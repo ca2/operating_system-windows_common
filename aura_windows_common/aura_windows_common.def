@@ -1,5 +1,5 @@
-LIBRARY "aura_windows"
+LIBRARY "aura_windows_common"
 
 EXPORTS
-aura_windows_factory_exchange
+aura_windows_common_factory_exchange
 

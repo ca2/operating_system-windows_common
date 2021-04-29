@@ -23,13 +23,13 @@
 #include "node.h"
 
 
-void CLASS_DECL_APEX_WINDOWS __cdecl _ca2_purecall();
+void CLASS_DECL_APEX_WINDOWS_COMMON __cdecl _ca2_purecall();
 
 
 void acme_windows_factory_exchange(::factory_map* pfactorymap);
 
 
-void apex_windows_factory_exchange(::factory_map * pfactorymap)
+void apex_windows_common_factory_exchange(::factory_map * pfactorymap)
 {
 
    _set_purecall_handler(_ca2_purecall);

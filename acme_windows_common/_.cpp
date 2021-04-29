@@ -4,7 +4,7 @@
 #include "acme/library.h"
 
 
-void CLASS_DECL_ACME_WINDOWS __cdecl _ca2_purecall()
+void CLASS_DECL_ACME_WINDOWS_COMMON __cdecl _ca2_purecall()
 {
 
    __throw(::exception::exception());
@@ -33,7 +33,7 @@ namespace windows
    }
 
 
-   bool CLASS_DECL_ACME_WINDOWS shell_get_special_folder_path(HWND hwnd, ::file::path& str, i32 csidl, bool fCreate)
+   bool CLASS_DECL_ACME_WINDOWS_COMMON shell_get_special_folder_path(HWND hwnd, ::file::path& str, i32 csidl, bool fCreate)
    {
 
       return ::SHGetSpecialFolderPathW(hwnd, wtostring(str, MAX_PATH * 8), csidl, fCreate) != false;
@@ -41,7 +41,7 @@ namespace windows
    }
 
 
-   ::file::path CLASS_DECL_ACME_WINDOWS shell_get_special_folder_path(i32 csidl, bool fCreate, ::windowing::window* pwindow)
+   ::file::path CLASS_DECL_ACME_WINDOWS_COMMON shell_get_special_folder_path(i32 csidl, bool fCreate, ::windowing::window* pwindow)
    {
 
       ::file::path path;

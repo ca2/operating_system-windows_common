@@ -26,34 +26,7 @@
     <ClInclude Include="node.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="acme_dir.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="acme_path.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="serial.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="file_memory_map.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="console.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="file.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="pipe.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="registry.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="_acme_windows.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="_ (2).h">
+    <ClInclude Include="_acme_windows_common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="_node_windows.h">
@@ -65,40 +38,19 @@
     <ClInclude Include="_windows.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="event.h">
+    <ClInclude Include="_impl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="exception.h">
+    <ClInclude Include="_thread_os_create_impl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="factory_exchange (2).h">
+    <ClInclude Include="_types.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="file_change_event.h">
+    <ClInclude Include="_windows_common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="file_find.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="mutex.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="path.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="shared_memory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="standard_exception.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sync_options.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="uac_tools.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="user.h">
+    <ClInclude Include="exception_translator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -115,61 +67,13 @@
     <ClCompile Include="node.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="acme_dir.cpp">
+    <ClCompile Include="os_usleep.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="acme_path.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="serial.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="file_memory_map.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="console.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="file.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="pipe.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="registry.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="file_find.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="mutex.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="shared_memory.cpp">
+    <ClCompile Include="exception_translator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="standard_exception.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="strdup_array.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="system.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="timer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="trace.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="uac_tools.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="windows.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="windows_desktop.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -179,7 +83,7 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="acme_windows.def">
+    <None Include="acme_windows_common.def">
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>

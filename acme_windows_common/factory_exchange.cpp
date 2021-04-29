@@ -1,23 +1,11 @@
 #include "framework.h"
-#include "acme/operating_system.h"
-#include "acme/platform/node.h"
-#include "acme/filesystem/filesystem/acme_dir.h"
-#include "acme/os/console.h"
-#include "node.h"
-#include "acme_dir.h"
-#include "acme/filesystem/filesystem/acme_path.h"
-#include "acme_path.h"
-#include "acme/platform/serial.h"
-#include "serial.h"
-#include "file_memory_map.h"
-#include "pipe.h"
-#include "console.h"
-#include "file.h"
-
-void CLASS_DECL_ACME_WINDOWS __cdecl _ca2_purecall();
 
 
-void acme_windows_factory_exchange(::factory_map * pfactorymap)
+void CLASS_DECL_ACME_WINDOWS_COMMON __cdecl _ca2_purecall();
+
+
+extern "C"
+void acme_windows_common_factory_exchange(::factory_map * pfactorymap)
 {
 
    _set_purecall_handler(_ca2_purecall);
@@ -38,9 +26,9 @@ void acme_windows_factory_exchange(::factory_map * pfactorymap)
    //pfactorymap->create_factory < ::windows::crypto, ::crypto::crypto >();
    //pfactorymap->create_factory < ::windows::ip_enum, ::net::ip_enum >();
 
-   pfactorymap->create_factory < ::windows::acme::node, ::acme::node >();
-   pfactorymap->create_factory < ::windows::acme_dir, ::acme_dir >();
-   pfactorymap->create_factory < ::windows::acme_path, ::acme_path >();
+   pfactorymap->create_factory < ::windows_common::acme::node, ::acme::node >();
+   //pfactorymap->create_factory < ::windows::acme_dir, ::acme_dir >();
+   // pfactorymap->create_factory < ::windows::acme_path, ::acme_path >();
 
    //pfactorymap->create_factory < ::windows::interprocess_communication_base, ::interprocess_communication::base >();
    //pfactorymap->create_factory < ::windows::interprocess_communication_rx, ::interprocess_communication::rx >();
@@ -61,12 +49,12 @@ void acme_windows_factory_exchange(::factory_map * pfactorymap)
    // ydesk >();
    ////create_factory < ::windows::shell, ::user::shell >();
 
-   pfactorymap->create_factory < ::windows::serial, ::serial::serial >();
-   pfactorymap->create_factory < ::windows::file_memory_map, ::file::memory_map >();
+   //pfactorymap->create_factory < ::windows::serial, ::serial::serial >();
+   //pfactorymap->create_factory < ::windows::file_memory_map, ::file::memory_map >();
 
-   pfactorymap->create_factory < ::windows::pipe, ::process::pipe >();
-   pfactorymap->create_factory < ::windows::file, ::file::file >();
-   pfactorymap->create_factory < ::windows::console, ::console::console >();
+   //pfactorymap->create_factory < ::windows::pipe, ::process::pipe >();
+   //pfactorymap->create_factory < ::windows::file, ::file::file >();
+   //pfactorymap->create_factory < ::windows::console, ::console::console >();
 
    //pfactorymap->create_factory < ::windows::dir_system, ::dir_system >();
    //pfactorymap->create_factory < ::windows::file_system, ::file_system >();
@@ -91,8 +79,10 @@ void acme_windows_factory_exchange(::factory_map * pfactorymap)
    //pfactorymap->create_factory < ::windows::copydesk, ::user::copydesk >();
    //pfactorymap->create_factory < ::windows::shell, ::user::shell >();
 
-}
+   pfactorymap->create_factory < ::windows_common::exception::translator, ::exception::translator >();
 
+
+}
 
 
 

@@ -7,7 +7,7 @@
 #pragma once
 
 
-namespace windows
+namespace windows_common
 {
 
    
@@ -15,7 +15,7 @@ namespace windows
    {
 
 
-      class CLASS_DECL_ACME_WINDOWS node :
+      class CLASS_DECL_ACME_WINDOWS_COMMON node :
          virtual public ::acme::node
       {
       public:
@@ -66,13 +66,13 @@ namespace windows
          virtual ::e_status on_start_system() override;
 
 
-         };
+      };
 
 
    } // namespace acme
 
 
-} // namespace windows
+} // namespace windows_common
 
 
 

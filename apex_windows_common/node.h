@@ -16,7 +16,7 @@ namespace windows
    {
 
 
-      class CLASS_DECL_APEX_WINDOWS node :
+      class CLASS_DECL_APEX_WINDOWS_COMMON node :
          virtual public ::windows::acme::node,
          virtual public ::apex::node
       {

@@ -9,7 +9,7 @@
 //   {
 //
 //
-//      class CLASS_DECL_APEX_WINDOWS factory_exchange:
+//      class CLASS_DECL_APEX_WINDOWS_COMMON factory_exchange:
 //         virtual public ::object
 //      {
 //      public:

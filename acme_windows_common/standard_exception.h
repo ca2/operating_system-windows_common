@@ -31,8 +31,8 @@ namespace windows
       u32         code() const { return m_ppointers->ExceptionRecord->ExceptionCode; }
       void * address() const { return m_ppointers->ExceptionRecord->ExceptionAddress; }
       EXCEPTION_POINTERS * info() const { return m_ppointers; }
-      const char * name() const { return ::exception::translator::name(code()); }
-      const char * description() const { return ::exception::translator::description(code()); }
+      const char * name() const { return ::windows_common::exception::translator::_s_get_standard_exception_name(code()); }
+      const char * description() const { return ::windows_common::exception::translator::_s_get_standard_exception_description(code()); }
 #else
       u32         code() const;
       void * address() const;

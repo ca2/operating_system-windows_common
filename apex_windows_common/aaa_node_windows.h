@@ -9,7 +9,7 @@
 string get_error_message(::u32 dwError);
 
 
-//CLASS_DECL_APEX_WINDOWS bool __initialize();
+//CLASS_DECL_APEX_WINDOWS_COMMON bool __initialize();
 
 
 //#include "system_dir.h"
@@ -32,10 +32,10 @@ string get_error_message(::u32 dwError);
 
 
 
-//void CLASS_DECL_APEX_WINDOWS __cdecl _ca2_purecall();
-//void CLASS_DECL_APEX_WINDOWS __cdecl _null_se_translator(u32 uiCode, EXCEPTION_POINTERS * ppointers);
-//bool CLASS_DECL_APEX_WINDOWS __windows_init();
-i32 CLASS_DECL_APEX_WINDOWS __windows_main(::apex::system * psystem, ::create * pmaininitdata);
+//void CLASS_DECL_APEX_WINDOWS_COMMON __cdecl _ca2_purecall();
+//void CLASS_DECL_APEX_WINDOWS_COMMON __cdecl _null_se_translator(u32 uiCode, EXCEPTION_POINTERS * ppointers);
+//bool CLASS_DECL_APEX_WINDOWS_COMMON __windows_init();
+i32 CLASS_DECL_APEX_WINDOWS_COMMON __windows_main(::apex::system * psystem, ::create * pmaininitdata);
 
 
 
@@ -51,9 +51,9 @@ i32 CLASS_DECL_APEX_WINDOWS __windows_main(::apex::system * psystem, ::create * 
 
 //
 //// Sanity checks for ATOMs
-//CLASS_DECL_APEX_WINDOWS bool __is_valid_atom(ATOM nAtom);
-////CLASS_DECL_APEX_WINDOWS bool __is_valid_atom(const char * psz);
-//CLASS_DECL_APEX_WINDOWS bool __is_valid_atom(const wchar_t * psz);
+//CLASS_DECL_APEX_WINDOWS_COMMON bool __is_valid_atom(ATOM nAtom);
+////CLASS_DECL_APEX_WINDOWS_COMMON bool __is_valid_atom(const char * psz);
+//CLASS_DECL_APEX_WINDOWS_COMMON bool __is_valid_atom(const wchar_t * psz);
 //
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -118,22 +118,22 @@ i32 CLASS_DECL_APEX_WINDOWS __windows_main(::apex::system * psystem, ::create * 
 //      i32 function();
 //   };
 //
-//   CLASS_DECL_APEX_WINDOWS HINSTANCE   load_library(const char * psz);
+//   CLASS_DECL_APEX_WINDOWS_COMMON HINSTANCE   load_library(const char * psz);
 //
-//   CLASS_DECL_APEX_WINDOWS bool        shell_get_special_folder_path(::windowing::window * pwindow,::file::path &str,i32 csidl,bool fCreate);
-//   CLASS_DECL_APEX_WINDOWS ::file::path  shell_get_special_folder_path(i32 csidl, bool fCreate = true, ::windowing::window * pwindow = nullptr);
-//   CLASS_DECL_APEX_WINDOWS ::u32       get_file_attributes(const char * pFileName);
+//   CLASS_DECL_APEX_WINDOWS_COMMON bool        shell_get_special_folder_path(::windowing::window * pwindow,::file::path &str,i32 csidl,bool fCreate);
+//   CLASS_DECL_APEX_WINDOWS_COMMON ::file::path  shell_get_special_folder_path(i32 csidl, bool fCreate = true, ::windowing::window * pwindow = nullptr);
+//   CLASS_DECL_APEX_WINDOWS_COMMON ::u32       get_file_attributes(const char * pFileName);
 //
-//   CLASS_DECL_APEX_WINDOWS ::u32       get_current_directory(string & str);
-//   CLASS_DECL_APEX_WINDOWS ::u32       get_temp_path(string & str);
-//   CLASS_DECL_APEX_WINDOWS ::i32        reg_query_value(HKEY hkey,const char * pszSubKey,string & str);
+//   CLASS_DECL_APEX_WINDOWS_COMMON ::u32       get_current_directory(string & str);
+//   CLASS_DECL_APEX_WINDOWS_COMMON ::u32       get_temp_path(string & str);
+//   CLASS_DECL_APEX_WINDOWS_COMMON ::i32        reg_query_value(HKEY hkey,const char * pszSubKey,string & str);
 //
-//   CLASS_DECL_APEX_WINDOWS HICON       extract_icon(HINSTANCE hInst,const char * pszExeFileName,::u32 nIconIndex);
+//   CLASS_DECL_APEX_WINDOWS_COMMON HICON       extract_icon(HINSTANCE hInst,const char * pszExeFileName,::u32 nIconIndex);
 //
-//   CLASS_DECL_APEX_WINDOWS bool        delete_file(const char * pFileName);
+//   CLASS_DECL_APEX_WINDOWS_COMMON bool        delete_file(const char * pFileName);
 //
-//   CLASS_DECL_APEX_WINDOWS i32     get_menu_string(HMENU hMenu,::u32 uDItem,string & str,::u32 flags);
-//   CLASS_DECL_APEX_WINDOWS void        time_to_filetime(::object * pobject,const ::datetime::time& time,LPFILETIME pFileTime);
+//   CLASS_DECL_APEX_WINDOWS_COMMON i32     get_menu_string(HMENU hMenu,::u32 uDItem,string & str,::u32 flags);
+//   CLASS_DECL_APEX_WINDOWS_COMMON void        time_to_filetime(::object * pobject,const ::datetime::time& time,LPFILETIME pFileTime);
 //
 //
 //} // namespace windows
@@ -142,19 +142,19 @@ i32 CLASS_DECL_APEX_WINDOWS __windows_main(::apex::system * psystem, ::create * 
 //
 //
 //
-//CLASS_DECL_APEX_WINDOWS ::i32 delete_registry_tree_helper(HKEY hParentKey,const string & strKeyName);
+//CLASS_DECL_APEX_WINDOWS_COMMON ::i32 delete_registry_tree_helper(HKEY hParentKey,const string & strKeyName);
 //
 //
-//CLASS_DECL_APEX_WINDOWS HINSTANCE __get_resource_handle();
-//CLASS_DECL_APEX_WINDOWS void __set_resource_handle(HINSTANCE hInstResource);
+//CLASS_DECL_APEX_WINDOWS_COMMON HINSTANCE __get_resource_handle();
+//CLASS_DECL_APEX_WINDOWS_COMMON void __set_resource_handle(HINSTANCE hInstResource);
 //
-//CLASS_DECL_APEX_WINDOWS HINSTANCE __get_resource_handle();
-//CLASS_DECL_APEX_WINDOWS HINSTANCE __find_string_resource_handle(::u32 nID);
+//CLASS_DECL_APEX_WINDOWS_COMMON HINSTANCE __get_resource_handle();
+//CLASS_DECL_APEX_WINDOWS_COMMON HINSTANCE __find_string_resource_handle(::u32 nID);
 //
 
-CLASS_DECL_APEX_WINDOWS __pointer(::apex::application) __get_app();
+CLASS_DECL_APEX_WINDOWS_COMMON __pointer(::apex::application) __get_app();
 
-CLASS_DECL_APEX_WINDOWS i32 app_main(::apex::system * psystem, HINSTANCE hInstance, HINSTANCE hPrevInstance, char * pCmdLine, ::e_display edisplay);
+CLASS_DECL_APEX_WINDOWS_COMMON i32 app_main(::apex::system * psystem, HINSTANCE hInstance, HINSTANCE hPrevInstance, char * pCmdLine, ::e_display edisplay);
 
 
 

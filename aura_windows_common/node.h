@@ -13,7 +13,7 @@ namespace windows
 
 
 
-   class CLASS_DECL_AURA_WINDOWS aura :
+   class CLASS_DECL_AURA_WINDOWS_COMMON aura :
       virtual public ::windows::apex,
       virtual public ::aura::node
    {

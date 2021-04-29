@@ -32,7 +32,7 @@
     <ClInclude Include="process_data.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="explorer\explorer_restart.h">
+    <ClInclude Include="explorer\aaa_explorer_restart.h">
       <Filter>Header Files\explorer</Filter>
     </ClInclude>
     <ClInclude Include="tts_speaker.h">
@@ -52,10 +52,10 @@
     <ClCompile Include="node.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="explorer\install_desk_toolbar.cpp">
+    <ClCompile Include="explorer\aaa_install_desk_toolbar.cpp">
       <Filter>Source Files\explorer</Filter>
     </ClCompile>
-    <ClCompile Include="explorer\explorer_restart.cpp">
+    <ClCompile Include="explorer\aaa_explorer_restart.cpp">
       <Filter>Source Files\explorer</Filter>
     </ClCompile>
   </ItemGroup>
@@ -65,7 +65,7 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="aura_windows.def">
+    <None Include="aura_windows_common.def">
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>
