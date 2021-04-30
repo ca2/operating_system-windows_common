@@ -1,18 +1,13 @@
 #include "framework.h"
-#include "apex/platform/node.h"
-#include "acme/node/windows/registry.h"
 #include "acme/filesystem/filesystem/acme_dir.h"
 #include "acme/filesystem/filesystem/acme_path.h"
-#include "acme_windows/node.h"
-#include "node.h"
-#include "aura/os/windows/_c.h"
 
 
-namespace windows
+namespace apex
 {
 
 
-   namespace apex
+   namespace windows_common
    {
 
 
@@ -50,7 +45,7 @@ namespace windows
       ::e_status node::initialize(::object* pobject)
       {
 
-         auto estatus = ::windows::acme::node::initialize(pobject);
+         auto estatus = ::acme::windows_common::node::initialize(pobject);
 
          if (!estatus)
          {
@@ -81,40 +76,42 @@ namespace windows
       bool node::_os_calc_app_dark_mode()
       {
 
-         try
-         {
+         //try
+         //{
 
-            ::windows::registry::key key;
+         //   ::windows::registry::key key;
 
-            key.open(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize");
+         //   key.open(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize");
 
-            ::u32 dw;
+         //   ::u32 dw;
 
-            auto estatus = key._get("AppsUseLightTheme", dw);
+         //   auto estatus = key._get("AppsUseLightTheme", dw);
 
-            if (::failed(estatus))
-            {
+         //   if (::failed(estatus))
+         //   {
 
-               estatus = key._get("SystemUseLightTheme", dw);
+         //      estatus = key._get("SystemUseLightTheme", dw);
 
-               if (::failed(estatus))
-               {
+         //      if (::failed(estatus))
+         //      {
 
-                  return false;
+         //         return false;
 
-               }
+         //      }
 
-            }
+         //   }
 
-            return dw == 0;
+         //   return dw == 0;
 
-         }
-         catch (...)
-         {
+         //}
+         //catch (...)
+         //{
 
-            return false;
+         //   return false;
 
-         }
+         //}
+
+         return false;
 
       }
 
@@ -122,40 +119,42 @@ namespace windows
       bool node::_os_calc_system_dark_mode()
       {
 
-         try
-         {
+         //try
+         //{
 
-            ::windows::registry::key key;
+         //   ::windows::registry::key key;
 
-            key.open(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize");
+         //   key.open(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize");
 
-            ::u32 dw;
+         //   ::u32 dw;
 
-            auto estatus = key._get("SystemUseLightTheme", dw);
+         //   auto estatus = key._get("SystemUseLightTheme", dw);
 
-            if (::failed(estatus))
-            {
+         //   if (::failed(estatus))
+         //   {
 
-               estatus = key._get("AppsUseLightTheme", dw);
+         //      estatus = key._get("AppsUseLightTheme", dw);
 
-               if (::failed(estatus))
-               {
+         //      if (::failed(estatus))
+         //      {
 
-                  return false;
+         //         return false;
 
-               }
+         //      }
 
-            }
+         //   }
 
-            return dw == 0;
+         //   return dw == 0;
 
-         }
-         catch (...)
-         {
+         //}
+         //catch (...)
+         //{
 
-            return false;
+         //   return false;
 
-         }
+         //}
+
+         return false;
 
       }
 
@@ -189,11 +188,11 @@ namespace windows
       void node::set_console_colors(::u32 dwScreenColors, ::u32 dwPopupColors, ::u32 dwWindowAlpha)
       {
 
-         ::windows::registry::key key(HKEY_CURRENT_USER, "Console", true);
+         //::windows::registry::key key(HKEY_CURRENT_USER, "Console", true);
 
-         key._set("ScreenColors", dwScreenColors);
-         key._set("PopupColors", dwPopupColors);
-         key._set("WindowAlpha", dwWindowAlpha);
+         //key._set("ScreenColors", dwScreenColors);
+         //key._set("PopupColors", dwPopupColors);
+         //key._set("WindowAlpha", dwWindowAlpha);
 
       }
 
@@ -202,19 +201,19 @@ namespace windows
       ::e_status node::set_system_dark_mode1(bool bSet)
       {
 
-         ::windows::registry::key key(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", true);
+         //::windows::registry::key key(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", true);
 
-         ::u32 dwSystemUseLightTheme;
-         if (bSet)
-         {
-            dwSystemUseLightTheme = 0;
-         }
-         else
-         {
-            dwSystemUseLightTheme = 1;
-         }
+         //::u32 dwSystemUseLightTheme;
+         //if (bSet)
+         //{
+         //   dwSystemUseLightTheme = 0;
+         //}
+         //else
+         //{
+         //   dwSystemUseLightTheme = 1;
+         //}
 
-         key._set("SystemUsesLightTheme", dwSystemUseLightTheme);
+         //key._set("SystemUsesLightTheme", dwSystemUseLightTheme);
          return ::success;
 
       }
@@ -223,19 +222,19 @@ namespace windows
       ::e_status node::set_app_dark_mode1(bool bSet)
       {
 
-         ::windows::registry::key key(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", true);
+         //::windows::registry::key key(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", true);
 
-         ::u32 dwAppsUseLightTheme;
-         if (bSet)
-         {
-            dwAppsUseLightTheme = 0;
-         }
-         else
-         {
-            dwAppsUseLightTheme = 1;
-         }
+         //::u32 dwAppsUseLightTheme;
+         //if (bSet)
+         //{
+         //   dwAppsUseLightTheme = 0;
+         //}
+         //else
+         //{
+         //   dwAppsUseLightTheme = 1;
+         //}
 
-         key._set("AppsUseLightTheme", dwAppsUseLightTheme);
+         //key._set("AppsUseLightTheme", dwAppsUseLightTheme);
 
          return ::success;
 
@@ -481,28 +480,28 @@ namespace windows
 
 #ifdef WINDOWS_DESKTOP
 
-         try
-         {
+         //try
+         //{
 
-            ::windows::registry::key key(HKEY_LOCAL_MACHINE, "SOFTWARE\\Mozilla\\Mozilla Firefox");
+         //   ::windows::registry::key key(HKEY_LOCAL_MACHINE, "SOFTWARE\\Mozilla\\Mozilla Firefox");
 
-            string strCurrentVersion;
+         //   string strCurrentVersion;
 
-            key.get("CurrentVersion", strCurrentVersion);
+         //   key.get("CurrentVersion", strCurrentVersion);
 
-            key.open(HKEY_LOCAL_MACHINE, "SOFTWARE\\Mozilla\\Mozilla Firefox\\" + strCurrentVersion + "\\Main");
+         //   key.open(HKEY_LOCAL_MACHINE, "SOFTWARE\\Mozilla\\Mozilla Firefox\\" + strCurrentVersion + "\\Main");
 
-            key.get("PathToExe", strPathToExe);
+         //   key.get("PathToExe", strPathToExe);
 
-            key.get("Install Directory", strInstallDirectory);
+         //   key.get("Install Directory", strInstallDirectory);
 
-         }
-         catch (const ::e_status& estatus)
-         {
+         //}
+         //catch (const ::e_status& estatus)
+         //{
 
-            return estatus;
+         //   return estatus;
 
-         }
+         //}
 
          return ::success;
 
@@ -866,14 +865,10 @@ namespace windows
       //}
 
 
-   } // namespace node
+   } // namespace windows_common
 
 
-} // namespace windows
-
-
-
-
+} // namespace apex
 
 
 

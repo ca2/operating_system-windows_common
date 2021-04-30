@@ -1158,6 +1158,7 @@
     <ClInclude Include="exception_translator.h" />
     <ClInclude Include="node.h" />
     <ClInclude Include="factory_exchange.h" />
+    <ClInclude Include="standard_exception.h" />
     <ClInclude Include="_.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="_acme_windows_common.h" />
@@ -1193,12 +1194,12 @@
     <ResourceCompile Include="..\version.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="acme_windows_common.def" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\..\source\app\acme\acme.vcxproj">
       <Project>{638b242f-0f21-41c3-9f66-724660046133}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="acme_windows_common.def" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

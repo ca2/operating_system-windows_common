@@ -1,5 +1,18 @@
 // Created on 2021-04-29 12:33 BRT <3TBS_!! Second celebration of Mummis Birthday 70!!
 #include "framework.h"
+#include <eh.h>
+
+
+bool g_bExiting;
+
+
+#ifdef WINDOWS_DESKTOP
+
+
+#define EXCEPTION_NO_MEMORY STATUS_NO_MEMORY
+
+
+#endif
 
 
 namespace windows_common
@@ -268,7 +281,7 @@ namespace windows_common
       }
 
 
-      const char * translator::name(u32 uiCode)
+      const char * translator::_s_get_standard_exception_name(u32 uiCode)
       {
 
          const char * pszName = nullptr;
@@ -312,7 +325,7 @@ namespace windows_common
       }
 
 
-      const char * translator::description(u32 uiCode)
+      const char * translator::_s_get_standard_exception_description(u32 uiCode)
       {
 
          const char* pszDescription = nullptr;

@@ -5,17 +5,16 @@
 #include "acme/filesystem/filesystem/acme_dir.h"
 
 
-namespace windows
+namespace acme
 {
 
 
-   namespace acme
+   namespace windows_common
    {
 
 
       node::node()
       {
-
 
       }
 
@@ -573,23 +572,23 @@ namespace windows
       void node::install_crash_dump_reporting(const string& strModuleNameWithTheExeExtension)
       {
 
-         ::windows::registry::key k;
+         //::windows::registry::key k;
 
-         string strKey = "SOFTWARE\\Microsoft\\Windows\\Windows Error Reporting\\LocalDumps\\" + strModuleNameWithTheExeExtension;
+         //string strKey = "SOFTWARE\\Microsoft\\Windows\\Windows Error Reporting\\LocalDumps\\" + strModuleNameWithTheExeExtension;
 
-         if (k._open(HKEY_LOCAL_MACHINE, strKey, true))
-         {
-            ::file::path str = m_psystem->m_pacmedir->system() / "CrashDumps" / strModuleNameWithTheExeExtension;
-            wstring wstr = str;
-            RegSetValueExW(k.m_hkey, L"DumpFolder", 0, REG_EXPAND_SZ, (byte*)wstr.c_str(), ::u32((wcslen(wstr) + 1) * sizeof(wchar_t)));
-            ::u32 dw = 10;
-            RegSetValueExW(k.m_hkey, L"DumpCount", 0, REG_DWORD, (byte*)&dw, sizeof(dw));
-            dw = 2;
-            RegSetValueExW(k.m_hkey, L"DumpType", 0, REG_DWORD, (byte*)&dw, sizeof(dw));
+         //if (k._open(HKEY_LOCAL_MACHINE, strKey, true))
+         //{
+         //   ::file::path str = m_psystem->m_pacmedir->system() / "CrashDumps" / strModuleNameWithTheExeExtension;
+         //   wstring wstr = str;
+         //   RegSetValueExW(k.m_hkey, L"DumpFolder", 0, REG_EXPAND_SZ, (byte*)wstr.c_str(), ::u32((wcslen(wstr) + 1) * sizeof(wchar_t)));
+         //   ::u32 dw = 10;
+         //   RegSetValueExW(k.m_hkey, L"DumpCount", 0, REG_DWORD, (byte*)&dw, sizeof(dw));
+         //   dw = 2;
+         //   RegSetValueExW(k.m_hkey, L"DumpType", 0, REG_DWORD, (byte*)&dw, sizeof(dw));
 
-         }
+         //}
 
-         output_debug_string("test01");
+         //output_debug_string("test01");
 
       }
       //
@@ -741,10 +740,10 @@ namespace windows
       }
 
 
-   } // namespace acme
+   } // namespace windows_common
 
 
-} // namespace windows
+} // namespace acme
 
 
 

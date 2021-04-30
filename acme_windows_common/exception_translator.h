@@ -11,7 +11,7 @@ namespace windows_common
 
 
       class CLASS_DECL_ACME_WINDOWS_COMMON translator :
-         virtual ::exception::translator
+         virtual public ::exception::translator
       {
       public:
 
@@ -24,7 +24,7 @@ namespace windows_common
 
          virtual ~translator();
 
-         virtual void __cdecl filter2(u32 uiCode, EXCEPTION_POINTERS* ppointers);
+         static void __cdecl filter2(u32 uiCode, EXCEPTION_POINTERS* ppointers);
 
          //virtual void filter_sigsegv(i32 signal, siginfo_t* psiginfo, void* pc);
          //virtual void filter_sigfpe(i32 signal, siginfo_t* psiginfo, void* pc);

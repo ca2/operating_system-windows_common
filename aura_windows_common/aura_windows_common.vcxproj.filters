@@ -12,12 +12,6 @@
     <Filter Include="Resource Files">
       <UniqueIdentifier>{2ec8ecd0-d089-4887-98eb-a66497a4e6c3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\explorer">
-      <UniqueIdentifier>{0ce00e36-f453-4141-91ee-88aaa5963d42}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\explorer">
-      <UniqueIdentifier>{37feb373-2a27-451e-a14b-19911d93082a}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -29,13 +23,7 @@
     <ClInclude Include="node.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="process_data.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="explorer\aaa_explorer_restart.h">
-      <Filter>Header Files\explorer</Filter>
-    </ClInclude>
-    <ClInclude Include="tts_speaker.h">
+    <ClInclude Include="_aura_windows_common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -51,12 +39,6 @@
     </ClCompile>
     <ClCompile Include="node.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="explorer\aaa_install_desk_toolbar.cpp">
-      <Filter>Source Files\explorer</Filter>
-    </ClCompile>
-    <ClCompile Include="explorer\aaa_explorer_restart.cpp">
-      <Filter>Source Files\explorer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

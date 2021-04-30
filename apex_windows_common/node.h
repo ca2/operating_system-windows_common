@@ -8,16 +8,16 @@
 #pragma once
 
 
-namespace windows
+namespace apex
 {
 
 
-   namespace apex
+   namespace windows_common
    {
 
 
       class CLASS_DECL_APEX_WINDOWS_COMMON node :
-         virtual public ::windows::acme::node,
+         virtual public ::acme::windows_common::node,
          virtual public ::apex::node
       {
       public:
@@ -37,7 +37,7 @@ namespace windows
 
          virtual ::e_status _001InitializeShellOpen() override;
 
-         virtual ::e_status shell_create_link(::file::path pathObj, ::file::path pathLnk, string strDesc, ::file::path pathIco, int iIcon);
+         //virtual ::e_status shell_create_link(::file::path pathObj, ::file::path pathLnk, string strDesc, ::file::path pathIco, int iIcon);
 
 
          virtual bool _os_calc_app_dark_mode();
@@ -102,10 +102,10 @@ namespace windows
       };
 
 
-   } // namespace apex
+   } // namespace windows_common
 
 
-} // namespace node_windows
+} // namespace apex
 
 
 

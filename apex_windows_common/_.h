@@ -2,6 +2,7 @@
 
 
 #include "apex/_.h"
+#include "acme_windows_common/_.h"
 
 
 #if defined(_APEX_WINDOWS_COMMON_LIBRARY)

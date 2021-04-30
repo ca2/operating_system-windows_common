@@ -2,9 +2,7 @@
 
 
 #include "aura/_.h"
-#include "aura/operating_system.h"
-#include "apex/operating_system.h"
-#include "apex_windows/_.h"
+#include "apex_windows_common/_.h"
 
 
 #if defined(_AURA_WINDOWS_COMMON_LIBRARY)
@@ -14,7 +12,7 @@
 #endif
 
 
-::e_status gdiplus_draw_text(::draw2d::graphics * pgraphics, ::draw2d::path * ppath, const string & str, rectangle_f64 & rectParam, const ::e_align & ealign, const ::e_draw_text & edrawtext, ::write_text::font * pfont, double dFontWidth, ::draw2d::brush * pbrush = nullptr, bool bMeasure = false);
+//::e_status gdiplus_draw_text(::draw2d::graphics * pgraphics, ::draw2d::path * ppath, const string & str, rectangle_f64 & rectParam, const ::e_align & ealign, const ::e_draw_text & edrawtext, ::write_text::font * pfont, double dFontWidth, ::draw2d::brush * pbrush = nullptr, bool bMeasure = false);
 
 
 //inline auto gdiplus_color(const ::color::color& color)

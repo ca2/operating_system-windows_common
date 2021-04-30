@@ -23,9 +23,6 @@
     <ClInclude Include="node.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="factory_exchange.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="_apex_windows_common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -41,12 +38,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="node.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="application.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="crypto.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

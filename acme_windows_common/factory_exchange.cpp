@@ -26,7 +26,7 @@ void acme_windows_common_factory_exchange(::factory_map * pfactorymap)
    //pfactorymap->create_factory < ::windows::crypto, ::crypto::crypto >();
    //pfactorymap->create_factory < ::windows::ip_enum, ::net::ip_enum >();
 
-   pfactorymap->create_factory < ::windows_common::acme::node, ::acme::node >();
+   pfactorymap->create_factory < ::acme::windows_common::node, ::acme::node >();
    //pfactorymap->create_factory < ::windows::acme_dir, ::acme_dir >();
    // pfactorymap->create_factory < ::windows::acme_path, ::acme_path >();
 

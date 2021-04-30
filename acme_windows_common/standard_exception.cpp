@@ -47,7 +47,7 @@ void InstallUncaughtExceptionHandler();
 // 0xc06d007f Procedure Not Found
 // 0x40010008 control-Break
 
-#define EXCEPTION_NO_MEMORY STATUS_NO_MEMORY
+
 
 LPTOP_LEVEL_EXCEPTION_FILTER WINAPI MyDummySetUnhandledExceptionFilter(
    LPTOP_LEVEL_EXCEPTION_FILTER pTopLevelExceptionFilter)
@@ -106,9 +106,9 @@ namespace exception
 #endif
 
 
-#else
+//#else
 
-
+#ifdef LINUX
    void filter_sigsegv(i32 signal, siginfo_t * psiginfo, void * pc)
    {
 

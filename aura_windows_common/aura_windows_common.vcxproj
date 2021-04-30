@@ -1155,16 +1155,12 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="explorer\aaa_explorer_restart.h" />
     <ClInclude Include="node.h" />
-    <ClInclude Include="process_data.h" />
-    <ClInclude Include="tts_speaker.h" />
     <ClInclude Include="_.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="_aura_windows_common.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="explorer\aaa_explorer_restart.cpp" />
-    <ClCompile Include="explorer\aaa_install_desk_toolbar.cpp" />
     <ClCompile Include="node.cpp" />
     <ClCompile Include="_.cpp" />
     <ClCompile Include="factory_exchange.cpp" />
@@ -1197,11 +1193,11 @@
     <ProjectReference Include="..\..\..\source\app\aura\aura.vcxproj">
       <Project>{e000ffaf-392f-4e32-bf51-fd7ed638991f}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\acme_windows\acme_windows.vcxproj">
-      <Project>{cc8e8200-00a9-414e-9829-7ca3f1091add}</Project>
+    <ProjectReference Include="..\acme_windows_common\acme_windows_common.vcxproj">
+      <Project>{eb9dc9c0-0573-4da0-8700-4dbb371773f1}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\apex_windows\apex_windows.vcxproj">
-      <Project>{c598e718-55ae-4d6e-81e0-53450fc3a649}</Project>
+    <ProjectReference Include="..\apex_windows_common\apex_windows_common.vcxproj">
+      <Project>{a094e038-d195-4400-82ce-44a7edf91b78}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

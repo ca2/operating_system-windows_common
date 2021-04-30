@@ -1,15 +1,11 @@
 #include "framework.h"
-#include "acme/node/windows/registry.h"
-#include "acme_windows/acme.h"
-#include "apex_windows/apex.h"
-#include "node.h"
 
 
-namespace windows
+namespace aura
 {
 
 
-   namespace aura
+   namespace windows_common
    {
 
 
@@ -46,40 +42,42 @@ namespace windows
       bool node::_os_calc_app_dark_mode()
       {
 
-         try
-         {
+         //try
+         //{
 
-            ::windows::registry::key key;
+         //   ::windows::registry::key key;
 
-            key.open(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize");
+         //   key.open(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize");
 
-            ::u32 dw;
+         //   ::u32 dw;
 
-            auto estatus = key._get("AppsUseLightTheme", dw);
+         //   auto estatus = key._get("AppsUseLightTheme", dw);
 
-            if (::failed(estatus))
-            {
+         //   if (::failed(estatus))
+         //   {
 
-               estatus = key._get("SystemUseLightTheme", dw);
+         //      estatus = key._get("SystemUseLightTheme", dw);
 
-               if (::failed(estatus))
-               {
+         //      if (::failed(estatus))
+         //      {
 
-                  return false;
+         //         return false;
 
-               }
+         //      }
 
-            }
+         //   }
 
-            return dw == 0;
+         //   return dw == 0;
 
-         }
-         catch (...)
-         {
+         //}
+         //catch (...)
+         //{
 
-            return false;
+         //   return false;
 
-         }
+         //}
+
+         return false;
 
       }
 
@@ -87,35 +85,35 @@ namespace windows
       bool node::_os_calc_system_dark_mode()
       {
 
-         try
-         {
+         //try
+         //{
 
-            ::windows::registry::key key;
+         //   ::windows::registry::key key;
 
-            key.open(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize");
+         //   key.open(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize");
 
-            ::u32 dw;
+         //   ::u32 dw;
 
-            auto estatus = key._get("SystemUseLightTheme", dw);
+         //   auto estatus = key._get("SystemUseLightTheme", dw);
 
-            if (::failed(estatus))
-            {
+         //   if (::failed(estatus))
+         //   {
 
-               estatus = key._get("AppsUseLightTheme", dw);
+         //      estatus = key._get("AppsUseLightTheme", dw);
 
-               if (::failed(estatus))
-               {
+         //      if (::failed(estatus))
+         //      {
 
-                  return false;
+         //         return false;
 
-               }
+         //      }
 
-            }
+         //   }
 
-            return dw == 0;
+         //   return dw == 0;
 
-         }
-         catch (...)
+         //}
+         //catch (...)
          {
 
             return false;
@@ -154,11 +152,11 @@ namespace windows
       void node::set_console_colors(::u32 dwScreenColors, ::u32 dwPopupColors, ::u32 dwWindowAlpha)
       {
 
-         ::windows::registry::key key(HKEY_CURRENT_USER, "Console", true);
+         //::windows::registry::key key(HKEY_CURRENT_USER, "Console", true);
 
-         key._set("ScreenColors", dwScreenColors);
-         key._set("PopupColors", dwPopupColors);
-         key._set("WindowAlpha", dwWindowAlpha);
+         //key._set("ScreenColors", dwScreenColors);
+         //key._set("PopupColors", dwPopupColors);
+         //key._set("WindowAlpha", dwWindowAlpha);
 
       }
 
@@ -167,19 +165,19 @@ namespace windows
       ::e_status node::set_system_dark_mode1(bool bSet)
       {
 
-         ::windows::registry::key key(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", true);
+         //::windows::registry::key key(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", true);
 
-         ::u32 dwSystemUseLightTheme;
-         if (bSet)
-         {
-            dwSystemUseLightTheme = 0;
-         }
-         else
-         {
-            dwSystemUseLightTheme = 1;
-         }
+         //::u32 dwSystemUseLightTheme;
+         //if (bSet)
+         //{
+         //   dwSystemUseLightTheme = 0;
+         //}
+         //else
+         //{
+         //   dwSystemUseLightTheme = 1;
+         //}
 
-         key._set("SystemUsesLightTheme", dwSystemUseLightTheme);
+         //key._set("SystemUsesLightTheme", dwSystemUseLightTheme);
          return ::success;
 
       }
@@ -188,19 +186,19 @@ namespace windows
       ::e_status node::set_app_dark_mode1(bool bSet)
       {
 
-         ::windows::registry::key key(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", true);
+         //::windows::registry::key key(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", true);
 
-         ::u32 dwAppsUseLightTheme;
-         if (bSet)
-         {
-            dwAppsUseLightTheme = 0;
-         }
-         else
-         {
-            dwAppsUseLightTheme = 1;
-         }
+         //::u32 dwAppsUseLightTheme;
+         //if (bSet)
+         //{
+         //   dwAppsUseLightTheme = 0;
+         //}
+         //else
+         //{
+         //   dwAppsUseLightTheme = 1;
+         //}
 
-         key._set("AppsUseLightTheme", dwAppsUseLightTheme);
+         //key._set("AppsUseLightTheme", dwAppsUseLightTheme);
 
          return ::success;
 
@@ -398,7 +396,7 @@ namespace windows
       ::e_status node::system_main()
       {
 
-         __pointer(::node::system) psystem = m_psystem;
+         auto psystem = m_psystem;
 
          auto estatus = psystem->main();
 
@@ -409,7 +407,7 @@ namespace windows
 
          }
 
-         estatus = m_psystem->inline_term();
+         estatus = psystem->inline_term();
 
          if (!estatus)
          {
@@ -424,34 +422,26 @@ namespace windows
       }
 
 
+      int _os_message_box(const char* pszMessage, const char* pszTitle, const ::e_message_box& emessagebox)
+      {
 
-   } // namespace node_windows
+         int iMessageBox = emessagebox.m_eenum & 0x7f;
 
+         wstring wstrText(pszMessage);
 
+         wstring wstrTitle(pszTitle);
 
+         int iResult = ::MessageBox(nullptr, wstrText, wstrTitle, iMessageBox);
 
+         return iResult;
 
-
-   int _os_message_box(const char* pszMessage, const char* pszTitle, const ::e_message_box& emessagebox)
-   {
-
-      int iMessageBox = emessagebox.m_eenum & 0x7f;
-
-      wstring wstrText(pszMessage);
-
-      wstring wstrTitle(pszTitle);
-
-      int iResult = ::MessageBox(nullptr, wstrText, wstrTitle, iMessageBox);
-
-      return iResult;
-
-   }
+      }
 
 
-   } // namespace aura
+   } // namespace windows_common
 
 
-} // namespace windows
+} // namespace aura
 
 
 

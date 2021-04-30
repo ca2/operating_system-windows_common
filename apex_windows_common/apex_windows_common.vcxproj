@@ -1155,15 +1155,12 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="factory_exchange.h" />
     <ClInclude Include="node.h" />
     <ClInclude Include="_.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="_apex_windows_common.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="application.cpp" />
-    <ClCompile Include="crypto.cpp" />
     <ClCompile Include="node.cpp" />
     <ClCompile Include="_.cpp" />
     <ClCompile Include="factory_exchange.cpp" />
@@ -1190,8 +1187,8 @@
     <ProjectReference Include="..\..\..\source\app\apex\apex.vcxproj">
       <Project>{e000ffaf-392f-4e32-bf51-777ca238991f}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\acme_windows\acme_windows.vcxproj">
-      <Project>{cc8e8200-00a9-414e-9829-7ca3f1091add}</Project>
+    <ProjectReference Include="..\acme_windows_common\acme_windows_common.vcxproj">
+      <Project>{eb9dc9c0-0573-4da0-8700-4dbb371773f1}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
