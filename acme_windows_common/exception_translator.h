@@ -36,7 +36,7 @@ namespace windows_common
 
          virtual bool detach() override;
 
-         virtual void filter(u32 uiCode, EXCEPTION_POINTERS* ppointers) override;
+         virtual void filter(u32 uiCode, EXCEPTION_POINTERS* ppointers);
 
 
          virtual string _get_standard_exception_name(u32 uiCode) override;
