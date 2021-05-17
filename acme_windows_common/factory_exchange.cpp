@@ -80,6 +80,7 @@ void acme_windows_common_factory_exchange(::factory_map * pfactorymap)
    //pfactorymap->create_factory < ::windows::shell, ::user::shell >();
 
    pfactorymap->create_factory < ::windows_common::exception::translator, ::exception::translator >();
+   //pfactorymap->create_factory < ::windows_common::exception::engine, ::exception::engine >();
 
 
 }
