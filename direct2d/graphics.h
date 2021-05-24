@@ -159,12 +159,12 @@ namespace draw2d_direct2d
       //::u32 RealizePalette() override;
       //void UpdateColors() override;
 
-      //int GetPolyFillMode() override;
-      //int GetROP2() override;
-      //int GetStretchBltMode() override;
+      int GetPolyFillMode() override;
+      int GetROP2() override;
+      int GetStretchBltMode() override;
 
-      //int SetPolyFillMode(int nPolyFillMode) override;
-      //int SetROP2(int nDrawMode) override;
+      int SetPolyFillMode(int nPolyFillMode) override;
+      int SetROP2(int nDrawMode) override;
       virtual bool set_interpolation_mode(::draw2d::enum_interpolation_mode einterpolationmode) override;
 
 
@@ -179,8 +179,8 @@ namespace draw2d_direct2d
 //#endif
 
       // Graphics mode
-      //int SetGraphicsMode(int iMode) override;
-      //int GetGraphicsMode() override;
+      int SetGraphicsMode(int iMode) override;
+      int GetGraphicsMode() override;
 
 
       virtual bool _get(::draw2d::matrix & matrix) override;
@@ -204,9 +204,9 @@ namespace draw2d_direct2d
       //bool GetWorldTransform(XFORM* pXform) override;
 
       // Mapping Functions
-      //virtual int GetMapMode() override;
+      virtual int GetMapMode() override;
       virtual ::point_f64 GetViewportOrg() override;
-      //virtual int SetMapMode(int nMapMode) override;
+      virtual int SetMapMode(int nMapMode) override;
       // Viewport Origin
       virtual ::point_f64 SetViewportOrg(double x, double y) override;
       virtual ::point_f64 SetViewportOrg(const ::point_f64 & point) override;
@@ -256,12 +256,12 @@ namespace draw2d_direct2d
 
       virtual ::e_status add_shapes(const shape_array& shapea);
       virtual ::e_status reset_clip();
-      virtual ::e_status intersect_clip(const ::rectangle & rectangle);
+      virtual ::e_status intersect_clip(const ::rectangle_f64& rectangle);
       //virtual ::e_status intersect_clip(const ::rectangle_f64& rectangle);
-      //virtual ::e_status intersect_clip(const ::oval& oval);
-      virtual ::e_status intersect_clip(const ::ellipse & ellipse);
+      //virtual ::e_status intersect_clip(const ::ellipse& ellipse);
+      virtual ::e_status intersect_clip(const ::ellipse& ellipse);
       //virtual ::e_status intersect_clip(const ::polygon_i32& polygon_i32);
-      virtual ::e_status intersect_clip(const ::polygon & polygon);
+      virtual ::e_status intersect_clip(const ::polygon_f64& polygon_i32);
 
       //virtual bool PtVisible(double x, double y) override;
       //bool PtVisible(const ::point_f64 & point) override;
@@ -518,7 +518,7 @@ namespace draw2d_direct2d
       bool widen_path() override;
       float GetMiterLimit() override;
       bool SetMiterLimit(float fMiterLimit) override;
-      //virtual i32 GetPath(::point_f64 * ppoints, LPBYTE lpTypes, ::count nCount) override;
+      virtual i32 GetPath(::point_f64 * ppoints, LPBYTE lpTypes, ::count nCount) override;
       bool SelectClipPath(int nMode) override;
 
       // Misc Helper Functions
@@ -566,13 +566,13 @@ namespace draw2d_direct2d
 
       using ::draw2d::graphics::draw;
 
-      virtual bool draw(const ::write_text::text_out & textout, ::draw2d::pen * ppen);
+      virtual bool draw(const ::text_out & textout, ::draw2d::pen * ppen);
 
-      virtual bool fill(const ::write_text::text_out & textout, ::draw2d::brush * pbrush);
+      virtual bool fill(const ::text_out & textout, ::draw2d::brush * pbrush);
 
-      virtual bool draw(const ::write_text::draw_text & drawtext, ::draw2d::pen* ppen);
+      virtual bool draw(const ::draw_text & drawtext, ::draw2d::pen* ppen);
 
-      virtual bool fill(const ::write_text::draw_text & drawtext, ::draw2d::brush* pbrush);
+      virtual bool fill(const ::draw_text & drawtext, ::draw2d::brush* pbrush);
 
 
       virtual bool flush() override;

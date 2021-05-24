@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include <math.h>
 
 
@@ -158,15 +158,13 @@ namespace draw2d_direct2d
 
       wstring szOutline(strText);
 
-      IDWriteFactory * pfactory = ::direct2d::direct2d()->dwrite_factory();
+      IDWriteFactory * pfactory = pdraw2d->direct2d()->dwrite_factory();
 
       Microsoft::WRL::ComPtr < IDWriteTextLayout> textLayout;
 
       pfactory->CreateTextLayout(szOutline, (::u32) szOutline.length(),(IDWriteTextFormat *)pfont->get_os_data(pgraphics),1024 * 1024,1024 * 1024,&textLayout);
 
       Microsoft::WRL::ComPtr < IDWriteTextRenderer > textRenderer;
-
-      auto psystem = m_psystem->m_paurasystem;
 
       CreatePathTextRenderer(psystem->m_dpi, &textRenderer);
 
@@ -315,7 +313,7 @@ namespace draw2d_direct2d
 
          }
 
-         hr = ::direct2d::direct2d()->d2d1_factory1()->CreatePathGeometry(&m_ppathHollow);
+         hr = ::draw2d_direct2d::plugin::d2d1_factory1()->CreatePathGeometry(&m_ppathHollow);
 
          m_ppath = m_ppathHollow;
 
@@ -332,7 +330,7 @@ namespace draw2d_direct2d
 
          }
 
-         hr = ::direct2d::direct2d()->d2d1_factory1()->CreatePathGeometry(&m_ppathFilled);
+         hr = ::draw2d_direct2d::plugin::d2d1_factory1()->CreatePathGeometry(&m_ppathFilled);
          
          m_ppath = m_ppathFilled;
 
@@ -552,29 +550,29 @@ namespace draw2d_direct2d
    }
 
 
-   //bool path::_set(::draw2d::graphics* pgraphics, const ::line & line)
-   //{
+   bool path::_set(::draw2d::graphics* pgraphics, const ::lined& line)
+   {
 
-   //   if (line.m_p1 != m_pointEnd || !m_bFigureOpened)
-   //   {
+      if (line.m_p1 != m_pointEnd || !m_bFigureOpened)
+      {
 
-   //      if (!internal_start_figure(pgraphics, line.m_p1.x, line.m_p1.y))
-   //      {
+         if (!internal_start_figure(pgraphics, line.m_p1.x, line.m_p1.y))
+         {
 
-   //         return false;
+            return false;
 
-   //      }
+         }
 
-   //      m_pointEnd = line.m_p1;
+         m_pointEnd = line.m_p1;
 
-   //   }
+      }
 
-   //   return internal_add_line(pgraphics, line.m_p2.x, line.m_p2.y);
+      return internal_add_line(pgraphics, line.m_p2.x, line.m_p2.y);
 
-   //}
+   }
 
 
-   bool path::_set(::draw2d::graphics* pgraphics, const ::rectangle & rectangle)
+   bool path::_set(::draw2d::graphics* pgraphics, const ::rectangle_i32 & rectangle)
    {
 
       return internal_add_rect(pgraphics, rectangle.left, rectangle.top, rectangle.width(), rectangle.height());
@@ -582,12 +580,12 @@ namespace draw2d_direct2d
    }
 
 
-   //bool path::_set(::draw2d::graphics* pgraphics, const ::rectangle_f64& rectangle)
-   //{
+   bool path::_set(::draw2d::graphics* pgraphics, const ::rectangle_f64& rectangle)
+   {
 
-   //   return internal_add_rect(pgraphics, rectangle.left, rectangle.top, rectangle.width(), rectangle.height());
+      return internal_add_rect(pgraphics, rectangle.left, rectangle.top, rectangle.width(), rectangle.height());
 
-   //}
+   }
 
 
    bool path::_set(::draw2d::graphics* pgraphics, const ::lines & lines)
@@ -598,30 +596,29 @@ namespace draw2d_direct2d
    }
 
 
-   //bool path::_set(::draw2d::graphics* pgraphics, const ::linesd& lines)
-   //{
-
-   //   return internal_add_lines(pgraphics, (const ::point_f64_array&) lines, false);
-
-   //}
-
-
-   bool path::_set(::draw2d::graphics* pgraphics, const ::polygon & polygon)
+   bool path::_set(::draw2d::graphics* pgraphics, const ::linesd& lines)
    {
 
-      return internal_add_lines(pgraphics, (const ::point_i32_array&)polygon, true);
+      return internal_add_lines(pgraphics, (const ::point_f64_array&) lines, false);
 
    }
 
-   //bool path::_set(::draw2d::graphics* pgraphics, const ::polygon_f64& polygon_i32)
-   //{
 
-   //   return internal_add_lines(pgraphics, (const ::point_f64_array&)polygon_i32, true);
+   bool path::_set(::draw2d::graphics* pgraphics, const ::polygon_i32 & polygon_i32)
+   {
 
-   //}
+      return internal_add_lines(pgraphics, (const ::point_i32_array&)polygon_i32, true);
 
+   }
 
-   bool path::_set(::draw2d::graphics * pgraphics, const ::write_text::text_out & textout)
+   bool path::_set(::draw2d::graphics* pgraphics, const ::polygon_f64& polygon_i32)
+   {
+
+      return internal_add_lines(pgraphics, (const ::point_f64_array&)polygon_i32, true);
+
+   }
+
+   bool path::_set(::draw2d::graphics * pgraphics, const ::text_out & textout)
    {
 
       return true;
@@ -629,7 +626,7 @@ namespace draw2d_direct2d
    }
 
 
-   bool path::_set(::draw2d::graphics* pgraphics, const ::write_text::draw_text & drawtext)
+   bool path::_set(::draw2d::graphics* pgraphics, const ::draw_text & drawtext)
    {
 
       return true;
