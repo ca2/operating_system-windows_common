@@ -35,7 +35,7 @@ namespace acme
    }
 
 
-   ::apex::application* system::get_main_application()
+   ::application* system::get_main_application()
    {
 
       return nullptr;
