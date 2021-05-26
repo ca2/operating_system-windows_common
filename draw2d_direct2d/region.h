@@ -38,8 +38,8 @@ namespace draw2d_direct2d
 
 
       ID2D1Geometry * get(::draw2d::graphics * pgraphics);
-      ID2D1Geometry * get_rect(::draw2d::graphics * pgraphics);
-      ID2D1Geometry * get_oval(::draw2d::graphics * pgraphics);
+      ID2D1Geometry * get_rectangle(::draw2d::graphics * pgraphics);
+      ID2D1Geometry * get_ellipse(::draw2d::graphics * pgraphics);
       ID2D1Geometry * get_polygon(::draw2d::graphics * pgraphics);
       ID2D1Geometry * get_poly_polygon(::draw2d::graphics * pgraphics);
       ID2D1Geometry * get_combine(::draw2d::graphics * pgraphics);

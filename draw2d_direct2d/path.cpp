@@ -552,42 +552,42 @@ namespace draw2d_direct2d
    }
 
 
-   bool path::_set(::draw2d::graphics* pgraphics, const ::lined& line)
-   {
+   //bool path::_set(::draw2d::graphics* pgraphics, const ::line & line)
+   //{
 
-      if (line.m_p1 != m_pointEnd || !m_bFigureOpened)
-      {
+   //   if (line.m_p1 != m_pointEnd || !m_bFigureOpened)
+   //   {
 
-         if (!internal_start_figure(pgraphics, line.m_p1.x, line.m_p1.y))
-         {
+   //      if (!internal_start_figure(pgraphics, line.m_p1.x, line.m_p1.y))
+   //      {
 
-            return false;
+   //         return false;
 
-         }
+   //      }
 
-         m_pointEnd = line.m_p1;
+   //      m_pointEnd = line.m_p1;
 
-      }
+   //   }
 
-      return internal_add_line(pgraphics, line.m_p2.x, line.m_p2.y);
+   //   return internal_add_line(pgraphics, line.m_p2.x, line.m_p2.y);
 
-   }
-
-
-   bool path::_set(::draw2d::graphics* pgraphics, const ::rectangle_i32 & rectangle)
-   {
-
-      return internal_add_rect(pgraphics, rectangle.left, rectangle.top, rectangle.width(), rectangle.height());
-
-   }
+   //}
 
 
-   bool path::_set(::draw2d::graphics* pgraphics, const ::rectangle_f64& rectangle)
+   bool path::_set(::draw2d::graphics* pgraphics, const ::rectangle & rectangle)
    {
 
       return internal_add_rect(pgraphics, rectangle.left, rectangle.top, rectangle.width(), rectangle.height());
 
    }
+
+
+   //bool path::_set(::draw2d::graphics* pgraphics, const ::rectangle_f64& rectangle)
+   //{
+
+   //   return internal_add_rect(pgraphics, rectangle.left, rectangle.top, rectangle.width(), rectangle.height());
+
+   //}
 
 
    bool path::_set(::draw2d::graphics* pgraphics, const ::lines & lines)
@@ -598,27 +598,27 @@ namespace draw2d_direct2d
    }
 
 
-   bool path::_set(::draw2d::graphics* pgraphics, const ::linesd& lines)
+   //bool path::_set(::draw2d::graphics* pgraphics, const ::linesd& lines)
+   //{
+
+   //   return internal_add_lines(pgraphics, (const ::point_f64_array&) lines, false);
+
+   //}
+
+
+   bool path::_set(::draw2d::graphics* pgraphics, const ::polygon & polygon)
    {
 
-      return internal_add_lines(pgraphics, (const ::point_f64_array&) lines, false);
+      return internal_add_lines(pgraphics, (const ::point_i32_array&)polygon, true);
 
    }
 
+   //bool path::_set(::draw2d::graphics* pgraphics, const ::polygon_f64& polygon_i32)
+   //{
 
-   bool path::_set(::draw2d::graphics* pgraphics, const ::polygon_i32 & polygon_i32)
-   {
+   //   return internal_add_lines(pgraphics, (const ::point_f64_array&)polygon_i32, true);
 
-      return internal_add_lines(pgraphics, (const ::point_i32_array&)polygon_i32, true);
-
-   }
-
-   bool path::_set(::draw2d::graphics* pgraphics, const ::polygon_f64& polygon_i32)
-   {
-
-      return internal_add_lines(pgraphics, (const ::point_f64_array&)polygon_i32, true);
-
-   }
+   //}
 
 
    bool path::_set(::draw2d::graphics * pgraphics, const ::write_text::text_out & textout)

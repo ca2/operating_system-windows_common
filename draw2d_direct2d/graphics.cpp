@@ -2725,15 +2725,15 @@ namespace draw2d_direct2d
    }
 
 
-   i32 graphics::GetPath(::point_f64 * ppoints, byte * lpTypes, ::count nCount)
-   {
+   //i32 graphics::GetPath(::point_f64 * ppoints, byte * lpTypes, ::count nCount)
+   //{
 
-      __throw(todo);
+   //   __throw(todo);
 
-      //ASSERT(get_handle1() != nullptr);
-      //return ::GetPath(get_handle1(), ppoints, lpTypes, nCount);
+   //   //ASSERT(get_handle1() != nullptr);
+   //   //return ::GetPath(get_handle1(), ppoints, lpTypes, nCount);
 
-   }
+   //}
 
 
    bool graphics::SetMiterLimit(float fMiterLimit)
@@ -3803,20 +3803,20 @@ namespace draw2d_direct2d
                //case e_shape_rect:
                //   intersect_clip(shapea[i]->shape < ::rectangle_i32>());
                //   break;
-               case e_shape_rectd:
-                  intersect_clip(shapea[i]->shape < ::rectangle_f64>());
+               case e_shape_rectangle:
+                  intersect_clip(shapea[i]->shape < ::rectangle >());
                   break;
                //case e_shape_oval:
                //   intersect_clip(shapea[i]->shape < ::oval>());
                //   break;
-               case e_shape_ovald:
-                  intersect_clip(shapea[i]->shape < ::ovald>());
+               case e_shape_ellipse:
+                  intersect_clip(shapea[i]->shape < ::ellipse >());
                   break;
                //case e_shape_polygon:
                //   intersect_clip(shapea[i]->shape < ::polygon_i32>());
                //   break;
-               case e_shape_polygond:
-                  intersect_clip(shapea[i]->shape < ::polygon_f64>());
+               case e_shape_polygon:
+                  intersect_clip(shapea[i]->shape < ::polygon >());
                   break;
 
                }
@@ -3936,7 +3936,7 @@ namespace draw2d_direct2d
    //}
 
 
-   ::e_status graphics::intersect_clip(const ::ovald& oval)
+   ::e_status graphics::intersect_clip(const ::ellipse & ellipse)
    {
 
       ::draw2d::lock draw2dlock;
@@ -3945,7 +3945,7 @@ namespace draw2d_direct2d
 
          ::draw2d::region_pointer pregion(e_create);
 
-         pregion->create_oval(oval);
+         pregion->create_oval(ellipse);
 
          D2D1::Matrix3x2F m = {};
 
