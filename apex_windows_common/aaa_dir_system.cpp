@@ -177,29 +177,6 @@ namespace windows
    }
 
 
-   ::file::path dir_system::get_last_run_application_path_file(string strAppId)
-   {
-
-      ::file::path pathFile = m_psystem->m_pacmedir->local() / "appdata" / strAppId / "last_run_path.txt";
-
-      return pathFile;
-
-   }
-
-
-   ::file::path dir_system::get_last_run_application_path(string strAppId)
-   {
-
-      ::file::path pathFile = get_last_run_application_path_file(strAppId);
-
-      ::file::path path = ::file_as_string(pathFile);
-
-      return path;
-
-   }
-
-
-
 } // namespace windows
 
 

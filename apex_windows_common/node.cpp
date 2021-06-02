@@ -584,44 +584,6 @@ namespace apex
 
       }
 
-      bool node::is_application_installed(const ::file::path& pathExe, string strAppId, string& strBuild, const char* pszPlatform, const char* pszConfiguration, const char* pszLocale, const char* pszSchema)
-      {
-
-         ::file::path path;
-
-         path = m_psystem->m_papexsystem->m_pdirsystem->application_installer_folder(pathExe, strAppId, pszPlatform, pszConfiguration, pszLocale, pszSchema) / "installed.txt";
-
-         strBuild = file_as_string(path);
-
-         return strBuild.has_char();
-
-      }
-
-
-      bool node::set_application_installed(const ::file::path& pathExe, string strAppId, const char* pszBuild, const char* pszPlatform, const char* pszConfiguration, const char* pszLocale, const char* pszSchema)
-      {
-
-         ::file::path path;
-
-         path = m_psystem->m_papexsystem->m_pdirsystem->application_installer_folder(pathExe, strAppId, pszPlatform, pszConfiguration, pszLocale, pszSchema) / "installed.txt";
-
-         return file_put_contents(path, pszBuild);
-
-      }
-
-
-      bool node::set_last_run_application_path(string strAppId)
-      {
-
-         ::file::path path = m_psystem->m_pacmepath->app_module();
-
-         ::file::path pathFile = m_psystem->m_papexsystem->m_pdirsystem->get_last_run_application_path_file(strAppId);
-
-         return file_put_contents(pathFile, path);
-
-      }
-
-
       string node::get_version()
       {
 
