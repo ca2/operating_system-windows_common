@@ -3879,7 +3879,7 @@ namespace draw2d_direct2d
 
       auto rectClip = rectangle + m_pointAddShapeTranslate;
 
-      pregion->create_rect(rectClip);
+      pregion->create_rectangle(rectClip);
 
       D2D1::Matrix3x2F m = {};
 
@@ -3945,7 +3945,7 @@ namespace draw2d_direct2d
 
          ::draw2d::region_pointer pregion(e_create);
 
-         pregion->create_oval(ellipse);
+         pregion->create_ellipse(ellipse);
 
          D2D1::Matrix3x2F m = {};
 
