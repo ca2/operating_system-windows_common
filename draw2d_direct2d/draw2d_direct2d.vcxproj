@@ -913,6 +913,7 @@
     <ClInclude Include="printer.h" />
     <ClInclude Include="region.h" />
     <ClInclude Include="_.h" />
+    <ClInclude Include="_draw2d_direct2d.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="bitmap.cpp" />
@@ -964,6 +965,9 @@
     </ProjectReference>
     <ProjectReference Include="..\direct2d\direct2d.vcxproj">
       <Project>{2f21f158-1dd5-43f6-9fad-01fb77a81ec5}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\directx\directx.vcxproj">
+      <Project>{a149252d-1de3-4cba-b1cb-7e9868793e6e}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

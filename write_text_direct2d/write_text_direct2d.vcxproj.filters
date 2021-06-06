@@ -16,6 +16,9 @@
     <ClCompile Include="font_department.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="font_enumeration.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -28,6 +31,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="font_department.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="font_enumeration.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="_write_text_direct2d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

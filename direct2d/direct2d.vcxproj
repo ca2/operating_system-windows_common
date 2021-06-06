@@ -899,9 +899,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="direct2d.h" />
-    <ClInclude Include="factory_exchange.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="_.h" />
+    <ClInclude Include="_direct2d.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="direct2d.cpp" />
@@ -930,6 +930,9 @@
     </ProjectReference>
     <ProjectReference Include="..\..\..\source\app\aura\aura.vcxproj">
       <Project>{e000ffaf-392f-4e32-bf51-fd7ed638991f}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\directx\directx.vcxproj">
+      <Project>{a149252d-1de3-4cba-b1cb-7e9868793e6e}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

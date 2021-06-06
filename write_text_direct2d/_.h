@@ -3,9 +3,7 @@
 
 
 #include "aura/_.h"
-#include "aura/operating_system.h"
 #include "direct2d/_.h"
-#include "apex_windows/process_data.h"
 
 
 #ifdef _WRITE_TEXT_DIRECT2D_STATIC
@@ -15,12 +13,6 @@
 #else
 #define CLASS_DECL_WRITE_TEXT_DIRECT2D  CLASS_DECL_IMPORT
 #endif
-
-
-#include "font_department.h"
-
-
-#include "write_text.h"
 
 
 

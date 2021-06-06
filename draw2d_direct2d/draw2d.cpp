@@ -8,7 +8,7 @@ namespace draw2d_direct2d
    draw2d::draw2d()
    {
       
-      ::direct2d::component::initialize();
+      ::direct2d::defer_initialize();
 
    }
 
@@ -16,7 +16,7 @@ namespace draw2d_direct2d
    draw2d::~draw2d()
    {
 
-      ::direct2d::component::terminate();
+      ::direct2d::terminate();
 
    }
 

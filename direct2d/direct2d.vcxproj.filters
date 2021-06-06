@@ -34,10 +34,10 @@
     <ClInclude Include="_.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="factory_exchange.h">
+    <ClInclude Include="direct2d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="direct2d.h">
+    <ClInclude Include="_direct2d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

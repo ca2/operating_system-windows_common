@@ -29,7 +29,7 @@ namespace write_text_win32
       void enumerate();
 
 
-      void enum_cs(::write_text::font_enum_item * pitem);
+      void enum_cs(::write_text::font_enumeration_item * pitem);
 
 
       static BOOL CALLBACK callback(LPLOGFONTW plf, LPNEWTEXTMETRICW lpntm, ::u32 FontType, LPVOID point_i32);
