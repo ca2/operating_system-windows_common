@@ -6,14 +6,14 @@ namespace write_text_direct2d
 {
 
 
-   class CLASS_DECL_WRITE_TEXT_DIRECT2D font_department :
-      virtual public ::write_text::font_department
+   class CLASS_DECL_WRITE_TEXT_DIRECT2D fonts :
+      virtual public ::write_text::fonts
    {
    public:
 
 
-      font_department();
-      ~font_department() override;
+      fonts();
+      ~fonts() override;
 
 
       virtual ::e_status initialize(::object * pobject);
