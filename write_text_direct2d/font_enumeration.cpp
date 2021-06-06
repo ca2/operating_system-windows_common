@@ -128,7 +128,7 @@ namespace write_text_direct2d
 
             string strName = string((const widechar*)(name));
 
-            m_pitema->add(__new(::write_text::font_enumeration_item(strName, strName)));
+            m_pfontenumerationitema->add(__new(::write_text::font_enumeration_item(strName, strName)));
 
          }
 

@@ -13,7 +13,7 @@
     <ClCompile Include="write_text.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="font_department.cpp">
+    <ClCompile Include="fonts.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="font_enumeration.cpp">
@@ -30,7 +30,7 @@
     <ClInclude Include="write_text.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="font_department.h">
+    <ClInclude Include="fonts.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="font_enumeration.h">
