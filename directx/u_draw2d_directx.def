@@ -1,0 +1,8 @@
+LIBRARY  "draw2d_directx"
+
+
+EXPORTS
+draw2d_directx_factory_exchange
+
+
+
