@@ -582,7 +582,7 @@ namespace draw2d_direct2d
       // used for implementation of non-virtual SelectObject calls
       //static ::draw2d::object* SelectGdiObject(application * papp, HDC hDC, HGDIOBJ h) override;
 
-      //virtual void enum_fonts(::write_text::font_enum_item_array & itema) override;
+      //virtual void enum_fonts(::write_text::font_enumeration_item_array & itema) override;
 
 //#ifdef _UWP
 //      virtual void set_direct2d_plugin(::draw2d_direct2d::plugin * pplugin);

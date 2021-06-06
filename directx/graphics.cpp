@@ -5781,7 +5781,7 @@ namespace draw2d_directx
    }
 
 
-   //void graphics::enum_fonts(::write_text::font_enum_item_array & itema)
+   //void graphics::enum_fonts(::write_text::font_enumeration_item_array & itema)
    //{
 
 

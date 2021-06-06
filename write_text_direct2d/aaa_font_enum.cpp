@@ -7,7 +7,7 @@ namespace write_text_win32
 {
 
    
-   wingdi_font_enum::wingdi_font_enum(::write_text::font_enum_item_array & itema, bool bRaster, bool bTrueType, bool bOther) :
+   wingdi_font_enum::wingdi_font_enum(::write_text::font_enumeration_item_array & itema, bool bRaster, bool bTrueType, bool bOther) :
             m_itema(itema),
             m_bRaster(bRaster),
             m_bTrueType(bTrueType),
