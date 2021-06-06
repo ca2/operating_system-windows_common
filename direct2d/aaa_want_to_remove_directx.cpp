@@ -656,14 +656,14 @@ namespace draw2d_direct2d
 
       g.reference_os_data(m_d2dContext.Get());
 
-      RECT32 rect;
+      RECT32 rectangle;
 
-      rect.left     = 200;
-      rect.top      = 200;
-      rect.right    = 300;
-      rect.bottom   = 100;
+      rectangle.left     = 200;
+      rectangle.top      = 200;
+      rectangle.right    = 300;
+      rectangle.bottom   = 100;
 
-      g.fill_rectangle(rect, argb(127, 255, 255, 240));
+      g.fill_rectangle(rectangle, argb(127, 255, 255, 240));
 
       g.m_pdc = nullptr;*/
 
