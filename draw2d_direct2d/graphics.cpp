@@ -541,7 +541,7 @@ namespace draw2d_direct2d
       
       // "Reference" implementation for TextOutAlphaBlend
 
-      auto size = GetTextExtent(block);
+      auto size = get_text_extent(block);
 
       ::rectangle_f64 rectAlphaBlend(m_pointAlphaBlend, m_pimageAlphaBlend->size());
 
@@ -4656,7 +4656,7 @@ namespace draw2d_direct2d
    }
 
 
-   size_f64 graphics::GetTextExtent(const char * lpszString, strsize nCount, strsize iIndex)
+   size_f64 graphics::get_text_extent(const char * lpszString, strsize nCount, strsize iIndex)
    {
 
       if (nCount < 0)
@@ -4668,7 +4668,7 @@ namespace draw2d_direct2d
 
       size_f64 sz;
 
-      bool bOk = GetTextExtent(sz, lpszString, nCount, iIndex);
+      bool bOk = get_text_extent(sz, lpszString, nCount, iIndex);
 
       if (!bOk)
       {
@@ -4686,11 +4686,11 @@ namespace draw2d_direct2d
    }
 
 
-   size_f64 graphics::GetTextExtent(const string & str)
+   size_f64 graphics::get_text_extent(const string & str)
    {
       size_f64 s;
 
-      if (!GetTextExtent(s, str))
+      if (!get_text_extent(s, str))
       {
 
          return ::size_f64(0, 0);
@@ -4718,7 +4718,7 @@ namespace draw2d_direct2d
    }
 
 
-   bool graphics::GetTextExtent(size_f64 & size, const char * lpszString, strsize nCount, strsize iIndex)
+   bool graphics::get_text_extent(size_f64 & size, const char * lpszString, strsize nCount, strsize iIndex)
    {
 
       if (iIndex <= 0)
@@ -4836,7 +4836,7 @@ namespace draw2d_direct2d
    }
 
 
-   bool graphics::GetTextExtent(size_f64 & size, const char * lpszString, strsize nCount)
+   bool graphics::get_text_extent(size_f64 & size, const char * lpszString, strsize nCount)
    {
 
       if (nCount < 0)
@@ -4846,15 +4846,15 @@ namespace draw2d_direct2d
 
       }
 
-      return GetTextExtent(size, lpszString, nCount, nCount);
+      return get_text_extent(size, lpszString, nCount, nCount);
 
    }
 
 
-   bool graphics::GetTextExtent(size_f64 & size, const string & str)
+   bool graphics::get_text_extent(size_f64 & size, const string & str)
    {
 
-      return GetTextExtent(size, str, str.get_length());
+      return get_text_extent(size, str, str.get_length());
 
    }
 
@@ -4962,7 +4962,7 @@ namespace draw2d_direct2d
       else
       {
 
-         sizeText = GetTextExtent(block);
+         sizeText = get_text_extent(block);
 
       }
 
@@ -5274,9 +5274,9 @@ namespace draw2d_direct2d
 //
 //      }
 //
-//      ::rectangle_i32 rectClient;
+//      ::rectangle_i32 rectangleClient;
 //
-//      ::GetClientRect(hwnd, rectClient);
+//      ::GetClientRect(hwnd, rectangleClient);
 //
 //      // Create a DC render target.
 //      D2D1_RENDER_TARGET_PROPERTIES props = D2D1::RenderTargetProperties(
@@ -5299,7 +5299,7 @@ namespace draw2d_direct2d
 //
 //      }
 //
-//      hr = m_pdcrendertarget->BindDC(hdc, rectClient);
+//      hr = m_pdcrendertarget->BindDC(hdc, rectangleClient);
 //
 //      m_pdcrendertarget.As(&m_prendertarget);
 //
