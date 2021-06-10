@@ -2057,7 +2057,7 @@ namespace draw2d_direct2d
    //}
 
 
-   bool graphics::get_text_metrics(::write_text::text_metric * lpMetrics)
+   ::e_status graphics::get_text_metrics(::write_text::text_metric * lpMetrics)
    {
 
       if (m_pfont.is_null())
@@ -4686,11 +4686,12 @@ namespace draw2d_direct2d
    }
 
 
-   size_f64 graphics::get_text_extent(const string & str)
+   size_f64 graphics::get_text_extent(const block & block)
    {
+
       size_f64 s;
 
-      if (!get_text_extent(s, str))
+      if (!get_text_extent(s, (const char *) block.get_data(), block.get_size()))
       {
 
          return ::size_f64(0, 0);
@@ -4903,7 +4904,7 @@ namespace draw2d_direct2d
    //}
 
 
-   bool graphics::TextOutRaw(double x, double y, const block & block)
+   ::e_status graphics::TextOutRaw(double x, double y, const block & block)
    {
 
       if (block.is_empty())

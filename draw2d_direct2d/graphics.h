@@ -403,7 +403,7 @@ namespace draw2d_direct2d
       // Text Functions
       //virtual bool text_out(double x, double y, const char * lpszString, strsize nCount) override;
       //virtual bool text_out(double x, double y, const block & block) override;
-      virtual bool TextOutRaw(double x, double y, const block & block) override;
+      virtual ::e_status TextOutRaw(double x, double y, const block & block) override;
       //virtual bool text_out(double x, double y, const string & str) override;
       //virtual bool ExtTextOut(double x, double y, ::u32 nOptions, const ::rectangle_f64 & rectangle, const char * lpszString, strsize nCount, LPINT lpDxWidths) override;
       //virtual bool ExtTextOut(double x, double y, ::u32 nOptions, const ::rectangle_f64 & rectangle, const string & str, LPINT lpDxWidths) override;
@@ -418,7 +418,7 @@ namespace draw2d_direct2d
 
       virtual size_f64 get_text_extent(const char * lpszString, strsize nCount, strsize iIndex) override;
       //virtual size_f64 get_text_extent(const char * lpszString, strsize nCount) override;
-      virtual size_f64 get_text_extent(const string & str) override;
+      virtual size_f64 get_text_extent(const block & block) override;
       virtual bool get_text_extent(size_f64 & size, const char * lpszString, strsize nCount, strsize iIndex) override;
       virtual bool get_text_extent(size_f64 & size, const char * lpszString, strsize nCount) override;
       virtual bool get_text_extent(size_f64 & size, const string & str) override;
@@ -433,7 +433,7 @@ namespace draw2d_direct2d
       virtual ::u32 SetTextAlign(::u32 nFlags) override;
       //virtual int GetTextFace(count nCount, char * lpszFacename) override;
       //virtual int GetTextFace(string & rString) override;
-      virtual bool get_text_metrics(::write_text::text_metric * lpMetrics) override;
+      virtual ::e_status get_text_metrics(::write_text::text_metric * lpMetrics) override;
       virtual bool get_output_text_metrics(::write_text::text_metric * lpMetrics) override;
       //virtual int SetTextJustification(int nBreakExtra, int nBreakCount) override;
       //virtual int GetTextCharacterExtra() override;
