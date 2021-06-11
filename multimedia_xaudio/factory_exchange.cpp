@@ -1,35 +1,37 @@
 #include "framework.h"
 
+//
+//namespace multimedia
+//{
+//
+//
+//   namespace xaudio
+//   {
+//
+//
+//      factory_exchange::factory_exchange()
+//      {
+//
+//      }
+//
+//
+//      factory_exchange::~factory_exchange()
+//      {
+//      }
+//
+//
+//   } // namespace xaudio
+//
+//
+//} // namespace multimedia
+//
 
-namespace multimedia
+
+extern "C"
+void multimedia_xaudio_factory_exchange(::factory_map * pfactorymap)
 {
 
-
-   namespace xaudio
-   {
-
-
-      factory_exchange::factory_exchange()
-      {
-
-      }
-
-
-      factory_exchange::~factory_exchange()
-      {
-      }
-
-
-   } // namespace xaudio
-
-
-} // namespace multimedia
-
-
-void factory_exchange()
-{
-
-   ::multimedia::xaudio::factory_exchange factoryexchange();
+   //::multimedia::xaudio::factory_exchange factoryexchange();
 
 }
 

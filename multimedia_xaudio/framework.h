@@ -7,6 +7,9 @@
 #include "_.h"
 
 
+#include "_multimedia_xaudio.h"
+
+
 #include "aura/_defer.h"
 
 

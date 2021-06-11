@@ -1,3 +1,4 @@
 LIBRARY  "multimedia_xaudio"
 
 EXPORTS
+multimedia_xaudio_factory_exchange
