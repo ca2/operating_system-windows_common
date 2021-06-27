@@ -248,8 +248,8 @@ namespace draw2d_direct2d
       double rx = arc.m_sizeRadius.cx;
       double ry = arc.m_sizeRadius.cy;
 
-      pointStart.x = arc.m_pointBeg.x;
-      pointStart.y = arc.m_pointBeg.y;
+      pointStart.x = arc.m_pointBegin.x;
+      pointStart.y = arc.m_pointBegin.y;
 
       arcseg.point.x = (FLOAT)arc.m_pointEnd.x;
       arcseg.point.y = (FLOAT)arc.m_pointEnd.y;
