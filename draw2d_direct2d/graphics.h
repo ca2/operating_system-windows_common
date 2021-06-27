@@ -154,7 +154,7 @@ namespace draw2d_direct2d
       // ::draw2d::object* provided so compiler doesn't use SelectObject(HGDIOBJ)
 
       //// color and color Palette Functions
-      //color32_t GetNearestColor(const ::color::color & color) override;
+      //::color::color GetNearestColor(const ::color::color & color) override;
       //// ::draw2d::palette* SelectPalette(::draw2d::palette* pPalette, bool bForceBackground) override;
       //::u32 RealizePalette() override;
       //void UpdateColors() override;
@@ -170,11 +170,11 @@ namespace draw2d_direct2d
 
 //#if (_WIN32_WINNT >= 0x0500)
 //
-//      color32_t GetDCBrushColor() override;
-//      color32_t SetDCBrushColor(const ::color::color & color) override;
+//      ::color::color GetDCBrushColor() override;
+//      ::color::color SetDCBrushColor(const ::color::color & color) override;
 //
-//      color32_t GetDCPenColor() override;
-//      color32_t SetDCPenColor(const ::color::color & color) override;
+//      ::color::color GetDCPenColor() override;
+//      ::color::color SetDCPenColor(const ::color::color & color) override;
 //
 //#endif
 

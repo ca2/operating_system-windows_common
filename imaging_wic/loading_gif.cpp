@@ -20,7 +20,7 @@ namespace imaging_wic
 
    //bool draw2d_gif_load_frame(::image * pimageCanvas, image_frame_array * pframea, image_frame * pframe, int uFrameIndex, u8 * ba, int iScan, colorref_array & colorrefa, int transparentIndex);
    bool windows_image_from_bitmap_source(::image * pimage, IWICBitmapSource * pbitmapsource, IWICImagingFactory * pimagingfactory);
-   color32_t windows_image_metadata_get_background_color(IWICMetadataQueryReader * pqueryreader, IWICBitmapDecoder * pbitmapdecoder, IWICImagingFactory * pimagingfactory);
+   ::color::color windows_image_metadata_get_background_color(IWICMetadataQueryReader * pqueryreader, IWICBitmapDecoder * pbitmapdecoder, IWICImagingFactory * pimagingfactory);
 
 
    ::e_status context_image::_load_image(::image * pimageCompose, __pointer(image_frame_array) & pframea, memory_pointer pmemory)
@@ -967,7 +967,7 @@ namespace imaging_wic
 
 
 
-   color32_t windows_image_metadata_get_background_color(IWICMetadataQueryReader * pqueryreader, IWICBitmapDecoder * pbitmapdecoder, IWICImagingFactory * pimagingfactory)
+   ::color::color windows_image_metadata_get_background_color(IWICMetadataQueryReader * pqueryreader, IWICBitmapDecoder * pbitmapdecoder, IWICImagingFactory * pimagingfactory)
    {
 
       ::u32 dwBGColor;
@@ -977,7 +977,7 @@ namespace imaging_wic
       PROPVARIANT propVariant;
       comptr < IWICPalette > pWicPalette;
 
-      color32_t crBk = 0;
+      ::color::color crBk = 0;
 
       PropVariantInit(&propVariant);
       // If we have a global palette, get the palette and background color

@@ -31,8 +31,8 @@ namespace draw2d_direct2d
 
       //virtual ID2D1Brush * get_os_brush(::draw2d_direct2d::graphics * pgraphics) const;
 
-      //bool CreateSolidBrush(color32_t crColor);
-      //bool CreateHatchBrush(int nIndex, color32_t crColor);
+      //bool CreateSolidBrush(::color::color crColor);
+      //bool CreateHatchBrush(int nIndex, ::color::color crColor);
       //bool CreatePatternBrush(::draw2d::bitmap* pBitmap);
       //bool CreateDIBPatternBrush(HGLOBAL hPackedDIB, ::u32 nUsage);
       //bool CreateDIBPatternBrush(const void * lpPackedDIB, ::u32 nUsage);

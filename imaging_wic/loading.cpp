@@ -448,7 +448,7 @@ namespace imaging_wic
 
       pimageFrame->map();
 
-      ::copy_colorref(pimageFrame->get_data(), uWidth, uHeight, pimageFrame->scan_size(), (color32_t *)pData, cbStride);
+      ::copy_colorref(pimageFrame->get_data(), uWidth, uHeight, pimageFrame->scan_size(), (::color::color *)pData, cbStride);
 
 
       return true;
@@ -767,7 +767,7 @@ namespace imaging_wic
 
       pimage->map();
 
-      const color32_t * pcr = pimage->get_data();
+      const ::color::color * pcr = pimage->get_data();
 
       //   memory m;
       //
@@ -775,7 +775,7 @@ namespace imaging_wic
       //
       //   m.set_size(uiHeight*pimage->scan_size());
       //
-      //   pcr = (color32_t *)m.get_data();
+      //   pcr = (::color::color *)m.get_data();
       //
       //   ::draw2d::vertical_swap_copy_colorref(pimage->width(), pimage->height(), pcr,
       //                                         pimage->scan_size(), pimage->get_data(), pimage->scan_size());

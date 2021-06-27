@@ -640,8 +640,8 @@ namespace draw2d_directx
 
       m_d2dContext->BeginDraw();
 
-      D2D1_COLOR_F cr = D2D1::ColorF(D2D1::ColorF::White);
-      m_d2dContext->Clear(cr);
+      D2D1_COLOR_F color32 = D2D1::ColorF(D2D1::ColorF::White);
+      m_d2dContext->Clear(color32);
 
 
       m_d2dContext->SetTransform(D2D1::Matrix3x2F::Identity());

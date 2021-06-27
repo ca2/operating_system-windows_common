@@ -132,7 +132,7 @@ inline D2D1_COLOR_F* copy(D2D1_COLOR_F* pcolorTarget, const ::color::color* pcol
 }
 
 
-inline D2D1_COLOR_F* copy(D2D1_COLOR_F* pcolorTarget, const color32_t* pcolor)
+inline D2D1_COLOR_F* copy(D2D1_COLOR_F* pcolorTarget, const ::color::color* pcolor)
 {
 
    pcolorTarget->a = colorref_get_a_value(*pcolor) / 255.0f;

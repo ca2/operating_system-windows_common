@@ -79,7 +79,7 @@ namespace draw2d_direct2d
 
    }
 
-   ::u32 palette::GetNearestPaletteIndex(color32_t crColor) const
+   ::u32 palette::GetNearestPaletteIndex(::color::color crColor) const
    {
 
       __throw(todo);

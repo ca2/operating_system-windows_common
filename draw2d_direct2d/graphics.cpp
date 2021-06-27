@@ -646,7 +646,7 @@ namespace draw2d_direct2d
    }
 
 
-   //color32_t graphics::GetNearestColor(const ::color::color & color)
+   //::color::color graphics::GetNearestColor(const ::color::color & color)
    //{
 
    //   __throw(todo);
@@ -1116,7 +1116,7 @@ namespace draw2d_direct2d
 //         bool bOk = false;
 //
 //         BITMAPINFO info;
-//         color32_t * pcolorref;
+//         ::color::color * pcolorref;
 //
 //         ZeroMemory(&info, sizeof (BITMAPINFO));
 //
@@ -1147,7 +1147,7 @@ namespace draw2d_direct2d
 //
 //               ::draw2d::bitmap_pointer b(e_create);
 //
-//               b->CreateBitmap(this, rectDst.size(), 1, 32, pcolorref, rectDst.width() * sizeof(color32_t));
+//               b->CreateBitmap(this, rectDst.size(), 1, 32, pcolorref, rectDst.width() * sizeof(::color::color));
 //
 //               D2D1_RECT_F rectangle_i32;
 //
@@ -3103,7 +3103,7 @@ namespace draw2d_direct2d
 
    // Always Inline. Functions only in Win98/Win2K or later
 
-   //inline color32_t graphics::GetDCBrushColor()
+   //inline ::color::color graphics::GetDCBrushColor()
    //{
 
    //   __throw(todo);
@@ -3113,7 +3113,7 @@ namespace draw2d_direct2d
    //   //return ::GetDCBrushColor(get_handle1());
 
    //}
-   //inline color32_t graphics::SetDCBrushColor(const ::color::color & color)
+   //inline ::color::color graphics::SetDCBrushColor(const ::color::color & color)
    //{
 
    //   __throw(todo);
@@ -3124,7 +3124,7 @@ namespace draw2d_direct2d
 
    //}
 
-   //inline color32_t graphics::GetDCPenColor()
+   //inline ::color::color graphics::GetDCPenColor()
    //{
 
    //   __throw(todo);
@@ -3134,7 +3134,7 @@ namespace draw2d_direct2d
    //   //return ::GetDCPenColor(get_handle1());
 
    //}
-   //inline color32_t graphics::SetDCPenColor(const ::color::color & color)
+   //inline ::color::color graphics::SetDCPenColor(const ::color::color & color)
    //{
 
    //   __throw(todo);
@@ -3599,7 +3599,7 @@ namespace draw2d_direct2d
    }
 
 
-   // color32_t graphics::SetTextColor(const ::color::color & color)
+   // ::color::color graphics::SetTextColor(const ::color::color & color)
 //   {
    //  return set_color(crColor);
    //const ::color::color & colorRetVal = m_colorColor;
@@ -4412,7 +4412,7 @@ namespace draw2d_direct2d
          
          ::draw2d::brush_pointer brush(e_create);
          
-         brush->create_solid(*(UNALIGNED color32_t*)&pMetaRec->rdParm[0]);
+         brush->create_solid(*(UNALIGNED ::color::color*)&pMetaRec->rdParm[0]);
          
          (dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->set(brush);
 
@@ -4421,7 +4421,7 @@ namespace draw2d_direct2d
       case META_SETTEXTCOLOR:
       {
          ::draw2d::brush_pointer brush(e_create);
-         brush->create_solid(*(UNALIGNED color32_t*)&pMetaRec->rdParm[0]);
+         brush->create_solid(*(UNALIGNED ::color::color*)&pMetaRec->rdParm[0]);
          (dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->set(brush);
       }
       break;
