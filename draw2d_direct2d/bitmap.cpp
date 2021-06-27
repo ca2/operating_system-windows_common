@@ -51,7 +51,7 @@ namespace draw2d_direct2d
 
       //if(ppdata != nullptr)
       {
-         // g.m_pdc->CreateBitmap(size, *ppdata, cx * sizeof(::color::color), props, &m_pbitmap);
+         // g.m_pdc->CreateBitmap(size, *ppdata, cx * sizeof(::color32_t), props, &m_pbitmap);
       }
       //else
       //{
@@ -140,7 +140,7 @@ namespace draw2d_direct2d
 
       //props.bitmapOptions = D2D1_BITMAP_OPTIONS_CPU_READ | D2D1_BITMAP_OPTIONS_CANNOT_DRAW;
 
-      //m_memory.set_size(size.width * size.height * sizeof(::color::color));
+      //m_memory.set_size(size.width * size.height * sizeof(::color32_t));
 
       HRESULT hr;
 
@@ -153,7 +153,7 @@ namespace draw2d_direct2d
       //else
       {
 
-         //hr = METROWIN_DC(pgraphics)->m_pdevicecontext->CreateBitmap(size, m_memory.get_data(), size.width * sizeof(::color::color), props, &m_pbitmap1);
+         //hr = METROWIN_DC(pgraphics)->m_pdevicecontext->CreateBitmap(size, m_memory.get_data(), size.width * sizeof(::color32_t), props, &m_pbitmap1);
 
       }
 
@@ -281,12 +281,12 @@ namespace draw2d_direct2d
 
       //if(ppdata != nullptr)
       {
-         // g.m_pdc->CreateBitmap(size, *ppdata, cx * sizeof(::color::color), props, &m_pbitmap);
+         // g.m_pdc->CreateBitmap(size, *ppdata, cx * sizeof(::color32_t), props, &m_pbitmap);
       }
       //else
       //      ID2D1Bitmap1 * pbitmap1;
       {
-         ((ID2D1DeviceContext *)pgraphics->get_os_data())->CreateBitmap(size, nullptr, size.width * sizeof(::color::color), props, &m_pbitmap1);
+         ((ID2D1DeviceContext *)pgraphics->get_os_data())->CreateBitmap(size, nullptr, size.width * sizeof(::color32_t), props, &m_pbitmap1);
       }
       m_pbitmap = m_pbitmap1;
 
@@ -329,11 +329,11 @@ namespace draw2d_direct2d
 
       //if(ppdata != nullptr)
       {
-         // g.m_pdc->CreateBitmap(size, *ppdata, cx * sizeof(::color::color), props, &m_pbitmap);
+         // g.m_pdc->CreateBitmap(size, *ppdata, cx * sizeof(::color32_t), props, &m_pbitmap);
       }
       //else
       {
-         ((ID2D1DeviceContext *)pgraphics->get_os_data())->CreateBitmap(size, nullptr, size.width * sizeof(::color::color), &props, &m_pbitmap1);
+         ((ID2D1DeviceContext *)pgraphics->get_os_data())->CreateBitmap(size, nullptr, size.width * sizeof(::color32_t), &props, &m_pbitmap1);
       }
       m_pbitmap = m_pbitmap1;
 

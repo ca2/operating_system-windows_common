@@ -1147,7 +1147,7 @@ namespace draw2d_direct2d
 //
 //               ::draw2d::bitmap_pointer b(e_create);
 //
-//               b->CreateBitmap(this, rectDst.size(), 1, 32, pcolorref, rectDst.width() * sizeof(::color::color));
+//               b->CreateBitmap(this, rectDst.size(), 1, 32, pcolorref, rectDst.width() * sizeof(::color32_t));
 //
 //               D2D1_RECT_F rectangle_i32;
 //

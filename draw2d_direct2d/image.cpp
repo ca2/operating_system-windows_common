@@ -1133,9 +1133,9 @@ namespace draw2d_direct2d
 
       m_iScan = pbitmap->m_map.pitch;
 
-      int compare_scan = this->width() * sizeof(::color::color);
+      int compare_scan = this->width() * sizeof(::color32_t);
 
-      i64 i = m_iScan * this->height() / sizeof(::color::color);
+      i64 i = m_iScan * this->height() / sizeof(::color32_t);
 
       if (bApplyAlphaTransform)
       {
@@ -1211,7 +1211,7 @@ namespace draw2d_direct2d
 
          byte * p = (byte *)m_pcolorrefRaw;
 
-         i64 i = m_iScan * this->height() / sizeof(::color::color);
+         i64 i = m_iScan * this->height() / sizeof(::color32_t);
 
          if (m_bTrans)
          {
