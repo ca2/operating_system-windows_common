@@ -448,7 +448,7 @@ namespace imaging_wic
 
       pimageFrame->map();
 
-      ::copy_colorref(pimageFrame->get_data(), uWidth, uHeight, pimageFrame->scan_size(), (::color::color *)pData, cbStride);
+      ::copy_colorref(pimageFrame->get_data(), uWidth, uHeight, pimageFrame->scan_size(), (::color32_t *)pData, cbStride);
 
 
       return true;
@@ -767,7 +767,7 @@ namespace imaging_wic
 
       pimage->map();
 
-      const ::color::color * pcr = pimage->get_data();
+      auto * pcr = pimage->get_data();
 
       //   memory m;
       //

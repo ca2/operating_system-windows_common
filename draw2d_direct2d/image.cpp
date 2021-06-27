@@ -1129,7 +1129,7 @@ namespace draw2d_direct2d
 
       }
 
-      m_pcolorrefRaw = (::color::color *)pbitmap->m_map.bits;
+      m_pcolorrefRaw = (::color32_t *)pbitmap->m_map.bits;
 
       m_iScan = pbitmap->m_map.pitch;
 
