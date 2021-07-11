@@ -25,7 +25,7 @@ namespace music
 
                m_psequencethread = dynamic_cast < ::music::midi::sequence_thread * > (__begin_thread < sequence_thread >(papp, ::aura::scheduling_priority_normal, 0, CREATE_SUSPENDED));
 
-               m_puie               = nullptr;
+               m_puserinteraction               = nullptr;
 
             }
 
@@ -286,7 +286,7 @@ namespace music
                __pointer(::user::message) pusermessage(pmessage);
                if(pusermessage->m_wparam == 3377)
                {
-                  m_puie->send_message(WM_USER, pusermessage->m_wparam, pusermessage->m_lparam);
+                  m_puserinteraction->send_message(WM_USER, pusermessage->m_wparam, pusermessage->m_lparam);
                }
 
             }
@@ -378,20 +378,20 @@ namespace music
 
             void player::PostNotifyEvent(::music::midi::player::e_notify_event eevent)
             {
-               if(m_puie != nullptr)
+               if(m_puserinteraction != nullptr)
                {
                   __pointer(::music::midi::player::notify_event) pdata(__new(::music::midi::player::notify_event));
                   pdata->m_pplayer = this;
                   pdata->m_enotifyevent = eevent;
-                  m_puie->post_object(::music::midi::player::message_notify_event, 0,pdata);
+                  m_puserinteraction->post_object(::music::midi::player::message_notify_event, 0,pdata);
                }
             }
 
             void player::SendMmsgDone(::music::midi::sequence *pSeq, ::music::midi::LPMIDIDONEDATA lpmdd)
             {
-               if(m_puie != nullptr)
+               if(m_puserinteraction != nullptr)
                {
-                  m_puie->post_message(MMSG_DONE, (WPARAM) pSeq, (LPARAM) lpmdd);
+                  m_puserinteraction->post_message(MMSG_DONE, (WPARAM) pSeq, (LPARAM) lpmdd);
                }
 
             }
@@ -404,7 +404,7 @@ namespace music
 
             void player::SetCallbackWindow(__pointer(::user::interaction) puie)
             {
-               m_puie = puie;
+               m_puserinteraction = puie;
             }
 
             void player::on_attribute_change(::message::message * pmessage)
@@ -476,9 +476,9 @@ namespace music
                __pointer(::user::message) pusermessage(pmessage);
                __pointer(::music::midi::player::notify_event) pdata(pusermessage->m_lparam);
                pdata->m_pplayer = this;
-               if(m_puie != nullptr)
+               if(m_puserinteraction != nullptr)
                {
-                  m_puie->post_object(::music::midi::player::message_notify_event, 0, pdata);
+                  m_puserinteraction->post_object(::music::midi::player::message_notify_event, 0, pdata);
                }
             }
 

@@ -691,7 +691,7 @@ namespace imaging_wic
          //   option.pstrName = L"Quality";
          //   VariantInit(&varValue);
          //   varValue.vt = VT_UI1;
-         //   varValue.bVal = 184;
+         //   varValue.bVal = 200;
          //   if(SUCCEEDED(hr))
          //   {
          //      hr = pPropertybag->Write(1,&option,&varValue);

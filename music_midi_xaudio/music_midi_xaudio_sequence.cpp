@@ -902,7 +902,7 @@ seq_Preroll_Cleanup:
          ::e_status     sequence::get_ticks(imedia_time &  pTicks)
          {
             single_lock synchronouslock(&m_mutex);
-            if(!synchronouslock.lock(millis(184)))
+            if(!synchronouslock.lock(millis(200)))
                return ::multimedia::result_internal;
 
             ::e_status                    mmr;
@@ -979,7 +979,7 @@ seq_Preroll_Cleanup:
          ::e_status     sequence::get_millis(imedia_time & time)
          {
             single_lock synchronouslock(&m_mutex);
-            if(!synchronouslock.lock(millis(184)))
+            if(!synchronouslock.lock(millis(200)))
                return ::multimedia::result_internal;
 
             ::e_status                    mmr;
