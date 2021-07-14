@@ -55,6 +55,6 @@ target_include_directories(apex_windows_common PRIVATE ${CMAKE_CURRENT_SOURCE_DI
 target_include_directories(apex_windows_common PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 
 
-target_compile_definitions(apex_windows_common PRIVATE _apex_windows_common_LIBRARY)
+target_compile_definitions(apex_windows_common PRIVATE _APEX_WINDOWS_COMMON_LIBRARY)
 target_compile_definitions(apex_windows_common PRIVATE UNICODE)
 target_compile_definitions(apex_windows_common PRIVATE _UNICODE)
