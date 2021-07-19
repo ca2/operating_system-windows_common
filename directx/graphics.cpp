@@ -40,7 +40,7 @@ namespace draw2d_directx
    graphics::graphics()
    {
 
-      m_ealphamodeDevice = ::draw2d::alpha_mode_none;
+      m_ealphamodeDevice = ::draw2d::e_alpha_mode_none;
 
       clear_os_data();
 
@@ -359,7 +359,7 @@ namespace draw2d_directx
 
       //      ::rectangle_i32 rectDib1(::point_f64(), pimage1->m_size);
 
-      //      pimage1->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
+      //      pimage1->get_graphics()->set_alpha_mode(::draw2d::e_alpha_mode_set);
 
       //      pimage1->get_graphics()->fill_rectangle(rectDib1, argb(0, 0, 0, 0));
 
@@ -374,7 +374,7 @@ namespace draw2d_directx
 
       //      pimage2 = create_image(::size_f64);
 
-      //      pimage2->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
+      //      pimage2->get_graphics()->set_alpha_mode(::draw2d::e_alpha_mode_set);
 
       //      pimage2->get_graphics()->fill_rectangle(rectDib1, argb(255, 0, 0, 0));
 
@@ -405,7 +405,7 @@ namespace draw2d_directx
 
       //      }
 
-      //      set_alpha_mode(::draw2d::alpha_mode_blend);
+      //      set_alpha_mode(::draw2d::e_alpha_mode_blend);
 
       //      BitBltRaw(x, y, nWidth, nHeight, pimage2->get_graphics(), 0, 0);
 
@@ -493,7 +493,7 @@ namespace draw2d_directx
 
                auto pimage1 = create_image(rectBlt.size());
 
-               pimage1->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
+               pimage1->get_graphics()->set_alpha_mode(::draw2d::e_alpha_mode_set);
 
                if (!pimage1->draw(::rectangle_f64(rectBlt.size()), imagedrawing.m_pimage, ::point_f64(xSrc, ySrc)))
                {
@@ -557,7 +557,7 @@ namespace draw2d_directx
 
          pimage1->get_graphics()->set(get_current_brush());
 
-         pimage1->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
+         pimage1->get_graphics()->set_alpha_mode(::draw2d::e_alpha_mode_set);
 
          pimage1->get_graphics()->fill_rectangle(rectDib1, argb(0, 0, 0, 0));
 
@@ -567,7 +567,7 @@ namespace draw2d_directx
 
          pimage2->create(size);
 
-         pimage2->get_graphics()->set_alpha_mode(::draw2d::alpha_mode_set);
+         pimage2->get_graphics()->set_alpha_mode(::draw2d::e_alpha_mode_set);
 
          pimage2->get_graphics()->fill_rectangle(rectDib1, argb(255, 0, 0, 0));
 
@@ -598,7 +598,7 @@ namespace draw2d_directx
 
          }
 
-         set_alpha_mode(::draw2d::alpha_mode_blend);
+         set_alpha_mode(::draw2d::e_alpha_mode_blend);
 
          draw(::point_f64(x, y), pimage1->get_graphics());
 
@@ -2944,7 +2944,7 @@ namespace draw2d_directx
 
 
    //      //auto pimage = (ID2D1Bitmap*)pgraphicsSrc->get_current_bitmap()->get_os_data();
-   //      //auto ecomposite = m_ealphamode == ::draw2d::alpha_mode_blend ? D2D1_COMPOSITE_MODE_SOURCE_OVER : D2D1_COMPOSITE_MODE_SOURCE_IN;
+   //      //auto ecomposite = m_ealphamode == ::draw2d::e_alpha_mode_blend ? D2D1_COMPOSITE_MODE_SOURCE_OVER : D2D1_COMPOSITE_MODE_SOURCE_IN;
 
    //      //m_pdevicecontext->DrawImage(pimage, pointDst, rectSrc, m_interpolationmode, ecomposite);
 
@@ -4174,13 +4174,13 @@ namespace draw2d_directx
 
          m_ealphamodeDevice = m_ealphamode;
 
-         if (m_ealphamodeDevice == ::draw2d::alpha_mode_blend)
+         if (m_ealphamodeDevice == ::draw2d::e_alpha_mode_blend)
          {
 
             m_pdevicecontext->SetPrimitiveBlend(D2D1_PRIMITIVE_BLEND_SOURCE_OVER);
 
          }
-         else if (m_ealphamodeDevice == ::draw2d::alpha_mode_set)
+         else if (m_ealphamodeDevice == ::draw2d::e_alpha_mode_set)
          {
 
             m_pdevicecontext->SetPrimitiveBlend(D2D1_PRIMITIVE_BLEND_COPY);
@@ -4247,7 +4247,7 @@ namespace draw2d_directx
    void graphics::defer_text_primitive_blend()
    {
 
-      if (m_ealphamodeDevice != ::draw2d::alpha_mode_blend)
+      if (m_ealphamodeDevice != ::draw2d::e_alpha_mode_blend)
       {
 
          m_ealphamodeDevice = m_ealphamode;
@@ -5133,9 +5133,9 @@ namespace draw2d_directx
 
       ::draw2d::graphics::on_begin_draw();
 
-      m_ealphamodeDevice = ::draw2d::alpha_mode_none;
+      m_ealphamodeDevice = ::draw2d::e_alpha_mode_none;
 
-      set_alpha_mode(::draw2d::alpha_mode_blend);
+      set_alpha_mode(::draw2d::e_alpha_mode_blend);
 
       return true;
 
