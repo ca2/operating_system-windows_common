@@ -1594,7 +1594,7 @@ namespace draw2d_direct2d
 
       //   ::draw2d_direct2d::graphics * pgraphics = dynamic_cast <::draw2d_direct2d::graphics *> (get_graphics());
 
-      //   pgraphics->set_alpha_mode(::draw2d::alpha_mode_set);
+      //   pgraphics->set_alpha_mode(::draw2d::e_alpha_mode_set);
 
       //   {
 
@@ -1700,7 +1700,7 @@ namespace draw2d_direct2d
       //D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR,
       //D2D1_COMPOSITE_MODE_SOU_IN);
 
-      //set_alpha_mode(::draw2d::alpha_mode_blend);
+      //set_alpha_mode(::draw2d::e_alpha_mode_blend);
 
       //pgraphicsDib2->m_pdevicecontext->BeginDraw();
 
