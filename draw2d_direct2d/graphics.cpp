@@ -5347,7 +5347,7 @@ namespace draw2d_direct2d
    }
 
 
-   bool graphics::destroy()
+   ::e_status graphics::destroy()
    {
 
       ::draw2d::lock draw2dlock;
@@ -5371,7 +5371,7 @@ namespace draw2d_direct2d
 
       clear_os_data();
 
-      return true;
+      return ::success;
 
    }
 

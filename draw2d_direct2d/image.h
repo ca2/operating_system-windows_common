@@ -20,7 +20,7 @@ namespace draw2d_direct2d
 
 
       image();
-      virtual ~image();
+      ~image() override;
 
 
       virtual bool map(bool bApplyAlphaTransform = true) override;
@@ -36,9 +36,9 @@ namespace draw2d_direct2d
 
 
       using ::image::create;
-      virtual ::e_status create(const ::size_i32 & size, ::eobject eobjectCreate = DEFAULT_CREATE_IMAGE_OBJECT_FLAG, int iStride = -1, bool bPreserver = false) override;
+      ::e_status create(const ::size_i32 & size, ::eobject eobjectCreate = DEFAULT_CREATE_IMAGE_OBJECT_FLAG, int iStride = -1, bool bPreserver = false) override;
       bool _create(::draw2d::graphics * pgraphics);
-      bool destroy();
+      ::e_status destroy() override;
 
 
       virtual bool _draw_raw(const ::rectangle_i32 & rectDst, ::image * pimage, const ::point_i32 & pointSrc) override;

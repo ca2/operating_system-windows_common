@@ -393,10 +393,12 @@ namespace draw2d_direct2d
    }
 
 
-   void region::destroy()
+   ::e_status region::destroy()
    {
 
       m_pgeometry = nullptr;
+
+      return ::success;
 
    }
 

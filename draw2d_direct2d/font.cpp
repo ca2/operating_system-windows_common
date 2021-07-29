@@ -137,7 +137,7 @@ namespace draw2d_direct2d
    }
 
 
-   void font::destroy()
+   ::e_status font::destroy()
    {
 
       ::write_text::font::destroy();
@@ -145,11 +145,13 @@ namespace draw2d_direct2d
       if (m_pformat == nullptr)
       {
 
-         return;
+         return ::error_failed;
 
       }
 
       m_pformat = nullptr;
+
+      return ::success;
 
    }
 

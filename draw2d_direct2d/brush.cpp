@@ -246,7 +246,7 @@ namespace draw2d_direct2d
    }
 
 
-   void brush::destroy()
+   ::e_status brush::destroy()
    {
 
       if(m_psolidbrush != nullptr)
@@ -276,6 +276,8 @@ namespace draw2d_direct2d
          m_pimagebrush = nullptr;
 
       }
+
+      return ::success;
 
    }
 

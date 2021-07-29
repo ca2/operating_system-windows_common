@@ -30,8 +30,10 @@ namespace draw2d_direct2d
 
 
       bitmap();
-      virtual ~bitmap();
+      ~bitmap() override;
 
+
+      void dump(dump_context& dumpcontext) const override;
 
       bool LoadBitmap(const char * lpszResourceName);
       bool LoadBitmap(::u32 nIDResource);
@@ -56,9 +58,9 @@ namespace draw2d_direct2d
       //::size_i32 SetBitmapDimension(int nWidth, int nHeight);
       ::size_i32 GetBitmapDimension() const;
 
-      virtual void dump(dump_context & dumpcontext) const;
+      
 
-      virtual void destroy() override;
+      ::e_status destroy() override;
 
 
    };

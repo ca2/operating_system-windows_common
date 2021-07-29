@@ -402,7 +402,7 @@ namespace draw2d_direct2d
    }
 
 
-   void bitmap::destroy()
+   ::e_status bitmap::destroy()
    {
 
       m_pbitmap = nullptr;
@@ -410,6 +410,8 @@ namespace draw2d_direct2d
       m_pbitmap1 = nullptr;
 
       clear_os_data();
+
+      return ::success;
 
    }
 

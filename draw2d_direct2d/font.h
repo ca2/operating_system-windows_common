@@ -16,14 +16,16 @@ namespace draw2d_direct2d
 
 
       font();
-      virtual ~font();
+      ~font() override;
 
+
+      void dump(dump_context& dumpcontext) const override;
 
       // virtual IDWriteTextFormat* get_os_data(::draw2d::graphics * pgraphics, index i) const;
       //virtual void * _get_os_data(::draw2d::graphics * pgraphics, index i) const override;
 
-      virtual void destroy() override;
-      virtual bool create(::draw2d::graphics * pgraphics, i8 iCreate) override;
+      ::e_status destroy() override;
+      bool create(::draw2d::graphics * pgraphics, i8 iCreate) override;
 
 
       /*      virtual void construct(const ::write_text::font & fontParam);
@@ -39,7 +41,7 @@ namespace draw2d_direct2d
 
             virtual int GetLogFont(LOGFONTW* pLogFont);*/
 
-      virtual void dump(dump_context & dumpcontext) const;
+      
 
       //bool destroy();
 

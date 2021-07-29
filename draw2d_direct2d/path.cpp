@@ -395,7 +395,7 @@ namespace draw2d_direct2d
    }
 
 
-   void path::destroy()
+   ::e_status path::destroy()
    {
 
       m_psink = nullptr;
@@ -405,6 +405,8 @@ namespace draw2d_direct2d
       m_ppathHollow = nullptr;
 
       m_ppathFilled = nullptr;
+
+      return ::success;
 
    }
 

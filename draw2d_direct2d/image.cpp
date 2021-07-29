@@ -206,7 +206,7 @@ namespace draw2d_direct2d
    }
 
 
-   bool image::destroy()
+   ::e_status image::destroy()
    {
 
       if (m_bMapped)

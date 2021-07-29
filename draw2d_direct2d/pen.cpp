@@ -63,12 +63,14 @@ namespace draw2d_direct2d
    }
 
 
-   void pen::destroy()
+   ::e_status pen::destroy()
    {
 
       m_pbrush = nullptr;
 
       ::draw2d::pen::destroy();
+
+      return ::success;
 
    }
 

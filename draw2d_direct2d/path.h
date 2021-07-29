@@ -31,11 +31,11 @@ namespace draw2d_direct2d
 
 
       path();
-      virtual ~path();
+      ~path() override;
 
 
-      virtual bool create(::draw2d::graphics * pgraphics, i8 iCreate) override;
-      virtual void destroy() override;
+      bool create(::draw2d::graphics * pgraphics, i8 iCreate) override;
+      ::e_status destroy() override;
 
 
       //virtual bool internal_begin_figure(bool bFill, ::draw2d::enum_fill_mode efillmode);

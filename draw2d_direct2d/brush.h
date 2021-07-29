@@ -23,11 +23,14 @@ namespace draw2d_direct2d
 
 
       brush();
-      virtual ~brush();
+      ~brush() override;
 
 
-      virtual void destroy() override;
-      virtual bool create(::draw2d::graphics * pgraphics, i8 iCreate) override;
+      void dump(dump_context& dumpcontext) const override;
+
+
+      ::e_status destroy() override;
+      bool create(::draw2d::graphics * pgraphics, i8 iCreate) override;
 
       //virtual ID2D1Brush * get_os_brush(::draw2d_direct2d::graphics * pgraphics) const;
 
@@ -41,7 +44,6 @@ namespace draw2d_direct2d
 
       //bool destroy();
 
-      virtual void dump(dump_context & dumpcontext) const;
    };
 
 

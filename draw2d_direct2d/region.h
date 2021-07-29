@@ -15,12 +15,12 @@ namespace draw2d_direct2d
 
 
       region();
-      virtual ~region();
+      ~region() override;
 
       //void defer_update();
 
-      virtual void destroy() override;
-      virtual bool create(::draw2d::graphics * pgraphics, i8 iCreate) override;
+      ::e_status destroy() override;
+      bool create(::draw2d::graphics * pgraphics, i8 iCreate) override;
 
 
       void SetRectRgn(int x1, int y1, int x2, int y2);

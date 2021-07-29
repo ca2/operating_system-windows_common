@@ -25,7 +25,7 @@ namespace draw2d_direct2d
          D2D1_LAYER_PARAMETERS               m_layerparameters;
 
          state();
-         virtual ~state();
+         ~state() override;
 
 
       };
@@ -61,7 +61,7 @@ namespace draw2d_direct2d
 
 
       graphics();
-      virtual ~graphics();
+      ~graphics() override;
 
 
       virtual bool TextOutAlphaBlend(double x, double y, const block & block) override;
@@ -534,11 +534,11 @@ namespace draw2d_direct2d
       //void draw_3drect(const ::rectangle_f64 & rectangle, const ::color::color & colorTopLeft, const ::color::color & colorBottomRight, const ::e_border & eborder = e_border_all) override;
 
 
-      virtual void assert_valid() const override;
-      virtual void dump(dump_context & dumpcontext) const override;
+      void assert_valid() const override;
+      void dump(dump_context & dumpcontext) const override;
 
 
-      virtual bool set_alpha_mode(::draw2d::enum_alpha_mode ealphamode) override;
+      bool set_alpha_mode(::draw2d::enum_alpha_mode ealphamode) override;
 
 
       virtual HDC get_handle() const;
@@ -558,7 +558,7 @@ namespace draw2d_direct2d
       bool blur(bool bExpand, double dRadius, const ::rectangle_f64 & rectangle) override;
 
 
-      virtual bool destroy();
+      ::e_status destroy() override;
 
       //IDWriteTextFormat * get_os_font(::write_text::font * pfont);
       //ID2D1Brush * get_os_brush(::draw2d::brush * pbrush);
