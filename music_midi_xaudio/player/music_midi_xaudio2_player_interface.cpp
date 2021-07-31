@@ -47,7 +47,7 @@ namespace music
             bool player_interface::Finalize()
             {
 
-               if(!finalize())
+               if(!destroy())
                   return false;
 
                return true;

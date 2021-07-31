@@ -34,7 +34,7 @@ namespace music
                return true;
             }
 
-            bool callback::finalize()
+            bool callback::destroy()
             {
                if(!m_wnd.is_window())
                   return true;

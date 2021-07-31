@@ -31,7 +31,7 @@ namespace music
                virtual ~callback();
 
                virtual bool initialize();
-               virtual bool finalize();
+               virtual bool destroy();
 
                virtual void OnMmsgDone(::music::midi::sequence *pSeq, ::music::midi::LPMIDIDONEDATA lpmdd);
                virtual void OnMidiPlayerNotifyEvent(::music::midi::player::notify_event * pdata);

@@ -31,7 +31,7 @@ namespace multimedia
       }
 
 
-      bool department::finalize()
+      bool department::destroy()
       {
 
          DestroyWindow();

@@ -68,7 +68,7 @@ namespace draw2d_direct2d
 
    CLASS_DECL_AURA void initialize();
 
-   CLASS_DECL_AURA::e_status finalize();
+   CLASS_DECL_AURA::e_status destroy();
 
    class graphics;
 

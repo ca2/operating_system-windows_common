@@ -37,7 +37,7 @@ namespace multimedia
          bool initialize();
 
 
-         bool finalize();
+         bool destroy();
 
 
 

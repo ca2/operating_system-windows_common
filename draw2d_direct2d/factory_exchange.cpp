@@ -40,7 +40,7 @@ void draw2d_direct2d_factory_exchange(::factory_map * pfactorymap)
    //factory_exchange::~factory_exchange()
    //{
 
-   //   finalize();
+   //   destroy();
 
    //}
 

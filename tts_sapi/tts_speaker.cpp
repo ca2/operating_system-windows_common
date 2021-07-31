@@ -382,7 +382,7 @@ namespace tts_sapi
       bool speaker::initialize(string strLang)
       {
 
-         //finalize(strLang);
+         //destroy(strLang);
 
          //bool bOk = false;
 
@@ -467,7 +467,7 @@ namespace tts_sapi
       }
 
 
-      bool speaker::finalize(string strLang)
+      bool speaker::destroy(string strLang)
       {
 
          //fork([&]()
@@ -1000,7 +1000,7 @@ namespace tts_sapi
          //if (m_tts[strLang])
          //{
 
-         //   finalize(strLang);
+         //   destroy(strLang);
 
          //}
          //else
