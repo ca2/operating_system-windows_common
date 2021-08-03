@@ -199,7 +199,7 @@ inline bool SpGetDefaultTokenFromCategoryIdAndLang(
 
       }
 
-      if (set[str].get_string().has_char())
+      if (set[str].has_char())
       {
 
          strLang = set[str];
