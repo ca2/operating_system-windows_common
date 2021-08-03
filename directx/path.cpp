@@ -144,7 +144,7 @@ namespace draw2d_directx
    }
 
 
-   bool path::internal_add_string(::draw2d_directx::graphics * pgraphics, double x, double y, const string & strText, ::write_text::font * pfont)
+   bool path::internal_add_string(::draw2d_directx::graphics * pgraphics, double x, double y, const ::string & strText, ::write_text::font * pfont)
    {
 
       HRESULT hr;

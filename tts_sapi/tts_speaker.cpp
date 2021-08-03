@@ -550,7 +550,7 @@ namespace tts_sapi
       // Speaks some text.
       // (The input text must not be empty.)
       //--------------------------------------------------------------------
-      bool speaker::speak(const string & strLangParam, const string & strTextParam, bool bSync)
+      bool speaker::speak(const ::string & strLangParam, const ::string & strTextParam, bool bSync)
       {
 
          string strLang(strLangParam);
@@ -753,7 +753,7 @@ namespace tts_sapi
       // Speaks some text.
       // (The input text must not be empty.)
       //--------------------------------------------------------------------
-      bool speaker::speak(const string & strAttributes, const string & strLangParam, const string & strTextParam, bool bSync)
+      bool speaker::speak(const ::string & strAttributes, const ::string & strLangParam, const ::string & strTextParam, bool bSync)
       {
 
          string strLang(strLangParam);

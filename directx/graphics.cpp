@@ -1946,7 +1946,7 @@ namespace draw2d_directx
    //}
 
 
-   //bool graphics::text_out(double x, double y, const string & str)
+   //bool graphics::text_out(double x, double y, const ::string & str)
    //{
 
    //   return text_out((int) x, (int) y, str, (int) str.get_length());
@@ -1962,7 +1962,7 @@ namespace draw2d_directx
    //}
 
 
-   //bool graphics::ExtTextOut(double x, double y, ::u32 nOptions, const ::rectangle_f64 & rectangle, const string & str, LPINT lpDxWidths)
+   //bool graphics::ExtTextOut(double x, double y, ::u32 nOptions, const ::rectangle_f64 & rectangle, const ::string & str, LPINT lpDxWidths)
    //{
 
    //   __throw(todo);
@@ -1978,7 +1978,7 @@ namespace draw2d_directx
    //}
 
 
-   //::size_f64 graphics::TabbedTextOut(double x, double y, const string & str, count nTabPositions, LPINT lpnTabStopPositions, i32 nTabOrigin)
+   //::size_f64 graphics::TabbedTextOut(double x, double y, const ::string & str, count nTabPositions, LPINT lpnTabStopPositions, i32 nTabOrigin)
    //{
 
    //   __throw(todo);
@@ -1994,7 +1994,7 @@ namespace draw2d_directx
    //}
 
 
-   //::size_f64 graphics::GetTabbedTextExtent(const string & str, count nTabPositions, LPINT lpnTabStopPositions)
+   //::size_f64 graphics::GetTabbedTextExtent(const ::string & str, count nTabPositions, LPINT lpnTabStopPositions)
    //{
 
    //   __throw(todo);
@@ -2010,7 +2010,7 @@ namespace draw2d_directx
    }
 
 
-   ::size_f64 graphics::GetOutputTabbedTextExtent(const string & str, count nTabPositions, LPINT lpnTabStopPositions)
+   ::size_f64 graphics::GetOutputTabbedTextExtent(const ::string & str, count nTabPositions, LPINT lpnTabStopPositions)
    {
 
       __throw(todo);
@@ -4514,7 +4514,7 @@ namespace draw2d_directx
    //}
 
 
-   bool graphics::draw_text(const string & str,const ::rectangle_f64 & rectangle, const ::e_align & ealign, const ::e_draw_text & edrawtext)
+   bool graphics::draw_text(const ::string & str,const ::rectangle_f64 & rectangle, const ::e_align & ealign, const ::e_draw_text & edrawtext)
    {
 
       if (str.is_empty())
@@ -4679,7 +4679,7 @@ namespace draw2d_directx
    }
 
 
-   size_f64 graphics::get_text_extent(const string & str)
+   size_f64 graphics::get_text_extent(const ::string & str)
    {
       size_f64 s;
 
@@ -4703,7 +4703,7 @@ namespace draw2d_directx
    }
 
 
-   ::size_f64 graphics::GetOutputTextExtent(const string & str)
+   ::size_f64 graphics::GetOutputTextExtent(const ::string & str)
    {
 
       __throw(todo);
@@ -4844,7 +4844,7 @@ namespace draw2d_directx
    }
 
 
-   bool graphics::get_text_extent(size_f64 & size, const string & str)
+   bool graphics::get_text_extent(size_f64 & size, const ::string & str)
    {
 
       return get_text_extent(size, str, str.get_length());

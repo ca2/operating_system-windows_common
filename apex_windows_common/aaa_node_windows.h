@@ -142,7 +142,7 @@ i32 CLASS_DECL_APEX_WINDOWS_COMMON __windows_main(::apex::system * psystem, ::cr
 //
 //
 //
-//CLASS_DECL_APEX_WINDOWS_COMMON ::i32 delete_registry_tree_helper(HKEY hParentKey,const string & strKeyName);
+//CLASS_DECL_APEX_WINDOWS_COMMON ::i32 delete_registry_tree_helper(HKEY hParentKey,const ::string & strKeyName);
 //
 //
 //CLASS_DECL_APEX_WINDOWS_COMMON HINSTANCE __get_resource_handle();

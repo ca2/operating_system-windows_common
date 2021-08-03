@@ -58,9 +58,9 @@ namespace tts_sapi
          //--------------------------------------------------------------------
          virtual bool speak(const string & text) override;
 
-         virtual bool speak(const string & strLang, const string & text, bool bSync = false) override;
+         virtual bool speak(const ::string & strLang, const string & text, bool bSync = false) override;
 
-         virtual bool speak(const string & strAttributes, const string & strLang, const string & text, bool bSync = false) override;
+         virtual bool speak(const ::string & strAttributes, const ::string & strLang, const string & text, bool bSync = false) override;
 
          virtual bool is_speaking(string strLang) override;
 
