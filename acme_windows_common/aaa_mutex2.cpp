@@ -91,7 +91,7 @@ static int g_iMutex = 0;
 }
 
 
-::mutex::mutex(enum_create_new, bool bInitiallyOwn, const char * pstrName, LPSECURITY_ATTRIBUTES psaAttribute)
+::mutex::mutex(enum_create_new, bool bInitiallyOwn, const ::string & pstrName, LPSECURITY_ATTRIBUTES psaAttribute)
 {
 
    m_bAlreadyExists = false;
@@ -431,7 +431,7 @@ get_existing:
 
 #ifdef WINDOWS
 
-::mutex::mutex(enum_create_new, const char * pstrName, void * h, bool bOwner)
+::mutex::mutex(enum_create_new, const ::string & pstrName, void * h, bool bOwner)
 {
 
    m_bOwner = bOwner;
@@ -451,7 +451,7 @@ get_existing:
 
 #if defined(MUTEX_NAMED_POSIX)
 
-mutexmutex(const char * pstrName, sem_t * psem, bool bOwner) :
+mutexmutex(const ::string & pstrName, sem_t * psem, bool bOwner) :
    ::matter(pobject),
    synchronization_object(pstrName)
 {
@@ -487,7 +487,7 @@ mutexmutex(const ::mutex & m):
 #elif defined(MUTEX_NAMED_FD)
 
 
-::mutex::mutex(enum_create_new, const char * lpszName, int iFd, bool bOwner)
+::mutex::mutex(enum_create_new, const ::string & lpszName, int iFd, bool bOwner)
 {
 
    m_strName = lpszName;
@@ -511,7 +511,7 @@ mutexmutex(const ::mutex & m):
 
 #elif defined(MUTEX_NAMED_VSEM)
 
-mutexmutex(e_create_new enew, const char * pstrName, key_t key, i32 semid, bool bOwner):
+mutexmutex(e_create_new enew, const ::string & pstrName, key_t key, i32 semid, bool bOwner):
    ::matter(pobject),
    synchronization_object(pstrName)
 {
@@ -1476,7 +1476,7 @@ bool ::mutex::unlock()
 
 
 
-__pointer(::mutex) open_mutex(const char * lpszName)
+__pointer(::mutex) open_mutex(const ::string & lpszName)
 {
 
 #ifdef WINDOWS
@@ -1623,7 +1623,7 @@ __pointer(::mutex) open_mutex(const char * lpszName)
 }
 
 
-void wait_until_mutex_does_not_exist(const char * lpszName)
+void wait_until_mutex_does_not_exist(const ::string & lpszName)
 {
 
    __pointer(::mutex) pmutex = __new(::mutex(e_create_new, false, "Global\\::ca::account::ca2_spa::7807e510-5579-11dd-ae16-0800200c7784"));

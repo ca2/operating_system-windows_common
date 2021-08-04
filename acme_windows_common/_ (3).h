@@ -83,7 +83,7 @@ CLASS_DECL_ACME ::e_status __call(const ::routine & routine);
 //   {
 //
 //      template < typename ARRAY >
-//      __pointer(::matter) is_running(ARRAY & array, const char * pszTag)
+//      __pointer(::matter) is_running(ARRAY & array, const ::string & pszTag)
 //      {
 //
 //         for (::index i = 0; i < array.get_size(); i++)
@@ -124,8 +124,8 @@ CLASS_DECL_ACME ::e_status __call(const ::routine & routine);
 
 
 
-CLASS_DECL_ACME bool set_thread_name(const char * psz);
-CLASS_DECL_ACME bool set_thread_name(htask_t htask, const char* pszName);
+CLASS_DECL_ACME bool set_thread_name(const ::string & psz);
+CLASS_DECL_ACME bool set_thread_name(htask_t htask, const ::string & pszName);
 
 
 typedef ::e_status     (*__THREADPROC)(void *);
@@ -358,8 +358,8 @@ string get_thread_name(const ::task* ptask);
 
 CLASS_DECL_ACME void thread_name_abbreviate(string & strName, int len);
 
-CLASS_DECL_ACME bool set_thread_name(htask_t htask, const char * psz);
-CLASS_DECL_ACME bool set_thread_name(const char * psz);
+CLASS_DECL_ACME bool set_thread_name(htask_t htask, const ::string & psz);
+CLASS_DECL_ACME bool set_thread_name(const ::string & psz);
 
 //#include "update_task_item_array.h"
 

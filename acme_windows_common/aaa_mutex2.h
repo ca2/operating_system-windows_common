@@ -1,7 +1,7 @@
 #pragma once
 
 
-CLASS_DECL_ACME ::mutex open_mutex(const char * lpszName);
+CLASS_DECL_ACME ::mutex open_mutex(const ::string & lpszName);
 
 
 class CLASS_DECL_ACME mutex :
@@ -49,15 +49,15 @@ public:
 
 
 #ifdef WINDOWS
-   ::mutex(enum_create_new ecreatenew, const char * pstrName, void * posdata, bool bOwner = true);
+   ::mutex(enum_create_new ecreatenew, const ::string & pstrName, void * posdata, bool bOwner = true);
 #elif defined(MUTEX_NAMED_POSIX)
-   ::mutex(enum_create_new ecreatenew = create_new, const char * psz = nullptr, const char * pstrName,sem_t * psem,bool bOwner = true);
+   ::mutex(enum_create_new ecreatenew = create_new, const ::string & psz = nullptr, const ::string & pstrName,sem_t * psem,bool bOwner = true);
 #elif defined(MUTEX_NAMED_FD)
-   ::mutex(enum_create_new ecreatenew, const char * pstrName, int iFd, bool bOwner = true);
+   ::mutex(enum_create_new ecreatenew, const ::string & pstrName, int iFd, bool bOwner = true);
 #elif defined(MUTEX_NAMED_VSEM)
-   ::mutex(enum_create_new ecreatenew, const char * pstrName,key_t key, i32 semid, bool bOwner = true);
+   ::mutex(enum_create_new ecreatenew, const ::string & pstrName,key_t key, i32 semid, bool bOwner = true);
 #endif
-   ::mutex(enum_create_new ecreatenew, bool bInitiallyOwn, const char * lpszName, sync_options * psyncoptions = nullptr);
+   ::mutex(enum_create_new ecreatenew, bool bInitiallyOwn, const ::string & lpszName, sync_options * psyncoptions = nullptr);
    ::mutex(enum_create_new ecreatenew = e_create_new, bool bInitiallyOwn = false);
    virtual ~mutex();
 
@@ -81,13 +81,13 @@ public:
    bool already_exists();
 
 
-   static ::mutex open_mutex(const char * lpszName) {return ::open_mutex(lpszName);}
+   static ::mutex open_mutex(const ::string & lpszName) {return ::open_mutex(lpszName);}
 
 
 };
 
 
-CLASS_DECL_ACME void wait_until_mutex_does_not_exist(const char * lpszName);
+CLASS_DECL_ACME void wait_until_mutex_does_not_exist(const ::string & lpszName);
 
 
 

@@ -172,14 +172,14 @@ namespace music
 
             VOID FreeBuffers();
 
-            //::e_status     OpenFile(const char * lpFileName, i32 openMode);
+            //::e_status     OpenFile(const ::string & lpFileName, i32 openMode);
             ::e_status     OpenFile(::music::midi::sequence & sequence, i32 iOpenMode);
             ::e_status     OpenFile(::file::file & ar, i32 openMode);
-            ::e_status     OpenFile(const char * lpFileName, i32 openMode);
+            ::e_status     OpenFile(const ::string & lpFileName, i32 openMode);
             ::e_status     OpenFile(memory * pmemorystorage, i32 openMode, ::music::e_storage estorage);
 
             ::e_status     CloseFile();
-            ::e_status     SaveFile(const char * lpFileName);
+            ::e_status     SaveFile(const ::string & lpFileName);
             ::e_status     SaveFile();
             ::e_status     SaveFile(file_pointer &ar);
 

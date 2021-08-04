@@ -194,7 +194,7 @@ namespace draw2d_gdiplus
 
       return 0;
    }
-   bool bitmap::LoadBitmap(const char * pszResourceName)
+   bool bitmap::LoadBitmap(const ::string & pszResourceName)
 
    {
       //   return attach(::LoadBitmap(::aura::FindResourceHandle(

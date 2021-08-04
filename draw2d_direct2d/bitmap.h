@@ -35,7 +35,7 @@ namespace draw2d_direct2d
 
       void dump(dump_context& dumpcontext) const override;
 
-      bool LoadBitmap(const char * lpszResourceName);
+      bool LoadBitmap(const ::string & lpszResourceName);
       bool LoadBitmap(::u32 nIDResource);
       bool LoadOEMBitmap(::u32 nIDBitmap); // for OBM_/OCR_/OIC_
 

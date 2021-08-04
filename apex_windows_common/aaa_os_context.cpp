@@ -161,7 +161,7 @@ namespace windows
       return true;
    }
 
-   void os_context::terminate_processes_by_title(const char * lpszName)
+   void os_context::terminate_processes_by_title(const ::string & lpszName)
    {
 
       u32 uPid;
@@ -192,7 +192,7 @@ namespace windows
       }
    }
 
-   bool os_context::get_pid_by_path(const char * lpszName, u32 & dwPid)
+   bool os_context::get_pid_by_path(const ::string & lpszName, u32 & dwPid)
    {
       u32_array dwa;
       get_all_processes(dwa);
@@ -207,7 +207,7 @@ namespace windows
       return false;
    }
 
-   bool os_context::get_pid_by_title(const char * lpszName, u32 & dwPid)
+   bool os_context::get_pid_by_title(const ::string & lpszName, u32 & dwPid)
    {
       u32_array dwa;
       get_all_processes(dwa);
@@ -377,7 +377,7 @@ namespace windows
    }
 
 
-   bool os_context::local_machine_set_run(const char * pszKey, const char * pszCommand, bool bSet)
+   bool os_context::local_machine_set_run(const ::string & pszKey, const ::string & pszCommand, bool bSet)
    {
 
       try
@@ -412,7 +412,7 @@ namespace windows
    }
 
 
-   bool os_context::local_machine_set_run_once(const char * pszKey, const char * pszCommand, bool bSet)
+   bool os_context::local_machine_set_run_once(const ::string & pszKey, const ::string & pszCommand, bool bSet)
    {
 
       try
@@ -446,7 +446,7 @@ namespace windows
    }
 
 
-   bool os_context::current_user_set_run(const char * pszKey, const char * pszCommand, bool bSet)
+   bool os_context::current_user_set_run(const ::string & pszKey, const ::string & pszCommand, bool bSet)
    {
 
       try
@@ -482,7 +482,7 @@ namespace windows
    }
 
 
-   bool os_context::current_user_set_run_once(const char * pszKey, const char * pszCommand, bool bSet)
+   bool os_context::current_user_set_run_once(const ::string & pszKey, const ::string & pszCommand, bool bSet)
    {
 
       try
@@ -548,7 +548,7 @@ namespace windows
       return true;
    }
 
-   bool os_context::file_extension_get_open_with_list_keys(string_array & straKey, const char * pszExtension)
+   bool os_context::file_extension_get_open_with_list_keys(string_array & straKey, const ::string & pszExtension)
    {
 
       try
@@ -579,7 +579,7 @@ namespace windows
    }
 
 
-   bool os_context::file_extension_get_open_with_list_commands(string_array & straCommand, const char * pszExtension)
+   bool os_context::file_extension_get_open_with_list_commands(string_array & straCommand, const ::string & pszExtension)
    {
 
       string_array straKey;
@@ -597,7 +597,7 @@ namespace windows
    }
 
 
-   bool os_context::file_association_set_default_icon(const char * pszExtension, const char * pszExtensionNamingClass, const char * pszIconPath)
+   bool os_context::file_association_set_default_icon(const ::string & pszExtension, const ::string & pszExtensionNamingClass, const ::string & pszIconPath)
    {
 
       try
@@ -623,7 +623,7 @@ namespace windows
    }
 
 
-   bool os_context::file_association_set_shell_open_command(const char * pszExtension, const char * pszExtensionNamingClass,  const char * pszCommand, const char * pszParam)
+   bool os_context::file_association_set_shell_open_command(const ::string & pszExtension, const ::string & pszExtensionNamingClass,  const char * pszCommand, const ::string & pszParam)
    {
 
       ::e_status estatus = ::success;
@@ -710,7 +710,7 @@ namespace windows
    }
 
 
-   bool os_context::file_association_get_shell_open_command(const char * pszExtension, string & strExtensionNamingClass, string & strCommand, string & strParam)
+   bool os_context::file_association_get_shell_open_command(const ::string & pszExtension, string & strExtensionNamingClass, string & strCommand, string & strParam)
    {
 
       try
@@ -761,7 +761,7 @@ namespace windows
    }
 
 
-   bool os_context::open_in_ie(const char * pcsz)
+   bool os_context::open_in_ie(const ::string & pcsz)
    {
 
       try
@@ -1567,7 +1567,7 @@ retry:
 
 
 
-   void os_context::set_file_status(const char * pszFileName, const ::file::file_status& status)
+   void os_context::set_file_status(const ::string & pszFileName, const ::file::file_status& status)
 
    {
 

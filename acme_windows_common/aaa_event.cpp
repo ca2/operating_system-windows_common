@@ -42,7 +42,7 @@ void clock_getrealtime(struct timespec * pts)
 #endif
 
 
-event::event(char * sz, bool bInitiallyOwn, bool bManualReset, const char * pstrName,sync_options * psyncoptions)
+event::event(char * sz, bool bInitiallyOwn, bool bManualReset, const ::string & pstrName,sync_options * psyncoptions)
 {
 
 #ifdef WINDOWS_DESKTOP

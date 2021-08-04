@@ -531,7 +531,7 @@ namespace windows
    }
 
 
-   bool interaction_impl::create_message_queue(::user::interaction * puserinteraction, const char * lpszName)
+   bool interaction_impl::create_message_queue(::user::interaction * puserinteraction, const ::string & lpszName)
    {
 
       if (_is_window())
@@ -1943,7 +1943,7 @@ namespace windows
 
 
 
-   i32 interaction_impl::message_box(const char * pszText, const char * pszCaption, UINT nType)
+   i32 interaction_impl::message_box(const ::string & pszText, const ::string & pszCaption, UINT nType)
 
    {
       if (pszCaption == nullptr)
@@ -2274,7 +2274,7 @@ namespace windows
 
    bool gen_GotScrollLines;
 
-   void interaction_impl::OnSettingChange(UINT uFlags, const char * pszSection)
+   void interaction_impl::OnSettingChange(UINT uFlags, const ::string & pszSection)
 
    {
       UNUSED_ALWAYS(uFlags);
@@ -2796,7 +2796,7 @@ namespace windows
 /////////////////////////////////////////////////////////////////////////////
 // Dialog initialization support
 
-   bool interaction_impl::ExecuteDlgInit(const char * pszResourceName)
+   bool interaction_impl::ExecuteDlgInit(const ::string & pszResourceName)
 
    {
       // find resource handle
@@ -3624,7 +3624,7 @@ namespace windows
 
    }
 
-   void interaction_impl::set_window_text(const char * pszString)
+   void interaction_impl::set_window_text(const ::string & pszString)
 
    {
 
@@ -4351,7 +4351,7 @@ namespace windows
       ASSERT(::is_window(get_handle()));
       ::SetDlgItemInt(get_handle(), nID, nValue, bSigned);
    }
-   void interaction_impl::SetDlgItemText(i32 nID, const char * pszString)
+   void interaction_impl::SetDlgItemText(i32 nID, const ::string & pszString)
 
    {
       ASSERT(::is_window(get_handle()));
@@ -5158,7 +5158,7 @@ namespace windows
 
    }
 
-   void interaction_impl::OnWinIniChange(const char *)
+   void interaction_impl::OnWinIniChange(const ::string &)
    {
       Default();
    }
@@ -5202,7 +5202,7 @@ namespace windows
    { m_nIdleFlags |= (idleLayout | (bNotify ? idleNotify : 0)); };
    bool frame_window::InModalState() const
    { return m_cModalStack != 0; }
-   void frame_window::set_title(const char * pszTitle)
+   void frame_window::set_title(const ::string & pszTitle)
 
    { m_strTitle = pszTitle; }
 

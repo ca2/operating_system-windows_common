@@ -33,7 +33,7 @@ public:
 #endif
 
 
-   event(char * sz = nullptr,bool bInitiallyOwn = false, bool bManualReset = false, const char * pszNAme = nullptr, sync_options * psyncoptions = nullptr);
+   event(char * sz = nullptr,bool bInitiallyOwn = false, bool bManualReset = false, const ::string & pszNAme = nullptr, sync_options * psyncoptions = nullptr);
 
    virtual ~event();
 

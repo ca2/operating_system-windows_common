@@ -879,7 +879,7 @@ smf_Open_File_Cleanup:
             lpmh->dwBytesRecorded += 3*sizeof(u32);*/
             //m_cbPendingUserEvent = ((u32)MEVT_SHORTMSG )<<24;
             //         str = (char *) malloc(pEvent->cbParm + 1);
-            //         strncpy(str, (const char *) pEvent->hpbParm,  pEvent->cbParm);
+            //         strncpy(str, (const ::string &) pEvent->hpbParm,  pEvent->cbParm);
             //         str[pEvent->cbParm] = 0;
             //         printf("%s", str);
 
@@ -2048,7 +2048,7 @@ smf_Open_File_Cleanup:
                m_pFileHeader->wFormat);
          }*/
 
-         ::e_status     buffer::SaveFile(const char * lpcFilePath)
+         ::e_status     buffer::SaveFile(const ::string & lpcFilePath)
          {
             HMMIO                   hmmio = (HMMIO)nullptr;
             //    ::e_status                   smfrc = ::success;

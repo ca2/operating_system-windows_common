@@ -84,7 +84,7 @@ namespace music
 
             ::e_status     GetPreviousEvent(::music::midi::event * pPreviousEvent, ::music::midi::event * pEvent);
 
-            ::e_status     SaveFile(const char * lpFilePath);
+            ::e_status     SaveFile(const ::string & lpFilePath);
 
             ::e_status     WorkWriteXFTracks(string_array & tokena, imedia_position_array & positiona, ::music::xf::info_header & xfinfoheader);
 

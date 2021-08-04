@@ -31,7 +31,7 @@ namespace acme
 
 
          node();
-         virtual ~node();
+         ~node() override;
 
 
          virtual ::e_status initialize_matter(::matter* pmatter) override;
@@ -46,9 +46,7 @@ namespace acme
 
          //virtual ::file::path roaming() override;
 
-
          virtual void install_crash_dump_reporting(const string& strModuleNameWithTheExeExtension) override;
-
 
          //virtual bool memcnts();
 

@@ -16,7 +16,7 @@ namespace draw2d_directx
    {
    }
 
-   bool printer::open(const char * pszDeviceName)
+   bool printer::open(const ::string & pszDeviceName)
    {
       if(is_opened())
          close();

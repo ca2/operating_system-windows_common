@@ -212,7 +212,7 @@ Seq_Open_File_Cleanup:
          }
 
 
-         ::e_status     sequence::OpenFile(const char * lpFileName, i32 openMode)
+         ::e_status     sequence::OpenFile(const ::string & lpFileName, i32 openMode)
          {
 
             file_pointer file;
@@ -1311,7 +1311,7 @@ seq_Preroll_Cleanup:
          }
 
 
-         ::e_status     sequence::SaveFile(const char * lpFileName)
+         ::e_status     sequence::SaveFile(const ::string & lpFileName)
          {
 
             return file()->SaveFile(lpFileName);

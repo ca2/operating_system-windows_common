@@ -20,7 +20,7 @@ public:
 
 #endif
 
-   semaphore(::i32 lInitialCount = 1, ::i32 lMaxCount = 1, const char * pstrName=nullptr, sync_options * poptions = nullptr);
+   semaphore(::i32 lInitialCount = 1, ::i32 lMaxCount = 1, const ::string & pstrName=nullptr, sync_options * poptions = nullptr);
 
    virtual ~semaphore();
 

@@ -14,7 +14,7 @@
 #endif
 
 
-semaphore::semaphore(::i32 lInitialCount, ::i32 lMaxCount, const char * pstrName, LPSECURITY_ATTRIBUTES psaAttributes)
+semaphore::semaphore(::i32 lInitialCount, ::i32 lMaxCount, const ::string & pstrName, LPSECURITY_ATTRIBUTES psaAttributes)
 {
 
    ASSERT(lMaxCount > 0);

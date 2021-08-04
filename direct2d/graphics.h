@@ -120,9 +120,9 @@ namespace draw2d_direct2d
       virtual double get_dpix() override;
 
       //// Constructors
-      //bool CreateDC(const char * lpszDriverName, const char * lpszDeviceName,
+      //bool CreateDC(const ::string & lpszDriverName, const ::string & lpszDeviceName,
       //              const char * lpszOutput, const void * lpInitData) override;
-      //bool CreateIC(const char * lpszDriverName, const char * lpszDeviceName,
+      //bool CreateIC(const ::string & lpszDriverName, const ::string & lpszDeviceName,
       //              const char * lpszOutput, const void * lpInitData) override;
       bool CreateCompatibleDC(::draw2d::graphics * pgraphics) override;
 
@@ -322,9 +322,9 @@ namespace draw2d_direct2d
 //                     HBRUSH hBrush = nullptr) override;
 //      bool DrawState(const ::point_f64 & point, const ::size_f64 & size, HICON hIcon, ::u32 nFlags,
 //                     ::draw2d::brush* pBrush = nullptr) override;
-//      bool DrawState(const ::point_f64 & point, const ::size_f64 & size, const char * lpszText, ::u32 nFlags,
+//      bool DrawState(const ::point_f64 & point, const ::size_f64 & size, const ::string & lpszText, ::u32 nFlags,
 //                     bool bPrefixText = true, int nTextLen = 0, HBRUSH hBrush = nullptr) override;
-//      bool DrawState(const ::point_f64 & point, const ::size_f64 & size, const char * lpszText, ::u32 nFlags,
+//      bool DrawState(const ::point_f64 & point, const ::size_f64 & size, const ::string & lpszText, ::u32 nFlags,
 //                     bool bPrefixText = true, int nTextLen = 0, ::draw2d::brush* pBrush = nullptr) override;
 //      bool DrawState(const ::point_f64 & point, const ::size_f64 & size, DRAWSTATEPROC lpDrawProc,
       //       LPARAM lData, ::u32 nFlags, HBRUSH hBrush = nullptr) override;
@@ -401,32 +401,32 @@ namespace draw2d_direct2d
         BLENDFUNCTION blend) override;*/
 
       // Text Functions
-      //virtual bool text_out(double x, double y, const char * lpszString, strsize nCount) override;
+      //virtual bool text_out(double x, double y, const ::string & lpszString, strsize nCount) override;
       //virtual bool text_out(double x, double y, const block & block) override;
       virtual bool TextOutRaw(double x, double y, const block & block) override;
       //virtual bool text_out(double x, double y, const ::string & str) override;
-      //virtual bool ExtTextOut(double x, double y, ::u32 nOptions, const ::rectangle_f64 & rectangle, const char * lpszString, strsize nCount, LPINT lpDxWidths) override;
+      //virtual bool ExtTextOut(double x, double y, ::u32 nOptions, const ::rectangle_f64 & rectangle, const ::string & lpszString, strsize nCount, LPINT lpDxWidths) override;
       //virtual bool ExtTextOut(double x, double y, ::u32 nOptions, const ::rectangle_f64 & rectangle, const ::string & str, LPINT lpDxWidths) override;
-      //virtual ::size_f64 TabbedTextOut(double x, double y, const char * lpszString, strsize nCount, count nTabPositions, LPINT lpnTabStopPositions, i32 nTabOrigin) override;
+      //virtual ::size_f64 TabbedTextOut(double x, double y, const ::string & lpszString, strsize nCount, count nTabPositions, LPINT lpnTabStopPositions, i32 nTabOrigin) override;
       //virtual ::size_f64 TabbedTextOut(double x, double y, const ::string & str, count nTabPositions, LPINT lpnTabStopPositions, i32 nTabOrigin) override;
 
-      //virtual bool draw_text(const char * lpszString, strsize nCount, const ::rectangle_f64 & rectangle, const ::e_align & ealign = e_align_top_left, const ::e_draw_text & edrawtext = e_draw_text_none) override;
+      //virtual bool draw_text(const ::string & lpszString, strsize nCount, const ::rectangle_f64 & rectangle, const ::e_align & ealign = e_align_top_left, const ::e_draw_text & edrawtext = e_draw_text_none) override;
       virtual bool draw_text(const ::string & str,const ::rectangle_f64 & rectangle, const ::e_align & ealign = e_align_top_left, const ::e_draw_text & edrawtext = e_draw_text_none) override;
 
 //      virtual int draw_text_ex(char * lpszString, int nCount, ::rectangle_f64 * prectangle, const ::e_align & ealign = e_align_top_left, const ::e_draw_text & edrawtext = e_draw_text_none, LPDRAWTEXTPARAMS lpDTParams) override;
       //    virtual int draw_text_ex(const ::string & str, ::rectangle_f64 * prectangle, const ::e_align & ealign = e_align_top_left, const ::e_draw_text & edrawtext = e_draw_text_none, LPDRAWTEXTPARAMS lpDTParams) override;
 
-      virtual size_f64 get_text_extent(const char * lpszString, strsize nCount, strsize iIndex) override;
-      //virtual size_f64 get_text_extent(const char * lpszString, strsize nCount) override;
+      virtual size_f64 get_text_extent(const ::string & lpszString, strsize nCount, strsize iIndex) override;
+      //virtual size_f64 get_text_extent(const ::string & lpszString, strsize nCount) override;
       virtual size_f64 get_text_extent(const ::string & str) override;
-      virtual bool get_text_extent(size_f64 & size, const char * lpszString, strsize nCount, strsize iIndex) override;
-      virtual bool get_text_extent(size_f64 & size, const char * lpszString, strsize nCount) override;
+      virtual bool get_text_extent(size_f64 & size, const ::string & lpszString, strsize nCount, strsize iIndex) override;
+      virtual bool get_text_extent(size_f64 & size, const ::string & lpszString, strsize nCount) override;
       virtual bool get_text_extent(size_f64 & size, const ::string & str) override;
-      virtual ::size_f64 GetOutputTextExtent(const char * lpszString, strsize nCount) override;
+      virtual ::size_f64 GetOutputTextExtent(const ::string & lpszString, strsize nCount) override;
       virtual ::size_f64 GetOutputTextExtent(const ::string & str) override;
-      //virtual ::size_f64 GetTabbedTextExtent(const char * lpszString, strsize nCount, count nTabPositions, LPINT lpnTabStopPositions) override;
+      //virtual ::size_f64 GetTabbedTextExtent(const ::string & lpszString, strsize nCount, count nTabPositions, LPINT lpnTabStopPositions) override;
       //virtual ::size_f64 GetTabbedTextExtent(const ::string & str, count nTabPositions, LPINT lpnTabStopPositions) override;
-      virtual ::size_f64 GetOutputTabbedTextExtent(const char * lpszString, strsize nCount, count nTabPositions, LPINT lpnTabStopPositions) override;
+      virtual ::size_f64 GetOutputTabbedTextExtent(const ::string & lpszString, strsize nCount, count nTabPositions, LPINT lpnTabStopPositions) override;
       virtual ::size_f64 GetOutputTabbedTextExtent(const ::string & str, count  nTabPositions, LPINT lpnTabStopPositions) override;
       //virtual bool GrayString(::draw2d::brush* pBrush, bool (CALLBACK* lpfnOutput)(HDC, LPARAM, int), LPARAM lpData, int nCount, double x, double y, double nWidth, double nHeight) override;
       virtual ::u32 GetTextAlign() override;
@@ -439,7 +439,7 @@ namespace draw2d_direct2d
       //virtual int GetTextCharacterExtra() override;
       //virtual int SetTextCharacterExtra(int nCharExtra) override;
 
-//      u32 GetCharacterPlacement(const char * lpString, int nCount, int nMaxExtent, LPGCP_RESULTS lpResults, u32 dwFlags) override;
+//      u32 GetCharacterPlacement(const ::string & lpString, int nCount, int nMaxExtent, LPGCP_RESULTS lpResults, u32 dwFlags) override;
       //    u32 GetCharacterPlacement(string & str, int nMaxExtent, LPGCP_RESULTS lpResults, u32 dwFlags) override;
 
 //#if (_WIN32_WINNT >= 0x0500)
@@ -487,12 +487,12 @@ namespace draw2d_direct2d
 //#endif
 
       //// Printer/Device Escape Functions
-      //virtual int Escape(int nEscape, int nCount, const char * lpszInData, LPVOID lpOutData) override;
-      //virtual int Escape(int nEscape, int nInputSize, const char * lpszInputData, int nOutputSize, char * lpszOutputData) override;
-      //virtual int DrawEscape(int nEscape, int nInputSize, const char * lpszInputData) override;
+      //virtual int Escape(int nEscape, int nCount, const ::string & lpszInData, LPVOID lpOutData) override;
+      //virtual int Escape(int nEscape, int nInputSize, const ::string & lpszInputData, int nOutputSize, char * lpszOutputData) override;
+      //virtual int DrawEscape(int nEscape, int nInputSize, const ::string & lpszInputData) override;
 
       // Escape helpers
-      //int StartDoc(const char * lpszDocName) override;  // old Win3.0 version
+      //int StartDoc(const ::string & lpszDocName) override;  // old Win3.0 version
 //      int StartDoc(LPDOCINFO lpDocInfo) override;
       int StartPage() override;
       int EndPage() override;

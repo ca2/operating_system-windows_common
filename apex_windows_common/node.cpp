@@ -716,7 +716,7 @@ namespace apex
       }
 
 
-      ::i32 node::reg_query_value(HKEY hkey, const char* pszSubKey, string& str)
+      ::i32 node::reg_query_value(HKEY hkey, const ::string & pszSubKey, string& str)
       {
 
          DWORD dwType = 0;
@@ -750,7 +750,7 @@ namespace apex
       }
 
 
-      HICON node::extract_icon(HINSTANCE hInst, const char* pszExeFileName, ::u32 nIconIndex)
+      HICON node::extract_icon(HINSTANCE hInst, const ::string & pszExeFileName, ::u32 nIconIndex)
 
       {
 
@@ -760,7 +760,7 @@ namespace apex
       }
 
 
-      bool node::delete_file(const char* pFileName)
+      bool node::delete_file(const ::string & pFileName)
 
       {
 

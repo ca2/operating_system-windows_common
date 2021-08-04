@@ -50,7 +50,7 @@ namespace windows
    }
 
 
-   bool interprocess_communication_tx::open(const char * pszKey, ::launcher * plauncher)
+   bool interprocess_communication_tx::open(const ::string & pszKey, ::launcher * plauncher)
    {
 
       if (get_hwnd() != nullptr)
@@ -133,7 +133,7 @@ namespace windows
    }
 
 
-   bool interprocess_communication_tx::send(const char * pszMessage, duration durationTimeout)
+   bool interprocess_communication_tx::send(const ::string & pszMessage, duration durationTimeout)
    {
 
       if (!is_tx_ok())
@@ -256,7 +256,7 @@ namespace windows
    }
 
 
-   bool interprocess_communication_rx::create(const char * pszKey)
+   bool interprocess_communication_rx::create(const ::string & pszKey)
    {
 
 
@@ -330,7 +330,7 @@ namespace windows
 
 
 
-   void * interprocess_communication_rx::on_interprocess_receive(::interprocess_communication::rx * prx, const char * pszMessage)
+   void * interprocess_communication_rx::on_interprocess_receive(::interprocess_communication::rx * prx, const ::string & pszMessage)
    {
 
       string strMessage(pszMessage);
@@ -477,7 +477,7 @@ namespace windows
          else if (pcds->dwData == 0x80000000)
          {
 
-            string strMessage((const char *)pcds->lpData, pcds->cbData);
+            string strMessage((const ::string &)pcds->lpData, pcds->cbData);
 
             on_interprocess_receive(this, strMessage.c_str());
 
@@ -539,7 +539,7 @@ namespace windows
    //}
 
 
-   //bool interprocess_communication::open_ab(const char * pszKey, const char * pszModule, launcher * plauncher)
+   //bool interprocess_communication::open_ab(const ::string & pszKey, const ::string & pszModule, launcher * plauncher)
    //{
 
    //   m_strChannel = pszKey;
@@ -573,7 +573,7 @@ namespace windows
    //}
 
 
-   //bool interprocess_communication::open_ba(const char * pszKey, const char * pszModule, launcher * plauncher)
+   //bool interprocess_communication::open_ba(const ::string & pszKey, const ::string & pszModule, launcher * plauncher)
    //{
 
    //   m_strChannel = pszKey;

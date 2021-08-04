@@ -85,7 +85,7 @@ namespace imaging_wic
 
             m_pcontext->m_papexcontext->file().as_memory(payload, *pmemory);
 
-            const char* psz = (const char*)pmemory->get_data();
+            const char* psz = (const char *)pmemory->get_data();
 
             auto size = pmemory->get_size();
 
