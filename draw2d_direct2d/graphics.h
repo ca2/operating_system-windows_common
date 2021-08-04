@@ -416,13 +416,13 @@ namespace draw2d_direct2d
 //      virtual int draw_text_ex(char * lpszString, int nCount, ::rectangle_f64 * prectangle, const ::e_align & ealign = e_align_top_left, const ::e_draw_text & edrawtext = e_draw_text_none, LPDRAWTEXTPARAMS lpDTParams) override;
       //    virtual int draw_text_ex(const ::string & str, ::rectangle_f64 * prectangle, const ::e_align & ealign = e_align_top_left, const ::e_draw_text & edrawtext = e_draw_text_none, LPDRAWTEXTPARAMS lpDTParams) override;
 
-      virtual size_f64 get_text_extent(const ::string & lpszString, strsize nCount, strsize iIndex) override;
+      virtual size_f64 get_text_extent(const char * pszString, strsize nCount, strsize iIndex) override;
       //virtual size_f64 get_text_extent(const ::string & lpszString, strsize nCount) override;
       virtual size_f64 get_text_extent(const block & block) override;
-      virtual bool get_text_extent(size_f64 & size, const ::string & lpszString, strsize nCount, strsize iIndex) override;
-      virtual bool get_text_extent(size_f64 & size, const ::string & lpszString, strsize nCount) override;
+      virtual bool get_text_extent(size_f64 & size, const char * pszString, strsize nCount, strsize iIndex) override;
+      virtual bool get_text_extent(size_f64 & size, const char * pszString, strsize nCount) override;
       virtual bool get_text_extent(size_f64 & size, const ::string & str) override;
-      virtual ::size_f64 GetOutputTextExtent(const ::string & lpszString, strsize nCount) override;
+      virtual ::size_f64 GetOutputTextExtent(const char * pszString, strsize nCount) override;
       virtual ::size_f64 GetOutputTextExtent(const ::string & str) override;
       //virtual ::size_f64 GetTabbedTextExtent(const ::string & lpszString, strsize nCount, count nTabPositions, LPINT lpnTabStopPositions) override;
       //virtual ::size_f64 GetTabbedTextExtent(const ::string & str, count nTabPositions, LPINT lpnTabStopPositions) override;

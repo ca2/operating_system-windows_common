@@ -4656,7 +4656,7 @@ namespace draw2d_direct2d
    }
 
 
-   size_f64 graphics::get_text_extent(const ::string & lpszString, strsize nCount, strsize iIndex)
+   size_f64 graphics::get_text_extent(const char * lpszString, strsize nCount, strsize iIndex)
    {
 
       if (nCount < 0)
@@ -4691,7 +4691,7 @@ namespace draw2d_direct2d
 
       size_f64 s;
 
-      if (!get_text_extent(s, (const ::string &) block.get_data(), block.get_size()))
+      if (!get_text_extent(s, (const char *) block.get_data(), block.get_size()))
       {
 
          return ::size_f64(0, 0);
@@ -4703,7 +4703,7 @@ namespace draw2d_direct2d
    }
 
 
-   ::size_f64 graphics::GetOutputTextExtent(const ::string & lpszString, strsize nCount)
+   ::size_f64 graphics::GetOutputTextExtent(const char * lpszString, strsize nCount)
    {
 
       __throw(todo);
@@ -4719,7 +4719,7 @@ namespace draw2d_direct2d
    }
 
 
-   bool graphics::get_text_extent(size_f64 & size, const ::string & lpszString, strsize nCount, strsize iIndex)
+   bool graphics::get_text_extent(size_f64 & size, const char * lpszString, strsize nCount, strsize iIndex)
    {
 
       if (iIndex <= 0)
@@ -4837,7 +4837,7 @@ namespace draw2d_direct2d
    }
 
 
-   bool graphics::get_text_extent(size_f64 & size, const ::string & lpszString, strsize nCount)
+   bool graphics::get_text_extent(size_f64 & size, const char * lpszString, strsize nCount)
    {
 
       if (nCount < 0)
