@@ -33,30 +33,6 @@ namespace windows
    }
 
 
-   bool CLASS_DECL_ACME_WINDOWS_COMMON shell_get_special_folder_path(HWND hwnd, ::file::path& str, i32 csidl, bool fCreate)
-   {
-
-      return ::SHGetSpecialFolderPathW(hwnd, wtostring(str, MAX_PATH * 8), csidl, fCreate) != false;
-
-   }
-
-
-   ::file::path CLASS_DECL_ACME_WINDOWS_COMMON shell_get_special_folder_path(i32 csidl, bool fCreate, ::windowing::window* pwindow)
-   {
-
-      ::file::path path;
-
-      if (!shell_get_special_folder_path(nullptr, path, csidl, fCreate))
-      {
-
-         return "";
-
-      }
-
-      return path;
-
-   }
-
 
 
 
@@ -106,16 +82,6 @@ namespace windows
          return ERROR_NOT_SUPPORTED;
 
       }
-
-   }
-
-
-   HICON extract_icon(HINSTANCE hInst, const ::string & pszExeFileName, ::u32 nIconIndex)
-
-   {
-
-      return ::ExtractIconW(hInst, ::str::international::utf8_to_unicode(pszExeFileName), nIconIndex);
-
 
    }
 

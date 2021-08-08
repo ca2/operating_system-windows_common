@@ -302,57 +302,8 @@ namespace apex
       ::e_status node::open_folder(::file::path& pathFolder)
       {
 
-         wstring wstrFolder(pathFolder);
-
-         int i = (int)(iptr) ::ShellExecuteW(nullptr, L"open", wstrFolder, nullptr, nullptr, SW_NORMAL);
-
-         if (i < 32)
-         {
-
-            switch (i)
-            {
-            case 0:
-               //The operating system is out of memory or resources.
-               return error_no_memory;
-            case ERROR_FILE_NOT_FOUND:
-               return error_file_not_found;
-               //The specified file was not found.
-            case ERROR_PATH_NOT_FOUND:
-               return error_path_not_found;
-               //            The specified path was not found.
-            case          ERROR_BAD_FORMAT:
-               return error_bad_format;
-               //The.exe file is invalid(non - Win32.exe or error in.exe image).
-               //case SE_ERR_ACCESSDENIED:
-               //         return error_access_denied;
-               ////The operating system denied access to the specified file.
-               //SE_ERR_ASSOCINCOMPLETE
-               //The file name association is incomplete or invalid.
-               //SE_ERR_DDEBUSY
-               //The DDE transaction could not be completed because other DDE transactions were being processed.
-               //SE_ERR_DDEFAIL
-               //The DDE transaction failed.
-               //SE_ERR_DDETIMEOUT
-               //The DDE transaction could not be completed because the request timed out.
-               //SE_ERR_DLLNOTFOUND
-               //The specified DLL was not found.
-               //SE_ERR_FNF
-               //The specified file was not found.
-               //SE_ERR_NOASSOC
-               //There is no application associated with the given file name extension.This error will also be returned if you attempt to print a file that is not printable.
-               //SE_ERR_OOM
-               //There was not enough memory to complete the operation.
-               //SE_ERR_PNF
-               //The specified path was not found.
-               //SE_ERR_SHARE
-               //A sharing violation occurred.*/
-            default:
-               return error_failed;
-            }
-
-         }
-
-         return ::success;
+        
+         return ::error_failed;
 
       }
 
@@ -700,74 +651,15 @@ namespace apex
 
 
 
-      ::u32 node::get_current_directory(string& str)
-      {
+      //HICON node::extract_icon(HINSTANCE hInst, const ::string & pszExeFileName, ::u32 nIconIndex)
 
-         return ::GetCurrentDirectoryW(MAX_PATH * 8, wtostring(str, MAX_PATH * 8));
+      //{
 
-      }
-
-
-      ::u32 node::get_temp_path(string& str)
-      {
-
-         return ::GetTempPathW(MAX_PATH * 8, wtostring(str, MAX_PATH * 8));
-
-      }
+      //   return ::ExtractIconW(hInst, ::str::international::utf8_to_unicode(pszExeFileName), nIconIndex);
 
 
-      ::i32 node::reg_query_value(HKEY hkey, const ::string & pszSubKey, string& str)
-      {
+      //}
 
-         DWORD dwType = 0;
-         DWORD dwSize = 0;
-         ::i32 lResult = RegQueryValueExW(hkey, wstring(pszSubKey), nullptr, &dwType, nullptr, &dwSize);
-
-         if (lResult != ERROR_SUCCESS)
-            return lResult;
-         ASSERT(dwType == REG_SZ || dwType == REG_MULTI_SZ || dwType == REG_EXPAND_SZ);
-         if (dwType == REG_SZ || dwType == REG_MULTI_SZ || dwType == REG_EXPAND_SZ)
-         {
-
-            natural_wstring pwsz(byte_count, dwSize);
-
-            lResult = RegQueryValueExW(hkey, wstring(pszSubKey), nullptr, &dwType, (byte*)(unichar*)pwsz, &dwSize);
-
-            str = pwsz;
-
-            //str.release_string_buffer(dwSize);
-
-            return lResult;
-
-         }
-         else
-         {
-
-            return ERROR_NOT_SUPPORTED;
-
-         }
-
-      }
-
-
-      HICON node::extract_icon(HINSTANCE hInst, const ::string & pszExeFileName, ::u32 nIconIndex)
-
-      {
-
-         return ::ExtractIconW(hInst, ::str::international::utf8_to_unicode(pszExeFileName), nIconIndex);
-
-
-      }
-
-
-      bool node::delete_file(const ::string & pFileName)
-
-      {
-
-         return ::DeleteFileW(::str::international::utf8_to_unicode(pFileName)) != false;
-
-
-      }
 
       //CLASS_DECL_ACME::file::path user_appdata_local();
 
