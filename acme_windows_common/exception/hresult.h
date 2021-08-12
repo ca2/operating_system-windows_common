@@ -1,0 +1,26 @@
+#pragma once
+
+
+#ifdef WINDOWS
+
+
+class CLASS_DECL_ACME_WINDOWS_COMMON hresult_exception :
+   public ::exception::exception
+{
+public:
+
+
+   hresult_exception(HRESULT hresult, const char * pszMessage = nullptr);
+   virtual ~hresult_exception();
+
+
+};
+
+
+#endif
+
+
+
+#ifdef WINDOWS
+CLASS_DECL_ACME_WINDOWS_COMMON int trace_hr(const char * psz, HRESULT hr);
+#endif

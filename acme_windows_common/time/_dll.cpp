@@ -1,0 +1,192 @@
+#include "framework.h"
+#include "acme/operating_system.h"
+
+
+#include "_c.h"
+
+#ifdef _UWP
+
+#include <Psapi.h>
+
+#endif
+
+
+#include "framework.h"
+
+
+WCHAR* wrap_dup_w(const WCHAR* pwsz, const WCHAR* pwszPrefix = nullptr, const WCHAR* pwszSuffix = nullptr)
+{
+
+   auto len = wcslen(pwsz);
+
+   if (!len)
+   {
+
+      return wcsdup(L"");
+
+   }
+
+   auto prefix_len = ::is_set(pwszPrefix) ? wcslen(pwszPrefix) : 0;
+
+   auto suffix_len = ::is_set(pwszSuffix) ? wcslen(pwszSuffix) : 0;
+
+   auto buffer_len = len + prefix_len + suffix_len;
+
+   WCHAR* pwszResult = (WCHAR*)malloc((buffer_len + 1) * sizeof(WCHAR));
+
+   pwszResult[0] = L'\0';
+
+   if (prefix_len)
+   {
+
+      wcscat(pwszResult, pwszPrefix);
+
+   }
+
+   wcscat(pwszResult, pwsz);
+
+   if (suffix_len)
+   {
+
+      wcscat(pwszResult, pwszSuffix);
+
+   }
+
+   return pwszResult;
+
+}
+
+
+WCHAR* module_debug_wcsdup(hinstance hinstance, const WCHAR* pwszPrefix = nullptr, const WCHAR* pwszSuffix = nullptr)
+{
+
+   auto prefix_len = ::is_set(pwszPrefix) ? wcslen(pwszPrefix) : 0;
+
+   auto suffix_len = ::is_set(pwszSuffix) ? wcslen(pwszSuffix) : 0;
+
+   auto module_len = MAX_PATH * 4;
+
+   auto buffer_len = module_len * 2 + prefix_len + suffix_len + 16;
+
+   WCHAR* pwsz = (WCHAR*)malloc((buffer_len + 1) * sizeof(WCHAR));
+
+   try
+   {
+
+      pwsz[0] = L'\'';
+
+      ::GetModuleFileNameW((HINSTANCE) hinstance, pwsz + 1, module_len);
+
+      auto name = wcsrchr(pwsz, '\\');
+
+      if (name)
+      {
+
+         memmove(pwsz + 1, name + 1, module_len * sizeof(WCHAR));
+
+      }
+
+      wcscat(pwsz, L"\'");
+
+      if (prefix_len)
+      {
+
+         wcscat(pwsz, pwszPrefix);
+
+      }
+      else
+      {
+
+         wcscat(pwsz, L"");
+
+      }
+
+      wcscat(pwsz, L"\'");
+
+      ::GetModuleFileNameW((HINSTANCE) hinstance, &pwsz[wcslen(pwsz)], (::u32)module_len);
+
+      wcscat(pwsz, L"\'");
+
+      if (suffix_len)
+      {
+
+         wcscat(pwsz, pwszSuffix);
+
+      }
+
+   }
+   catch (...)
+   {
+
+   }
+
+   return pwsz;
+
+}
+
+
+// void module_debug_box_w(const ::e_message_box & emessagebox, hinstance hinstance, const WCHAR* pwszCaption, WCHAR* pwszSuffix = nullptr)
+// {
+
+//    WCHAR* pwsz = nullptr;
+
+//    WCHAR* pwszPrefix = wrap_dup_w(pwszCaption, L"\n\n", L"\n\n");
+
+//    try
+//    {
+
+//       auto pwsz = module_debug_wcsdup(hinstance, pwszPrefix, pwszSuffix);
+
+//       try
+//       {
+
+//          xxxshow_error_message(string(pwsz), string(pwszCaption), emessagebox);
+//          //FUNCTION_DEBUGBOXW(pwsz, pwszCaption, iFlags);
+
+//       }
+//       catch (...)
+//       {
+
+//       }
+
+//       ::free(pwsz);
+
+//    }
+//    catch (...)
+//    {
+
+//    }
+
+//    ::free(pwszPrefix);
+
+// }
+
+
+void module_output_debug_string_w(hinstance hinstance, const WCHAR* pwszPrefix = nullptr, const WCHAR* pwszSuffix = nullptr)
+{
+
+   auto pwsz = module_debug_wcsdup(hinstance, pwszPrefix, pwszSuffix);
+
+   try
+   {
+
+      ::OutputDebugStringW(pwsz);
+
+   }
+   catch (...)
+   {
+
+   }
+
+   ::free(pwsz);
+
+}
+
+
+
+#ifndef CUBE
+
+
+
+
+
