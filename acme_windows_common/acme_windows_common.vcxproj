@@ -298,7 +298,7 @@
       <SubSystem>Windows</SubSystem>
       <EntryPointSymbol>
       </EntryPointSymbol>
-      <AdditionalDependencies>Gdiplus.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Ws2_32.lib;Gdiplus.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
     </Link>
@@ -476,7 +476,7 @@
       <SubSystem>Windows</SubSystem>
       <EntryPointSymbol>
       </EntryPointSymbol>
-      <AdditionalDependencies>Gdiplus.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Ws2_32.lib;Gdiplus.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
       <ShowProgress>NotSet</ShowProgress>
@@ -573,7 +573,7 @@
       <SubSystem>Windows</SubSystem>
       <EntryPointSymbol>
       </EntryPointSymbol>
-      <AdditionalDependencies>Gdiplus.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Ws2_32.lib;Gdiplus.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
       <ShowProgress>NotSet</ShowProgress>
@@ -771,7 +771,7 @@
       </EntryPointSymbol>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
-      <AdditionalDependencies>Gdiplus.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Ws2_32.lib;Gdiplus.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <MapFileName>
       </MapFileName>
     </Link>
@@ -945,7 +945,7 @@
       </EntryPointSymbol>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
-      <AdditionalDependencies>Gdiplus.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Ws2_32.lib;Gdiplus.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <MapFileName>$(TargetDir)$(TargetName).map</MapFileName>
     </Link>
     <Manifest>
@@ -1037,7 +1037,7 @@
       </EntryPointSymbol>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
-      <AdditionalDependencies>Gdiplus.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Ws2_32.lib;Gdiplus.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <MapFileName>$(TargetDir)$(TargetName).map</MapFileName>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
@@ -1155,23 +1155,57 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="acme_dir.h" />
+    <ClInclude Include="acme_file.h" />
+    <ClInclude Include="acme_path.h" />
+    <ClInclude Include="bstring.h" />
+    <ClInclude Include="comptr.h" />
+    <ClInclude Include="cotaskptr.h" />
+    <ClInclude Include="exception\engine.h" />
+    <ClInclude Include="exception\translator.h" />
+    <ClInclude Include="exception\hresult.h" />
     <ClInclude Include="exception_translator.h" />
+    <ClInclude Include="file.h" />
+    <ClInclude Include="new_api.h" />
     <ClInclude Include="node.h" />
     <ClInclude Include="factory_exchange.h" />
+    <ClInclude Include="parallelization.h" />
+    <ClInclude Include="prop_variant.h" />
     <ClInclude Include="standard_exception.h" />
+    <ClInclude Include="variant.h" />
+    <ClInclude Include="_ (2).h" />
+    <ClInclude Include="_ (3).h" />
     <ClInclude Include="_.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="_acme_windows_common.h" />
+    <ClInclude Include="_c.h" />
+    <ClInclude Include="_default_dll_impl.h" />
+    <ClInclude Include="_file_c.h" />
+    <ClInclude Include="_geometry2.h" />
     <ClInclude Include="_impl.h" />
     <ClInclude Include="_node_windows.h" />
     <ClInclude Include="_node_windows_private.h" />
     <ClInclude Include="_thread_os_create_impl.h" />
     <ClInclude Include="_types.h" />
+    <ClInclude Include="_unicode_c.h" />
     <ClInclude Include="_windows.h" />
     <ClInclude Include="_windows_common.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="exception_translator.cpp" />
+    <ClCompile Include="acme_file.cpp" />
+    <ClCompile Include="acme_path.cpp" />
+    <ClCompile Include="aura.cpp" />
+    <ClCompile Include="base.cpp" />
+    <ClCompile Include="bstr.cpp" />
+    <ClCompile Include="bstring.cpp" />
+    <ClCompile Include="com.cpp" />
+    <ClCompile Include="debug.cpp" />
+    <ClCompile Include="exception\engine.cpp" />
+    <ClCompile Include="exception\hresult.cpp" />
+    <ClCompile Include="exception\translator.cpp" />
+    <ClCompile Include="file.cpp" />
+    <ClCompile Include="file1.cpp" />
+    <ClCompile Include="networking.cpp" />
     <ClCompile Include="node.cpp" />
     <ClCompile Include="os_usleep.cpp" />
     <ClCompile Include="standard_exception.cpp" />

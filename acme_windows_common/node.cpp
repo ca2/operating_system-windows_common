@@ -540,10 +540,10 @@ namespace acme
       //
       //      string str;
       //
-      //      if (file_exists(m_psystem->m_pacmedir->system() / "config\\system\\audio.txt"))
+      //      if (m_psystem->m_pacmefile->exists(m_psystem->m_pacmedir->system() / "config\\system\\audio.txt"))
       //      {
       //
-      //         str = file_as_string(m_psystem->m_pacmedir->system() / "config\\system\\audio.txt");
+      //         str = m_psystem->m_pacmefile->as_string(m_psystem->m_pacmedir->system() / "config\\system\\audio.txt");
       //
       //      }
       //      else
@@ -553,7 +553,7 @@ namespace acme
       //
       //         strPath = m_psystem->m_pacmedir->appdata() / "audio.txt";
       //
-      //         str = file_as_string(strPath);
+      //         str = m_psystem->m_pacmefile->as_string(strPath);
       //
       //      }
       //
@@ -601,7 +601,7 @@ namespace acme
       //      if (g_iMemoryCountersStartable && g_iMemoryCounters < 0)
       //      {
       //
-      //         g_iMemoryCounters = file_exists(m_psystem->m_pacmedir->config() / "system/memory_counters.txt") ? 1 : 0;
+      //         g_iMemoryCounters = m_psystem->m_pacmefile->exists(m_psystem->m_pacmedir->config() / "system/memory_counters.txt") ? 1 : 0;
       //
       //         if (g_iMemoryCounters)
       //         {

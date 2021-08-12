@@ -1156,12 +1156,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="node.h" />
+    <ClInclude Include="single_threaded_handler_manager.h" />
     <ClInclude Include="_.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="_apex_windows_common.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="node.cpp" />
+    <ClCompile Include="single_threaded_handler_manager.cpp" />
     <ClCompile Include="_.cpp" />
     <ClCompile Include="factory_exchange.cpp" />
     <ClCompile Include="framework.cpp">

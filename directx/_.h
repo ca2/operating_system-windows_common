@@ -3,6 +3,7 @@
 
 
 #include "aura/_.h"
+#include "aura_windows/_.h"
 
 
 #ifdef _DIRECTX_LIBRARY

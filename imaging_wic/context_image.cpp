@@ -1,4 +1,6 @@
 #include "framework.h"
+#include "apex/parallelization/handler_manager.h"
+#include "apex_windows_common/single_threaded_handler_manager.h"
 #include <wincodec.h>
 
 
@@ -33,12 +35,21 @@ namespace imaging_wic
 
       }
 
-      __own(this, m_pmanagerImageLoad, __new(handler_manager("imaging_load_image", true)));
+      __own(this, m_pmanagerImageLoad, __new(single_threaded_handler_manager));
 
       if (!m_pmanagerImageLoad)
       {
 
          return ::error_failed;
+
+      }
+
+      estatus = m_pmanagerImageLoad->initialize_handler_manager(this, "imaging_load_image", true);
+
+      if (!estatus)
+      {
+
+         return estatus;
 
       }
 

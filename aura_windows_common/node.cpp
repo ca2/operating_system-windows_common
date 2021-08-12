@@ -1,4 +1,5 @@
 #include "framework.h"
+#include "aura/node/operating_system/windows/_.h"
 
 
 namespace aura
@@ -36,7 +37,6 @@ namespace aura
          return string(wsz);
 
       }
-#include "aura/os/windows/_c.h"
 
 
       bool node::_os_calc_app_dark_mode()

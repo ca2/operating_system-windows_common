@@ -3,6 +3,9 @@
 #include "acme/filesystem/filesystem/acme_path.h"
 
 
+CLASS_DECL_ACME_WINDOWS_COMMON bool defer_initialize_winsock();
+
+
 namespace apex
 {
 
@@ -511,10 +514,10 @@ namespace apex
 
          string str;
 
-         if (file_exists(m_psystem->m_pacmedir->system() / "config\\system\\audio.txt"))
+         if (m_psystem->m_pacmefile->exists(m_psystem->m_pacmedir->system() / "config\\system\\audio.txt"))
          {
 
-            str = file_as_string(m_psystem->m_pacmedir->system() / "config\\system\\audio.txt");
+            str = m_psystem->m_pacmefile->as_string(m_psystem->m_pacmedir->system() / "config\\system\\audio.txt");
 
          }
          else
@@ -524,7 +527,7 @@ namespace apex
 
             strPath = m_psystem->m_pacmedir->appdata() / "audio.txt";
 
-            str = file_as_string(strPath);
+            str = m_psystem->m_pacmefile->as_string(strPath);
 
          }
 

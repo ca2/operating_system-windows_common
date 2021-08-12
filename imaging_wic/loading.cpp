@@ -1,4 +1,5 @@
 #include "framework.h"
+#include "apex/parallelization/handler_manager.h"
 #include <wincodec.h>
 #include <shcore.h>
 
