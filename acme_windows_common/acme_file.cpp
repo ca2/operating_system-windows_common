@@ -190,134 +190,136 @@ namespace windows_common
    }
 
 
-   string acme_file::as_string(const char * path, strsize iReadAtMostByteCount)
-   {
+   //string acme_file::as_string(const char * path, strsize iReadAtMostByteCount)
+   //{
 
-      string str;
+   //   string str;
 
-      FILE * file = FILE_open(path, "r", _SH_DENYNO);
+   //   wstring wstr(path);
 
-      if (file == nullptr)
-      {
+   //   FILE * pfile = _wfsopen(wstr, L"r", _SH_DENYNO);
 
-         DWORD dwLastError = ::GetLastError();
+   //   if (::is_null(pfile))
+   //   {
 
-         TRACELASTERROR();
+   //      DWORD dwLastError = ::GetLastError();
 
-         return "";
+   //      TRACELASTERROR();
 
-      }
+   //      return "";
 
-      DWORD dwSize;
+   //   }
 
-      dwSize = (DWORD)FILE_get_size(file);
+   //   DWORD dwSize;
 
-      iReadAtMostByteCount = iReadAtMostByteCount < 0 ? dwSize : minimum(iReadAtMostByteCount, (::strsize)dwSize);
+   //   dwSize = (DWORD)get_size(pfile);
 
-      char * psz = str.get_string_buffer(iReadAtMostByteCount);
+   //   iReadAtMostByteCount = iReadAtMostByteCount < 0 ? dwSize : minimum(iReadAtMostByteCount, (::strsize)dwSize);
 
-      ::size_t iPos = 0;
+   //   char * psz = str.get_string_buffer(iReadAtMostByteCount);
 
-      while (iReadAtMostByteCount - iPos > 0)
-      {
+   //   ::size_t iPos = 0;
 
-         auto dwRead = ::fread(psz + iPos, 1, (size_t)iReadAtMostByteCount - iPos, file);
+   //   while (iReadAtMostByteCount - iPos > 0)
+   //   {
 
-         if (dwRead <= 0)
-         {
+   //      auto dwRead = ::fread(psz + iPos, 1, (size_t)iReadAtMostByteCount - iPos, file);
 
-            break;
+   //      if (dwRead <= 0)
+   //      {
 
-         }
+   //         break;
 
-         iPos += dwRead;
+   //      }
 
-      }
+   //      iPos += dwRead;
 
-      psz[iPos] = '\0';
+   //   }
 
-      str.release_string_buffer(iReadAtMostByteCount);
+   //   psz[iPos] = '\0';
 
-      fclose(file);
+   //   str.release_string_buffer(iReadAtMostByteCount);
 
-      return str;
+   //   fclose(file);
 
-   }
+   //   return str;
 
-
-   memsize acme_file::as_memory(const char * path, void * p, memsize s)
-   {
-
-      FILE * file = FILE_open(path, "r", _SH_DENYNO);
-
-      if (file == nullptr)
-      {
-
-         return false;
-
-      }
-
-      memsize sRead = 0;
-
-      try
-      {
-
-         sRead = ::fread(p, 1, (size_t)s, file);
+   //}
 
 
-      }
-      catch (...)
-      {
+   //memsize acme_file::as_memory(const char * path, void * p, memsize s)
+   //{
 
-      }
+   //   FILE * file = FILE_open(path, "r", _SH_DENYNO);
 
-      fclose(file);
+   //   if (file == nullptr)
+   //   {
 
-      return sRead;
+   //      return false;
 
-   }
+   //   }
+
+   //   memsize sRead = 0;
+
+   //   try
+   //   {
+
+   //      sRead = ::fread(p, 1, (size_t)s, file);
+
+
+   //   }
+   //   catch (...)
+   //   {
+
+   //   }
+
+   //   fclose(file);
+
+   //   return sRead;
+
+   //}
 
 
 
 
-   bool acme_file::as_memory(memory_base & memory, const char * path, memsize iReadAtMostByteCount)
-   {
+   //bool acme_file::as_memory(memory_base & memory, const char * path, memsize iReadAtMostByteCount)
+   //{
 
-      memory.set_size(0);
+   //   memory.set_size(0);
 
-      FILE * file = FILE_open(path, "r", _SH_DENYNO);
+   //   FILE * file = FILE_open(path, "r", _SH_DENYNO);
 
-      if (file == nullptr)
-      {
+   //   if (file == nullptr)
+   //   {
 
-         return false;
+   //      return false;
 
-      }
+   //   }
 
-      filesize iSize = FILE_get_size(file);
+   //   filesize iSize = FILE_get_size(file);
 
-      if (iSize < 0)
-      {
+   //   if (iSize < 0)
+   //   {
 
-         ::fclose(file);
+   //      ::fclose(file);
 
-         return false;
+   //      return false;
 
-      }
+   //   }
 
-      iReadAtMostByteCount = minimum_non_negative(iReadAtMostByteCount, (::strsize)iSize);
+   //   iReadAtMostByteCount = minimum_non_negative(iReadAtMostByteCount, (::strsize)iSize);
 
-      memory.set_size(iReadAtMostByteCount);
+   //   memory.set_size(iReadAtMostByteCount);
 
-      auto dwRead = ::fread(memory.get_data(), 1, (u32)iReadAtMostByteCount, file);
+   //   auto dwRead = ::fread(memory.get_data(), 1, (u32)iReadAtMostByteCount, file);
 
-      memory.set_size(dwRead);
+   //   memory.set_size(dwRead);
 
-      ::fclose(file);
+   //   ::fclose(file);
 
-      return true;
+   //   return true;
 
-   }
+   //}
 
 
 

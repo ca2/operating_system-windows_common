@@ -65,13 +65,13 @@ HRESULT out_file(::memory_file * f, WAVEFORMATEX & fmt, IStream * pStream)
    size_t file_length = (size_t)f->get_size();
 
    // Fix the data chunk header to contain the data size_i32
-   f->seek(data_chunk_pos + 4, ::file::seek_begin);
+   f->seek(data_chunk_pos + 4, ::e_seek_set);
    dw = (::u32)(file_length - data_chunk_pos + 8);
    f->write(&dw, sizeof(::u32));
 
 
    // Fix the file header to contain the proper RIFF chunk size, which is (file size - 8) bytes
-   f->seek(0 + 4, ::file::seek_begin);
+   f->seek(0 + 4, ::e_seek_set);
    dw = (::u32)(file_length - 8);
    f->write(&dw, sizeof(::u32));
    return S_OK;

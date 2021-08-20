@@ -25,13 +25,16 @@ namespace windows_common
       bool put_contents(const char * path, const char * contents, memsize len) override;
 
 
+      using ::acme_file::get_size;
       filesize get_size(const char * path) override;
       
       //int_bool file_is_equal_path_dup(const char * psz1, const char * psz2)
 
-      string as_string(const char * path, strsize iReadAtMostByteCount) override;
-      memsize as_memory(const char * path, void * p, memsize s) override;
-      bool as_memory(memory_base & memory, const char * path, memsize iReadAtMostByteCount) override;
+      //string as_string(const char * path, strsize iReadAtMostByteCount) override;
+      //memsize as_memory(const char * path, void * p, memsize s) override;
+      //bool as_memory(memory_base & memory, const char * path, memsize iReadAtMostByteCount) override;
+
+
    };
 
 
