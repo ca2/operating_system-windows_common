@@ -3782,7 +3782,7 @@ namespace draw2d_gdiplus
    //}
 
 
-   bool graphics::draw_3drect(const ::rectangle_f64 & rectangle, const ::color::color& colorTopLeft, const ::color::color& colorBottomRight, const ::e_border & eborder)
+   bool graphics::draw_inset_3drect(const ::rectangle_f64 & rectangle, const ::color::color& colorTopLeft, const ::color::color& colorBottomRight, const ::e_border & eborder)
    {
 
       if (!(eborder & (e_border_left | e_border_right | e_border_top | e_border_bottom)))
@@ -3897,7 +3897,7 @@ namespace draw2d_gdiplus
    }
 
 
-   //void graphics::draw_3drect(const ::rectangle_i32& rectangle, const ::color::color& colorTopLeft, const ::color::color& colorBottomRight, const ::e_border & eborder)
+   //void graphics::draw_inset_3drect(const ::rectangle_i32& rectangle, const ::color::color& colorTopLeft, const ::color::color& colorBottomRight, const ::e_border & eborder)
    //{
 
    //   if (!(eborder & (e_border_left | e_border_right | e_border_top | e_border_bottom)))

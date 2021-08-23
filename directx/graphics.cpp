@@ -3402,15 +3402,15 @@ namespace draw2d_directx
    //}
 
 
-   //bool graphics::draw_3drect(const ::rectangle_f64 & rectangle, const ::color::color & colorTopLeft, const ::color::color & colorBottomRight, const ::e_border & eborder)
+   //bool graphics::draw_inset_3drect(const ::rectangle_f64 & rectangle, const ::color::color & colorTopLeft, const ::color::color & colorBottomRight, const ::e_border & eborder)
    //{
 
-   //   draw_3drect(rectangle_f64(rectangle), colorTopLeft, colorBottomRight, eborder);
+   //   draw_inset_3drect(rectangle_f64(rectangle), colorTopLeft, colorBottomRight, eborder);
 
    //}
 
 
-   //void graphics::draw_3drect(const ::rectangle_f64 & rectangle,  const ::color::color & colorTopLeft, const ::color::color & colorBottomRight, const ::e_border & eborder)
+   //void graphics::draw_inset_3drect(const ::rectangle_f64 & rectangle,  const ::color::color & colorTopLeft, const ::color::color & colorBottomRight, const ::e_border & eborder)
    //{
 
    //   double x = rectangle.left;

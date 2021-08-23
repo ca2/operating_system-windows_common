@@ -530,8 +530,8 @@ namespace draw2d_direct2d
       bool fill_rectangle(const ::rectangle_f64 & rectangle, const ::color::color & color) override;
       //void fill_rectangle(const ::rectangle_f64 & rectangle, const ::color::color & color) override;
 
-      //bool draw_3drect(const ::rectangle_f64 & rectangle, const ::color::color & colorTopLeft, const ::color::color & colorBottomRight, const ::e_border & eborder = e_border_all) override;
-      //void draw_3drect(const ::rectangle_f64 & rectangle, const ::color::color & colorTopLeft, const ::color::color & colorBottomRight, const ::e_border & eborder = e_border_all) override;
+      //bool draw_inset_3drect(const ::rectangle_f64 & rectangle, const ::color::color & colorTopLeft, const ::color::color & colorBottomRight, const ::e_border & eborder = e_border_all) override;
+      //void draw_inset_3drect(const ::rectangle_f64 & rectangle, const ::color::color & colorTopLeft, const ::color::color & colorBottomRight, const ::e_border & eborder = e_border_all) override;
 
 
       void assert_valid() const override;
