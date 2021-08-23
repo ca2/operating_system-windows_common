@@ -29,7 +29,7 @@ namespace imaging_wic
          virtual ::e_status run() override;
 
 
-         virtual void on_os_load_image(memory_pointer pmemory);
+         virtual void on_os_load_image(memory & memory);
 
 
       };

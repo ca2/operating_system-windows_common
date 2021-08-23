@@ -75,7 +75,7 @@ namespace imaging_wic
          while (true)
          {
 
-            auto pmemory = create_memory();
+            memory memory;
 
             if (!bCache)
             {
@@ -84,11 +84,11 @@ namespace imaging_wic
 
             }
 
-            m_pcontext->m_papexcontext->file().as_memory(payload, *pmemory);
+            m_pcontext->m_papexcontext->file().as_memory(payload, memory);
 
-            const char* psz = (const char *)pmemory->get_data();
+            const char* psz = (const char *)memory.get_data();
 
-            auto size = pmemory->get_size();
+            auto size = memory.get_size();
 
             if (::is_null(psz))
             {
@@ -110,7 +110,7 @@ namespace imaging_wic
 
             auto pcontextimage = pcontext->context_image();
 
-            auto estatus = pcontextimage->load_svg(pimage, pmemory);
+            auto estatus = pcontextimage->load_svg(pimage, memory);
 
             if (::succeeded(estatus))
             {
@@ -125,10 +125,10 @@ namespace imaging_wic
 
             }
 
-            if (pmemory->get_size() > 3 && strnicmp(psz, "gif", 3) == 0)
+            if (memory.get_size() > 3 && strnicmp(psz, "gif", 3) == 0)
             {
 
-               if (!m_pcontextimage->_load_multi_frame_image(pimage, pmemory))
+               if (!m_pcontextimage->_load_multi_frame_image(pimage, memory))
                {
 
                   pimage->set_nok();
@@ -156,7 +156,7 @@ namespace imaging_wic
 
             }
 
-            on_os_load_image(pmemory);
+            on_os_load_image(memory);
 
             if (pimage->is_ok())
             {
@@ -197,7 +197,7 @@ namespace imaging_wic
    }
 
 
-   void context_image::load_image::on_os_load_image(memory_pointer pmemory)
+   void context_image::load_image::on_os_load_image(memory & memory)
    {
 
       ::image * pimage = m_pimage;
@@ -221,7 +221,7 @@ namespace imaging_wic
 
       }
 
-      hr = piStream->InitializeFromMemory(pmemory->get_data(), (::u32)pmemory->get_size());
+      hr = piStream->InitializeFromMemory(memory.get_data(), (::u32)memory.get_size());
 
       if (FAILED(hr))
       {
