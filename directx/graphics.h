@@ -309,7 +309,7 @@ namespace draw2d_directx
 
       virtual bool invert_rectangle(const ::rectangle_f64 & rectangle) override;
 
-      //virtual bool draw(const ::rectangle_f64 & rectDst, ::draw2d::icon * picon) override;
+      //virtual bool draw(const ::rectangle_f64 & rectangleTarget, ::draw2d::icon * picon) override;
 
       //bool DrawIcon(double x, double y, ::draw2d::icon * picon) override;
       //bool DrawIcon(const ::point_f64 & point, ::draw2d::icon * picon) override;
@@ -364,15 +364,15 @@ namespace draw2d_directx
       virtual bool round_rectangle(const ::rectangle_f64 & rectangle, double dRadius) override;
 
 
-      //virtual bool _draw_raw(const ::rectangle_f64 & rectDst, ::image * pimage, const ::image_drawing_options & imagedrawingoptions, const ::point_f64 & rectSrc = ::point_f64()) override;
+      //virtual bool _draw_raw(const ::rectangle_f64 & rectangleTarget, ::image * pimage, const ::image_drawing_options & imagedrawingoptions, const ::point_f64 & rectangleSource = ::point_f64()) override;
 
       using ::draw2d::graphics::_draw_raw;
 
 
       // Bitmap Functions
       //bool PatBlt(double x, double y, double nWidth, double nHeight) override;
-      virtual bool _draw_raw(const ::rectangle_f64 & rectDst, ::image * pimage, const image_drawing_options & imagedrawingoptions, const ::point_f64 & pointSrc) override;
-      virtual bool _stretch_raw(const ::rectangle_f64 & rectDst, ::image * pimage, const image_drawing_options & imagedrawingoptions, const ::rectangle_f64 & rectSrc) override;
+      virtual bool _draw_raw(const ::rectangle_f64 & rectangleTarget, ::image * pimage, const image_drawing_options & imagedrawingoptions, const ::point_f64 & pointSrc) override;
+      virtual bool _stretch_raw(const ::rectangle_f64 & rectangleTarget, ::image * pimage, const image_drawing_options & imagedrawingoptions, const ::rectangle_f64 & rectangleSource) override;
 
 
       ::color::color GetPixel(double x, double y) override;
@@ -394,7 +394,7 @@ namespace draw2d_directx
 //                          ::draw2d::graphics * pgraphicsSrc, double xSrc, double ySrc, int nSrcWidth, int nSrcHeight,
 //                          ::u32 clrTransparent) override;
 
-      //virtual bool _alpha_blend_raw(const ::rectangle_f64 & rectDst, ::draw2d::graphics * pgraphicsSrc, const ::rectangle_f64 & rectSrc, double dOpacity) override;
+      //virtual bool _alpha_blend_raw(const ::rectangle_f64 & rectangleTarget, ::draw2d::graphics * pgraphicsSrc, const ::rectangle_f64 & rectangleSource, double dOpacity) override;
 
       /*bool alpha_blend(double xDest, double yDest, int nDestWidth, int nDestHeight,
         ::draw2d::graphics * pgraphicsSrc, double xSrc, double ySrc, int nSrcWidth, int nSrcHeight,

@@ -24,6 +24,10 @@ CLASS_DECL_ACME_WINDOWS_COMMON bool windows_create_directory(const char * pszPat
 #include "comptr.h"
 #include "cotaskptr.h"
 
+
+#include "prop_variant.h"
+
+
 #include "exception/hresult.h"
 
 #include "exception/translator.h"

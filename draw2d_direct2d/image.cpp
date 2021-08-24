@@ -949,10 +949,10 @@ namespace draw2d_direct2d
    //   }
    //}
 
-  bool image::_draw_raw(const ::rectangle_i32 & rectDst, ::image * pimage, const ::point_i32 & pointSrc)
+  bool image::_draw_raw(const ::rectangle_i32 & rectangleTarget, ::image * pimage, const ::point_i32 & pointSrc)
    {
 
-      return ::image::draw(rectDst, pimage, pointSrc);
+      return ::image::draw(rectangleTarget, pimage, pointSrc);
 
    }
 
@@ -1586,9 +1586,9 @@ namespace draw2d_direct2d
 
       //   }
 
-      //   D2D1_RECT_F rectDst = D2D1::RectF((float)pointDst.x, (float)pointDst.y, (float)(pointDst.x + size.cx), (float)(pointDst.y + size.cy));
+      //   D2D1_RECT_F rectangleTarget = D2D1::RectF((float)pointDst.x, (float)pointDst.y, (float)(pointDst.x + size.cx), (float)(pointDst.y + size.cy));
 
-      //   D2D1_RECT_F rectSrc = D2D1::RectF((float)pointSrc.x, (float)pointSrc.y, (float)(pointSrc.x + size.cx), (float)(pointSrc.y + size.cy));
+      //   D2D1_RECT_F rectangleSource = D2D1::RectF((float)pointSrc.x, (float)pointSrc.y, (float)(pointSrc.x + size.cx), (float)(pointSrc.y + size.cy));
 
       //   HRESULT hr = ((ID2D1DeviceContext *)pgraphicsMap->get_os_data())->EndDraw();
 
@@ -1599,10 +1599,10 @@ namespace draw2d_direct2d
       //   {
 
       //      D2D1_POINT_2F p;
-      //      p.x = rectDst.left;
-      //      p.y = rectDst.top;
+      //      p.x = rectangleTarget.left;
+      //      p.y = rectangleTarget.top;
 
-      //      pgraphics->m_pdevicecontext->DrawImage((ID2D1Bitmap *)pgraphicsMap->get_current_bitmap()->get_os_data(), p, rectSrc, pgraphics->m_interpolationmode, D2D1_COMPOSITE_MODE_DESTINATION_IN);
+      //      pgraphics->m_pdevicecontext->DrawImage((ID2D1Bitmap *)pgraphicsMap->get_current_bitmap()->get_os_data(), p, rectangleSource, pgraphics->m_interpolationmode, D2D1_COMPOSITE_MODE_DESTINATION_IN);
 
       //   }
 

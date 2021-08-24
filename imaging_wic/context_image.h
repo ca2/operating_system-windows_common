@@ -23,10 +23,10 @@ namespace imaging_wic
 
 
          load_image(context_image* pcontextimage);
-         virtual ~load_image();
+         ~load_image() override;
 
 
-         virtual ::e_status run() override;
+         ::e_status run() override;
 
 
          virtual void on_os_load_image(memory & memory);
@@ -39,7 +39,7 @@ namespace imaging_wic
 
 
       context_image();
-      virtual ~context_image();
+      ~context_image() override;
 
 
       virtual ::e_status initialize(::object * pobject) override;
@@ -50,6 +50,10 @@ namespace imaging_wic
 
       virtual ::e_status _load_image(::image * pimage, __pointer(image_frame_array) & pframea, ::memory_pointer pmemory);
       virtual ::e_status save_image(memory & memory, const ::image * pimage, const ::save_image * psaveimage) override;
+
+
+      //::e_status _load_icon(::draw2d::icon * picon, const ::payload & varFile);
+
 
       //virtual ::e_status _load_image(::image* pimage, const ::payload& varFile, bool bSync, bool bCreateHelperMaps);
 

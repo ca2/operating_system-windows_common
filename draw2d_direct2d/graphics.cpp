@@ -427,16 +427,16 @@ namespace draw2d_direct2d
       if (m_pimageAlphaBlend->is_set())
       {
 
-         auto rectDst = imagedrawing.m_rectDst;
-         auto rectSrc = imagedrawing.m_rectSrc;
+         auto rectangleTarget = imagedrawing.m_rectDst;
+         auto rectangleSource = imagedrawing.m_rectSrc;
 
 
-         auto x = rectDst.left;
-         auto y = rectDst.top;
-         auto xSrc = rectSrc.left;
-         auto ySrc = rectSrc.top;
-         auto nWidth = rectDst.width();
-         auto nHeight = rectDst.height();
+         auto x = rectangleTarget.left;
+         auto y = rectangleTarget.top;
+         auto xSrc = rectangleSource.left;
+         auto ySrc = rectangleSource.top;
+         auto nWidth = rectangleTarget.width();
+         auto nHeight = rectangleTarget.height();
 
          if (x < 0)
          {
@@ -513,7 +513,7 @@ namespace draw2d_direct2d
 
                image_drawing_options imagedrawingoptions;
 
-               _draw_raw(rectDst, pimage1, imagedrawingoptions, ::point_f64());
+               _draw_raw(rectangleTarget, pimage1, imagedrawingoptions, ::point_f64());
 
             //}
 
@@ -1094,7 +1094,7 @@ namespace draw2d_direct2d
 
    //}
 
-//   bool graphics::draw(const ::rectangle_f64 & rectDst, ::draw2d::icon * picon)
+//   bool graphics::draw(const ::rectangle_f64 & rectangleTarget, ::draw2d::icon * picon)
 //   {
 //
 //#ifdef _UWP
@@ -1121,12 +1121,12 @@ namespace draw2d_direct2d
 //         ZeroMemory(&info, sizeof (BITMAPINFO));
 //
 //         info.bmiHeader.biSize          = sizeof (BITMAPINFOHEADER);
-//         info.bmiHeader.biWidth         = rectDst.width();
-//         info.bmiHeader.biHeight        = - rectDst.height();
+//         info.bmiHeader.biWidth         = rectangleTarget.width();
+//         info.bmiHeader.biHeight        = - rectangleTarget.height();
 //         info.bmiHeader.biPlanes        = 1;
 //         info.bmiHeader.biBitCount      = 32;
 //         info.bmiHeader.biCompression   = BI_RGB;
-//         info.bmiHeader.biSizeImage     = rectDst.area() * 4;
+//         info.bmiHeader.biSizeImage     = rectangleTarget.area() * 4;
 //
 //         HBITMAP hbitmap = ::CreateDIBSection(nullptr, &info, DIB_RGB_COLORS, (void **) &pcolorref, nullptr, 0);
 //
@@ -1135,7 +1135,7 @@ namespace draw2d_direct2d
 //         HBITMAP hbitmapOld = (HBITMAP) ::SelectObject(hdc, hbitmap);
 //
 //         int istepIfAniCur = 0;
-//         if(::DrawIconEx(hdc, 0, 0, (HICON) picon->m_picon, rectDst.width(), rectDst.height(), istepIfAniCur, nullptr, DI_IMAGE | DI_MASK))
+//         if(::DrawIconEx(hdc, 0, 0, (HICON) picon->m_picon, rectangleTarget.width(), rectangleTarget.height(), istepIfAniCur, nullptr, DI_IMAGE | DI_MASK))
 //         {
 //
 //            ::SelectObject(hdc, hbitmapOld);
@@ -1147,11 +1147,11 @@ namespace draw2d_direct2d
 //
 //               ::draw2d::bitmap_pointer b(e_create);
 //
-//               b->CreateBitmap(this, rectDst.size(), 1, 32, pcolorref, rectDst.width() * sizeof(::color32_t));
+//               b->CreateBitmap(this, rectangleTarget.size(), 1, 32, pcolorref, rectangleTarget.width() * sizeof(::color32_t));
 //
 //               D2D1_RECT_F rectangle_i32;
 //
-//               __copy(rectangle, rectDst);
+//               __copy(rectangle, rectangleTarget);
 //               //rectangle.left   = (FLOAT) rectangle_i32;
 //               //rectangle.top    = (FLOAT) y;
 //               //rectangle.right  = rectangle.left    + cx;
@@ -1671,7 +1671,7 @@ namespace draw2d_direct2d
    //}
 
 
-   bool graphics::_draw_raw(const ::rectangle_f64 & rectDst, ::image * pimage, const image_drawing_options & imagedrawingoptions, const ::point_f64 & pointSrc)
+   bool graphics::_draw_raw(const ::rectangle_f64 & rectangleTarget, ::image * pimage, const image_drawing_options & imagedrawingoptions, const ::point_f64 & pointSrc)
    {
 
       ::draw2d::lock draw2dlock;
@@ -1700,10 +1700,10 @@ namespace draw2d_direct2d
 
          //}
 
-         double x = rectDst.left;
-         double y = rectDst.top;
-         double nWidth = rectDst.width();
-         double nHeight = rectDst.height();
+         double x = rectangleTarget.left;
+         double y = rectangleTarget.top;
+         double nWidth = rectangleTarget.width();
+         double nHeight = rectangleTarget.height();
          double xSrc = pointSrc.x;
          double ySrc = pointSrc.y;
 
@@ -1770,15 +1770,15 @@ namespace draw2d_direct2d
 
          }
 
-         D2D1_RECT_F rectDst = D2D1::RectF((float)x, (float)y, (float)(x + nWidth), (float)(y + nHeight));
+         D2D1_RECT_F rectangleTarget = D2D1::RectF((float)x, (float)y, (float)(x + nWidth), (float)(y + nHeight));
 
-         D2D1_RECT_F rectSrc = D2D1::RectF((float)xSrc, (float)ySrc, (float)(xSrc + nWidth), (float)(ySrc + nHeight));
+         D2D1_RECT_F rectangleSource = D2D1::RectF((float)xSrc, (float)ySrc, (float)(xSrc + nWidth), (float)(ySrc + nHeight));
 
          HRESULT hr = ((ID2D1DeviceContext *)pimage->g()->get_os_data())->EndDraw();
 
          defer_primitive_blend();
 
-         m_pdevicecontext->DrawBitmap((ID2D1Bitmap *)pimage->g()->get_current_bitmap()->get_os_data(), rectDst, 1.0, D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR, rectSrc);
+         m_pdevicecontext->DrawBitmap((ID2D1Bitmap *)pimage->g()->get_current_bitmap()->get_os_data(), rectangleTarget, 1.0, D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR, rectangleSource);
 
          if (SUCCEEDED(hr))
          {
@@ -1800,20 +1800,20 @@ namespace draw2d_direct2d
    }
 
 
-   bool graphics::_stretch_raw(const ::rectangle_f64 & rectDst, ::image * pimage, const image_drawing_options & imagedrawingoptions, const ::rectangle_f64 & rectSrc)
+   bool graphics::_stretch_raw(const ::rectangle_f64 & rectangleTarget, ::image * pimage, const image_drawing_options & imagedrawingoptions, const ::rectangle_f64 & rectangleSource)
    {
 
       try
       {
 
-         double xDst = rectDst.left;
-         double yDst = rectDst.top;
-         double nDstWidth = rectDst.width();
-         double nDstHeight = rectDst.height();
-         double xSrc = rectSrc.left;
-         double ySrc = rectSrc.top;
-         double nSrcWidth = rectSrc.width();
-         double nSrcHeight = rectSrc.height();
+         double xDst = rectangleTarget.left;
+         double yDst = rectangleTarget.top;
+         double nDstWidth = rectangleTarget.width();
+         double nDstHeight = rectangleTarget.height();
+         double xSrc = rectangleSource.left;
+         double ySrc = rectangleSource.top;
+         double nSrcWidth = rectangleSource.width();
+         double nSrcHeight = rectangleSource.height();
 
          //if (pgraphicsSrc == nullptr)
          //{
@@ -1836,9 +1836,9 @@ namespace draw2d_direct2d
 
          //}
 
-         D2D1_RECT_F rectDst = D2D1::RectF((float)xDst, (float)yDst, (float)(xDst + nDstWidth), (float)(yDst + nDstHeight));
+         D2D1_RECT_F rectangleTarget = D2D1::RectF((float)xDst, (float)yDst, (float)(xDst + nDstWidth), (float)(yDst + nDstHeight));
 
-         D2D1_RECT_F rectSrc = D2D1::RectF((float)xSrc, (float)ySrc, (float)(xSrc + nSrcWidth), (float)(ySrc + nSrcHeight));
+         D2D1_RECT_F rectangleSource = D2D1::RectF((float)xSrc, (float)ySrc, (float)(xSrc + nSrcWidth), (float)(ySrc + nSrcHeight));
 
          HRESULT hr = ((ID2D1DeviceContext *)pimage->g()->get_os_data())->EndDraw();
 
@@ -1847,13 +1847,13 @@ namespace draw2d_direct2d
          if (m_prendertarget != nullptr)
          {
 
-            m_prendertarget->DrawBitmap((ID2D1Bitmap *)pimage->g()->get_current_bitmap()->get_os_data(), &rectDst, 1.0, m_bitmapinterpolationmode, &rectSrc);
+            m_prendertarget->DrawBitmap((ID2D1Bitmap *)pimage->g()->get_current_bitmap()->get_os_data(), &rectangleTarget, 1.0, m_bitmapinterpolationmode, &rectangleSource);
 
          }
          else
          {
 
-            m_pdevicecontext->DrawBitmap((ID2D1Bitmap *)pimage->g()->get_current_bitmap()->get_os_data(), rectDst, 1.0, m_interpolationmode, rectSrc);
+            m_pdevicecontext->DrawBitmap((ID2D1Bitmap *)pimage->g()->get_current_bitmap()->get_os_data(), rectangleTarget, 1.0, m_interpolationmode, rectangleSource);
 
          }
 
@@ -1883,14 +1883,14 @@ namespace draw2d_direct2d
    }
 
 
-   //bool graphics::_draw_raw(const ::rectangle_f64 & rectDst, ::draw2d::graphics * pgraphicsSrc, const ::point_f64 & pointSrc)
+   //bool graphics::_draw_raw(const ::rectangle_f64 & rectangleTarget, ::draw2d::graphics * pgraphicsSrc, const ::point_f64 & pointSrc)
    //{
 
 
    //}
 
 
-   //bool graphics::_stretch_raw(const ::rectangle_f64 & rectDst, ::draw2d::graphics * pgraphicsSrc, const ::rectangle_f64 & rectSrc)
+   //bool graphics::_stretch_raw(const ::rectangle_f64 & rectangleTarget, ::draw2d::graphics * pgraphicsSrc, const ::rectangle_f64 & rectangleSource)
    //{
 
 
@@ -2862,7 +2862,7 @@ namespace draw2d_direct2d
    // Member
 
 
-   //bool graphics::_alpha_blend_raw(const ::rectangle_f64 & rectDst, ::draw2d::graphics * pgraphicsSrc, const ::rectangle_f64 & rectSrc, double dRate)
+   //bool graphics::_alpha_blend_raw(const ::rectangle_f64 & rectangleTarget, ::draw2d::graphics * pgraphicsSrc, const ::rectangle_f64 & rectangleSource, double dRate)
    //{
 
    //   ::draw2d::lock draw2dlock;
@@ -2898,8 +2898,8 @@ namespace draw2d_direct2d
    //      if(pgraphicsSrc->get_current_bitmap()->m_osdata[0] == nullptr)
    //         return false;
 
-   //      //D2D1_RECT_F rectDst = D2D1::RectF((float) xDst, (float) yDst, (float) (xDst + nDstWidth), (float) (yDst + nDstHeight));
-   //      //D2D1_RECT_F rectSrc = D2D1::RectF((float) xSrc, (float) ySrc, (float) (xSrc + nSrcWidth), (float) (ySrc + nSrcHeight));
+   //      //D2D1_RECT_F rectangleTarget = D2D1::RectF((float) xDst, (float) yDst, (float) (xDst + nDstWidth), (float) (yDst + nDstHeight));
+   //      //D2D1_RECT_F rectangleSource = D2D1::RectF((float) xSrc, (float) ySrc, (float) (xSrc + nSrcWidth), (float) (ySrc + nSrcHeight));
    //      /*
    //               if (get_current_bitmap() != nullptr && get_current_bitmap()->get_os_data() != nullptr)
    //               {
@@ -2926,8 +2926,8 @@ namespace draw2d_direct2d
 
    //               }*/
 
-   //      D2D1_RECT_F rDst = D2D1::RectF((float)rectDst.left, (float)rectDst.top, (float) rectDst.right, (float) rectDst.bottom);
-   //      D2D1_RECT_F rSrc = D2D1::RectF((float)rectSrc.left, (float)rectSrc.top, (float) rectSrc.right, (float) rectSrc.bottom);
+   //      D2D1_RECT_F rDst = D2D1::RectF((float)rectangleTarget.left, (float)rectangleTarget.top, (float) rectangleTarget.right, (float) rectangleTarget.bottom);
+   //      D2D1_RECT_F rSrc = D2D1::RectF((float)rectangleSource.left, (float)rectangleSource.top, (float) rectangleSource.right, (float) rectangleSource.bottom);
 
 
    //      //dynamic_cast <::draw2d_direct2d::graphics *> (pgraphicsSrc)->SaveClip();
@@ -2953,7 +2953,7 @@ namespace draw2d_direct2d
    //      //auto pimage = (ID2D1Bitmap*)pgraphicsSrc->get_current_bitmap()->get_os_data();
    //      //auto ecomposite = m_ealphamode == ::draw2d::e_alpha_mode_blend ? D2D1_COMPOSITE_MODE_SOURCE_OVER : D2D1_COMPOSITE_MODE_SOURCE_IN;
 
-   //      //m_pdevicecontext->DrawImage(pimage, pointDst, rectSrc, m_interpolationmode, ecomposite);
+   //      //m_pdevicecontext->DrawImage(pimage, pointDst, rectangleSource, m_interpolationmode, ecomposite);
 
 
    //      //hr = m_prendertarget->Flush();
