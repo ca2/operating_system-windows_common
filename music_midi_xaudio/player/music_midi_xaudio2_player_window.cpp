@@ -99,7 +99,7 @@ namespace music
                {
                case 3388:
                {
-                  // Lyric ::view Event
+                  // Lyric ::impact Event
                   if(get_callback() != nullptr)
                   {
                      get_callback()->OnMidiLyricEvent((array<::ikaraoke::lyric_event_v1, ::ikaraoke::lyric_event_v1&> *) pusermessage->m_lparam.m_lparam);
@@ -136,7 +136,7 @@ namespace music
                {
                case 3388:
                {
-               // Lyric ::view Event
+               // Lyric ::impact Event
                if(get_callback() != nullptr)
                {
                get_callback()->OnMidiLyricEvent((array<::ikaraoke::lyric_event_v1, ::ikaraoke::lyric_event_v1&> *) pusermessage->m_lparam.m_lparam);

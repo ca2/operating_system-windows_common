@@ -298,23 +298,35 @@ namespace draw2d_direct2d
 
       pimage1->fill(0, 255, 255, 255);
 
-#ifdef WINDOWS_DESKTOP
+      {
 
-      pimage1->g()->stretch(::size_f64(cx, cy), picon);
+         image_source imagesource(picon);
 
-#else
+         image_drawing_options imagedrawingoptions(::size_f64(cx, cy));
 
-      __throw(todo);
+         image_drawing imagedrawing(imagedrawingoptions, imagesource);
 
-#endif
+         pimage1->g()->draw(imagedrawing);
+
+      }
 
       // Black blend image
       auto pimage2 = create_image({cx,  cy});
 
       pimage2->fill(0, 0, 0, 0);
 
-//#ifdef WINDOWS_DESKTOP
-      pimage2->get_graphics()->stretch(::size_f64(cx, cy),picon);
+      {
+
+         image_source imagesource(picon);
+
+         image_drawing_options imagedrawingoptions(::size_f64(cx, cy));
+
+         image_drawing imagedrawing(imagedrawingoptions, imagesource);
+
+         pimage2->get_graphics()->draw(imagedrawing);
+
+      }
+
 //#else
 //      pimage2->get_graphics()->DrawIcon(
 //      0, 0,
@@ -328,7 +340,17 @@ namespace draw2d_direct2d
       // Mask image
       auto pimageM = create_image({cx,  cy});
 
-      pimageM->g()->stretch(::size_f64(cx, cy), picon);
+      {
+
+         image_source imagesource(picon);
+
+         image_drawing_options imagedrawingoptions(::size_f64(cx, cy));
+
+         image_drawing imagedrawing(imagedrawingoptions, imagesource);
+
+         pimageM->g()->draw(imagedrawing);
+
+      }
 
       byte * r1 = (byte*) pimage1->colorref();
       byte * r2 = (byte*) pimage2->colorref();
@@ -949,12 +971,12 @@ namespace draw2d_direct2d
    //   }
    //}
 
-  bool image::_draw_raw(const ::rectangle_i32 & rectangleTarget, ::image * pimage, const ::point_i32 & pointSrc)
-   {
+   //bool image::_draw_raw(const ::rectangle_i32 & rectangleTarget, ::image * pimage, const ::point_i32 & pointSrc)
+   //{
 
-      return ::image::draw(rectangleTarget, pimage, pointSrc);
+   //   return ::image::draw(rectangleTarget, pimage, pointSrc);
 
-   }
+   //}
 
    //bool image::stretch(const ::image * pimage)
    //{

@@ -427,8 +427,8 @@ namespace draw2d_direct2d
       if (m_pimageAlphaBlend->is_set())
       {
 
-         auto rectangleTarget = imagedrawing.m_rectDst;
-         auto rectangleSource = imagedrawing.m_rectSrc;
+         auto rectangleTarget = imagedrawing.m_rectangleTarget;
+         auto rectangleSource = imagedrawing.source_rectangle();
 
 
          auto x = rectangleTarget.left;
@@ -502,7 +502,9 @@ namespace draw2d_direct2d
 
                pimage1->get_graphics()->set_alpha_mode(::draw2d::e_alpha_mode_set);
 
-               if (!pimage1->draw(::rectangle_f64(rectBlt.size()), imagedrawing.m_pimage, ::point_f64(xSrc, ySrc)))
+               auto pimage = imagedrawing.image();
+
+               if (!pimage1->_draw_raw(::rectangle_f64(rectBlt.size()), pimage , ::point_f64(xSrc, ySrc)))
                {
 
                   return false;
@@ -578,7 +580,7 @@ namespace draw2d_direct2d
 
          pimage2->get_graphics()->fill_rectangle(rectDib1, argb(255, 0, 0, 0));
 
-         if (!pimage2->draw(rectIntersect.size(), m_pimageAlphaBlend, __pointd(point - m_pointAlphaBlend)))
+         if (!pimage2->_draw_raw(rectIntersect.size(), m_pimageAlphaBlend, __pointd(point - m_pointAlphaBlend)))
          {
 
             return false;
@@ -607,7 +609,15 @@ namespace draw2d_direct2d
 
          set_alpha_mode(::draw2d::e_alpha_mode_blend);
 
-         draw(::point_f64(x, y), pimage1->get_graphics());
+         image_source imagesource(pimage1);
+
+         ::rectangle_f64 rectangleTarget(::point_f64(x, y), pimage1->size());
+
+         image_drawing_options imagedrawingoptions(rectangleTarget);
+
+         image_drawing imagedrawing(imagedrawingoptions, imagesource);
+
+         draw(imagedrawing);
 
          return true;
 

@@ -198,7 +198,7 @@ namespace draw2d_directx
    }
 
    // Helps track the DPI in the helper class.
-   // This is called in the dpiChanged event handler in the view class.
+   // This is called in the dpiChanged event handler in the impact class.
    void directx::SetDpi(float dpi)
    {
       if (dpi != m_dpi)
@@ -216,7 +216,7 @@ namespace draw2d_directx
       }
    }
 
-   // This routine is called in the event handler for the view SizeChanged event.
+   // This routine is called in the event handler for the impact SizeChanged event.
    void directx::UpdateForWindowSizeChange()
    {
       // Only handle window size changed if there is no pending DPI change.
@@ -317,7 +317,7 @@ namespace draw2d_directx
             );
       }
 
-      // Create a Direct3D render target view of the __swap chain back buffer.
+      // Create a Direct3D render target impact of the __swap chain back buffer.
       ComPtr<ID3D11Texture2D> backBuffer;
       ::draw2d_directx::throw_if_failed(
          m_swapChain->GetBuffer(0, IID_PPV_ARGS(&backBuffer))
@@ -337,7 +337,7 @@ namespace draw2d_directx
       m_renderTargetSize.Width  = static_cast<float>(backBufferDesc.Width);
       m_renderTargetSize.Height = static_cast<float>(backBufferDesc.Height);
 
-      // Create a depth stencil view for use with 3D rendering if needed.
+      // Create a depth stencil impact for use with 3D rendering if needed.
       CD3D11_TEXTURE2D_DESC depthStencilDesc(
          DXGI_FORMAT_D24_UNORM_S8_::u32,
          backBufferDesc.Width,

@@ -14,7 +14,7 @@ namespace imaging_wic
    ::e_status context_image::_load_image(::image * pimageParam, const ::payload & varFile, bool bSync, bool bCreateHelperMaps)
    {
 
-      auto ploadimage = __new(load_image(this));
+      auto ploadimage = __new(::load_image(this));
 
       auto estatus = ploadimage->initialize(this);
 
@@ -27,7 +27,7 @@ namespace imaging_wic
 
       ploadimage->m_pimage = pimageParam;
 
-      ploadimage->m_varFile = varFile;
+      ploadimage->m_payload = varFile;
 
       pimageParam->m_bCreateHelperMaps = bCreateHelperMaps;
 
@@ -38,169 +38,8 @@ namespace imaging_wic
    }
 
 
-   context_image::load_image::load_image(context_image * pcontextimage) :
-      m_pcontextimage(pcontextimage)
+   void context_image::_os_load_image(::image * pimage, memory & memory)
    {
-
-
-   }
-
-   
-   context_image::load_image::~load_image()
-   {
-
-
-   }
-
-
-
-   ::e_status context_image::load_image::run()
-   {
-
-      //defer_co_initialize_ex(false);
-
-      ::image * pimage = m_pimage;
-
-      pimage->m_estatus = error_failed;
-
-      try
-      {
-         
-         ::payload payload = m_varFile;
-
-         ::file::path path = payload.get_file_path();
-
-         bool bCache = true;
-
-         while (true)
-         {
-
-            memory memory;
-
-            if (!bCache)
-            {
-
-               ::file::set_no_cache(payload);
-
-            }
-
-            m_pcontext->m_papexcontext->file().as_memory(payload, memory);
-
-            const char* psz = (const char *)memory.get_data();
-
-            auto size = memory.get_size();
-
-            if (::is_null(psz))
-            {
-
-               if (bCache)
-               {
-
-                  bCache = false;
-
-                  continue;
-
-               }
-
-               return pimage->m_estatus;
-
-            }
-
-            auto pcontext = m_pcontext->m_pauracontext;
-
-            auto pcontextimage = pcontext->context_image();
-
-            auto estatus = pcontextimage->load_svg(pimage, memory);
-
-            if (::succeeded(estatus))
-            {
-
-               pimage->on_load_image();
-
-               pimage->set_ok();
-
-               pimage->m_estatus = ::success;
-
-               return pimage->m_estatus;
-
-            }
-
-            if (memory.get_size() > 3 && strnicmp(psz, "gif", 3) == 0)
-            {
-
-               if (!m_pcontextimage->_load_multi_frame_image(pimage, memory))
-               {
-
-                  pimage->set_nok();
-
-                  if (bCache)
-                  {
-
-                     bCache = false;
-
-                     continue;
-
-                  }
-
-                  return pimage->m_estatus;
-
-               }
-
-               pimage->on_load_image();
-
-               pimage->set_ok();
-
-               pimage->m_estatus = ::success;
-
-               return pimage->m_estatus;
-
-            }
-
-            on_os_load_image(memory);
-
-            if (pimage->is_ok())
-            {
-
-               break;
-
-            }
-            else
-            {
-
-               if (bCache)
-               {
-
-                  bCache = false;
-
-                  continue;
-
-               }
-               else
-               {
-
-                  break;
-
-               }
-
-            }
-
-         }
-
-      }
-      catch (...)
-      {
-
-      }
-
-      return pimage->m_estatus;
-
-   }
-
-
-   void context_image::load_image::on_os_load_image(memory & memory)
-   {
-
-      ::image * pimage = m_pimage;
 
       pimage->m_estatus = ::error_failed;
 

@@ -11,28 +11,6 @@ namespace imaging_wic
    public:
 
 
-      class CLASS_DECL_IMAGING_WIC load_image :
-         virtual public ::object
-      {
-      public:
-
-
-         ::payload                        m_varFile;
-         ::image_pointer                  m_pimage;
-         __pointer(context_image)         m_pcontextimage;
-
-
-         load_image(context_image* pcontextimage);
-         ~load_image() override;
-
-
-         ::e_status run() override;
-
-
-         virtual void on_os_load_image(memory & memory);
-
-
-      };
 
 
       __composite(handler_manager)        m_pmanagerImageLoad;
@@ -46,10 +24,10 @@ namespace imaging_wic
 
 
       //virtual ::e_status _load_image(::context_image * pcontextimage, ::image * pimageParam, const ::payload & varFile, bool bSync, bool bCreateHelperMaps) override;
-      virtual ::e_status _load_image(image* pimage, const ::payload& varFile, bool bSync = true, bool bCreateHelperMaps = false);
+      ::e_status _load_image(image* pimage, const ::payload& varFile, bool bSync = true, bool bCreateHelperMaps = false) override;
 
-      virtual ::e_status _load_image(::image * pimage, __pointer(image_frame_array) & pframea, ::memory_pointer pmemory);
-      virtual ::e_status save_image(memory & memory, const ::image * pimage, const ::save_image * psaveimage) override;
+      ::e_status _load_image(::image * pimage, __pointer(image_frame_array) & pframea, ::memory & memory) override;
+      ::e_status save_image(memory & memory, const ::image * pimage, const ::save_image * psaveimage) override;
 
 
       //::e_status _load_icon(::draw2d::icon * picon, const ::payload & varFile);
@@ -75,6 +53,8 @@ namespace imaging_wic
 
 
       virtual bool _save_image(::file::file* pfile, const ::image* pimage, const ::save_image* psaveimage);
+
+      void _os_load_image(::image * pimage, memory & memory) override;
 
 
    };
