@@ -1163,7 +1163,6 @@
     <ClInclude Include="exception\engine.h" />
     <ClInclude Include="exception\translator.h" />
     <ClInclude Include="exception\hresult.h" />
-    <ClInclude Include="exception_translator.h" />
     <ClInclude Include="file.h" />
     <ClInclude Include="new_api.h" />
     <ClInclude Include="node.h" />

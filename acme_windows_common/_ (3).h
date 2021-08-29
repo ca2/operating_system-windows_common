@@ -336,11 +336,11 @@ CLASS_DECL_ACME bool task_sleep(millis millis = U32_INFINITE_TIMEOUT, ::synchron
 //CLASS_DECL_ACME bool acme_task_sleep(millis millis = U32_INFINITE_TIMEOUT, ::synchronization_object* psync = nullptr);
 //CLASS_DECL_ACME void set_taskhread_sleep(PFN_task_sleep pfnThreadSleep);
 
-#ifdef _UWP
-
-#include "acme/os/uwp/parallelization_winrt.h"
-
-#endif
+//#ifdef _UWP
+//
+//#include "acme/os/uwp/parallelization_winrt.h"
+//
+//#endif
 
 
 string get_thread_name(htask_t htask);

@@ -56,9 +56,6 @@
     <ClInclude Include="_windows_common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="exception_translator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="standard_exception.h">
       <Filter>Header Files</Filter>
     </ClInclude>
