@@ -1,3 +1,0 @@
-﻿  framework.cpp
-C:\basis\archive\platform-windows_common\apex_windows_common\framework.h(4,10): fatal error C1083: Cannot open include file: 'acme/_start.h': No such file or directory
-C:\Program Files (x86)\Windows Kits\10\bin\10.0.19041.0\XamlCompiler\Microsoft.Windows.UI.Xaml.Common.targets(486,5): error MSB4181: The "CompileXaml" task returned false but did not log an error.
