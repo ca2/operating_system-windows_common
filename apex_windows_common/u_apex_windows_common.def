@@ -1,0 +1,8 @@
+LIBRARY "apex_windows_common"
+
+
+EXPORTS
+apex_windows_common_factory_exchange
+
+
+
