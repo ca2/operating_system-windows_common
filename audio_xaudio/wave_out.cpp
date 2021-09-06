@@ -43,7 +43,7 @@ namespace multimedia
 
          }
 
-         set_thread_priority(::priority_time_critical);
+         set_thread_priority(::e_priority_time_critical);
 
          return true;
 
@@ -636,10 +636,10 @@ namespace multimedia
       void out::OnBufferEnd(void* pBufferContext)
       {
 
-         //if(get_thread_priority() != ::priority_time_critical)
+         //if(get_thread_priority() != ::e_priority_time_critical)
          //{
 
-         //   set_thread_priority(::priority_time_critical);
+         //   set_thread_priority(::e_priority_time_critical);
 
          //}
 

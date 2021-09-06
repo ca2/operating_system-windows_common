@@ -1,7 +1,7 @@
 #include "framework.h"
 
 
-void CLASS_DECL_ACME_WINDOWS_COMMON __cdecl _ca2_purecall();
+void CLASS_DECL_ACME __cdecl _ca2_purecall();
 
 
 extern "C"
@@ -27,8 +27,9 @@ void acme_windows_common_factory_exchange(::factory_map * pfactorymap)
    //pfactorymap->create_factory < ::windows::ip_enum, ::net::ip_enum >();
 
    pfactorymap->create_factory < ::acme::windows_common::node, ::acme::node >();
-   //pfactorymap->create_factory < ::windows::acme_dir, ::acme_dir >();
-   // pfactorymap->create_factory < ::windows::acme_path, ::acme_path >();
+   pfactorymap->create_factory < ::windows_common::acme_dir, ::acme_dir >();
+   pfactorymap->create_factory < ::windows_common::acme_file, ::acme_path >();
+   pfactorymap->create_factory < ::windows_common::acme_path, ::acme_path >();
 
    //pfactorymap->create_factory < ::windows::interprocess_communication_base, ::interprocess_communication::base >();
    //pfactorymap->create_factory < ::windows::interprocess_communication_rx, ::interprocess_communication::rx >();

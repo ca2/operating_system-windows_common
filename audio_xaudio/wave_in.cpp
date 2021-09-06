@@ -34,7 +34,7 @@ namespace multimedia
 
          //ASSERT(GetMainWnd() == nullptr);
 
-         set_thread_priority(::priority_highest);
+         set_thread_priority(::e_priority_highest);
 
 //         m_evInitialized.SetEvent();
 

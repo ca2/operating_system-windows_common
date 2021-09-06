@@ -115,7 +115,7 @@ namespace process
 {
 
 
-   bool set_priority(::e_priority epriority)
+   bool set_priority(::enum_priority epriority)
    {
 
       return (::SetPriorityClass(::GetCurrentProcess(), get_os_priority_class(epriority)) != 0);

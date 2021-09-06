@@ -13,6 +13,7 @@ CLASS_DECL_ACME_WINDOWS_COMMON HRESULT defer_co_initialize_ex(bool bMultiThread,
 CLASS_DECL_ACME_WINDOWS_COMMON ::u32 windows_get_file_attributes(const char * path);
 CLASS_DECL_ACME_WINDOWS_COMMON bool windows_create_directory(const char * pszPath ARG_SEC_ATTRS);
 
+//CLASS_DECL_ACME_WINDOWS_COMMON string FormatMessageFromSystem(u32 dwError);
 
 //CLASS_DECL_ACME_WINDOWS_COMMON BSTR AllocSysString(const ::string & str) noexcept;
 ////CLASS_DECL_ACME_WINDOWS_COMMON bool ReAllocSysString(BSTR * pbstr, const ansichar * pchData, strsize nDataLength) noexcept;

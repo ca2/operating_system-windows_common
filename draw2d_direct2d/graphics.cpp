@@ -83,8 +83,8 @@ namespace draw2d_direct2d
 
       object::dump(dumpcontext);
 
-      dumpcontext << "get_handle1() = " << (::iptr) get_handle1();
-      dumpcontext << "\nm_hAttribDC = " << (::iptr) get_handle2();
+      //dumpcontext << "get_handle1() = " << (::iptr) get_handle1();
+      //dumpcontext << "\nm_hAttribDC = " << (::iptr) get_handle2();
       dumpcontext << "\nm_bPrinting = " << m_bPrinting;
 
       dumpcontext << "\n";
@@ -92,12 +92,12 @@ namespace draw2d_direct2d
    }
 
 
-   bool graphics::IsPrinting()
-   {
+   //bool graphics::IsPrinting()
+   //{
 
-      return m_bPrinting;
+   //   return m_bPrinting;
 
-   }
+   //}
 
 
    //bool graphics::CreateDC(const ::string & lpszDriverName, const ::string & lpszDeviceName, const ::string & lpszOutput, const void * lpInitData)
@@ -780,6 +780,8 @@ namespace draw2d_direct2d
 
       __throw(todo);
 
+      return nullptr;
+
    }
 
    
@@ -787,6 +789,8 @@ namespace draw2d_direct2d
    {
 
       __throw(todo);
+
+      return nullptr;
 
    }
 
@@ -797,6 +801,7 @@ namespace draw2d_direct2d
       //::size_f64::size_f64;
       //::GetWindowExtEx(get_handle2(), &::size_f64);
       //return ::size_f64;
+      return nullptr;
    }
 
 
@@ -874,6 +879,8 @@ namespace draw2d_direct2d
       __throw(todo);
       //return ::FillRgn(get_handle1(), (HRGN)pRgn->get_os_data(), (HBRUSH)pBrush->get_os_data()) != false;
 
+      return false;
+
    }
 
 
@@ -882,6 +889,8 @@ namespace draw2d_direct2d
 
       __throw(todo);
       //return ::FrameRgn(get_handle1(), (HRGN)pRgn->get_os_data(), (HBRUSH)pBrush->get_os_data(), nWidth, nHeight) != false;
+
+      return false;
 
    }
 
@@ -894,6 +903,8 @@ namespace draw2d_direct2d
 
       //return ::InvertRgn(get_handle1(), (HRGN)pRgn->get_os_data()) != false;
 
+      return false;
+
    }
 
 
@@ -904,6 +915,8 @@ namespace draw2d_direct2d
       //ASSERT(get_handle1() != nullptr);
 
       //return ::PaintRgn(get_handle1(), (HRGN)pRgn->get_os_data())  != false;
+
+      return false;
 
    }
 
@@ -947,6 +960,8 @@ namespace draw2d_direct2d
       //::point_f64 point;
       //VERIFY(::GetCurrentPositionEx(get_handle2(), &point));
       //return point;
+
+      return nullptr;
 
    }
 
@@ -1022,7 +1037,7 @@ namespace draw2d_direct2d
    bool graphics::Arc(const ::rectangle_f64 & rectangle, const ::point_f64 & pointStart, const ::point_f64 & pointEnd)
    {
 
-      ASSERT(get_handle1() != nullptr);
+      //ASSERT(get_handle1() != nullptr);
 
       return Arc(rectangle.left, rectangle.top, rectangle.right, rectangle.bottom, pointStart.x, pointStart.y, pointEnd.x, pointEnd.y)  != false;
 
@@ -1306,9 +1321,11 @@ namespace draw2d_direct2d
 
       __throw(todo);
 
-      ASSERT(get_handle1() != nullptr);
+      //ASSERT(get_handle1() != nullptr);
 
       //return ::Chord(get_handle1(), x1, y1, x2, y2, x3, y3, x4, y4) != false;
+
+      return false;
 
    }
 
@@ -1317,9 +1334,11 @@ namespace draw2d_direct2d
 
       __throw(todo);
 
-      ASSERT(get_handle1() != nullptr);
+      //ASSERT(get_handle1() != nullptr);
 
       //return ::Chord(get_handle1(), rectangle.left, rectangle.top, rectangle.right, rectangle.bottom, pointStart.x, pointStart.y, pointEnd.x, pointEnd.y) != false;
+
+      return false;
 
    }
 
@@ -1329,7 +1348,7 @@ namespace draw2d_direct2d
 
       __throw(todo);
 
-      ASSERT(get_handle1() != nullptr);
+//      ASSERT(get_handle1() != nullptr);
 
    }
 
@@ -1408,6 +1427,8 @@ namespace draw2d_direct2d
    {
 
       __throw(todo);
+
+      return false;
 
    }
 
@@ -1912,6 +1933,9 @@ namespace draw2d_direct2d
 
       __throw(todo);
 
+
+      return false;
+
    }
 
 
@@ -1919,6 +1943,8 @@ namespace draw2d_direct2d
    {
 
       __throw(todo);
+
+      return false;
 
    }
 
@@ -1928,6 +1954,8 @@ namespace draw2d_direct2d
 
       __throw(todo);
 
+      return false;
+
    }
 
 
@@ -1935,6 +1963,8 @@ namespace draw2d_direct2d
    {
 
       __throw(todo);
+
+      return false;
 
    }
 
@@ -2024,6 +2054,8 @@ namespace draw2d_direct2d
 
       __throw(todo);
 
+      return nullptr;
+
    }
 
 
@@ -2031,6 +2063,8 @@ namespace draw2d_direct2d
    {
 
       __throw(todo);
+
+      return nullptr;
 
    }
 
@@ -2047,6 +2081,8 @@ namespace draw2d_direct2d
    {
 
       __throw(todo);
+
+      return false;
 
    }
 
@@ -2205,6 +2241,8 @@ namespace draw2d_direct2d
 
       //return ::GetTextMetrics(get_handle1(), lpMetrics) != false;
 
+      return false;
+
    }
 
 
@@ -2324,6 +2362,8 @@ namespace draw2d_direct2d
 
       //return ::SetBoundsRect(get_handle1(), rectBounds, flags);
 
+      return false;
+
    }
 
 
@@ -2335,6 +2375,8 @@ namespace draw2d_direct2d
       //ASSERT(get_handle2() != nullptr);
 
       //return ::GetBoundsRect(get_handle2(), rectBounds, flags);
+
+      return false;
 
    }
 
@@ -2435,6 +2477,8 @@ namespace draw2d_direct2d
 
       //return ::StartPage(get_handle1());
 
+      return 0;
+
    }
 
    int graphics::EndPage()
@@ -2445,6 +2489,7 @@ namespace draw2d_direct2d
       //ASSERT(get_handle1() != nullptr);
 
       //return ::EndPage(get_handle1());
+      return 0;
 
    }
 
@@ -2470,6 +2515,8 @@ namespace draw2d_direct2d
 
       //return ::AbortDoc(get_handle1());
 
+      return 0;
+
    }
 
 
@@ -2481,6 +2528,8 @@ namespace draw2d_direct2d
       //ASSERT(get_handle1() != nullptr);
 
       //return ::EndDoc(get_handle1());
+
+      return 0;
 
    }
 
@@ -2518,6 +2567,8 @@ namespace draw2d_direct2d
 
       //return ::SetPixelV(get_handle1(), x, y, crColor) != false;
 
+      return false;
+
    }
 
    bool graphics::SetPixelV(const ::point_f64 & point, const ::color::color & color)
@@ -2528,6 +2579,8 @@ namespace draw2d_direct2d
       //ASSERT(get_handle1() != nullptr);
 
       //return ::SetPixelV(get_handle1(), point.x, point.y, crColor) != false;
+
+      return false;
 
    }
 
@@ -2540,6 +2593,8 @@ namespace draw2d_direct2d
 
       //return ::AngleArc(get_handle1(), x, y, nRadius, fStartAngle, fSweepAngle) != false;
 
+      return false;
+
    }
 
 
@@ -2551,6 +2606,8 @@ namespace draw2d_direct2d
       //ASSERT(get_handle1() != nullptr);
 
       //return ArcTo(rectangle.left, rectangle.top, rectangle.right, rectangle.bottom, pointStart.x, pointStart.y, pointEnd.x, pointEnd.y);
+      return false;
+
 
    }
 
@@ -2573,6 +2630,8 @@ namespace draw2d_direct2d
       //ASSERT(get_handle1() != nullptr);
 
       //return ::poly_polyline(get_handle1(), ppoints, lpPolyPoints, nCount) != false;
+      return false;
+
 
    }
 
@@ -2600,6 +2659,8 @@ namespace draw2d_direct2d
       //ASSERT(get_handle1() != nullptr);
 
       //return ::poly_bezier(get_handle1(), ppoints, nCount) != false;
+
+      return false;
 
    }
 
@@ -2667,13 +2728,17 @@ namespace draw2d_direct2d
       //}
       //return true;
 
+      return false;
 
    }
+
 
    bool graphics::begin_path()
    {
 
       __throw(todo);
+
+      return false;
 
    }
 
@@ -2685,6 +2750,8 @@ namespace draw2d_direct2d
 
       //ASSERT(m_ppath != nullptr);
       //return m_ppath->CloseFigure() == Gdiplus::Status::Ok;
+
+      return false;
 
    }
 
@@ -2702,7 +2769,10 @@ namespace draw2d_direct2d
 
       //return true;
 
+      return false;
+
    }
+
 
    bool graphics::fill_path()
    {
@@ -2711,7 +2781,11 @@ namespace draw2d_direct2d
 
       //return m_prendertarget->FillPath(direct2d_brush(), m_ppath) == Gdiplus::Status::Ok;
 
+      return false;
+
+
    }
+
 
    bool graphics::flatten_path()
    {
@@ -2719,8 +2793,11 @@ namespace draw2d_direct2d
       __throw(todo);
 
       //return m_ppath->Flatten() == Gdiplus::Status::Ok;
+      return false;
+
 
    }
+
 
    float graphics::GetMiterLimit()
    {
@@ -2731,6 +2808,8 @@ namespace draw2d_direct2d
       //float fMiterLimit;
       //VERIFY(::GetMiterLimit(get_handle1(), &fMiterLimit));
       //return fMiterLimit;
+
+      return 0.f;
 
    }
 
@@ -2754,6 +2833,8 @@ namespace draw2d_direct2d
       //ASSERT(get_handle1() != nullptr);
       //return ::SetMiterLimit(get_handle1(), fMiterLimit, nullptr) != false;
 
+      return false;
+
    }
 
 
@@ -2768,6 +2849,8 @@ namespace draw2d_direct2d
 
       //return bOk1 && bOk2;
 
+      return false;
+
    }
 
 
@@ -2777,6 +2860,9 @@ namespace draw2d_direct2d
       __throw(todo);
 
 //      return m_prendertarget->DrawPath(direct2d_pen(), m_ppathPaint) == Gdiplus::Status::Ok;
+
+      return false;
+
    }
 
 
@@ -2787,6 +2873,8 @@ namespace draw2d_direct2d
 
 
 //      return m_ppath->Widen(direct2d_pen()) == Gdiplus::Status::Ok;
+
+      return false;
    }
 
 
@@ -2798,6 +2886,9 @@ namespace draw2d_direct2d
 
       //ASSERT(get_handle1() != nullptr);
       //return ::GdiComment(get_handle1(), nDataSize, pCommentData) != false;
+
+      return false;
+
    }
 
 
@@ -3703,6 +3794,9 @@ namespace draw2d_direct2d
 
       __throw(todo);
 
+
+      return nullptr;
+
    }
 
 
@@ -3719,6 +3813,8 @@ namespace draw2d_direct2d
 
       __throw(todo);
 
+      return nullptr;
+
    }
 
 
@@ -3726,6 +3822,8 @@ namespace draw2d_direct2d
    {
 
       __throw(todo);
+
+      return nullptr;
 
    }
 
@@ -3735,6 +3833,8 @@ namespace draw2d_direct2d
 
       __throw(todo);
 
+      return nullptr;
+
    }
 
 
@@ -3742,6 +3842,9 @@ namespace draw2d_direct2d
    {
 
       __throw(todo);
+
+
+      return nullptr;
 
    }
 
@@ -4152,6 +4255,8 @@ namespace draw2d_direct2d
 
       __throw(todo);
 
+      return 0;
+
    }
 
 
@@ -4296,6 +4401,8 @@ namespace draw2d_direct2d
 
       __throw(todo);
 
+      return 0;
+
    }
 
 
@@ -4304,6 +4411,8 @@ namespace draw2d_direct2d
 
       __throw(todo);
 
+      return 0;
+
    }
 
 
@@ -4311,6 +4420,8 @@ namespace draw2d_direct2d
    {
 
       __throw(todo);
+
+      return false;
 
    }
 
@@ -4328,6 +4439,8 @@ namespace draw2d_direct2d
 
       __throw(todo);
 
+      return false;
+
    }
 
 
@@ -4336,6 +4449,8 @@ namespace draw2d_direct2d
 
       __throw(todo);
 
+      return false;
+
    }
 
 
@@ -4343,6 +4458,8 @@ namespace draw2d_direct2d
    {
 
       __throw(todo);
+
+      return false;
 
    }
 
@@ -4718,6 +4835,8 @@ namespace draw2d_direct2d
 
       __throw(todo);
 
+      return nullptr;
+
    }
 
 
@@ -4725,6 +4844,8 @@ namespace draw2d_direct2d
    {
 
       __throw(todo);
+
+      return nullptr;
 
    }
 
@@ -5175,28 +5296,30 @@ namespace draw2d_direct2d
    }
 
 
-   HDC graphics::get_handle() const
-   {
+   //HDC graphics::get_handle() const
+   //{
 
-      __throw(todo);
+   //   __throw(todo);
 
-   }
+   //   return
 
-
-   HDC graphics::get_handle1() const
-   {
-
-      return get_handle();
-
-   }
+   //}
 
 
-   HDC graphics::get_handle2() const
-   {
+   //HDC graphics::get_handle1() const
+   //{
 
-      return get_handle();
+   //   return get_handle();
 
-   }
+   //}
+
+
+   //HDC graphics::get_handle2() const
+   //{
+
+   //   return get_handle();
+
+   //}
 
 
    bool graphics::attach(void * pdata)
@@ -5345,6 +5468,8 @@ namespace draw2d_direct2d
    {
 
       __throw(todo);
+
+      return false;
 
    }
 

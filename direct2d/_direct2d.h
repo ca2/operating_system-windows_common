@@ -5,6 +5,12 @@
 #include "directx/_directx.h"
 
 
+#include "global.h"
+
+
+
+
+
 #include <DXGI1_2.h>
 #include <Dwrite.h>
 #include <D2D1.h>
@@ -17,6 +23,9 @@ interface ID2D1Factory1;
 
 
 #include "direct2d.h"
+
+
+#include "multithreading_lock.h"
 
 
 

@@ -12,21 +12,24 @@ namespace directx
    public:
 
 
-      Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_pd3devicecontext;
-      Microsoft::WRL::ComPtr<ID3D11DeviceContext1> m_pd3devicecontext1;
-      Microsoft::WRL::ComPtr<ID3D11Device> m_pd3device;
-      Microsoft::WRL::ComPtr<ID3D11Device1> m_pd3device1;
-      Microsoft::WRL::ComPtr<IDXGIDevice> m_pdxgidevice;
+      Microsoft::WRL::ComPtr<ID3D11DeviceContext>        m_pd3devicecontext;
+      Microsoft::WRL::ComPtr<ID3D11DeviceContext1>       m_pd3devicecontext1;
+      Microsoft::WRL::ComPtr<ID3D11Device>               m_pd3device;
+      Microsoft::WRL::ComPtr<ID3D11Device1>              m_pd3device1;
+      Microsoft::WRL::ComPtr<IDXGIDevice>                m_pdxgidevice;
+
+
+      __pointer(::user::interaction_impl)                m_pimpl;
 
       
-      D3D_FEATURE_LEVEL m_featurelevel;
+      D3D_FEATURE_LEVEL                                  m_featurelevel;
 
 
-      static directx * s_pdirectx;
+      static directx *                                   s_pdirectx;
 
 
       directx();
-      virtual ~directx();
+      ~directx() override;
 
 
       ::e_status initialize(::object * pobject) override;
@@ -50,8 +53,8 @@ namespace directx
    }
 
    
-   CLASS_DECL_DIRECTX void defer_initialize();
-   CLASS_DECL_DIRECTX void terminate();
+   CLASS_DECL_DIRECTX void defer_initialize(::object * pobject);
+   CLASS_DECL_DIRECTX void finalize();
 
 
 } // namespace directx

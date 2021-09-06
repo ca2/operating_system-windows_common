@@ -68,7 +68,7 @@ namespace draw2d_direct2d
       virtual bool _draw_blend(const ::image_drawing & imagedrawing) override;
 
 
-      bool IsPrinting() override;            // true if being used for printing
+      //bool IsPrinting() override;            // true if being used for printing
 
       
       virtual bool on_begin_draw() override;
@@ -541,9 +541,9 @@ namespace draw2d_direct2d
       bool set_alpha_mode(::draw2d::enum_alpha_mode ealphamode) override;
 
 
-      virtual HDC get_handle() const;
-      virtual HDC get_handle1() const;
-      virtual HDC get_handle2() const;
+      //virtual HDC get_handle() const;
+      //virtual HDC get_handle1() const;
+      //virtual HDC get_handle2() const;
 
       virtual bool attach(void * pdata) override;
       virtual void * detach() override;

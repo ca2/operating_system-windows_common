@@ -39,7 +39,7 @@ namespace windows
    }
 
 
-   bool process::create_child_process(const ::string & pszCmdLine, bool bPiped, const ::string & pszDir, ::e_priority epriority)
+   bool process::create_child_process(const ::string & pszCmdLine, bool bPiped, const ::string & pszDir, ::enum_priority epriority)
    {
 
       if (!::process::process::create_child_process(pszCmdLine, bPiped, pszDir, epriority))

@@ -5,9 +5,10 @@
 #include "_file_c.h"
 #include "file.h"
 
-#ifdef _UWP
-CLASS_DECL_ACME::Windows::Storage::StorageFolder^ winrt_folder(string& strPath, string& strPrefix);
-#endif
+
+//#ifdef _UWP
+//CLASS_DECL_ACME::winrt::Windows::Storage::StorageFolder^ winrt_folder(string& strPath, string& strPrefix);
+//#endif
 
 
 ::u32 windows_get_file_attributes(const char* path)

@@ -1,18 +1,18 @@
 #pragma once
 
 
-namespace draw2d_directx
+namespace directx
 {
 
 
-   class CLASS_DECL_DRAW2D_DIRECTX object :
+   class CLASS_DECL_DIRECTX object :
       virtual public ::draw2d::object
    {
    public:
 
 
       object();
-      virtual ~object();
+      ~object() override;
 
 
       int get_object(int nCount, LPVOID lpObject) const;
@@ -22,22 +22,22 @@ namespace draw2d_directx
       bool operator==(const object& obj) const;
       bool operator!=(const object& obj) const;
 
-      virtual void dump(dump_context & dumpcontext) const;
-      virtual void assert_valid() const;
+      void dump(dump_context & dumpcontext) const override;
+      void assert_valid() const override;
 
 
-      ::draw2d_directx::draw2d * draw2d()
-      {
+      //::directx::draw2d * draw2d()
+      //{
 
-         return (::draw2d_directx::draw2d * ) pdraw2d->layer(LAYERED_IMPL);
+      //   return (::directx::draw2d * ) pdraw2d->layer(LAYERED_IMPL);
 
-      }
+      //}
 
 
    };
 
 
-} // namespace aura
+} // namespace directx
 
 
 

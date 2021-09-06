@@ -97,7 +97,7 @@ namespace imaging_wic
       psystem->main_user_sync(__routine([&]()
          {
 
-            auto dataPackage = ::Windows::ApplicationModel::DataTransfer::Clipboard::GetContent();
+            auto dataPackage = ::winrt::Windows::ApplicationModel::DataTransfer::Clipboard::GetContent();
 
             if (dataPackage == nullptr)
             {
@@ -108,7 +108,7 @@ namespace imaging_wic
 
             }
 
-            if (!dataPackage->Contains(::Windows::ApplicationModel::DataTransfer::StandardDataFormats::Bitmap))
+            if (!dataPackage->Contains(::winrt::Windows::ApplicationModel::DataTransfer::StandardDataFormats::Bitmap))
             {
 
                bOk = false;
@@ -119,19 +119,19 @@ namespace imaging_wic
 
             auto p = ::wait(dataPackage->GetDataAsync(L"DeviceIndependentBitmap"));
 
-            //::Windows::Storage::Streams::IRandomAccessStream^ stream = (::Windows::Storage::Streams::IRandomAccessStream^)
+            //::winrt::Windows::Storage::Streams::IRandomAccessStream^ stream = (::winrt::Windows::Storage::Streams::IRandomAccessStream^)
 
             //auto ref = ::wait(dataPackage->GetDataAsync(L"DeviceIndependentBitmap"));
 
             if (p == nullptr)
             {
 
-               p = (::Windows::Storage::Streams::IRandomAccessStream^) ::wait(dataPackage->GetDataAsync(L"DeviceIndependentBitmapV5"));
+               p = (::winrt::Windows::Storage::Streams::IRandomAccessStream^) ::wait(dataPackage->GetDataAsync(L"DeviceIndependentBitmapV5"));
 
                if (p == nullptr)
                {
                   
-                  p = (::Windows::Storage::Streams::IRandomAccessStream^) ::wait(dataPackage->GetDataAsync(L"DeviceInterchangeFormat"));
+                  p = (::winrt::Windows::Storage::Streams::IRandomAccessStream^) ::wait(dataPackage->GetDataAsync(L"DeviceInterchangeFormat"));
 
                   if (p == nullptr)
                   {
@@ -146,9 +146,9 @@ namespace imaging_wic
 
             }
 
-            ::Windows::Storage::Streams::IRandomAccessStream^ stream = (::Windows::Storage::Streams::IRandomAccessStream ^ ) p;
+            ::winrt::Windows::Storage::Streams::IRandomAccessStream^ stream = (::winrt::Windows::Storage::Streams::IRandomAccessStream ^ ) p;
 
-            //::Windows::Storage::Streams::IRandomAccessStreamWithContentType ^ stream = ::wait(ref->OpenReadAsync());
+            //::winrt::Windows::Storage::Streams::IRandomAccessStreamWithContentType ^ stream = ::wait(ref->OpenReadAsync());
 
             //if (stream == nullptr)
             //{
@@ -162,12 +162,12 @@ namespace imaging_wic
 
             memsize s = (memsize)stream->Size;
 
-            Windows::Storage::Streams::Buffer^ buffer = ref new Windows::Storage::Streams::Buffer(s);
+            ::winrt::Windows::Storage::Streams::Buffer^ buffer = ref new ::winrt::Windows::Storage::Streams::Buffer(s);
 
             if (buffer == nullptr)
                return;
 
-            ::wait(stream->ReadAsync(buffer, s, ::Windows::Storage::Streams::InputStreamOptions::ReadAhead));
+            ::wait(stream->ReadAsync(buffer, s, ::winrt::Windows::Storage::Streams::InputStreamOptions::ReadAhead));
 
             memory m;
 
@@ -229,7 +229,7 @@ namespace imaging_wic
 
       bool bOk = true;
 
-      auto package = ref new ::Windows::ApplicationModel::DataTransfer::DataPackage;
+      auto package = ref new ::winrt::Windows::ApplicationModel::DataTransfer::DataPackage;
 
       if (package == nullptr)
       {
@@ -238,7 +238,7 @@ namespace imaging_wic
 
       }
 
-      Windows::Storage::Streams::InMemoryRandomAccessStream^ randomAccessStream = ref new Windows::Storage::Streams::InMemoryRandomAccessStream();
+      ::winrt::Windows::Storage::Streams::InMemoryRandomAccessStream^ randomAccessStream = ref new ::winrt::Windows::Storage::Streams::InMemoryRandomAccessStream();
 
       ::save_image saveimage;
 
@@ -253,16 +253,16 @@ namespace imaging_wic
 
       }
 
-      package->RequestedOperation = ::Windows::ApplicationModel::DataTransfer::DataPackageOperation::Copy;
+      package->RequestedOperation = ::winrt::Windows::ApplicationModel::DataTransfer::DataPackageOperation::Copy;
 
-      auto object = ::Windows::Storage::Streams::RandomAccessStreamReference::CreateFromStream(randomAccessStream);
+      auto object = ::winrt::Windows::Storage::Streams::RandomAccessStreamReference::CreateFromStream(randomAccessStream);
 
       package->SetBitmap(object);
 
       defer_main_thread([&package, this]()
          {
 
-            ::Windows::ApplicationModel::DataTransfer::Clipboard::SetContent(package);
+            ::winrt::Windows::ApplicationModel::DataTransfer::Clipboard::SetContent(package);
 
          });
 

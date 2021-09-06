@@ -6,7 +6,7 @@
 #include "file.h"
 
 #ifdef _UWP
-CLASS_DECL_ACME::Windows::Storage::StorageFolder^ winrt_folder(string& strPath, string& strPrefix);
+CLASS_DECL_ACME::winrt::Windows::Storage::StorageFolder^ winrt_folder(string& strPath, string& strPrefix);
 #endif
 
 
@@ -248,7 +248,7 @@ int_bool m_psystem->m_pacmepath->is_file_or_dir(const char * path, ::file::enum_
             if (item != nullptr)
             {
 
-               if (item->IsOfType(::Windows::Storage::StorageItemTypes::Folder))
+               if (item->IsOfType(::winrt::Windows::Storage::StorageItemTypes::Folder))
                {
 
                   if (is_set(petype))
@@ -261,7 +261,7 @@ int_bool m_psystem->m_pacmepath->is_file_or_dir(const char * path, ::file::enum_
                   return true;
 
                }
-               else if (item->IsOfType(::Windows::Storage::StorageItemTypes::File))
+               else if (item->IsOfType(::winrt::Windows::Storage::StorageItemTypes::File))
                {
 
                   if (is_set(petype))

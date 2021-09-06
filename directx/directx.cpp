@@ -72,19 +72,19 @@ namespace directx
          &context                    // Returns the device immediate context.
       );
 
-      ::directx::throw_if_failed(hr);
+      ::throw_if_failed(hr);
 
       // Get the Direct3D 11.1 API device and context interfaces.
-      ::directx::throw_if_failed(device.As(&m_pd3device));
+      ::throw_if_failed(device.As(&m_pd3device));
 
-      ::directx::throw_if_failed(device.As(&m_pd3device1));
+      ::throw_if_failed(device.As(&m_pd3device1));
 
-      ::directx::throw_if_failed(context.As(&m_pd3devicecontext));
+      ::throw_if_failed(context.As(&m_pd3devicecontext));
 
-      ::directx::throw_if_failed(context.As(&m_pd3devicecontext1));
+      ::throw_if_failed(context.As(&m_pd3devicecontext1));
 
       // Get the underlying DXGI device of the Direct3D device.
-      ::directx::throw_if_failed(device.As(&m_pdxgidevice));
+      ::throw_if_failed(device.As(&m_pdxgidevice));
 
       
       ::directx::defer_dxgi_debug_initialize();
@@ -141,7 +141,7 @@ namespace directx
    typedef FN_DXGIGetDebugInterface* PFN_DXGIGetDebugInterface;
 
 
-   CLASS_DECL_DIRECTX void defer_initialize()
+   CLASS_DECL_DIRECTX void defer_initialize(::object * pobject)
    {
 
       if (::is_set(directx::s_pdirectx))
@@ -152,6 +152,8 @@ namespace directx
       }
 
       directx::s_pdirectx = new class directx;
+
+      directx::s_pdirectx->initialize(pobject);
 
    }
 

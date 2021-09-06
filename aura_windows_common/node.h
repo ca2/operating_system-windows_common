@@ -27,9 +27,6 @@ namespace aura
          ~node() override;
 
 
-         string get_user_name();
-
-
          virtual bool _os_calc_app_dark_mode() override;
 
          virtual bool _os_calc_system_dark_mode() override;

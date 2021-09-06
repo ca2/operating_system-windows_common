@@ -184,6 +184,9 @@
     <ClCompile Include="exception\engine.cpp">
       <Filter>Source Files\exception</Filter>
     </ClCompile>
+    <ClCompile Include="acme_dir.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\version.rc">

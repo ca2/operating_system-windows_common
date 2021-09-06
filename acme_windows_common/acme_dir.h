@@ -15,6 +15,16 @@ namespace windows_common
    public:
 
 
+      acme_dir();
+      ~acme_dir() override;
+
+
+
+      ::e_status _create_directory(const char * path) override;
+
+      bool _is(const char * path) override;
+
+
    };
 
 

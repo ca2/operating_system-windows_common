@@ -46,7 +46,7 @@ hresult_exception::~hresult_exception()
 CLASS_DECL_ACME_WINDOWS_COMMON int trace_hr(const char * psz,HRESULT hr)
 {
 
-   string strError = get_last_error_message((DWORD) hr);
+   string strError = last_error_message((DWORD) hr);
 
    strError.trim();
 

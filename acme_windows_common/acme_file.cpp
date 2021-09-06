@@ -128,16 +128,37 @@ namespace windows_common
    filesize acme_file::get_size(const char * path)
    {
 
+#ifdef WINDOWS_DESKTOP
+
       HANDLE hfile = CreateFileW(wstring(path), GENERIC_READ, FILE_SHARE_WRITE | FILE_SHARE_READ | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 
+#else
+
+      hfile hfile = hfile_create(path, GENERIC_READ, FILE_SHARE_WRITE | FILE_SHARE_READ | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+
+#endif
+
       if (hfile == INVALID_HANDLE_VALUE)
+      {
+
          return 0;
+
+      }
 
       DWORD dwHi = 0;
 
-      u64 u = GetFileSize(hfile, &dwHi);
+      LARGE_INTEGER largeintegerFileSize;
 
-      u |= ((u64)dwHi) << 32ULL;
+      if (!GetFileSizeEx(hfile, &largeintegerFileSize))
+      {
+
+         return 0;
+
+      }
+
+      u64 u = largeintegerFileSize.LowPart;
+
+      u |= ((u64)largeintegerFileSize.HighPart) << 32ULL;
 
       CloseHandle(hfile);
 

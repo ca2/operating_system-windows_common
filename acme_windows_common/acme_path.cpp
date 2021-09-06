@@ -17,77 +17,77 @@ namespace windows_common
       if (dwFileAttributes == INVALID_FILE_ATTRIBUTES)
       {
 
-#ifdef _UWP
-
-         DWORD dwLastError = ::GetLastError();
-
-         string strPrefix;
-
-         string strRelative = path;
-
-         auto folderBase = winrt_folder(strRelative, strPrefix);
-
-         if (folderBase != nullptr)
-         {
-
-            strRelative.replace("/", "\\");
-
-            strPrefix.replace("/", "\\");
-
-            ::str::begins_eat_ci(strRelative, strPrefix);
-
-            strRelative.trim("/\\");
-
-            //strPrefix.trim_right("/\\");
-
-            try
-            {
-
-               auto item = ::wait(folderBase->GetItemAsync(strRelative));
-
-               if (item != nullptr)
-               {
-
-                  if (item->IsOfType(::Windows::Storage::StorageItemTypes::Folder))
-                  {
-
-                     if (is_set(petype))
-                     {
-
-                        *petype = ::file::e_type_folder;
-
-                     }
-
-                     return true;
-
-                  }
-                  else if (item->IsOfType(::Windows::Storage::StorageItemTypes::File))
-                  {
-
-                     if (is_set(petype))
-                     {
-
-                        *petype = ::file::e_type_file;
-
-                     }
-
-                     return true;
-
-                  }
-
-                  return false;
-
-               }
-
-            }
-            catch (...)
-            {
-
-            }
-
-         }
-
-#endif
+//#ifdef _UWP
+//
+//         DWORD dwLastError = ::GetLastError();
+//
+//         string strPrefix;
+//
+//         string strRelative = path;
+//
+//         auto folderBase = winrt_folder(strRelative, strPrefix);
+//
+//         if (folderBase != nullptr)
+//         {
+//
+//            strRelative.replace("/", "\\");
+//
+//            strPrefix.replace("/", "\\");
+//
+//            ::str::begins_eat_ci(strRelative, strPrefix);
+//
+//            strRelative.trim("/\\");
+//
+//            //strPrefix.trim_right("/\\");
+//
+//            try
+//            {
+//
+//               auto item = ::wait(folderBase->GetItemAsync(strRelative));
+//
+//               if (item != nullptr)
+//               {
+//
+//                  if (item->IsOfType(::winrt::Windows::Storage::StorageItemTypes::Folder))
+//                  {
+//
+//                     if (is_set(petype))
+//                     {
+//
+//                        *petype = ::file::e_type_folder;
+//
+//                     }
+//
+//                     return true;
+//
+//                  }
+//                  else if (item->IsOfType(::winrt::Windows::Storage::StorageItemTypes::File))
+//                  {
+//
+//                     if (is_set(petype))
+//                     {
+//
+//                        *petype = ::file::e_type_file;
+//
+//                     }
+//
+//                     return true;
+//
+//                  }
+//
+//                  return false;
+//
+//               }
+//
+//            }
+//            catch (...)
+//            {
+//
+//            }
+//
+//         }
+//
+//#endif
 
          if (is_set(petype))
          {

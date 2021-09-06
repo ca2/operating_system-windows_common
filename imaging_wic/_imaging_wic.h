@@ -1,4 +1,4 @@
-// Created by camilo on 2021-08-10 13:31 BRT <3ThomasBorregaardSørensen!!
+// Created by camilo on 2021-08-10 13:31 BRT <3ThomasBorregaardSï¿½rensen!!
 #pragma once
 
 
@@ -20,7 +20,7 @@ namespace imaging_wic
 #ifdef _UWP
 
 
-   CLASS_DECL_IMAGING_WIC bool node_save_image(Windows::Storage::Streams::IRandomAccessStream ^ stream, const ::image * pimage, const ::save_image * psaveimage);
+   CLASS_DECL_IMAGING_WIC bool node_save_image(::winrt::Windows::Storage::Streams::IRandomAccessStream ^ stream, const ::image * pimage, const ::save_image * psaveimage);
 
 
 #endif

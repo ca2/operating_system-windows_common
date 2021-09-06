@@ -2,9 +2,9 @@
 
 
 using namespace Platform;
-using namespace Windows::UI::Xaml::Controls;
-using namespace Windows::Devices::Enumeration;
-using namespace Windows::Devices::Midi;
+using namespace ::winrt::Windows::UI::Xaml::Controls;
+using namespace ::winrt::Windows::Devices::Enumeration;
+using namespace ::winrt::Windows::Devices::Midi;
 
 namespace SDKSample
 {
@@ -13,7 +13,7 @@ namespace SDKSample
       /// <summary>
       /// An empty page that can be used on its own or navigated to within a Frame.
       /// </summary>
-      [Windows::Foundation::Metadata::WebHostHidden]
+      [::winrt::Windows::Foundation::Metadata::WebHostHidden]
       public ref class MessageIO sealed
       {
       public:
@@ -21,8 +21,8 @@ namespace SDKSample
          virtual ~MessageIO();
 
       protected:
-         virtual void OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs^ e) override;
-         virtual void OnNavigatedFrom(Windows::UI::Xaml::Navigation::NavigationEventArgs^ e) override;
+         virtual void OnNavigatedTo(::winrt::Windows::UI::Xaml::Navigation::NavigationEventArgs^ e) override;
+         virtual void OnNavigatedFrom(::winrt::Windows::UI::Xaml::Navigation::NavigationEventArgs^ e) override;
 
       private:
          void ScenarioInit();
@@ -41,9 +41,9 @@ namespace SDKSample
          void Field1ComboBoxSelectionChanged(Object^ sender, SelectionChangedEventArgs^ e);
          void Field2ComboBoxSelectionChanged(Object^ sender, SelectionChangedEventArgs^ e);
          void Field3ComboBoxSelectionChanged(Object^ sender, SelectionChangedEventArgs^ e);
-         void RawMessageTextBlockTapped(Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e);
-         void ResetButtonClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
-         void SendButtonClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+         void RawMessageTextBlockTapped(Object^ sender, ::winrt::Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e);
+         void ResetButtonClick(Platform::Object^ sender, ::winrt::Windows::UI::Xaml::RoutedEventArgs^ e);
+         void SendButtonClick(Platform::Object^ sender, ::winrt::Windows::UI::Xaml::RoutedEventArgs^ e);
 
          void UpdateMessageTypeUI();
          void UpdateField1UI();
@@ -86,7 +86,7 @@ namespace SDKSample
          ref class MidiDeviceWatcher sealed
          {
          public:
-            MidiDeviceWatcher(String ^ midiSelector, Windows::UI::Core::CoreDispatcher ^ dispatcher, ListBox ^ portListBox);
+            MidiDeviceWatcher(String ^ midiSelector, ::winrt::Windows::UI::Core::CoreDispatcher ^ dispatcher, ListBox ^ portListBox);
             virtual ~MidiDeviceWatcher();
             void Start();
             void Stop();
@@ -100,13 +100,13 @@ namespace SDKSample
             void OnPortUpdated(DeviceWatcher^ deviceWatcher, DeviceInformationUpdate^ devInfoUpdate);
             void OnPortEnumCompleted(DeviceWatcher^ deviceWatcher, Object^ obj);
 
-            Windows::Foundation::EventRegistrationToken _portAddedToken;
-            Windows::Foundation::EventRegistrationToken _portRemovedToken;
-            Windows::Foundation::EventRegistrationToken _portUpdatedToken;
-            Windows::Foundation::EventRegistrationToken _portEnumCompleteToken;
+            ::winrt::Windows::Foundation::EventRegistrationToken _portAddedToken;
+            ::winrt::Windows::Foundation::EventRegistrationToken _portRemovedToken;
+            ::winrt::Windows::Foundation::EventRegistrationToken _portUpdatedToken;
+            ::winrt::Windows::Foundation::EventRegistrationToken _portEnumCompleteToken;
 
             String ^ _midiSelectorString;
-            Windows::UI::Core::CoreDispatcher^ _coreDispatcher;
+            ::winrt::Windows::UI::Core::CoreDispatcher^ _coreDispatcher;
             ListBox ^ _portListBox;
             DeviceWatcher ^ _deviceWatcher;
             DeviceInformationCollection^ _devInfoCollection;

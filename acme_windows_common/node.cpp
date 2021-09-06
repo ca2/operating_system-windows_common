@@ -721,23 +721,30 @@ namespace acme
       }
 
 
-      ::e_status node::on_start_system()
-      {
+      //::e_status node::on_start_system()
+      //{
 
-         auto psystem = m_psystem;
+      //   if (m_bHasNodeSystemStarted)
+      //   {
 
-         auto estatus = psystem->post_initial_request();
+      //      return ::success_none;
 
-         if (!estatus)
-         {
+      //   }
 
-            return estatus;
+      //   auto psystem = m_psystem;
 
-         }
+      //   auto estatus = psystem->post_initial_request();
 
-         return estatus;
+      //   if (!estatus)
+      //   {
 
-      }
+      //      return estatus;
+
+      //   }
+
+      //   return estatus;
+
+      //}
 
 
    } // namespace windows_common

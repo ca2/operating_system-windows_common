@@ -21,6 +21,7 @@ namespace acme
       public:
 
 
+
          ::file::path            m_strTimeFolder;
          ::file::path            m_strNetSeedFolder;
 
@@ -34,7 +35,7 @@ namespace acme
          ~node() override;
 
 
-         virtual ::e_status initialize_matter(::matter* pmatter) override;
+         ::e_status initialize_matter(::matter* pmatter) override;
 
          //virtual ::string dir_root() override;
 
@@ -46,22 +47,20 @@ namespace acme
 
          //virtual ::file::path roaming() override;
 
-         virtual void install_crash_dump_reporting(const string& strModuleNameWithTheExeExtension) override;
+         void install_crash_dump_reporting(const string& strModuleNameWithTheExeExtension) override;
 
          //virtual bool memcnts();
 
          //virtual ::file::path memcnts_base_path();
 
-         virtual ::e_status datetime_to_filetime(filetime_t* pFileTime, const ::datetime::time& time) override;
+         ::e_status datetime_to_filetime(filetime_t* pFileTime, const ::datetime::time& time) override;
 
 
          virtual ::e_status last_error_to_status(DWORD dwLastError);
 
 
-         virtual string audio_get_default_library_name() override;
+         string audio_get_default_library_name() override;
 
-
-         virtual ::e_status on_start_system() override;
 
 
       };

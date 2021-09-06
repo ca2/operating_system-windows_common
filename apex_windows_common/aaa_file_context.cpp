@@ -248,7 +248,7 @@ namespace windows
 
 #elif defined(_UWP)
 
-      ::Windows::Storage::StorageFile ^ file = get_os_file(psz, 0, 0, nullptr, OPEN_EXISTING, 0, nullptr);
+      ::winrt::Windows::Storage::StorageFile ^ file = get_os_file(psz, 0, 0, nullptr, OPEN_EXISTING, 0, nullptr);
 
       if (file == nullptr)
       {
@@ -277,7 +277,7 @@ namespace windows
       }
       else
       {
-         ::Windows::Storage::StorageFolder ^ folder = get_os_folder(strDirNew);
+         ::winrt::Windows::Storage::StorageFolder ^ folder = get_os_folder(strDirNew);
          if (strNameOld == strNameNew)
          {
             ::wait(file->MoveAsync(folder));

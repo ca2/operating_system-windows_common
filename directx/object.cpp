@@ -1,7 +1,7 @@
 ﻿#include "framework.h"
 
 
-namespace draw2d_directx
+namespace directx
 {
 
 
@@ -78,7 +78,7 @@ namespace draw2d_directx
    void object::dump(dump_context & dumpcontext) const
    {
 
-      ::object::dump(dumpcontext);
+      ::draw2d::object::dump(dumpcontext);
 
    }
 
@@ -86,7 +86,7 @@ namespace draw2d_directx
    void object::assert_valid() const
    {
 
-      ::object::assert_valid();
+      ::draw2d::object::assert_valid();
 
    }
 
@@ -108,8 +108,8 @@ namespace draw2d_directx
    //   return ::draw2d::object::get_os_data_ex(i);
    //}
 
-} // namespace draw2d_directx
 
+} // namespace directx
 
 
 

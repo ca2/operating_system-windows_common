@@ -25,18 +25,6 @@ namespace aura
       }
 
 
-      string node::get_user_name()
-      {
-
-         WCHAR wsz[1024];
-
-         DWORD dwSize = sizeof(wsz) / sizeof(WCHAR);
-
-         ::GetUserNameW(wsz, &dwSize);
-
-         return string(wsz);
-
-      }
 
 
       bool node::_os_calc_app_dark_mode()
@@ -293,20 +281,20 @@ namespace aura
       }
 
 
-      int _os_message_box(const ::string & pszMessage, const ::string & pszTitle, const ::e_message_box& emessagebox)
-      {
+      //int _os_message_box(const ::string & pszMessage, const ::string & pszTitle, const ::e_message_box& emessagebox)
+      //{
 
-         int iMessageBox = emessagebox.m_eenum & 0x7f;
+      //   int iMessageBox = emessagebox.m_eenum & 0x7f;
 
-         wstring wstrText(pszMessage);
+      //   wstring wstrText(pszMessage);
 
-         wstring wstrTitle(pszTitle);
+      //   wstring wstrTitle(pszTitle);
 
-         int iResult = ::MessageBox(nullptr, wstrText, wstrTitle, iMessageBox);
+      //   int iResult = ::MessageBox(nullptr, wstrText, wstrTitle, iMessageBox);
 
-         return iResult;
+      //   return iResult;
 
-      }
+      //}
 
 
    } // namespace windows_common

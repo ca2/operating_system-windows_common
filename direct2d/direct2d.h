@@ -54,8 +54,8 @@ namespace direct2d
    }
 
 
-   CLASS_DECL_DIRECT2D void defer_initialize();
-   CLASS_DECL_DIRECT2D void terminate();
+   CLASS_DECL_DIRECT2D void defer_initialize(::object * pobject);
+   CLASS_DECL_DIRECT2D void finalize();
 
 
 } // namespace direct2d

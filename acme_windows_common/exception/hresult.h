@@ -24,3 +24,19 @@ public:
 #ifdef WINDOWS
 CLASS_DECL_ACME_WINDOWS_COMMON int trace_hr(const char * psz, HRESULT hr);
 #endif
+
+
+inline void throw_if_failed(HRESULT hr)
+{
+
+
+   if (FAILED(hr))
+   {
+
+      throw hresult_exception(hr);
+
+   }
+
+
+}
+

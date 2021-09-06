@@ -31,20 +31,6 @@ namespace apex
       }
 
 
-      string node::get_user_name()
-      {
-
-         WCHAR wsz[1024];
-
-         DWORD dwSize = sizeof(wsz) / sizeof(WCHAR);
-
-         ::GetUserNameW(wsz, &dwSize);
-
-         return string(wsz);
-
-      }
-
-
       ::e_status node::initialize(::object* pobject)
       {
 
@@ -538,115 +524,7 @@ namespace apex
 
       }
 
-      string node::get_version()
-      {
 
-         unichar pszModuleFilePath[MAX_PATH + 1];
-
-         GetModuleFileNameW(nullptr, pszModuleFilePath, MAX_PATH + 1);
-
-         DWORD dw;
-
-         ::u32 dwResSize = GetFileVersionInfoSizeW(
-            pszModuleFilePath,
-            &dw);
-
-         if (dwResSize > 0)
-         {
-
-            memory memory;
-
-            memory.set_size(dwResSize);
-
-            if (GetFileVersionInfoW(
-               pszModuleFilePath,
-
-               0,
-               dwResSize,
-               memory.get_data()))
-
-            {
-               ::u32 cbTranslate;
-               struct LANGANDCODEPAGE
-               {
-                  ::u16 wLanguage;
-                  ::u16 wCodePage;
-               } *pTranslate;
-
-
-               // read the list of languages and code pages.
-
-               VerQueryValue(memory.get_data(),
-                  TEXT("\\VarFileInfo\\Translation"),
-                  (LPVOID*)&pTranslate,
-                  &cbTranslate);
-
-               string strKey;
-
-               for (::u32 u = 0; u < (cbTranslate / sizeof(struct LANGANDCODEPAGE)); u++)
-               {
-
-                  WCHAR* psz;
-
-                  UINT uSize;
-
-                  //strKey.Format(
-                  //"\\StringFileInfo\\%04x%04x\\FileDescription",
-                  //pTranslate[u].wLanguage,
-                  //pTranslate[u].wCodePage);
-
-                  strKey.Format(
-                     "\\StringFileInfo\\%04x%04x\\FileVersion",
-                     pTranslate[u].wLanguage,
-                     pTranslate[u].wCodePage);
-
-                  wstring wstrKey(strKey);
-
-                  // Retrieve file description for language and code page "i".
-                  if (VerQueryValueW(memory.get_data(),
-                     (WCHAR*)(const WCHAR*)wstrKey,
-                     (LPVOID*)&psz,
-                     &uSize))
-                  {
-
-                     string strVersion(psz, uSize);
-
-                     return strVersion;
-
-                  }
-
-               }
-
-            }
-
-         }
-
-         return "";
-
-      }
-
-
-      void node::show_wait_cursor(bool bShow)
-      {
-
-         if (bShow)
-         {
-
-            HCURSOR hcursorWait = ::LoadCursor(nullptr, IDC_WAIT);
-
-            HCURSOR hcursorPrevious = ::SetCursor(hcursorWait);
-
-            //     if(hcursorPrevious != hcursorWait)
-            //         m_hcurWaitCursorRestore = hcursorPrevious;
-
-         }
-         else
-         {
-
-            //         ::SetCursor(m_hcurWaitCursorRestore);
-         }
-
-      }
 
 
 

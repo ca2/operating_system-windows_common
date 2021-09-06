@@ -8,15 +8,13 @@ namespace draw2d_direct2d
    draw2d::draw2d()
    {
       
-      ::direct2d::defer_initialize();
-
    }
 
 
    draw2d::~draw2d()
    {
 
-      ::direct2d::terminate();
+      ::direct2d::finalize();
 
    }
 
@@ -33,6 +31,8 @@ namespace draw2d_direct2d
 
       }
    
+      ::direct2d::defer_initialize(this);
+
       //estatus = initialize_gdiplus();
 
       //if (!estatus)

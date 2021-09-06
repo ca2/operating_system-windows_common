@@ -4,90 +4,179 @@
     <Filter Include="Header Files">
       <UniqueIdentifier>{176c3936-f65e-4fc0-8897-9b2a8831fcb6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\player">
-      <UniqueIdentifier>{ecf09e51-30e5-4331-97bf-38016cd86c5e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files">
       <UniqueIdentifier>{9bbb73a0-40d0-4f09-b55c-524201fce82b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\player">
-      <UniqueIdentifier>{bb13006e-22ad-4dea-8a12-50de9a2eb737}</UniqueIdentifier>
+    <Filter Include="Source Files\exception">
+      <UniqueIdentifier>{78d9c32e-97c2-4138-b4d9-493e5fc453e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\exception">
+      <UniqueIdentifier>{96caaa07-2f98-4759-bae3-4b7a97beb0f5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="music_midi_io.h">
+    <ClInclude Include="_.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="music_midi_winrt.h">
+    <ClInclude Include="_acme_windows_common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="music_midi_winrt_factory_exchange.h">
+    <ClInclude Include="_c.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="music_midi_winrt_file.h">
+    <ClInclude Include="_default_dll_impl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="music_midi_winrt_out.h">
+    <ClInclude Include="_file_c.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="music_midi_winrt_sequence.h">
+    <ClInclude Include="_geometry2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="music_midi_winrt_sequence_thread.h">
+    <ClInclude Include="_impl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="music_midi_winrt_translation.h">
+    <ClInclude Include="_node_windows.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="player\music_midi_winrt_player.h">
-      <Filter>Header Files\player</Filter>
-    </ClInclude>
-    <ClInclude Include="music_midi_winrt_midi.h">
+    <ClInclude Include="_node_windows_private.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="music_midi_winrt_thread.h">
+    <ClInclude Include="_thread_os_create_impl.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="_types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="_unicode_c.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="_windows.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="_windows_common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="acme_dir.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="acme_file.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="acme_path.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="bstring.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="comptr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cotaskptr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="factory_exchange.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="file.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="node.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="parallelization.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="prop_variant.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="standard_exception.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="variant.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="exception\translator.h">
+      <Filter>Header Files\exception</Filter>
+    </ClInclude>
+    <ClInclude Include="exception\engine.h">
+      <Filter>Header Files\exception</Filter>
+    </ClInclude>
+    <ClInclude Include="exception\hresult.h">
+      <Filter>Header Files\exception</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="framework.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="music_midi_io.cpp">
+    <ClCompile Include="_.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="music_midi_winrt.cpp">
+    <ClCompile Include="acme_file.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="music_midi_winrt_factory_exchange.cpp">
+    <ClCompile Include="acme_path.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="music_midi_winrt_out.cpp">
+    <ClCompile Include="aura.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="music_midi_winrt_sequence.cpp">
+    <ClCompile Include="base.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="music_midi_winrt_translation.cpp">
+    <ClCompile Include="bstr.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="player\music_midi_winrt_player.cpp">
-      <Filter>Source Files\player</Filter>
-    </ClCompile>
-    <ClCompile Include="music_midi_winrt_midi.cpp">
+    <ClCompile Include="bstring.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="music_midi_winrt_thread.cpp">
+    <ClCompile Include="com.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="music_midi_winrt_sequence_thread.cpp">
+    <ClCompile Include="debug.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="music_midi_winrt_file.cpp">
+    <ClCompile Include="factory_exchange.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="file.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="file1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="networking.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="node.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="os_usleep.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="standard_exception.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="exception\engine.cpp">
+      <Filter>Source Files\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="exception\hresult.cpp">
+      <Filter>Source Files\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="exception\translator.cpp">
+      <Filter>Source Files\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="acme_dir.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="u_acme_windows_common.def">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

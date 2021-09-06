@@ -73,12 +73,12 @@
 
 
 
-string FormatMessageFromSystem(u32 dwError)
-{
-
-   return ::get_last_error_message(dwError);
-
-}
+//string FormatMessageFromSystem(u32 dwError)
+//{
+//
+//   return ::get_last_error_message(dwError);
+//
+//}
 
 
 

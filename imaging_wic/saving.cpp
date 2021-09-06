@@ -24,7 +24,7 @@ namespace imaging_wic
 
 #ifdef _UWP
 
-      Windows::Storage::Streams::InMemoryRandomAccessStream ^ randomAccessStream = ref new Windows::Storage::Streams::InMemoryRandomAccessStream();
+      ::winrt::Windows::Storage::Streams::InMemoryRandomAccessStream ^ randomAccessStream = ref new ::winrt::Windows::Storage::Streams::InMemoryRandomAccessStream();
 
       //::wait(randomAccessStream->WriteAsync(get_os_buffer()));
 
@@ -353,10 +353,10 @@ namespace imaging_wic
 #ifdef _UWP
 
 
-   bool node_save_image(Windows::Storage::Streams::IRandomAccessStream ^ stream, const ::image * pimage, const ::save_image * psaveimage)
+   bool node_save_image(::winrt::Windows::Storage::Streams::IRandomAccessStream ^ stream, const ::image * pimage, const ::save_image * psaveimage)
    {
 
-      Windows::Storage::Streams::InMemoryRandomAccessStream ^ randomAccessStream = ref new Windows::Storage::Streams::InMemoryRandomAccessStream();
+      ::winrt::Windows::Storage::Streams::InMemoryRandomAccessStream ^ randomAccessStream = ref new ::winrt::Windows::Storage::Streams::InMemoryRandomAccessStream();
 
       comptr < IStream > pstream;
 

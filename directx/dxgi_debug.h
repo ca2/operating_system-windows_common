@@ -12,6 +12,8 @@ namespace directx
    public:
 
 
+      Microsoft::WRL::ComPtr < IDXGIDebug1 >m_pdxgidebug1;
+
       Microsoft::WRL::ComPtr < IDXGIDebug >     m_pdxgidebug;
 
 

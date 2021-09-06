@@ -15,7 +15,9 @@ namespace directx
 
 #ifdef _UWP
 
-      HRESULT hr = DXGIGetDebugInterface1(0, IID_IDXGIDebug1, &d);
+      HRESULT hr = DXGIGetDebugInterface1(0, IID_IDXGIDebug1, &m_pdxgidebug1);
+
+      HRESULT hrQueryInterface = m_pdxgidebug1.As(&m_pdxgidebug);
 
 #else
 
@@ -92,6 +94,15 @@ CLASS_DECL_DIRECTX void directx_debug()
    ::directx::dxgi_debug::s_pdxgidebug->debug();
 
 }
+//
+//
+//
+//CLASS_DECL_DIRECT2D void directx_debug()
+//{
+//
+//   g_pdxgidebug->debug();
+//
+//}
 
 
 
