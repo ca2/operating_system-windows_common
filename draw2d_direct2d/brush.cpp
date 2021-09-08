@@ -204,8 +204,14 @@ namespace draw2d_direct2d
          if (m_pimagebrush == nullptr)
          {
 
+            int cx = m_pimage->width();
+
+            int cy = m_pimage->height();
+
+            auto rect = D2D1::RectF(0, 0, (float)cx, (float)cy);
+
             auto imagebrushproperties = D2D1::ImageBrushProperties(
-               D2D1::RectF(0, 0,(float) m_pimage->width(),(float) m_pimage->height()),
+               rect,
                D2D1_EXTEND_MODE_WRAP,
                D2D1_EXTEND_MODE_WRAP,
                D2D1_INTERPOLATION_MODE_LINEAR
@@ -246,7 +252,7 @@ namespace draw2d_direct2d
    }
 
 
-   ::e_status brush::destroy()
+   ::e_status brush::destroy_os_data()
    {
 
       if(m_psolidbrush != nullptr)

@@ -181,12 +181,7 @@ namespace imaging_wic
 
       pimage->set_ok();
 
-      //pimage->notify(OK);
-
       pimage->m_estatus = ::success;
-
-
-
 
    }
 
@@ -288,11 +283,13 @@ namespace imaging_wic
 
       pimageFrame->map();
 
-      ::copy_colorref(pimageFrame->get_data(), uWidth, uHeight, pimageFrame->scan_size(), (::color32_t *)pData, cbStride);
+      auto pdataTarget = pimageFrame->get_data();
 
+      auto scanSizeTarget = pimageFrame->scan_size();
+
+      ::copy_colorref(pdataTarget, uWidth, uHeight, scanSizeTarget, (::color32_t *)pData, cbStride);
 
       return true;
-
 
    }
 
@@ -441,12 +438,17 @@ namespace imaging_wic
    {
 
       comptr < IWICImagingFactory > pimagingfactory = nullptr;
+      
       comptr < IWICBitmapEncoder > piEncoder = nullptr;
+      
       comptr < IWICBitmapFrameEncode > piBitmapFrame = nullptr;
+
       comptr < IPropertyBag2 > pPropertybag = nullptr;
 
       comptr < IWICStream > piStream = nullptr;
+
       ::u32 uWidth = pimage->width();
+
       ::u32 uHeight = pimage->height();
 
       HRESULT hr = CoCreateInstance(

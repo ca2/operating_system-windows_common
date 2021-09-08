@@ -88,10 +88,10 @@ namespace draw2d_direct2d
       m_info.bmiHeader.biCompression = BI_RGB;
       m_info.bmiHeader.biSizeImage = iStride * size.cy;
 
-      m_pbitmap.create();
-      m_pbitmapMap.create();
-      m_pgraphics.create();
-      m_pgraphicsMap.create();
+      m_pbitmap.create(this);
+      m_pbitmapMap.create(this);
+      m_pgraphics.create(this);
+      m_pgraphicsMap.create(this);
 
       if (m_pbitmap.m_p == nullptr || m_pbitmapMap.is_null() || m_pgraphics.is_null() || m_pgraphicsMap.is_null())
       {
@@ -1136,7 +1136,15 @@ namespace draw2d_direct2d
 
       HRESULT hr = S_OK;
 
-      hr = pbitmap1Map->CopyFromBitmap(nullptr, pbitmap1, nullptr);
+      D2D1_POINT_2U pointDst = {};
+
+      D2D1_RECT_U srcRect = {};
+
+      srcRect.right = width();
+
+      srcRect.bottom = height();
+
+      hr = pbitmap1Map->CopyFromBitmap(&pointDst, pbitmap1, &srcRect);
 
       __pointer(::draw2d_direct2d::bitmap) pbitmap = m_pbitmap;
 
