@@ -24,8 +24,7 @@ namespace windows_common
    //}
 
 
-   //extern "C"
-   bool acme_file::copy(const char * pszNew, const char * pszSrc, bool bOverwrite)
+   ::e_status acme_file::copy(const char * pszNew, const char * pszSrc, bool bOverwrite)
    {
 
       string strNew(pszNew);
@@ -91,36 +90,57 @@ namespace windows_common
 
    }
 
-   bool acme_file::put_contents(const char * path, const char * contents, memsize len)
+
+   ::e_status acme_file::put_contents(const char * path, const char * contents, memsize len)
    {
 
-      m_pacmedir->create(file_path_folder(path));
+      auto estatus = m_pacmedir->create(file_path_folder(path));
 
-      wstring wstrPath(path);
-
-      FILE * file = _wfsopen(wstrPath, L"w", _SH_DENYWR);
-
-      if (file == nullptr)
+      if (!estatus)
       {
 
-         return false;
+         return estatus;
 
       }
 
-      count dwWrite;
+      wstring wstrPath(path);
+
+      auto pfile = stdio_open(path, "w", _SH_DENYWR);
+
+      if (!pfile)
+      {
+
+         return pfile;
+
+      }
 
       if (len < 0)
-         dwWrite = ansi_length(contents);
-      else
-         dwWrite = len;
+      {
 
-      auto dwWritten = fwrite(contents, 1, (u32)dwWrite, file);
+         len = ansi_length(contents);
 
-      int_bool bOk = dwWritten == dwWrite;
+      }
 
-      fclose(file);
+      try
+      {
 
-      return dwWrite == dwWritten && bOk != false;
+         pfile->write(contents, len);
+
+      }
+      catch (const ::exception::exception & e)
+      {
+
+         return e.m_estatus;
+
+      }
+      catch (...)
+      {
+         
+         return error_exception;
+
+      }
+
+      return success;
 
    }
 
@@ -343,21 +363,25 @@ namespace windows_common
    //}
 
 
-   bool acme_file::delete_file(const char * pszFileName)
+   ::e_status acme_file::delete_file(const char * pszFileName)
    {
 
+      wstring wstrFilePath(pszFileName);
 
-
-      if (!::DeleteFileW(strFilePath))
+      if (!::DeleteFileW(wstrFilePath))
       {
 
+         auto dwLastError = ::GetLastError();
+
+         auto estatus = last_error_to_status(dwLastError);
+
+         return estatus;
 
       }
 
+      return ::success;
+
    }
-
-
-
 
 
 } // namespace windows_common

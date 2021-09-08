@@ -18,11 +18,11 @@ namespace windows_common
       //::file::path _final(const char * path) override;
 
 
-      bool copy(const char * pszNew, const char * pszSrc, bool bOverwrite) override;
+      ::e_status copy(const char * pszNew, const char * pszSrc, bool bOverwrite) override;
       bool exists(const char * path) override;
 
 
-      bool put_contents(const char * path, const char * contents, memsize len) override;
+      ::e_status put_contents(const char * path, const char * contents, memsize len) override;
 
 
       using ::acme_file::get_size;
