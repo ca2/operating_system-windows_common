@@ -2,7 +2,13 @@
 
 
 #include "aura/_.h"
+#include "aura_windows_common/_.h"
+#ifdef _UWP
+#include "aura_universal_windows/_.h"
+#endif
+#ifdef WINDOWS_DESKTOP
 #include "aura_windows/_.h"
+#endif
 
 
 #ifdef _IMAGING_WIC_STATIC

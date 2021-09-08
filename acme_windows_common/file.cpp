@@ -11,7 +11,7 @@
 //#endif
 
 
-::u32 windows_get_file_attributes(const char* path)
+CLASS_DECL_ACME_WINDOWS_COMMON ::u32 windows_get_file_attributes(const char* path)
 {
 
    wstring wstr(path);

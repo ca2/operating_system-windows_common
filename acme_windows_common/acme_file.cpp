@@ -343,6 +343,18 @@ namespace windows_common
    //}
 
 
+   bool acme_file::delete_file(const char * pszFileName)
+   {
+
+
+
+      if (!::DeleteFileW(strFilePath))
+      {
+
+
+      }
+
+   }
 
 
 

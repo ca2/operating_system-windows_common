@@ -33,6 +33,7 @@ namespace windows_common
       //string as_string(const char * path, strsize iReadAtMostByteCount) override;
       //memsize as_memory(const char * path, void * p, memsize s) override;
       //bool as_memory(memory_base & memory, const char * path, memsize iReadAtMostByteCount) override;
+      ::e_status delete_file(const char * pszFileName) override;
 
 
    };

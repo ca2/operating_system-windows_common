@@ -142,30 +142,30 @@
     <ProjectReference Include="..\..\..\source\app\aura\u_aura.vcxproj">
       <Project>{b3b6a9d8-7776-434e-8e3b-d2696632df39}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\acme_windows_common\w_acme_windows_common.vcxproj">
-      <Project>{4a44d9ca-a46e-4bb3-8ad5-8bcace5228ce}</Project>
+    <ProjectReference Include="..\..\platform-universal_windows\aura_universal_windows\u_aura_universal_windows.vcxproj">
+      <Project>{05c4cf3f-fcb7-4017-a39b-1a03158ec0f3}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\apex_windows_common\w_apex_windows_common.vcxproj">
+    <ProjectReference Include="..\apex_windows_common\u_apex_windows_common.vcxproj">
       <Project>{9b59539c-abd7-4ff5-a64b-521813534736}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\aura_windows_common\w_aura_windows_common.vcxproj">
+    <ProjectReference Include="..\aura_windows_common\u_aura_windows_common.vcxproj">
       <Project>{e256890d-cf1e-420b-b1f9-8c88434ca1c1}</Project>
     </ProjectReference>
     <ProjectReference Include="..\direct2d\u_direct2d.vcxproj">
       <Project>{91608259-0b1f-4deb-a867-873618075395}</Project>
     </ProjectReference>
-    <ProjectReference Include="C:\basis\archive\platform-universal_windows\acme_universal_windows\u_acme_universal_windows.vcxproj">
+    <ProjectReference Include="R:\basis\archive\platform-universal_windows\acme_universal_windows\u_acme_universal_windows.vcxproj">
       <Project>{7d2387eb-a3de-4ea5-b061-48a856dd7211}</Project>
     </ProjectReference>
-    <ProjectReference Include="C:\basis\archive\platform-universal_windows\apex_universal_windows\u_apex_universal_windows.vcxproj">
+    <ProjectReference Include="R:\basis\archive\platform-universal_windows\apex_universal_windows\u_apex_universal_windows.vcxproj">
       <Project>{699c5c28-fe00-4e04-91ee-47d857588020}</Project>
     </ProjectReference>
-    <ProjectReference Include="C:\basis\archive\platform-universal_windows\aura_universal_windows\u_aura_universal_windows.vcxproj">
-      <Project>{05c4cf3f-fcb7-4017-a39b-1a03158ec0f3}</Project>
+    <ProjectReference Include="R:\basis\archive\platform-windows_common\acme_windows_common\u_acme_windows_common.vcxproj">
+      <Project>{4a44d9ca-a46e-4bb3-8ad5-8bcace5228ce}</Project>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{BA9BFF50-1888-4722-8DEE-73A3B5B32BCB}</ProjectGuid>
+    <ProjectGuid>{E5945DD0-328C-4E97-A0DD-97E608E96DB1}</ProjectGuid>
     <Keyword>DynamicLibrary</Keyword>
     <ProjectName>draw2d_direct2d</ProjectName>
     <RootNamespace>app</RootNamespace>

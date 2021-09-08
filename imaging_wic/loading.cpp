@@ -203,7 +203,7 @@ namespace imaging_wic
 #ifdef _UWP
 
 
-   CLASS_DECL_IMAGING_WIC bool node_save_image(::winrt::Windows::Storage::Streams::InMemoryRandomAccessStream ^ randomAccessStream, const ::image * pimage, ::save_image * psaveimage);
+   CLASS_DECL_IMAGING_WIC bool node_save_image(::winrt::Windows::Storage::Streams::InMemoryRandomAccessStream const & randomAccessStream, const ::image * pimage, ::save_image * psaveimage);
 
 
 #endif
@@ -348,12 +348,12 @@ namespace imaging_wic
 #ifdef _UWP
 
 
-   bool node_save_image(::winrt::Windows::Storage::Streams::InMemoryRandomAccessStream ^ randomAccessStream, const ::image * pimage, const ::save_image * psaveimage)
+   bool node_save_image(::winrt::Windows::Storage::Streams::InMemoryRandomAccessStream const & randomAccessStream, const ::image * pimage, const ::save_image * psaveimage)
    {
 
       comptr < IStream > pstream;
 
-      ::CreateStreamOverRandomAccessStream(randomAccessStream, IID_PPV_ARGS(&pstream));
+      ::CreateStreamOverRandomAccessStream(winrt::get_unknown(randomAccessStream), IID_PPV_ARGS(&pstream));
 
       if (!node_save_image(pstream, pimage, psaveimage))
       {
@@ -376,13 +376,13 @@ namespace imaging_wic
 
 #ifdef _UWP
 
-      ::winrt::Windows::Storage::Streams::InMemoryRandomAccessStream ^ randomAccessStream = ref new ::winrt::Windows::Storage::Streams::InMemoryRandomAccessStream();
+      ::winrt::Windows::Storage::Streams::InMemoryRandomAccessStream randomAccessStream;
 
       //::wait(randomAccessStream->WriteAsync(get_os_buffer()));
 
       comptr < IStream > pstream;
 
-      ::CreateStreamOverRandomAccessStream(randomAccessStream, IID_PPV_ARGS(&pstream));
+      ::CreateStreamOverRandomAccessStream(winrt::get_unknown(randomAccessStream), IID_PPV_ARGS(&pstream));
 
 #else
 

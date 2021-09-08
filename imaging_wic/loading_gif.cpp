@@ -42,9 +42,7 @@ namespace imaging_wic
 
          }
 
-         auto pinputstream = ::create_istream(memory);
-
-         hr = pwicstream->InitializeFromIStream(pinputstream);
+         hr = pwicstream->InitializeFromMemory(memory.get_data(), memory.get_size());
 
          if (FAILED(hr))
          {
