@@ -321,6 +321,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ExceptionHandling>Async</ExceptionHandling>
       <CompileAsWinRT>false</CompileAsWinRT>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -344,6 +345,7 @@
       <AdditionalOptions>/bigobj -Zm512 /await</AdditionalOptions>
       <ExceptionHandling>Async</ExceptionHandling>
       <CompileAsWinRT>false</CompileAsWinRT>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -412,6 +414,7 @@
       <AdditionalOptions>/bigobj -Zm512 /await</AdditionalOptions>
       <ExceptionHandling>Async</ExceptionHandling>
       <CompileAsWinRT>false</CompileAsWinRT>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -454,6 +457,7 @@
       <AdditionalOptions>/bigobj -Zm512 /await</AdditionalOptions>
       <ExceptionHandling>Async</ExceptionHandling>
       <CompileAsWinRT>false</CompileAsWinRT>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -538,6 +542,7 @@
       <AdditionalOptions>/bigobj -Zm512 /await</AdditionalOptions>
       <ExceptionHandling>Async</ExceptionHandling>
       <CompileAsWinRT>false</CompileAsWinRT>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -559,6 +564,7 @@
       <AdditionalOptions>/bigobj -Zm512 /await</AdditionalOptions>
       <ExceptionHandling>Async</ExceptionHandling>
       <CompileAsWinRT>false</CompileAsWinRT>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
