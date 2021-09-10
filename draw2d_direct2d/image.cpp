@@ -52,8 +52,10 @@ namespace draw2d_direct2d
 
    ::e_status image::create(const ::size_i32 & size, ::eobject eobjectCreate, int iGoodStride, bool bPreserve)
    {
+      
+      auto sizeCurrent = this->size();
 
-      if (m_pbitmap.is_set() && size == this->size())
+      if (m_pbitmap.is_set() && size == sizeCurrent)
       {
 
          return true;
@@ -294,7 +296,7 @@ namespace draw2d_direct2d
       }
 
       // White blend image
-      auto pimage1 = create_image({cx,  cy});
+      auto pimage1 = m_pcontext->context_image()->create_image({cx,  cy});
 
       pimage1->fill(0, 255, 255, 255);
 
@@ -311,7 +313,7 @@ namespace draw2d_direct2d
       }
 
       // Black blend image
-      auto pimage2 = create_image({cx,  cy});
+      auto pimage2 = m_pcontext->context_image()->create_image({cx,  cy});
 
       pimage2->fill(0, 0, 0, 0);
 
@@ -338,7 +340,7 @@ namespace draw2d_direct2d
 //#endif
 
       // Mask image
-      auto pimageM = create_image({cx,  cy});
+      auto pimageM = m_pcontext->context_image()->create_image({cx,  cy});
 
       {
 

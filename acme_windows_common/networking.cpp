@@ -33,7 +33,7 @@ CLASS_DECL_ACME_WINDOWS_COMMON bool defer_initialize_winsock()
 
    }
 
-   if (LOBYTE(g_wsadata.wVersion) < byteHi || (LOBYTE(g_wsadata.wVersion) == byteHi && HIBYTE(g_wsadata.wVersion) < 2))
+   if (__LOBYTE(g_wsadata.wVersion) < byteHi || (__LOBYTE(g_wsadata.wVersion) == byteHi && HIBYTE(g_wsadata.wVersion) < 2))
    {
 
       output_debug_string("Could not find a usable version of Winsock.dll!\n");

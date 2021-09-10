@@ -62,7 +62,7 @@ namespace windows_common
 
          }
 
-         UNREFERENCED_PARAMETER(uiCode);
+         __UNREFERENCED_PARAMETER(uiCode);
 
          //::acme::application * papp = ::get_application();
 
@@ -229,7 +229,7 @@ namespace windows_common
       void translator::filter(u32 uiCode, EXCEPTION_POINTERS* ppointers)
       {
 
-         UNREFERENCED_PARAMETER(uiCode);
+         __UNREFERENCED_PARAMETER(uiCode);
 
          switch (ppointers->ExceptionRecord->ExceptionCode)
          {

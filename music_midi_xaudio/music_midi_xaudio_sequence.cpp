@@ -443,7 +443,7 @@ Seq_Open_File_Cleanup:
          ::e_status     sequence::Preroll(::thread * pthread, ::music::midi::LPPREROLL lpPreroll, bool bThrow)
          {
 
-            UNREFERENCED_PARAMETER(pthread);
+            __UNREFERENCED_PARAMETER(pthread);
 
             single_lock synchronouslock(&m_mutex, true);
 
@@ -1075,7 +1075,7 @@ seq_Preroll_Cleanup:
 
          void sequence::OnDone(HMIDISTRM hmidistream, LPMIDIHDR lpmidihdr)
          {
-            UNREFERENCED_PARAMETER(hmidistream);
+            __UNREFERENCED_PARAMETER(hmidistream);
             ::e_status                   smfrc;
             midi_callback_data *      lpData;
             ASSERT(lpmidihdr != nullptr);
@@ -1275,9 +1275,9 @@ seq_Preroll_Cleanup:
          void CALLBACK sequence::MidiOutProc(HMIDIOUT hmo, ::u32 wMsg, DWORD_PTR dwInstance, DWORD_PTR dwParam1, DWORD_PTR dwParam2)
          {
 
-            UNREFERENCED_PARAMETER(hmo);
-            UNREFERENCED_PARAMETER(dwInstance);
-            UNREFERENCED_PARAMETER(dwParam2);
+            __UNREFERENCED_PARAMETER(hmo);
+            __UNREFERENCED_PARAMETER(dwInstance);
+            __UNREFERENCED_PARAMETER(dwParam2);
 
             LPMIDIHDR               lpmh         = (LPMIDIHDR) dwParam1;
 
@@ -1532,7 +1532,7 @@ seq_Preroll_Cleanup:
 
          void sequence::OnMidiPlaybackEnd(::music::midi::sequence::event * pevent)
          {
-            UNREFERENCED_PARAMETER(pevent);
+            __UNREFERENCED_PARAMETER(pevent);
             single_lock synchronouslock(&m_mutex, true);
             //   LPMIDIHDR lpmh = pevent->m_lpmh;
             //   midi_callback_data * lpData = &m_midicallbackdata;
@@ -1755,7 +1755,7 @@ seq_Preroll_Cleanup:
          ::ikaraoke::data & data)
          {
 
-            UNREFERENCED_PARAMETER(str2a);
+            __UNREFERENCED_PARAMETER(str2a);
 
             ::music::midi::file::buffer & file = *this->file();
 

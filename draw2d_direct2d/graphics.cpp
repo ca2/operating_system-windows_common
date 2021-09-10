@@ -498,7 +498,7 @@ namespace draw2d_direct2d
             //else
             //{
 
-               auto pimage1 = create_image(rectBlt.size());
+               auto pimage1 = m_pcontext->context_image()->create_image(rectBlt.size());
 
                pimage1->get_graphics()->set_alpha_mode(::draw2d::e_alpha_mode_set);
 
@@ -558,7 +558,7 @@ namespace draw2d_direct2d
 
          ::draw2d::lock draw2dlock;
 
-         auto pimage1 = create_image(size);
+         auto pimage1 = m_pcontext->context_image()->create_image(size);
 
          ::rectangle_f64 rectDib1(::point_f64(), size);
 

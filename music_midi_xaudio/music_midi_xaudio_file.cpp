@@ -710,8 +710,8 @@ smf_Open_File_Cleanup:
                                         u32 cbPrerollNomimalMax
                                        )
          {
-            UNREFERENCED_PARAMETER(tkMax);
-            UNREFERENCED_PARAMETER(cbPrerollNomimalMax);
+            __UNREFERENCED_PARAMETER(tkMax);
+            __UNREFERENCED_PARAMETER(cbPrerollNomimalMax);
             ::e_status                   smfrc;
 
             if(eventptra.get_size() <= 0)
@@ -775,8 +775,8 @@ smf_Open_File_Cleanup:
          imedia_time                   tkMax,
          u32                   cbPrerollNominalMax)
          {
-            UNREFERENCED_PARAMETER(tkMax);
-            UNREFERENCED_PARAMETER(cbPrerollNominalMax);
+            __UNREFERENCED_PARAMETER(tkMax);
+            __UNREFERENCED_PARAMETER(cbPrerollNominalMax);
             //   TRACE("buffer::StreamEvent tkDelta %d\n", tkDelta);
 
             u32                   dwTempo;
@@ -1284,8 +1284,8 @@ smf_Open_File_Cleanup:
          ::ikaraoke::lyric_event_v1 *      pLyricEvent,
          LPMIDIHDR         lpmh)
          {
-            UNREFERENCED_PARAMETER(pLyricEvent);
-            UNREFERENCED_PARAMETER(lpmh);
+            __UNREFERENCED_PARAMETER(pLyricEvent);
+            __UNREFERENCED_PARAMETER(lpmh);
             /*    LPDWORD                 lpdw;
             u32                   dwRounded;
             u32               dwLength;
@@ -2145,7 +2145,7 @@ smf_Open_File_Cleanup:
          ::music::midi::event  * pPreviousEvent,
          ::music::midi::event  * pEvent)
          {
-            UNREFERENCED_PARAMETER(pPreviousEvent);
+            __UNREFERENCED_PARAMETER(pPreviousEvent);
 
             ::e_status                   smfrc;
             ::music::midi::event *           pevent;

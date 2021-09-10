@@ -40,7 +40,7 @@ namespace draw2d_gdiplus
 
    {
 
-      UNREFERENCED_PARAMETER(pgraphics);
+      __UNREFERENCED_PARAMETER(pgraphics);
 
       ::acme::del(m_pbitmap);
 
@@ -56,7 +56,7 @@ namespace draw2d_gdiplus
 
    {
 
-      UNREFERENCED_PARAMETER(pgraphics);
+      __UNREFERENCED_PARAMETER(pgraphics);
 
       return false;
    }
@@ -72,7 +72,7 @@ namespace draw2d_gdiplus
 
       }
 
-      UNREFERENCED_PARAMETER(pgraphics);
+      __UNREFERENCED_PARAMETER(pgraphics);
 
       ::acme::del(m_pbitmap);
 
@@ -125,7 +125,7 @@ namespace draw2d_gdiplus
 
       const BITMAPINFO * pbmi = &info;
 
-      UNREFERENCED_PARAMETER(pgraphics);
+      __UNREFERENCED_PARAMETER(pgraphics);
 
       ::acme::del(m_pbitmap);
 
