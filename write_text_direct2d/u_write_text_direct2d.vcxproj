@@ -91,7 +91,7 @@
       <Project>{05c4cf3f-fcb7-4017-a39b-1a03158ec0f3}</Project>
     </ProjectReference>
     <ProjectReference Include="..\apex_windows_common\u_apex_windows_common.vcxproj">
-      <Project>{9b59539c-abd7-4ff5-a64b-521813534736}</Project>
+      <Project>{bc71de03-0bcb-46ed-a9c5-d1dd8242c511}</Project>
     </ProjectReference>
     <ProjectReference Include="..\aura_windows_common\u_aura_windows_common.vcxproj">
       <Project>{e256890d-cf1e-420b-b1f9-8c88434ca1c1}</Project>

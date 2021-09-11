@@ -96,13 +96,10 @@
       <Project>{b3b6a9d8-7776-434e-8e3b-d2696632df39}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\platform-universal_windows\acme_universal_windows\u_acme_universal_windows.vcxproj">
-      <Project>{7d2387eb-a3de-4ea5-b061-48a856dd7211}</Project>
+      <Project>{e38ecf25-a157-4402-a803-f54759ff1c91}</Project>
     </ProjectReference>
     <ProjectReference Include="..\acme_windows_common\u_acme_windows_common.vcxproj">
       <Project>{4a44d9ca-a46e-4bb3-8ad5-8bcace5228ce}</Project>
-    </ProjectReference>
-    <ProjectReference Include="C:\basis\archive\platform-windows_common\apex_windows_common\u_apex_windows_common.vcxproj">
-      <Project>{9b59539c-abd7-4ff5-a64b-521813534736}</Project>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
