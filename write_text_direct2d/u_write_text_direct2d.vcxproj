@@ -87,26 +87,26 @@
     <ProjectReference Include="..\..\..\source\app\aura\u_aura.vcxproj">
       <Project>{b3b6a9d8-7776-434e-8e3b-d2696632df39}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\platform-universal_windows\acme_universal_windows\u_acme_universal_windows.vcxproj">
+      <Project>{e38ecf25-a157-4402-a803-f54759ff1c91}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\platform-universal_windows\apex_universal_windows\u_apex_universal_windows.vcxproj">
+      <Project>{310fec1b-4deb-40c9-8ed2-4d8fd9cf52d0}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\platform-universal_windows\aura_universal_windows\u_aura_universal_windows.vcxproj">
-      <Project>{05c4cf3f-fcb7-4017-a39b-1a03158ec0f3}</Project>
+      <Project>{dc91f8bc-afd2-441b-8c90-be101e7a8617}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\acme_windows_common\u_acme_windows_common.vcxproj">
+      <Project>{4a44d9ca-a46e-4bb3-8ad5-8bcace5228ce}</Project>
     </ProjectReference>
     <ProjectReference Include="..\apex_windows_common\u_apex_windows_common.vcxproj">
       <Project>{bc71de03-0bcb-46ed-a9c5-d1dd8242c511}</Project>
     </ProjectReference>
     <ProjectReference Include="..\aura_windows_common\u_aura_windows_common.vcxproj">
-      <Project>{e256890d-cf1e-420b-b1f9-8c88434ca1c1}</Project>
+      <Project>{da5570cd-d399-45cb-94e3-e81735d80f3a}</Project>
     </ProjectReference>
     <ProjectReference Include="..\direct2d\u_direct2d.vcxproj">
       <Project>{91608259-0b1f-4deb-a867-873618075395}</Project>
-    </ProjectReference>
-    <ProjectReference Include="R:\basis\archive\platform-universal_windows\acme_universal_windows\u_acme_universal_windows.vcxproj">
-      <Project>{7d2387eb-a3de-4ea5-b061-48a856dd7211}</Project>
-    </ProjectReference>
-    <ProjectReference Include="R:\basis\archive\platform-universal_windows\apex_universal_windows\u_apex_universal_windows.vcxproj">
-      <Project>{699c5c28-fe00-4e04-91ee-47d857588020}</Project>
-    </ProjectReference>
-    <ProjectReference Include="R:\basis\archive\platform-windows_common\acme_windows_common\u_acme_windows_common.vcxproj">
-      <Project>{4a44d9ca-a46e-4bb3-8ad5-8bcace5228ce}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

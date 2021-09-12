@@ -118,7 +118,7 @@ namespace draw2d_direct2d
    bool graphics::CreateCompatibleDC(::draw2d::graphics *)
    {
 
-      ::draw2d::lock draw2dlock;
+      ::draw2d::device_lock devicelock(this);
 
       if (m_iType != 0)
       {
@@ -1710,7 +1710,7 @@ namespace draw2d_direct2d
       try
       {
 
-         if (pimage == nullptr)
+         if (pimage == nullptr || pimage->get_bitmap() == nullptr)
          {
 
             return false;
@@ -1846,26 +1846,26 @@ namespace draw2d_direct2d
          double nSrcWidth = rectangleSource.width();
          double nSrcHeight = rectangleSource.height();
 
-         //if (pgraphicsSrc == nullptr)
-         //{
+         if (::is_null(pimage))
+         {
 
-         //   return false;
+            return false;
 
-         //}
+         }
 
-         //if (pgraphicsSrc->get_current_bitmap() == nullptr)
-         //{
+         if (pimage->get_bitmap() == nullptr)
+         {
 
-         //   return false;
+            return false;
 
-         //}
+         }
 
-         //if (pgraphicsSrc->get_current_bitmap()->get_os_data() == nullptr)
-         //{
+         if (pimage->get_graphics() == nullptr)
+         {
 
-         //   return false;
+            return false;
 
-         //}
+         }
 
          D2D1_RECT_F rectangleTarget = D2D1::RectF((float)xDst, (float)yDst, (float)(xDst + nDstWidth), (float)(yDst + nDstHeight));
 

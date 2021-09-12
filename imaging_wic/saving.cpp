@@ -29,10 +29,10 @@ namespace imaging_wic
 
       //::wait(randomAccessStream->WriteAsync(get_os_buffer()));
 
-      comptr < IStream > pstream;
+      comptr <IUnknown> punknown = randomAccessStream.as<IUnknown>().get();
 
-      ::CreateStreamOverRandomAccessStream((IUnknown *) &randomAccessStream, IID_PPV_ARGS(&pstream));
-
+      comptr <IStream> pstream;
+      CreateStreamOverRandomAccessStream(punknown,__interface_of(pstream));
 #else
 
       comptr < IStream > pstream = SHCreateMemStream(nullptr, NULL);

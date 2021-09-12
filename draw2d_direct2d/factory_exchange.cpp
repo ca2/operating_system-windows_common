@@ -34,7 +34,7 @@ void draw2d_direct2d_factory_exchange(::factory_map * pfactorymap)
 
       create_factory < ::draw2d_direct2d::graphics, ::draw2d::graphics > ();
 
-      create_factory < ::draw2d_direct2d::draw2d, ::draw2d::draw2d >();
+      pfactorymap->create_factory < ::draw2d_direct2d::draw2d, ::draw2d::draw2d >();
 
    }
 

@@ -54,6 +54,27 @@ namespace draw2d_direct2d
 
    }
 
+
+   ::e_status draw2d::lock_device()
+   {
+
+      direct2d::direct2d()->m_d2dMultithread->Enter();
+
+      return success;
+
+   }
+
+
+   ::e_status draw2d::unlock_device()
+   {
+
+      direct2d::direct2d()->m_d2dMultithread->Leave();
+
+      return success;
+
+   }
+
+
 } // namespace draw2d_direct2d
 
 
