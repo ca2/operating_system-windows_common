@@ -12,17 +12,17 @@ namespace direct2d
    protected:
 
 
-      Microsoft::WRL::ComPtr<IDWriteFactory>      m_pwritefactory;
-      Microsoft::WRL::ComPtr<ID2D1Factory1>       m_pd2factory;
+      comptr<IDWriteFactory>      m_pwritefactory;
+      comptr<ID2D1Factory1>       m_pd2factory;
 
 
    public:
 
 
-      Microsoft::WRL::ComPtr<ID2D1Device> m_pd2device;
-      Microsoft::WRL::ComPtr<ID2D1DeviceContext> m_pd2devicecontext;
+      comptr<ID2D1Device> m_pd2device;
+      comptr<ID2D1DeviceContext> m_pd2devicecontext;
 
-      Microsoft::WRL::ComPtr<ID2D1Multithread> m_d2dMultithread;
+      comptr<ID2D1Multithread> m_d2dMultithread;
 
       D3D_FEATURE_LEVEL m_featurelevel;
 

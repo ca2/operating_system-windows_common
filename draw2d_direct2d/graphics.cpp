@@ -4562,21 +4562,21 @@ namespace draw2d_direct2d
          {
             // object type is unknown, determine if it is a font
             HFONT hStockFont = (HFONT)::GetStockObject(SYSTEM_FONT);
-            HFONT hFontOld = (HFONT)::SelectObject((dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->get_handle1(), hStockFont);
-            HGDIOBJ hObjOld = ::SelectObject((dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->get_handle1(), hObject);
-            if (hObjOld == hStockFont)
-            {
-               // got the stock object back, so must be selecting a font
-               __throw(error_not_implemented);
-               //                  (dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->SelectObject(::draw2d_direct2d::font::from_handle_dup(pgraphics->get_application(), (HFONT)hObject));
-               break;  // don't play the default record
-            }
-            else
-            {
-               // didn't get the stock object back, so restore everything
-               ::SelectObject((dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->get_handle1(), hFontOld);
-               ::SelectObject((dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->get_handle1(), hObjOld);
-            }
+            //HFONT hFontOld = (HFONT)::SelectObject((dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->get_handle1(), hStockFont);
+            //HGDIOBJ hObjOld = ::SelectObject((dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->get_handle1(), hObject);
+            //if (hObjOld == hStockFont)
+            //{
+            //   // got the stock object back, so must be selecting a font
+            //   __throw(error_not_implemented);
+            //   //                  (dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->SelectObject(::draw2d_direct2d::font::from_handle_dup(pgraphics->get_application(), (HFONT)hObject));
+            //   break;  // don't play the default record
+            //}
+            //else
+            //{
+            //   // didn't get the stock object back, so restore everything
+            //   ::SelectObject((dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->get_handle1(), hFontOld);
+            //   ::SelectObject((dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->get_handle1(), hObjOld);
+            //}
             // and fall through to PlayMetaFileRecord...
          }
          else if (nObjType == OBJ_FONT)

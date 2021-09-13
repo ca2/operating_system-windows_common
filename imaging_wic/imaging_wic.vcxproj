@@ -298,7 +298,7 @@
       <SubSystem>Windows</SubSystem>
       <EntryPointSymbol>
       </EntryPointSymbol>
-      <AdditionalDependencies>Shlwapi.lib;glew32.lib;opengl32.lib;windowscodecs.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Shlwapi.lib;windowscodecs.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
     </Link>
@@ -366,11 +366,10 @@
       <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
       <SDLCheck>true</SDLCheck>
       <UseFullPaths>true</UseFullPaths>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <Optimization>Disabled</Optimization>
       <OpenMPSupport>false</OpenMPSupport>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
-      <EnableModules>false</EnableModules>
       <IntrinsicFunctions>true</IntrinsicFunctions>
     </ClCompile>
     <ResourceCompile>
@@ -652,9 +651,8 @@
       <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
       <CreateHotpatchableImage>false</CreateHotpatchableImage>
       <UseFullPaths>true</UseFullPaths>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <OpenMPSupport>false</OpenMPSupport>
-      <EnableModules>false</EnableModules>
       <WholeProgramOptimization>true</WholeProgramOptimization>
     </ClCompile>
     <ResourceCompile>
@@ -834,12 +832,11 @@
       <UseFullPaths>true</UseFullPaths>
       <CompileAsManaged>false</CompileAsManaged>
       <CompileAsWinRT>false</CompileAsWinRT>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <OmitFramePointers>false</OmitFramePointers>
       <Optimization>Disabled</Optimization>
       <OpenMPSupport>false</OpenMPSupport>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
-      <EnableModules>false</EnableModules>
       <IntrinsicFunctions>true</IntrinsicFunctions>
     </ClCompile>
     <ResourceCompile>
@@ -1107,9 +1104,8 @@
       </SDLCheck>
       <CreateHotpatchableImage>false</CreateHotpatchableImage>
       <UseFullPaths>true</UseFullPaths>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <OpenMPSupport>false</OpenMPSupport>
-      <EnableModules>false</EnableModules>
       <WholeProgramOptimization>true</WholeProgramOptimization>
     </ClCompile>
     <ResourceCompile>

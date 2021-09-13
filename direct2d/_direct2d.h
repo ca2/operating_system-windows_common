@@ -25,7 +25,7 @@ interface ID2D1Factory1;
 #include "direct2d.h"
 
 
-#include "multithreading_lock.h"
+//#include "multithreading_lock.h"
 
 
 

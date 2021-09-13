@@ -101,7 +101,7 @@ namespace direct2d
       auto& pdxgidevice = ::directx::directx()->m_pdxgidevice;
 
       // Create the Direct2D device object and a corresponding context.
-      ::throw_if_failed(d2d1_factory1()->CreateDevice(pdxgidevice.Get(), &m_pd2device));
+      ::throw_if_failed(d2d1_factory1()->CreateDevice(pdxgidevice, &m_pd2device));
 
       d2d1_factory1()->QueryInterface(IID_PPV_ARGS(&m_d2dMultithread));
 
@@ -116,11 +116,14 @@ namespace direct2d
       if (m_pwritefactory != nullptr || !bCreate)
       {
 
-         return m_pwritefactory.Get();
+         return m_pwritefactory;
 
       }
 
-      HRESULT hr = DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(IDWriteFactory), &m_pwritefactory);
+      HRESULT hr = DWriteCreateFactory(
+         DWRITE_FACTORY_TYPE_SHARED,
+         __uuidof(IDWriteFactory),
+         reinterpret_cast < IUnknown ** > (&m_pwritefactory));
 
       if (FAILED(hr))
       {
@@ -129,7 +132,7 @@ namespace direct2d
 
       }
 
-      return m_pwritefactory.Get();
+      return m_pwritefactory;
 
    }
 
@@ -141,7 +144,7 @@ namespace direct2d
       if (m_pd2factory != nullptr || !bCreate)
       {
 
-         return m_pd2factory.Get();
+         return m_pd2factory;
 
       }
 
@@ -149,7 +152,7 @@ namespace direct2d
 
       __memset(&options, 0, sizeof(options));
 
-      HRESULT hr = ::D2D1CreateFactory(d2d1_thread_model, __uuidof(ID2D1Factory1), &options, &m_pd2factory);
+      HRESULT hr = ::D2D1CreateFactory(d2d1_thread_model, __uuidof(ID2D1Factory1), &options, (void **) &m_pd2factory);
 
       if (FAILED(hr))
       {
@@ -158,7 +161,7 @@ namespace direct2d
 
       }
 
-      return m_pd2factory.Get();
+      return m_pd2factory;
 
    }
 
@@ -166,7 +169,7 @@ namespace direct2d
    ID2D1Device * direct2d::draw_get_d2d1_device()
    {
 
-      return m_pd2device.Get();
+      return m_pd2device;
 
    }
 

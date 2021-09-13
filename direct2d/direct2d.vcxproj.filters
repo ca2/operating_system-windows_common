@@ -40,6 +40,12 @@
     <ClInclude Include="_direct2d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="aaa_multithreading_lock.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="global.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\..\archive\platform-windows\version.rc">

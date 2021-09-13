@@ -42,10 +42,10 @@ namespace directx
 CLASS_DECL_DIRECTX void directx_debug();
 
 
-#include "object.h"
+//#include "object.h"
 
 
-#include "graphics.h"
+//#include "graphics.h"
 
 
 #include "directx.h"

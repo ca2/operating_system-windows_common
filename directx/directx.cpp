@@ -55,9 +55,9 @@ namespace directx
       };
 
       // Create the Direct3D 11 API device object and a corresponding context.
-      Microsoft::WRL::ComPtr<ID3D11Device> device;
+      comptr<ID3D11Device> device;
 
-      Microsoft::WRL::ComPtr<ID3D11DeviceContext> context;
+      comptr<ID3D11DeviceContext> context;
 
       HRESULT hr = D3D11CreateDevice(
          nullptr,                    // Specify nullptr to use the default adapter.
@@ -75,20 +75,18 @@ namespace directx
       ::throw_if_failed(hr);
 
       // Get the Direct3D 11.1 API device and context interfaces.
-      ::throw_if_failed(device.As(&m_pd3device));
+      ::throw_if_failed(device.as(m_pd3device));
 
-      ::throw_if_failed(device.As(&m_pd3device1));
+      ::throw_if_failed(device.as(m_pd3device1));
 
-      ::throw_if_failed(context.As(&m_pd3devicecontext));
+      ::throw_if_failed(context.as(m_pd3devicecontext));
 
-      ::throw_if_failed(context.As(&m_pd3devicecontext1));
+      ::throw_if_failed(context.as(m_pd3devicecontext1));
 
       // Get the underlying DXGI device of the Direct3D device.
-      ::throw_if_failed(device.As(&m_pdxgidevice));
+      ::throw_if_failed(device.as(m_pdxgidevice));
 
-      
       ::directx::defer_dxgi_debug_initialize();
-
 
       return ::success;
 
@@ -98,7 +96,7 @@ namespace directx
    ID3D11Device * directx::draw_get_d3d11_device()
    {
 
-      return m_pd3device.Get();
+      return m_pd3device;
 
    }
 
@@ -106,7 +104,7 @@ namespace directx
    ID3D11Device1 * directx::draw_get_d3d11_device1()
    {
 
-      return m_pd3device1.Get();
+      return m_pd3device1;
 
    }
 
@@ -114,7 +112,7 @@ namespace directx
    ID3D11DeviceContext * directx::draw_get_d3d11_device_context()
    {
 
-      return m_pd3devicecontext.Get();
+      return m_pd3devicecontext;
 
    }
 
@@ -122,7 +120,7 @@ namespace directx
    ID3D11DeviceContext1 * directx::draw_get_d3d11_device_context1()
    {
 
-      return m_pd3devicecontext1.Get();
+      return m_pd3devicecontext1;
 
    }
 
@@ -130,7 +128,7 @@ namespace directx
    IDXGIDevice * directx::draw_get_dxgi_device()
    {
 
-      return m_pdxgidevice.Get();
+      return m_pdxgidevice;
 
    }
 

@@ -75,7 +75,7 @@ public:
    }
 
    template < class IFACE >
-   HRESULT As(comptr < IFACE > & iface)
+   HRESULT as(comptr < IFACE > & iface)
    {
 
       if (m_p == nullptr)

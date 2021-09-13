@@ -900,6 +900,8 @@
   <ItemGroup>
     <ClInclude Include="direct2d.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="aaa_multithreading_lock.h" />
+    <ClInclude Include="global.h" />
     <ClInclude Include="_.h" />
     <ClInclude Include="_direct2d.h" />
   </ItemGroup>

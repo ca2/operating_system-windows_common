@@ -12,11 +12,11 @@ namespace directx
    public:
 
 
-      Microsoft::WRL::ComPtr<ID3D11DeviceContext>        m_pd3devicecontext;
-      Microsoft::WRL::ComPtr<ID3D11DeviceContext1>       m_pd3devicecontext1;
-      Microsoft::WRL::ComPtr<ID3D11Device>               m_pd3device;
-      Microsoft::WRL::ComPtr<ID3D11Device1>              m_pd3device1;
-      Microsoft::WRL::ComPtr<IDXGIDevice>                m_pdxgidevice;
+      comptr<ID3D11DeviceContext>        m_pd3devicecontext;
+      comptr<ID3D11DeviceContext1>       m_pd3devicecontext1;
+      comptr<ID3D11Device>               m_pd3device;
+      comptr<ID3D11Device1>              m_pd3device1;
+      comptr<IDXGIDevice>                m_pdxgidevice;
 
 
       __pointer(::user::interaction_impl)                m_pimpl;
