@@ -136,7 +136,7 @@ namespace directx
 //
 //      HRESULT hr;
 //
-//      Microsoft::WRL::ComPtr<ID2D1DeviceContext> pdevicecontextTemplate;
+//      comptr<ID2D1DeviceContext> pdevicecontextTemplate;
 //
 //      if (FAILED(hr = pdraw2d->directx()->m_pd2device->CreateDeviceContext(
 //                      D2D1_DEVICE_CONTEXT_OPTIONS_NONE,
@@ -150,7 +150,7 @@ namespace directx
 //
 //      }
 //
-//      Microsoft::WRL::ComPtr<ID2D1RenderTarget> prendertargetTemplate;
+//      comptr<ID2D1RenderTarget> prendertargetTemplate;
 //
 //      auto dpi = os_get_dpi();
 //
@@ -1415,13 +1415,13 @@ namespace directx
 //
 //      }
 //
-//      Microsoft::WRL::ComPtr<ID2D1PathGeometry> pgeometry;
+//      comptr<ID2D1PathGeometry> pgeometry;
 //
 //      HRESULT hr = ::draw2d_directx::plugin::d2d1_factory1()->CreatePathGeometry(&pgeometry);
 //
 //      {
 //
-//         Microsoft::WRL::ComPtr<ID2D1GeometrySink> psink;
+//         comptr<ID2D1GeometrySink> psink;
 //
 //         pgeometry->Open(&psink);
 //
@@ -1461,13 +1461,13 @@ namespace directx
 //
 //      }
 //
-//      Microsoft::WRL::ComPtr<ID2D1PathGeometry> pgeometry;
+//      comptr<ID2D1PathGeometry> pgeometry;
 //
 //      HRESULT hr = ::draw2d_directx::plugin::d2d1_factory1()->CreatePathGeometry(&pgeometry);
 //
 //      {
 //
-//         Microsoft::WRL::ComPtr<ID2D1GeometrySink> psink;
+//         comptr<ID2D1GeometrySink> psink;
 //
 //         pgeometry->Open(&psink);
 //
@@ -1506,13 +1506,13 @@ namespace directx
 //
 //      }
 //
-//      Microsoft::WRL::ComPtr<ID2D1PathGeometry> pgeometry;
+//      comptr<ID2D1PathGeometry> pgeometry;
 //
 //      HRESULT hr = ::draw2d_directx::plugin::d2d1_factory1()->CreatePathGeometry(&pgeometry);
 //
 //      {
 //
-//         Microsoft::WRL::ComPtr<ID2D1GeometrySink> psink;
+//         comptr<ID2D1GeometrySink> psink;
 //
 //         pgeometry->Open(&psink);
 //
@@ -2067,7 +2067,7 @@ namespace directx
 //
 //      }
 //
-//      Microsoft::WRL::ComPtr<IDWriteFontCollection> pcollection;
+//      comptr<IDWriteFontCollection> pcollection;
 //
 //      WCHAR name[256];
 //      ::u32 findex;
@@ -2128,7 +2128,7 @@ namespace directx
 //
 //      }
 //
-//      Microsoft::WRL::ComPtr<IDWriteFontFamily> ffamily;
+//      comptr<IDWriteFontFamily> ffamily;
 //
 //      pcollection->GetFontFamily(findex, &ffamily);
 //
@@ -2145,7 +2145,7 @@ namespace directx
 //
 //      }
 //
-//      Microsoft::WRL::ComPtr<IDWriteFont> pfont;
+//      comptr<IDWriteFont> pfont;
 //
 //      ffamily->GetFirstMatchingFont(pwritetextformat->GetFontWeight(), pwritetextformat->GetFontStretch(), pwritetextformat->GetFontStyle(), &pfont);
 //
@@ -4784,11 +4784,11 @@ namespace directx
 //
 //      }
 //
-//      Microsoft::WRL::ComPtr<IDWriteTextLayout> playout1;
+//      comptr<IDWriteTextLayout> playout1;
 //
 //      HRESULT hr;
 //
-//      Microsoft::WRL::ComPtr<IDWriteTextLayout> playout;
+//      comptr<IDWriteTextLayout> playout;
 //
 //      ::u32 uLength = (::u32)text.m_wstr.get_length();
 //

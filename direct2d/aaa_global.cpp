@@ -43,8 +43,8 @@ namespace direct2d
 
 
 
-   Microsoft::WRL::ComPtr<IDWriteFactory>      plugin::s_pwritefactory;
-   Microsoft::WRL::ComPtr<ID2D1Factory1>       plugin::s_pd2factory;
+   comptr<IDWriteFactory>      plugin::s_pwritefactory;
+   comptr<ID2D1Factory1>       plugin::s_pd2factory;
 
 
     //plugin * g_pdirect2dplugin = nullptr;
@@ -95,9 +95,9 @@ namespace direct2d
       };
 
       // Create the Direct3D 11 API device object and a corresponding context.
-      Microsoft::WRL::ComPtr<ID3D11Device> device;
+      comptr<ID3D11Device> device;
 
-      Microsoft::WRL::ComPtr<ID3D11DeviceContext> context;
+      comptr<ID3D11DeviceContext> context;
 
       HRESULT hr = D3D11CreateDevice(
                    nullptr,                    // Specify nullptr to use the default adapter.
@@ -150,105 +150,105 @@ namespace direct2d
    }
 
 
-   IDWriteFactory * plugin::dwrite_factory(bool bCreate)
-   {
+   //IDWriteFactory * plugin::dwrite_factory(bool bCreate)
+   //{
 
-      if (s_pwritefactory != nullptr || !bCreate)
-      {
+   //   if (s_pwritefactory != nullptr || !bCreate)
+   //   {
 
-         return s_pwritefactory.Get();
+   //      return s_pwritefactory.Get();
 
-      }
+   //   }
 
-      HRESULT hr = DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(IDWriteFactory), &s_pwritefactory);
+   //   HRESULT hr = DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(IDWriteFactory), &s_pwritefactory);
 
-      if (FAILED(hr))
-      {
+   //   if (FAILED(hr))
+   //   {
 
-         return nullptr;
+   //      return nullptr;
 
-      }
+   //   }
 
-      return s_pwritefactory.Get();
+   //   return s_pwritefactory.Get();
 
-   }
-
-
-   ID2D1Factory1 * plugin::d2d1_factory1(bool bCreate)
-   {
+   //}
 
 
-      if (s_pd2factory != nullptr || !bCreate)
-      {
-
-         return s_pd2factory.Get();
-
-      }
-
-      d2d1_fax_options options;
-
-      __memset(&options, 0, sizeof(options));
-
-      HRESULT hr = ::D2D1CreateFactory(d2d1_thread_model, __uuidof(ID2D1Factory1), &options, &s_pd2factory);
-
-      if (FAILED(hr))
-      {
-
-         return nullptr;
-
-      }
-
-      //dpi_initialize(::draw2d::device_lock::g_pfactory);
-
-      return s_pd2factory.Get();
-
-   }
+   //ID2D1Factory1 * plugin::d2d1_factory1(bool bCreate)
+   //{
 
 
-   ID3D11Device * plugin::draw_get_d3d11_device()
-   {
+   //   if (s_pd2factory != nullptr || !bCreate)
+   //   {
 
-      return m_pd3device.Get();
+   //      return s_pd2factory.Get();
 
-   }
+   //   }
+
+   //   d2d1_fax_options options;
+
+   //   __memset(&options, 0, sizeof(options));
+
+   //   HRESULT hr = ::D2D1CreateFactory(d2d1_thread_model, __uuidof(ID2D1Factory1), &options, &s_pd2factory);
+
+   //   if (FAILED(hr))
+   //   {
+
+   //      return nullptr;
+
+   //   }
+
+   //   //dpi_initialize(::draw2d::device_lock::g_pfactory);
+
+   //   return s_pd2factory.Get();
+
+   //}
 
 
-   ID3D11Device1 * plugin::draw_get_d3d11_device1()
-   {
+   //ID3D11Device * plugin::draw_get_d3d11_device()
+   //{
 
-      return m_pd3device1.Get();
+   //   return m_pd3device.Get();
 
-   }
-
-
-   ID3D11DeviceContext * plugin::draw_get_d3d11_device_context()
-   {
-
-      return m_pd3devicecontext.Get();
-
-   }
+   //}
 
 
-   ID3D11DeviceContext1 * plugin::draw_get_d3d11_device_context1()
-   {
+   //ID3D11Device1 * plugin::draw_get_d3d11_device1()
+   //{
 
-      return m_pd3devicecontext1.Get();
+   //   return m_pd3device1.Get();
 
-   }
+   //}
 
-   IDXGIDevice * plugin::draw_get_dxgi_device()
-   {
 
-      return m_pdxgidevice.Get();
+   //ID3D11DeviceContext * plugin::draw_get_d3d11_device_context()
+   //{
 
-   }
+   //   return m_pd3devicecontext.Get();
 
-   ID2D1Device * plugin::draw_get_d2d1_device()
-   {
+   //}
 
-      return m_pd2device.Get();
 
-   }
+   //ID3D11DeviceContext1 * plugin::draw_get_d3d11_device_context1()
+   //{
+
+   //   return m_pd3devicecontext1.Get();
+
+   //}
+
+   //IDXGIDevice * plugin::draw_get_dxgi_device()
+   //{
+
+   //   return m_pdxgidevice.Get();
+
+   //}
+
+   //ID2D1Device * plugin::draw_get_d2d1_device()
+   //{
+
+   //   return m_pd2device.Get();
+
+   //}
 
 
 } // namespace draw2d_direct2d
