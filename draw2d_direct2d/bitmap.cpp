@@ -71,7 +71,7 @@ namespace draw2d_direct2d
       //
       //if(ppdata != nullptr)
       // *ppdata = (::color::color *) m_map.bits;
-      m_osdata[0] = m_pbitmap.Get();
+      m_osdata[0] = m_pbitmap;
 
       return true;
 
@@ -128,15 +128,15 @@ namespace draw2d_direct2d
 
       }
 
-      prendertarget->GetDpi(&props.dpiX, &props.dpiY); // Thank you again https://repo.anl-external.org/repos/BlueTBB/tbb41_20130314oss/examples/common/gui/d2dvideo.cpp      props.bitmapOptions = D2D1_BITMAP_OPTIONS_CPU_READ | D2D1_BITMAP_OPTIONS_CANNOT_DRAW;
+      prendertarget->GetDpi(&props.dpiX, &props.dpiY);
 
       props.colorContext = nullptr;
 
-      //props.bitmapOptions = D2D1_BITMAP_OPTIONS_NONE;
+      props.bitmapOptions = D2D1_BITMAP_OPTIONS_TARGET;
 
-      props.bitmapOptions = D2D1_BITMAP_OPTIONS_CPU_READ | D2D1_BITMAP_OPTIONS_CANNOT_DRAW;
+      //props.bitmapOptions = D2D1_BITMAP_OPTIONS_CPU_READ | D2D1_BITMAP_OPTIONS_CANNOT_DRAW;
 
-      props.bitmapOptions = D2D1_BITMAP_OPTIONS_CPU_READ | D2D1_BITMAP_OPTIONS_CANNOT_DRAW;
+      //props.bitmapOptions = D2D1_BITMAP_OPTIONS_CPU_READ | D2D1_BITMAP_OPTIONS_CANNOT_DRAW;
 
       //props.bitmapOptions = D2D1_BITMAP_OPTIONS_CPU_READ | D2D1_BITMAP_OPTIONS_CANNOT_DRAW;
 
@@ -166,16 +166,16 @@ namespace draw2d_direct2d
 
       }
 
-      if (FAILED(m_pbitmap1.As(&m_pbitmap)))
+      if (FAILED(m_pbitmap1.as(m_pbitmap)))
       {
 
          return false;
 
       }
 
-      m_osdata[0] = m_pbitmap.Get();
+      m_osdata[0] = m_pbitmap;
 
-      m_osdata[1] = m_pbitmap1.Get();
+      m_osdata[1] = m_pbitmap1;
 
       return true;
 
@@ -223,8 +223,12 @@ namespace draw2d_direct2d
    size_i32 bitmap::GetBitmapDimension() const
    {
 
-      if (m_pbitmap == nullptr)
+      if (!m_pbitmap)
+      {
+
          return ::size_i32(0, 0);
+
+      }
 
       D2D1_SIZE_U size = m_pbitmap->GetPixelSize();
 
@@ -290,9 +294,9 @@ namespace draw2d_direct2d
       }
       m_pbitmap = m_pbitmap1;
 
-      m_osdata[0] = m_pbitmap.Get();
+      m_osdata[0] = m_pbitmap;
 
-      m_osdata[1] = m_pbitmap1.Get();
+      m_osdata[1] = m_pbitmap1;
 
       return true;
 
@@ -337,9 +341,9 @@ namespace draw2d_direct2d
       }
       m_pbitmap = m_pbitmap1;
 
-      m_osdata[0] = m_pbitmap.Get();
+      m_osdata[0] = m_pbitmap;
 
-      m_osdata[1] = m_pbitmap1.Get();
+      m_osdata[1] = m_pbitmap1;
 
       //m_pbitmap->Map(D2D1_MAP_OPTIONS_READ | D2D1_MAP_OPTIONS_WRITE, &m_map);
 
@@ -380,11 +384,11 @@ namespace draw2d_direct2d
 
       m_pbitmap = (ID2D1Bitmap *)hbitmap;
 
-      m_pbitmap.As(&m_pbitmap1);
+      m_pbitmap.as(m_pbitmap1);
 
-      m_osdata[0] = m_pbitmap.Get();
+      m_osdata[0] = m_pbitmap;
 
-      m_osdata[1] = m_pbitmap1.Get();
+      m_osdata[1] = m_pbitmap1;
 
       return true;
 
@@ -397,7 +401,7 @@ namespace draw2d_direct2d
 
       m_pbitmap1 = nullptr;
 
-      return m_pbitmap.Detach();
+      return m_pbitmap.detach();
 
    }
 

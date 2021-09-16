@@ -61,16 +61,6 @@
 //} // namespace acme
 //
 
-//
-//
-//void output_debug_string(const unichar * pwsz)
-//{
-//
-//   g_pfnOutputDebugStringW(pwsz);
-//
-//}
-
-
 
 
 //string FormatMessageFromSystem(u32 dwError)

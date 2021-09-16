@@ -12,7 +12,7 @@ namespace draw2d_directx
    public:
 
 
-      Microsoft::WRL::ComPtr<ID2D1SolidColorBrush>    m_pbrush;
+      comptr<ID2D1SolidColorBrush>    m_pbrush;
       bool                                            m_bMetroColor;
       color32_t                                        m_colorMetro;
 

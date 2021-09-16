@@ -63,7 +63,6 @@
   <ItemGroup>
     <ClCompile Include="multithreading_lock.cpp" />
     <ClCompile Include="direct2d.cpp" />
-    <ClCompile Include="global.cpp" />
     <ClCompile Include="_.cpp" />
     <ClCompile Include="_universal_windows.cpp" />
     <ClCompile Include="factory_exchange.cpp" />

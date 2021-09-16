@@ -320,11 +320,11 @@ namespace draw2d_direct2d
    ID2D1Geometry * region::get_combine(::draw2d::graphics* pgraphics)
    {
 
-      Microsoft::WRL::ComPtr <ID2D1PathGeometry> ppathgeometry ;
+      comptr <ID2D1PathGeometry> ppathgeometry ;
 
       HRESULT hr = ::draw2d_direct2d::plugin::d2d1_factory1()->CreatePathGeometry(&ppathgeometry);
 
-      Microsoft::WRL::ComPtr < ID2D1GeometrySink > psink ;
+      comptr < ID2D1GeometrySink > psink ;
 
       if (FAILED(hr))
       {

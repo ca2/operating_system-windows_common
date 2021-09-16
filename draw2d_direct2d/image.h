@@ -15,8 +15,9 @@ namespace draw2d_direct2d
       BITMAPINFO                          m_info;
       bool                                m_bTrans;
 
-      ::draw2d::bitmap_pointer            m_pbitmapMap;
-      ::draw2d::graphics_pointer          m_pgraphicsMap;
+      comptr<ID2D1Bitmap1>                m_pbitmap1;
+      //::draw2d::bitmap_pointer            m_pbitmapMap;
+      //::draw2d::graphics_pointer          m_pgraphicsMap;
 
 
       image();
@@ -48,7 +49,7 @@ namespace draw2d_direct2d
 
 
       virtual bool defer_realize(::draw2d::graphics * pgraphics) const;
-      virtual bool realize(::draw2d::graphics * pgraphics) const;
+      //virtual bool realize(::draw2d::graphics * pgraphics) const;
       virtual bool unrealize() const;
       virtual bool is_realized() const;
 

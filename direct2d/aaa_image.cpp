@@ -1355,7 +1355,7 @@ namespace draw2d_direct2d
 
       pixelformat.format = DXGI_FORMAT_B8G8R8A8_UNORM;
 
-      Microsoft::WRL::ComPtr < ID2D1RenderTarget > prendertarget = pgraphicsMap->m_prendertarget;
+      comptr < ID2D1RenderTarget > prendertarget = pgraphicsMap->m_prendertarget;
 
       HRESULT hr = prendertarget->CreateCompatibleRenderTarget(nullptr, &sizeu, &pixelformat, D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS_NONE, &pgraphics->m_pbitmaprendertarget);
 

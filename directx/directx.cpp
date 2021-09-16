@@ -75,13 +75,13 @@ namespace directx
       ::throw_if_failed(hr);
 
       // Get the Direct3D 11.1 API device and context interfaces.
-      ::throw_if_failed(device.as(m_pd3device));
+      ::throw_if_failed(device.as(m_pdevice));
 
-      ::throw_if_failed(device.as(m_pd3device1));
+      ::throw_if_failed(device.as(m_pdevice1));
 
-      ::throw_if_failed(context.as(m_pd3devicecontext));
+      ::throw_if_failed(context.as(m_pdevicecontext));
 
-      ::throw_if_failed(context.as(m_pd3devicecontext1));
+      ::throw_if_failed(context.as(m_pdevicecontext1));
 
       // Get the underlying DXGI device of the Direct3D device.
       ::throw_if_failed(device.as(m_pdxgidevice));
@@ -96,7 +96,7 @@ namespace directx
    ID3D11Device * directx::draw_get_d3d11_device()
    {
 
-      return m_pd3device;
+      return m_pdevice;
 
    }
 
@@ -104,7 +104,7 @@ namespace directx
    ID3D11Device1 * directx::draw_get_d3d11_device1()
    {
 
-      return m_pd3device1;
+      return m_pdevice1;
 
    }
 
@@ -112,7 +112,7 @@ namespace directx
    ID3D11DeviceContext * directx::draw_get_d3d11_device_context()
    {
 
-      return m_pd3devicecontext;
+      return m_pdevicecontext;
 
    }
 
@@ -120,7 +120,7 @@ namespace directx
    ID3D11DeviceContext1 * directx::draw_get_d3d11_device_context1()
    {
 
-      return m_pd3devicecontext1;
+      return m_pdevicecontext1;
 
    }
 

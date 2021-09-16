@@ -160,11 +160,11 @@ namespace draw2d_direct2d
 
       IDWriteFactory * pfactory = pdraw2d->direct2d()->dwrite_factory();
 
-      Microsoft::WRL::ComPtr < IDWriteTextLayout> textLayout;
+      comptr < IDWriteTextLayout> textLayout;
 
       pfactory->CreateTextLayout(szOutline, (::u32) szOutline.length(),(IDWriteTextFormat *)pfont->get_os_data(pgraphics),1024 * 1024,1024 * 1024,&textLayout);
 
-      Microsoft::WRL::ComPtr < IDWriteTextRenderer > textRenderer;
+      comptr < IDWriteTextRenderer > textRenderer;
 
       CreatePathTextRenderer(psystem->m_dpi, &textRenderer);
 

@@ -12,7 +12,7 @@ namespace draw2d_directx
    public:
 
 
-      Microsoft::WRL::ComPtr < IDWriteTextFormat >    m_pformat;
+      comptr < IDWriteTextFormat >    m_pformat;
 
 
       font();

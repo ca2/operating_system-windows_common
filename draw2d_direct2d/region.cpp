@@ -163,7 +163,7 @@ namespace draw2d_direct2d
 
       m_osdata[0] = get(pgraphics);
 
-      return m_pgeometry.Get() != nullptr;
+      return m_pgeometry != nullptr;
 
    }
 
@@ -321,11 +321,11 @@ namespace draw2d_direct2d
    ID2D1Geometry * region::get_combine(::draw2d::graphics* pgraphics)
    {
 
-      Microsoft::WRL::ComPtr <ID2D1PathGeometry> ppathgeometry ;
+      comptr <ID2D1PathGeometry> ppathgeometry ;
 
       HRESULT hr = ::direct2d::direct2d()->d2d1_factory1()->CreatePathGeometry(&ppathgeometry);
 
-      Microsoft::WRL::ComPtr < ID2D1GeometrySink > psink ;
+      comptr < ID2D1GeometrySink > psink ;
 
       if (FAILED(hr))
       {
@@ -350,25 +350,25 @@ namespace draw2d_direct2d
       if(m_ecombine == ::draw2d::e_combine_add)
       {
 
-         hr = pgeometry1->CombineWithGeometry(pgeometry2, D2D1_COMBINE_MODE_UNION, nullptr, 0.f, psink.Get());
+         hr = pgeometry1->CombineWithGeometry(pgeometry2, D2D1_COMBINE_MODE_UNION, nullptr, 0.f, psink);
 
       }
       else if(m_ecombine == ::draw2d::e_combine_exclude)
       {
 
-         hr = pgeometry1->CombineWithGeometry(pgeometry2, D2D1_COMBINE_MODE_EXCLUDE, nullptr, 0.f, psink.Get());
+         hr = pgeometry1->CombineWithGeometry(pgeometry2, D2D1_COMBINE_MODE_EXCLUDE, nullptr, 0.f, psink);
 
       }
       else if(m_ecombine == ::draw2d::e_combine_intersect)
       {
 
-         hr = pgeometry1->CombineWithGeometry(pgeometry2, D2D1_COMBINE_MODE_INTERSECT, nullptr, 0.f, psink.Get());
+         hr = pgeometry1->CombineWithGeometry(pgeometry2, D2D1_COMBINE_MODE_INTERSECT, nullptr, 0.f, psink);
 
       }
       else
       {
 
-         hr = pgeometry1->CombineWithGeometry(pgeometry2, D2D1_COMBINE_MODE_UNION, nullptr, 0.f, psink.Get());
+         hr = pgeometry1->CombineWithGeometry(pgeometry2, D2D1_COMBINE_MODE_UNION, nullptr, 0.f, psink);
 
       }
 
@@ -389,7 +389,7 @@ namespace draw2d_direct2d
 
       }
 
-      return ppathgeometry.Detach();
+      return ppathgeometry.detach();
 
    }
 

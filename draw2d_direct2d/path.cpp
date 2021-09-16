@@ -160,17 +160,17 @@ namespace draw2d_direct2d
 
       IDWriteFactory * pfactory = ::direct2d::direct2d()->dwrite_factory();
 
-      Microsoft::WRL::ComPtr < IDWriteTextLayout> textLayout;
+      comptr < IDWriteTextLayout> textLayout;
 
       pfactory->CreateTextLayout(szOutline, (::u32) szOutline.length(),(IDWriteTextFormat *)pfont->get_os_data(pgraphics),1024 * 1024,1024 * 1024,&textLayout);
 
-      Microsoft::WRL::ComPtr < IDWriteTextRenderer > textRenderer;
+      comptr < IDWriteTextRenderer > textRenderer;
 
       auto psystem = m_psystem->m_paurasystem;
 
       CreatePathTextRenderer(psystem->m_dpi, &textRenderer);
 
-      textLayout->Draw(this, textRenderer.Get(), 0, 0);
+      textLayout->Draw(this, textRenderer, 0, 0);
 
       return true;
 
@@ -180,7 +180,7 @@ namespace draw2d_direct2d
    bool path::internal_add_line(::draw2d::graphics* pgraphics, double x, double y)
    {
 
-      if (::is_null(m_psink.Get()))
+      if (::is_null(m_psink))
       {
 
          return false;
@@ -304,10 +304,10 @@ namespace draw2d_direct2d
          if (iCreate == path_hollow)
          {
 
-            if (m_ppathHollow.Get())
+            if (m_ppathHollow)
             {
 
-               m_osdata[path_hollow] = m_ppathHollow.Get();
+               m_osdata[path_hollow] = m_ppathHollow;
 
                return m_osdata[path_hollow] != nullptr;
 
@@ -323,10 +323,10 @@ namespace draw2d_direct2d
       else
       {
 
-         if (m_ppathFilled.Get())
+         if (m_ppathFilled)
          {
 
-            m_osdata[path_filled] = m_ppathFilled.Get();
+            m_osdata[path_filled] = m_ppathFilled;
 
             return m_osdata[path_filled] != nullptr;
 
@@ -368,7 +368,7 @@ namespace draw2d_direct2d
          
          HRESULT hr = m_psink->Close();
 
-         m_osdata[iCreate] = m_ppath.Get();
+         m_osdata[iCreate] = m_ppath;
 
       }
       else
@@ -380,7 +380,7 @@ namespace draw2d_direct2d
 
       m_psink = nullptr;
 
-      return m_ppath.Get() != nullptr;
+      return m_ppath != nullptr;
 
    }
 
@@ -390,13 +390,15 @@ namespace draw2d_direct2d
 
       defer_update(pgraphicsParam, 0);
 
-      return m_ppath.Detach();
+      return m_ppath.detach();
 
    }
 
 
    ::e_status path::destroy()
    {
+
+      ::draw2d::path::destroy();
 
       m_psink = nullptr;
 
@@ -809,7 +811,7 @@ _In_opt_ IUnknown* clientDrawingEffect
                 glyphRun->glyphCount,
                 glyphRun->isSideways,
                 glyphRun->bidiLevel % 2,
-                dc->m_psink.Get()
+                dc->m_psink
                 );
 
    return hr;

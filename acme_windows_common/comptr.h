@@ -257,7 +257,8 @@ public:
 };
 
 
-#define __interface_of(comptr) __uuidof(decltype(*comptr.m_p)), (void **) &comptr
+#define __interface_of(comptr) __uuidof(decltype(*comptr.m_p)), (void **) &comptr.m_p
+#define __unknown_of(comptr) __uuidof(decltype(*comptr.m_p)), reinterpret_cast < IUnknown ** > (&comptr.m_p)
 
 
 

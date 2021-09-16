@@ -12,20 +12,20 @@ namespace directx
    public:
 
 
-      comptr<ID3D11DeviceContext>        m_pd3devicecontext;
-      comptr<ID3D11DeviceContext1>       m_pd3devicecontext1;
-      comptr<ID3D11Device>               m_pd3device;
-      comptr<ID3D11Device1>              m_pd3device1;
-      comptr<IDXGIDevice>                m_pdxgidevice;
+      comptr<ID3D11DeviceContext>        m_pdevicecontext;
+      comptr<ID3D11DeviceContext1>                    m_pdevicecontext1;
+      comptr<ID3D11Device>                            m_pdevice;
+      comptr<ID3D11Device1>                           m_pdevice1;
+      comptr<IDXGIDevice>                             m_pdxgidevice;
 
 
-      __pointer(::user::interaction_impl)                m_pimpl;
+      __pointer(::user::interaction_impl)             m_pimpl;
 
       
-      D3D_FEATURE_LEVEL                                  m_featurelevel;
+      D3D_FEATURE_LEVEL                               m_featurelevel;
 
 
-      static directx *                                   s_pdirectx;
+      static directx *                                s_pdirectx;
 
 
       directx();

@@ -21,7 +21,7 @@ namespace direct2d
    public:
 
 
-      Microsoft::WRL::ComPtr < ID2D1Multithread > m_D2DMultithread;
+      comptr < ID2D1Multithread > m_D2DMultithread;
 
       //device_lock(ID2D1Multithread * pinteraction);
       //~device_lock();

@@ -21,10 +21,10 @@ namespace draw2d_direct2d
    public:
 
 
-      Microsoft::WRL::ComPtr<ID2D1PathGeometry>          m_ppathHollow;
-      Microsoft::WRL::ComPtr<ID2D1PathGeometry>          m_ppathFilled;
-      Microsoft::WRL::ComPtr<ID2D1PathGeometry>          m_ppath;
-      Microsoft::WRL::ComPtr<ID2D1GeometrySink>          m_psink;
+      comptr<ID2D1PathGeometry>          m_ppathHollow;
+      comptr<ID2D1PathGeometry>          m_ppathFilled;
+      comptr<ID2D1PathGeometry>          m_ppath;
+      comptr<ID2D1GeometrySink>          m_psink;
       bool                                               m_bFigureOpened;
       ::point_i32                                            m_point;
       D2D1_FIGURE_BEGIN                                  m_d2d2figurebegin;

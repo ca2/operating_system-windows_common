@@ -15,11 +15,11 @@ namespace draw2d_direct2d
       //      Gdiplus::Brush * m_pbrush;
 
 
-      Microsoft::WRL::ComPtr<ID2D1Brush>                 m_pbrush;
-      Microsoft::WRL::ComPtr<ID2D1SolidColorBrush>       m_psolidbrush;
-      Microsoft::WRL::ComPtr<ID2D1LinearGradientBrush>   m_plineargradientbrush;
-      Microsoft::WRL::ComPtr<ID2D1RadialGradientBrush>   m_pradialgradientbrush;
-      Microsoft::WRL::ComPtr<ID2D1ImageBrush>            m_pimagebrush;
+      comptr<ID2D1Brush>                 m_pbrush;
+      comptr<ID2D1SolidColorBrush>       m_psolidbrush;
+      comptr<ID2D1LinearGradientBrush>   m_plineargradientbrush;
+      comptr<ID2D1RadialGradientBrush>   m_pradialgradientbrush;
+      comptr<ID2D1ImageBrush>            m_pimagebrush;
 
 
       brush();

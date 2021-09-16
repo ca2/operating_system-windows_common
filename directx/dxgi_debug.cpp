@@ -15,13 +15,13 @@ namespace directx
 
 #ifdef _UWP
 
-      HRESULT hr = DXGIGetDebugInterface1(0, IID_IDXGIDebug1, &m_pdxgidebug1);
+      HRESULT hr = DXGIGetDebugInterface1(0, __interface_of(m_pdxgidebug1));
 
-      HRESULT hrQueryInterface = m_pdxgidebug1.As(&m_pdxgidebug);
+      HRESULT hrQueryInterface = m_pdxgidebug1.as(m_pdxgidebug);
 
 #else
 
-      Microsoft::WRL::ComPtr<IDXGIInfoQueue> dxgiInfoQueue;
+      comptr<IDXGIInfoQueue> dxgiInfoQueue;
 
       typedef HRESULT(WINAPI* LPDXGIGETDEBUGINTERFACE)(REFIID, void**);
 

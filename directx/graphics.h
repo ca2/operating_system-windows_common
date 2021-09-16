@@ -31,15 +31,15 @@ namespace directx
 
       };
 
-      Microsoft::WRL::ComPtr<ID2D1DeviceContext>         m_pdevicecontext; // 0
-      Microsoft::WRL::ComPtr<ID2D1RenderTarget>          m_prendertarget; // 1
-      Microsoft::WRL::ComPtr<ID2D1BitmapRenderTarget>    m_pbitmaprendertarget; // 2
-      Microsoft::WRL::ComPtr<ID2D1DCRenderTarget>        m_pdcrendertarget; // 3
+      comptr<ID2D1DeviceContext>         m_pdevicecontext; // 0
+      comptr<ID2D1RenderTarget>          m_prendertarget; // 1
+      comptr<ID2D1BitmapRenderTarget>    m_pbitmaprendertarget; // 2
+      comptr<ID2D1DCRenderTarget>        m_pdcrendertarget; // 3
 
-      Microsoft::WRL::ComPtr<IDXGIAdapter>               m_padapter;
-      Microsoft::WRL::ComPtr<IDXGIFactory2>              m_pfactory2;
-      Microsoft::WRL::ComPtr<ID2D1Layer>                 m_player;
-      Microsoft::WRL::ComPtr<ID2D1PathGeometry>          m_ppathgeometryClip;
+      comptr<IDXGIAdapter>               m_padapter;
+      comptr<IDXGIFactory2>              m_pfactory2;
+      comptr<ID2D1Layer>                 m_player;
+      comptr<ID2D1PathGeometry>          m_ppathgeometryClip;
 
       __pointer_array(state)                             m_statea;
       __pointer(state)                                   m_pstate;

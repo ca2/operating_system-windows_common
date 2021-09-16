@@ -13,7 +13,7 @@ typedef FN_DXGIGetDebugInterface * PFN_DXGIGetDebugInterface;
 //{
 //public:
 //
-//   Microsoft::WRL::ComPtr<IDXGIDebug> d;
+//   comptr<IDXGIDebug> d;
 //
 //   void init()
 //   {
@@ -22,7 +22,7 @@ typedef FN_DXGIGetDebugInterface * PFN_DXGIGetDebugInterface;
 //      HRESULT hr = DXGIGetDebugInterface1(0, IID_IDXGIDebug1, &d);
 //#else
 //
-//      Microsoft::WRL::ComPtr<IDXGIInfoQueue> dxgiInfoQueue;
+//      comptr<IDXGIInfoQueue> dxgiInfoQueue;
 //
 //      typedef HRESULT(WINAPI * LPDXGIGETDEBUGINTERFACE)(REFIID, void **);
 //

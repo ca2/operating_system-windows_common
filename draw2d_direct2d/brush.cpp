@@ -58,7 +58,7 @@ namespace draw2d_direct2d
             if(m_psolidbrush != nullptr)
             {
 
-               m_osdata[0] = (ID2D1Brush*)m_psolidbrush.Get();
+               m_osdata[0] = (ID2D1Brush*)m_psolidbrush;
                
                set_updated();
 
@@ -66,7 +66,7 @@ namespace draw2d_direct2d
 
          }
 
-         return m_psolidbrush.Get();
+         return m_psolidbrush;
 
       }
       else if(m_etype == type_linear_gradient_point_color)
@@ -111,7 +111,7 @@ namespace draw2d_direct2d
             if(m_plineargradientbrush != nullptr)
             {
                
-               m_osdata[0] = (ID2D1Brush*)m_plineargradientbrush.Get();
+               m_osdata[0] = (ID2D1Brush*)m_plineargradientbrush;
 
                set_updated();
 
@@ -119,7 +119,7 @@ namespace draw2d_direct2d
 
          }
 
-         return (ID2D1Brush *) m_plineargradientbrush.Get();
+         return (ID2D1Brush *) m_plineargradientbrush;
 
       }
       else if(m_etype == type_radial_gradient_color)
@@ -178,7 +178,7 @@ namespace draw2d_direct2d
             if(m_pradialgradientbrush != nullptr)
             {
 
-               m_osdata[0] = (ID2D1Brush*)m_pradialgradientbrush.Get();
+               m_osdata[0] = (ID2D1Brush*)m_pradialgradientbrush;
 
                set_updated();
 
@@ -186,7 +186,7 @@ namespace draw2d_direct2d
 
          }
 
-         return (ID2D1Brush *)m_pradialgradientbrush.Get();
+         return (ID2D1Brush *)m_pradialgradientbrush;
 
       }
       else if (m_etype == type_pattern)
@@ -229,7 +229,7 @@ namespace draw2d_direct2d
             if (SUCCEEDED(hr) && m_pimagebrush != nullptr)
             {
 
-               m_osdata[0] = (ID2D1Brush*)m_pimagebrush.Get();
+               m_osdata[0] = (ID2D1Brush*)m_pimagebrush;
 
                set_updated();
 
@@ -237,13 +237,13 @@ namespace draw2d_direct2d
 
          }
 
-         return (ID2D1Brush*) m_pimagebrush.Get();
+         return (ID2D1Brush*) m_pimagebrush;
 
       }
       else
       {
 
-         return (ID2D1Brush *) m_pbrush.Get();
+         return (ID2D1Brush *) m_pbrush;
 
       }
 

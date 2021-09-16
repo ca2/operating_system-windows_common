@@ -133,7 +133,7 @@ namespace draw2d_direct2d
 
       HRESULT hr;
 
-      Microsoft::WRL::ComPtr<ID2D1DeviceContext> pdevicecontextTemplate;
+      comptr<ID2D1DeviceContext> pdevicecontextTemplate;
 
       if (FAILED(hr = ::direct2d::direct2d()->m_pd2device->CreateDeviceContext(
                       D2D1_DEVICE_CONTEXT_OPTIONS_NONE,
@@ -147,7 +147,7 @@ namespace draw2d_direct2d
 
       }
 
-      Microsoft::WRL::ComPtr<ID2D1RenderTarget> prendertargetTemplate;
+      comptr<ID2D1RenderTarget> prendertargetTemplate;
 
       auto psession = get_session();
 
@@ -203,7 +203,7 @@ namespace draw2d_direct2d
 
       }
 
-      hr = m_pbitmaprendertarget.As(&m_prendertarget);
+      hr = m_pbitmaprendertarget.as(m_prendertarget);
 
       if(FAILED(hr))
       {
@@ -214,7 +214,7 @@ namespace draw2d_direct2d
 
       }
 
-      hr = m_pbitmaprendertarget.As(&m_pdevicecontext);
+      hr = m_pbitmaprendertarget.as(m_pdevicecontext);
 
       if(FAILED(hr))
       {
@@ -250,9 +250,9 @@ namespace draw2d_direct2d
 
       m_iType = 3;
 
-      m_osdata[data_device_context] = m_pdevicecontext.Get();
+      m_osdata[data_device_context] = m_pdevicecontext;
 
-      m_osdata[data_render_target] = m_prendertarget.Get();
+      m_osdata[data_render_target] = m_prendertarget;
 
       return true;
 
@@ -591,7 +591,7 @@ namespace draw2d_direct2d
 
          __pointer(::draw2d_direct2d::graphics) pgraphicsDib2 = pimage2->get_graphics();
 
-         HRESULT hr = ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->EndDraw();
+         //HRESULT hr = ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->EndDraw();
 
          pgraphicsDib1->m_pdevicecontext->DrawImage(
          (ID2D1Bitmap *)pgraphicsDib2->get_current_bitmap()->m_osdata[0],
@@ -600,12 +600,12 @@ namespace draw2d_direct2d
          D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR,
          D2D1_COMPOSITE_MODE_DESTINATION_IN);
 
-         if (SUCCEEDED(hr))
-         {
+         //if (SUCCEEDED(hr))
+         //{
 
-            ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->BeginDraw();
+         //   ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->BeginDraw();
 
-         }
+         //}
 
          set_alpha_mode(::draw2d::e_alpha_mode_blend);
 
@@ -628,28 +628,152 @@ namespace draw2d_direct2d
    }
 
 
-   ::e_status graphics::set(::draw2d::bitmap* pbitmap)
+   ::e_status graphics::set(::draw2d::bitmap* pbitmapParam)
    {
 
-      if (::is_null(pbitmap))
+      ::draw2d::lock draw2dlock;
+
+      __pointer(::draw2d_direct2d::bitmap) pbitmap = pbitmapParam;
+
+      if (::is_null(pbitmapParam))
       {
 
          return ::error_failed;
 
       }
 
-      if(m_prendertarget == nullptr)
-      {
 
-         CreateCompatibleDC(nullptr);
+      //if(m_prendertarget == nullptr)
+      //{
 
-      }
+        // CreateCompatibleDC(nullptr);
 
-      m_pdevicecontext->SetTarget((ID2D1Bitmap *)pbitmap->m_osdata[0]);
+      //}
 
-      m_pbitmap = pbitmap;
+      //bool image::realize(::draw2d::graphics *) const
+      //{
 
-      m_iType = 3;
+         //if (is_realized())
+         //{
+
+         //   unrealize();
+
+         //}
+
+         //if (is_realized())
+         //{
+
+         //   return false;
+
+         //}
+
+         //if (m_pbitmap.is_null()
+         //   || m_pbitmapMap.is_null()
+         //   || m_pgraphics.is_null()
+         //   || m_pgraphicsMap.is_null())
+         //{
+
+         //   return false;
+
+         //}
+
+         //__pointer(::draw2d_direct2d::graphics) pgraphicsMap = m_pgraphicsMap;
+
+         //__pointer(::draw2d_direct2d::graphics) pgraphics = m_pgraphics;
+
+         //__pointer(::draw2d_direct2d::bitmap) pbitmap = m_pbitmap;
+
+         m_pbitmaprendertarget = nullptr;
+
+         m_iType = 11;
+
+         ::size_i32 size = pbitmap->GetBitmapDimension();
+
+         D2D1_SIZE_U sizeu = D2D1::SizeU(size.cx, size.cy);
+
+         D2D1_PIXEL_FORMAT pixelformat;
+
+         pixelformat.alphaMode = D2D1_ALPHA_MODE_PREMULTIPLIED;
+
+         pixelformat.format = DXGI_FORMAT_B8G8R8A8_UNORM;
+
+         auto & prendertarget = m_prendertarget;
+
+         HRESULT hr = prendertarget->CreateCompatibleRenderTarget(nullptr, &sizeu, &pixelformat, D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS_NONE, &m_pbitmaprendertarget);
+
+         if (m_pbitmaprendertarget == nullptr)
+         {
+
+            return false;
+
+         }
+
+         if (FAILED(m_pbitmaprendertarget.as(m_prendertarget)))
+         {
+
+            m_pbitmaprendertarget = nullptr;
+
+            return false;
+
+         }
+
+         if (FAILED(m_pbitmaprendertarget.as(m_pdevicecontext)))
+         {
+
+            m_pbitmaprendertarget = nullptr;
+
+            m_prendertarget = nullptr;
+
+            return false;
+
+         }
+
+         comptr<ID2D1Bitmap> pd2d1bitmap;
+
+         m_pbitmaprendertarget->GetBitmap(&pd2d1bitmap);
+
+         if (pbitmap->m_pbitmap == nullptr)
+         {
+
+            return false;
+
+         }
+
+         //pgraphics->m_pplugin = pgraphicsMap->m_pplugin;
+
+         pbitmap->m_pbitmap = pd2d1bitmap;
+
+         pbitmap->m_pbitmap.as(pbitmap->m_pbitmap1);
+
+         pbitmap->m_osdata[0] = pbitmap->m_pbitmap;
+
+         pbitmap->m_osdata[1] = pbitmap->m_pbitmap1;
+
+         m_osdata[0] = m_pdevicecontext;
+
+         m_osdata[1] = m_prendertarget;
+
+         //D2D1_POINT_2U p;
+
+         //p.x = 0;
+         //p.y = 0;
+
+         //D2D1_RECT_U srcRect;
+
+         //srcRect.left = 0;
+         //srcRect.right = this->width();
+         //srcRect.top = 0;
+         //srcRect.bottom = this->height();
+
+      //   return true;
+
+      //}
+
+         m_pdevicecontext->SetTarget(pbitmap->m_pbitmap);
+
+      //pbitmap = pbitmap;
+
+      //m_iType = 3;
 
       return ::success;
 
@@ -1453,13 +1577,13 @@ namespace draw2d_direct2d
 
       }
 
-      Microsoft::WRL::ComPtr<ID2D1PathGeometry> pgeometry;
+      comptr<ID2D1PathGeometry> pgeometry;
 
       HRESULT hr = ::direct2d::direct2d()->d2d1_factory1()->CreatePathGeometry(&pgeometry);
 
       {
 
-         Microsoft::WRL::ComPtr<ID2D1GeometrySink> psink;
+         comptr<ID2D1GeometrySink> psink;
 
          pgeometry->Open(&psink);
 
@@ -1480,9 +1604,9 @@ namespace draw2d_direct2d
 
       }
 
-      bool bOk = fill_path(pgeometry.Get(), m_pbrush);
+      bool bOk = fill_path(pgeometry, m_pbrush);
 
-      bOk = bOk && draw_path(pgeometry.Get(), m_ppen);
+      bOk = bOk && draw_path(pgeometry, m_ppen);
 
       return bOk;
 
@@ -1499,13 +1623,13 @@ namespace draw2d_direct2d
 
       }
 
-      Microsoft::WRL::ComPtr<ID2D1PathGeometry> pgeometry;
+      comptr<ID2D1PathGeometry> pgeometry;
 
       HRESULT hr = ::direct2d::direct2d()->d2d1_factory1()->CreatePathGeometry(&pgeometry);
 
       {
 
-         Microsoft::WRL::ComPtr<ID2D1GeometrySink> psink;
+         comptr<ID2D1GeometrySink> psink;
 
          pgeometry->Open(&psink);
 
@@ -1526,7 +1650,7 @@ namespace draw2d_direct2d
 
       }
 
-      bool bOk = draw_path(pgeometry.Get(), m_ppen);
+      bool bOk = draw_path(pgeometry, m_ppen);
 
       return bOk;
 
@@ -1544,13 +1668,13 @@ namespace draw2d_direct2d
 
       }
 
-      Microsoft::WRL::ComPtr<ID2D1PathGeometry> pgeometry;
+      comptr<ID2D1PathGeometry> pgeometry;
 
       HRESULT hr = ::direct2d::direct2d()->d2d1_factory1()->CreatePathGeometry(&pgeometry);
 
       {
 
-         Microsoft::WRL::ComPtr<ID2D1GeometrySink> psink;
+         comptr<ID2D1GeometrySink> psink;
 
          pgeometry->Open(&psink);
 
@@ -1571,7 +1695,7 @@ namespace draw2d_direct2d
 
       }
 
-      bool bOk = fill_path(pgeometry.Get(), m_pbrush);
+      bool bOk = fill_path(pgeometry, m_pbrush);
 
       return bOk;
 
@@ -1805,18 +1929,24 @@ namespace draw2d_direct2d
 
          D2D1_RECT_F rectangleSource = D2D1::RectF((float)xSrc, (float)ySrc, (float)(xSrc + nWidth), (float)(ySrc + nHeight));
 
-         HRESULT hr = ((ID2D1DeviceContext *)pimage->g()->get_os_data())->EndDraw();
+         auto pd2d1bitmap = ((ID2D1Bitmap *)pimage->get_bitmap()->get_os_data());
+
+         int cx = pd2d1bitmap->GetPixelSize().width;
+
+         int cy = pd2d1bitmap->GetPixelSize().height;
+
+         //HRESULT hr = ((ID2D1DeviceContext *)pimage->g()->get_os_data())->EndDraw();
 
          defer_primitive_blend();
 
-         m_pdevicecontext->DrawBitmap((ID2D1Bitmap *)pimage->g()->get_current_bitmap()->get_os_data(), rectangleTarget, 1.0, D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR, rectangleSource);
+         m_pdevicecontext->DrawBitmap(pd2d1bitmap, rectangleTarget, 1.0, D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR, rectangleSource);
 
-         if (SUCCEEDED(hr))
-         {
+         //if (SUCCEEDED(hr))
+         //{
 
-            ((ID2D1DeviceContext *)pimage->g()->get_os_data())->BeginDraw();
+         //   ((ID2D1DeviceContext *)pimage->g()->get_os_data())->BeginDraw();
 
-         }
+         //}
 
          return true;
 
@@ -1871,7 +2001,7 @@ namespace draw2d_direct2d
 
          D2D1_RECT_F rectangleSource = D2D1::RectF((float)xSrc, (float)ySrc, (float)(xSrc + nSrcWidth), (float)(ySrc + nSrcHeight));
 
-         HRESULT hr = ((ID2D1DeviceContext *)pimage->g()->get_os_data())->EndDraw();
+         //HRESULT hr = ((ID2D1DeviceContext *)pimage->g()->get_os_data())->EndDraw();
 
          defer_primitive_blend();
 
@@ -1888,18 +2018,18 @@ namespace draw2d_direct2d
 
          }
 
-         if (SUCCEEDED(hr))
-         {
+         //if (SUCCEEDED(hr))
+         //{
 
-            ((ID2D1DeviceContext *)pimage->g()->get_os_data())->BeginDraw();
+         //   ((ID2D1DeviceContext *)pimage->g()->get_os_data())->BeginDraw();
 
-         }
-         else
-         {
+         //}
+         //else
+         //{
 
-            output_debug_string("direct2d graphics::StretchBltRaw hr failed");
+         //   output_debug_string("direct2d graphics::StretchBltRaw hr failed");
 
-         }
+         //}
 
          return true;
 
@@ -2120,7 +2250,7 @@ namespace draw2d_direct2d
 
       }
 
-      Microsoft::WRL::ComPtr<IDWriteFontCollection> pcollection;
+      comptr<IDWriteFontCollection> pcollection;
 
       WCHAR name[256];
       ::u32 findex;
@@ -2181,7 +2311,7 @@ namespace draw2d_direct2d
 
       }
 
-      Microsoft::WRL::ComPtr<IDWriteFontFamily> ffamily;
+      comptr<IDWriteFontFamily> ffamily;
 
       pcollection->GetFontFamily(findex, &ffamily);
 
@@ -2198,7 +2328,7 @@ namespace draw2d_direct2d
 
       }
 
-      Microsoft::WRL::ComPtr<IDWriteFont> pfont;
+      comptr<IDWriteFont> pfont;
 
       ffamily->GetFirstMatchingFont(pwritetextformat->GetFontWeight(), pwritetextformat->GetFontStretch(), pwritetextformat->GetFontStyle(), &pfont);
 
@@ -4923,11 +5053,11 @@ namespace draw2d_direct2d
 
       }
 
-      Microsoft::WRL::ComPtr<IDWriteTextLayout> playout1;
+      comptr<IDWriteTextLayout> playout1;
 
       HRESULT hr;
 
-      Microsoft::WRL::ComPtr<IDWriteTextLayout> playout;
+      comptr<IDWriteTextLayout> playout;
 
       ::u32 uLength = (::u32)text.m_wstr.get_length();
 
@@ -5348,7 +5478,7 @@ namespace draw2d_direct2d
 
       m_pdevicecontext = (ID2D1DeviceContext *) pdata;
 
-      HRESULT hr = m_pdevicecontext.As(&m_prendertarget);
+      HRESULT hr = m_pdevicecontext.as(m_prendertarget);
 
       if(FAILED(hr))
       {
@@ -5361,16 +5491,16 @@ namespace draw2d_direct2d
 
       }
 
-      hr = m_prendertarget.As(&m_pbitmaprendertarget);
+      hr = m_prendertarget.as(m_pbitmaprendertarget);
 
       if(FAILED(hr))
       {
          m_pbitmaprendertarget = nullptr;
       }
 
-      m_osdata[data_device_context] = m_pdevicecontext.Get();
+      m_osdata[data_device_context] = m_pdevicecontext;
 
-      m_osdata[data_render_target] = m_prendertarget.Get();
+      m_osdata[data_render_target] = m_prendertarget;
 
       return true;
 
@@ -5388,7 +5518,7 @@ namespace draw2d_direct2d
 
       m_osdata[data_render_target] = nullptr;
 
-      return m_pdevicecontext.Detach();
+      return m_pdevicecontext.detach();
 
    }
 
@@ -5757,7 +5887,7 @@ namespace draw2d_direct2d
 
       }
 
-      CustomTextRenderer renderer(::direct2d::direct2d()->d2d1_factory1(),m_prendertarget.Get(),ppen->get_os_data < ID2D1Brush * >(this));
+      CustomTextRenderer renderer(::direct2d::direct2d()->d2d1_factory1(),m_prendertarget,ppen->get_os_data < ID2D1Brush * >(this));
 
       defer_text_primitive_blend();
 
@@ -5802,7 +5932,7 @@ namespace draw2d_direct2d
       if (posbrush)
       {
 
-         CustomTextRenderer renderer(::direct2d::direct2d()->d2d1_factory1(), m_prendertarget.Get(), nullptr, posbrush);
+         CustomTextRenderer renderer(::direct2d::direct2d()->d2d1_factory1(), m_prendertarget, nullptr, posbrush);
 
          defer_text_primitive_blend();
 
@@ -5844,7 +5974,7 @@ namespace draw2d_direct2d
 
       }
 
-      CustomTextRenderer renderer(::direct2d::direct2d()->d2d1_factory1(), m_prendertarget.Get(), ppen->get_os_data < ID2D1Brush* >(this));
+      CustomTextRenderer renderer(::direct2d::direct2d()->d2d1_factory1(), m_prendertarget, ppen->get_os_data < ID2D1Brush* >(this));
 
       defer_text_primitive_blend();
 
@@ -5889,7 +6019,7 @@ namespace draw2d_direct2d
       if (posbrush)
       {
 
-         CustomTextRenderer renderer(::direct2d::direct2d()->d2d1_factory1(), m_prendertarget.Get(), nullptr, posbrush);
+         CustomTextRenderer renderer(::direct2d::direct2d()->d2d1_factory1(), m_prendertarget, nullptr, posbrush);
 
          defer_text_primitive_blend();
 
@@ -5906,6 +6036,13 @@ namespace draw2d_direct2d
 
    bool graphics::flush()
    {
+
+      if (!m_bBeginDraw)
+      {
+
+         return false;
+
+      }
 
       HRESULT hr = m_prendertarget->Flush();
 
