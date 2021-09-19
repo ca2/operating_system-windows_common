@@ -127,7 +127,7 @@ namespace windows_common
          pfile->write(contents, len);
 
       }
-      catch (const ::exception::exception & e)
+      catch (const ::exception & e)
       {
 
          return e.m_estatus;

@@ -5,7 +5,7 @@
 
 
 class CLASS_DECL_ACME_WINDOWS_COMMON hresult_exception :
-   public ::exception::exception
+   public ::exception
 {
 public:
 

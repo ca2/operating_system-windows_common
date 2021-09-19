@@ -196,7 +196,7 @@ namespace draw2d_direct2d
       case ::draw2d::e_region_combine:
          return get_combine(pgraphics);
       default:
-         ::exception::throw_not_implemented();
+         throw interface_only_exception();
       }
 
       return nullptr;

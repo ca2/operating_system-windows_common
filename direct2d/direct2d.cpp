@@ -131,7 +131,6 @@ namespace direct2d
          return nullptr;
 
       }
-
       return m_pwritefactory;
 
    }
@@ -160,6 +159,8 @@ namespace direct2d
          return nullptr;
 
       }
+
+      m_geometrysinktextrenderer.m_pfactory = m_pd2factory;
 
       return m_pd2factory;
 

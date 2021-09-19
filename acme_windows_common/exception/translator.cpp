@@ -19,11 +19,11 @@ namespace windows_common
 {
 
 
-   namespace exception
-   {
+   //namespace exception
+   //{
 
 
-      translator::translator()
+      exception_translator::exception_translator()
       {
 
 //#ifdef EXCEPTION_TRANSLATOR_USE_SIGNAL
@@ -35,7 +35,7 @@ namespace windows_common
       }
 
 
-      translator::~translator()
+      exception_translator::~exception_translator()
       {
 //
 //#ifdef EXCEPTION_TRANSLATOR_USE_SIGNAL
@@ -52,7 +52,7 @@ namespace windows_common
       }
 
 
-      void __cdecl translator::filter2(u32 uiCode, EXCEPTION_POINTERS* ppointers)
+      void __cdecl exception_translator::filter2(u32 uiCode, EXCEPTION_POINTERS* ppointers)
       {
 
          if (g_bExiting)
@@ -109,13 +109,13 @@ namespace windows_common
 //#endif
 
 
-      bool translator::attach()
+      bool exception_translator::attach()
       {
 
          if (!m_bSet)
          {
 
-            m_pfn = _set_se_translator(&translator::filter2);
+            m_pfn = _set_se_translator(&exception_translator::filter2);
 
             //m_pfn = SetUnhandledExceptionFilter((LPTOP_LEVEL_EXCEPTION_FILTER) GetThunk());
 
@@ -195,7 +195,7 @@ namespace windows_common
       }
 
 
-      bool translator::detach()
+      bool exception_translator::detach()
       {
 
          if (m_bSet)
@@ -226,7 +226,7 @@ namespace windows_common
       }
 
 
-      void translator::filter(u32 uiCode, EXCEPTION_POINTERS* ppointers)
+      void exception_translator::filter(u32 uiCode, EXCEPTION_POINTERS* ppointers)
       {
 
          __UNREFERENCED_PARAMETER(uiCode);
@@ -261,7 +261,7 @@ namespace windows_common
       }
 
 
-      string translator::_get_standard_exception_name(u32 uiCode)
+      string exception_translator::_get_standard_exception_name(u32 uiCode)
       {
 
          auto pszName = _s_get_standard_exception_name(uiCode);
@@ -271,7 +271,7 @@ namespace windows_common
       }
 
 
-      string translator::_get_standard_exception_description(u32 uiCode)
+      string exception_translator::_get_standard_exception_description(u32 uiCode)
       {
 
          auto pszDescription= _s_get_standard_exception_description(uiCode);
@@ -281,7 +281,7 @@ namespace windows_common
       }
 
 
-      const char * translator::_s_get_standard_exception_name(u32 uiCode)
+      const char * exception_translator::_s_get_standard_exception_name(u32 uiCode)
       {
 
          const char * pszName = nullptr;
@@ -325,7 +325,7 @@ namespace windows_common
       }
 
 
-      const char * translator::_s_get_standard_exception_description(u32 uiCode)
+      const char * exception_translator::_s_get_standard_exception_description(u32 uiCode)
       {
 
          const char* pszDescription = nullptr;
@@ -416,7 +416,7 @@ namespace windows_common
       }
 
 
-   } // namespace translator
+   //} // namespace translator
 
 
 } // namespace windows_common

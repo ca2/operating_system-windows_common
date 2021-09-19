@@ -2,30 +2,24 @@
 #include "acme/operating_system.h"
 
 
-namespace windows
+namespace windows_common
 {
 
 
-   namespace exception
+
+   exception_engine::exception_engine()
    {
 
-
-      engine::engine()
-      {
-
-      }
+   }
 
 
-      engine::~engine()
-      {
+   exception_engine::~exception_engine()
+   {
 
-      }
-
-
-   } // namespace exception
+   }
 
 
-} // namespace windows
+} // namespace windows_common
 
 
 

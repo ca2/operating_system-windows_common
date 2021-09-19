@@ -1,31 +1,24 @@
 #pragma once
 
 
-namespace windows
+namespace windows_common
 {
 
 
-   namespace exception
+   class CLASS_DECL_ACME_WINDOWS_COMMON exception_engine :
+      virtual public ::exception_engine
    {
+   public:
 
 
-      class CLASS_DECL_ACME_WINDOWS_COMMON engine :
-         virtual public ::exception::engine
-      {
-      public:
+      exception_engine();
+      virtual ~exception_engine();
 
 
-         engine();
-         virtual ~engine();
+   };
 
 
-      };
-
-
-   } // namespace exception
-
-
-} // namespace windows
+} // namespace windows_common
 
 
 

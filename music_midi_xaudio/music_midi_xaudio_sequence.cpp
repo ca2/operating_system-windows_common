@@ -1534,7 +1534,7 @@ seq_Preroll_Cleanup:
          {
             __UNREFERENCED_PARAMETER(pevent);
             single_lock synchronouslock(&m_mutex, true);
-            //   LPMIDIHDR lpmh = pevent->m_lpmh;
+            //   LPMIDIHDR lpmh = psubject->m_lpmh;
             //   midi_callback_data * lpData = &m_midicallbackdata;
             ::e_status     estatus;
 
@@ -1565,7 +1565,7 @@ seq_Preroll_Cleanup:
 
          void sequence::OnEvent(::music::midi::sequence::event * pevent)
          {
-            switch(pevent->m_eevent)
+            switch(psubject->m_id)
             {
             case EventSpecialModeV001End:
             {
@@ -2541,9 +2541,9 @@ seq_Preroll_Cleanup:
 
             event * pevent          = new event();
 
-            pevent->m_eevent        = eevent;
-            pevent->m_psequence     = this;
-            pevent->m_lpmh          = lpmidihdr;
+            psubject->m_id        = eevent;
+            psubject->m_psequence     = this;
+            psubject->m_lpmh          = lpmidihdr;
 
             return pevent;
 

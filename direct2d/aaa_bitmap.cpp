@@ -214,7 +214,7 @@ namespace draw2d_direct2d
    //{
 
 
-   //   ::exception::throw_not_implemented();
+   //   throw interface_only_exception();
 
    //   return ::size_i32(0, 0);
 

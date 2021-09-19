@@ -83,8 +83,8 @@ bool PreventSetUnhandledExceptionFilter()
 
 
 
-namespace exception
-{
+//namespace exception
+//{
 
 
 #ifdef EXCEPTION_TRANSLATOR_USE_SIGNAL
@@ -171,8 +171,8 @@ namespace exception
 
    */
 
-
-} // namespace exception
+//
+//} // namespace exception
 
 
 CLASS_DECL_ACME bool g_bExiting;
@@ -228,7 +228,7 @@ const void * standard_exception::info() const
 const char * standard_exception::name() const
 {
 
-   //return ::exception::translator::name(code());
+   //return ::exception_translator::name(code());
    return "";
 
 }
@@ -237,7 +237,7 @@ const char * standard_exception::name() const
 const char * standard_exception::description() const
 {
 
-   //return ::exception::translator::description(code());
+   //return ::exception_translator::description(code());
    return "";
 
 }

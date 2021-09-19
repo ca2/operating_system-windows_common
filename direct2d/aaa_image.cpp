@@ -1125,7 +1125,7 @@ namespace draw2d_direct2d
       if (FAILED(hr) || pbitmap->m_map.bits == nullptr)
       {
 
-         __throw(::exception::exception(""));
+         __throw(::exception(""));
 
       }
 
@@ -1251,7 +1251,7 @@ namespace draw2d_direct2d
 
             ((image *) this)->m_bMapped = false;
 
-            __throw(::exception::exception(""));
+            __throw(::exception(""));
 
          }
 

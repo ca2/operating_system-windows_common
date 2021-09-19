@@ -725,8 +725,8 @@ smf_Open_File_Cleanup:
             for(i = 0; i < eventptra.get_size(); i++)
             {
                pevent = eventptra[i];
-               ASSERT(pevent->GetFlags() & 1);
-               iSize += (i32) pevent->GetParamSize();
+               ASSERT(psubject->GetFlags() & 1);
+               iSize += (i32) psubject->GetParamSize();
                iSize += sizeof(midi_stream_event_header);
             }
 
@@ -741,10 +741,10 @@ smf_Open_File_Cleanup:
             for(i = 0; i < eventptra.get_size(); i++)
             {
                pevent = eventptra[i];
-               lpbParam = pevent->GetParam();
+               lpbParam = psubject->GetParam();
                lpdwType = (LPDWORD) lpbParam;
                pheader = (midi_stream_event_header *) &m_memstorageF1.get_data()[iSize];
-               pheader->m_dwLength = (u32) pevent->GetParamSize();
+               pheader->m_dwLength = (u32) psubject->GetParamSize();
                pheader->m_dwType = *lpdwType;
                ::memcpy_dup(
                &m_memstorageF1.get_data()[iSize + sizeof(midi_stream_event_header)],
@@ -1661,24 +1661,24 @@ smf_Open_File_Cleanup:
             while (::success == (smfrc = GetNextEvent(pevent, tkPosition, false)))
             {
 
-               if (meta == (bEvent = pevent->GetFullType()))
+               if (meta == (bEvent = psubject->GetFullType()))
                {
-                  if (pevent->GetMetaType() == meta_tempo)
+                  if (psubject->GetMetaType() == meta_tempo)
                   {
-                     if (pevent->GetParamSize() != sizeof(m_keyframe.rbTempo))
+                     if (psubject->GetParamSize() != sizeof(m_keyframe.rbTempo))
                         return error_invalid_file;
 
-                     ::memcpy_dup((byte *)m_keyframe.rbTempo, pevent->GetParam(), pevent->GetParamSize());
+                     ::memcpy_dup((byte *)m_keyframe.rbTempo, psubject->GetParam(), psubject->GetParamSize());
                   }
                }
                if((bEvent & 0xF0) == program_change)
                {
-                  m_keyframe.rbProgram[bEvent & 0x0F] = pevent->GetChB1();
+                  m_keyframe.rbProgram[bEvent & 0x0F] = psubject->GetChB1();
                }
                else if((bEvent & 0xF0) == control_change)
                {
-                  m_keyframe.rbControl[(((::u16)bEvent & 0x0F)*120) + pevent->GetChB1()] =
-                  pevent->GetChB2();
+                  m_keyframe.rbControl[(((::u16)bEvent & 0x0F)*120) + psubject->GetChB1()] =
+                  psubject->GetChB2();
                }
             }
 
@@ -1880,24 +1880,24 @@ smf_Open_File_Cleanup:
 
             if(!GetFlags().has(file::DisablePlayLevel1Operations))
             {
-               if(pevent->GetType() == note_on &&
-                     pevent->GetNoteVelocity() != 0)
+               if(psubject->GetType() == note_on &&
+                     psubject->GetNoteVelocity() != 0)
                {
-                  m_ptracks->m_iaNoteOn.element_at(pevent->GetTrack())++;
-                  m_ptracks->m_iaLevel.element_at(pevent->GetTrack())
-                     = pevent->GetNoteVelocity();
+                  m_ptracks->m_iaNoteOn.element_at(psubject->GetTrack())++;
+                  m_ptracks->m_iaLevel.element_at(psubject->GetTrack())
+                     = psubject->GetNoteVelocity();
                }
-               else if((pevent->GetType() == note_on &&
-                        pevent->GetNoteVelocity() == 0) ||
-                       pevent->GetType() == note_off)
+               else if((psubject->GetType() == note_on &&
+                        psubject->GetNoteVelocity() == 0) ||
+                       psubject->GetType() == note_off)
                {
-                  i32 iCount = m_ptracks->m_iaNoteOn.element_at(pevent->GetTrack());
+                  i32 iCount = m_ptracks->m_iaNoteOn.element_at(psubject->GetTrack());
                   if(iCount > 0)
                      iCount--;
-                  m_ptracks->m_iaNoteOn.element_at(pevent->GetTrack()) =
+                  m_ptracks->m_iaNoteOn.element_at(psubject->GetTrack()) =
                   iCount;
                   if(iCount == 0)
-                     m_ptracks->m_iaLevel.element_at(pevent->GetTrack())
+                     m_ptracks->m_iaLevel.element_at(psubject->GetTrack())
                         = 0;
                }
             }
@@ -2160,7 +2160,7 @@ smf_Open_File_Cleanup:
 
             while(::success == (smfrc = GetNextEvent(pevent, pEvent->GetPosition(), true)))
             {
-               if(pevent->GetImage() == pEvent->GetImage())
+               if(psubject->GetImage() == pEvent->GetImage())
                {
                   pEvent->operator =(*peventPrevious);
                   return ::success;
@@ -2574,14 +2574,14 @@ smf_Open_File_Cleanup:
                // The position CB events are grouped in a single position CB
                // event after other type of simultaneous events.
                // The {if block} change the order of simultaneous events.
-               // position CB events ( pevent->GetFlags() & 1 )
+               // position CB events ( psubject->GetFlags() & 1 )
                // are streamed together in a single position CB event, through
                // StreamEventF1 member function.
                // These position CB events are put after any other kind of event
                // that have the same position.
                // The order of the non PositionCB events are not altered.
 
-               if(pevent->GetFlags() & 1)
+               if(psubject->GetFlags() & 1)
                {
                   if(eventptraPositionCB.get_size() <= 0)
                   {
@@ -2616,7 +2616,7 @@ smf_Open_File_Cleanup:
                {
                   if(eventptraPositionCB.get_size() > 0)
                   {
-                     if(pevent->GetPosition() != eventptraPositionCB[0]->GetPosition())
+                     if(psubject->GetPosition() != eventptraPositionCB[0]->GetPosition())
                      {
                         ASSERT(tkPositionF1 >= tkLastPosition);
 
@@ -2635,12 +2635,12 @@ smf_Open_File_Cleanup:
                         tkPositionF1   = tkPosition;
                      }
                   }
-                  /*         if(pevent->GetType() == NoteOn)
+                  /*         if(psubject->GetType() == NoteOn)
                   {
                   TRACE("WorkStreamRender: NoteOn     position %d Delta %d Track %d\n",
                   m_ptracks->GetPosition(),
                   tkDelta,
-                  pevent->GetTrack());
+                  psubject->GetTrack());
                   }
                   else
                   {
@@ -2769,9 +2769,9 @@ smf_Open_File_Cleanup:
                }
                else
                {
-                  if(pevent->GetType() == note_on
-                        && pevent->GetNoteVelocity() > 0
-                        && m_iaMuteTrack.contains(pevent->GetTrack()))
+                  if(psubject->GetType() == note_on
+                        && psubject->GetNoteVelocity() > 0
+                        && m_iaMuteTrack.contains(psubject->GetTrack()))
                   {
                      ASSERT(true);
                   }
@@ -2784,24 +2784,24 @@ smf_Open_File_Cleanup:
 
             if(!GetFlags().has(file::DisablePlayLevel1Operations))
             {
-               if(pevent->GetType() == note_on &&
-                     pevent->GetNoteVelocity() != 0)
+               if(psubject->GetType() == note_on &&
+                     psubject->GetNoteVelocity() != 0)
                {
-                  m_ptracks->m_iaNoteOn.element_at(pevent->GetTrack())++;
-                  m_ptracks->m_iaLevel.element_at(pevent->GetTrack())
-                     = pevent->GetNoteVelocity();
+                  m_ptracks->m_iaNoteOn.element_at(psubject->GetTrack())++;
+                  m_ptracks->m_iaLevel.element_at(psubject->GetTrack())
+                     = psubject->GetNoteVelocity();
                }
-               else if((pevent->GetType() == note_on &&
-                        pevent->GetNoteVelocity() == 0) ||
-                       pevent->GetType() == note_off)
+               else if((psubject->GetType() == note_on &&
+                        psubject->GetNoteVelocity() == 0) ||
+                       psubject->GetType() == note_off)
                {
-                  i32 iCount = m_ptracks->m_iaNoteOn.element_at(pevent->GetTrack());
+                  i32 iCount = m_ptracks->m_iaNoteOn.element_at(psubject->GetTrack());
                   if(iCount > 0)
                      iCount--;
-                  m_ptracks->m_iaNoteOn.element_at(pevent->GetTrack()) =
+                  m_ptracks->m_iaNoteOn.element_at(psubject->GetTrack()) =
                   iCount;
                   if(iCount == 0)
-                     m_ptracks->m_iaLevel.element_at(pevent->GetTrack())
+                     m_ptracks->m_iaLevel.element_at(psubject->GetTrack())
                         = 0;
                }
             }
@@ -2844,24 +2844,24 @@ smf_Open_File_Cleanup:
 
             while (::success == (smfrc = WorkGetNextEvent(pevent, tkPosition, false)))
             {
-               if (meta == (bEvent = pevent->GetFullType()))
+               if (meta == (bEvent = psubject->GetFullType()))
                {
-                  if (pevent->GetMetaType() == meta_tempo)
+                  if (psubject->GetMetaType() == meta_tempo)
                   {
-                     if (pevent->GetParamSize() != sizeof(m_keyframe.rbTempo))
+                     if (psubject->GetParamSize() != sizeof(m_keyframe.rbTempo))
                         return error_invalid_file;
 
-                     ::memcpy_dup((byte *)m_keyframe.rbTempo, pevent->GetParam(), pevent->GetParamSize());
+                     ::memcpy_dup((byte *)m_keyframe.rbTempo, psubject->GetParam(), psubject->GetParamSize());
                   }
                }
                if((bEvent & 0xF0) == program_change)
                {
-                  m_keyframe.rbProgram[bEvent & 0x0F] = pevent->GetChB1();
+                  m_keyframe.rbProgram[bEvent & 0x0F] = psubject->GetChB1();
                }
                else if((bEvent & 0xF0) == control_change)
                {
-                  m_keyframe.rbControl[(((::u16)bEvent & 0x0F)*120) + pevent->GetChB1()] =
-                  pevent->GetChB2();
+                  m_keyframe.rbControl[(((::u16)bEvent & 0x0F)*120) + psubject->GetChB1()] =
+                  psubject->GetChB2();
                }
             }
 
@@ -2975,11 +2975,11 @@ smf_Open_File_Cleanup:
                      while (success
                         == (smfrc = WorkGetNextRawMidiEvent(pevent, MAX_TICKS, true)))
                      {
-                        if (meta == pevent->GetFullType() &&
-                           meta_tempo == pevent->GetMetaType() &&
-                           (pevent->GetFlags() != 1))
+                        if (meta == psubject->GetFullType() &&
+                           meta_tempo == psubject->GetMetaType() &&
+                           (psubject->GetFlags() != 1))
                         {
-                           if (3 != pevent->GetParamSize())
+                           if (3 != psubject->GetParamSize())
                            {
                               return error_invalid_file;
                            }
@@ -3018,9 +3018,9 @@ smf_Open_File_Cleanup:
             1000L * m_MusicTempoTimeDivision);
          }
 
-         tempo.dwTempo = (((u32)pevent->GetParam()[0])<<16) |
-         (((u32)pevent->GetParam()[1])<<8) |
-         ((u32)pevent->GetParam()[2]);
+         tempo.dwTempo = (((u32)psubject->GetParam()[0])<<16) |
+         (((u32)psubject->GetParam()[1])<<8) |
+         ((u32)psubject->GetParam()[2]);
 
          m_tempomap.add(tempo);
          }

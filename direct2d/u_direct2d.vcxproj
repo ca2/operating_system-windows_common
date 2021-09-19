@@ -51,16 +51,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CustomRenderer.h" />
+    <ClInclude Include="geometry_sink_text_renderer.h" />
     <ClInclude Include="multithreading_lock.h" />
     <ClInclude Include="direct2d.h" />
-    <ClInclude Include="global.h" />
     <ClInclude Include="_.h" />
     <ClInclude Include="factory_exchange.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="_direct2d.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="geometry_sink_text_renderer.cpp" />
     <ClCompile Include="multithreading_lock.cpp" />
     <ClCompile Include="direct2d.cpp" />
     <ClCompile Include="_.cpp" />

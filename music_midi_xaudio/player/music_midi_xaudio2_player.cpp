@@ -214,7 +214,7 @@ namespace music
                   {
                      //         PrerollAndWait(m_dNextPositionRate);
                   }
-                  catch(const ::exception::exception & e)
+                  catch(const ::exception & e)
                   {
                      SendMmsgDone(pSeq, nullptr);
                      ::exception_pointer esp(pe);

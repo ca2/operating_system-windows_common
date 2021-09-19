@@ -6,49 +6,42 @@ namespace windows_common
 {
 
 
-   namespace exception
+   class CLASS_DECL_ACME_WINDOWS_COMMON exception_translator :
+      virtual public ::exception_translator
    {
+   public:
 
 
-      class CLASS_DECL_ACME_WINDOWS_COMMON translator :
-         virtual public ::exception::translator
-      {
-      public:
+      _se_translator_function   m_pfn;
 
 
-         _se_translator_function   m_pfn;
+      exception_translator();
 
 
-         translator();
+      virtual ~exception_translator();
+
+      static void __cdecl filter2(u32 uiCode, EXCEPTION_POINTERS* ppointers);
+
+      //virtual void filter_sigsegv(i32 signal, siginfo_t* psiginfo, void* pc);
+      //virtual void filter_sigfpe(i32 signal, siginfo_t* psiginfo, void* pc);
+      //virtual void filter_sigpipe(i32 signal, siginfo_t* psiginfo, void* pc);
 
 
-         virtual ~translator();
-
-         static void __cdecl filter2(u32 uiCode, EXCEPTION_POINTERS* ppointers);
-
-         //virtual void filter_sigsegv(i32 signal, siginfo_t* psiginfo, void* pc);
-         //virtual void filter_sigfpe(i32 signal, siginfo_t* psiginfo, void* pc);
-         //virtual void filter_sigpipe(i32 signal, siginfo_t* psiginfo, void* pc);
+      virtual bool attach() override;
 
 
-         virtual bool attach() override;
+      virtual bool detach() override;
+
+      virtual void filter(u32 uiCode, EXCEPTION_POINTERS* ppointers);
 
 
-         virtual bool detach() override;
+      virtual string _get_standard_exception_name(u32 uiCode) override;
+      virtual string _get_standard_exception_description(u32 uiCode) override;
 
-         virtual void filter(u32 uiCode, EXCEPTION_POINTERS* ppointers);
+      static const char * _s_get_standard_exception_name(u32 uiCode);
+      static const char * _s_get_standard_exception_description(u32 uiCode);
 
-
-         virtual string _get_standard_exception_name(u32 uiCode) override;
-         virtual string _get_standard_exception_description(u32 uiCode) override;
-
-         static const char * _s_get_standard_exception_name(u32 uiCode);
-         static const char * _s_get_standard_exception_description(u32 uiCode);
-
-      };
-
-
-   } // namespace exception
+   };
 
 
 } // namespace windows_common

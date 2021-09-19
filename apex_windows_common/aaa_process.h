@@ -6,7 +6,7 @@ namespace windows
 
 
    class CLASS_DECL_APEX_WINDOWS_COMMON process :
-      virtual public ::process::process
+      virtual public ::operating_system::process
    {
    public:
 

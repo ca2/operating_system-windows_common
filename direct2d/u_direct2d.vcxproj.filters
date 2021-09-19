@@ -19,12 +19,12 @@
     <ClCompile Include="multithreading_lock.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="geometry_sink_text_renderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="_.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CustomRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="factory_exchange.h">
@@ -39,10 +39,10 @@
     <ClInclude Include="_direct2d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="global.h">
+    <ClInclude Include="multithreading_lock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="multithreading_lock.h">
+    <ClInclude Include="geometry_sink_text_renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

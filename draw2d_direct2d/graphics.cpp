@@ -1248,7 +1248,7 @@ namespace draw2d_direct2d
 //
 //#ifdef _UWP
 //
-//      //::exception::throw_not_implemented();
+//      //throw interface_only_exception();
 //      return false;
 //
 //#else
@@ -3555,7 +3555,7 @@ namespace draw2d_direct2d
    //void graphics::DrawDragRect(const ::rectangle_i32 & rectangle, const ::size_f64& ::size_f64, const ::rectangle_i32 & rectLast, const ::size_f64& sizeLast, ::draw2d::brush* pBrush, ::draw2d::brush* pBrushLast)
    //{
 
-   //   ::exception::throw_not_implemented();
+   //   throw interface_only_exception();
 
    //   /*
    //   ASSERT(__is_valid_address(rectangle, sizeof(::rectangle_f64), false));
@@ -5700,9 +5700,7 @@ namespace draw2d_direct2d
 
       __stack(m_bOutline, true);
 
-      ppath->set_modified();
-
-      ID2D1PathGeometry * pgeometry = ppath->get_os_data < ID2D1PathGeometry * >(this);
+      ID2D1PathGeometry * pgeometry = ppath->get_os_data < ID2D1PathGeometry * >(this, path_hollow);
 
       defer_primitive_blend();
 
@@ -5713,23 +5711,23 @@ namespace draw2d_direct2d
 
       }
 
-      for(index i = 0; i < ppath->m_shapea.get_size(); i++)
-      {
+      //for(index i = 0; i < ppath->m_shapea.get_size(); i++)
+      //{
 
-         if(ppath->m_shapea[i]->eshape() == e_shape_text_out)
-         {
+      //   if(ppath->m_shapea[i]->eshape() == e_shape_text_out)
+      //   {
 
-            draw(ppath->m_shapea[i]->shape < ::write_text::text_out>(), ppen);
+      //      draw(ppath->m_shapea[i]->shape < ::write_text::text_out>(), ppen);
 
-         }
-         else if (ppath->m_shapea[i]->eshape() == e_shape_draw_text)
-         {
+      //   }
+      //   else if (ppath->m_shapea[i]->eshape() == e_shape_draw_text)
+      //   {
 
-            draw(ppath->m_shapea[i]->shape < ::write_text::draw_text>(), ppen);
+      //      draw(ppath->m_shapea[i]->shape < ::write_text::draw_text>(), ppen);
 
-         }
+      //   }
 
-      }
+      //}
 
       return true;
 
@@ -5748,9 +5746,7 @@ namespace draw2d_direct2d
 
       __stack(m_bOutline, false);
 
-      ppath->set_modified();
-
-      ID2D1PathGeometry * pgeometry = ppath->get_os_data < ID2D1PathGeometry * >(this);
+      ID2D1PathGeometry * pgeometry = ppath->get_os_data < ID2D1PathGeometry * >(this, path_filled);
 
       defer_primitive_blend();
 
@@ -5761,23 +5757,23 @@ namespace draw2d_direct2d
 
       }
 
-      for (index i = 0; i < ppath->m_shapea.get_size(); i++)
-      {
+      //for (index i = 0; i < ppath->m_shapea.get_size(); i++)
+      //{
 
-         if (ppath->m_shapea[i]->eshape() == ::e_shape_text_out)
-         {
+      //   if (ppath->m_shapea[i]->eshape() == ::e_shape_text_out)
+      //   {
 
-            fill(ppath->m_shapea[i]->shape < ::write_text::text_out >(), m_pbrush);
+      //      fill(ppath->m_shapea[i]->shape < ::write_text::text_out >(), m_pbrush);
 
-         }
-         else if (ppath->m_shapea[i]->eshape() == ::e_shape_draw_text)
-         {
+      //   }
+      //   else if (ppath->m_shapea[i]->eshape() == ::e_shape_draw_text)
+      //   {
 
-            fill(ppath->m_shapea[i]->shape < ::write_text::draw_text >(), m_pbrush);
+      //      fill(ppath->m_shapea[i]->shape < ::write_text::draw_text >(), m_pbrush);
 
-         }
+      //   }
 
-      }
+      //}
 
       return true;
 
@@ -5805,9 +5801,7 @@ namespace draw2d_direct2d
 
       __stack(m_bOutline, false);
 
-      ppath->set_modified();
-
-      ID2D1PathGeometry * pgeometry = ppath->get_os_data < ID2D1PathGeometry * >(this);
+      ID2D1PathGeometry * pgeometry = ppath->get_os_data < ID2D1PathGeometry * >(this, path_filled);
 
       defer_primitive_blend();
 
@@ -5818,23 +5812,23 @@ namespace draw2d_direct2d
 
       }
 
-      for (index i = 0; i < ppath->m_shapea.get_size(); i++)
-      {
+      //for (index i = 0; i < ppath->m_shapea.get_size(); i++)
+      //{
 
-         if (ppath->m_shapea[i]->eshape() == ::e_shape_text_out)
-         {
+      //   if (ppath->m_shapea[i]->eshape() == ::e_shape_text_out)
+      //   {
 
-            fill(ppath->m_shapea[i]->shape < ::write_text::text_out >(), pbrushParam);
+      //      fill(ppath->m_shapea[i]->shape < ::write_text::text_out >(), pbrushParam);
 
-         }
-         else if (ppath->m_shapea[i]->eshape() == ::e_shape_draw_text)
-         {
+      //   }
+      //   else if (ppath->m_shapea[i]->eshape() == ::e_shape_draw_text)
+      //   {
 
-            fill(ppath->m_shapea[i]->shape < ::write_text::draw_text >(), pbrushParam);
+      //      fill(ppath->m_shapea[i]->shape < ::write_text::draw_text >(), pbrushParam);
 
-         }
+      //   }
 
-      }
+      //}
 
       return true;
 
@@ -5863,37 +5857,37 @@ namespace draw2d_direct2d
    bool graphics::draw(const ::write_text::text_out & textout, ::draw2d::pen * ppen)
    {
 
-      wstring szOutline(textout.m_strText);
+      //wstring szOutline(textout.m_strText);
 
-      IDWriteTextFormat * pformat = textout.m_pfont->get_os_data < IDWriteTextFormat * > (this);
+      //IDWriteTextFormat * pformat = textout.m_pfont->get_os_data < IDWriteTextFormat * > (this);
 
-      IDWriteFactory * pfactory = ::direct2d::direct2d()->dwrite_factory();
+      //IDWriteFactory * pfactory = ::direct2d::direct2d()->dwrite_factory();
 
-      IDWriteTextLayout * playout = nullptr;
+      //comptr<IDWriteTextLayout> playout;
 
-      HRESULT hr = pfactory->CreateTextLayout(
-                   szOutline,      // The string to be laid out and formatted.
-                   (::u32) szOutline.length(),  // The length of the string.
-                   pformat,  // The text format to apply to the string (contains font information, etc).
-                   4096,         // The width of the on_layout box.
-                   4096,        // The height of the on_layout box.
-                   &playout  // The IDWriteTextLayout interface pointer.
-                   );
+      //HRESULT hr = pfactory->CreateTextLayout(
+      //             szOutline,      // The string to be laid out and formatted.
+      //             (::u32) szOutline.length(),  // The length of the string.
+      //             pformat,  // The text format to apply to the string (contains font information, etc).
+      //             4096,         // The width of the on_layout box.
+      //             4096,        // The height of the on_layout box.
+      //             &playout  // The IDWriteTextLayout interface pointer.
+      //             );
 
-      if(playout == nullptr)
-      {
+      //if(playout == nullptr)
+      //{
 
-         return false;
+      //   return false;
 
-      }
+      //}
 
-      CustomTextRenderer renderer(::direct2d::direct2d()->d2d1_factory1(),m_prendertarget,ppen->get_os_data < ID2D1Brush * >(this));
+      //CustomTextRenderer renderer(::direct2d::direct2d()->d2d1_factory1(),m_prendertarget,ppen->get_os_data < ID2D1Brush * >(this));
 
-      defer_text_primitive_blend();
+      //defer_text_primitive_blend();
 
-      defer_text_rendering_hint();
+      //defer_text_rendering_hint();
 
-      playout->Draw(nullptr, &renderer, (FLOAT) textout.m_point.x, (FLOAT) textout.m_point.y);
+      //playout->Draw(nullptr, &renderer, (FLOAT) textout.m_point.x, (FLOAT) textout.m_point.y);
 
       return true;
 
@@ -5903,44 +5897,44 @@ namespace draw2d_direct2d
    bool graphics::fill(const ::write_text::text_out & textout, ::draw2d::brush * pbrush)
    {
 
-      wstring szOutline(textout.m_strText);
+      //wstring szOutline(textout.m_strText);
 
-      IDWriteTextFormat * pformat = textout.m_pfont->get_os_data < IDWriteTextFormat * >(this);
+      //IDWriteTextFormat * pformat = textout.m_pfont->get_os_data < IDWriteTextFormat * >(this);
 
-      IDWriteFactory * pfactory = ::direct2d::direct2d()->dwrite_factory();
+      //IDWriteFactory * pfactory = ::direct2d::direct2d()->dwrite_factory();
 
-      IDWriteTextLayout * playout = nullptr;
+      //comptr<IDWriteTextLayout> playout;
 
-      HRESULT hr = pfactory->CreateTextLayout(
-                   szOutline,      // The string to be laid out and formatted.
-                   (::u32) szOutline.length(),  // The length of the string.
-                   pformat,  // The text format to apply to the string (contains font information, etc).
-                   4096,         // The width of the on_layout box.
-                   4096,        // The height of the on_layout box.
-                   &playout  // The IDWriteTextLayout interface pointer.
-                   );
+      //HRESULT hr = pfactory->CreateTextLayout(
+      //             szOutline,      // The string to be laid out and formatted.
+      //             (::u32) szOutline.length(),  // The length of the string.
+      //             pformat,  // The text format to apply to the string (contains font information, etc).
+      //             4096,         // The width of the on_layout box.
+      //             4096,        // The height of the on_layout box.
+      //             &playout  // The IDWriteTextLayout interface pointer.
+      //             );
 
-      if (playout == nullptr)
-      {
-         
-         return false;
+      //if (playout == nullptr)
+      //{
+      //   
+      //   return false;
 
-      }
+      //}
 
-      auto posbrush = pbrush->get_os_data < ID2D1Brush * >(this);
+      //auto posbrush = pbrush->get_os_data < ID2D1Brush * >(this);
 
-      if (posbrush)
-      {
+      //if (posbrush)
+      //{
 
-         CustomTextRenderer renderer(::direct2d::direct2d()->d2d1_factory1(), m_prendertarget, nullptr, posbrush);
+      //   CustomTextRenderer renderer(::direct2d::direct2d()->d2d1_factory1(), m_prendertarget, nullptr, posbrush);
 
-         defer_text_primitive_blend();
+      //   defer_text_primitive_blend();
 
-         defer_text_rendering_hint();
+      //   defer_text_rendering_hint();
 
-         playout->Draw(nullptr, &renderer, (FLOAT)textout.m_point.x, (FLOAT)textout.m_point.y);
+      //   playout->Draw(nullptr, &renderer, (FLOAT)textout.m_point.x, (FLOAT)textout.m_point.y);
 
-      }
+      //}
 
       return true;
 
@@ -5950,37 +5944,37 @@ namespace draw2d_direct2d
    bool graphics::draw(const ::write_text::draw_text & drawtext, ::draw2d::pen* ppen)
    {
 
-      wstring szOutline(drawtext.m_strText);
+      //wstring szOutline(drawtext.m_strText);
 
-      IDWriteTextFormat* pformat = drawtext.m_pfont->get_os_data < IDWriteTextFormat* >(this);
+      //IDWriteTextFormat* pformat = drawtext.m_pfont->get_os_data < IDWriteTextFormat* >(this);
 
-      IDWriteFactory* pfactory = ::direct2d::direct2d()->dwrite_factory();
+      //IDWriteFactory* pfactory = ::direct2d::direct2d()->dwrite_factory();
 
-      IDWriteTextLayout* playout = nullptr;
+      //IDWriteTextLayout* playout = nullptr;
 
-      HRESULT hr = pfactory->CreateTextLayout(
-         szOutline,      // The string to be laid out and formatted.
-         (::u32)szOutline.length(),  // The length of the string.
-         pformat,  // The text format to apply to the string (contains font information, etc).
-         4096,         // The width of the on_layout box.
-         4096,        // The height of the on_layout box.
-         &playout  // The IDWriteTextLayout interface pointer.
-      );
+      //HRESULT hr = pfactory->CreateTextLayout(
+      //   szOutline,      // The string to be laid out and formatted.
+      //   (::u32)szOutline.length(),  // The length of the string.
+      //   pformat,  // The text format to apply to the string (contains font information, etc).
+      //   4096,         // The width of the on_layout box.
+      //   4096,        // The height of the on_layout box.
+      //   &playout  // The IDWriteTextLayout interface pointer.
+      //);
 
-      if (playout == nullptr)
-      {
+      //if (playout == nullptr)
+      //{
 
-         return false;
+      //   return false;
 
-      }
+      //}
 
-      CustomTextRenderer renderer(::direct2d::direct2d()->d2d1_factory1(), m_prendertarget, ppen->get_os_data < ID2D1Brush* >(this));
+      //CustomTextRenderer renderer(::direct2d::direct2d()->d2d1_factory1(), m_prendertarget, ppen->get_os_data < ID2D1Brush* >(this));
 
-      defer_text_primitive_blend();
+      //defer_text_primitive_blend();
 
-      defer_text_rendering_hint();
+      //defer_text_rendering_hint();
 
-      playout->Draw(nullptr, &renderer, (FLOAT)drawtext.m_rectangle.left, (FLOAT)drawtext.m_rectangle.top);
+      //playout->Draw(nullptr, &renderer, (FLOAT)drawtext.m_rectangle.left, (FLOAT)drawtext.m_rectangle.top);
 
       return true;
 
@@ -5990,44 +5984,44 @@ namespace draw2d_direct2d
    bool graphics::fill(const ::write_text::draw_text & drawtext, ::draw2d::brush* pbrush)
    {
 
-      wstring szOutline(drawtext.m_strText);
+      //wstring szOutline(drawtext.m_strText);
 
-      IDWriteTextFormat* pformat = drawtext.m_pfont->get_os_data < IDWriteTextFormat* >(this);
+      //IDWriteTextFormat* pformat = drawtext.m_pfont->get_os_data < IDWriteTextFormat* >(this);
 
-      IDWriteFactory* pfactory = ::direct2d::direct2d()->dwrite_factory();
+      //IDWriteFactory* pfactory = ::direct2d::direct2d()->dwrite_factory();
 
-      IDWriteTextLayout* playout = nullptr;
+      //IDWriteTextLayout* playout = nullptr;
 
-      HRESULT hr = pfactory->CreateTextLayout(
-         szOutline,      // The string to be laid out and formatted.
-         (::u32)szOutline.length(),  // The length of the string.
-         pformat,  // The text format to apply to the string (contains font information, etc).
-         4096,         // The width of the on_layout box.
-         4096,        // The height of the on_layout box.
-         &playout  // The IDWriteTextLayout interface pointer.
-      );
+      //HRESULT hr = pfactory->CreateTextLayout(
+      //   szOutline,      // The string to be laid out and formatted.
+      //   (::u32)szOutline.length(),  // The length of the string.
+      //   pformat,  // The text format to apply to the string (contains font information, etc).
+      //   4096,         // The width of the on_layout box.
+      //   4096,        // The height of the on_layout box.
+      //   &playout  // The IDWriteTextLayout interface pointer.
+      //);
 
-      if (playout == nullptr)
-      {
+      //if (playout == nullptr)
+      //{
 
-         return false;
+      //   return false;
 
-      }
+      //}
 
-      auto posbrush = pbrush->get_os_data < ID2D1Brush* >(this);
+      //auto posbrush = pbrush->get_os_data < ID2D1Brush* >(this);
 
-      if (posbrush)
-      {
+      //if (posbrush)
+      //{
 
-         CustomTextRenderer renderer(::direct2d::direct2d()->d2d1_factory1(), m_prendertarget, nullptr, posbrush);
+      //   CustomTextRenderer renderer(::direct2d::direct2d()->d2d1_factory1(), m_prendertarget, nullptr, posbrush);
 
-         defer_text_primitive_blend();
+      //   defer_text_primitive_blend();
 
-         defer_text_rendering_hint();
+      //   defer_text_rendering_hint();
 
-         playout->Draw(nullptr, &renderer, (FLOAT)drawtext.m_rectangle.left, (FLOAT)drawtext.m_rectangle.top);
+      //   playout->Draw(nullptr, &renderer, (FLOAT)drawtext.m_rectangle.left, (FLOAT)drawtext.m_rectangle.top);
 
-      }
+      //}
 
       return true;
 

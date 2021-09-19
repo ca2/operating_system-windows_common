@@ -1181,7 +1181,7 @@ namespace draw2d_direct2d
       if (FAILED(hr) || pbitmap->m_map.bits == nullptr)
       {
 
-         throw ::exception::exception(error_failed);
+         throw ::exception(error_failed);
 
       }
 

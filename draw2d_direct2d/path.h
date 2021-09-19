@@ -58,6 +58,8 @@ namespace draw2d_direct2d
 
       virtual bool internal_add_string(::draw2d_direct2d::graphics * pgraphics, double x, double y, const ::string & strText, ::write_text::font * pfont);
 
+      virtual bool internal_start_figure(::draw2d::graphics * pgraphics);
+
       virtual bool internal_start_figure(::draw2d::graphics* pgraphics, double x, double y);
 
       virtual bool internal_get_arc(::point_f64 & pointStart, D2D1_ARC_SEGMENT & arcseg, const ::arc & arc);
@@ -95,7 +97,7 @@ namespace draw2d_direct2d
       virtual bool _set(::draw2d::graphics* pgraphics, const ::write_text::draw_text& pdrawtext);
 
 
-      static void CreatePathTextRenderer(FLOAT pixelsPerDip,IDWriteTextRenderer **textRenderer);
+      //static void CreatePathTextRenderer(FLOAT pixelsPerDip,IDWriteTextRenderer **textRenderer);
 
 
    };

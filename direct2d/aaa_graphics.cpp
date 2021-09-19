@@ -1092,7 +1092,7 @@ namespace draw2d_direct2d
 //
 //#ifdef _UWP
 //
-//      //::exception::throw_not_implemented();
+//      //throw interface_only_exception();
 //      return false;
 //
 //#else
@@ -3317,7 +3317,7 @@ namespace draw2d_direct2d
    //void graphics::DrawDragRect(const ::rectangle_i32 & rectangle, const ::size_f64& ::size_f64, const ::rectangle_i32 & rectLast, const ::size_f64& sizeLast, ::draw2d::brush* pBrush, ::draw2d::brush* pBrushLast)
    //{
 
-   //   ::exception::throw_not_implemented();
+   //   throw interface_only_exception();
 
    //   /*
    //   ASSERT(__is_valid_address(rectangle, sizeof(::rectangle_f64), false));

@@ -42,7 +42,7 @@ namespace imaging_wic
 
          }
 
-         hr = pwicstream->InitializeFromMemory(memory.get_data(), memory.get_size());
+         hr = pwicstream->InitializeFromMemory(memory.get_data(), (DWORD) memory.get_size());
 
          if (FAILED(hr))
          {

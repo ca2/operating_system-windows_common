@@ -76,11 +76,11 @@ namespace music
             __pointer(::user::message) pusermessage(pmessage);
 
             ::music::midi::sequence::event * pevent = (::music::midi::sequence::event *) pusermessage->m_lparam.m_lparam;
-            ::music::midi::sequence * pseq = (::music::midi::sequence *) pevent->m_psequence;
+            ::music::midi::sequence * pseq = (::music::midi::sequence *) psubject->m_psequence;
 
             pseq->OnEvent(pevent);
 
-            switch(pevent->m_eevent)
+            switch(psubject->m_id)
             {
             case ::music::midi::sequence::EventStopped:
             {
@@ -106,7 +106,7 @@ namespace music
                   {
                      PrerollAndWait(link.m_tkRestart);
                   }
-                  catch(const ::exception::exception & e)
+                  catch(const ::exception & e)
                   {
                      return;
                   }
@@ -121,7 +121,7 @@ namespace music
                   {
                      PrerollAndWait(link.m_tkRestart);
                   }
-                  catch(const ::exception::exception & e)
+                  catch(const ::exception & e)
                   {
                      return;
                   }
@@ -143,7 +143,7 @@ namespace music
                   {
                      PrerollAndWait(link.m_tkRestart);
                   }
-                  catch(const ::exception::exception & e)
+                  catch(const ::exception & e)
                   {
                      return;
                   }
