@@ -591,9 +591,11 @@ namespace draw2d_direct2d
 
          __pointer(::draw2d_direct2d::graphics) pgraphicsDib2 = pimage2->get_graphics();
 
-         //HRESULT hr = ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->EndDraw();
-
          pimage2->unmap();
+
+         HRESULT hrFlush = ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->Flush();
+
+         HRESULT hrEndDraw = ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->EndDraw();
 
          pgraphicsDib1->m_pdevicecontext->DrawImage(
          (ID2D1Bitmap *)pgraphicsDib2->get_current_bitmap()->m_osdata[0],
@@ -602,12 +604,12 @@ namespace draw2d_direct2d
          D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR,
          D2D1_COMPOSITE_MODE_DESTINATION_IN);
 
-         //if (SUCCEEDED(hr))
-         //{
+         if (SUCCEEDED(hrEndDraw))
+         {
 
-         //   ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->BeginDraw();
+            ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->BeginDraw();
 
-         //}
+         }
 
          set_alpha_mode(::draw2d::e_alpha_mode_blend);
 
@@ -1937,20 +1939,22 @@ namespace draw2d_direct2d
 
          int cy = pd2d1bitmap->GetPixelSize().height;
 
-         //HRESULT hr = ((ID2D1DeviceContext *)pimage->g()->get_os_data())->EndDraw();
-
          pimage->unmap();
+
+         HRESULT hrFlush = ((ID2D1DeviceContext *)pimage->g()->get_os_data())->Flush();
+
+         HRESULT hrEndDraw = ((ID2D1DeviceContext *)pimage->g()->get_os_data())->EndDraw();
 
          defer_primitive_blend();
 
          m_pdevicecontext->DrawBitmap(pd2d1bitmap, rectangleTarget, 1.0, D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR, rectangleSource);
 
-         //if (SUCCEEDED(hr))
-         //{
+         if (SUCCEEDED(hrEndDraw))
+         {
 
-         //   ((ID2D1DeviceContext *)pimage->g()->get_os_data())->BeginDraw();
+            ((ID2D1DeviceContext *)pimage->g()->get_os_data())->BeginDraw();
 
-         //}
+         }
 
          return true;
 
@@ -2005,16 +2009,18 @@ namespace draw2d_direct2d
 
          D2D1_RECT_F rectangleSource = D2D1::RectF((float)xSrc, (float)ySrc, (float)(xSrc + nSrcWidth), (float)(ySrc + nSrcHeight));
 
-         //HRESULT hr = ((ID2D1DeviceContext *)pimage->g()->get_os_data())->EndDraw();
-
          pimage->unmap();
+
+         HRESULT hrFlush = ((ID2D1DeviceContext *)pimage->g()->get_os_data())->Flush();
+
+         HRESULT hrEndDraw = ((ID2D1DeviceContext *)pimage->g()->get_os_data())->EndDraw();
 
          defer_primitive_blend();
 
          if (m_prendertarget != nullptr)
          {
 
-            m_prendertarget->DrawBitmap((ID2D1Bitmap *)pimage->g()->get_current_bitmap()->get_os_data(), &rectangleTarget, 1.0, m_bitmapinterpolationmode, &rectangleSource);
+            m_prendertarget->DrawBitmap((ID2D1Bitmap *)pimage->get_bitmap()->get_os_data(), &rectangleTarget, 1.0, m_bitmapinterpolationmode, &rectangleSource);
 
          }
          else
@@ -2024,12 +2030,12 @@ namespace draw2d_direct2d
 
          }
 
-         //if (SUCCEEDED(hr))
-         //{
+         if (SUCCEEDED(hrEndDraw))
+         {
 
-         //   ((ID2D1DeviceContext *)pimage->g()->get_os_data())->BeginDraw();
+            ((ID2D1DeviceContext *)pimage->g()->get_os_data())->BeginDraw();
 
-         //}
+         }
          //else
          //{
 
