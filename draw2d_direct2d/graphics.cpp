@@ -593,6 +593,8 @@ namespace draw2d_direct2d
 
          //HRESULT hr = ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->EndDraw();
 
+         pimage2->unmap();
+
          pgraphicsDib1->m_pdevicecontext->DrawImage(
          (ID2D1Bitmap *)pgraphicsDib2->get_current_bitmap()->m_osdata[0],
          D2D1::Point2F(0.f, 0.f),
@@ -683,91 +685,91 @@ namespace draw2d_direct2d
 
          //__pointer(::draw2d_direct2d::bitmap) pbitmap = m_pbitmap;
 
-         m_pbitmaprendertarget = nullptr;
+      //   m_pbitmaprendertarget = nullptr;
 
-         m_iType = 11;
+      //   m_iType = 11;
 
-         ::size_i32 size = pbitmap->GetBitmapDimension();
+      //   ::size_i32 size = pbitmap->GetBitmapDimension();
 
-         D2D1_SIZE_U sizeu = D2D1::SizeU(size.cx, size.cy);
+      //   D2D1_SIZE_U sizeu = D2D1::SizeU(size.cx, size.cy);
 
-         D2D1_PIXEL_FORMAT pixelformat;
+      //   D2D1_PIXEL_FORMAT pixelformat;
 
-         pixelformat.alphaMode = D2D1_ALPHA_MODE_PREMULTIPLIED;
+      //   pixelformat.alphaMode = D2D1_ALPHA_MODE_PREMULTIPLIED;
 
-         pixelformat.format = DXGI_FORMAT_B8G8R8A8_UNORM;
+      //   pixelformat.format = DXGI_FORMAT_B8G8R8A8_UNORM;
 
-         auto & prendertarget = m_prendertarget;
+      //   auto & prendertarget = m_prendertarget;
 
-         HRESULT hr = prendertarget->CreateCompatibleRenderTarget(nullptr, &sizeu, &pixelformat, D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS_NONE, &m_pbitmaprendertarget);
+      //   HRESULT hr = prendertarget->CreateCompatibleRenderTarget(nullptr, &sizeu, &pixelformat, D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS_NONE, &m_pbitmaprendertarget);
 
-         if (m_pbitmaprendertarget == nullptr)
-         {
+      //   if (m_pbitmaprendertarget == nullptr)
+      //   {
 
-            return false;
+      //      return false;
 
-         }
+      //   }
 
-         if (FAILED(m_pbitmaprendertarget.as(m_prendertarget)))
-         {
+      //   if (FAILED(m_pbitmaprendertarget.as(m_prendertarget)))
+      //   {
 
-            m_pbitmaprendertarget = nullptr;
+      //      m_pbitmaprendertarget = nullptr;
 
-            return false;
+      //      return false;
 
-         }
+      //   }
 
-         if (FAILED(m_pbitmaprendertarget.as(m_pdevicecontext)))
-         {
+      //   if (FAILED(m_pbitmaprendertarget.as(m_pdevicecontext)))
+      //   {
 
-            m_pbitmaprendertarget = nullptr;
+      //      m_pbitmaprendertarget = nullptr;
 
-            m_prendertarget = nullptr;
+      //      m_prendertarget = nullptr;
 
-            return false;
+      //      return false;
 
-         }
+      //   }
 
-         comptr<ID2D1Bitmap> pd2d1bitmap;
+      //   comptr<ID2D1Bitmap> pd2d1bitmap;
 
-         m_pbitmaprendertarget->GetBitmap(&pd2d1bitmap);
+      //   m_pbitmaprendertarget->GetBitmap(&pd2d1bitmap);
 
-         if (pbitmap->m_pbitmap == nullptr)
-         {
+      //   if (pbitmap->m_pbitmap == nullptr)
+      //   {
 
-            return false;
+      //      return false;
 
-         }
+      //   }
 
-         //pgraphics->m_pplugin = pgraphicsMap->m_pplugin;
+      //   //pgraphics->m_pplugin = pgraphicsMap->m_pplugin;
 
-         pbitmap->m_pbitmap = pd2d1bitmap;
+      //   pbitmap->m_pbitmap = pd2d1bitmap;
 
-         pbitmap->m_pbitmap.as(pbitmap->m_pbitmap1);
+      //   pbitmap->m_pbitmap.as(pbitmap->m_pbitmap1);
 
-         pbitmap->m_osdata[0] = pbitmap->m_pbitmap;
+      //   pbitmap->m_osdata[0] = pbitmap->m_pbitmap;
 
-         pbitmap->m_osdata[1] = pbitmap->m_pbitmap1;
+      //   pbitmap->m_osdata[1] = pbitmap->m_pbitmap1;
 
-         m_osdata[0] = m_pdevicecontext;
+      //   m_osdata[0] = m_pdevicecontext;
 
-         m_osdata[1] = m_prendertarget;
+      //   m_osdata[1] = m_prendertarget;
 
-         //D2D1_POINT_2U p;
+      //   //D2D1_POINT_2U p;
 
-         //p.x = 0;
-         //p.y = 0;
+      //   //p.x = 0;
+      //   //p.y = 0;
 
-         //D2D1_RECT_U srcRect;
+      //   //D2D1_RECT_U srcRect;
 
-         //srcRect.left = 0;
-         //srcRect.right = this->width();
-         //srcRect.top = 0;
-         //srcRect.bottom = this->height();
+      //   //srcRect.left = 0;
+      //   //srcRect.right = this->width();
+      //   //srcRect.top = 0;
+      //   //srcRect.bottom = this->height();
 
-      //   return true;
+      ////   return true;
 
-      //}
+      ////}
 
          m_pdevicecontext->SetTarget(pbitmap->m_pbitmap);
 
@@ -1937,6 +1939,8 @@ namespace draw2d_direct2d
 
          //HRESULT hr = ((ID2D1DeviceContext *)pimage->g()->get_os_data())->EndDraw();
 
+         pimage->unmap();
+
          defer_primitive_blend();
 
          m_pdevicecontext->DrawBitmap(pd2d1bitmap, rectangleTarget, 1.0, D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR, rectangleSource);
@@ -2002,6 +2006,8 @@ namespace draw2d_direct2d
          D2D1_RECT_F rectangleSource = D2D1::RectF((float)xSrc, (float)ySrc, (float)(xSrc + nSrcWidth), (float)(ySrc + nSrcHeight));
 
          //HRESULT hr = ((ID2D1DeviceContext *)pimage->g()->get_os_data())->EndDraw();
+
+         pimage->unmap();
 
          defer_primitive_blend();
 

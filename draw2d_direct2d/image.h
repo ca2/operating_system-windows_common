@@ -12,12 +12,13 @@ namespace draw2d_direct2d
 
 
       HRESULT                             m_hrEndDraw;
-      BITMAPINFO                          m_info;
-      bool                                m_bTrans;
+//      BITMAPINFO                          m_info;
+      //bool                                m_bTrans;
 
-      comptr<ID2D1Bitmap1>                m_pbitmap1;
-      //::draw2d::bitmap_pointer            m_pbitmapMap;
-      //::draw2d::graphics_pointer          m_pgraphicsMap;
+
+      //D2D1_MAPPED_RECT                    m_map;
+      comptr<ID2D1Bitmap1>                m_pbitmap1Map;
+      //memory                              m_memory;
 
 
       image();
@@ -26,6 +27,9 @@ namespace draw2d_direct2d
 
       virtual bool map(bool bApplyAlphaTransform = true) override;
       virtual bool _unmap() override;
+
+
+      bool copy_from(::image * pimage) override;
 
 
       virtual ::draw2d::graphics * _get_graphics() const override;
@@ -37,10 +41,14 @@ namespace draw2d_direct2d
 
 
       using ::image::create;
-      ::e_status create(const ::size_i32 & size, ::eobject eobjectCreate = DEFAULT_CREATE_IMAGE_OBJECT_FLAG, int iStride = -1, bool bPreserver = false) override;
+      ::e_status create(const ::size_i32 & size, ::eobject eobjectCreate = DEFAULT_CREATE_IMAGE_OBJECT_FLAG, int iStride = -1, bool bPreserve = false) override;
+      using ::image::initialize;
+      ::e_status initialize(const ::size_i32 & size, ::color32_t * pcolorref, int iScan) override;
       bool _create(::draw2d::graphics * pgraphics);
       ::e_status destroy() override;
 
+
+      virtual ::e_status create_ex(const ::size_i32 & size, ::color32_t * pcolorref, int iScan, ::eobject eobjectCreate = DEFAULT_CREATE_IMAGE_OBJECT_FLAG, int iStride = -1, bool bPreserve = false) ;
 
       //virtual bool _draw_raw(const ::rectangle_i32 & rectangleTarget, ::image * pimage, const ::point_i32 & pointSrc) override;
 

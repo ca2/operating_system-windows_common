@@ -24,8 +24,8 @@ namespace draw2d_direct2d
 
       comptr<ID2D1Bitmap>                    m_pbitmap;
       comptr<ID2D1Bitmap1>                   m_pbitmap1;
-      D2D1_MAPPED_RECT                       m_map;
       memory                                 m_memory;
+
 
 
 
@@ -34,6 +34,11 @@ namespace draw2d_direct2d
 
 
       void dump(dump_context& dumpcontext) const override;
+
+
+      ::e_status map();
+      ::e_status unmap();
+
 
       bool LoadBitmap(const ::string & lpszResourceName);
       bool LoadBitmap(::u32 nIDResource);

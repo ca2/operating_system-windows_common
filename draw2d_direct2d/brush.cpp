@@ -204,6 +204,8 @@ namespace draw2d_direct2d
          if (m_pimagebrush == nullptr)
          {
 
+            m_pimage->unmap();
+
             int cx = m_pimage->width();
 
             int cy = m_pimage->height();
@@ -216,8 +218,6 @@ namespace draw2d_direct2d
                D2D1_EXTEND_MODE_WRAP,
                D2D1_INTERPOLATION_MODE_LINEAR
             );
-
-            m_pimage->unmap();
 
             ID2D1Image* pimage = m_pimage->m_pbitmap->get_os_data < ID2D1Bitmap * >();
 

@@ -40,9 +40,9 @@ namespace draw2d_direct2d
    }
 
 
-   ::e_status image::create(const ::size_i32 & size, ::eobject eobjectCreate, int iGoodStride, bool bPreserve)
+   ::e_status image::create_ex(const ::size_i32 & size, ::color32_t * pcolorref, int iScan, ::eobject eobjectCreate, int iGoodStride, bool bPreserve)
    {
-      
+
       auto sizeCurrent = this->size();
 
       if (m_pbitmap.is_set() && size == sizeCurrent)
@@ -61,8 +61,6 @@ namespace draw2d_direct2d
 
       }
 
-      __zero(m_info);
-
       int iStride = size.cx * 4;
 
       if (iGoodStride > iStride)
@@ -72,33 +70,22 @@ namespace draw2d_direct2d
 
       }
 
-      m_info.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
-      m_info.bmiHeader.biWidth = size.cx;
-      m_info.bmiHeader.biHeight = -size.cy;
-      m_info.bmiHeader.biPlanes = 1;
-      m_info.bmiHeader.biBitCount = 32;
-      m_info.bmiHeader.biCompression = BI_RGB;
-      m_info.bmiHeader.biSizeImage = iStride * size.cy;
+      //m_info.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+      //m_info.bmiHeader.biWidth = size.cx;
+      //m_info.bmiHeader.biHeight = -size.cy;
+      //m_info.bmiHeader.biPlanes = 1;
+      //m_info.bmiHeader.biBitCount = 32;
+      //m_info.bmiHeader.biCompression = BI_RGB;
+      //m_info.bmiHeader.biSizeImage = iStride * size.cy;
 
       ::draw2d::bitmap_pointer         pbitmap;
-      //::draw2d::bitmap_pointer         pbitmapMap;
       ::draw2d::graphics_pointer       pgraphics;
-      //::draw2d::graphics_pointer       pgraphicsMap;
 
       pbitmap.create(this);
-      //pbitmapMap.create(this);
       pgraphics.create(this);
-      //pgraphicsMap.create(this);
 
-      //if (::is_null(pbitmap) || ::is_null(pbitmapMap) || ::is_null(pgraphics) || ::is_null(pgraphicsMap))
       if (::is_null(pbitmap) || ::is_null(pgraphics))
       {
-
-         //m_sizeRaw.cx = 0;
-
-         //m_sizeRaw.cy = 0;
-
-         //m_iScan = 0;
 
          return false;
 
@@ -106,18 +93,8 @@ namespace draw2d_direct2d
 
       pgraphics->create_memory_graphics();
 
-      ::color::color * pcolorref = nullptr;
-
-      int iScan = iStride;
-
       if (!pbitmap->create_bitmap(pgraphics, size, (void **)&pcolorref, &iScan))
       {
-
-         //m_sizeRaw.cx = 0;
-
-         //m_sizeRaw.cy = 0;
-
-         //m_iScan = 0;
 
          return false;
 
@@ -145,23 +122,6 @@ namespace draw2d_direct2d
 
       m_sizeRaw = size;
 
-//      m_sizeRaw.cy = size.cy;
-
-//      //realize(nullptr);
-//
-//      //if (!is_realized())
-//      //{
-//
-//         m_sizeRaw.cx = 0;
-//
-//         m_sizeRaw.cy = 0;
-//
-//         m_iScan = 0;
-//
-//         ///return false;
-//
-//  //    }
-////
       m_size = m_sizeRaw;
 
       m_bMapped = false;
@@ -177,6 +137,41 @@ namespace draw2d_direct2d
       return true;
 
    }
+
+
+   ::e_status image::create(const ::size_i32 & size, ::eobject eobjectCreate, int iGoodStride, bool bPreserve)
+   {
+
+      auto estatus = create_ex(size, nullptr, 0, eobjectCreate, iGoodStride, bPreserve);
+
+      if (!estatus)
+      {
+
+         return estatus;
+
+      }
+
+      return estatus;
+
+   }
+
+
+   ::e_status image::initialize(const ::size_i32 & size, ::color32_t * pcolorref, int iScan)
+   {
+
+      auto estatus = create_ex(size, pcolorref, iScan);
+
+      if (!estatus)
+      {
+
+         return estatus;
+
+      }
+
+      return estatus;
+
+   }
+
 
 
    bool image::dc_select(bool bSelect)
@@ -215,6 +210,40 @@ namespace draw2d_direct2d
    }
 
 
+
+   bool image::copy_from(::image * pimage)
+   {
+
+      ::size_i32 s(pimage->width(), pimage->height());
+
+      if (size() != s && pimage->map()
+         && ::is_set(pimage->m_pcolorrefRaw)
+         && pimage->m_iScan > 0)
+      {
+
+         if (initialize(s, pimage->m_pcolorrefRaw, pimage->m_iScan))
+         {
+
+            return true;
+
+         }
+
+      }
+
+      auto bOk = ::image::copy_from(pimage, 0, 0);
+
+      if (!bOk)
+      {
+
+         return bOk;
+
+      }
+
+      return true;
+
+   }
+
+
    ::e_status image::destroy()
    {
 
@@ -241,45 +270,6 @@ namespace draw2d_direct2d
 
    //}
 
-
-   //bool image::from(::draw2d::graphics* pgraphics)
-   //{
-
-   //   bool bOk = false;
-
-   //   ::draw2d::bitmap_pointer bitmap;
-
-   //   bitmap->CreateCompatibleBitmap(pgraphics, 1, 1);
-
-   //   ::size_i32 size = bitmap->get_size();
-
-   //   if (!create(size))
-   //   {
-
-   //      return false;
-
-   //   }
-
-   //   auto estatus = pgraphics->set(bitmap);
-
-   //   if (!estatus)
-   //   {
-
-   //      return false;
-
-   //   }
-
-   //   return bOk;
-
-   //}
-
-
-   //bool image::from(const ::point_i32 & pointDest, ::draw2d::graphics* pgraphics, const ::point_i32 & point, const ::size_i32 & sz)
-   //{
-
-   //   return m_pgraphics->BitBlt(pointDest.x, pointDest.y, sz.cx, sz.cy, pgraphics, point.x, point.y) != false;
-
-   //}
 
 
    ::e_status image::SetIconMask(::draw2d::icon * picon, int cx, int cy)
@@ -1039,85 +1029,6 @@ namespace draw2d_direct2d
    }
 
 
-   //double image::pi()
-   //{
-   //   return dPi;
-   //}
-
-   //void image::fill_channel(int intensity, color::color::color::rgba::echannel echannel)
-   //{
-   //   int offset = ((int)echannel) % 4;
-   //   int size_i32=cx*cy;
-
-   //   byte * pb;
-
-   //   int iSize32 = size / 32;
-   //   int i;
-   //   for (i=0; i < iSize32; i+=32 )
-   //   {
-   //      pb = ((byte * ) &m_pcolorref[i]) + offset;
-   //      pb[0 * 4] = (byte) intensity;
-   //      pb[1 * 4] = (byte) intensity;
-   //      pb[2 * 4] = (byte) intensity;
-   //      pb[3 * 4] = (byte) intensity;
-   //      pb[4 * 4] = (byte) intensity;
-   //      pb[5 * 4] = (byte) intensity;
-   //      pb[6 * 4] = (byte) intensity;
-   //      pb[7 * 4] = (byte) intensity;
-   //      pb[8 * 4] = (byte) intensity;
-   //      pb[9 * 4] = (byte) intensity;
-   //      pb[10 * 4] = (byte) intensity;
-   //      pb[11 * 4] = (byte) intensity;
-   //      pb[12 * 4] = (byte) intensity;
-   //      pb[13 * 4] = (byte) intensity;
-   //      pb[14 * 4] = (byte) intensity;
-   //      pb[15 * 4] = (byte) intensity;
-   //      pb[16 * 4] = (byte) intensity;
-   //      pb[17 * 4] = (byte) intensity;
-   //      pb[18 * 4] = (byte) intensity;
-   //      pb[19 * 4] = (byte) intensity;
-   //      pb[20 * 4] = (byte) intensity;
-   //      pb[21 * 4] = (byte) intensity;
-   //      pb[22 * 4] = (byte) intensity;
-   //      pb[23 * 4] = (byte) intensity;
-   //      pb[24 * 4] = (byte) intensity;
-   //      pb[25 * 4] = (byte) intensity;
-   //      pb[26 * 4] = (byte) intensity;
-   //      pb[27 * 4] = (byte) intensity;
-   //      pb[28 * 4] = (byte) intensity;
-   //      pb[29 * 4] = (byte) intensity;
-   //      pb[30 * 4] = (byte) intensity;
-   //      pb[31 * 4] = (byte) intensity;
-   //   }
-
-   //   for (i=0; i<size_i32; i++ )
-   //   {
-   //      *(((byte * ) &m_pcolorref[i]) + offset) = (byte) intensity;
-   //   }
-   //}
-
-
-   //int image::cos(int i, int iAngle)
-   //{
-   //   return (int) (((_int64) i * CosN[iAngle]) >> 31);
-   //}
-
-   //int image::sin(int i, int iAngle)
-   //{
-   //   return (int) (((_int64) i * SinN[iAngle]) >> 31);
-   //}
-
-   //int image::cos10(int i, int iAngle)
-   //{
-   //   return (int) (((_int64) i * Cos10N[iAngle]) >> 34);
-   //}
-
-   //int image::sin10(int i, int iAngle)
-   //{
-   //   return (int) (((_int64) i * Sin10N[iAngle]) >> 34);
-   //}
-
-
    bool image::map(bool bApplyAlphaTransform)
    {
 
@@ -1137,30 +1048,26 @@ namespace draw2d_direct2d
 
       }
 
+      auto pgraphics2d = m_pgraphics.cast < ::draw2d_direct2d::graphics>();
 
       D2D1_SIZE_U size;
 
       size.width = m_size.cx;
       size.height = m_size.cy;
 
-      D2D1_BITMAP_PROPERTIES1 props = {};
-
-      props.pixelFormat.alphaMode = D2D1_ALPHA_MODE_PREMULTIPLIED;
-      props.pixelFormat.format = DXGI_FORMAT_B8G8R8A8_UNORM;
-      props.bitmapOptions = D2D1_BITMAP_OPTIONS_CPU_READ | D2D1_BITMAP_OPTIONS_CANNOT_DRAW;
-      props.colorContext = nullptr;
-
-      auto pgraphics2d = m_pgraphics.cast < ::draw2d_direct2d::graphics> ();
-
-      pgraphics2d->m_prendertarget->GetDpi(&props.dpiX, &props.dpiY); 
-
-      HRESULT hr = pgraphics2d->m_pdevicecontext->CreateBitmap(size, nullptr, 0, props, &m_pbitmap1);
-
-      auto pbitmap1 = m_pbitmap->get_os_data < ID2D1Bitmap1 * >(data_bitmap1);
+      HRESULT hrFlush = pgraphics2d->m_pdevicecontext->Flush();
 
       m_hrEndDraw = pgraphics2d->m_pdevicecontext->EndDraw();
 
-      //HRESULT hr = S_OK;
+      auto pbitmap = m_pbitmap->get_os_data < ID2D1Bitmap * >(data_bitmap);
+
+      D2D1_BITMAP_OPTIONS options = 
+         D2D1_BITMAP_OPTIONS_CPU_READ |
+         D2D1_BITMAP_OPTIONS_CANNOT_DRAW;
+
+      auto props = D2D1::BitmapProperties1(options, pbitmap->GetPixelFormat());
+
+      HRESULT hr = pgraphics2d->m_pdevicecontext->CreateBitmap(size, nullptr, 0, props, &m_pbitmap1Map);
 
       D2D1_POINT_2U pointDst = {};
 
@@ -1170,58 +1077,30 @@ namespace draw2d_direct2d
 
       srcRect.bottom = height();
 
-      hr = m_pbitmap1->CopyFromBitmap(&pointDst, pbitmap1, &srcRect);
+      hr = m_pbitmap1Map->CopyFromBitmap(&pointDst, pbitmap, &srcRect);
 
-      __pointer(::draw2d_direct2d::bitmap) pbitmap = m_pbitmap;
+      D2D1_MAPPED_RECT map = {};
 
-      __zero(pbitmap->m_map);
+      hr = m_pbitmap1Map->Map(D2D1_MAP_OPTIONS_READ, &map);
 
-      hr = m_pbitmap1->Map(D2D1_MAP_OPTIONS_READ, &pbitmap->m_map);
-
-      if (FAILED(hr) || pbitmap->m_map.bits == nullptr)
+      if (FAILED(hr) || map.bits == nullptr)
       {
 
          throw ::exception(error_failed);
 
       }
 
-      m_pcolorrefRaw = (::color32_t *)pbitmap->m_map.bits;
+      auto pcolorref = (::color32_t *)map.bits;
 
-      m_iScan = pbitmap->m_map.pitch;
+      auto p = pcolorref;
 
-      int compare_scan = this->width() * sizeof(::color32_t);
+      auto iScan = map.pitch;
 
-      i64 i = m_iScan * this->height() / sizeof(::color32_t);
+      auto area = (iScan / sizeof(*pcolorref)) * m_size.cy;
 
-      if (bApplyAlphaTransform)
-      {
-
-         //byte * p = ((byte *)m_pcolorref);
-         //while (i > 0)
-         //{
-         //   if (p[3] == 0)
-         //   {
-         //      p[0] = 0;
-         //      p[1] = 0;
-         //      p[2] = 0;
-         //   }
-         //   else
-         //   {
-         //      p[0] = (p[0] * 255 / p[3]);
-         //      p[1] = (p[1] * 255 / p[3]);
-         //      p[2] = (p[2] * 255 / p[3]);
-         //   }
-         //   p += 4;
-         //   i--;
-         //}
-
-         m_bTrans = true;
-
-      }
+      pixmap::init(m_size, pcolorref, iScan);
 
       m_bMapped = true;
-
-      ::image::map(bApplyAlphaTransform);
 
       return true;
 
@@ -1240,7 +1119,6 @@ namespace draw2d_direct2d
 
       }
 
-      //if (m_pbitmapMap.is_null() || m_pbitmap.is_null())
       if (m_pbitmap.is_null())
       {
 
@@ -1251,59 +1129,27 @@ namespace draw2d_direct2d
       try
       {
 
-         //if (m_pbitmap->m_osdata[0] == nullptr)
-         {
+         D2D1_POINT_2U pointDst = {};
 
-            m_pbitmap1->Unmap();
+         D2D1_RECT_U srcRect={};
 
-            m_pcolorrefRaw = nullptr;
-
-            m_bMapped = false;
-
-            //return false;
-
-         }
-
-         i64 iArea = area();
-
-         byte * p = (byte *)m_pcolorrefRaw;
-
-         i64 i = m_iScan * this->height() / sizeof(::color32_t);
-
-         if (m_bTrans)
-         {
-
-            //while(i > 0)
-            //{
-            //   p[0] = (p[0] * p[3] / 255);
-            //   p[1] = (p[1] * p[3] / 255);
-            //   p[2] = (p[2] * p[3] / 255);
-            //   p += 4;
-            //   i--;
-            //}
-
-         }
-
-         //auto pbitmap1 = m_pbitmap->get_os_data < ID2D1Bitmap1 * >(data_bitmap1);
-
-         D2D1_RECT_U srcRect;
-
-         srcRect.left = 0;
          srcRect.right = this->width();
-         srcRect.top = 0;
+
          srcRect.bottom = this->height();
 
-         //HRESULT hr = pbitmap1Map->CopyFromMemory(&srcRect, m_pcolorrefRaw, m_iScan);
+         auto pbitmap = m_pbitmap->get_os_data < ID2D1Bitmap * >(data_bitmap);
 
-         //HRESULT hr = pbitmap1Map->Unmap();
+         auto hr = pbitmap->CopyFromMemory(&srcRect, m_pcolorrefRaw, m_iScan);
 
-         auto pbitmap1 = m_pbitmap->get_os_data < ID2D1Bitmap1 * >(data_bitmap1);
+         m_pbitmap1Map->Unmap();
 
-         auto hr = pbitmap1->CopyFromBitmap(nullptr, m_pbitmap1, nullptr);
+         m_bMapped = false;
 
-         m_pbitmap1 = nullptr;
+         m_pbitmap1Map = nullptr;
 
          m_pcolorrefRaw = nullptr;
+
+         m_pcolorref1 = nullptr;
 
          if (FAILED(hr))
          {
@@ -1313,8 +1159,6 @@ namespace draw2d_direct2d
             throw_if_failed(hr);
 
          }
-
-         //m_pgraphics->SelectObject(m_pbitmap);
 
       }
       catch (...)
@@ -1327,17 +1171,16 @@ namespace draw2d_direct2d
 
          ((ID2D1DeviceContext *)m_pgraphics->get_os_data())->BeginDraw();
 
-         ///dynamic_cast <::draw2d_direct2d::graphics *> (((image *) this)->m_pgraphics.m_p)->RestoreClip();
-
       }
 
-      ((image *) this)->m_bMapped = false;
+      m_bMapped = false;
 
-      ((image *) this)->m_bTrans = false;
+      m_bTrans = false;
 
       return true;
 
    }
+
 
    /*   int image::cx
    {

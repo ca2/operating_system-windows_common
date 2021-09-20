@@ -66,7 +66,7 @@ namespace draw2d_direct2d
 
       }
 
-      __zero(m_map);
+      //__zero(m_map);
       //    m_pbitmap->Map(D2D1_MAP_OPTIONS_READ | D2D1_MAP_OPTIONS_WRITE, &m_map);
       //
       //if(ppdata != nullptr)
@@ -86,7 +86,7 @@ namespace draw2d_direct2d
    }
 
 
-   bool bitmap::create_bitmap(::draw2d::graphics* pgraphics, const ::size_i32 & size, void **ppvBits, int * stride)
+   bool bitmap::create_bitmap(::draw2d::graphics* pgraphics, const ::size_i32 & size, void **ppdata, int * pstride)
    {
 
       ::draw2d::lock draw2dlock;
@@ -134,30 +134,7 @@ namespace draw2d_direct2d
 
       props.bitmapOptions = D2D1_BITMAP_OPTIONS_TARGET;
 
-      //props.bitmapOptions = D2D1_BITMAP_OPTIONS_CPU_READ | D2D1_BITMAP_OPTIONS_CANNOT_DRAW;
-
-      //props.bitmapOptions = D2D1_BITMAP_OPTIONS_CPU_READ | D2D1_BITMAP_OPTIONS_CANNOT_DRAW;
-
-      //props.bitmapOptions = D2D1_BITMAP_OPTIONS_CPU_READ | D2D1_BITMAP_OPTIONS_CANNOT_DRAW;
-
-      //m_memory.set_size(size.width * size.height * sizeof(::color32_t));
-
-      HRESULT hr;
-
-      //if(ppvBits == nullptr || *ppvBits == nullptr)
-      {
-
-         // hr = METROWIN_DC(pgraphics)->m_pdc->CreateBitmap(size, nullptr, 0, props, &m_pbitmap);
-
-      }
-      //else
-      {
-
-         //hr = METROWIN_DC(pgraphics)->m_pdevicecontext->CreateBitmap(size, m_memory.get_data(), size.width * sizeof(::color32_t), props, &m_pbitmap1);
-
-      }
-
-      hr = ((ID2D1DeviceContext *)pgraphics->get_os_data())->CreateBitmap(usize, nullptr, 0, props, &m_pbitmap1);
+      HRESULT hr = ((ID2D1DeviceContext *)pgraphics->get_os_data())->CreateBitmap(usize, nullptr, 0, props, &m_pbitmap1);
 
       if (FAILED(hr) || m_pbitmap1 == nullptr)
       {
@@ -172,6 +149,27 @@ namespace draw2d_direct2d
          return false;
 
       }
+
+      auto pcolorref = (color32_t *)*ppdata;
+
+      auto iScan = *pstride;
+
+      HRESULT hrResultCopyBitmap = S_OK;
+
+      if (pcolorref && iScan > 0)
+      {
+
+         D2D1_RECT_U rectDst = {};
+
+         rectDst.right = size.cx;
+
+         rectDst.bottom = size.cy;
+
+         hrResultCopyBitmap = m_pbitmap->CopyFromMemory(&rectDst, pcolorref, iScan);
+
+      }
+
+      m_size = size;
 
       m_osdata[0] = m_pbitmap;
 
@@ -364,6 +362,8 @@ namespace draw2d_direct2d
       dumpcontext << "\n";
 
    }
+
+
 
 
    void bitmap::defer_update(::draw2d::graphics* pgraphics) const
