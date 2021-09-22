@@ -901,6 +901,7 @@
     <ClInclude Include="direct2d.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="aaa_multithreading_lock.h" />
+    <ClInclude Include="geometry_sink_text_renderer.h" />
     <ClInclude Include="global.h" />
     <ClInclude Include="_.h" />
     <ClInclude Include="_direct2d.h" />
@@ -912,6 +913,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="geometry_sink_text_renderer.cpp" />
     <ClCompile Include="_.cpp" />
   </ItemGroup>
   <ItemGroup>

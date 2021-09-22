@@ -934,8 +934,8 @@ namespace draw2d_direct2d
 //   }
 //
 //   ::draw2d_direct2d::path * dc = static_cast<::draw2d_direct2d::path*>(clientDrawingContext);
-//   HRESULT hr = glyphRun->fontFace->GetGlyphRunOutline(
-//                glyphRun->fontEmSize,
+//   HRESULT hr = glyphRun->pfontFace->GetGlyphRunOutline(
+//                glyphRun->pfontEmSize,
 //                glyphRun->glyphIndices,
 //                glyphRun->glyphAdvances,
 //                glyphRun->glyphOffsets,

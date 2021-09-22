@@ -10,10 +10,6 @@
 #endif
 
 
-struct FIBITMAP;
-
-
-
 
 namespace imaging_wic
 {

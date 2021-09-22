@@ -27,6 +27,10 @@ namespace imaging_wic
 
       ploadimage->m_pimage = pimageParam;
 
+      ploadimage->m_pimage->m_estatus = error_failed;
+
+      ploadimage->m_pimage->set_nok();
+
       ploadimage->m_payload = varFile;
 
       pimageParam->m_bCreateHelperMaps = bCreateHelperMaps;

@@ -236,10 +236,10 @@ namespace draw2d_direct2d
          CreateWindowSizeDependentResources();
       }
 
-      psystem->m_puserinteraction->m_rectParentClient.left     = 0;
-      psystem->m_puserinteraction->m_rectParentClient.top      = 0;
-      psystem->m_puserinteraction->m_rectParentClient.right    = (i64) m_window.Bounds.Width;
-      psystem->m_puserinteraction->m_rectParentClient.bottom   = (i64) m_window.Bounds.Height;
+      psystem->m_puserinteraction->m_rectangleParentClient.left     = 0;
+      psystem->m_puserinteraction->m_rectangleParentClient.top      = 0;
+      psystem->m_puserinteraction->m_rectangleParentClient.right    = (i64) m_window.Bounds.Width;
+      psystem->m_puserinteraction->m_rectangleParentClient.bottom   = (i64) m_window.Bounds.Height;
       */
    }
 
@@ -499,11 +499,11 @@ namespace draw2d_direct2d
          );
 
       // Enumerate a stylistic set 6 font feature for application to our text on_layout
-      DWRITE_FONT_FEATURE fontFeature = {DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_6, 1};
+      DWRITE_FONT_FEATURE pfontFeature = {DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_6, 1};
 
       // Apply the previously enumerated font feature to our Text Typography object
       ::draw2d_direct2d::throw_if_failed(
-         m_textTypography->AddFontFeature(fontFeature)
+         m_textTypography->AddFontFeature(pfontFeature)
          );
 
       // Move our text range to the entire length of the string

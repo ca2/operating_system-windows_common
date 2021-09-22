@@ -215,8 +215,8 @@ namespace Platform {
 //   if(SUCCEEDED(hr))
 //   {
 //
-//      hr = glyphRun->fontFace->GetGlyphRunOutline(
-//         glyphRun->fontEmSize,
+//      hr = glyphRun->pfontFace->GetGlyphRunOutline(
+//         glyphRun->pfontEmSize,
 //         glyphRun->glyphIndices,
 //         glyphRun->glyphAdvances,
 //         glyphRun->glyphOffsets,

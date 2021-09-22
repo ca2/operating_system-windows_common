@@ -250,7 +250,7 @@ namespace draw2d_direct2d
    ID2D1Geometry * region::get_polygon(::draw2d::graphics* pgraphics)
    {
 
-      ::draw2d::path_pointer path(this);
+      auto ppath = __create < ::draw2d::path > ();
 
       /*point_i32_array pa;
 
@@ -270,11 +270,11 @@ namespace draw2d_direct2d
       }
       */
 
-      path->begin_figure();
-      path->add_lines(m_lppoints, m_nCount);
-      path->close_figure();
+      ppath->begin_figure();
+      ppath->add_lines(m_lppoints, m_nCount);
+      ppath->close_figure();
 
-      return (ID2D1PathGeometry *) path->detach();
+      return (ID2D1PathGeometry *) ppath->detach();
 
    }
 
@@ -282,7 +282,7 @@ namespace draw2d_direct2d
    ID2D1Geometry * region::get_poly_polygon(::draw2d::graphics* pgraphics)
    {
 
-      ::draw2d::path_pointer path(this);
+      auto ppath = __create < ::draw2d::path > ();
 
       point_f64_array pa;
 
@@ -306,14 +306,14 @@ namespace draw2d_direct2d
             pa.add(point_f64(m_lppoints[n].x, m_lppoints[n].y));
             n++;
          }
-         //path->begin_figure(true, m_efillmode);
-         path->begin_figure();
-         path->add_lines(pa.get_data(), (int) pa.get_count());
-         //path->end_figure(true);
-         path->close_figure();
+         //ppath->begin_figure(true, m_efillmode);
+         ppath->begin_figure();
+         ppath->add_lines(pa.get_data(), (int) pa.get_count());
+         //ppath->end_figure(true);
+         ppath->close_figure();
       }
 
-      return (ID2D1PathGeometry *) path->detach();
+      return (ID2D1PathGeometry *) ppath->detach();
 
    }
 

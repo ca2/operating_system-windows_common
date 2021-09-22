@@ -12,12 +12,11 @@ namespace directx
    public:
 
 
-      comptr < IDXGIDebug1 >m_pdxgidebug1;
+      comptr < IDXGIDebug1 >     m_pdxgidebug1;
 
-      comptr < IDXGIDebug >     m_pdxgidebug;
+      comptr < IDXGIDebug >      m_pdxgidebug;
 
-
-      static dxgi_debug *                       s_pdxgidebug;
+      static dxgi_debug *        s_pdxgidebug;
 
 
       dxgi_debug();

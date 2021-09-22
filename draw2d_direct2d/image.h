@@ -25,11 +25,11 @@ namespace draw2d_direct2d
       ~image() override;
 
 
-      virtual bool map(bool bApplyAlphaTransform = true) override;
+      virtual bool _map(bool bApplyAlphaTransform = true) override;
       virtual bool _unmap() override;
 
 
-      bool copy_from(::image * pimage) override;
+      bool copy_from(::image * pimage, eobject eobjectCreate = e_object_success) override;
 
 
       virtual ::draw2d::graphics * _get_graphics() const override;
@@ -43,7 +43,7 @@ namespace draw2d_direct2d
       using ::image::create;
       ::e_status create(const ::size_i32 & size, ::eobject eobjectCreate = DEFAULT_CREATE_IMAGE_OBJECT_FLAG, int iStride = -1, bool bPreserve = false) override;
       using ::image::initialize;
-      ::e_status initialize(const ::size_i32 & size, ::color32_t * pcolorref, int iScan) override;
+      ::e_status initialize(const ::size_i32 & size, ::color32_t * pcolorref, int iScan, ::eobject eobjectCreate = DEFAULT_CREATE_IMAGE_OBJECT_FLAG) override;
       bool _create(::draw2d::graphics * pgraphics);
       ::e_status destroy() override;
 

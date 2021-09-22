@@ -26,7 +26,7 @@ namespace draw2d_direct2d
       virtual bool create(::draw2d::graphics * pgraphics, i8 iCreate) override;
 
 
-      /*      virtual void construct(const ::write_text::font & fontParam);
+      /*      virtual void construct(const ::write_text::font & pfontParam);
 
             virtual bool CreateFontIndirect(const LOGFONTW* lpLogFont);
             virtual bool CreateFont(int nHeight, int nWidth, int nEscapement,

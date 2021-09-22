@@ -41,5 +41,13 @@
     <ClCompile Include="wave_out.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="_.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="u_audio_xaudio.def">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

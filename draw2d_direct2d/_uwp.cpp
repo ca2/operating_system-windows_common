@@ -298,8 +298,8 @@
 //      m_xOffset = baselineOriginX;
 //      m_yOffset = baselineOriginY;
 //
-//      hr = glyphRun->fontFace->GetGlyphRunOutline(
-//         glyphRun->fontEmSize,
+//      hr = glyphRun->pfontFace->GetGlyphRunOutline(
+//         glyphRun->pfontEmSize,
 //         glyphRun->glyphIndices,
 //         glyphRun->glyphAdvances,
 //         glyphRun->glyphOffsets,

@@ -34,8 +34,6 @@ namespace draw2d_direct2d
 
       auto pgraphics = __graphics(pgraphicsParam);
 
-      ::draw2d::lock draw2dlock;
-
       if (pgraphics->m_prendertarget == nullptr)
       {
 

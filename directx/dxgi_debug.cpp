@@ -33,7 +33,7 @@ namespace directx
          auto pfnDXGIGetDebugInterface = reinterpret_cast<LPDXGIGETDEBUGINTERFACE>(
             reinterpret_cast<void*>(GetProcAddress(hmoduleDXGIDebug, "DXGIGetDebugInterface")));
 
-         if (SUCCEEDED(pfnDXGIGetDebugInterface(IID_IDXGIDebug, &m_pdxgidebug)))
+         if (SUCCEEDED(pfnDXGIGetDebugInterface(__interface_of(m_pdxgidebug))))
          {
 
          }

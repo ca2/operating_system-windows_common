@@ -318,7 +318,7 @@ namespace directx
 //
 //      //   // Reference implementation
 //
-//      //   ::rectangle_i32 rectAlphaBlend(m_pointAlphaBlend, m_pimageAlphaBlend->size());
+//      //   ::rectangle_i32 rectangleAlphaBlend(m_pointAlphaBlend, m_pimageAlphaBlend->size());
 //
 //      //   if (x < 0)
 //      //   {
@@ -346,22 +346,22 @@ namespace directx
 //
 //      //   ::size_f64 size(nWidth, nHeight);
 //
-//      //   ::rectangle_i32 rectBlend(point, ::size_f64);
+//      //   ::rectangle_i32 rectangleBlend(point, ::size_f64);
 //
-//      //   ::rectangle_i32 rectIntersect;
+//      //   ::rectangle_i32 rectangleIntersect;
 //
-//      //   if (rectIntersect.intersect(rectAlphaBlend, rectBlend))
+//      //   if (rectangleIntersect.intersect(rectangleAlphaBlend, rectangleBlend))
 //      //   {
 //
 //      //      ::image_pointer pimage1;
 //
 //      //      pimage1 = create_image(::size_f64);
 //
-//      //      ::rectangle_i32 rectDib1(::point_f64(), pimage1->m_size);
+//      //      ::rectangle_i32 rectangleDib1(::point_f64(), pimage1->m_size);
 //
 //      //      pimage1->get_graphics()->set_alpha_mode(::draw2d::e_alpha_mode_set);
 //
-//      //      pimage1->get_graphics()->fill_rectangle(rectDib1, argb(0, 0, 0, 0));
+//      //      pimage1->get_graphics()->fill_rectangle(rectangleDib1, argb(0, 0, 0, 0));
 //
 //      //      if (!pimage1->from(::point_f64(), pgraphicsSrc, ::point_f64(xSrc, ySrc), ::size_f64))
 //      //      {
@@ -376,9 +376,9 @@ namespace directx
 //
 //      //      pimage2->get_graphics()->set_alpha_mode(::draw2d::e_alpha_mode_set);
 //
-//      //      pimage2->get_graphics()->fill_rectangle(rectDib1, argb(255, 0, 0, 0));
+//      //      pimage2->get_graphics()->fill_rectangle(rectangleDib1, argb(255, 0, 0, 0));
 //
-//      //      if (!pimage2->from(::point_f64(), m_pimageAlphaBlend, point_i32 - m_pointAlphaBlend, rectIntersect.size()))
+//      //      if (!pimage2->from(::point_f64(), m_pimageAlphaBlend, point_i32 - m_pointAlphaBlend, rectangleIntersect.size()))
 //      //      {
 //
 //      //         return false;
@@ -394,7 +394,7 @@ namespace directx
 //      //      pgraphicsDib2->m_pdevicecontext->DrawImage(
 //      //      (ID2D1Bitmap *)pgraphicsDib1->get_current_bitmap()->get_os_data(),
 //      //      D2D1::Point2F(0.f, 0.f),
-//      //      d2d1::rectangle_f32(rectDib1),
+//      //      d2d1::rectangle_f32(rectangleDib1),
 //      //      D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR,
 //      //      D2D1_COMPOSITE_MODE_SOURCE_OVER);
 //
@@ -420,8 +420,8 @@ namespace directx
 //      if (m_pimageAlphaBlend->is_set())
 //      {
 //
-//         auto rectangleTarget = imagedrawing.m_rectDst;
-//         auto rectangleSource = imagedrawing.m_rectSrc;
+//         auto rectangleTarget = imagedrawing.m_rectangleDst;
+//         auto rectangleSource = imagedrawing.m_rectangleSrc;
 //
 //
 //         auto x = rectangleTarget.left;
@@ -454,11 +454,11 @@ namespace directx
 //         }
 //
 //
-//         ::rectangle_f64 rectIntersect(m_pointAlphaBlend, m_pimageAlphaBlend->size());
+//         ::rectangle_f64 rectangleIntersect(m_pointAlphaBlend, m_pimageAlphaBlend->size());
 //
-//         ::rectangle_f64 rectBlt(::point_f64(x, y), ::size_f64(nWidth, nHeight));
+//         ::rectangle_f64 rectangleBlt(::point_f64(x, y), ::size_f64(nWidth, nHeight));
 //
-//         if (rectIntersect.intersect(rectIntersect, rectBlt))
+//         if (rectangleIntersect.intersect(rectangleIntersect, rectangleBlt))
 //         {
 //
 //            //if (m_pointAlphaBlend.x < 0)
@@ -485,24 +485,24 @@ namespace directx
 //
 //            //   y += pointOff.y;
 //
-//            //   return m_pimage->blend(::point_f64(x, y), pgraphicsSrc->m_pimage, ::point_f64(xSrc, ySrc), m_pimageAlphaBlend, point_i32(m_pointAlphaBlend.x - x, m_pointAlphaBlend.y - y), rectBlt.size());
+//            //   return m_pimage->blend(::point_f64(x, y), pgraphicsSrc->m_pimage, ::point_f64(xSrc, ySrc), m_pimageAlphaBlend, point_i32(m_pointAlphaBlend.x - x, m_pointAlphaBlend.y - y), rectangleBlt.size());
 //
 //            //}
 //            //else
 //            //{
 //
-//               auto pimage1 = create_image(rectBlt.size());
+//               auto pimage1 = create_image(rectangleBlt.size());
 //
 //               pimage1->get_graphics()->set_alpha_mode(::draw2d::e_alpha_mode_set);
 //
-//               if (!pimage1->draw(::rectangle_f64(rectBlt.size()), imagedrawing.m_pimage, ::point_f64(xSrc, ySrc)))
+//               if (!pimage1->draw(::rectangle_f64(rectangleBlt.size()), imagedrawing.m_pimage, ::point_f64(xSrc, ySrc)))
 //               {
 //
 //                  return false;
 //
 //               }
 //
-//               pimage1->blend2(::point_f64(), m_pimageAlphaBlend, point_f64(x - m_pointAlphaBlend.x, y - m_pointAlphaBlend.y), rectBlt.size(), 255);
+//               pimage1->blend2(::point_f64(), m_pimageAlphaBlend, point_f64(x - m_pointAlphaBlend.x, y - m_pointAlphaBlend.y), rectangleBlt.size(), 255);
 //
 //               image_drawing_options imagedrawingoptions;
 //
@@ -536,22 +536,22 @@ namespace directx
 //
 //      auto size = get_text_extent(block);
 //
-//      ::rectangle_f64 rectAlphaBlend(m_pointAlphaBlend, m_pimageAlphaBlend->size());
+//      ::rectangle_f64 rectangleAlphaBlend(m_pointAlphaBlend, m_pimageAlphaBlend->size());
 //
 //      ::point_f64 point(x, y);
 //
-//      ::rectangle_f64 rectText(point, size);
+//      ::rectangle_f64 rectangleText(point, size);
 //
-//      ::rectangle_f64 rectIntersect;
+//      ::rectangle_f64 rectangleIntersect;
 //
-//      if (rectIntersect.intersect(rectAlphaBlend, rectText))
+//      if (rectangleIntersect.intersect(rectangleAlphaBlend, rectangleText))
 //      {
 //
 //         ::draw2d::lock draw2dlock;
 //
 //         auto pimage1 = create_image(size);
 //
-//         ::rectangle_f64 rectDib1(::point_f64(), size);
+//         ::rectangle_f64 rectangleDib1(::point_f64(), size);
 //
 //         pimage1->get_graphics()->set(get_current_font());
 //
@@ -559,7 +559,7 @@ namespace directx
 //
 //         pimage1->get_graphics()->set_alpha_mode(::draw2d::e_alpha_mode_set);
 //
-//         pimage1->get_graphics()->fill_rectangle(rectDib1, argb(0, 0, 0, 0));
+//         pimage1->get_graphics()->fill_rectangle(rectangleDib1, argb(0, 0, 0, 0));
 //
 //         pimage1->get_graphics()->text_out(0, 0, block);
 //
@@ -569,9 +569,9 @@ namespace directx
 //
 //         pimage2->get_graphics()->set_alpha_mode(::draw2d::e_alpha_mode_set);
 //
-//         pimage2->get_graphics()->fill_rectangle(rectDib1, argb(255, 0, 0, 0));
+//         pimage2->get_graphics()->fill_rectangle(rectangleDib1, argb(255, 0, 0, 0));
 //
-//         if (!pimage2->draw(rectIntersect.size(), m_pimageAlphaBlend, __pointd(point - m_pointAlphaBlend)))
+//         if (!pimage2->draw(rectangleIntersect.size(), m_pimageAlphaBlend, __pointd(point - m_pointAlphaBlend)))
 //         {
 //
 //            return false;
@@ -587,7 +587,7 @@ namespace directx
 //         pgraphicsDib1->m_pdevicecontext->DrawImage(
 //         (ID2D1Bitmap *)pgraphicsDib2->get_current_bitmap()->m_osdata[0],
 //         D2D1::Point2F(0.f, 0.f),
-//         d2d1::rectangle_f32(rectDib1),
+//         d2d1::rectangle_f32(rectangleDib1),
 //         D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR,
 //         D2D1_COMPOSITE_MODE_DESTINATION_IN);
 //
@@ -937,7 +937,7 @@ namespace directx
 //   //bool graphics::Arc(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4)
 //   //{
 //
-//   //   ::draw2d::path_pointer path(e_create);
+//   //   auto ppath = __create < ::draw2d::path > ();
 //
 //   //   double pi = 3.1415927f;
 //
@@ -949,30 +949,30 @@ namespace directx
 //   //   double start      = atan2(y3 - centery, x3 - centerx) * 180.0 / pi;
 //   //   double end        = atan2(y4 - centery, x4 - centerx) * 180.0 / pi;
 //
-//   //   //path->begin_figure(false, ::draw2d::fill_mode_winding);
-//   //   path->begin_figure();
-//   //   path->add_arc(rectangle, (int) start, (int) fmod(end + 360.0 - start, 360.0));
-//   //   //path->end_figure(false);
-//   //   //path->close_figure();
+//   //   //ppath->begin_figure(false, ::draw2d::fill_mode_winding);
+//   //   ppath->begin_figure();
+//   //   ppath->add_arc(rectangle, (int) start, (int) fmod(end + 360.0 - start, 360.0));
+//   //   //ppath->end_figure(false);
+//   //   //ppath->close_figure();
 //
-//   //   return this->path(path);
+//   //   return this->path(ppath);
 //
 //   //}
 //
 //   bool graphics::Arc(double x1, double y1, double w, double h, angle start, angle extends)
 //   {
 //
-//      ::draw2d::path_pointer path(e_create);
+//      auto ppath = __create < ::draw2d::path > ();
 //
 //      ::rectangle_i32 rectangle((::i32) x1, (::i32)y1, (::i32)(x1 + w), (::i32)(y1 + h));
 //
-//      //path->begin_figure(false, ::draw2d::fill_mode_winding);
-//      path->begin_figure();
-//      path->add_arc(rectangle, start, extends);
-//      //path->end_figure(false);
-//      //path->close(false);
+//      //ppath->begin_figure(false, ::draw2d::fill_mode_winding);
+//      ppath->begin_figure();
+//      ppath->add_arc(rectangle, start, extends);
+//      //ppath->end_figure(false);
+//      //ppath->close(false);
 //
-//      return this->path(path);
+//      return this->path(ppath);
 //
 //   }
 //
@@ -980,7 +980,7 @@ namespace directx
 //   bool graphics::Arc(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4)
 //   {
 //
-//      ::draw2d::path_pointer path(e_create);
+//      auto ppath = __create < ::draw2d::path > ();
 //
 //      double pi = 3.1415927f;
 //
@@ -992,12 +992,12 @@ namespace directx
 //      double start = atan2(y3 - centery, x3 - centerx) * 180.0 / pi;
 //      double end = atan2(y4 - centery, x4 - centerx) * 180.0 / pi;
 //
-//      //path->begin_figure(false, ::draw2d::fill_mode_winding);
-//      path->begin_figure();
-//      path->add_arc(rectangle, start, end - start);
-//      //path->end_figure(false);
+//      //ppath->begin_figure(false, ::draw2d::fill_mode_winding);
+//      ppath->begin_figure();
+//      ppath->add_arc(rectangle, start, end - start);
+//      //ppath->end_figure(false);
 //
-//      return this->path(path);
+//      return this->path(ppath);
 //
 //   }
 //
@@ -1015,24 +1015,24 @@ namespace directx
 //   bool graphics::polyline(const ::point_f64* ppoints, count nCount)
 //   {
 //
-//      ::draw2d::path_pointer path(e_create);
+//      auto ppath = __create < ::draw2d::path > ();
 //
-//      //path->begin_figure(false, ::draw2d::fill_mode_winding);
+//      //ppath->begin_figure(false, ::draw2d::fill_mode_winding);
 //
-//      path->begin_figure();
+//      ppath->begin_figure();
 //
-//      path->add_lines(ppoints, nCount);
+//      ppath->add_lines(ppoints, nCount);
 //
-//      //path->end_figure(false);
+//      //ppath->end_figure(false);
 //
-//      //path->end_figure();
+//      //ppath->end_figure();
 //
-//      return this->draw_path(path);
+//      return this->draw_path(ppath);
 //
 //   }
 //
 //
-//   bool graphics::frame_rectangle(const ::rectangle_f64 & rectParam, ::draw2d::brush* pbrush)
+//   bool graphics::frame_rectangle(const ::rectangle_f64 & rectangleParam, ::draw2d::brush* pbrush)
 //   {
 //
 //      if (m_prendertarget == nullptr)
@@ -1044,7 +1044,7 @@ namespace directx
 //
 //      D2D1_RECT_F rectangle;
 //
-//      __copy(rectangle, rectParam);
+//      __copy(rectangle, rectangleParam);
 //
 //      m_prendertarget->DrawRectangle(rectangle, pbrush->get_os_data < ID2D1Brush * > (this));
 //
@@ -1556,7 +1556,7 @@ namespace directx
 //   }
 //
 //
-//   bool graphics::draw_rectangle(const ::rectangle_f64 & rectParam, ::draw2d::pen * ppen)
+//   bool graphics::draw_rectangle(const ::rectangle_f64 & rectangleParam, ::draw2d::pen * ppen)
 //   {
 //
 //      if (ppen == nullptr)
@@ -1575,7 +1575,7 @@ namespace directx
 //
 //      D2D1_RECT_F rectangle;
 //
-//      __copy(rectangle, rectParam);
+//      __copy(rectangle, rectangleParam);
 //
 //      ::draw2d_directx::pen * ppen2 = dynamic_cast <::draw2d_directx::pen *> (ppen);
 //
@@ -1588,7 +1588,7 @@ namespace directx
 //   }
 //
 //
-//   bool graphics::fill_rectangle(const ::rectangle_f64 & rectParam, ::draw2d::brush * pbrush)
+//   bool graphics::fill_rectangle(const ::rectangle_f64 & rectangleParam, ::draw2d::brush * pbrush)
 //   {
 //
 //      if (pbrush == nullptr)
@@ -1607,7 +1607,7 @@ namespace directx
 //
 //      D2D1_RECT_F rectangle;
 //
-//      __copy(rectangle, rectParam);
+//      __copy(rectangle, rectangleParam);
 //
 //      ::draw2d_directx::brush * pbrush2 = dynamic_cast <::draw2d_directx::brush *> (pbrush);
 //
@@ -1620,12 +1620,12 @@ namespace directx
 //   }
 //
 //
-//   bool graphics::round_rectangle(const ::rectangle_f64 & rectParam, double dRadius)
+//   bool graphics::round_rectangle(const ::rectangle_f64 & rectangleParam, double dRadius)
 //   {
 //
 //      D2D1_ROUNDED_RECT rectangle;
 //
-//      __copy(rectangle, rectParam);
+//      __copy(rectangle, rectangleParam);
 //
 //      rectangle.radiusX = (FLOAT) dRadius;
 //
@@ -2274,7 +2274,7 @@ namespace directx
 ////
 ////   }
 ////
-////   bool graphics::ScrollDC(int dx, int dy, const ::rectangle_i32 & rectScroll, const ::rectangle_i32 & rectClip, ::draw2d::region* pRgnUpdate, RECTANGLE_I32 * lpRectUpdate)
+////   bool graphics::ScrollDC(int dx, int dy, const ::rectangle_i32 & rectangleScroll, const ::rectangle_i32 & rectangleClip, ::draw2d::region* pRgnUpdate, RECTANGLE_I32 * lpRectUpdate)
 ////   {
 ////
 ////      __throw(todo);
@@ -2298,14 +2298,14 @@ namespace directx
 ////   }
 //
 //   // graphics 3.1 Specific functions
-//   ::u32 graphics::SetBoundsRect(const ::rectangle_f64 & rectBounds, ::u32 flags)
+//   ::u32 graphics::SetBoundsRect(const ::rectangle_f64 & rectangleBounds, ::u32 flags)
 //   {
 //
 //      __throw(todo);
 //
 //      //ASSERT(get_handle1() != nullptr);
 //
-//      //return ::SetBoundsRect(get_handle1(), rectBounds, flags);
+//      //return ::SetBoundsRect(get_handle1(), rectangleBounds, flags);
 //
 //   }
 //
@@ -2317,7 +2317,7 @@ namespace directx
 //
 //      //ASSERT(get_handle2() != nullptr);
 //
-//      //return ::GetBoundsRect(get_handle2(), rectBounds, flags);
+//      //return ::GetBoundsRect(get_handle2(), rectangleBounds, flags);
 //
 //   }
 //
@@ -2822,7 +2822,7 @@ namespace directx
 //   graphics.DrawImage(pMeta, Point(0, 150));
 //   delete pMeta;;
 //   }*/
-//   //bool graphics::PlayMetaFile(HENHMETAFILE hEnhMF, const ::rectangle_f64 & rectBounds)
+//   //bool graphics::PlayMetaFile(HENHMETAFILE hEnhMF, const ::rectangle_f64 & rectangleBounds)
 //   //{
 //
 //   //   __throw(todo);
@@ -2989,7 +2989,7 @@ namespace directx
 //   {
 //
 //
-//   ::rectangle_i32 rectIntersect(m_pointAlphaBlend, m_pimageAlphaBlend->size());
+//   ::rectangle_i32 rectangleIntersect(m_pointAlphaBlend, m_pimageAlphaBlend->size());
 //
 //
 //   ::image_pointer pimageWork = nullptr;
@@ -3314,7 +3314,7 @@ namespace directx
 //   }
 //
 //
-//   //void graphics::DrawDragRect(const ::rectangle_i32 & rectangle, const ::size_f64& ::size_f64, const ::rectangle_i32 & rectLast, const ::size_f64& sizeLast, ::draw2d::brush* pBrush, ::draw2d::brush* pBrushLast)
+//   //void graphics::DrawDragRect(const ::rectangle_i32 & rectangle, const ::size_f64& ::size_f64, const ::rectangle_i32 & rectangleLast, const ::size_f64& sizeLast, ::draw2d::brush* pBrush, ::draw2d::brush* pBrushLast)
 //   //{
 //
 //   //   throw interface_only_exception();
@@ -3834,11 +3834,11 @@ namespace directx
 //
 //   //   {
 //
-//   //      ::draw2d::region_pointer pregion(e_create);
+//   //      auto pregion = __create < ::draw2d::region > ();
 //
-//   //      auto rectClip = rectangle_i32 + m_pointAddShapeTranslate;
+//   //      auto rectangleClip = rectangle_i32 + m_pointAddShapeTranslate;
 //
-//   //      pregion->create_rect(rectClip);
+//   //      pregion->create_rect(rectangleClip);
 //
 //   //      D2D1::Matrix3x2F m = {};
 //
@@ -3868,11 +3868,11 @@ namespace directx
 //
 //      ::draw2d::lock draw2dlock;
 //
-//      ::draw2d::region_pointer pregion(e_create);
+//      auto pregion = __create < ::draw2d::region > ();
 //
-//      auto rectClip = rectangle + m_pointAddShapeTranslate;
+//      auto rectangleClip = rectangle + m_pointAddShapeTranslate;
 //
-//      pregion->create_rect(rectClip);
+//      pregion->create_rect(rectangleClip);
 //
 //      D2D1::Matrix3x2F m = {};
 //
@@ -3905,7 +3905,7 @@ namespace directx
 //
 //   //   {
 //
-//   //      ::draw2d::region_pointer pregion(e_create);
+//   //      auto pregion = __create < ::draw2d::region > ();
 //
 //   //      pregion->create_oval(ellipse);
 //
@@ -3936,7 +3936,7 @@ namespace directx
 //
 //      {
 //
-//         ::draw2d::region_pointer pregion(e_create);
+//         auto pregion = __create < ::draw2d::region > ();
 //
 //         pregion->create_oval(ellipse);
 //
@@ -3967,7 +3967,7 @@ namespace directx
 //
 //   //   {
 //
-//   //      ::draw2d::region_pointer pregion(e_create);
+//   //      auto pregion = __create < ::draw2d::region > ();
 //
 //   //      pregion->create_polygon(polygon_i32.get_data(), (::i32) polygon_i32.get_count(), ::draw2d::fill_mode_winding);
 //
@@ -3998,7 +3998,7 @@ namespace directx
 //
 //      {
 //
-//         ::draw2d::region_pointer pregion(e_create);
+//         auto pregion = __create < ::draw2d::region > ();
 //
 //         pregion->create_polygon(polygon_i32.get_data(), (::i32) polygon_i32.get_count(), ::draw2d::fill_mode_winding);
 //
@@ -4403,19 +4403,19 @@ namespace directx
 //      case META_SETBKCOLOR:
 //      {
 //         
-//         ::draw2d::brush_pointer brush(e_create);
+//         auto pbrush = __create < ::draw2d::brush >();
 //         
-//         brush->create_solid(*(UNALIGNED color32_t*)&pMetaRec->rdParm[0]);
+//         pbrush->create_solid(*(UNALIGNED color32_t*)&pMetaRec->rdParm[0]);
 //         
-//         (dynamic_cast<::draw2d_directx::graphics * >(pgraphics))->set(brush);
+//         (dynamic_cast<::draw2d_directx::graphics * >(pgraphics))->set(pbrush);
 //
 //      }
 //      break;
 //      case META_SETTEXTCOLOR:
 //      {
-//         ::draw2d::brush_pointer brush(e_create);
-//         brush->create_solid(*(UNALIGNED color32_t*)&pMetaRec->rdParm[0]);
-//         (dynamic_cast<::draw2d_directx::graphics * >(pgraphics))->set(brush);
+//         auto pbrush = __create < ::draw2d::brush >();
+//         pbrush->create_solid(*(UNALIGNED color32_t*)&pMetaRec->rdParm[0]);
+//         (dynamic_cast<::draw2d_directx::graphics * >(pgraphics))->set(pbrush);
 //      }
 //      break;
 //
@@ -4852,7 +4852,7 @@ namespace directx
 //   }
 //
 //
-//   bool graphics::fill_rectangle(const ::rectangle_f64 & rectParam, const ::color::color & color)
+//   bool graphics::fill_rectangle(const ::rectangle_f64 & rectangleParam, const ::color::color & color)
 //   {
 //
 //      if (!m_pdevicecontext)
@@ -4862,15 +4862,15 @@ namespace directx
 //
 //      }
 //
-//      ::draw2d::brush_pointer br(e_create);
+//      auto pbrush = __create < ::draw2d::brush > ();
 //
-//      br->create_solid(color);
+//      pbrush->create_solid(color);
 //
-//      auto pbrush = br->get_os_data < ID2D1Brush * >(this);
+//      auto pbrush = pbrush->get_os_data < ID2D1Brush * >(this);
 //
 //      D2D1_RECT_F rectangle;
 //
-//      __copy(rectangle, rectParam);
+//      __copy(rectangle, rectangleParam);
 //
 //      defer_primitive_blend();
 //

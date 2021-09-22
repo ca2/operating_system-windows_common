@@ -25,6 +25,8 @@ namespace draw2d_direct2d
 
       ::draw2d::lock draw2dlock;
 
+      ::draw2d::device_lock devicelock(this);
+
       if (m_pbitmap != nullptr)
       {
 
@@ -90,6 +92,8 @@ namespace draw2d_direct2d
    {
 
       ::draw2d::lock draw2dlock;
+
+      ::draw2d::device_lock devicelock(this);
 
       if (m_pbitmap != nullptr)
       {
@@ -159,13 +163,13 @@ namespace draw2d_direct2d
       if (pcolorref && iScan > 0)
       {
 
-         D2D1_RECT_U rectDst = {};
+         D2D1_RECT_U rectangleDst = {};
 
-         rectDst.right = size.cx;
+         rectangleDst.right = size.cx;
 
-         rectDst.bottom = size.cy;
+         rectangleDst.bottom = size.cy;
 
-         hrResultCopyBitmap = m_pbitmap->CopyFromMemory(&rectDst, pcolorref, iScan);
+         hrResultCopyBitmap = m_pbitmap->CopyFromMemory(&rectangleDst, pcolorref, iScan);
 
       }
 
@@ -258,6 +262,8 @@ namespace draw2d_direct2d
 
       ::draw2d::lock draw2dlock;
 
+      ::draw2d::device_lock devicelock(this);
+
       if (m_pbitmap != nullptr)
       {
 
@@ -305,6 +311,8 @@ namespace draw2d_direct2d
    {
 
       ::draw2d::lock draw2dlock;
+
+      ::draw2d::device_lock devicelock(this);
 
       if (m_pbitmap != nullptr)
       {

@@ -977,11 +977,11 @@ namespace draw2d_direct2d
 
    //   }
 
-   //   D2D1_RECT_F rectDest = D2D1::RectF(0, 0, (FLOAT)this->width(), (FLOAT)this->height());
+   //   D2D1_RECT_F rectangleDest = D2D1::RectF(0, 0, (FLOAT)this->width(), (FLOAT)this->height());
 
-   //   D2D1_RECT_F rectSource = D2D1::RectF(0, 0, (FLOAT) pimage->width(), (FLOAT) pimage->height());
+   //   D2D1_RECT_F rectangleSource = D2D1::RectF(0, 0, (FLOAT) pimage->width(), (FLOAT) pimage->height());
 
-   //   ((ID2D1RenderTarget *)m_pgraphics->get_os_data())->DrawBitmap(((ID2D1Bitmap1 *) pimage->get_bitmap()->m_osdata[0]), rectDest, 1.0, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, rectSource);
+   //   ((ID2D1RenderTarget *)m_pgraphics->get_os_data())->DrawBitmap(((ID2D1Bitmap1 *) pimage->get_bitmap()->m_osdata[0]), rectangleDest, 1.0, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, rectangleSource);
 
    //   /*
    //   ::StretchDIBits(
@@ -1480,15 +1480,15 @@ namespace draw2d_direct2d
    //bool image::update_window(::aura::draw_interface * puserinteraction, ::message::message * pmessage, bool bTransferBuffer)
    //{
 
-   //   rectangle_i64 rectWindow;
+   //   rectangle_i64 rectangleWindow;
 
-   //   puserinteraction->get_window_rect(rectWindow);
+   //   puserinteraction->get_window_rect(rectangleWindow);
 
    //   m_pgraphics->SetViewportOrg(0, 0);
 
    //   map(false);
 
-   //   ::rectangle_i32 rectangle(rectWindow);
+   //   ::rectangle_i32 rectangle(rectangleWindow);
 
    //   //      papplication->window_graphics_update_window(puserinteraction->get_window_graphics(),puserinteraction->get_handle(),m_pcolorref,rectangle,this->width(), this->height(), m_iScan, bTransferBuffer);
 
@@ -1683,7 +1683,7 @@ namespace draw2d_direct2d
 
       //}
 
-      //::rectangle_i32 rectDib1(::point_i32(), pimage->get_size());
+      //::rectangle_i32 rectangleDib1(::point_i32(), pimage->get_size());
 
       //fill(a_rgb(255, rgb));
 
@@ -1696,7 +1696,7 @@ namespace draw2d_direct2d
       //pgraphicsDib1->m_pdevicecontext->DrawImage(
       //pimage->get_bitmap()->get_os_data< ID2D1Bitmap>(),
       //D2D1::Point2F(0.f, 0.f),
-      //d2d1::rectangle_f32(rectDib1),
+      //d2d1::rectangle_f32(rectangleDib1),
       //D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR,
       //D2D1_COMPOSITE_MODE_SOU_IN);
 

@@ -33,4 +33,9 @@
       <UniqueIdentifier>{cf4c2f87-28cb-419b-9454-ecdaca98bab5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="u_multimedia_xaudio.def">
+      <Filter>Source Files</Filter>
+    </None>
+  </ItemGroup>
 </Project>
