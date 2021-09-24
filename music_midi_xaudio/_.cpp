@@ -318,48 +318,48 @@ namespace music
 
       }
 
-      ::e_status     FillTypeCombo(__pointer(simple_combo_box)lpcombo)
-      {
-         __UNREFERENCED_PARAMETER(lpcombo);
-         /*   lpcombo->ResetContent();
+      //::e_status     FillTypeCombo(__pointer(simple_combo_box)lpcombo)
+      //{
+      //   __UNREFERENCED_PARAMETER(lpcombo);
+      //   /*   lpcombo->ResetContent();
 
-         string str;
-         str.load_string(IDS_MIDI_NOTEOFF);
-         i32 iItem = lpcombo->AddString(str);
-         lpcombo->SetItemData(iItem, NoteOff);
+      //   string str;
+      //   str.load_string(IDS_MIDI_NOTEOFF);
+      //   i32 iItem = lpcombo->AddString(str);
+      //   lpcombo->SetItemData(iItem, NoteOff);
 
-         str.load_string(IDS_MIDI_NOTEON);
-         iItem = lpcombo->AddString(str);
-         lpcombo->SetItemData(iItem, NoteOn);
+      //   str.load_string(IDS_MIDI_NOTEON);
+      //   iItem = lpcombo->AddString(str);
+      //   lpcombo->SetItemData(iItem, NoteOn);
 
-         //    string str;
-         //  str.load_string(IDS_MIDI_KEYPRESSURE);
-         //lpcombo->AddString(str);
-         //lpcombo->SetItemData(lpcombo->get_count() - 1, K);
-         str.load_string(IDS_MIDI_CONTROLCHANGE);
-         iItem = lpcombo->AddString(str);
-         lpcombo->SetItemData(iItem, control_change);
+      //   //    string str;
+      //   //  str.load_string(IDS_MIDI_KEYPRESSURE);
+      //   //lpcombo->AddString(str);
+      //   //lpcombo->SetItemData(lpcombo->get_count() - 1, K);
+      //   str.load_string(IDS_MIDI_CONTROLCHANGE);
+      //   iItem = lpcombo->AddString(str);
+      //   lpcombo->SetItemData(iItem, control_change);
 
-         str.load_string(IDS_MIDI_PROGRAMCHANGE);
-         iItem = lpcombo->AddString(str);
-         lpcombo->SetItemData(iItem, ProgramChange);*/
+      //   str.load_string(IDS_MIDI_PROGRAMCHANGE);
+      //   iItem = lpcombo->AddString(str);
+      //   lpcombo->SetItemData(iItem, ProgramChange);*/
 
-         return ::success;
-      }
+      //   return ::success;
+      //}
 
-      ::e_status     FillPitchCombo(__pointer(simple_combo_box)lpcombo)
-      {
-         __UNREFERENCED_PARAMETER(lpcombo);
-         /*    lpcombo->ResetContent();
+      //::e_status     FillPitchCombo(__pointer(simple_combo_box)lpcombo)
+      //{
+      //   __UNREFERENCED_PARAMETER(lpcombo);
+      //   /*    lpcombo->ResetContent();
 
-         for(i32 i = 0; i < 128; i++)
-         {
-         i32 iItem = lpcombo->AddString(pitchText[i]);
-         lpcombo->SetItemData(iItem, i);
-         }
-         */
-         return ::success;
-      }
+      //   for(i32 i = 0; i < 128; i++)
+      //   {
+      //   i32 iItem = lpcombo->AddString(pitchText[i]);
+      //   lpcombo->SetItemData(iItem, i);
+      //   }
+      //   */
+      //   return ::success;
+      //}
 
 
       i32 GetMessageLen(byte bEvent)

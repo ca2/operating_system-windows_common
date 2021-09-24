@@ -16,7 +16,7 @@ namespace music
    {
 
 
-      namespace mmsystem
+      namespace xaudio
       {
 
 
@@ -49,7 +49,7 @@ namespace music
             public:
 
 
-               MIDIHDR              m_midihdr;
+               //MIDIHDR              m_midihdr;
                memory    m_storage;
                bool                 m_bPrepared;
 
@@ -57,14 +57,14 @@ namespace music
                void Reset();
                void Initialize(i32 iSize, uptr dwUser);
 
-               ::e_status     midiStreamOut(HMIDISTRM hmidiout);
-               ::e_status     midiOutPrepareHeader(HMIDIOUT hmidiout);
-               ::e_status     midiOutUnprepareHeader(HMIDIOUT hmidiout);
+               //::e_status     midiStreamOut(HMIDISTRM hmidiout);
+               //::e_status     midiOutPrepareHeader(HMIDIOUT hmidiout);
+               //::e_status     midiOutUnprepareHeader(HMIDIOUT hmidiout);
 
 
-               inline LPMIDIHDR GetMidiHdr() { return &m_midihdr; }
+               //inline LPMIDIHDR GetMidiHdr() { return &m_midihdr; }
 
-               void SetNextMidiHdr(LPMIDIHDR lpNext);
+               //void SetNextMidiHdr(LPMIDIHDR lpNext);
 
 
             };
@@ -80,9 +80,9 @@ namespace music
                void Initialize(i32 iCount, i32 iSize, uptr dwUser);
 
 
-               ::e_status     midiStreamOut(HMIDISTRM hmidiout);
+     /*          ::e_status     midiStreamOut(HMIDISTRM hmidiout);
                ::e_status     midiOutPrepareHeader(HMIDIOUT hmidiout);
-               ::e_status     midiOutUnprepareHeader(HMIDIOUT hmidiout);
+               ::e_status     midiOutUnprepareHeader(HMIDIOUT hmidiout);*/
 
             };
 
@@ -92,7 +92,7 @@ namespace music
             public:
 
 
-               LPMIDIHDR                     m_lpmh;
+               //LPMIDIHDR                     m_lpmh;
 
 
             };
