@@ -100,10 +100,10 @@ namespace SDKSample
             void OnPortUpdated(DeviceWatcher^ deviceWatcher, DeviceInformationUpdate^ devInfoUpdate);
             void OnPortEnumCompleted(DeviceWatcher^ deviceWatcher, Object^ obj);
 
-            ::winrt::Windows::Foundation::EventRegistrationToken _portAddedToken;
-            ::winrt::Windows::Foundation::EventRegistrationToken _portRemovedToken;
-            ::winrt::Windows::Foundation::EventRegistrationToken _portUpdatedToken;
-            ::winrt::Windows::Foundation::EventRegistrationToken _portEnumCompleteToken;
+            ::winrt::event_token _portAddedToken;
+            ::winrt::event_token _portRemovedToken;
+            ::winrt::event_token _portUpdatedToken;
+            ::winrt::event_token _portEnumCompleteToken;
 
             String ^ _midiSelectorString;
             ::winrt::Windows::UI::Core::CoreDispatcher^ _coreDispatcher;

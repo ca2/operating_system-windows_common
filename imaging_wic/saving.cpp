@@ -83,7 +83,7 @@ namespace imaging_wic
 
 
 
-   bool node_save_image(comptr < IStream > pstream, const ::image * pimage, const ::save_image * psaveimage)
+   bool node_save_image(IStream * pstream, const ::image * pimage, const ::save_image * psaveimage)
    {
 
       comptr < IWICImagingFactory > pimagingfactory;
@@ -257,6 +257,10 @@ namespace imaging_wic
 
       pimage->map();
 
+      auto pcolorref = pimage->get_data();
+
+      auto iScan = pimage->scan_size();
+
       if (SUCCEEDED(hr))
       {
 
@@ -266,7 +270,7 @@ namespace imaging_wic
             if (SUCCEEDED(hr))
             {
 
-               hr = pbitmapframeencode->WritePixels(uHeight, pimage->scan_size(), uHeight * pimage->scan_size(), (byte *)pimage->get_data());
+               hr = pbitmapframeencode->WritePixels(uHeight, iScan, uHeight * iScan, (byte *)pcolorref);
 
             }
 

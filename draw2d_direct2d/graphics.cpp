@@ -51,8 +51,6 @@ namespace draw2d_direct2d
 
       m_hdcAttach = nullptr;
 
-      m_ppen.create();
-
       m_iType     = 0;
 
       m_interpolationmode = D2D1_INTERPOLATION_MODE_HIGH_QUALITY_CUBIC;
@@ -115,7 +113,7 @@ namespace draw2d_direct2d
    //}
 
 
-   bool graphics::CreateCompatibleDC(::draw2d::graphics *)
+   bool graphics::CreateCompatibleDC(::draw2d::graphics * pgraphics)
    {
 
       ::draw2d::lock draw2dlock;
@@ -228,12 +226,7 @@ namespace draw2d_direct2d
          return false;
       }
 
-      if (m_pbitmap.is_null())
-      {
-
-         m_pbitmap.create();
-
-      }
+      __defer_construct(m_pbitmap);
 
       ID2D1Bitmap * pbitmap;
 
@@ -1753,7 +1746,7 @@ namespace draw2d_direct2d
 
       defer_primitive_blend();
 
-      m_prendertarget->DrawRectangle(&rectangle, ppen2->get_os_data < ID2D1Brush * >(this), (FLOAT)m_ppen->m_dWidth);
+      m_prendertarget->DrawRectangle(&rectangle, ppen2->get_os_data < ID2D1Brush * >(this), (FLOAT)ppen->m_dWidth);
 
       return true;
 
@@ -2259,7 +2252,7 @@ namespace draw2d_direct2d
       if (m_pfont.is_null())
       {
 
-         ((graphics*)this)->m_pfont.create();
+         __construct(((graphics*)this)->m_pfont);
 
       }
 

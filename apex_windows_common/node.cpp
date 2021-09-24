@@ -479,50 +479,50 @@ namespace apex
       }
 
 
-      string node::veriwell_multimedia_music_midi_get_default_library_name()
-      {
+      //string node::veriwell_multimedia_music_midi_get_default_library_name()
+      //{
 
-         return "music_midi_mmsystem";
+      //   return "music_midi_mmsystem";
 
-      }
-
-
-      string node::multimedia_audio_mixer_get_default_library_name()
-      {
-
-         return "audio_mixer_mmsystem";
-
-      }
+      //}
 
 
-      string node::multimedia_audio_get_default_library_name()
-      {
+      //string node::multimedia_audio_mixer_get_default_library_name()
+      //{
 
-         string str;
+      //   return "audio_mixer_mmsystem";
 
-         if (m_psystem->m_pacmefile->exists(m_psystem->m_pacmedir->system() / "config\\system\\audio.txt"))
-         {
+      //}
 
-            str = m_psystem->m_pacmefile->as_string(m_psystem->m_pacmedir->system() / "config\\system\\audio.txt");
 
-         }
-         else
-         {
+      //string node::multimedia_audio_get_default_library_name()
+      //{
 
-            ::file::path strPath;
+      //   string str;
 
-            strPath = m_psystem->m_pacmedir->appdata() / "audio.txt";
+      //   if (m_psystem->m_pacmefile->exists(m_psystem->m_pacmedir->system() / "config\\system\\audio.txt"))
+      //   {
 
-            str = m_psystem->m_pacmefile->as_string(strPath);
+      //      str = m_psystem->m_pacmefile->as_string(m_psystem->m_pacmedir->system() / "config\\system\\audio.txt");
 
-         }
+      //   }
+      //   else
+      //   {
 
-         if (str.has_char())
-            return "audio_" + str;
-         else
-            return "audio_mmsystem";
+      //      ::file::path strPath;
 
-      }
+      //      strPath = m_psystem->m_pacmedir->appdata() / "audio.txt";
+
+      //      str = m_psystem->m_pacmefile->as_string(strPath);
+
+      //   }
+
+      //   if (str.has_char())
+      //      return "audio_" + str;
+      //   else
+      //      return "audio_mmsystem";
+
+      //}
 
 
 

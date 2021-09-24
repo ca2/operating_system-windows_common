@@ -250,7 +250,7 @@ namespace draw2d_direct2d
    ID2D1Geometry * region::get_polygon(::draw2d::graphics* pgraphics)
    {
 
-      auto ppath = __create < ::draw2d::path > ();
+      auto ppath = pgraphics->__create < ::draw2d::path > ();
 
       /*point_i32_array pa;
 
@@ -282,7 +282,7 @@ namespace draw2d_direct2d
    ID2D1Geometry * region::get_poly_polygon(::draw2d::graphics* pgraphics)
    {
 
-      auto ppath = __create < ::draw2d::path > ();
+      auto ppath = pgraphics->__create < ::draw2d::path > ();
 
       point_f64_array pa;
 

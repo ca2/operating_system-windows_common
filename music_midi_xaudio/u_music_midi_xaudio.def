@@ -1,4 +1,4 @@
-LIBRARY  "music_midi_mmsystem"
+LIBRARY  "music_midi_xaudio"
 
 EXPORTS
-factory_exchange
+music_midi_xaudio_factory_exchange

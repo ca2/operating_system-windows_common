@@ -57,11 +57,11 @@ namespace apex
 
          ::e_status get_firefox_installation_info(string& strPathToExe, string& strInstallDirectory);
 
-         virtual string veriwell_multimedia_music_midi_get_default_library_name() override;
+         //virtual string veriwell_multimedia_music_midi_get_default_library_name() override;
 
-         virtual string multimedia_audio_mixer_get_default_library_name() override;
+         //virtual string multimedia_audio_mixer_get_default_library_name() override;
 
-         virtual string multimedia_audio_get_default_library_name() override;
+         //virtual string multimedia_audio_get_default_library_name() override;
 
          //virtual bool is_application_installed(const ::file::path& pathExe, string strAppId, string& strBuild, const ::string & pszPlatform, const ::string & pszConfiguration, const ::string & pszLocale, const ::string & pszSchema) override;
 

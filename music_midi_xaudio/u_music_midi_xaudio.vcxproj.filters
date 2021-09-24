@@ -4,51 +4,27 @@
     <Filter Include="Header Files">
       <UniqueIdentifier>{176c3936-f65e-4fc0-8897-9b2a8831fcb6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\player">
-      <UniqueIdentifier>{ecf09e51-30e5-4331-97bf-38016cd86c5e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files">
       <UniqueIdentifier>{9bbb73a0-40d0-4f09-b55c-524201fce82b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\player">
-      <UniqueIdentifier>{bb13006e-22ad-4dea-8a12-50de9a2eb737}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="player\music_midi_xaudio2_player.h">
-      <Filter>Header Files\player</Filter>
-    </ClInclude>
-    <ClInclude Include="player\music_midi_xaudio2_player_callback.h">
-      <Filter>Header Files\player</Filter>
-    </ClInclude>
-    <ClInclude Include="player\music_midi_xaudio2_player_interface.h">
-      <Filter>Header Files\player</Filter>
-    </ClInclude>
-    <ClInclude Include="player\music_midi_xaudio2_player_window.h">
-      <Filter>Header Files\player</Filter>
-    </ClInclude>
     <ClInclude Include="framework.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="music_midi_xaudio.h">
+    <ClInclude Include="_music_midi_xaudio.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="music_midi_xaudio_factory_exchange.h">
+    <ClInclude Include="factory_exchange.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="music_midi_xaudio_file.h">
+    <ClInclude Include="out.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="music_midi_xaudio_out.h">
+    <ClInclude Include="translation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="music_midi_xaudio_sequence.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="music_midi_xaudio_sequence_thread.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="music_midi_xaudio_translation.h">
+    <ClInclude Include="_.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -56,38 +32,22 @@
     <ClCompile Include="framework.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="music_midi_xaudio.cpp">
+    <ClCompile Include="_.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="music_midi_xaudio_factory_exchange.cpp">
+    <ClCompile Include="factory_exchange.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="music_midi_xaudio_file.cpp">
+    <ClCompile Include="out.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="music_midi_xaudio_out.cpp">
+    <ClCompile Include="translation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="music_midi_xaudio_sequence.cpp">
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="u_music_midi_xaudio.def">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="music_midi_xaudio_sequence_thread.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="music_midi_xaudio_translation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="player\music_midi_xaudio2_player.cpp">
-      <Filter>Source Files\player</Filter>
-    </ClCompile>
-    <ClCompile Include="player\music_midi_xaudio2_player_callback.cpp">
-      <Filter>Source Files\player</Filter>
-    </ClCompile>
-    <ClCompile Include="player\music_midi_xaudio2_player_interface.cpp">
-      <Filter>Source Files\player</Filter>
-    </ClCompile>
-    <ClCompile Include="player\music_midi_xaudio2_player_window.cpp">
-      <Filter>Source Files\player</Filter>
-    </ClCompile>
+    </None>
   </ItemGroup>
 </Project>

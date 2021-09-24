@@ -21,7 +21,7 @@ namespace imaging_wic
    comptr < IWICImagingFactory > get_imaging_factory();
 
 
-   CLASS_DECL_IMAGING_WIC bool node_save_image(comptr < IStream > pstream, const ::image * pimage, const ::save_image * psaveimage);
+   CLASS_DECL_IMAGING_WIC bool node_save_image(IStream * pstream, const ::image * pimage, const ::save_image * psaveimage);
 
 
 #ifdef _UWP

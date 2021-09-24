@@ -27,6 +27,9 @@
     <ClInclude Include="wave_out.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="_audio_xaudio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="framework.cpp">
