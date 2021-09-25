@@ -4688,7 +4688,7 @@ namespace draw2d_direct2d
       case META_SETBKCOLOR:
       {
          
-         auto pbrush = __create < ::draw2d::brush >();
+         auto pbrush = pgraphics->__create < ::draw2d::brush >();
          
          pbrush->create_solid(*(UNALIGNED ::color::color*)&pMetaRec->rdParm[0]);
          
@@ -4698,7 +4698,7 @@ namespace draw2d_direct2d
       break;
       case META_SETTEXTCOLOR:
       {
-         auto pbrush = __create < ::draw2d::brush >();
+         auto pbrush = pgraphics->__create < ::draw2d::brush >();
          pbrush->create_solid(*(UNALIGNED ::color::color*)&pMetaRec->rdParm[0]);
          (dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->set(pbrush);
       }
