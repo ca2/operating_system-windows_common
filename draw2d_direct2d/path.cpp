@@ -589,7 +589,7 @@ namespace draw2d_direct2d
    bool path::_set(::draw2d::graphics* pgraphics, const ::line & line)
    {
 
-      if (line.m_p1 != m_pointEnd)
+      if (line.m_p1 != m_pointEnd || ::is_null(m_psink))
       {
 
          if (!internal_start_figure(pgraphics, line.m_p1.x, line.m_p1.y))

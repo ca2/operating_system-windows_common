@@ -24,7 +24,7 @@ namespace imaging_wic
 
 
       //virtual ::e_status _load_image(::context_image * pcontextimage, ::image * pimageParam, const ::payload & varFile, bool bSync, bool bCreateHelperMaps) override;
-      ::e_status _load_image(image* pimage, const ::payload& varFile, bool bSync = true, bool bCreateHelperMaps = false) override;
+      ::e_status _load_image(image* pimage, const ::payload& varFile, const ::image::load_options & loadoptions = ::image::load_options()) override;
 
       ::e_status _load_image(::image * pimage, __pointer(image_frame_array) & pframea, ::memory & memory) override;
       ::e_status save_image(memory & memory, const ::image * pimage, const ::save_image * psaveimage) override;

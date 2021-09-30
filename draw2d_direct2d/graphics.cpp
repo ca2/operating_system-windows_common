@@ -1985,7 +1985,7 @@ namespace draw2d_direct2d
          double nSrcWidth = rectangleSource.width();
          double nSrcHeight = rectangleSource.height();
 
-         if (::is_null(pimage))
+         if (::nok(pimage))
          {
 
             return false;

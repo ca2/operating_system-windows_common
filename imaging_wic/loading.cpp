@@ -11,7 +11,7 @@ namespace imaging_wic
    bool windows_image_from_bitmap_source(::image * pimageFrame, IWICBitmapSource * pbitmapsource, IWICImagingFactory * pimagingfactory);
 
 
-   ::e_status context_image::_load_image(::image * pimageParam, const ::payload & varFile, bool bSync, bool bCreateHelperMaps)
+   ::e_status context_image::_load_image(::image * pimageParam, const ::payload & varFile, const ::image::load_options & loadoptions)
    {
 
       auto ploadimage = __new(::load_image(this));
@@ -33,9 +33,9 @@ namespace imaging_wic
 
       ploadimage->m_payload = varFile;
 
-      pimageParam->m_bCreateHelperMaps = bCreateHelperMaps;
+      pimageParam->m_bCreateHelperMaps = loadoptions.helper_maps;
 
-      m_pmanagerImageLoad->handle(ploadimage, bSync);
+      m_pmanagerImageLoad->handle(ploadimage, loadoptions.sync);
 
       return ploadimage->m_estatus;
 

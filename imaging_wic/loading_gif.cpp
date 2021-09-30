@@ -370,10 +370,10 @@ namespace imaging_wic
                      // This will defeat the purpose of using zero delay intermediate frames in
                      // order to preserve compatibility. If this is erased, the zero delay
                      // intermediate frames will not be visible.
-                     if (pframe->m_tick < 90)
+                     if (pframe->m_tick < 20)
                      {
 
-                        pframe->m_tick = 90;
+                        pframe->m_tick = 20;
 
                      }
 
@@ -417,9 +417,9 @@ namespace imaging_wic
 
             }
 
-            ::draw2d::e_disposal edisposal = iFrame <= 0 ? ::draw2d::disposal_none : pframea->element_at(iFrame - 1)->m_edisposal;
+            //::draw2d::e_disposal edisposal = edisposaliFrame <= 0 ? ::draw2d::disposal_none : pframea->element_at(iFrame - 1)->m_edisposal;
 
-            pframe->m_edisposal = edisposal;
+            //pframe->m_edisposal = edisposal;
 
             pframe->_001Process(pimageCompose, pimageFrame, pframea);
 
@@ -430,13 +430,6 @@ namespace imaging_wic
       return SUCCEEDED(hr);
 
    }
-
-
-
-
-
-
-
 
 
    //#ifdef WINDOWS

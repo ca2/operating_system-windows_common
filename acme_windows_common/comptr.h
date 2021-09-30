@@ -261,4 +261,11 @@ public:
 #define __unknown_of(comptr) __uuidof(decltype(*comptr.m_p)), reinterpret_cast < IUnknown ** > (&comptr.m_p)
 
 
+template < typename TYPE >
+inline bool is_null(const comptr < TYPE > & p)
+{
+
+   return ::is_null(p.m_p);
+
+}
 
