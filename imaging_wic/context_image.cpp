@@ -111,7 +111,7 @@ namespace imaging_wic
       if (FAILED(hrCreate))
       {
 
-         TRACE("Failed creating WICImagingFactory1 %x", hrCreate);
+         _INFORMATION(::get_task(), "Failed creating WICImagingFactory1 %x" << hrCreate);
 
       }
 

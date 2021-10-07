@@ -418,7 +418,7 @@ Seq_Open_File_Cleanup:
          *
          * pSeq                      - The sequencer instance.
          *
-         * lpPreroll                 - Specifies the starting and ending millis
+         * lpPreroll                 - Specifies the starting and ending ::duration
          *                             positions to play between.
          *
          * Returns
@@ -902,7 +902,7 @@ seq_Preroll_Cleanup:
          ::e_status     sequence::get_ticks(imedia_time &  pTicks)
          {
             single_lock synchronouslock(&m_mutex);
-            if(!synchronouslock.lock(millis(200)))
+            if(!synchronouslock.lock(::duration(200)))
                return ::multimedia::result_internal;
 
             ::e_status                    mmr;
@@ -979,7 +979,7 @@ seq_Preroll_Cleanup:
          ::e_status     sequence::get_millis(imedia_time & time)
          {
             single_lock synchronouslock(&m_mutex);
-            if(!synchronouslock.lock(millis(200)))
+            if(!synchronouslock.lock(::duration(200)))
                return ::multimedia::result_internal;
 
             ::e_status                    mmr;
@@ -1039,12 +1039,12 @@ seq_Preroll_Cleanup:
          *
          * seqMillisecsToTicks
          *
-         * Given a millisecond offset in the output stream, returns the associated
-         * millis position.
+         * Given a ::duration offset in the output stream, returns the associated
+         * ::duration position.
          *
          * pSeq                      - The sequencer instance.
          *
-         * msOffset                  - The millisecond offset into the stream.
+         * msOffset                  - The ::duration offset into the stream.
          *
          * Returns the number of ticks into the stream.
          *
@@ -1058,14 +1058,14 @@ seq_Preroll_Cleanup:
          *
          * seqTicksToMillisecs
          *
-         * Given a millis offset in the output stream, returns the associated
-         * millisecond position.
+         * Given a ::duration offset in the output stream, returns the associated
+         * ::duration position.
          *
          * pSeq                      - The sequencer instance.
          *
-         * tkOffset                  - The millis offset into the stream.
+         * tkOffset                  - The ::duration offset into the stream.
          *
-         * Returns the number of milliseconds into the stream.
+         * Returns the number of ::durations into the stream.
          *
          ***************************************************************************/
          imedia_time sequence::TicksToMillisecs(imedia_time tkOffset)
@@ -1683,7 +1683,7 @@ seq_Preroll_Cleanup:
          imedia_time sequence::GetPositionTicks()
          {
             single_lock synchronouslock(&m_mutex);
-            if(!synchronouslock.lock(millis(0)))
+            if(!synchronouslock.lock(::duration(0)))
                return -1;
             MMTIME mmt;
             mmt.wType = TIME_TICKS;
@@ -1720,9 +1720,9 @@ seq_Preroll_Cleanup:
             return false;
          }
 
-         imedia_time sequence::TimeToPosition(imedia_time millis)
+         imedia_time sequence::TimeToPosition(imedia_time ::duration)
          {
-            return imedia_time(MillisecsToTicks((iptr) millis));
+            return imedia_time(MillisecsToTicks((iptr) ::duration));
          }
 
          imedia_time sequence::PositionToTime(imedia_time tk)

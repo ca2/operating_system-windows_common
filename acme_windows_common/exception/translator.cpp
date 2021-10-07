@@ -133,7 +133,7 @@ namespace windows_common
 
 //#if defined(__SANITIZE_ADDRESS__) || defined(__FOR_PERF__)
 //
-//            INFO("sanitize address compilation, not going to install standard exception translator");
+//            INFORMATION("sanitize address compilation, not going to install standard exception translator");
 //
 //#else
 //

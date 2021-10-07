@@ -325,7 +325,7 @@ namespace multimedia
 
 #endif
 
-         if(m_millisLastBuffer.timeout(50_tick))
+         if(m_durationLastBuffer.timeout(50_tick))
          {
 
             output_debug_string("too much delay for submitting audio buffer\n");

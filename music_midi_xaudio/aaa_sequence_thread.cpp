@@ -44,7 +44,7 @@ namespace music
          void sequence_thread::Stop(imedia_time msEllapse)
          {
             get_sequence()->Stop();
-            m_eventStop.wait(millis(msEllapse));
+            m_eventStop.wait(::duration(msEllapse));
          }
 
          ::music::midi::sequence * sequence_thread::get_sequence()

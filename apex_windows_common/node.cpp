@@ -341,7 +341,7 @@ namespace apex
 
          set["privileged"] = true;
 
-         if (!call_sync(path, strParam, path.folder(), ::e_display_none, 3_min, set))
+         if (!call_sync(path, strParam, path.folder(), ::e_display_none, 3_minute, set))
          {
 
             return false;

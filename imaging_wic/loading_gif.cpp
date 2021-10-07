@@ -346,7 +346,7 @@ namespace imaging_wic
 
                         hr = UIntMult(propValue.uiVal, 10, &uDelay);
 
-                        pframe->m_tick = uDelay;
+                        pframe->m_duration = INTEGRAL_MILLISECOND(uDelay);
 
                      }
 
@@ -356,7 +356,7 @@ namespace imaging_wic
 
                      // Failed to get delay from graphic control extension. Possibly a
                      // single frame image (non-animated gif)
-                     pframe->m_tick = 0;
+                     pframe->m_duration.Null();
 
                   }
 
@@ -370,10 +370,10 @@ namespace imaging_wic
                      // This will defeat the purpose of using zero delay intermediate frames in
                      // order to preserve compatibility. If this is erased, the zero delay
                      // intermediate frames will not be visible.
-                     if (pframe->m_tick < 20)
+                     if (pframe->m_duration < 20_ms)
                      {
 
-                        pframe->m_tick = 20;
+                        pframe->m_duration = 20_ms;
 
                      }
 
@@ -757,7 +757,7 @@ namespace imaging_wic
                // Convert the delay retrieved in 10 ms units to a delay in 1 ms units
                hr = UIntMult(propValue.uiVal, 10, &u);
 
-               pframe->m_tick = u;
+               pframe->m_duration = INTEGRAL_MILLISECOND(u);
 
             }
 
@@ -767,13 +767,13 @@ namespace imaging_wic
 
             // Failed to get delay from graphic control extension. Possibly a
             // single frame image (non-animated gif)
-            pframe->m_tick = 0;
+            pframe->m_duration.Null();
 
          }
 
          PropVariantClear(&propValue);
 
-         if (pframe->m_tick <= 0)
+         if (pframe->m_duration.is_null())
          {
 
             output_debug_string("0 delay");
