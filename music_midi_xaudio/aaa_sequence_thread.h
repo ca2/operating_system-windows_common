@@ -27,7 +27,7 @@ namespace music
             void install_message_routing(::channel * pchannel);
 
             ::music::midi::sequence * get_sequence();
-            void Stop(imedia_time msEllapse);
+            void Stop(::duration msEllapse);
 
             bool PostMidiSequenceEvent(::music::midi::sequence * pseq, ::music::midi::sequence::e_event event);
 
@@ -36,9 +36,9 @@ namespace music
             void PostNotifyEvent(::music::midi::player::e_notify_event eevent);
 
             void PrerollAndWait(double rate = 0.0);
-            void PrerollAndWait(imedia_time tkStart);
+            void PrerollAndWait(::duration tkStart);
             void Play(double dRate = 0.0);
-            void Play(imedia_time tkStart);
+            void Play(::duration tkStart);
             void PostGMReset();
             void PostTempoChange();
             void SendTempoChange();

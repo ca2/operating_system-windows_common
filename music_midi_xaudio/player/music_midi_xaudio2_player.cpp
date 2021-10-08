@@ -72,7 +72,7 @@ namespace music
                MESSAGE_LINK(MM_MOM_POSITIONCB, pchannel, this, &player::OnMultimediaMidiOutputMessagePositionCB);
             }
 
-            bool player::Play(imedia_time tkStart, u32 dwEllapse)
+            bool player::Play(::duration tkStart, u32 dwEllapse)
             {
 
                ::music::midi::player::command * pcommand = new ::music::midi::player::command(this);
@@ -111,11 +111,11 @@ namespace music
 
             }
 
-            imedia_time player::RateToTicks(double dRate)
+            ::duration player::RateToTicks(double dRate)
             {
                ASSERT(dRate >= 0.0);
                ASSERT(dRate <= 1.0);
-               return (imedia_time) (i32) (get_sequence()->m_tkLength * dRate);
+               return (::duration) (i32) (get_sequence()->m_tkLength * dRate);
             }
 
 
@@ -349,7 +349,7 @@ namespace music
                   link.ModifyFlag(
                   ::music::midi::sequence::e_flag_tempo_change,
                   ::music::midi::sequence::e_flag_null);
-                  imedia_time tk = get_sequence()->GetPositionTicks();
+                  ::duration tk = get_sequence()->GetPositionTicks();
                   get_sequence()->m_evMmsgDone.ResetEvent();
                   link.m_tkRestart = tk + get_sequence()->m_tkBase;
                   //m_bChangingTempo = true;
@@ -357,7 +357,7 @@ namespace music
                   //get_sequence()->m_evMmsgDone.lock();
                   */
                   bool bPlay = IsPlaying();
-                  imedia_time ticks = 0;
+                  ::duration ticks = 0;
                   if(bPlay)
                   {
                      ticks = get_sequence()->GetPositionTicks();
@@ -425,7 +425,7 @@ namespace music
                get_sequence()->SetMidiOutDevice(GetMidiOutDevice());
                if(get_sequence()->IsPlaying())
                {
-                  imedia_time tkPosition = 0;
+                  ::duration tkPosition = 0;
                   get_sequence()->GetPosition(tkPosition);
                   ::music::midi::sequence::PlayerLink & link = get_sequence()->GetPlayerLink();
                   link.ModifyFlag(

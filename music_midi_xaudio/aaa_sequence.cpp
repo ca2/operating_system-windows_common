@@ -899,7 +899,7 @@ seq_Preroll_Cleanup:
          * may be called.
          *
          ***************************************************************************/
-         ::e_status     sequence::get_ticks(imedia_time &  pTicks)
+         ::e_status     sequence::get_ticks(::duration &  pTicks)
          {
             single_lock synchronouslock(&m_mutex);
             if(!synchronouslock.lock(::duration(200)))
@@ -971,12 +971,12 @@ seq_Preroll_Cleanup:
 
          }
 
-         void sequence::get_time(imedia_time & time)
+         void sequence::get_time(::duration & time)
          {
             get_millis(time);
          }
 
-         ::e_status     sequence::get_millis(imedia_time & time)
+         ::e_status     sequence::get_millis(::duration & time)
          {
             single_lock synchronouslock(&m_mutex);
             if(!synchronouslock.lock(::duration(200)))
@@ -1049,7 +1049,7 @@ seq_Preroll_Cleanup:
          * Returns the number of ticks into the stream.
          *
          ***************************************************************************/
-         imedia_time sequence::MillisecsToTicks(imedia_time msOffset)
+         ::duration sequence::MillisecsToTicks(::duration msOffset)
          {
             return file()->MillisecsToTicks(msOffset);
          }
@@ -1068,7 +1068,7 @@ seq_Preroll_Cleanup:
          * Returns the number of ::durations into the stream.
          *
          ***************************************************************************/
-         imedia_time sequence::TicksToMillisecs(imedia_time tkOffset)
+         ::duration sequence::TicksToMillisecs(::duration tkOffset)
          {
             return file()->TicksToMillisecs(tkOffset);
          }
@@ -1425,7 +1425,7 @@ seq_Preroll_Cleanup:
 
             bool bPlay = IsPlaying();
 
-            imedia_time ticks = 0;
+            ::duration ticks = 0;
 
             if(bPlay)
             {
@@ -1680,7 +1680,7 @@ seq_Preroll_Cleanup:
             }
          }
 
-         imedia_time sequence::GetPositionTicks()
+         ::duration sequence::GetPositionTicks()
          {
             single_lock synchronouslock(&m_mutex);
             if(!synchronouslock.lock(::duration(0)))
@@ -1720,17 +1720,17 @@ seq_Preroll_Cleanup:
             return false;
          }
 
-         imedia_time sequence::TimeToPosition(imedia_time ::duration)
+         ::duration sequence::TimeToPosition(::duration ::duration)
          {
-            return imedia_time(MillisecsToTicks((iptr) ::duration));
+            return ::duration(MillisecsToTicks((iptr) ::duration));
          }
 
-         imedia_time sequence::PositionToTime(imedia_time tk)
+         ::duration sequence::PositionToTime(::duration tk)
          {
-            return imedia_time(TicksToMillisecs((imedia_time) (iptr) tk));
+            return ::duration(TicksToMillisecs((::duration) (iptr) tk));
          }
 
-         void sequence::GetPosition(imedia_time & position)
+         void sequence::GetPosition(::duration & position)
          {
             get_ticks(position);
          }
@@ -1740,7 +1740,7 @@ seq_Preroll_Cleanup:
             return GetState() != e_state_no_file;
          }
 
-         void sequence::GetTimeLength(imedia_time & time)
+         void sequence::GetTimeLength(::duration & time)
          {
             time = m_msLength;
          }
@@ -1763,8 +1763,8 @@ seq_Preroll_Cleanup:
 
             ASSERT(!file.IsNull());
             file.GetTracks().seek_begin();
-            imedia_time               tkMax = file.m_tkLength;
-            imedia_time               tkLastPosition = 0;
+            ::duration               tkMax = file.m_tkLength;
+            ::duration               tkLastPosition = 0;
 
 
             ::ikaraoke::static_data & staticdata = data.GetStaticData();
@@ -1979,8 +1979,8 @@ seq_Preroll_Cleanup:
                ms2DNoteOnMillis[i],
                0);
 
-               imedia_time time1(0);
-               imedia_time time2(0);
+               ::duration time1(0);
+               ::duration time2(0);
 
                pLyricEventsV2->m_msaTokensPosition.CopySorted(
                ms2DTokensMillis[i],
@@ -1991,15 +1991,15 @@ seq_Preroll_Cleanup:
                ms2DNoteOffMillis[i],
                ms2DNoteOnMillis[i]);
 
-               imedia_time time3(0);
-               imedia_time time4(0);
+               ::duration time3(0);
+               ::duration time4(0);
 
                pLyricEventsV2->m_msaNotesPosition.CopySorted(
                ms2DNoteOnMillis[i],
                time3,
                time4);
 
-               imedia_time time5(0x7fffffff);
+               ::duration time5(0x7fffffff);
 
                pLyricEventsV2->m_msaTokensDuration.ElementDiff(
                ms2DTokensMillis[i],
@@ -2036,8 +2036,8 @@ seq_Preroll_Cleanup:
                ms2DNoteOnMillis[i],
                0);
 
-               imedia_time time1(-100);
-               imedia_time time2(0);
+               ::duration time1(-100);
+               ::duration time2(0);
 
                pLyricEventsV2->m_msaTokensPosition.CopySorted(
                ms2DTokensMillis[i],
@@ -2048,15 +2048,15 @@ seq_Preroll_Cleanup:
                ms2DNoteOffMillis[i],
                ms2DNoteOnMillis[i]);
 
-               imedia_time time3(-100);
-               imedia_time time4(0);
+               ::duration time3(-100);
+               ::duration time4(0);
 
                pLyricEventsV2->m_msaNotesPosition.CopySorted(
                ms2DNoteOnMillis[i],
                time3,
                time4);
 
-               imedia_time time5(0x7fffffff);
+               ::duration time5(0x7fffffff);
 
                pLyricEventsV2->m_msaTokensDuration.ElementDiff(
                ms2DTokensMillis[i],
@@ -2088,8 +2088,8 @@ seq_Preroll_Cleanup:
                ms2DNoteOnMillis[i],
                -100);
 
-               imedia_time time1(-100);
-               imedia_time time2(0);
+               ::duration time1(-100);
+               ::duration time2(0);
 
                pLyricEventsV2->m_msaTokensPosition.CopySorted(
                ms2DTokensMillis[i],
@@ -2107,15 +2107,15 @@ seq_Preroll_Cleanup:
                */
 
 
-               imedia_time time3(-100);
-               imedia_time time4(0);
+               ::duration time3(-100);
+               ::duration time4(0);
 
                pLyricEventsV2->m_msaNotesPosition.CopySorted(
                ms2DNoteOnMillis[i],
                time3,
                time4);
 
-               imedia_time time5(0x7fffffff);
+               ::duration time5(0x7fffffff);
 
                pLyricEventsV2->m_msaTokensDuration.ElementDiff(
                ms2DTokensMillis[i],
@@ -2150,8 +2150,8 @@ seq_Preroll_Cleanup:
                ms2DNoteOnMillis[i],
                -100);
 
-               imedia_time time1(-100);
-               imedia_time time2(0);
+               ::duration time1(-100);
+               ::duration time2(0);
 
                pLyricEventsV2->m_msaTokensPosition.CopySorted(
                ms2DTokensMillis[i],
@@ -2168,15 +2168,15 @@ seq_Preroll_Cleanup:
                ms2DNoteOnMillis[i]);
                */
 
-               imedia_time time3(-100);
-               imedia_time time4(0);
+               ::duration time3(-100);
+               ::duration time4(0);
 
                pLyricEventsV2->m_msaNotesPosition.CopySorted(
                ms2DNoteOnMillis[i],
                time3,
                time4);
 
-               imedia_time time5(0x7fffffff);
+               ::duration time5(0x7fffffff);
 
                pLyricEventsV2->m_msaTokensDuration.ElementDiff(
                ms2DTokensMillis[i],
@@ -2285,7 +2285,7 @@ seq_Preroll_Cleanup:
          }
 
 
-         void sequence::GetPositionLength(imedia_time &position)
+         void sequence::GetPositionLength(::duration &position)
          {
             position = m_tkLength;
          }
@@ -2467,7 +2467,7 @@ seq_Preroll_Cleanup:
          void sequence::MuteAll(bool bMute, i32 iExcludeTrack)
          {
             bool bPlay = IsPlaying();
-            imedia_time ticks = 0;
+            ::duration ticks = 0;
             if(bPlay)
             {
                ticks = GetPositionTicks();
@@ -2484,7 +2484,7 @@ seq_Preroll_Cleanup:
          void sequence::MuteTrack(i32 iIndex, bool bMute)
          {
             bool bPlay = IsPlaying();
-            imedia_time ticks = 0;
+            ::duration ticks = 0;
             if(bPlay)
             {
                ticks = GetPositionTicks();
@@ -2498,7 +2498,7 @@ seq_Preroll_Cleanup:
             }
          }
 
-         imedia_time sequence::GetQuarterNote()
+         ::duration sequence::GetQuarterNote()
          {
             return get_file()->m_pFileHeader->GetQuarterNoteTicks();
          }
