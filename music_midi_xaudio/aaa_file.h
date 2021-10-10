@@ -136,13 +136,13 @@ namespace music
 
             iptr TicksToMillisecs(::duration tkOffset);
 
-            void TicksToMillisecs(imedia_time_array *pMillisArray, imedia_position_array *pTickArray, iptr tkOffset);
+            void TicksToMillisecs(duration_array *pMillisArray, imedia_position_array *pTickArray, iptr tkOffset);
 
-            void TicksToMillisecs(imedia_time_2darray *p2DMillisArray, imedia_position_2darray * p2DTicksArray, iptr tkOffset);
+            void TicksToMillisecs(duration_2darray *p2DMillisArray, imedia_position_2darray * p2DTicksArray, iptr tkOffset);
 
-            void PositionToTime(imedia_time_2darray  & timea, imedia_position_2darray  & positiona, iptr tkOffset);
+            void PositionToTime(duration_2darray  & timea, imedia_position_2darray  & positiona, iptr tkOffset);
 
-            void PositionToTime(imedia_time_array  & timea, imedia_position_array  & positiona, iptr tkOffset);
+            void PositionToTime(duration_array  & timea, imedia_position_array  & positiona, iptr tkOffset);
 
             ::duration MillisecsToTicks(::duration msOffset);
 
@@ -150,9 +150,9 @@ namespace music
 
             ::duration TimeToPosition(::duration msOffset);
 
-            void MillisecsToTicks(imedia_position_array * pTickArray, imedia_time_array *pMillisArray, ::duration msOffset);
+            void MillisecsToTicks(imedia_position_array * pTickArray, duration_array *pMillisArray, ::duration msOffset);
 
-            void TimeToPosition(imedia_position_array & positiona, imedia_time_array & timea, ::duration msOffset);
+            void TimeToPosition(imedia_position_array & positiona, duration_array & timea, ::duration msOffset);
 
             ::e_status     StreamRender(LPMIDIHDR lpmh, ::duration tkMax, u32 cbPrerollNomimalMax);
 

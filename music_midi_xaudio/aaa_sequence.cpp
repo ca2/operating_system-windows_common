@@ -1530,7 +1530,7 @@ seq_Preroll_Cleanup:
             }
          }
 
-         void sequence::OnMidiPlaybackEnd(::music::midi::sequence::event * pevent)
+         void sequence::on_midi_playback_end(::music::midi::sequence::event * pevent)
          {
             __UNREFERENCED_PARAMETER(pevent);
             single_lock synchronouslock(&m_mutex, true);
@@ -1570,19 +1570,19 @@ seq_Preroll_Cleanup:
             case EventSpecialModeV001End:
             {
                SetSpecialModeV001Flag(false);
-               OnMidiPlaybackEnd(pevent);
+               on_midi_playback_end(pevent);
                SetState(m_uiPreSpecialModeV001State);
             }
             break;
             case EventStopped:
             {
-               OnMidiPlaybackEnd(pevent);
+               on_midi_playback_end(pevent);
                SetState(e_state_opened);
             }
             break;
             case e_event_midi_playback_end:
             {
-               OnMidiPlaybackEnd(pevent);
+               on_midi_playback_end(pevent);
                SetState(e_state_opened);
             }
             break;
@@ -1783,11 +1783,11 @@ seq_Preroll_Cleanup:
             imedia_position_2darray tk2DNoteOffPositions(this);
             imedia_position_2darray tk2DBegPositions(this);
             imedia_position_2darray tk2DEndPositions(this);
-            imedia_time_2darray ms2DTokensMillis(this);
-            imedia_time_2darray ms2DNoteOnMillis(this);
-            imedia_time_2darray ms2DNoteOffMillis(this);
-            imedia_time_2darray ms2DBegMillis(this);
-            imedia_time_2darray ms2DEndMillis(this);
+            duration_2darray ms2DTokensMillis(this);
+            duration_2darray ms2DNoteOnMillis(this);
+            duration_2darray ms2DNoteOffMillis(this);
+            duration_2darray ms2DBegMillis(this);
+            duration_2darray ms2DEndMillis(this);
             ::music::midi::events midiEvents;
 
 

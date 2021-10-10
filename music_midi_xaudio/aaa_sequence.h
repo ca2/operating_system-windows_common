@@ -139,7 +139,7 @@ namespace music
             i32 SetKeyShift(i32 iKeyShift);
             i32 GetKeyShift();
 
-            void OnMidiPlaybackEnd(::music::midi::sequence::event * pevent);
+            void on_midi_playback_end(::music::midi::sequence::event * pevent);
             i32 SetTempoShift(i32 iTempoShift);
 
             void OnPositionCB(LPMIDIHDR lpmidihdr);
