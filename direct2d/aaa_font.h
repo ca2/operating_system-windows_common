@@ -39,7 +39,7 @@ namespace draw2d_direct2d
 
             virtual int GetLogFont(LOGFONTW* pLogFont);*/
 
-      virtual void dump(dump_context & dumpcontext) const;
+      void dump(dump_context & dumpcontext) const override;
 
       //bool destroy();
 

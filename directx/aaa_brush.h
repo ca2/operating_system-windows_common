@@ -41,7 +41,7 @@ namespace draw2d_directx
 
       //bool destroy();
 
-      virtual void dump(dump_context & dumpcontext) const;
+      void dump(dump_context & dumpcontext) const override;
    };
 
 

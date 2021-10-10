@@ -205,7 +205,7 @@ namespace draw2d_direct2d
          {
 
             auto imagebrushproperties = D2D1::ImageBrushProperties(
-               D2D1::RectF(0, 0,(float) m_pimage->width(),(float) m_pimage->height()),
+               D2D1::rectF(0, 0,(float) m_pimage->width(),(float) m_pimage->height()),
                D2D1_EXTEND_MODE_WRAP,
                D2D1_EXTEND_MODE_WRAP,
                D2D1_INTERPOLATION_MODE_LINEAR

@@ -301,7 +301,7 @@ namespace Platform {
 //{
 //   /*HRESULT hr;
 //
-//   D2D1_RECT_F rectangle = D2D1::RectF(
+//   D2D1_RECT_F rectangle = D2D1::rectF(
 //      0,
 //      underline->offset,
 //      underline->width,
@@ -366,7 +366,7 @@ namespace Platform {
 //{
 //   /*HRESULT hr;
 //
-//   D2D1_RECT_F rectangle = D2D1::RectF(
+//   D2D1_RECT_F rectangle = D2D1::rectF(
 //      0,
 //      strikethrough->offset,
 //      strikethrough->width,

@@ -140,13 +140,13 @@ namespace draw2d_direct2d
    }
 
 
-   bool region::RectInRegion(const ::rectangle_i32 & rectangle) const
+   bool region::rectInRegion(const ::rectangle_i32 & rectangle) const
    {
 
       __throw(todo);
 
 
-      //ASSERT(get_os_data() != nullptr); return ::RectInRegion((HRGN)get_os_data(), rectangle);
+      //ASSERT(get_os_data() != nullptr); return ::rectInRegion((HRGN)get_os_data(), rectangle);
 
       //Gdiplus::RectF rectangle_f32((Gdiplus::REAL) rectangle.left, (Gdiplus::REAL) rectangle.top, (Gdiplus::REAL) (rectangle.right - rectangle.left), (Gdiplus::REAL) (rectangle.bottom - rectangle.top));
       //

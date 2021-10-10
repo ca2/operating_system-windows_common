@@ -208,7 +208,7 @@ namespace draw2d_direct2d
 
             int cy = m_pimage->height();
 
-            auto rect = D2D1::RectF(0, 0, (float)cx, (float)cy);
+            auto rect = D2D1::rectF(0, 0, (float)cx, (float)cy);
 
             auto imagebrushproperties = D2D1::ImageBrushProperties(
                rect,

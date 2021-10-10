@@ -1067,14 +1067,14 @@ namespace draw2d_direct2d
    //} // call virtual
 
 
-   //bool graphics::RectVisible(const ::rectangle_i32 & rectangle)
+   //bool graphics::rectVisible(const ::rectangle_i32 & rectangle)
    //{
 
    //   __throw(todo);
 
    //   //ASSERT(get_handle1() != nullptr);
 
-   //   //return ::RectVisible(get_handle1(), rectangle) != false;
+   //   //return ::rectVisible(get_handle1(), rectangle) != false;
 
    //}
 
@@ -1930,9 +1930,9 @@ namespace draw2d_direct2d
 
          }
 
-         D2D1_RECT_F rectangleTarget = D2D1::RectF((float)x, (float)y, (float)(x + nWidth), (float)(y + nHeight));
+         D2D1_RECT_F rectangleTarget = D2D1::rectF((float)x, (float)y, (float)(x + nWidth), (float)(y + nHeight));
 
-         D2D1_RECT_F rectangleSource = D2D1::RectF((float)xSrc, (float)ySrc, (float)(xSrc + nWidth), (float)(ySrc + nHeight));
+         D2D1_RECT_F rectangleSource = D2D1::rectF((float)xSrc, (float)ySrc, (float)(xSrc + nWidth), (float)(ySrc + nHeight));
 
          auto pd2d1bitmap = ((ID2D1Bitmap *)pimage->get_bitmap()->get_os_data());
 
@@ -2006,9 +2006,9 @@ namespace draw2d_direct2d
 
          }
 
-         D2D1_RECT_F rectangleTarget = D2D1::RectF((float)xDst, (float)yDst, (float)(xDst + nDstWidth), (float)(yDst + nDstHeight));
+         D2D1_RECT_F rectangleTarget = D2D1::rectF((float)xDst, (float)yDst, (float)(xDst + nDstWidth), (float)(yDst + nDstHeight));
 
-         D2D1_RECT_F rectangleSource = D2D1::RectF((float)xSrc, (float)ySrc, (float)(xSrc + nSrcWidth), (float)(ySrc + nSrcHeight));
+         D2D1_RECT_F rectangleSource = D2D1::rectF((float)xSrc, (float)ySrc, (float)(xSrc + nSrcWidth), (float)(ySrc + nSrcHeight));
 
          pimage->unmap();
 
@@ -3142,8 +3142,8 @@ namespace draw2d_direct2d
    //      if(pgraphicsSrc->get_current_bitmap()->m_osdata[0] == nullptr)
    //         return false;
 
-   //      //D2D1_RECT_F rectangleTarget = D2D1::RectF((float) xDst, (float) yDst, (float) (xDst + nDstWidth), (float) (yDst + nDstHeight));
-   //      //D2D1_RECT_F rectangleSource = D2D1::RectF((float) xSrc, (float) ySrc, (float) (xSrc + nSrcWidth), (float) (ySrc + nSrcHeight));
+   //      //D2D1_RECT_F rectangleTarget = D2D1::rectF((float) xDst, (float) yDst, (float) (xDst + nDstWidth), (float) (yDst + nDstHeight));
+   //      //D2D1_RECT_F rectangleSource = D2D1::rectF((float) xSrc, (float) ySrc, (float) (xSrc + nSrcWidth), (float) (ySrc + nSrcHeight));
    //      /*
    //               if (get_current_bitmap() != nullptr && get_current_bitmap()->get_os_data() != nullptr)
    //               {
@@ -3170,8 +3170,8 @@ namespace draw2d_direct2d
 
    //               }*/
 
-   //      D2D1_RECT_F rDst = D2D1::RectF((float)rectangleTarget.left, (float)rectangleTarget.top, (float) rectangleTarget.right, (float) rectangleTarget.bottom);
-   //      D2D1_RECT_F rSrc = D2D1::RectF((float)rectangleSource.left, (float)rectangleSource.top, (float) rectangleSource.right, (float) rectangleSource.bottom);
+   //      D2D1_RECT_F rDst = D2D1::rectF((float)rectangleTarget.left, (float)rectangleTarget.top, (float) rectangleTarget.right, (float) rectangleTarget.bottom);
+   //      D2D1_RECT_F rSrc = D2D1::rectF((float)rectangleSource.left, (float)rectangleSource.top, (float) rectangleSource.right, (float) rectangleSource.bottom);
 
 
    //      //dynamic_cast <::draw2d_direct2d::graphics *> (pgraphicsSrc)->SaveClip();
@@ -3653,15 +3653,15 @@ namespace draw2d_direct2d
    //}
 
 
-   //bool graphics::draw_inset_3drect(const ::rectangle_f64 & rectangle, const ::color::color & colorTopLeft, const ::color::color & colorBottomRight, const ::e_border & eborder)
+   //bool graphics::draw_inset_3d_rectangle(const ::rectangle_f64 & rectangle, const ::color::color & colorTopLeft, const ::color::color & colorBottomRight, const ::e_border & eborder)
    //{
 
-   //   draw_inset_3drect(rectangle_f64(rectangle), colorTopLeft, colorBottomRight, eborder);
+   //   draw_inset_3d_rectangle(rectangle_f64(rectangle), colorTopLeft, colorBottomRight, eborder);
 
    //}
 
 
-   //void graphics::draw_inset_3drect(const ::rectangle_f64 & rectangle,  const ::color::color & colorTopLeft, const ::color::color & colorBottomRight, const ::e_border & eborder)
+   //void graphics::draw_inset_3d_rectangle(const ::rectangle_f64 & rectangle,  const ::color::color & colorTopLeft, const ::color::color & colorBottomRight, const ::e_border & eborder)
    //{
 
    //   double x = rectangle.left;
@@ -4902,7 +4902,7 @@ namespace draw2d_direct2d
       if (m_pfont->m_dFontWidth == 1.0)
       {
 
-         D2D1_RECT_F rectangle_f32 = D2D1::RectF((FLOAT)rectangle.left, (FLOAT)rectangle.top, (FLOAT)rectangle.right, (FLOAT)rectangle.bottom);
+         D2D1_RECT_F rectangle_f32 = D2D1::rectF((FLOAT)rectangle.left, (FLOAT)rectangle.top, (FLOAT)rectangle.right, (FLOAT)rectangle.bottom);
 
          m_prendertarget->DrawText(text.m_wstr, (::u32)text.m_wstr.get_length(), pfont, &rectangle_f32, pbrush);
 
@@ -4915,7 +4915,7 @@ namespace draw2d_direct2d
 
          D2D1::Matrix3x2F mOriginal(m);
 
-         D2D1_RECT_F rectangle_f32 = D2D1::RectF((FLOAT)0, (FLOAT)0, (FLOAT)width(rectangle), (FLOAT)height(rectangle));
+         D2D1_RECT_F rectangle_f32 = D2D1::rectF((FLOAT)0, (FLOAT)0, (FLOAT)width(rectangle), (FLOAT)height(rectangle));
 
          m = m * D2D1::Matrix3x2F::Translation((FLOAT)rectangle.left, (FLOAT)rectangle.top);
 
@@ -5249,7 +5249,7 @@ namespace draw2d_direct2d
 
       }
 
-      D2D1_RECT_F rectangle_f32 = D2D1::RectF((FLOAT) 0, (FLOAT)0, (FLOAT)(0 + sizeText.cx * 2), (FLOAT)(0 + sizeText.cy * 2));
+      D2D1_RECT_F rectangle_f32 = D2D1::rectF((FLOAT) 0, (FLOAT)0, (FLOAT)(0 + sizeText.cx * 2), (FLOAT)(0 + sizeText.cy * 2));
 
       HRESULT  hr = pfont->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
 
