@@ -321,7 +321,7 @@ namespace music
       //::e_status     FillTypeCombo(__pointer(simple_combo_box)lpcombo)
       //{
       //   __UNREFERENCED_PARAMETER(lpcombo);
-      //   /*   lpcombo->ResetContent();
+      //   /*   lpcombo->reset_content();
 
       //   string str;
       //   str.load_string(IDS_MIDI_NOTEOFF);
@@ -350,7 +350,7 @@ namespace music
       //::e_status     FillPitchCombo(__pointer(simple_combo_box)lpcombo)
       //{
       //   __UNREFERENCED_PARAMETER(lpcombo);
-      //   /*    lpcombo->ResetContent();
+      //   /*    lpcombo->reset_content();
 
       //   for(i32 i = 0; i < 128; i++)
       //   {
