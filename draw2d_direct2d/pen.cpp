@@ -88,7 +88,7 @@ namespace draw2d_direct2d
 
       //hr = pgraphics->CreateSolidColorBrush(*pcr, &pbr);
 
-      //pgraphics->DrawRectangle(D2D1::rectF(0.f, 0.f, 256.f, 256.f), pbr, 0.f);
+      //pgraphics->DrawRectangle(D2D1::RectF(0.f, 0.f, 256.f, 256.f), pbr, 0.f);
 
       //pbr->Release();
 
@@ -148,7 +148,7 @@ namespace draw2d_direct2d
       /*if (SUCCEEDED(hr))
       {
       pDeviceContext->fill_rectangle(
-      D2D1::rectF(0, 0, 100, 100), pImageBrush);
+      D2D1::RectF(0, 0, 100, 100), pImageBrush);
       }*/
 
       //pImageBrush->Release();

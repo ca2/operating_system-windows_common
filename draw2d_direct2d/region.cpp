@@ -140,7 +140,7 @@ namespace draw2d_direct2d
    }
 
 
-   bool region::rectInRegion(const ::rectangle_i32 & rectangle) const
+   bool region::RectInRegion(const ::rectangle_i32 & rectangle) const
    {
 
       __throw(todo);

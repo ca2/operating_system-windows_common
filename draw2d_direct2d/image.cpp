@@ -1008,9 +1008,9 @@ namespace draw2d_direct2d
 
    //   }
 
-   //   D2D1_RECT_F rectangleDest = D2D1::rectF(0, 0, (FLOAT)this->width(), (FLOAT)this->height());
+   //   D2D1_RECT_F rectangleDest = D2D1::RectF(0, 0, (FLOAT)this->width(), (FLOAT)this->height());
 
-   //   D2D1_RECT_F rectangleSource = D2D1::rectF(0, 0, (FLOAT) pimage->width(), (FLOAT) pimage->height());
+   //   D2D1_RECT_F rectangleSource = D2D1::RectF(0, 0, (FLOAT) pimage->width(), (FLOAT) pimage->height());
 
    //   ((ID2D1RenderTarget *)m_pgraphics->get_os_data())->DrawBitmap(((ID2D1Bitmap1 *) pimage->get_bitmap()->m_osdata[0]), rectangleDest, 1.0, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, rectangleSource);
 
@@ -1498,9 +1498,9 @@ namespace draw2d_direct2d
 
       //   }
 
-      //   D2D1_RECT_F rectangleTarget = D2D1::rectF((float)pointDst.x, (float)pointDst.y, (float)(pointDst.x + size.cx), (float)(pointDst.y + size.cy));
+      //   D2D1_RECT_F rectangleTarget = D2D1::RectF((float)pointDst.x, (float)pointDst.y, (float)(pointDst.x + size.cx), (float)(pointDst.y + size.cy));
 
-      //   D2D1_RECT_F rectangleSource = D2D1::rectF((float)pointSrc.x, (float)pointSrc.y, (float)(pointSrc.x + size.cx), (float)(pointSrc.y + size.cy));
+      //   D2D1_RECT_F rectangleSource = D2D1::RectF((float)pointSrc.x, (float)pointSrc.y, (float)(pointSrc.x + size.cx), (float)(pointSrc.y + size.cy));
 
       //   HRESULT hr = ((ID2D1DeviceContext *)pgraphicsMap->get_os_data())->EndDraw();
 

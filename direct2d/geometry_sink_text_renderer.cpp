@@ -405,7 +405,7 @@ IFACEMETHODIMP geometry_sink_text_renderer::DrawUnderline(
 {
    /*HRESULT hr;
 
-   D2D1_RECT_F rectangle = D2D1::rectF(
+   D2D1_RECT_F rectangle = D2D1::RectF(
       0,
       underline->offset,
       underline->width,
@@ -470,7 +470,7 @@ IFACEMETHODIMP geometry_sink_text_renderer::DrawStrikethrough(
 {
    /*HRESULT hr;
 
-   D2D1_RECT_F rectangle = D2D1::rectF(
+   D2D1_RECT_F rectangle = D2D1::RectF(
       0,
       strikethrough->offset,
       strikethrough->width,

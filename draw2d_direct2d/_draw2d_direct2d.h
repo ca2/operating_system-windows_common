@@ -33,7 +33,7 @@ namespace d2d1
    inline D2D1_RECT_F rectangle_f32(const ::rectangle_i32& rectangle)
    {
 
-      return D2D1::rectangle_i32<FLOAT>(
+      return D2D1::Rect<FLOAT>(
          (FLOAT)(rectangle.left),
          (FLOAT)(rectangle.top),
          (FLOAT)(rectangle.right),
