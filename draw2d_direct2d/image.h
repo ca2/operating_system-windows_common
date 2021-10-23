@@ -29,7 +29,7 @@ namespace draw2d_direct2d
       virtual bool _unmap() override;
 
 
-      bool copy_from(::image * pimage, eobject eobjectCreate = e_object_success) override;
+      bool copy_from(::image * pimage, enum_flag eflagCreate = e_flag_success) override;
 
 
       virtual ::draw2d::graphics * _get_graphics() const override;
@@ -41,14 +41,14 @@ namespace draw2d_direct2d
 
 
       using ::image::create;
-      ::e_status create(const ::size_i32 & size, ::eobject eobjectCreate = DEFAULT_CREATE_IMAGE_OBJECT_FLAG, int iStride = -1, bool bPreserve = false) override;
+      ::e_status create(const ::size_i32 & size, ::enum_flag eflagCreate = DEFAULT_CREATE_IMAGE_FLAG, int iStride = -1, bool bPreserve = false) override;
       using ::image::initialize;
-      ::e_status initialize(const ::size_i32 & size, ::color32_t * pcolorref, int iScan, ::eobject eobjectCreate = DEFAULT_CREATE_IMAGE_OBJECT_FLAG) override;
+      ::e_status initialize(const ::size_i32 & size, ::color32_t * pcolorref, int iScan, ::enum_flag eflagCreate = DEFAULT_CREATE_IMAGE_FLAG) override;
       bool _create(::draw2d::graphics * pgraphics);
       ::e_status destroy() override;
 
 
-      virtual ::e_status create_ex(const ::size_i32 & size, ::color32_t * pcolorref, int iScan, ::eobject eobjectCreate = DEFAULT_CREATE_IMAGE_OBJECT_FLAG, int iStride = -1, bool bPreserve = false) ;
+      virtual ::e_status create_ex(const ::size_i32 & size, ::color32_t * pcolorref, int iScan, ::enum_flag eflagCreate = DEFAULT_CREATE_IMAGE_FLAG, int iStride = -1, bool bPreserve = false);
 
       //virtual bool _draw_raw(const ::rectangle_i32 & rectangleTarget, ::image * pimage, const ::point_i32 & pointSrc) override;
 

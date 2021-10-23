@@ -42,7 +42,7 @@ namespace draw2d_direct2d
    }
 
 
-   ::e_status image::create_ex(const ::size_i32 & size, ::color32_t * pcolorref, int iScan, ::eobject eobjectCreate, int iGoodStride, bool bPreserve)
+   ::e_status image::create_ex(const ::size_i32 & size, ::color32_t * pcolorref, int iScan, ::enum_flag eflagCreate, int iGoodStride, bool bPreserve)
    {
 
       ::draw2d::lock draw2dlock;
@@ -138,17 +138,17 @@ namespace draw2d_direct2d
 
       m_pgraphics->m_pimage = this;
 
-      m_eobject = eobjectCreate;
+      set(eflagCreate);
 
       return true;
 
    }
 
 
-   ::e_status image::create(const ::size_i32 & size, ::eobject eobjectCreate, int iGoodStride, bool bPreserve)
+   ::e_status image::create(const ::size_i32 & size, ::enum_flag eflagCreate, int iGoodStride, bool bPreserve)
    {
 
-      auto estatus = create_ex(size, nullptr, 0, eobjectCreate, iGoodStride, bPreserve);
+      auto estatus = create_ex(size, nullptr, 0, eflagCreate, iGoodStride, bPreserve);
 
       if (!estatus)
       {
@@ -162,10 +162,10 @@ namespace draw2d_direct2d
    }
 
 
-   ::e_status image::initialize(const ::size_i32 & size, ::color32_t * pcolorref, int iScan, ::eobject eobjectCreate)
+   ::e_status image::initialize(const ::size_i32 & size, ::color32_t * pcolorref, int iScan, ::enum_flag eflagCreate)
    {
 
-      auto estatus = create_ex(size, pcolorref, iScan, eobjectCreate);
+      auto estatus = create_ex(size, pcolorref, iScan, eflagCreate);
 
       if (!estatus)
       {
@@ -217,7 +217,7 @@ namespace draw2d_direct2d
 
 
 
-   bool image::copy_from(::image * pimage, ::eobject eobjectCreate)
+   bool image::copy_from(::image * pimage, ::enum_flag eflagCreate)
    {
 
       ::size_i32 s(pimage->width(), pimage->height());
@@ -227,7 +227,7 @@ namespace draw2d_direct2d
          && pimage->m_iScan > 0)
       {
 
-         if (initialize(s, pimage->m_pcolorrefRaw, pimage->m_iScan, eobjectCreate))
+         if (initialize(s, pimage->m_pcolorrefRaw, pimage->m_iScan, eflagCreate))
          {
 
             return true;
@@ -236,7 +236,7 @@ namespace draw2d_direct2d
 
       }
 
-      auto bOk = ::image::copy_from(pimage, 0, 0);
+      auto bOk = ::image::copy_from(pimage, 0, eflagCreate);
 
       if (!bOk)
       {

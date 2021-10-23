@@ -171,7 +171,7 @@ namespace imaging_wic
 
             __defer_construct(pimageFrame);
 
-            estatus = pimageFrame->create(pframea->m_size, 0);
+            estatus = pimageFrame->create(pframea->m_size, e_flag_none);
 
             if (!estatus)
             {
@@ -483,7 +483,7 @@ namespace imaging_wic
 
             pframe->GetSize(&width, &height);
 
-            pimage->create(width, height);
+            pimage->create({(i32) width, (i32)height });
 
             pimage->map();
 
@@ -541,7 +541,7 @@ namespace imaging_wic
                hr = pbitmap->GetSize(&width, &height);
             }
 
-            pimage->create(width, height);
+            pimage->create({ (i32)width, (i32)height });
 
             pimage->map();
 
@@ -615,7 +615,7 @@ namespace imaging_wic
 
       }
 
-      pframe->m_pimage->create(width, height);
+      pframe->m_pimage->create({ (i32)width, (i32)height });
 
       pframe->m_pimage->map();
 
