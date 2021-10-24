@@ -76,7 +76,7 @@ namespace draw2d_direct2d
    {
 
       if (FAILED(hr))
-         __throw(hresult_exception(hr));
+         throw hresult_exception(hr);
       //if(FAILED(hr))
       // __throw(hr);
 

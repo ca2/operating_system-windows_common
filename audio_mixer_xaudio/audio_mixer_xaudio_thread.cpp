@@ -148,7 +148,7 @@ namespace multimedia
 
       void thread::OnVmsmException(::message::message * pmessage)
       {
-         UNREFERENCED_PARAMETER(pmessage);
+         __UNREFERENCED_PARAMETER(pmessage);
          //__pointer(base_application) pApp = (__pointer(base_application)) System;
          //pApp->post_thread_message(VMSM_EXCEPTION, wParam, lParam);
       }
@@ -241,7 +241,7 @@ namespace multimedia
             (CDBBuildAlbumThreadData *)lParam;
             if(!lpdata->m_ptaskdlg->create(IDD_TASK))
             {
-            message_box("Could not create task dialog");
+            output_error_message("Could not create task dialog");
             return;
             }
 

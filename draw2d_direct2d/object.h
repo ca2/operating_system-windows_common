@@ -22,8 +22,8 @@ namespace draw2d_direct2d
       bool operator==(const object& obj) const;
       bool operator!=(const object& obj) const;
 
-      virtual void dump(dump_context & dumpcontext) const;
-      virtual void assert_valid() const;
+      void dump(dump_context & dumpcontext) const override;
+      void assert_valid() const override;
 
 
       ::draw2d_direct2d::draw2d * draw2d()

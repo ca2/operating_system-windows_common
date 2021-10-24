@@ -248,14 +248,14 @@ namespace windows
 
 #elif defined(_UWP)
 
-      ::Windows::Storage::StorageFile ^ file = get_os_file(psz, 0, 0, nullptr, OPEN_EXISTING, 0, nullptr);
+      ::winrt::Windows::Storage::StorageFile ^ file = get_os_file(psz, 0, 0, nullptr, OPEN_EXISTING, 0, nullptr);
 
       if (file == nullptr)
       {
 
          //output_debug_string("test");
 
-         __throw(::exception::exception("file::file_context::move Could not move file, could not open source file"));
+         __throw(::exception("file::file_context::move Could not move file, could not open source file"));
 
       }
 
@@ -277,7 +277,7 @@ namespace windows
       }
       else
       {
-         ::Windows::Storage::StorageFolder ^ folder = get_os_folder(strDirNew);
+         ::winrt::Windows::Storage::StorageFolder ^ folder = get_os_folder(strDirNew);
          if (strNameOld == strNameNew)
          {
             ::wait(file->MoveAsync(folder));
@@ -295,7 +295,7 @@ namespace windows
          i32 err = errno;
          string strError;
          strError.Format("Failed to delete file error=%d", err);
-         __throw(::exception::exception(strError));
+         __throw(::exception(strError));
       }
 #endif
 
@@ -359,7 +359,7 @@ namespace windows
          {
             string strError;
             strError.Format("Failed to delete file error=%d", err);
-            __throw(::exception::exception(strError));
+            __throw(::exception(strError));
          }
       }
 #endif
@@ -796,10 +796,10 @@ namespace windows
    }
 
 
-   file_result file_context::get_file(const ::payload & varFile, const ::file::e_open & eopenFlags)
+   file_transport file_context::get_file(const ::payload & payloadFile, const ::file::e_open & eopenFlags)
    {
 
-      return ::file_context::get_file(varFile, eopenFlags);
+      return ::file_context::get_file(payloadFile, eopenFlags);
 
    }
 

@@ -12,6 +12,12 @@
     <Filter Include="Resource Files">
       <UniqueIdentifier>{2ec8ecd0-d089-4887-98eb-a66497a4e6c3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\exception">
+      <UniqueIdentifier>{7c567043-9110-44ba-b7cb-034e0dfd206b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\exception">
+      <UniqueIdentifier>{87e202b7-167a-4013-98c5-f0773e7c43ed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -50,11 +56,71 @@
     <ClInclude Include="_windows_common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="exception_translator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="standard_exception.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="_ (2).h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="_ (3).h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="_c.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="_default_dll_impl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="_file_c.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="_geometry2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="_unicode_c.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="bstring.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="comptr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cotaskptr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="file.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="new_api.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="parallelization.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="prop_variant.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="variant.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="exception\hresult.h">
+      <Filter>Header Files\exception</Filter>
+    </ClInclude>
+    <ClInclude Include="exception\translator.h">
+      <Filter>Header Files\exception</Filter>
+    </ClInclude>
+    <ClInclude Include="acme_file.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="acme_path.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="acme_dir.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="exception\engine.h">
+      <Filter>Header Files\exception</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -73,10 +139,52 @@
     <ClCompile Include="os_usleep.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="exception_translator.cpp">
+    <ClCompile Include="standard_exception.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="standard_exception.cpp">
+    <ClCompile Include="aura.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="base.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="bstring.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="com.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="debug.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="file.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="file1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="networking.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="exception\hresult.cpp">
+      <Filter>Source Files\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="acme_file.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="acme_path.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="bstr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="exception\translator.cpp">
+      <Filter>Source Files\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="exception\engine.cpp">
+      <Filter>Source Files\exception</Filter>
+    </ClCompile>
+    <ClCompile Include="acme_dir.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

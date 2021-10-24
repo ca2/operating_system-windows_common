@@ -1,4 +1,5 @@
 #include "framework.h"
+#include "apex/parallelization/handler_manager.h"
 #include <wincodec.h>
 #include <shcore.h>
 
@@ -10,10 +11,10 @@ namespace imaging_wic
    bool windows_image_from_bitmap_source(::image * pimageFrame, IWICBitmapSource * pbitmapsource, IWICImagingFactory * pimagingfactory);
 
 
-   ::e_status context_image::_load_image(::image * pimageParam, const ::payload & varFile, bool bSync, bool bCreateHelperMaps)
+   ::e_status context_image::_load_image(::image * pimageParam, const ::payload & payloadFile, const ::image::load_options & loadoptions)
    {
 
-      auto ploadimage = __new(load_image(this));
+      auto ploadimage = __new(::load_image(this));
 
       auto estatus = ploadimage->initialize(this);
 
@@ -26,180 +27,23 @@ namespace imaging_wic
 
       ploadimage->m_pimage = pimageParam;
 
-      ploadimage->m_varFile = varFile;
+      ploadimage->m_pimage->m_estatus = error_failed;
 
-      pimageParam->m_bCreateHelperMaps = bCreateHelperMaps;
+      ploadimage->m_pimage->set_nok();
 
-      m_pmanagerImageLoad->handle(ploadimage, bSync);
+      ploadimage->m_payload = payloadFile;
+
+      pimageParam->m_bCreateHelperMaps = loadoptions.helper_maps;
+
+      m_pmanagerImageLoad->handle(ploadimage, loadoptions.sync);
 
       return ploadimage->m_estatus;
 
    }
 
 
-   context_image::load_image::load_image(context_image * pcontextimage) :
-      m_pcontextimage(pcontextimage)
+   void context_image::_os_load_image(::image * pimage, memory & memory)
    {
-
-
-   }
-
-   
-   context_image::load_image::~load_image()
-   {
-
-
-   }
-
-
-
-   ::e_status context_image::load_image::run()
-   {
-
-      //defer_co_initialize_ex(false);
-
-      ::image * pimage = m_pimage;
-
-      pimage->m_estatus = error_failed;
-
-      try
-      {
-         
-         ::payload payload = m_varFile;
-
-         ::file::path path = payload.get_file_path();
-
-         bool bCache = true;
-
-         while (true)
-         {
-
-            auto pmemory = create_memory();
-
-            if (!bCache)
-            {
-
-               ::file::set_no_cache(payload);
-
-            }
-
-            m_pcontext->m_papexcontext->file().as_memory(payload, *pmemory);
-
-            const char* psz = (const char *)pmemory->get_data();
-
-            auto size = pmemory->get_size();
-
-            if (::is_null(psz))
-            {
-
-               if (bCache)
-               {
-
-                  bCache = false;
-
-                  continue;
-
-               }
-
-               return pimage->m_estatus;
-
-            }
-
-            auto pcontext = m_pcontext->m_pauracontext;
-
-            auto pcontextimage = pcontext->context_image();
-
-            auto estatus = pcontextimage->load_svg(pimage, pmemory);
-
-            if (::succeeded(estatus))
-            {
-
-               pimage->on_load_image();
-
-               pimage->set_ok();
-
-               pimage->m_estatus = ::success;
-
-               return pimage->m_estatus;
-
-            }
-
-            if (pmemory->get_size() > 3 && strnicmp(psz, "gif", 3) == 0)
-            {
-
-               if (!m_pcontextimage->_load_multi_frame_image(pimage, pmemory))
-               {
-
-                  pimage->set_nok();
-
-                  if (bCache)
-                  {
-
-                     bCache = false;
-
-                     continue;
-
-                  }
-
-                  return pimage->m_estatus;
-
-               }
-
-               pimage->on_load_image();
-
-               pimage->set_ok();
-
-               pimage->m_estatus = ::success;
-
-               return pimage->m_estatus;
-
-            }
-
-            on_os_load_image(pmemory);
-
-            if (pimage->is_ok())
-            {
-
-               break;
-
-            }
-            else
-            {
-
-               if (bCache)
-               {
-
-                  bCache = false;
-
-                  continue;
-
-               }
-               else
-               {
-
-                  break;
-
-               }
-
-            }
-
-         }
-
-      }
-      catch (...)
-      {
-
-      }
-
-      return pimage->m_estatus;
-
-   }
-
-
-   void context_image::load_image::on_os_load_image(memory_pointer pmemory)
-   {
-
-      ::image * pimage = m_pimage;
 
       pimage->m_estatus = ::error_failed;
 
@@ -220,7 +64,7 @@ namespace imaging_wic
 
       }
 
-      hr = piStream->InitializeFromMemory(pmemory->get_data(), (::u32)pmemory->get_size());
+      hr = piStream->InitializeFromMemory(memory.get_data(), (::u32)memory.get_size());
 
       if (FAILED(hr))
       {
@@ -341,12 +185,7 @@ namespace imaging_wic
 
       pimage->set_ok();
 
-      //pimage->notify(OK);
-
       pimage->m_estatus = ::success;
-
-
-
 
    }
 
@@ -363,7 +202,7 @@ namespace imaging_wic
 #ifdef _UWP
 
 
-   CLASS_DECL_IMAGING_WIC bool node_save_image(::Windows::Storage::Streams::InMemoryRandomAccessStream ^ randomAccessStream, const ::image * pimage, ::save_image * psaveimage);
+   CLASS_DECL_IMAGING_WIC bool node_save_image(::winrt::Windows::Storage::Streams::InMemoryRandomAccessStream const & randomAccessStream, const ::image * pimage, ::save_image * psaveimage);
 
 
 #endif
@@ -448,11 +287,13 @@ namespace imaging_wic
 
       pimageFrame->map();
 
-      ::copy_colorref(pimageFrame->get_data(), uWidth, uHeight, pimageFrame->scan_size(), (::color32_t *)pData, cbStride);
+      auto pdataTarget = pimageFrame->get_data();
 
+      auto scanSizeTarget = pimageFrame->scan_size();
+
+      ::copy_colorref(pdataTarget, uWidth, uHeight, scanSizeTarget, (::color32_t *)pData, cbStride);
 
       return true;
-
 
    }
 
@@ -508,12 +349,12 @@ namespace imaging_wic
 #ifdef _UWP
 
 
-   bool node_save_image(::Windows::Storage::Streams::InMemoryRandomAccessStream ^ randomAccessStream, const ::image * pimage, const ::save_image * psaveimage)
+   bool node_save_image(::winrt::Windows::Storage::Streams::InMemoryRandomAccessStream const & randomAccessStream, const ::image * pimage, const ::save_image * psaveimage)
    {
 
       comptr < IStream > pstream;
 
-      ::CreateStreamOverRandomAccessStream(randomAccessStream, IID_PPV_ARGS(&pstream));
+      ::CreateStreamOverRandomAccessStream(winrt::get_unknown(randomAccessStream), IID_PPV_ARGS(&pstream));
 
       if (!node_save_image(pstream, pimage, psaveimage))
       {
@@ -536,13 +377,13 @@ namespace imaging_wic
 
 #ifdef _UWP
 
-      Windows::Storage::Streams::InMemoryRandomAccessStream ^ randomAccessStream = ref new Windows::Storage::Streams::InMemoryRandomAccessStream();
+      ::winrt::Windows::Storage::Streams::InMemoryRandomAccessStream randomAccessStream;
 
       //::wait(randomAccessStream->WriteAsync(get_os_buffer()));
 
       comptr < IStream > pstream;
 
-      ::CreateStreamOverRandomAccessStream(randomAccessStream, IID_PPV_ARGS(&pstream));
+      ::CreateStreamOverRandomAccessStream(winrt::get_unknown(randomAccessStream), IID_PPV_ARGS(&pstream));
 
 #else
 
@@ -601,12 +442,17 @@ namespace imaging_wic
    {
 
       comptr < IWICImagingFactory > pimagingfactory = nullptr;
+      
       comptr < IWICBitmapEncoder > piEncoder = nullptr;
+      
       comptr < IWICBitmapFrameEncode > piBitmapFrame = nullptr;
+
       comptr < IPropertyBag2 > pPropertybag = nullptr;
 
       comptr < IWICStream > piStream = nullptr;
+
       ::u32 uWidth = pimage->width();
+
       ::u32 uHeight = pimage->height();
 
       HRESULT hr = CoCreateInstance(

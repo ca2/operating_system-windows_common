@@ -10,10 +10,6 @@
 #endif
 
 
-struct FIBITMAP;
-
-
-
 
 namespace imaging_wic
 {
@@ -23,7 +19,7 @@ namespace imaging_wic
    ::color::color windows_image_metadata_get_background_color(IWICMetadataQueryReader * pqueryreader, IWICBitmapDecoder * pbitmapdecoder, IWICImagingFactory * pimagingfactory);
 
 
-   ::e_status context_image::_load_image(::image * pimageCompose, __pointer(image_frame_array) & pframea, memory_pointer pmemory)
+   ::e_status context_image::_load_image(::image * pimageCompose, __pointer(image_frame_array) & pframea, memory & memory)
    {
 
       HRESULT hr = E_FAIL;
@@ -42,9 +38,7 @@ namespace imaging_wic
 
          }
 
-         auto pinputstream = ::create_istream(*pmemory);
-
-         hr = pwicstream->InitializeFromIStream(pinputstream);
+         hr = pwicstream->InitializeFromMemory(memory.get_data(), (DWORD) memory.get_size());
 
          if (FAILED(hr))
          {
@@ -177,7 +171,7 @@ namespace imaging_wic
 
             __defer_construct(pimageFrame);
 
-            estatus = pimageFrame->create(pframea->m_size, 0);
+            estatus = pimageFrame->create(pframea->m_size, e_flag_none);
 
             if (!estatus)
             {
@@ -352,7 +346,7 @@ namespace imaging_wic
 
                         hr = UIntMult(propValue.uiVal, 10, &uDelay);
 
-                        pframe->m_tick = uDelay;
+                        pframe->m_duration = INTEGRAL_MILLISECOND(uDelay);
 
                      }
 
@@ -362,7 +356,7 @@ namespace imaging_wic
 
                      // Failed to get delay from graphic control extension. Possibly a
                      // single frame image (non-animated gif)
-                     pframe->m_tick = 0;
+                     pframe->m_duration.Null();
 
                   }
 
@@ -376,10 +370,10 @@ namespace imaging_wic
                      // This will defeat the purpose of using zero delay intermediate frames in
                      // order to preserve compatibility. If this is erased, the zero delay
                      // intermediate frames will not be visible.
-                     if (pframe->m_tick < 90)
+                     if (pframe->m_duration < 20_ms)
                      {
 
-                        pframe->m_tick = 90;
+                        pframe->m_duration = 20_ms;
 
                      }
 
@@ -423,9 +417,9 @@ namespace imaging_wic
 
             }
 
-            ::draw2d::e_disposal edisposal = iFrame <= 0 ? ::draw2d::disposal_none : pframea->element_at(iFrame - 1)->m_edisposal;
+            //::draw2d::e_disposal edisposal = edisposaliFrame <= 0 ? ::draw2d::disposal_none : pframea->element_at(iFrame - 1)->m_edisposal;
 
-            pframe->m_edisposal = edisposal;
+            //pframe->m_edisposal = edisposal;
 
             pframe->_001Process(pimageCompose, pimageFrame, pframea);
 
@@ -436,13 +430,6 @@ namespace imaging_wic
       return SUCCEEDED(hr);
 
    }
-
-
-
-
-
-
-
 
 
    //#ifdef WINDOWS
@@ -496,7 +483,7 @@ namespace imaging_wic
 
             pframe->GetSize(&width, &height);
 
-            pimage->create(width, height);
+            pimage->create({(i32) width, (i32)height });
 
             pimage->map();
 
@@ -554,7 +541,7 @@ namespace imaging_wic
                hr = pbitmap->GetSize(&width, &height);
             }
 
-            pimage->create(width, height);
+            pimage->create({ (i32)width, (i32)height });
 
             pimage->map();
 
@@ -628,7 +615,7 @@ namespace imaging_wic
 
       }
 
-      pframe->m_pimage->create(width, height);
+      pframe->m_pimage->create({ (i32)width, (i32)height });
 
       pframe->m_pimage->map();
 
@@ -770,7 +757,7 @@ namespace imaging_wic
                // Convert the delay retrieved in 10 ms units to a delay in 1 ms units
                hr = UIntMult(propValue.uiVal, 10, &u);
 
-               pframe->m_tick = u;
+               pframe->m_duration = INTEGRAL_MILLISECOND(u);
 
             }
 
@@ -780,13 +767,13 @@ namespace imaging_wic
 
             // Failed to get delay from graphic control extension. Possibly a
             // single frame image (non-animated gif)
-            pframe->m_tick = 0;
+            pframe->m_duration.Null();
 
          }
 
          PropVariantClear(&propValue);
 
-         if (pframe->m_tick <= 0)
+         if (pframe->m_duration.is_null())
          {
 
             output_debug_string("0 delay");

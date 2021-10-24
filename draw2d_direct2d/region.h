@@ -11,7 +11,7 @@ namespace draw2d_direct2d
    public:
 
 
-      Microsoft::WRL::ComPtr<ID2D1Geometry>            m_pgeometry;
+      comptr<ID2D1Geometry>            m_pgeometry;
 
 
       region();

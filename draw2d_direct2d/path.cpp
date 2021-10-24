@@ -1,5 +1,6 @@
 #include "framework.h"
 #include <math.h>
+#include "CustomRenderer.h"
 
 
 namespace draw2d_direct2d
@@ -147,30 +148,64 @@ namespace draw2d_direct2d
    bool path::internal_add_string(::draw2d_direct2d::graphics * pgraphics, double x, double y, const ::string & strText, ::write_text::font * pfont)
    {
 
-      HRESULT hr;
-
-      if(m_psink == nullptr)
+      if(!internal_start_figure(pgraphics))
       {
 
-         hr = m_ppath->Open(&m_psink);
+         return false;
 
       }
 
-      wstring szOutline(strText);
+      IDWriteTextFormat * pformat = pfont->get_os_data < IDWriteTextFormat * >(pgraphics);
 
       IDWriteFactory * pfactory = ::direct2d::direct2d()->dwrite_factory();
 
-      Microsoft::WRL::ComPtr < IDWriteTextLayout> textLayout;
+      comptr<IDWriteTextLayout> playout;
 
-      pfactory->CreateTextLayout(szOutline, (::u32) szOutline.length(),(IDWriteTextFormat *)pfont->get_os_data(pgraphics),1024 * 1024,1024 * 1024,&textLayout);
+      wstring wstr(strText);
 
-      Microsoft::WRL::ComPtr < IDWriteTextRenderer > textRenderer;
+      HRESULT hr = pfactory->CreateTextLayout(
+         wstr,      // The string to be laid out and formatted.
+         (::u32)wstr.length(),  // The length of the string.
+         pformat,  // The text format to apply to the string (contains font information, etc).
+         4096,         // The width of the on_layout box.
+         4096,        // The height of the on_layout box.
+         &playout  // The IDWriteTextLayout interface pointer.
+      );
 
-      auto psystem = m_psystem->m_paurasystem;
+      if (playout == nullptr)
+      {
 
-      CreatePathTextRenderer(psystem->m_dpi, &textRenderer);
+         return false;
 
-      textLayout->Draw(this, textRenderer.Get(), 0, 0);
+      }
+
+      synchronous_lock lock(::direct2d::direct2d()->mutex());
+
+      auto & renderer = ::direct2d::direct2d()->m_geometrysinktextrenderer;
+
+      renderer.m_pgeometrysink = m_psink;
+
+      FLOAT dpix = 0.f;
+      FLOAT dpiy = 0.f;
+
+      pgraphics->m_prendertarget->GetDpi(&dpix, &dpiy);
+
+      if (dpix <= 0)
+      {
+
+         renderer.m_dDpi = 96.0;
+
+      }
+      else
+      {
+
+         renderer.m_dDpi = dpix;
+
+      }
+
+      renderer.m_figurebeginOverride = pgraphics->m_bOutline ? D2D1_FIGURE_BEGIN_HOLLOW : D2D1_FIGURE_BEGIN_FILLED;
+
+      playout->Draw(nullptr, &renderer, (FLOAT)x, (FLOAT)y);
 
       return true;
 
@@ -180,7 +215,7 @@ namespace draw2d_direct2d
    bool path::internal_add_line(::draw2d::graphics* pgraphics, double x, double y)
    {
 
-      if (::is_null(m_psink.Get()))
+      if (::is_null(m_psink))
       {
 
          return false;
@@ -198,20 +233,20 @@ namespace draw2d_direct2d
    }
 
 
-   bool path::internal_start_figure(::draw2d::graphics* pgraphics, double x, double y)
+   bool path::internal_start_figure(::draw2d::graphics* pgraphics)
    {
-
-      if (m_psink == nullptr)
-      {
-
-         m_ppath->Open(&m_psink);
-
-      }
 
       if (m_bFigureOpened)
       {
 
          internal_end_figure(false);
+
+      }
+
+      if (m_psink == nullptr)
+      {
+
+         m_ppath->Open(&m_psink);
 
       }
 
@@ -228,7 +263,22 @@ namespace draw2d_direct2d
 
       }
 
-      m_psink->BeginFigure({(FLOAT) x, (FLOAT) y}, pgraphics->m_bOutline ? D2D1_FIGURE_BEGIN_HOLLOW : D2D1_FIGURE_BEGIN_FILLED);
+      return true;
+
+   }
+
+
+   bool path::internal_start_figure(::draw2d::graphics * pgraphics, double x, double y)
+   {
+
+      if (!internal_start_figure(pgraphics))
+      {
+
+         return false;
+
+      }
+
+      m_psink->BeginFigure({ (FLOAT)x, (FLOAT)y }, pgraphics->m_bOutline ? D2D1_FIGURE_BEGIN_HOLLOW : D2D1_FIGURE_BEGIN_FILLED);
 
       m_bFigureOpened = true;
 
@@ -304,10 +354,10 @@ namespace draw2d_direct2d
          if (iCreate == path_hollow)
          {
 
-            if (m_ppathHollow.Get())
+            if (m_ppathHollow)
             {
 
-               m_osdata[path_hollow] = m_ppathHollow.Get();
+               m_osdata[path_hollow] = m_ppathHollow;
 
                return m_osdata[path_hollow] != nullptr;
 
@@ -323,10 +373,10 @@ namespace draw2d_direct2d
       else
       {
 
-         if (m_ppathFilled.Get())
+         if (m_ppathFilled)
          {
 
-            m_osdata[path_filled] = m_ppathFilled.Get();
+            m_osdata[path_filled] = m_ppathFilled;
 
             return m_osdata[path_filled] != nullptr;
 
@@ -368,7 +418,7 @@ namespace draw2d_direct2d
          
          HRESULT hr = m_psink->Close();
 
-         m_osdata[iCreate] = m_ppath.Get();
+         m_osdata[iCreate] = m_ppath;
 
       }
       else
@@ -380,7 +430,7 @@ namespace draw2d_direct2d
 
       m_psink = nullptr;
 
-      return m_ppath.Get() != nullptr;
+      return m_ppath != nullptr;
 
    }
 
@@ -390,13 +440,15 @@ namespace draw2d_direct2d
 
       defer_update(pgraphicsParam, 0);
 
-      return m_ppath.Detach();
+      return m_ppath.detach();
 
    }
 
 
    ::e_status path::destroy()
    {
+
+      ::draw2d::path::destroy();
 
       m_psink = nullptr;
 
@@ -443,7 +495,7 @@ namespace draw2d_direct2d
    //      internal_end_figure(e.u.m_end.m_bClose);
    //      break;
    //   default:
-   //      __throw(::exception::exception("unexpected simple os graphics matter type"));
+   //      __throw(::exception("unexpected simple os graphics matter type"));
    //   }
 
    //   return false;
@@ -537,7 +589,7 @@ namespace draw2d_direct2d
    bool path::_set(::draw2d::graphics* pgraphics, const ::line & line)
    {
 
-      if (line.m_p1 != m_pointEnd)
+      if (line.m_p1 != m_pointEnd || ::is_null(m_psink))
       {
 
          if (!internal_start_figure(pgraphics, line.m_p1.x, line.m_p1.y))
@@ -626,7 +678,89 @@ namespace draw2d_direct2d
    bool path::_set(::draw2d::graphics * pgraphics, const ::write_text::text_out & textout)
    {
 
+      auto pgraphicsDraw2dDirect2d = pgraphics->cast < ::draw2d_direct2d::graphics >();
+
+      auto bOk = internal_add_string(
+         pgraphicsDraw2dDirect2d,
+         textout.m_point.x,
+         textout.m_point.y,
+         textout.m_strText,
+         textout.m_pfont);
+
+      if (!bOk)
+      {
+
+         return false;
+
+      }
+
       return true;
+
+      //IDWriteTextFormat * pformat = textout.m_pfont->get_os_data < IDWriteTextFormat * >(pgraphicsParam);
+
+      //IDWriteFactory * pfactory = ::direct2d::direct2d()->dwrite_factory();
+
+      //comptr<IDWriteTextLayout> playout;
+
+      //wstring wstr(textout.m_strText);
+
+      //HRESULT hr = pfactory->CreateTextLayout(
+      //   wstr,      // The string to be laid out and formatted.
+      //   (::u32)wstr.length(),  // The length of the string.
+      //   pformat,  // The text format to apply to the string (contains font information, etc).
+      //   4096,         // The width of the on_layout box.
+      //   4096,        // The height of the on_layout box.
+      //   &playout  // The IDWriteTextLayout interface pointer.
+      //);
+
+      //if (playout == nullptr)
+      //{
+
+      //   return false;
+
+      //}
+
+      //auto pgraphics = pgraphicsParam->cast < ::draw2d_direct2d::graphics>();
+
+      ////if (m_psink == nullptr)
+      ////{
+
+      ////   hr = m_ppath->Open(&m_psink);
+
+      ////}
+
+      ////CustomTextRenderer renderer(::direct2d::direct2d()->d2d1_factory1(), m_psink);
+
+      ////defer_text_primitive_blend();
+
+      ////defer_text_rendering_hint();
+
+      //synchronous_lock lock(::direct2d::direct2d()->mutex());
+
+      //auto & renderer = ::direct2d::direct2d()->m_geometrysinktextrenderer;
+
+      //renderer.m_pgeometrysink = m_psink;
+
+      //FLOAT dpix, dpiy;
+
+      //if (SUCCEEDED(pgraphics->m_prendertarget->GetDpi(dpix, dpiy))
+      //{
+
+      //   renderer.m_dDpi = dpix;
+
+      //}
+      //else
+      //{
+
+      //   renderer.m_dDpi = 96.0;
+
+      //}
+
+      //renderer.m_figurebeginOverride = pgraphics->m_bOutline ? D2D1_FIGURE_BEGIN_HOLLOW : D2D1_FIGURE_BEGIN_FILLED;
+
+      //playout->Draw(nullptr, &renderer, (FLOAT)textout.m_point.x, (FLOAT)textout.m_point.y);
+
+      //return true;
 
    }
 
@@ -673,81 +807,81 @@ namespace draw2d_direct2d
 #define multi_threaded D2D1_FACTORY_TYPE_MULTI_THREADED // ???? muliple performance multi thread hidden option there exists cost uses?
 
 
-class PathTextRenderer: public IDWriteTextRenderer
-{
-public:
-
-   PathTextRenderer(
-   FLOAT pixelsPerDip
-   );
-
-   STDMETHOD(DrawGlyphRun)(
-   _In_opt_ void* clientDrawingContext,
-   FLOAT baselineOriginX,
-   FLOAT baselineOriginY,
-   DWRITE_MEASURING_MODE measuringMode,
-   _In_ DWRITE_GLYPH_RUN const* glyphRun,
-   _In_ DWRITE_GLYPH_RUN_DESCRIPTION const* glyphRunDescription,
-   _In_opt_ IUnknown* clientDrawingEffect
-   ) override;
-
-   STDMETHOD(DrawUnderline)(
-   _In_opt_ void* clientDrawingContext,
-   FLOAT baselineOriginX,
-   FLOAT baselineOriginY,
-   _In_ DWRITE_UNDERLINE const* underline,
-   _In_opt_ IUnknown* clientDrawingEffect
-   ) override;
-
-   STDMETHOD(DrawStrikethrough)(
-   _In_opt_ void* clientDrawingContext,
-   FLOAT baselineOriginX,
-   FLOAT baselineOriginY,
-   _In_ DWRITE_STRIKETHROUGH const* strikethrough,
-   _In_opt_ IUnknown* clientDrawingEffect
-   ) override;
-
-   STDMETHOD(DrawInlineObject)(
-   _In_opt_ void* clientDrawingContext,
-   FLOAT originX,
-   FLOAT originY,
-   IDWriteInlineObject* inlineObject,
-   BOOL isSideways,
-   BOOL isRightToLeft,
-   _In_opt_ IUnknown* clientDrawingEffect
-   ) override;
-
-   STDMETHOD(IsPixelSnappingDisabled)(
-   _In_opt_ void* clientDrawingContext,
-   _Out_ BOOL* isDisabled
-   ) override;
-
-   STDMETHOD(GetCurrentTransform)(
-   _In_opt_ void* clientDrawingContext,
-   _Out_ DWRITE_MATRIX* transform
-   ) override;
-
-   STDMETHOD(GetPixelsPerDip)(
-   _In_opt_ void* clientDrawingContext,
-   _Out_ FLOAT* pixelsPerDip
-   ) override;
-
-   STDMETHOD(QueryInterface)(
-   REFIID riid,
-   _Outptr_ void** object
-   ) override;
-
-   STDMETHOD_(ULONG,AddRef)() override;
-
-   STDMETHOD_(ULONG,Release)() override;
-
-private:
-   DWORD cRefCount_;
-   FLOAT m_pixelsPerDip;   // Number of pixels per DIP.
-   ::u32 m_ref;
-};
-
-
+//class PathTextRenderer: public IDWriteTextRenderer
+//{
+//public:
+//
+//   PathTextRenderer(
+//   FLOAT pixelsPerDip
+//   );
+//
+//   STDMETHOD(DrawGlyphRun)(
+//   _In_opt_ void* clientDrawingContext,
+//   FLOAT baselineOriginX,
+//   FLOAT baselineOriginY,
+//   DWRITE_MEASURING_MODE measuringMode,
+//   _In_ DWRITE_GLYPH_RUN const* glyphRun,
+//   _In_ DWRITE_GLYPH_RUN_DESCRIPTION const* glyphRunDescription,
+//   _In_opt_ IUnknown* clientDrawingEffect
+//   ) override;
+//
+//   STDMETHOD(DrawUnderline)(
+//   _In_opt_ void* clientDrawingContext,
+//   FLOAT baselineOriginX,
+//   FLOAT baselineOriginY,
+//   _In_ DWRITE_UNDERLINE const* underline,
+//   _In_opt_ IUnknown* clientDrawingEffect
+//   ) override;
+//
+//   STDMETHOD(DrawStrikethrough)(
+//   _In_opt_ void* clientDrawingContext,
+//   FLOAT baselineOriginX,
+//   FLOAT baselineOriginY,
+//   _In_ DWRITE_STRIKETHROUGH const* strikethrough,
+//   _In_opt_ IUnknown* clientDrawingEffect
+//   ) override;
+//
+//   STDMETHOD(DrawInlineObject)(
+//   _In_opt_ void* clientDrawingContext,
+//   FLOAT originX,
+//   FLOAT originY,
+//   IDWriteInlineObject* inlineObject,
+//   BOOL isSideways,
+//   BOOL isRightToLeft,
+//   _In_opt_ IUnknown* clientDrawingEffect
+//   ) override;
+//
+//   STDMETHOD(IsPixelSnappingDisabled)(
+//   _In_opt_ void* clientDrawingContext,
+//   _Out_ BOOL* isDisabled
+//   ) override;
+//
+//   STDMETHOD(GetCurrentTransform)(
+//   _In_opt_ void* clientDrawingContext,
+//   _Out_ DWRITE_MATRIX* transform
+//   ) override;
+//
+//   STDMETHOD(GetPixelsPerDip)(
+//   _In_opt_ void* clientDrawingContext,
+//   _Out_ FLOAT* pixelsPerDip
+//   ) override;
+//
+//   STDMETHOD(QueryInterface)(
+//   REFIID riid,
+//   _Outptr_ void** object
+//   ) override;
+//
+//   STDMETHOD_(ULONG,AddRef)() override;
+//
+//   STDMETHOD_(ULONG,Release)() override;
+//
+//private:
+//   DWORD cRefCount_;
+//   FLOAT m_pixelsPerDip;   // Number of pixels per DIP.
+//   ::u32 m_ref;
+//};
+//
+//
 
 //// THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF
 //// ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO
@@ -756,180 +890,179 @@ private:
 ////
 //// Copyright (c) Microsoft Corporation. All rights reserved
 
-using namespace Microsoft::WRL;
+//using namespace Microsoft::WRL;
 
-// An identity matrix for use by IDWritePixelSnapping::GetCurrentTransform.
-const DWRITE_MATRIX identityTransform =
-{
-   1,0,
-   0,1,
-   0,0
-};
-
-
-PathTextRenderer::PathTextRenderer(FLOAT pixelsPerDip):
-   m_pixelsPerDip(pixelsPerDip),
-   m_ref(0)
-{
-}
-
+//// An identity matrix for use by IDWritePixelSnapping::GetCurrentTransform.
+//const DWRITE_MATRIX identityTransform =
+//{
+//   1,0,
+//   0,1,
+//   0,0
+//};
 //
-// Draws a given glyph run along the geometry specified
-// in the given clientDrawingEffect.
 //
-// This method calculates the horizontal displacement
-// of each glyph cluster in the run, then calculates the
-// tangent vector of the geometry at each of those distances.
-// It then renders the glyph cluster using the offset and angle
-// defined by that tangent, thereby placing each cluster on
-// the path and also rotated to the path.
+//PathTextRenderer::PathTextRenderer(FLOAT pixelsPerDip):
+//   m_pixelsPerDip(pixelsPerDip),
+//   m_ref(0)
+//{
+//}
 //
-HRESULT PathTextRenderer::DrawGlyphRun(
-_In_opt_ void* clientDrawingContext,
-FLOAT baselineOriginX,
-FLOAT baselineOriginY,
-DWRITE_MEASURING_MODE measuringMode,
-_In_ DWRITE_GLYPH_RUN const* glyphRun,
-_In_ DWRITE_GLYPH_RUN_DESCRIPTION const* glyphRunDescription,
-_In_opt_ IUnknown* clientDrawingEffect
-)
-{
-   if(clientDrawingContext == nullptr)
-   {
-      return S_OK;
-   }
-
-   ::draw2d_direct2d::path * dc = static_cast<::draw2d_direct2d::path*>(clientDrawingContext);
-
-   HRESULT hr = glyphRun->fontFace->GetGlyphRunOutline(
-                glyphRun->fontEmSize,
-                glyphRun->glyphIndices,
-                glyphRun->glyphAdvances,
-                glyphRun->glyphOffsets,
-                glyphRun->glyphCount,
-                glyphRun->isSideways,
-                glyphRun->bidiLevel % 2,
-                dc->m_psink.Get()
-                );
-
-   return hr;
-}
-
-HRESULT PathTextRenderer::DrawUnderline(
-_In_opt_ void* clientDrawingContext,
-FLOAT baselineOriginX,
-FLOAT baselineOriginY,
-_In_ DWRITE_UNDERLINE const* underline,
-_In_opt_ IUnknown* clientDrawingEffect
-)
-{
-   // We don't use underline in this application.
-   return E_NOTIMPL;
-}
-
-HRESULT PathTextRenderer::DrawStrikethrough(
-_In_opt_ void* clientDrawingContext,
-FLOAT baselineOriginX,
-FLOAT baselineOriginY,
-_In_ DWRITE_STRIKETHROUGH const* strikethrough,
-_In_opt_ IUnknown* clientDrawingEffect
-)
-{
-   // We don't use strikethrough in this application.
-   return E_NOTIMPL;
-}
-
-HRESULT PathTextRenderer::DrawInlineObject(
-_In_opt_ void* clientDrawingContext,
-FLOAT originX,
-FLOAT originY,
-IDWriteInlineObject* inlineObject,
-BOOL isSideways,
-BOOL isRightToLeft,
-_In_opt_ IUnknown* clientDrawingEffect
-)
-{
-   // We don't use inline objects in this application.
-   return E_NOTIMPL;
-}
-
+////
+//// Draws a given glyph run along the geometry specified
+//// in the given clientDrawingEffect.
+////
+//// This method calculates the horizontal displacement
+//// of each glyph cluster in the run, then calculates the
+//// tangent vector of the geometry at each of those distances.
+//// It then renders the glyph cluster using the offset and angle
+//// defined by that tangent, thereby placing each cluster on
+//// the path and also rotated to the path.
+////
+//HRESULT PathTextRenderer::DrawGlyphRun(
+//_In_opt_ void* clientDrawingContext,
+//FLOAT baselineOriginX,
+//FLOAT baselineOriginY,
+//DWRITE_MEASURING_MODE measuringMode,
+//_In_ DWRITE_GLYPH_RUN const* glyphRun,
+//_In_ DWRITE_GLYPH_RUN_DESCRIPTION const* glyphRunDescription,
+//_In_opt_ IUnknown* clientDrawingEffect
+//)
+//{
+//   if(clientDrawingContext == nullptr)
+//   {
+//      return S_OK;
+//   }
 //
-// IDWritePixelSnapping methods
+//   ::draw2d_direct2d::path * dc = static_cast<::draw2d_direct2d::path*>(clientDrawingContext);
+//   HRESULT hr = glyphRun->pfontFace->GetGlyphRunOutline(
+//                glyphRun->pfontEmSize,
+//                glyphRun->glyphIndices,
+//                glyphRun->glyphAdvances,
+//                glyphRun->glyphOffsets,
+//                glyphRun->glyphCount,
+//                glyphRun->isSideways,
+//                glyphRun->bidiLevel % 2,
+//                dc->m_psink
+//                );
 //
-HRESULT PathTextRenderer::IsPixelSnappingDisabled(
-_In_opt_ void* clientDrawingContext,
-_Out_ BOOL* isDisabled
-)
-{
-   *isDisabled = false;
-   return S_OK;
-}
-
-HRESULT PathTextRenderer::GetCurrentTransform(
-_In_opt_ void* clientDrawingContext,
-_Out_ DWRITE_MATRIX* transform
-)
-{
-   *transform = identityTransform;
-   return S_OK;
-}
-
-HRESULT PathTextRenderer::GetPixelsPerDip(
-_In_opt_ void* clientDrawingContext,
-_Out_ FLOAT* pixelsPerDip
-)
-{
-   *pixelsPerDip = m_pixelsPerDip;
-   return S_OK;
-}
-
+//   return hr;
+//}
 //
-// IUnknown methods
+//HRESULT PathTextRenderer::DrawUnderline(
+//_In_opt_ void* clientDrawingContext,
+//FLOAT baselineOriginX,
+//FLOAT baselineOriginY,
+//_In_ DWRITE_UNDERLINE const* underline,
+//_In_opt_ IUnknown* clientDrawingEffect
+//)
+//{
+//   // We don't use underline in this application.
+//   return E_NOTIMPL;
+//}
 //
-// These use a basic, non-thread-safe implementation of the
-// standard object-counting logic.
+//HRESULT PathTextRenderer::DrawStrikethrough(
+//_In_opt_ void* clientDrawingContext,
+//FLOAT baselineOriginX,
+//FLOAT baselineOriginY,
+//_In_ DWRITE_STRIKETHROUGH const* strikethrough,
+//_In_opt_ IUnknown* clientDrawingEffect
+//)
+//{
+//   // We don't use strikethrough in this application.
+//   return E_NOTIMPL;
+//}
 //
-HRESULT PathTextRenderer::QueryInterface(
-REFIID riid,
-_Outptr_ void** object
-)
-{
-   *object = nullptr;
-   return E_NOTIMPL;
-}
-
-ULONG PathTextRenderer::AddRef()
-{
-   return InterlockedIncrement(&cRefCount_);
-}
-
-ULONG PathTextRenderer::Release()
-{
-   unsigned long newCount = InterlockedDecrement(&cRefCount_);
-   if(newCount == 0)
-   {
-      delete this;
-      return 0;
-   }
-
-   return newCount;
-}
-
-
-
-
-
-
-namespace draw2d_direct2d
-{
-   void path::CreatePathTextRenderer(FLOAT pixelsPerDip, IDWriteTextRenderer **textRenderer)
-   {
-      *textRenderer = nullptr;
-
-      PathTextRenderer *newRenderer = new PathTextRenderer(pixelsPerDip);
-      newRenderer->AddRef();
-      *textRenderer = newRenderer;
-      newRenderer = nullptr;
-   }
-
-} // namespace draw2d_direct2d
+//HRESULT PathTextRenderer::DrawInlineObject(
+//_In_opt_ void* clientDrawingContext,
+//FLOAT originX,
+//FLOAT originY,
+//IDWriteInlineObject* inlineObject,
+//BOOL isSideways,
+//BOOL isRightToLeft,
+//_In_opt_ IUnknown* clientDrawingEffect
+//)
+//{
+//   // We don't use inline objects in this application.
+//   return E_NOTIMPL;
+//}
+//
+////
+//// IDWritePixelSnapping methods
+////
+//HRESULT PathTextRenderer::IsPixelSnappingDisabled(
+//_In_opt_ void* clientDrawingContext,
+//_Out_ BOOL* isDisabled
+//)
+//{
+//   *isDisabled = false;
+//   return S_OK;
+//}
+//
+//HRESULT PathTextRenderer::GetCurrentTransform(
+//_In_opt_ void* clientDrawingContext,
+//_Out_ DWRITE_MATRIX* transform
+//)
+//{
+//   *transform = identityTransform;
+//   return S_OK;
+//}
+//
+//HRESULT PathTextRenderer::GetPixelsPerDip(
+//_In_opt_ void* clientDrawingContext,
+//_Out_ FLOAT* pixelsPerDip
+//)
+//{
+//   *pixelsPerDip = m_pixelsPerDip;
+//   return S_OK;
+//}
+//
+////
+//// IUnknown methods
+////
+//// These use a basic, non-thread-safe implementation of the
+//// standard object-counting logic.
+////
+//HRESULT PathTextRenderer::QueryInterface(
+//REFIID riid,
+//_Outptr_ void** object
+//)
+//{
+//   *object = nullptr;
+//   return E_NOTIMPL;
+//}
+//
+//ULONG PathTextRenderer::AddRef()
+//{
+//   return InterlockedIncrement(&cRefCount_);
+//}
+//
+//ULONG PathTextRenderer::Release()
+//{
+//   unsigned long newCount = InterlockedDecrement(&cRefCount_);
+//   if(newCount == 0)
+//   {
+//      delete this;
+//      return 0;
+//   }
+//
+//   return newCount;
+//}
+//
+//
+//
+//
+//
+//
+//namespace draw2d_direct2d
+//{
+//   void path::CreatePathTextRenderer(FLOAT pixelsPerDip, IDWriteTextRenderer **textRenderer)
+//   {
+//      *textRenderer = nullptr;
+//
+//      PathTextRenderer *newRenderer = new PathTextRenderer(pixelsPerDip);
+//      newRenderer->AddRef();
+//      *textRenderer = newRenderer;
+//      newRenderer = nullptr;
+//   }
+//
+//} // namespace draw2d_direct2d

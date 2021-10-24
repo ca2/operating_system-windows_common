@@ -46,10 +46,10 @@ private:
 
 
    unsigned long                                m_cReference;
-   Microsoft::WRL::ComPtr<ID2D1Factory>         m_pfactory;
-   Microsoft::WRL::ComPtr<ID2D1RenderTarget>    m_prendertarget;
-   Microsoft::WRL::ComPtr<ID2D1Brush>           m_pbrushOutline;
-   Microsoft::WRL::ComPtr<ID2D1Brush>           m_pbrushFill;
+   comptr<ID2D1Factory>         m_pfactory;
+   comptr<ID2D1RenderTarget>    m_prendertarget;
+   comptr<ID2D1Brush>           m_pbrushOutline;
+   comptr<ID2D1Brush>           m_pbrushFill;
 
 
 public:

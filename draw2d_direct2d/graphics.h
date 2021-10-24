@@ -30,15 +30,15 @@ namespace draw2d_direct2d
 
       };
 
-      Microsoft::WRL::ComPtr<ID2D1DeviceContext>         m_pdevicecontext; // 0
-      Microsoft::WRL::ComPtr<ID2D1RenderTarget>          m_prendertarget; // 1
-      Microsoft::WRL::ComPtr<ID2D1BitmapRenderTarget>    m_pbitmaprendertarget; // 2
-      Microsoft::WRL::ComPtr<ID2D1DCRenderTarget>        m_pdcrendertarget; // 3
+      comptr<ID2D1DeviceContext>                         m_pdevicecontext; // 0
+      comptr<ID2D1RenderTarget>                          m_prendertarget; // 1
+      comptr<ID2D1BitmapRenderTarget>                    m_pbitmaprendertarget; // 2
+      comptr<ID2D1DCRenderTarget>                        m_pdcrendertarget; // 3
 
-      Microsoft::WRL::ComPtr<IDXGIAdapter>               m_padapter;
-      Microsoft::WRL::ComPtr<IDXGIFactory2>              m_pfactory2;
-      Microsoft::WRL::ComPtr<ID2D1Layer>                 m_player;
-      Microsoft::WRL::ComPtr<ID2D1PathGeometry>          m_ppathgeometryClip;
+      comptr<IDXGIAdapter>                               m_padapter;
+      comptr<IDXGIFactory2>                              m_pfactory2;
+      comptr<ID2D1Layer>                                 m_player;
+      comptr<ID2D1PathGeometry>                          m_ppathgeometryClip;
 
       __pointer_array(state)                             m_statea;
       __pointer(state)                                   m_pstate;
@@ -68,7 +68,7 @@ namespace draw2d_direct2d
       virtual bool _draw_blend(const ::image_drawing & imagedrawing) override;
 
 
-      bool IsPrinting() override;            // true if being used for printing
+      //bool IsPrinting() override;            // true if being used for printing
 
       
       virtual bool on_begin_draw() override;
@@ -132,8 +132,8 @@ namespace draw2d_direct2d
       virtual int SaveDC() override;
       virtual bool RestoreDC(int nSavedDC) override;
       //int GetDeviceCaps(int nIndex) override;
-      ::u32 SetBoundsRect(const ::rectangle_f64 & rectBounds, ::u32 flags) override;
-      ::u32 GetBoundsRect(::rectangle_f64 * rectBounds, ::u32 flags) override;
+      ::u32 SetBoundsRect(const ::rectangle_f64 & rectangleBounds, ::u32 flags) override;
+      ::u32 GetBoundsRect(::rectangle_f64 * rectangleBounds, ::u32 flags) override;
 //      bool ResetDC(const DEVMODE* lpDevMode) override;
 
       // Drawing-Tool Functions
@@ -309,7 +309,7 @@ namespace draw2d_direct2d
 
       virtual bool invert_rectangle(const ::rectangle_f64 & rectangle) override;
 
-      //virtual bool draw(const ::rectangle_f64 & rectDst, ::draw2d::icon * picon) override;
+      //virtual bool draw(const ::rectangle_f64 & rectangleTarget, ::draw2d::icon * picon) override;
 
       //bool DrawIcon(double x, double y, ::draw2d::icon * picon) override;
       //bool DrawIcon(const ::point_f64 & point, ::draw2d::icon * picon) override;
@@ -364,15 +364,15 @@ namespace draw2d_direct2d
       virtual bool round_rectangle(const ::rectangle_f64 & rectangle, double dRadius) override;
 
 
-      //virtual bool _draw_raw(const ::rectangle_f64 & rectDst, ::image * pimage, const ::image_drawing_options & imagedrawingoptions, const ::point_f64 & rectSrc = ::point_f64()) override;
+      //virtual bool _draw_raw(const ::rectangle_f64 & rectangleTarget, ::image * pimage, const ::image_drawing_options & imagedrawingoptions, const ::point_f64 & rectangleSource = ::point_f64()) override;
 
       using ::draw2d::graphics::_draw_raw;
 
 
       // Bitmap Functions
       //bool PatBlt(double x, double y, double nWidth, double nHeight) override;
-      virtual bool _draw_raw(const ::rectangle_f64 & rectDst, ::image * pimage, const image_drawing_options & imagedrawingoptions, const ::point_f64 & pointSrc) override;
-      virtual bool _stretch_raw(const ::rectangle_f64 & rectDst, ::image * pimage, const image_drawing_options & imagedrawingoptions, const ::rectangle_f64 & rectSrc) override;
+      virtual bool _draw_raw(const ::rectangle_f64 & rectangleTarget, ::image * pimage, const image_drawing_options & imagedrawingoptions, const ::point_f64 & pointSrc) override;
+      virtual bool _stretch_raw(const ::rectangle_f64 & rectangleTarget, ::image * pimage, const image_drawing_options & imagedrawingoptions, const ::rectangle_f64 & rectangleSource) override;
 
 
       ::color::color GetPixel(double x, double y) override;
@@ -394,7 +394,7 @@ namespace draw2d_direct2d
 //                          ::draw2d::graphics * pgraphicsSrc, double xSrc, double ySrc, int nSrcWidth, int nSrcHeight,
 //                          ::u32 clrTransparent) override;
 
-      //virtual bool _alpha_blend_raw(const ::rectangle_f64 & rectDst, ::draw2d::graphics * pgraphicsSrc, const ::rectangle_f64 & rectSrc, double dOpacity) override;
+      //virtual bool _alpha_blend_raw(const ::rectangle_f64 & rectangleTarget, ::draw2d::graphics * pgraphicsSrc, const ::rectangle_f64 & rectangleSource, double dOpacity) override;
 
       /*bool alpha_blend(double xDest, double yDest, int nDestWidth, int nDestHeight,
         ::draw2d::graphics * pgraphicsSrc, double xSrc, double ySrc, int nSrcWidth, int nSrcHeight,
@@ -456,7 +456,7 @@ namespace draw2d_direct2d
       //bool DrawFrameControl(const ::rectangle_f64 & rectangle, ::u32 nType, ::u32 nState) override;
 
 //      // Scrolling Functions
-//      bool ScrollDC(int dx, int dy, const ::rectangle_f64 & rectScroll, const ::rectangle_f64 & rectClip,
+//      bool ScrollDC(int dx, int dy, const ::rectangle_f64 & rectangleScroll, const ::rectangle_f64 & rectangleClip,
 //                    ::draw2d::region* pRgnUpdate, RECTANGLE_I32 * lpRectUpdate) override;
 //
 //      // font Functions
@@ -502,7 +502,7 @@ namespace draw2d_direct2d
 
       // MetaFile Functions
       //bool PlayMetaFile(HMETAFILE hMF) override;
-      //bool PlayMetaFile(HENHMETAFILE hEnhMetaFile, const ::rectangle_f64 & rectBounds) override;
+      //bool PlayMetaFile(HENHMETAFILE hEnhMetaFile, const ::rectangle_f64 & rectangleBounds) override;
       bool AddMetaFileComment(::u32 nDataSize, const byte* pCommentData) override;
       // can be used for enhanced metafiles only
 
@@ -524,14 +524,14 @@ namespace draw2d_direct2d
       // Misc Helper Functions
       static ::draw2d::brush* GetHalftoneBrush(::object * pobject);
       //void DrawDragRect(const ::rectangle_f64 & rectangle, const ::size_f64 & size,
-      //                  const ::rectangle_f64 & rectLast, const ::size_f64 & sizeLast,
+      //                  const ::rectangle_f64 & rectangleLast, const ::size_f64 & sizeLast,
       //                  ::draw2d::brush* pBrush = nullptr, ::draw2d::brush* pBrushLast = nullptr) override;
 
       bool fill_rectangle(const ::rectangle_f64 & rectangle, const ::color::color & color) override;
       //void fill_rectangle(const ::rectangle_f64 & rectangle, const ::color::color & color) override;
 
-      //bool draw_3drect(const ::rectangle_f64 & rectangle, const ::color::color & colorTopLeft, const ::color::color & colorBottomRight, const ::e_border & eborder = e_border_all) override;
-      //void draw_3drect(const ::rectangle_f64 & rectangle, const ::color::color & colorTopLeft, const ::color::color & colorBottomRight, const ::e_border & eborder = e_border_all) override;
+      //bool draw_inset_3d_rectangle(const ::rectangle_f64 & rectangle, const ::color::color & colorTopLeft, const ::color::color & colorBottomRight, const ::e_border & eborder = e_border_all) override;
+      //void draw_inset_3d_rectangle(const ::rectangle_f64 & rectangle, const ::color::color & colorTopLeft, const ::color::color & colorBottomRight, const ::e_border & eborder = e_border_all) override;
 
 
       void assert_valid() const override;
@@ -541,9 +541,9 @@ namespace draw2d_direct2d
       bool set_alpha_mode(::draw2d::enum_alpha_mode ealphamode) override;
 
 
-      virtual HDC get_handle() const;
-      virtual HDC get_handle1() const;
-      virtual HDC get_handle2() const;
+      //virtual HDC get_handle() const;
+      //virtual HDC get_handle1() const;
+      //virtual HDC get_handle2() const;
 
       virtual bool attach(void * pdata) override;
       virtual void * detach() override;

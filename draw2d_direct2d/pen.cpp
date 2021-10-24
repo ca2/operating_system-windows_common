@@ -48,7 +48,7 @@ namespace draw2d_direct2d
          if(m_pbrush != nullptr)
          {
 
-            m_osdata[0] = (ID2D1Brush *) m_pbrush.Get();
+            m_osdata[0] = (ID2D1Brush *) m_pbrush;
             
             m_colorMetro       = m_color;
 

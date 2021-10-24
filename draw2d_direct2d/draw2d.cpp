@@ -7,16 +7,16 @@ namespace draw2d_direct2d
 
    draw2d::draw2d()
    {
-      
-      ::direct2d::defer_initialize();
 
+      defer_create_mutex();
+      
    }
 
 
    draw2d::~draw2d()
    {
 
-      ::direct2d::terminate();
+      ::direct2d::finalize();
 
    }
 
@@ -33,6 +33,8 @@ namespace draw2d_direct2d
 
       }
    
+      ::direct2d::defer_initialize(this);
+
       //estatus = initialize_gdiplus();
 
       //if (!estatus)
@@ -53,6 +55,27 @@ namespace draw2d_direct2d
       return "direct2d";
 
    }
+
+
+   ::e_status draw2d::lock_device()
+   {
+
+      direct2d::direct2d()->m_d2dMultithread->Enter();
+
+      return success;
+
+   }
+
+
+   ::e_status draw2d::unlock_device()
+   {
+
+      direct2d::direct2d()->m_d2dMultithread->Leave();
+
+      return success;
+
+   }
+
 
 } // namespace draw2d_direct2d
 

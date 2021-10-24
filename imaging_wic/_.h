@@ -2,8 +2,13 @@
 
 
 #include "aura/_.h"
-#include "aura/operating_system.h"
-#include <wincodec.h>
+#include "aura_windows_common/_.h"
+#ifdef _UWP
+#include "aura_universal_windows/_.h"
+#endif
+#ifdef WINDOWS_DESKTOP
+#include "aura_windows/_.h"
+#endif
 
 
 #ifdef _IMAGING_WIC_STATIC
@@ -15,37 +20,6 @@
 #endif
 
 
-
-
-namespace imaging_wic
-{
-
-
-   comptr < IWICImagingFactory > get_imaging_factory();
-
-
-   CLASS_DECL_IMAGING_WIC bool node_save_image(comptr < IStream > pstream, const ::image * pimage, const ::save_image * psaveimage);
-
-
-#ifdef _UWP
-   
-   
-   CLASS_DECL_IMAGING_WIC bool node_save_image(Windows::Storage::Streams::IRandomAccessStream ^ stream, const ::image * pimage, const ::save_image * psaveimage);
-
-
-#endif
-
-
-} // namespace imaging_wic
-
-
-#include "factory_exchange.h"
-
-
-comptr < IWICImagingFactory > wic_get_imaging_factory();
-
-
-#include "context_image.h"
 
 
 

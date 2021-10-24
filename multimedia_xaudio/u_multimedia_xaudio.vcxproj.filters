@@ -24,6 +24,9 @@
     <ClInclude Include="framework.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="_multimedia_xaudio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
@@ -32,5 +35,10 @@
     <Filter Include="Header Files">
       <UniqueIdentifier>{cf4c2f87-28cb-419b-9454-ecdaca98bab5}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="u_multimedia_xaudio.def">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

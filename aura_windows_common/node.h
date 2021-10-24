@@ -24,10 +24,7 @@ namespace aura
 
 
          node();
-         virtual ~node();
-
-
-         string get_user_name();
+         ~node() override;
 
 
          virtual bool _os_calc_app_dark_mode() override;
@@ -48,9 +45,9 @@ namespace aura
          //virtual ::e_status get_system_time(system_time_t * psystemtime) override;
 
 
-         virtual ::e_status open_folder(::file::path& pathFolder) override;
+         //virtual ::e_status open_folder(::file::path& pathFolder) override;
 
-         virtual ::e_status register_dll(const ::file::path& pathDll) override;
+         //virtual ::e_status register_dll(const ::file::path& pathDll) override;
 
 
          virtual ::e_status system_main() override;

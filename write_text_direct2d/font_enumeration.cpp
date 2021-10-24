@@ -23,6 +23,10 @@ namespace write_text_direct2d
    ::e_status font_enumeration::on_enumerate_fonts()
    {
 
+      __defer_construct_new(m_pfontenumerationitema);
+
+      m_pfontenumerationitema->erase_all();
+
       ::comptr<IDWriteFontCollection> pFontCollection;
 
       HRESULT hr = ::direct2d::direct2d()->dwrite_factory()->GetSystemFontCollection(&pFontCollection);

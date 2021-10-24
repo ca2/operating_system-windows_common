@@ -26,6 +26,9 @@
     <ClInclude Include="_apex_windows_common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="single_threaded_handler_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="framework.cpp">
@@ -38,6 +41,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="node.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="single_threaded_handler_manager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

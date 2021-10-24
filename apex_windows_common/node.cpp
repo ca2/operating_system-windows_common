@@ -3,6 +3,9 @@
 #include "acme/filesystem/filesystem/acme_path.h"
 
 
+CLASS_DECL_ACME_WINDOWS_COMMON bool defer_initialize_winsock();
+
+
 namespace apex
 {
 
@@ -24,20 +27,6 @@ namespace apex
       node::~node()
       {
 
-
-      }
-
-
-      string node::get_user_name()
-      {
-
-         WCHAR wsz[1024];
-
-         DWORD dwSize = sizeof(wsz) / sizeof(WCHAR);
-
-         ::GetUserNameW(wsz, &dwSize);
-
-         return string(wsz);
 
       }
 
@@ -302,57 +291,8 @@ namespace apex
       ::e_status node::open_folder(::file::path& pathFolder)
       {
 
-         wstring wstrFolder(pathFolder);
-
-         int i = (int)(iptr) ::ShellExecuteW(nullptr, L"open", wstrFolder, nullptr, nullptr, SW_NORMAL);
-
-         if (i < 32)
-         {
-
-            switch (i)
-            {
-            case 0:
-               //The operating system is out of memory or resources.
-               return error_no_memory;
-            case ERROR_FILE_NOT_FOUND:
-               return error_file_not_found;
-               //The specified file was not found.
-            case ERROR_PATH_NOT_FOUND:
-               return error_path_not_found;
-               //            The specified path was not found.
-            case          ERROR_BAD_FORMAT:
-               return error_bad_format;
-               //The.exe file is invalid(non - Win32.exe or error in.exe image).
-               //case SE_ERR_ACCESSDENIED:
-               //         return error_access_denied;
-               ////The operating system denied access to the specified file.
-               //SE_ERR_ASSOCINCOMPLETE
-               //The file name association is incomplete or invalid.
-               //SE_ERR_DDEBUSY
-               //The DDE transaction could not be completed because other DDE transactions were being processed.
-               //SE_ERR_DDEFAIL
-               //The DDE transaction failed.
-               //SE_ERR_DDETIMEOUT
-               //The DDE transaction could not be completed because the request timed out.
-               //SE_ERR_DLLNOTFOUND
-               //The specified DLL was not found.
-               //SE_ERR_FNF
-               //The specified file was not found.
-               //SE_ERR_NOASSOC
-               //There is no application associated with the given file name extension.This error will also be returned if you attempt to print a file that is not printable.
-               //SE_ERR_OOM
-               //There was not enough memory to complete the operation.
-               //SE_ERR_PNF
-               //The specified path was not found.
-               //SE_ERR_SHARE
-               //A sharing violation occurred.*/
-            default:
-               return error_failed;
-            }
-
-         }
-
-         return ::success;
+        
+         return ::error_failed;
 
       }
 
@@ -401,7 +341,7 @@ namespace apex
 
          set["privileged"] = true;
 
-         if (!call_sync(path, strParam, path.folder(), ::e_display_none, 3_min, set))
+         if (!call_sync(path, strParam, path.folder(), ::e_display_none, 3_minute, set))
          {
 
             return false;
@@ -539,235 +479,68 @@ namespace apex
       }
 
 
-      string node::veriwell_multimedia_music_midi_get_default_library_name()
-      {
+      //string node::veriwell_multimedia_music_midi_get_default_library_name()
+      //{
 
-         return "music_midi_mmsystem";
+      //   return "music_midi_mmsystem";
 
-      }
+      //}
 
 
-      string node::multimedia_audio_mixer_get_default_library_name()
-      {
+      //string node::multimedia_audio_mixer_get_default_library_name()
+      //{
 
-         return "audio_mixer_mmsystem";
+      //   return "audio_mixer_mmsystem";
 
-      }
+      //}
 
 
-      string node::multimedia_audio_get_default_library_name()
-      {
+      //string node::multimedia_audio_get_default_library_name()
+      //{
 
-         string str;
+      //   string str;
 
-         if (file_exists(m_psystem->m_pacmedir->system() / "config\\system\\audio.txt"))
-         {
+      //   if (m_psystem->m_pacmefile->exists(m_psystem->m_pacmedir->system() / "config\\system\\audio.txt"))
+      //   {
 
-            str = file_as_string(m_psystem->m_pacmedir->system() / "config\\system\\audio.txt");
+      //      str = m_psystem->m_pacmefile->as_string(m_psystem->m_pacmedir->system() / "config\\system\\audio.txt");
 
-         }
-         else
-         {
+      //   }
+      //   else
+      //   {
 
-            ::file::path strPath;
+      //      ::file::path strPath;
 
-            strPath = m_psystem->m_pacmedir->appdata() / "audio.txt";
+      //      strPath = m_psystem->m_pacmedir->appdata() / "audio.txt";
 
-            str = file_as_string(strPath);
+      //      str = m_psystem->m_pacmefile->as_string(strPath);
 
-         }
+      //   }
 
-         if (str.has_char())
-            return "audio_" + str;
-         else
-            return "audio_mmsystem";
+      //   if (str.has_char())
+      //      return "audio_" + str;
+      //   else
+      //      return "audio_mmsystem";
 
-      }
+      //}
 
-      string node::get_version()
-      {
 
-         unichar pszModuleFilePath[MAX_PATH + 1];
 
-         GetModuleFileNameW(nullptr, pszModuleFilePath, MAX_PATH + 1);
 
-         DWORD dw;
 
-         ::u32 dwResSize = GetFileVersionInfoSizeW(
-            pszModuleFilePath,
-            &dw);
 
-         if (dwResSize > 0)
-         {
 
-            memory memory;
 
-            memory.set_size(dwResSize);
 
-            if (GetFileVersionInfoW(
-               pszModuleFilePath,
+      //HICON node::extract_icon(HINSTANCE hInst, const ::string & pszExeFileName, ::u32 nIconIndex)
 
-               0,
-               dwResSize,
-               memory.get_data()))
+      //{
 
-            {
-               ::u32 cbTranslate;
-               struct LANGANDCODEPAGE
-               {
-                  ::u16 wLanguage;
-                  ::u16 wCodePage;
-               } *pTranslate;
+      //   return ::ExtractIconW(hInst, ::str::international::utf8_to_unicode(pszExeFileName), nIconIndex);
 
 
-               // read the list of languages and code pages.
+      //}
 
-               VerQueryValue(memory.get_data(),
-                  TEXT("\\VarFileInfo\\Translation"),
-                  (LPVOID*)&pTranslate,
-                  &cbTranslate);
-
-               string strKey;
-
-               for (::u32 u = 0; u < (cbTranslate / sizeof(struct LANGANDCODEPAGE)); u++)
-               {
-
-                  WCHAR* psz;
-
-                  UINT uSize;
-
-                  //strKey.Format(
-                  //"\\StringFileInfo\\%04x%04x\\FileDescription",
-                  //pTranslate[u].wLanguage,
-                  //pTranslate[u].wCodePage);
-
-                  strKey.Format(
-                     "\\StringFileInfo\\%04x%04x\\FileVersion",
-                     pTranslate[u].wLanguage,
-                     pTranslate[u].wCodePage);
-
-                  wstring wstrKey(strKey);
-
-                  // Retrieve file description for language and code page "i".
-                  if (VerQueryValueW(memory.get_data(),
-                     (WCHAR*)(const WCHAR*)wstrKey,
-                     (LPVOID*)&psz,
-                     &uSize))
-                  {
-
-                     string strVersion(psz, uSize);
-
-                     return strVersion;
-
-                  }
-
-               }
-
-            }
-
-         }
-
-         return "";
-
-      }
-
-
-      void node::show_wait_cursor(bool bShow)
-      {
-
-         if (bShow)
-         {
-
-            HCURSOR hcursorWait = ::LoadCursor(nullptr, IDC_WAIT);
-
-            HCURSOR hcursorPrevious = ::SetCursor(hcursorWait);
-
-            //     if(hcursorPrevious != hcursorWait)
-            //         m_hcurWaitCursorRestore = hcursorPrevious;
-
-         }
-         else
-         {
-
-            //         ::SetCursor(m_hcurWaitCursorRestore);
-         }
-
-      }
-
-
-
-
-
-
-
-      ::u32 node::get_current_directory(string& str)
-      {
-
-         return ::GetCurrentDirectoryW(MAX_PATH * 8, wtostring(str, MAX_PATH * 8));
-
-      }
-
-
-      ::u32 node::get_temp_path(string& str)
-      {
-
-         return ::GetTempPathW(MAX_PATH * 8, wtostring(str, MAX_PATH * 8));
-
-      }
-
-
-      ::i32 node::reg_query_value(HKEY hkey, const ::string & pszSubKey, string& str)
-      {
-
-         DWORD dwType = 0;
-         DWORD dwSize = 0;
-         ::i32 lResult = RegQueryValueExW(hkey, wstring(pszSubKey), nullptr, &dwType, nullptr, &dwSize);
-
-         if (lResult != ERROR_SUCCESS)
-            return lResult;
-         ASSERT(dwType == REG_SZ || dwType == REG_MULTI_SZ || dwType == REG_EXPAND_SZ);
-         if (dwType == REG_SZ || dwType == REG_MULTI_SZ || dwType == REG_EXPAND_SZ)
-         {
-
-            natural_wstring pwsz(byte_count, dwSize);
-
-            lResult = RegQueryValueExW(hkey, wstring(pszSubKey), nullptr, &dwType, (byte*)(unichar*)pwsz, &dwSize);
-
-            str = pwsz;
-
-            //str.release_string_buffer(dwSize);
-
-            return lResult;
-
-         }
-         else
-         {
-
-            return ERROR_NOT_SUPPORTED;
-
-         }
-
-      }
-
-
-      HICON node::extract_icon(HINSTANCE hInst, const ::string & pszExeFileName, ::u32 nIconIndex)
-
-      {
-
-         return ::ExtractIconW(hInst, ::str::international::utf8_to_unicode(pszExeFileName), nIconIndex);
-
-
-      }
-
-
-      bool node::delete_file(const ::string & pFileName)
-
-      {
-
-         return ::DeleteFileW(::str::international::utf8_to_unicode(pFileName)) != false;
-
-
-      }
 
       //CLASS_DECL_ACME::file::path user_appdata_local();
 

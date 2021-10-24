@@ -46,7 +46,7 @@ namespace multimedia
 
 //         run_step_thread *                m_prunstepthread;
 
-         millis                             m_millisLastBuffer;
+         ::duration                             m_durationLastBuffer;
          int                              m_iBuffer;
 
          WAVEFORMATEX                     m_waveformatex;
@@ -57,11 +57,11 @@ namespace multimedia
          virtual ~out();
 
 
-         ::e_status     out_start(const imedia_time & position);
+         ::e_status     out_start(const ::duration & position);
          //virtual bool  on_run_step();
          void install_message_routing(::channel * pchannel);
 
-         virtual imedia_time out_get_time() override;
+         virtual ::duration out_get_time() override;
          virtual void out_filled(index iBuffer) override;
          //virtual void out_buffer_ready(LPWAVEHDR lpwavehdr);
 

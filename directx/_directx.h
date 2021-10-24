@@ -2,7 +2,9 @@
 #pragma once
 
 
+#include "aura_windows_common/_aura_windows_common.h"
 #include "aura/operating_system.h"
+#include "aura/user/_user.h"
 
 
 #include <winapifamily.h>
@@ -34,25 +36,16 @@ namespace directx
    CLASS_DECL_DIRECTX void dxgi_debug_terminate();
 
 
-   inline void throw_if_failed(HRESULT hr)
-   {
-
-
-      if (FAILED(hr))
-      {
-
-         __throw(hresult_exception(hr));
-
-      }
-
-
-   }
-
-
 } // namespace dx
 
 
 CLASS_DECL_DIRECTX void directx_debug();
+
+
+//#include "object.h"
+
+
+//#include "graphics.h"
 
 
 #include "directx.h"

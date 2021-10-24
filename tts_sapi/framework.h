@@ -7,6 +7,9 @@
 #include "_.h"
 
 
+#include "_tts_api.h"
+
+
 #include "apex/_defer.h"
 
 

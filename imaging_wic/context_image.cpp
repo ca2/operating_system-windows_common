@@ -1,5 +1,33 @@
 #include "framework.h"
+#include "apex/parallelization/handler_manager.h"
+#include "apex_windows_common/single_threaded_handler_manager.h"
 #include <wincodec.h>
+
+class multi_threaded_handler_manager :
+   virtual public handler_manager
+{
+public:
+
+
+   multi_threaded_handler_manager() {}
+   ~multi_threaded_handler_manager() override {}
+
+
+
+
+   void on_start_loop()
+   {
+
+      defer_co_initialize_ex(true, true);
+
+   }
+
+
+
+};
+
+
+
 
 
 namespace imaging_wic
@@ -33,12 +61,30 @@ namespace imaging_wic
 
       }
 
-      __own(this, m_pmanagerImageLoad, __new(handler_manager("imaging_load_image", true)));
+
+#ifdef _UWP
+
+      __own(this, m_pmanagerImageLoad, __new(multi_threaded_handler_manager));
+
+#else
+
+      __own(this, m_pmanagerImageLoad, __new(single_threaded_handler_manager));
+
+#endif
 
       if (!m_pmanagerImageLoad)
       {
 
          return ::error_failed;
+
+      }
+
+      estatus = m_pmanagerImageLoad->initialize_handler_manager(this, "imaging_load_image", true);
+
+      if (!estatus)
+      {
+
+         return estatus;
 
       }
 
@@ -65,7 +111,7 @@ namespace imaging_wic
       if (FAILED(hrCreate))
       {
 
-         TRACE("Failed creating WICImagingFactory1 %x", hrCreate);
+         _INFORMATION(::get_task(), "Failed creating WICImagingFactory1 %x" << hrCreate);
 
       }
 
@@ -83,10 +129,10 @@ namespace imaging_wic
 
       bool bOk = true;
 
-      psystem->main_user_sync(__routine([&]()
+      m_psystem->m_paurasystem->m_paurasession->m_puser->m_pwindowing->windowing_send(__routine(15_s, [&]()
          {
 
-            auto dataPackage = ::Windows::ApplicationModel::DataTransfer::Clipboard::GetContent();
+            auto dataPackage = ::winrt::Windows::ApplicationModel::DataTransfer::Clipboard::GetContent();
 
             if (dataPackage == nullptr)
             {
@@ -97,7 +143,7 @@ namespace imaging_wic
 
             }
 
-            if (!dataPackage->Contains(::Windows::ApplicationModel::DataTransfer::StandardDataFormats::Bitmap))
+            if (!dataPackage.Contains(::winrt::Windows::ApplicationModel::DataTransfer::StandardDataFormats::Bitmap()))
             {
 
                bOk = false;
@@ -106,21 +152,21 @@ namespace imaging_wic
 
             }
 
-            auto p = ::wait(dataPackage->GetDataAsync(L"DeviceIndependentBitmap"));
+            auto p = dataPackage.GetDataAsync(L"DeviceIndependentBitmap").get();
 
-            //::Windows::Storage::Streams::IRandomAccessStream^ stream = (::Windows::Storage::Streams::IRandomAccessStream^)
+            //::winrt::Windows::Storage::Streams::IRandomAccessStream^ stream = (::winrt::Windows::Storage::Streams::IRandomAccessStream^)
 
-            //auto ref = ::wait(dataPackage->GetDataAsync(L"DeviceIndependentBitmap"));
+            //auto ref = ::wait(dataPackage.GetDataAsync(L"DeviceIndependentBitmap"));
 
             if (p == nullptr)
             {
 
-               p = (::Windows::Storage::Streams::IRandomAccessStream^) ::wait(dataPackage->GetDataAsync(L"DeviceIndependentBitmapV5"));
+               p = dataPackage.GetDataAsync(L"DeviceIndependentBitmapV5").get();
 
                if (p == nullptr)
                {
                   
-                  p = (::Windows::Storage::Streams::IRandomAccessStream^) ::wait(dataPackage->GetDataAsync(L"DeviceInterchangeFormat"));
+                  p = dataPackage.GetDataAsync(L"DeviceInterchangeFormat").get();
 
                   if (p == nullptr)
                   {
@@ -135,9 +181,9 @@ namespace imaging_wic
 
             }
 
-            ::Windows::Storage::Streams::IRandomAccessStream^ stream = (::Windows::Storage::Streams::IRandomAccessStream ^ ) p;
+            auto stream = p.as< ::winrt::Windows::Storage::Streams::IRandomAccessStream>();
 
-            //::Windows::Storage::Streams::IRandomAccessStreamWithContentType ^ stream = ::wait(ref->OpenReadAsync());
+            //::winrt::Windows::Storage::Streams::IRandomAccessStreamWithContentType ^ stream = ::wait(ref->OpenReadAsync());
 
             //if (stream == nullptr)
             //{
@@ -149,18 +195,20 @@ namespace imaging_wic
 
             //}
 
-            memsize s = (memsize)stream->Size;
+            memsize s = (memsize)stream.Size();
 
-            Windows::Storage::Streams::Buffer^ buffer = ref new Windows::Storage::Streams::Buffer(s);
+            ::winrt::Windows::Storage::Streams::Buffer buffer((::u32) s);
 
             if (buffer == nullptr)
                return;
 
-            ::wait(stream->ReadAsync(buffer, s, ::Windows::Storage::Streams::InputStreamOptions::ReadAhead));
+            stream.ReadAsync(buffer, (::u32) s, ::winrt::Windows::Storage::Streams::InputStreamOptions::ReadAhead).get();
 
             memory m;
 
-            m.set_os_buffer(buffer);
+            m.set_size(s);
+
+            windows_runtime_read_buffer(m.get_data(), s, buffer);
 
             BITMAPINFO* _ = (BITMAPINFO*)m.get_data();
 
@@ -173,7 +221,7 @@ namespace imaging_wic
                pimage->width(),
                pimage->height(),
                pimage->scan_size(),
-               (::color::color*)&m.get_data()[_->bmiHeader.biSize],
+               (::color32_t*)&m.get_data()[_->bmiHeader.biSize],
                _->bmiHeader.biSizeImage / _->bmiHeader.biHeight);
 
 
@@ -202,7 +250,7 @@ namespace imaging_wic
 
       bool bOk = false;
 
-      psystem->main_user_sync(__routine([&bOk]()
+      m_psystem->m_paurasession->m_puser->m_pwindowing->windowing_send(__routine(15_s, [&bOk]()
          {
 
 
@@ -218,7 +266,7 @@ namespace imaging_wic
 
       bool bOk = true;
 
-      auto package = ref new ::Windows::ApplicationModel::DataTransfer::DataPackage;
+      auto package = ::winrt::Windows::ApplicationModel::DataTransfer::DataPackage();
 
       if (package == nullptr)
       {
@@ -227,7 +275,7 @@ namespace imaging_wic
 
       }
 
-      Windows::Storage::Streams::InMemoryRandomAccessStream^ randomAccessStream = ref new Windows::Storage::Streams::InMemoryRandomAccessStream();
+      ::winrt::Windows::Storage::Streams::InMemoryRandomAccessStream randomAccessStream;
 
       ::save_image saveimage;
 
@@ -242,18 +290,18 @@ namespace imaging_wic
 
       }
 
-      package->RequestedOperation = ::Windows::ApplicationModel::DataTransfer::DataPackageOperation::Copy;
+      package.RequestedOperation(::winrt::Windows::ApplicationModel::DataTransfer::DataPackageOperation::Copy);
 
-      auto object = ::Windows::Storage::Streams::RandomAccessStreamReference::CreateFromStream(randomAccessStream);
+      auto object = ::winrt::Windows::Storage::Streams::RandomAccessStreamReference::CreateFromStream(randomAccessStream);
 
-      package->SetBitmap(object);
+      package.SetBitmap(object);
 
-      defer_main_thread([&package, this]()
+      m_psystem->m_paurasystem->m_paurasession->m_puser->m_pwindowing->windowing_send(__routine(15_s, [&package, this]()
          {
 
-            ::Windows::ApplicationModel::DataTransfer::Clipboard::SetContent(package);
+            ::winrt::Windows::ApplicationModel::DataTransfer::Clipboard::SetContent(package);
 
-         });
+         }));
 
       return true;
 
@@ -261,6 +309,11 @@ namespace imaging_wic
    }
 
 #endif
+
+
+   //::e_status context_image::_load_icon(::draw2d::icon * picon, const ::payload & payloadFile)
+
+
 
 
 } // namespace imaging_wic

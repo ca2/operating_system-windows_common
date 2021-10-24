@@ -34,8 +34,6 @@ namespace draw2d_direct2d
 
       auto pgraphics = __graphics(pgraphicsParam);
 
-      ::draw2d::lock draw2dlock;
-
       if (pgraphics->m_prendertarget == nullptr)
       {
 
@@ -58,7 +56,7 @@ namespace draw2d_direct2d
             if(m_psolidbrush != nullptr)
             {
 
-               m_osdata[0] = (ID2D1Brush*)m_psolidbrush.Get();
+               m_osdata[0] = (ID2D1Brush*)m_psolidbrush;
                
                set_updated();
 
@@ -66,7 +64,7 @@ namespace draw2d_direct2d
 
          }
 
-         return m_psolidbrush.Get();
+         return m_psolidbrush;
 
       }
       else if(m_etype == type_linear_gradient_point_color)
@@ -111,7 +109,7 @@ namespace draw2d_direct2d
             if(m_plineargradientbrush != nullptr)
             {
                
-               m_osdata[0] = (ID2D1Brush*)m_plineargradientbrush.Get();
+               m_osdata[0] = (ID2D1Brush*)m_plineargradientbrush;
 
                set_updated();
 
@@ -119,7 +117,7 @@ namespace draw2d_direct2d
 
          }
 
-         return (ID2D1Brush *) m_plineargradientbrush.Get();
+         return (ID2D1Brush *) m_plineargradientbrush;
 
       }
       else if(m_etype == type_radial_gradient_color)
@@ -178,7 +176,7 @@ namespace draw2d_direct2d
             if(m_pradialgradientbrush != nullptr)
             {
 
-               m_osdata[0] = (ID2D1Brush*)m_pradialgradientbrush.Get();
+               m_osdata[0] = (ID2D1Brush*)m_pradialgradientbrush;
 
                set_updated();
 
@@ -186,7 +184,7 @@ namespace draw2d_direct2d
 
          }
 
-         return (ID2D1Brush *)m_pradialgradientbrush.Get();
+         return (ID2D1Brush *)m_pradialgradientbrush;
 
       }
       else if (m_etype == type_pattern)
@@ -204,14 +202,20 @@ namespace draw2d_direct2d
          if (m_pimagebrush == nullptr)
          {
 
+            m_pimage->unmap();
+
+            int cx = m_pimage->width();
+
+            int cy = m_pimage->height();
+
+            auto rect = D2D1::RectF(0, 0, (float)cx, (float)cy);
+
             auto imagebrushproperties = D2D1::ImageBrushProperties(
-               D2D1::RectF(0, 0,(float) m_pimage->width(),(float) m_pimage->height()),
+               rect,
                D2D1_EXTEND_MODE_WRAP,
                D2D1_EXTEND_MODE_WRAP,
                D2D1_INTERPOLATION_MODE_LINEAR
             );
-
-            m_pimage->unmap();
 
             ID2D1Image* pimage = m_pimage->m_pbitmap->get_os_data < ID2D1Bitmap * >();
 
@@ -223,7 +227,7 @@ namespace draw2d_direct2d
             if (SUCCEEDED(hr) && m_pimagebrush != nullptr)
             {
 
-               m_osdata[0] = (ID2D1Brush*)m_pimagebrush.Get();
+               m_osdata[0] = (ID2D1Brush*)m_pimagebrush;
 
                set_updated();
 
@@ -231,13 +235,13 @@ namespace draw2d_direct2d
 
          }
 
-         return (ID2D1Brush*) m_pimagebrush.Get();
+         return (ID2D1Brush*) m_pimagebrush;
 
       }
       else
       {
 
-         return (ID2D1Brush *) m_pbrush.Get();
+         return (ID2D1Brush *) m_pbrush;
 
       }
 
@@ -246,7 +250,7 @@ namespace draw2d_direct2d
    }
 
 
-   ::e_status brush::destroy()
+   ::e_status brush::destroy_os_data()
    {
 
       if(m_psolidbrush != nullptr)

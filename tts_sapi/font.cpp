@@ -133,7 +133,7 @@ namespace draw2d_gdiplus
          break;
       };
 
-      //retry_single_lock slGdiplus(psystem->s_mutexGdiplus, millis(1), millis(1));
+      //retry_single_lock slGdiplus(psystem->s_mutexGdiplus, ::duration(1), ::duration(1));
 
       /*if (m_strFontFamilyName.begins_ci("matter://"))
       {
@@ -154,13 +154,13 @@ namespace draw2d_gdiplus
 
       //   Hide   Copy Code
       //   // When painting the text
-      //   FontFamily fontFamily;
+      //   FontFamily pfontFamily;
       //int nNumFound = 0;
-      //m_fontcollection.GetFamilies(1, &fontFamily, &nNumFound);
+      //m_fontcollection.GetFamilies(1, &pfontFamily, &nNumFound);
 
       //if (nNumFound > 0)
       //{
-      //   Font font(&fontFamily, 28, FontStyleRegular, UnitPixel);
+      //   Font font(&pfontFamily, 28, FontStyleRegular, UnitPixel);
 
       //   StringFormat strformat;
       //   wchar_t buf[] = L"The quick brown fox jumps over the lazy dog!";

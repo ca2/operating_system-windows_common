@@ -17,16 +17,16 @@
 #include "ppl.h"
 
 using namespace Platform::Collections;
-using namespace Windows::Foundation;
-using namespace Windows::Foundation::Collections;
+using namespace ::winrt::Windows::Foundation;
+using namespace ::winrt::Windows::Foundation::Collections;
 using namespace Platform;
-using namespace Windows::UI;
-using namespace Windows::UI::Core;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-using namespace Windows::UI::Xaml::Navigation;
-using namespace Windows::Storage::Streams;
-using namespace Windows::Devices::Midi;
+using namespace ::winrt::Windows::UI;
+using namespace ::winrt::Windows::UI::Core;
+using namespace ::winrt::Windows::UI::Xaml;
+using namespace ::winrt::Windows::UI::Xaml::Controls;
+using namespace ::winrt::Windows::UI::Xaml::Navigation;
+using namespace ::winrt::Windows::Storage::Streams;
+using namespace ::winrt::Windows::Devices::Midi;
 
 using namespace SDKSample::MIDI;
 using namespace concurrency;
@@ -159,7 +159,7 @@ void  MessageIO::ScenarioInit()
    }
 
    std::for_each(begin(_messageTypeMap), end(_messageTypeMap),
-                 [this](Windows::Foundation::Collections::IKeyValuePair<MidiMessageType, String ^>^ messageType)
+                 [this](::winrt::Windows::Foundation::Collections::IKeyValuePair<MidiMessageType, String ^>^ messageType)
    {
       _messageTypeComboBox->Items->Append(messageType->Value);
    });
@@ -232,7 +232,7 @@ MidiMessageType MessageIO::GetMessageTypeFromIndex(int index)
    MidiMessageType retValue = MidiMessageType::None;
 
    std::for_each(begin(_messageTypeMap), end(_messageTypeMap),
-                 [index, &retValue, &count](Windows::Foundation::Collections::IKeyValuePair<MidiMessageType, String ^>^ messageType)
+                 [index, &retValue, &count](::winrt::Windows::Foundation::Collections::IKeyValuePair<MidiMessageType, String ^>^ messageType)
    {
       if (count == index)
       {
@@ -245,7 +245,7 @@ MidiMessageType MessageIO::GetMessageTypeFromIndex(int index)
    return retValue;
 }
 
-void MessageIO::InPortsListSelectionChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e)
+void MessageIO::InPortsListSelectionChanged(Platform::Object^ sender, ::winrt::Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e)
 {
    // see if we should open ports
    IVector<Object ^>^ addedPorts = e->AddedItems;
@@ -261,7 +261,7 @@ void MessageIO::InPortsListSelectionChanged(Platform::Object^ sender, Windows::U
          {
             if (nullptr != inPort)
             {
-               inPort->MessageReceived += ref new Windows::Foundation::TypedEventHandler<MidiInPort ^,
+               inPort->MessageReceived += ref new ::winrt::Windows::Foundation::TypedEventHandler<MidiInPort ^,
                                           MidiMessageReceivedEventArgs ^>(this, &MessageIO::OnMessageReceived);
 
                _midiInPortArray.Append(inPort);
@@ -281,7 +281,7 @@ void MessageIO::InPortsListSelectionChanged(Platform::Object^ sender, Windows::U
    });
 }
 
-void MessageIO::OutPortsListSelectionChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e)
+void MessageIO::OutPortsListSelectionChanged(Platform::Object^ sender, ::winrt::Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e)
 {
    // see if we should open ports
    bool updateMessageBuildingUI = false;
@@ -333,7 +333,7 @@ void MessageIO::OutPortsListSelectionChanged(Platform::Object^ sender, Windows::
    }
 }
 
-void MessageIO::MessageTypeSelectionChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e)
+void MessageIO::MessageTypeSelectionChanged(Platform::Object^ sender, ::winrt::Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e)
 {
    int typeIndex = _messageTypeComboBox->SelectedIndex;
 
@@ -452,22 +452,22 @@ void MessageIO::Field3ComboBoxSelectionChanged(Object^ sender, SelectionChangedE
    }
 }
 
-void MessageIO::RawMessageTextBlockTapped(Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e)
+void MessageIO::RawMessageTextBlockTapped(Object^ sender, ::winrt::Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e)
 {
    FrameworkElement^ matter = static_cast<FrameworkElement^>(sender);
 
    if (matter != nullptr && MidiMessageType::SystemExclusive == _messageType)
    {
-      Windows::UI::Xaml::Controls::Primitives::FlyoutBase::ShowAttachedFlyout(matter);
+      ::winrt::Windows::UI::Xaml::Controls::Primitives::FlyoutBase::ShowAttachedFlyout(matter);
    }
 }
 
-void MessageIO::ResetButtonClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+void MessageIO::ResetButtonClick(Platform::Object^ sender, ::winrt::Windows::UI::Xaml::RoutedEventArgs^ e)
 {
    ResetMessageBuilding(true);
 }
 
-void MessageIO::SendButtonClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+void MessageIO::SendButtonClick(Platform::Object^ sender, ::winrt::Windows::UI::Xaml::RoutedEventArgs^ e)
 {
    IMidiMessage^ midiMessage;
 
@@ -912,8 +912,8 @@ void MessageIO::OnMessageReceived(MidiInPort ^sender, MidiMessageReceivedEventAr
 {
    IMidiMessage^ midiMessage = args->Message;
 
-   create_task(Dispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::High,
-                                    ref new Windows::UI::Core::DispatchedHandler([this, sender, midiMessage]()
+   create_task(Dispatcher->RunAsync(::winrt::Windows::UI::Core::CoreDispatcherPriority::High,
+                                    ref new ::winrt::Windows::UI::Core::DispatchedHandler([this, sender, midiMessage]()
    {
       String^ outputString = midiMessage->Timestamp.Duration + ", " + _messageTypeMap->lookup(midiMessage->Type);
 
@@ -1208,8 +1208,8 @@ void MessageIO::MidiDeviceWatcher::OnPortAdded(DeviceWatcher^ deviceWatcher, Dev
 {
    if (_enumCompleted)
    {
-      create_task(_coreDispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::High,
-                                            ref new Windows::UI::Core::DispatchedHandler([this]()
+      create_task(_coreDispatcher->RunAsync(::winrt::Windows::UI::Core::CoreDispatcherPriority::High,
+                                            ref new ::winrt::Windows::UI::Core::DispatchedHandler([this]()
       {
          UpdatePorts();
       })));
@@ -1220,8 +1220,8 @@ void MessageIO::MidiDeviceWatcher::OnPortRemoved(DeviceWatcher^ deviceWatcher, D
 {
    if (_enumCompleted)
    {
-      create_task(_coreDispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::High,
-                                            ref new Windows::UI::Core::DispatchedHandler([this]()
+      create_task(_coreDispatcher->RunAsync(::winrt::Windows::UI::Core::CoreDispatcherPriority::High,
+                                            ref new ::winrt::Windows::UI::Core::DispatchedHandler([this]()
       {
          UpdatePorts();
       })));
@@ -1232,8 +1232,8 @@ void MessageIO::MidiDeviceWatcher::OnPortUpdated(DeviceWatcher^ deviceWatcher, D
 {
    if (_enumCompleted)
    {
-      create_task(_coreDispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::High,
-                                            ref new Windows::UI::Core::DispatchedHandler([this]()
+      create_task(_coreDispatcher->RunAsync(::winrt::Windows::UI::Core::CoreDispatcherPriority::High,
+                                            ref new ::winrt::Windows::UI::Core::DispatchedHandler([this]()
       {
          UpdatePorts();
       })));
@@ -1244,8 +1244,8 @@ void MessageIO::MidiDeviceWatcher::OnPortEnumCompleted(DeviceWatcher^ deviceWatc
 {
    _enumCompleted = true;
 
-   create_task(_coreDispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::High,
-                                         ref new Windows::UI::Core::DispatchedHandler([this]()
+   create_task(_coreDispatcher->RunAsync(::winrt::Windows::UI::Core::CoreDispatcherPriority::High,
+                                         ref new ::winrt::Windows::UI::Core::DispatchedHandler([this]()
    {
       UpdatePorts();
    })));

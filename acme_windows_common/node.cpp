@@ -540,10 +540,10 @@ namespace acme
       //
       //      string str;
       //
-      //      if (file_exists(m_psystem->m_pacmedir->system() / "config\\system\\audio.txt"))
+      //      if (m_psystem->m_pacmefile->exists(m_psystem->m_pacmedir->system() / "config\\system\\audio.txt"))
       //      {
       //
-      //         str = file_as_string(m_psystem->m_pacmedir->system() / "config\\system\\audio.txt");
+      //         str = m_psystem->m_pacmefile->as_string(m_psystem->m_pacmedir->system() / "config\\system\\audio.txt");
       //
       //      }
       //      else
@@ -553,7 +553,7 @@ namespace acme
       //
       //         strPath = m_psystem->m_pacmedir->appdata() / "audio.txt";
       //
-      //         str = file_as_string(strPath);
+      //         str = m_psystem->m_pacmefile->as_string(strPath);
       //
       //      }
       //
@@ -601,7 +601,7 @@ namespace acme
       //      if (g_iMemoryCountersStartable && g_iMemoryCounters < 0)
       //      {
       //
-      //         g_iMemoryCounters = file_exists(m_psystem->m_pacmedir->config() / "system/memory_counters.txt") ? 1 : 0;
+      //         g_iMemoryCounters = m_psystem->m_pacmefile->exists(m_psystem->m_pacmedir->config() / "system/memory_counters.txt") ? 1 : 0;
       //
       //         if (g_iMemoryCounters)
       //         {
@@ -636,7 +636,7 @@ namespace acme
       //
       //         ::file::path strModule = module_path_from_pid(getpid());
       //
-      //         string strBasePath = m_psystem->m_pacmedir->system() / "memory_counters" / strModule.title() / __str(getpid());
+      //         string strBasePath = m_psystem->m_pacmedir->system() / "memory_counters" / strModule.title() / __string(getpid());
       //
       //#endif
       //
@@ -721,23 +721,30 @@ namespace acme
       }
 
 
-      ::e_status node::on_start_system()
-      {
+      //::e_status node::on_start_system()
+      //{
 
-         auto psystem = m_psystem;
+      //   if (m_bHasNodeSystemStarted)
+      //   {
 
-         auto estatus = psystem->post_initial_request();
+      //      return ::success_none;
 
-         if (!estatus)
-         {
+      //   }
 
-            return estatus;
+      //   auto psystem = m_psystem;
 
-         }
+      //   auto estatus = psystem->post_initial_request();
 
-         return estatus;
+      //   if (!estatus)
+      //   {
 
-      }
+      //      return estatus;
+
+      //   }
+
+      //   return estatus;
+
+      //}
 
 
    } // namespace windows_common

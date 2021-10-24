@@ -21,10 +21,10 @@ namespace draw2d_direct2d
    public:
 
 
-      Microsoft::WRL::ComPtr<ID2D1PathGeometry>          m_ppathHollow;
-      Microsoft::WRL::ComPtr<ID2D1PathGeometry>          m_ppathFilled;
-      Microsoft::WRL::ComPtr<ID2D1PathGeometry>          m_ppath;
-      Microsoft::WRL::ComPtr<ID2D1GeometrySink>          m_psink;
+      comptr<ID2D1PathGeometry>          m_ppathHollow;
+      comptr<ID2D1PathGeometry>          m_ppathFilled;
+      comptr<ID2D1PathGeometry>          m_ppath;
+      comptr<ID2D1GeometrySink>          m_psink;
       bool                                               m_bFigureOpened;
       ::point_i32                                            m_point;
       D2D1_FIGURE_BEGIN                                  m_d2d2figurebegin;
@@ -57,6 +57,8 @@ namespace draw2d_direct2d
       virtual bool internal_add_lines(::draw2d::graphics* pgraphics, const ::point_f64_array& pointa, bool bClose);
 
       virtual bool internal_add_string(::draw2d_direct2d::graphics * pgraphics, double x, double y, const ::string & strText, ::write_text::font * pfont);
+
+      virtual bool internal_start_figure(::draw2d::graphics * pgraphics);
 
       virtual bool internal_start_figure(::draw2d::graphics* pgraphics, double x, double y);
 
@@ -95,7 +97,7 @@ namespace draw2d_direct2d
       virtual bool _set(::draw2d::graphics* pgraphics, const ::write_text::draw_text& pdrawtext);
 
 
-      static void CreatePathTextRenderer(FLOAT pixelsPerDip,IDWriteTextRenderer **textRenderer);
+      //static void CreatePathTextRenderer(FLOAT pixelsPerDip,IDWriteTextRenderer **textRenderer);
 
 
    };

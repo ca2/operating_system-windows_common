@@ -1,0 +1,8 @@
+LIBRARY "directx"
+
+
+EXPORTS
+directx_factory_exchange
+
+
+

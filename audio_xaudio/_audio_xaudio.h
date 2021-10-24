@@ -2,7 +2,9 @@
 #pragma once
 
 
+
 #include "multimedia_xaudio/_multimedia_xaudio.h"
+#include "acme_windows_common/_acme_windows_common.h"
 
 
 #include "wave_out.h"

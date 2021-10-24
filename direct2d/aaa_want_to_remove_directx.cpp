@@ -7,10 +7,10 @@
 
 #include "framework.h"
 
-using namespace Windows::UI::Core;
-using namespace Windows::Foundation;
+using namespace ::winrt::Windows::UI::Core;
+using namespace ::winrt::Windows::Foundation;
 using namespace Microsoft::WRL;
-using namespace Windows::Graphics::Display;
+using namespace ::winrt::Windows::Graphics::Display;
 using namespace D2D1;
 
 namespace draw2d_direct2d
@@ -198,7 +198,7 @@ namespace draw2d_direct2d
    }
 
    // Helps track the DPI in the helper class.
-   // This is called in the dpiChanged event handler in the view class.
+   // This is called in the dpiChanged event handler in the impact class.
    void directx::SetDpi(float dpi)
    {
       if (dpi != m_dpi)
@@ -216,7 +216,7 @@ namespace draw2d_direct2d
       }
    }
 
-   // This routine is called in the event handler for the view SizeChanged event.
+   // This routine is called in the event handler for the impact SizeChanged event.
    void directx::UpdateForWindowSizeChange()
    {
       // Only handle window size changed if there is no pending DPI change.
@@ -236,10 +236,10 @@ namespace draw2d_direct2d
          CreateWindowSizeDependentResources();
       }
 
-      psystem->m_puserinteraction->m_rectParentClient.left     = 0;
-      psystem->m_puserinteraction->m_rectParentClient.top      = 0;
-      psystem->m_puserinteraction->m_rectParentClient.right    = (i64) m_window.Bounds.Width;
-      psystem->m_puserinteraction->m_rectParentClient.bottom   = (i64) m_window.Bounds.Height;
+      psystem->m_puserinteraction->m_rectangleParentClient.left     = 0;
+      psystem->m_puserinteraction->m_rectangleParentClient.top      = 0;
+      psystem->m_puserinteraction->m_rectangleParentClient.right    = (i64) m_window.Bounds.Width;
+      psystem->m_puserinteraction->m_rectangleParentClient.bottom   = (i64) m_window.Bounds.Height;
       */
    }
 
@@ -317,7 +317,7 @@ namespace draw2d_direct2d
             );
       }
 
-      // Create a Direct3D render target view of the __swap chain back buffer.
+      // Create a Direct3D render target impact of the __swap chain back buffer.
       ComPtr<ID3D11Texture2D> backBuffer;
       ::draw2d_direct2d::throw_if_failed(
          m_swapChain->GetBuffer(0, IID_PPV_ARGS(&backBuffer))
@@ -337,7 +337,7 @@ namespace draw2d_direct2d
       m_renderTargetSize.Width  = static_cast<float>(backBufferDesc.Width);
       m_renderTargetSize.Height = static_cast<float>(backBufferDesc.Height);
 
-      // Create a depth stencil view for use with 3D rendering if needed.
+      // Create a depth stencil impact for use with 3D rendering if needed.
       CD3D11_TEXTURE2D_DESC depthStencilDesc(
          DXGI_FORMAT_D24_UNORM_S8_::u32,
          backBufferDesc.Width,
@@ -499,11 +499,11 @@ namespace draw2d_direct2d
          );
 
       // Enumerate a stylistic set 6 font feature for application to our text on_layout
-      DWRITE_FONT_FEATURE fontFeature = {DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_6, 1};
+      DWRITE_FONT_FEATURE pfontFeature = {DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_6, 1};
 
       // Apply the previously enumerated font feature to our Text Typography object
       ::draw2d_direct2d::throw_if_failed(
-         m_textTypography->AddFontFeature(fontFeature)
+         m_textTypography->AddFontFeature(pfontFeature)
          );
 
       // Move our text range to the entire length of the string
@@ -578,7 +578,7 @@ namespace draw2d_direct2d
 
       slDc.unlock();
 
-      m_window->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new Windows::UI::Core::DispatchedHandler([this]()
+      m_window->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, ref new ::winrt::Windows::UI::Core::DispatchedHandler([this]()
       {
          if (m_windowSizeChangeInProgress)
          {

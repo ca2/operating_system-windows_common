@@ -130,9 +130,9 @@ namespace draw2d_direct2d
 
       }
 
-      m_osdata[0] = m_pformat.Get();
+      m_osdata[0] = m_pformat;
 
-      return (IDWriteTextFormat *) m_pformat.Get();
+      return (IDWriteTextFormat *) m_pformat;
 
    }
 

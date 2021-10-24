@@ -2,6 +2,7 @@
 
 
 #include "multimedia_xaudio/_.h"
+#include "acme_windows_common/_.h"
 
 
 #if defined(_AUDIO_XAUDIO_LIBRARY)

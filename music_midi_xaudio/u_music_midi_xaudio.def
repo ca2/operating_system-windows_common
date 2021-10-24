@@ -1,0 +1,4 @@
+LIBRARY  "music_midi_xaudio"
+
+EXPORTS
+music_midi_xaudio_factory_exchange

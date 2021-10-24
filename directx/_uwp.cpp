@@ -197,9 +197,9 @@ IFACEMETHODIMP CustomTextRenderer::DrawGlyphRun(
    
    HRESULT hr = S_OK;
 
-   Microsoft::WRL::ComPtr<ID2D1PathGeometry>        pPathGeometry;
+   comptr<ID2D1PathGeometry>        pPathGeometry;
 
-   Microsoft::WRL::ComPtr<ID2D1GeometrySink>        pSink;
+   comptr<ID2D1GeometrySink>        pSink;
 
    hr = m_pfactory->CreatePathGeometry(&pPathGeometry);
 
@@ -223,7 +223,7 @@ IFACEMETHODIMP CustomTextRenderer::DrawGlyphRun(
          glyphRun->glyphCount,
          glyphRun->isSideways,
          glyphRun->bidiLevel % 2,
-         pSink.Get()
+         pSink
          );
 
    }
@@ -244,11 +244,11 @@ IFACEMETHODIMP CustomTextRenderer::DrawGlyphRun(
       );
 
    // Create the transformed geometry
-   Microsoft::WRL::ComPtr<ID2D1TransformedGeometry> pTransformedGeometry;
+   comptr<ID2D1TransformedGeometry> pTransformedGeometry;
    if (SUCCEEDED(hr))
    {
 
-      hr = m_pfactory->CreateTransformedGeometry(pPathGeometry.Get(), &matrix, &pTransformedGeometry);
+      hr = m_pfactory->CreateTransformedGeometry(pPathGeometry, &matrix, &pTransformedGeometry);
 
    }
 
@@ -259,7 +259,7 @@ IFACEMETHODIMP CustomTextRenderer::DrawGlyphRun(
       if (m_pbrushOutline != nullptr)
       {
          
-         m_prendertarget->DrawGeometry(pTransformedGeometry.Get(), m_pbrushOutline.Get());
+         m_prendertarget->DrawGeometry(pTransformedGeometry, m_pbrushOutline);
 
       }
 
@@ -271,7 +271,7 @@ IFACEMETHODIMP CustomTextRenderer::DrawGlyphRun(
       if (m_pbrushFill != nullptr)
       {
 
-         m_prendertarget->FillGeometry(pTransformedGeometry.Get(), m_pbrushFill.Get());
+         m_prendertarget->FillGeometry(pTransformedGeometry, m_pbrushFill);
 
       }
 

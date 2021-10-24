@@ -1,6 +1,7 @@
 #include "framework.h"
 
 
+
 #ifdef _UWP
 #include <ShCore.h>
 #endif
@@ -24,14 +25,14 @@ namespace imaging_wic
 
 #ifdef _UWP
 
-      Windows::Storage::Streams::InMemoryRandomAccessStream ^ randomAccessStream = ref new Windows::Storage::Streams::InMemoryRandomAccessStream();
+      ::winrt::Windows::Storage::Streams::InMemoryRandomAccessStream randomAccessStream;
 
       //::wait(randomAccessStream->WriteAsync(get_os_buffer()));
 
-      comptr < IStream > pstream;
+      comptr <IUnknown> punknown = randomAccessStream.as<IUnknown>().get();
 
-      ::CreateStreamOverRandomAccessStream(randomAccessStream, IID_PPV_ARGS(&pstream));
-
+      comptr <IStream> pstream;
+      CreateStreamOverRandomAccessStream(punknown,__interface_of(pstream));
 #else
 
       comptr < IStream > pstream = SHCreateMemStream(nullptr, NULL);
@@ -82,7 +83,7 @@ namespace imaging_wic
 
 
 
-   bool node_save_image(comptr < IStream > pstream, const ::image * pimage, const ::save_image * psaveimage)
+   bool node_save_image(IStream * pstream, const ::image * pimage, const ::save_image * psaveimage)
    {
 
       comptr < IWICImagingFactory > pimagingfactory;
@@ -256,6 +257,10 @@ namespace imaging_wic
 
       pimage->map();
 
+      auto pcolorref = pimage->get_data();
+
+      auto iScan = pimage->scan_size();
+
       if (SUCCEEDED(hr))
       {
 
@@ -265,7 +270,7 @@ namespace imaging_wic
             if (SUCCEEDED(hr))
             {
 
-               hr = pbitmapframeencode->WritePixels(uHeight, pimage->scan_size(), uHeight * pimage->scan_size(), (byte *)pimage->get_data());
+               hr = pbitmapframeencode->WritePixels(uHeight, iScan, uHeight * iScan, (byte *)pcolorref);
 
             }
 
@@ -353,14 +358,14 @@ namespace imaging_wic
 #ifdef _UWP
 
 
-   bool node_save_image(Windows::Storage::Streams::IRandomAccessStream ^ stream, const ::image * pimage, const ::save_image * psaveimage)
+   bool node_save_image(::winrt::Windows::Storage::Streams::IRandomAccessStream const & stream, const ::image * pimage, const ::save_image * psaveimage)
    {
 
-      Windows::Storage::Streams::InMemoryRandomAccessStream ^ randomAccessStream = ref new Windows::Storage::Streams::InMemoryRandomAccessStream();
+      ::winrt::Windows::Storage::Streams::InMemoryRandomAccessStream randomAccessStream;
 
       comptr < IStream > pstream;
 
-      ::CreateStreamOverRandomAccessStream(randomAccessStream, IID_PPV_ARGS(&pstream));
+      ::CreateStreamOverRandomAccessStream(winrt::get_unknown(randomAccessStream), IID_PPV_ARGS(&pstream));
 
       return node_save_image(pstream, pimage, psaveimage);
 

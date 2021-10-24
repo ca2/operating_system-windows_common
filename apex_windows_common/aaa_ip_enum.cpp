@@ -1,5 +1,5 @@
 #include "framework.h"
-#include "apex/net/sockets/_sockets.h"
+#include "apex/networking/sockets/_sockets.h"
 #include "ip_enum.h"
 
 
@@ -26,7 +26,7 @@ namespace windows
       m_bWinsockInitialized = true;
 
       //Code requires at least Winsock 1.1
-      if ((LOBYTE(wsaData.wVersion) != 1) || (HIBYTE(wsaData.wVersion) != 1))
+      if ((__LOBYTE(wsaData.wVersion) != 1) || (HIBYTE(wsaData.wVersion) != 1))
       {
          TRACE("Failed to find a usable winsock stack which supports Winsock 1.1\n");
          __throw(error_not_supported);
@@ -137,7 +137,7 @@ namespace windows
 
                ipa.add(*ptr->ai_addr);
 
-               ::str::from(str, ipa.last().u.m_sa);
+               __string(str, ipa.last().u.m_sa);
 
                // sockaddr_ipv4 = (struct sockaddr_in *) ptr->ai_addr;
                //printf("\tIPv4 address %s\n",

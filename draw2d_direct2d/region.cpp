@@ -21,14 +21,14 @@ namespace draw2d_direct2d
    }
 
 
-   int region::GetRegionData(LPRGNDATA lpRgnData, int nDataSize) const
-   {
+   //int region::GetRegionData(LPRGNDATA lpRgnData, int nDataSize) const
+   //{
 
-      __throw(todo);
+   //   __throw(todo);
 
-      //   ASSERT(get_os_data() != nullptr); return (int)::GetRegionData((HRGN)get_os_data(), nDataSize, lpRgnData);
+   //   //   ASSERT(get_os_data() != nullptr); return (int)::GetRegionData((HRGN)get_os_data(), nDataSize, lpRgnData);
 
-   }
+   //}
    void region::SetRectRgn(int x1, int y1, int x2, int y2)
    {
 
@@ -45,58 +45,58 @@ namespace draw2d_direct2d
       //   ::SetRectRgn((HRGN)get_os_data(), rectangle.left, rectangle.top, rectangle.right, rectangle.bottom);
    }
 
-   int region::CombineRgn(const ::draw2d::region* pRgn1, const ::draw2d::region* pRgn2, int nCombineMode)
-   {
+   //int region::CombineRgn(const ::draw2d::region* pRgn1, const ::draw2d::region* pRgn2, int nCombineMode)
+   //{
 
-      __throw(todo);
+   //   __throw(todo);
 
-      //ASSERT(get_os_data() != nullptr); return ::CombineRgn((HRGN)get_os_data(), (HRGN)pRgn1->get_os_data(),
-      //(HRGN)pRgn2->get_os_data(), nCombineMode);
-   }
-   int region::CopyRgn(const ::draw2d::region* pRgnSrc)
-   {
+   //   //ASSERT(get_os_data() != nullptr); return ::CombineRgn((HRGN)get_os_data(), (HRGN)pRgn1->get_os_data(),
+   //   //(HRGN)pRgn2->get_os_data(), nCombineMode);
+   //}
+   //int region::CopyRgn(const ::draw2d::region* pRgnSrc)
+   //{
 
-      __throw(todo);
+   //   __throw(todo);
 
-      //ASSERT(get_os_data() != nullptr); return ::CombineRgn((HRGN)get_os_data(), (HRGN)pRgnSrc->get_os_data(), nullptr, RGN_COPY);
-   }
+   //   //ASSERT(get_os_data() != nullptr); return ::CombineRgn((HRGN)get_os_data(), (HRGN)pRgnSrc->get_os_data(), nullptr, RGN_COPY);
+   //}
 
-   bool region::EqualRgn(const ::draw2d::region* pRgn) const
-   {
+   //bool region::EqualRgn(const ::draw2d::region* pRgn) const
+   //{
 
-      __throw(todo);
-
-
-      //   ASSERT(get_os_data() != nullptr);
-
-      // return ::EqualRgn((HRGN)get_os_data(), (HRGN)pRgn->get_os_data()) != false;
-
-   }
-
-   int region::OffsetRgn(int x, int y)
-   {
-
-      __throw(todo);
+   //   __throw(todo);
 
 
-      //ASSERT(get_os_data() != nullptr); return ::OffsetRgn((HRGN)get_os_data(), x, y);
-   }
-   int region::OffsetRgn(const ::point_i32 & point)
-   {
+   //   //   ASSERT(get_os_data() != nullptr);
 
-      __throw(todo);
+   //   // return ::EqualRgn((HRGN)get_os_data(), (HRGN)pRgn->get_os_data()) != false;
 
+   //}
 
-      //ASSERT(get_os_data() != nullptr); return ::OffsetRgn((HRGN)get_os_data(), point.x, point.y);
-   }
-   int region::GetRgnBox(RECTANGLE_I32 * prectangle) const
-   {
+   //int region::OffsetRgn(int x, int y)
+   //{
 
-      __throw(todo);
+   //   __throw(todo);
 
 
-      //ASSERT(get_os_data() != nullptr); return ::GetRgnBox((HRGN)get_os_data(), rectangle);
-   }
+   //   //ASSERT(get_os_data() != nullptr); return ::OffsetRgn((HRGN)get_os_data(), x, y);
+   //}
+   //int region::OffsetRgn(const ::point_i32 & point)
+   //{
+
+   //   __throw(todo);
+
+
+   //   //ASSERT(get_os_data() != nullptr); return ::OffsetRgn((HRGN)get_os_data(), point.x, point.y);
+   //}
+   //int region::GetRgnBox(RECTANGLE_I32 * prectangle) const
+   //{
+
+   //   __throw(todo);
+
+
+   //   //ASSERT(get_os_data() != nullptr); return ::GetRgnBox((HRGN)get_os_data(), rectangle);
+   //}
 
 
    bool region::contains(::draw2d::graphics* pgraphics, int x, int y) const
@@ -146,13 +146,14 @@ namespace draw2d_direct2d
       __throw(todo);
 
 
-      //ASSERT(get_os_data() != nullptr); return ::RectInRegion((HRGN)get_os_data(), rectangle);
+      //ASSERT(get_os_data() != nullptr); return ::rectInRegion((HRGN)get_os_data(), rectangle);
 
       //Gdiplus::RectF rectangle_f32((Gdiplus::REAL) rectangle.left, (Gdiplus::REAL) rectangle.top, (Gdiplus::REAL) (rectangle.right - rectangle.left), (Gdiplus::REAL) (rectangle.bottom - rectangle.top));
       //
       //ASSERT(get_os_data() != nullptr); //return ::PtInRegion((HRGN)get_os_data(), x, y);
 
       //return m_pgeometry->IsVisible(rectangle_f32)  != false;
+      return false;
 
    }
 
@@ -162,7 +163,7 @@ namespace draw2d_direct2d
 
       m_osdata[0] = get(pgraphics);
 
-      return m_pgeometry.Get() != nullptr;
+      return m_pgeometry != nullptr;
 
    }
 
@@ -196,7 +197,7 @@ namespace draw2d_direct2d
       case ::draw2d::e_region_combine:
          return get_combine(pgraphics);
       default:
-         ::exception::throw_not_implemented();
+         throw interface_only_exception();
       }
 
       return nullptr;
@@ -249,7 +250,7 @@ namespace draw2d_direct2d
    ID2D1Geometry * region::get_polygon(::draw2d::graphics* pgraphics)
    {
 
-      ::draw2d::path_pointer path(this);
+      auto ppath = pgraphics->__create < ::draw2d::path > ();
 
       /*point_i32_array pa;
 
@@ -269,11 +270,11 @@ namespace draw2d_direct2d
       }
       */
 
-      path->begin_figure();
-      path->add_lines(m_lppoints, m_nCount);
-      path->close_figure();
+      ppath->begin_figure();
+      ppath->add_lines(m_lppoints, m_nCount);
+      ppath->close_figure();
 
-      return (ID2D1PathGeometry *) path->detach();
+      return (ID2D1PathGeometry *) ppath->detach();
 
    }
 
@@ -281,7 +282,7 @@ namespace draw2d_direct2d
    ID2D1Geometry * region::get_poly_polygon(::draw2d::graphics* pgraphics)
    {
 
-      ::draw2d::path_pointer path(this);
+      auto ppath = pgraphics->__create < ::draw2d::path > ();
 
       point_f64_array pa;
 
@@ -305,14 +306,14 @@ namespace draw2d_direct2d
             pa.add(point_f64(m_lppoints[n].x, m_lppoints[n].y));
             n++;
          }
-         //path->begin_figure(true, m_efillmode);
-         path->begin_figure();
-         path->add_lines(pa.get_data(), (int) pa.get_count());
-         //path->end_figure(true);
-         path->close_figure();
+         //ppath->begin_figure(true, m_efillmode);
+         ppath->begin_figure();
+         ppath->add_lines(pa.get_data(), (int) pa.get_count());
+         //ppath->end_figure(true);
+         ppath->close_figure();
       }
 
-      return (ID2D1PathGeometry *) path->detach();
+      return (ID2D1PathGeometry *) ppath->detach();
 
    }
 
@@ -320,11 +321,11 @@ namespace draw2d_direct2d
    ID2D1Geometry * region::get_combine(::draw2d::graphics* pgraphics)
    {
 
-      Microsoft::WRL::ComPtr <ID2D1PathGeometry> ppathgeometry ;
+      comptr <ID2D1PathGeometry> ppathgeometry ;
 
       HRESULT hr = ::direct2d::direct2d()->d2d1_factory1()->CreatePathGeometry(&ppathgeometry);
 
-      Microsoft::WRL::ComPtr < ID2D1GeometrySink > psink ;
+      comptr < ID2D1GeometrySink > psink ;
 
       if (FAILED(hr))
       {
@@ -349,25 +350,25 @@ namespace draw2d_direct2d
       if(m_ecombine == ::draw2d::e_combine_add)
       {
 
-         hr = pgeometry1->CombineWithGeometry(pgeometry2, D2D1_COMBINE_MODE_UNION, nullptr, 0.f, psink.Get());
+         hr = pgeometry1->CombineWithGeometry(pgeometry2, D2D1_COMBINE_MODE_UNION, nullptr, 0.f, psink);
 
       }
       else if(m_ecombine == ::draw2d::e_combine_exclude)
       {
 
-         hr = pgeometry1->CombineWithGeometry(pgeometry2, D2D1_COMBINE_MODE_EXCLUDE, nullptr, 0.f, psink.Get());
+         hr = pgeometry1->CombineWithGeometry(pgeometry2, D2D1_COMBINE_MODE_EXCLUDE, nullptr, 0.f, psink);
 
       }
       else if(m_ecombine == ::draw2d::e_combine_intersect)
       {
 
-         hr = pgeometry1->CombineWithGeometry(pgeometry2, D2D1_COMBINE_MODE_INTERSECT, nullptr, 0.f, psink.Get());
+         hr = pgeometry1->CombineWithGeometry(pgeometry2, D2D1_COMBINE_MODE_INTERSECT, nullptr, 0.f, psink);
 
       }
       else
       {
 
-         hr = pgeometry1->CombineWithGeometry(pgeometry2, D2D1_COMBINE_MODE_UNION, nullptr, 0.f, psink.Get());
+         hr = pgeometry1->CombineWithGeometry(pgeometry2, D2D1_COMBINE_MODE_UNION, nullptr, 0.f, psink);
 
       }
 
@@ -388,7 +389,7 @@ namespace draw2d_direct2d
 
       }
 
-      return ppathgeometry.Detach();
+      return ppathgeometry.detach();
 
    }
 

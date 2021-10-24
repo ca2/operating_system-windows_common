@@ -54,7 +54,7 @@ LPTOP_LEVEL_EXCEPTION_FILTER WINAPI MyDummySetUnhandledExceptionFilter(
    LPTOP_LEVEL_EXCEPTION_FILTER pTopLevelExceptionFilter)
 
 {
-   UNREFERENCED_PARAMETER(pTopLevelExceptionFilter);
+   __UNREFERENCED_PARAMETER(pTopLevelExceptionFilter);
 
    return nullptr;
 }
@@ -150,7 +150,7 @@ namespace exception
 
       }
 
-      UNREFERENCED_PARAMETER(uiCode);
+      __UNREFERENCED_PARAMETER(uiCode);
 
       //::acme::application * papp = ::get_application();
 
@@ -228,7 +228,7 @@ namespace exception
 
 #if defined(__SANITIZE_ADDRESS__) || defined(__FOR_PERF__)
 
-         INFO("sanitize address compilation, not going to install standard exception translator");
+         INFORMATION("sanitize address compilation, not going to install standard exception translator");
 
 #else
 
@@ -329,7 +329,7 @@ namespace exception
    void translator::filter(u32 uiCode, EXCEPTION_POINTERS * ppointers)
    {
 
-      UNREFERENCED_PARAMETER(uiCode);
+      __UNREFERENCED_PARAMETER(uiCode);
 
       switch (ppointers->ExceptionRecord->ExceptionCode)
       {
@@ -618,7 +618,7 @@ const void * standard_exception::info() const
 const char * standard_exception::name() const
 {
 
-   //return ::exception::translator::name(code());
+   //return ::exception_translator::name(code());
    return "";
 
 }
@@ -627,7 +627,7 @@ const char * standard_exception::name() const
 const char * standard_exception::description() const
 {
 
-   //return ::exception::translator::description(code());
+   //return ::exception_translator::description(code());
    return "";
 
 }
