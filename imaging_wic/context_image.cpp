@@ -129,7 +129,7 @@ namespace imaging_wic
 
       bool bOk = true;
 
-      m_psystem->m_paurasystem->m_paurasession->m_puser->m_pwindowing->windowing_sync(15_s, __routine([&]()
+      m_psystem->m_paurasystem->m_paurasession->m_puser->m_pwindowing->windowing_send(__routine(15_s, [&]()
          {
 
             auto dataPackage = ::winrt::Windows::ApplicationModel::DataTransfer::Clipboard::GetContent();
@@ -250,7 +250,7 @@ namespace imaging_wic
 
       bool bOk = false;
 
-      m_psystem->m_paurasession->m_puser->m_pwindowing->windowing_sync(15_s, __routine([&bOk]()
+      m_psystem->m_paurasession->m_puser->m_pwindowing->windowing_send(__routine(15_s, [&bOk]()
          {
 
 
@@ -296,7 +296,7 @@ namespace imaging_wic
 
       package.SetBitmap(object);
 
-      m_psystem->m_paurasystem->m_paurasession->m_puser->m_pwindowing->windowing_sync(15_s, __routine([&package, this]()
+      m_psystem->m_paurasystem->m_paurasession->m_puser->m_pwindowing->windowing_send(__routine(15_s, [&package, this]()
          {
 
             ::winrt::Windows::ApplicationModel::DataTransfer::Clipboard::SetContent(package);
