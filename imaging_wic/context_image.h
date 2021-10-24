@@ -23,17 +23,17 @@ namespace imaging_wic
       virtual ::e_status initialize(::object * pobject) override;
 
 
-      //virtual ::e_status _load_image(::context_image * pcontextimage, ::image * pimageParam, const ::payload & varFile, bool bSync, bool bCreateHelperMaps) override;
-      ::e_status _load_image(image* pimage, const ::payload& varFile, const ::image::load_options & loadoptions = ::image::load_options()) override;
+      //virtual ::e_status _load_image(::context_image * pcontextimage, ::image * pimageParam, const ::payload & payloadFile, bool bSync, bool bCreateHelperMaps) override;
+      ::e_status _load_image(image* pimage, const ::payload& payloadFile, const ::image::load_options & loadoptions = ::image::load_options()) override;
 
       ::e_status _load_image(::image * pimage, __pointer(image_frame_array) & pframea, ::memory & memory) override;
       ::e_status save_image(memory & memory, const ::image * pimage, const ::save_image * psaveimage) override;
 
 
-      //::e_status _load_icon(::draw2d::icon * picon, const ::payload & varFile);
+      //::e_status _load_icon(::draw2d::icon * picon, const ::payload & payloadFile);
 
 
-      //virtual ::e_status _load_image(::image* pimage, const ::payload& varFile, bool bSync, bool bCreateHelperMaps);
+      //virtual ::e_status _load_image(::image* pimage, const ::payload& payloadFile, bool bSync, bool bCreateHelperMaps);
 
 
       //virtual ::e_status _load_image(::image* pimage, __pointer(image_frame_array)& pframea, ::memory_pointer pmemory);

@@ -796,10 +796,10 @@ namespace windows
    }
 
 
-   file_transport file_context::get_file(const ::payload & varFile, const ::file::e_open & eopenFlags)
+   file_transport file_context::get_file(const ::payload & payloadFile, const ::file::e_open & eopenFlags)
    {
 
-      return ::file_context::get_file(varFile, eopenFlags);
+      return ::file_context::get_file(payloadFile, eopenFlags);
 
    }
 

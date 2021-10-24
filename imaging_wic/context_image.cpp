@@ -311,7 +311,7 @@ namespace imaging_wic
 #endif
 
 
-   //::e_status context_image::_load_icon(::draw2d::icon * picon, const ::payload & varFile)
+   //::e_status context_image::_load_icon(::draw2d::icon * picon, const ::payload & payloadFile)
 
 
 

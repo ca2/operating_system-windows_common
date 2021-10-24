@@ -175,7 +175,7 @@ bool PreventSetUnhandledExceptionFilter()
 //} // namespace exception
 
 
-CLASS_DECL_ACME bool g_bExiting;
+extern bool g_bExiting;
 
 
 #ifndef WINDOWS
