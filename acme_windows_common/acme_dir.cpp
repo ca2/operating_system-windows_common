@@ -28,7 +28,7 @@ namespace windows_common
       if (file_path_is_absolute(path))
       {
 
-         wstr = "\\\\?\\" + wstring(path);
+         wstr = L"\\\\?\\" + wstring(path);
 
       }
       else
