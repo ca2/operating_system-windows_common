@@ -325,7 +325,7 @@ namespace multimedia
 
 #endif
 
-         if(m_durationLastBuffer.timeout(50_tick))
+         if(m_durationLastBuffer.timeout(50_ms))
          {
 
             output_debug_string("too much delay for submitting audio buffer\n");
@@ -479,7 +479,7 @@ namespace multimedia
       }
 
 
-      ::duration out::out_get_time()
+      ::duration out::out_get_position()
       {
 
          single_lock sLock(mutex(), true);
@@ -493,15 +493,17 @@ namespace multimedia
 
             m_psourcevoice->GetState(&s);
 
-            i64 i = s.SamplesPlayed;
-            i *= 1000;
-            i /= m_pwaveformat->m_waveformat.nSamplesPerSec;
-            return (double) i;
+            //i64 i = s.SamplesPlayed;
+            //i *= 1000;
+            //i /= m_pwaveformat->m_waveformat.nSamplesPerSec;
+            return FLOATING_SECOND((double)s.SamplesPlayed/(double)m_pwaveformat->m_waveformat.nSamplesPerSec);
 
          }
          else
-            return 0;
+         {
+            return 0_s;
 
+         }
 
       }
 

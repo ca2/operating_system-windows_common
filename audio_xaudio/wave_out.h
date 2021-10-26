@@ -61,7 +61,7 @@ namespace multimedia
          //virtual bool  on_run_step();
          void install_message_routing(::channel * pchannel);
 
-         virtual ::duration out_get_time() override;
+         virtual ::duration out_get_position() override;
          virtual void out_filled(index iBuffer) override;
          //virtual void out_buffer_ready(LPWAVEHDR lpwavehdr);
 
