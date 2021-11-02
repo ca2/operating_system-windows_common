@@ -191,7 +191,7 @@ inline bool SpGetDefaultTokenFromCategoryIdAndLang(
       try
       {
 
-         set.parse_json(pszJson);
+         set.parse_network_payload(pszJson);
 
       }
       catch (...)
