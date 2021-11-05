@@ -184,14 +184,14 @@ inline bool SpGetDefaultTokenFromCategoryIdAndLang(
 
       ::property_set set;
 
-      string strJson = papp->file().as_string(papp->dir().matter("speech/windows/lang.json"));
+      string strJson = papp->file().as_string(papp->dir().matter("speech/windows/lang.network_payload"));
 
       const char * pszJson = strJson;
 
       try
       {
 
-         set.parse_json(pszJson);
+         set.parse_network_payload(pszJson);
 
       }
       catch (...)
