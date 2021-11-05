@@ -3,6 +3,13 @@
 #include "framework.h"
 #include "acme/operating_system.h"
 #include <stdio.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/utime.h>
+#include <io.h>
+#include <stdlib.h>
+#include <time.h>
 
 
 CLASS_DECL_ACME void TRACELASTERROR();
@@ -87,6 +94,72 @@ namespace windows_common
       }
 
       return true;
+
+   }
+
+
+   ::e_status acme_file::ensure_exists(const char* path)
+   {
+
+      if (exists(path))
+      {
+
+         return ::success;
+
+      }
+      
+      wstring wstrPath(path);
+      
+      int fd = _wopen(wstrPath, O_WRONLY | O_CREAT);
+
+      if (fd < 0) // Couldn't open that path.
+      {
+         
+         return error_io;
+
+      }
+
+      ::close(fd);
+
+      return ::success;
+
+   }
+
+
+
+   ::e_status acme_file::touch(const char* path)
+   {
+
+      wstring wstrPath(path);
+
+      int fd = _wopen(wstrPath, O_WRONLY | O_CREAT);
+
+      if (fd < 0) // Couldn't open that path.
+      {
+
+         return error_io;
+
+      }
+
+      ::close(fd);
+
+      auto time = ::time(nullptr);
+
+      _utimbuf ut;
+
+      ut.actime = time;
+
+      ut.modtime = time;
+
+      int rc = _wutime(wstrPath, &ut);
+
+      if (rc)
+      {
+
+         return error_io;
+      }
+
+      return ::success;
 
    }
 
@@ -388,3 +461,52 @@ namespace windows_common
 
 
 
+
+
+
+
+//#include <sys/types.h>
+//#include <sys/stat.h>
+//#include <sys/time.h>
+//#include <fcntl.h>
+//#include <unistd.h>
+//#include <utime.h>
+//
+//#include <iostream>
+//#include <string>
+//
+//#include <cstdlib>
+
+//void touch(const std::string& pathname)
+//{
+//   int fd = open(pathname.c_str(),
+//      O_WRONLY | O_CREAT | O_NOCTTY | O_NONBLOCK,
+//      0666);
+//   if (fd < 0) // Couldn't open that path.
+//   {
+//      std::cerr
+//         << __PRETTY_FUNCTION__
+//         << ": Couldn't open() path \""
+//         << pathname
+//         << "\"\n";
+//      return;
+//   }
+//   int rc = utimensat(AT_FDCWD,
+//      pathname.c_str(),
+//      nullptr,
+//      0);
+//   if (rc)
+//   {
+//      std::cerr
+//         << __PRETTY_FUNCTION__
+//         << ": Couldn't utimensat() path \""
+//         << pathname
+//         << "\"\n";
+//      return;
+//   }
+//   std::clog
+//      << __PRETTY_FUNCTION__
+//      << ": Completed touch() on path \""
+//      << pathname
+//      << "\"\n";
+//}

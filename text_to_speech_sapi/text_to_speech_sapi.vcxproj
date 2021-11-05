@@ -1158,7 +1158,7 @@
     <ClInclude Include="tts_speaker.h" />
     <ClInclude Include="_.h" />
     <ClInclude Include="framework.h" />
-    <ClInclude Include="_tts_api.h" />
+    <ClInclude Include="_text_to_speech_sapi.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="tts_speaker.cpp" />
