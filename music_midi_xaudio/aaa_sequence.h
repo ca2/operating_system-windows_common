@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 #define  VERSION_MINOR              0x00

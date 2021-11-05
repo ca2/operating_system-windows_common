@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 class CLASS_DECL_APEX_WINDOWS_COMMON single_threaded_handler_manager:

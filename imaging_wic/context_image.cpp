@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "apex/parallelization/handler_manager.h"
 #include "apex_windows_common/single_threaded_handler_manager.h"
 #include <wincodec.h>

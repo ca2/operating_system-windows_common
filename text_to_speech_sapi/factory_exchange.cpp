@@ -1,16 +1,13 @@
-#include "framework.h"
-
-
-void tts_sapi_tts_speaker_factory_exchange(::factory_map * pfactorymap);
+﻿#include "framework.h"
 
 
 extern "C"
-void tts_sapi_factory_exchange(::factory_map * pfactorymap)
+void text_to_speech_sapi_factory_exchange(::factory_map * pfactorymap)
 {
 
-   tts_sapi_tts_speaker_factory_exchange(pfactorymap);
-   
+   pfactorymap->create_factory < ::text_to_speech_sapi::speaker, ::text_to_speech::speaker >();
 
 }
+
 
 
