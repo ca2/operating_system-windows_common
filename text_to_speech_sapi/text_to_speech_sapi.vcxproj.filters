@@ -23,7 +23,7 @@
     <ClInclude Include="tts_speaker.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="_tts_api.h">
+    <ClInclude Include="_text_to_speech_sapi.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
