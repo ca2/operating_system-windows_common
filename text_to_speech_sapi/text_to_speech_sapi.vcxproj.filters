@@ -20,10 +20,10 @@
     <ClInclude Include="_.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="tts_speaker.h">
+    <ClInclude Include="speaker.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="_tts_api.h">
+    <ClInclude Include="_text_to_speech_sapi.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -37,7 +37,7 @@
     <ClCompile Include="_.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="tts_speaker.cpp">
+    <ClCompile Include="speaker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,7 +47,7 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="tts_sapi.def">
+    <None Include="text_to_speech_sapi.def">
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>

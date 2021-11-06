@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "apex/operating_system.h"
 #include "acme/filesystem/filesystem/acme_dir.h"
 #include "file_context.h"
@@ -804,12 +804,12 @@ namespace windows
    }
 
 
-   ::file::path file_context::dropbox_info_json()
+   ::file::path file_context::dropbox_info_network_payload()
    {
 
       ::file::path pathJson;
 
-      pathJson = m_psystem->m_pacmedir->user_appdata_local() / "Dropbox/info.json";
+      pathJson = m_psystem->m_pacmedir->user_appdata_local() / "Dropbox/info.network_payload";
 
       return pathJson;
 

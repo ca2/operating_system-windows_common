@@ -1,4 +1,4 @@
-// From direct2d_draw2d by camilo on ThomasBirthday2021 16:00 BRT
+﻿// From direct2d_draw2d by camilo on ThomasBirthday2021 16:00 BRT
 // Renamed from CustomTextRenderer to geometry_sink_text_renderer by camilo just after ThomasBirthday2021 03:07 BRT
 /************************************************************************
 *

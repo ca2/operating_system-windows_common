@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 //#include "direct2d/CustomTextRenderer.h"
 
 #undef new

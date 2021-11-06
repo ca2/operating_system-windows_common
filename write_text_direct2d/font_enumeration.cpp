@@ -1,4 +1,4 @@
-// Created by camilo 2021-06-05 22:57 BRT <3ThomasBS_!!
+﻿// Created by camilo 2021-06-05 22:57 BRT <3ThomasBS_!!
 #include "framework.h"
 #include <dwrite.h>
 

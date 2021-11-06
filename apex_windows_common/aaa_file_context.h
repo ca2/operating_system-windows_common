@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 CLASS_DECL_APEX_WINDOWS_COMMON bool vfxFullPath(unichar * pszPathOut, const unichar * pszFileIn);
@@ -65,7 +65,7 @@ namespace windows
 
 
 
-      virtual ::file::path dropbox_info_json() override;
+      virtual ::file::path dropbox_info_network_payload() override;
 
       //virtual ::file::path onedrive_global_ini(::object * pobject) override;
       //virtual ::file::path onedrive_cid_ini(::object * pobject) override;
