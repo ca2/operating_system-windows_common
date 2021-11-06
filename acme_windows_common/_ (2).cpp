@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include "acme/os/_c.h"
 #include "acme/os/_.h"
 #include "acme/const/id.h"

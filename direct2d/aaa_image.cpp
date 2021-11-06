@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 extern CLASS_DECL_AURA image_array * g_pimagea;

@@ -1,4 +1,4 @@
-﻿// Created by camilo on 2021-06-05 23:48 BRT <3ThomasBS_!!
+// Created by camilo on 2021-06-05 23:48 BRT <3ThomasBS_!!
 #include "framework.h"
 
 

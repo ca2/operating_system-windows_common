@@ -1,4 +1,4 @@
-﻿// Created on 2021-04-29 12:33 BRT <3TBS_!! Second celebration of Mummis Birthday 70!!
+// Created on 2021-04-29 12:33 BRT <3TBS_!! Second celebration of Mummis Birthday 70!!
 #include "framework.h"
 #include <eh.h>
 

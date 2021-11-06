@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 #include "music_midi_mmsystem_player_window.h"

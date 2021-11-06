@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include "task.h"
 #ifdef LINUX
 #include "acme/os/ansios/_pthread.h"

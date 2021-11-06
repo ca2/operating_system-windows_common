@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 
 #define d2d1_fax_options D2D1_FACTORY_OPTIONS // fax of merde

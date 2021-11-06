@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 
 #if defined(LINUX) || defined(__APPLE__) || defined(ANDROID)
 #include "acme/os/ansios/_pthread.h"
