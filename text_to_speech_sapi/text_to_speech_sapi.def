@@ -1,5 +1,0 @@
-LIBRARY "text_to_speech_sapi"
-
-EXPORTS
-text_to_speech_sapi_factory_exchange
-
