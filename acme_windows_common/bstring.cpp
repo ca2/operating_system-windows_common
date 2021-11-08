@@ -2,7 +2,7 @@
 #include "acme/operating_system.h"
 
 
-BSTR bstring::sys_alloc_string_byte_len(const char * psz, strsize len)
+BSTR bstring::string_byte_len(const char * psz, strsize len)
 {
 
    auto srclen = len < 0 ? strlen(psz) : len;
@@ -27,7 +27,7 @@ BSTR bstring::sys_alloc_string_byte_len(const char * psz, strsize len)
 }
 
 
-BSTR bstring::sys_alloc_string(const OLECHAR * sz)
+BSTR bstring::allocate_string(const OLECHAR * sz)
 {
 
    return ::SysAllocString(sz);
@@ -35,7 +35,17 @@ BSTR bstring::sys_alloc_string(const OLECHAR * sz)
 }
 
 
-void bstring::sys_free_string(BSTR bstr)
+BSTR bstring::allocate_string(const char * psz)
+{
+
+   wstring wstr(psz);
+
+   return ::SysAllocString(wstr);
+
+}
+
+
+void bstring::free_string(BSTR bstr)
 {
 
    if (::is_null(bstr))
