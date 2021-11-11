@@ -127,6 +127,32 @@ namespace windows_common
 
 
 
+   ::e_status acme_file::clear_read_only(const char* path)
+   {
+
+      wstring wstrPath(path);
+
+      auto attributes = ::GetFileAttributesW(wstrPath);
+
+      if (attributes == INVALID_FILE_ATTRIBUTES)
+      {
+
+         return ::error_failed;
+
+      }
+
+      if (!::SetFileAttributesW(wstrPath, attributes & ~FILE_ATTRIBUTE_READONLY))
+      {
+
+         return ::error_failed;
+
+      }
+
+      return ::success;
+
+   }
+
+
    ::e_status acme_file::touch(const char* path)
    {
 

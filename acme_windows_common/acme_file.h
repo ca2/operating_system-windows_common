@@ -24,6 +24,7 @@ namespace windows_common
 
       ::e_status ensure_exists(const char* path) override;
       ::e_status touch(const char* path) override;
+      ::e_status clear_read_only(const char* path) override;
 
       ::e_status put_contents(const char * path, const char * contents, memsize len) override;
 
