@@ -141,7 +141,7 @@ namespace multimedia
          {
 
             iBufferCount = 2;
-            iBufferSampleCount = (1 << 9);
+            iBufferSampleCount = (1 << 10);
 
          }
          else
