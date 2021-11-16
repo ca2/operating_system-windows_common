@@ -156,7 +156,13 @@ namespace windows_common
    ::e_status acme_file::touch(const char* path)
    {
 
+      
+      m_pacmedir->create(file_path_folder(path));
+
+
       wstring wstrPath(path);
+
+
 
       int fd = _wopen(wstrPath, O_WRONLY | O_CREAT);
 
