@@ -3,6 +3,9 @@
 #include "dxgi_debug.h"
 
 
+#if defined(_DEBUG)
+
+
 namespace directx
 {
 
@@ -13,41 +16,41 @@ namespace directx
    dxgi_debug::dxgi_debug()
    {
 
-#ifdef _UWP
+// #ifdef _UWP
 
       HRESULT hr = DXGIGetDebugInterface1(0, __interface_of(m_pdxgidebug1));
 
       HRESULT hrQueryInterface = m_pdxgidebug1.as(m_pdxgidebug);
 
-#else
+// #else
 
-      comptr<IDXGIInfoQueue> dxgiInfoQueue;
+//       comptr<IDXGIInfoQueue> dxgiInfoQueue;
 
-      typedef HRESULT(WINAPI* LPDXGIGETDEBUGINTERFACE)(REFIID, void**);
+//       typedef HRESULT(WINAPI* LPDXGIGETDEBUGINTERFACE)(REFIID, void**);
 
-      HMODULE hmoduleDXGIDebug = LoadLibraryExW(L"dxgidebug.dll", nullptr, LOAD_LIBRARY_SEARCH_SYSTEM32);
+//       HMODULE hmoduleDXGIDebug = LoadLibraryExW(L"dxgidebug.dll", nullptr, LOAD_LIBRARY_SEARCH_SYSTEM32);
 
-      if (hmoduleDXGIDebug)
-      {
+//       if (hmoduleDXGIDebug)
+//       {
 
-         auto pfnDXGIGetDebugInterface = reinterpret_cast<LPDXGIGETDEBUGINTERFACE>(
-            reinterpret_cast<void*>(GetProcAddress(hmoduleDXGIDebug, "DXGIGetDebugInterface")));
+//          auto pfnDXGIGetDebugInterface = reinterpret_cast<LPDXGIGETDEBUGINTERFACE>(
+//             reinterpret_cast<void*>(GetProcAddress(hmoduleDXGIDebug, "DXGIGetDebugInterface")));
 
-         if (SUCCEEDED(pfnDXGIGetDebugInterface(__interface_of(m_pdxgidebug))))
-         {
+//          if (SUCCEEDED(pfnDXGIGetDebugInterface(__interface_of(m_pdxgidebug))))
+//          {
 
-         }
+//          }
 
-         //d.Attach(dxgiGetDebugInterface);
-         //if (SUCCEEDED(dxgiGetDebugInterface(IID_PPV_ARGS(dxgiInfoQueue.GetAddressOf()))))
-         //{
-         // dxgiInfoQueue->SetBreakOnSeverity(DXGI_DEBUG_ALL, DXGI_INFO_QUEUE_MESSAGE_SEVERITY_ERROR, true);
-         //dxgiInfoQueue->SetBreakOnSeverity(DXGI_DEBUG_ALL, DXGI_INFO_QUEUE_MESSAGE_SEVERITY_CORRUPTION, true);
-         //}
+//          //d.Attach(dxgiGetDebugInterface);
+//          //if (SUCCEEDED(dxgiGetDebugInterface(IID_PPV_ARGS(dxgiInfoQueue.GetAddressOf()))))
+//          //{
+//          // dxgiInfoQueue->SetBreakOnSeverity(DXGI_DEBUG_ALL, DXGI_INFO_QUEUE_MESSAGE_SEVERITY_ERROR, true);
+//          //dxgiInfoQueue->SetBreakOnSeverity(DXGI_DEBUG_ALL, DXGI_INFO_QUEUE_MESSAGE_SEVERITY_CORRUPTION, true);
+//          //}
 
-      }
+//       }
 
-#endif
+// #endif
 
    }
 
@@ -103,6 +106,9 @@ CLASS_DECL_DIRECTX void directx_debug()
 //   g_pdxgidebug->debug();
 //
 //}
+
+
+#endif
 
 
 

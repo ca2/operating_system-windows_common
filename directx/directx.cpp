@@ -18,7 +18,11 @@ namespace directx
    directx::~directx()
    {
 
+#if defined(_DEBUG)
+
       ::directx::dxgi_debug_terminate();
+
+#endif
 
    }
 
@@ -86,7 +90,11 @@ namespace directx
       // Get the underlying DXGI device of the Direct3D device.
       ::throw_if_failed(device.as(m_pdxgidevice));
 
+#if defined(_DEBUG)
+
       ::directx::defer_dxgi_debug_initialize();
+
+#endif
 
       return ::success;
 

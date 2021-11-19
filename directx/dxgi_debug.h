@@ -2,6 +2,9 @@
 #pragma once
 
 
+#if defined(_DEBUG)
+
+
 namespace directx
 {
 
@@ -29,6 +32,9 @@ namespace directx
 
 
 } // namespace directx
+
+
+#endif // !defined(_UWP)
 
 
 

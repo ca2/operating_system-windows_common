@@ -28,6 +28,9 @@ interface ID3D11Device1;
 interface IDXGIDevice;
 
 
+#if defined(_DEBUG)
+
+
 namespace directx
 {
 
@@ -40,6 +43,9 @@ namespace directx
 
 
 CLASS_DECL_DIRECTX void directx_debug();
+
+
+#endif
 
 
 //#include "object.h"
