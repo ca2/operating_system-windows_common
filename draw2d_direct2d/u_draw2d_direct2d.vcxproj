@@ -70,7 +70,7 @@
     <ClCompile Include="bitmap.cpp" />
     <ClCompile Include="brush.cpp" />
     <ClCompile Include="draw2d.cpp" />
-    <ClCompile Include="factory_exchange.cpp" />
+    <ClCompile Include="_factory.cpp" />
     <ClCompile Include="font.cpp" />
     <ClCompile Include="framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">Create</PrecompiledHeader>

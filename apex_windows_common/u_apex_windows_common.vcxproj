@@ -67,7 +67,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="factory_exchange.cpp">
+    <ClCompile Include="_factory.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='stage|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='cube_stage|Win32'">Create</PrecompiledHeader>
@@ -119,9 +119,7 @@
     <ClInclude Include="_.h" />
     <ClInclude Include="_apex_windows_common.h" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="u_apex_windows_common.def" />
-  </ItemGroup>
+  
   <ItemGroup>
     <ProjectReference Include="..\..\..\source\app\acme\u_acme.vcxproj">
       <Project>{74a3ea71-9358-4441-a0cc-d5771df8dfbd}</Project>

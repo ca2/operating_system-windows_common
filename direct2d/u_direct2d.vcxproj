@@ -81,7 +81,7 @@
     <ClCompile Include="direct2d.cpp" />
     <ClCompile Include="_.cpp" />
     <ClCompile Include="_universal_windows.cpp" />
-    <ClCompile Include="factory_exchange.cpp" />
+    <ClCompile Include="_factory.cpp" />
     <ClCompile Include="framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='cube_basis|Win32'">Create</PrecompiledHeader>

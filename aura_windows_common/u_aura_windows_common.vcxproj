@@ -67,7 +67,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="factory_exchange.cpp" />
+    <ClCompile Include="_factory.cpp" />
     <ClCompile Include="framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='cube_basis|Win32'">Create</PrecompiledHeader>
@@ -115,9 +115,7 @@
       <Project>{bc71de03-0bcb-46ed-a9c5-d1dd8242c511}</Project>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="u_aura_windows_common.def" />
-  </ItemGroup>
+  
   <PropertyGroup Label="Globals">
     <ProjectGuid>{da5570cd-d399-45cb-94e3-e81735d80f3a}</ProjectGuid>
     <Keyword>DynamicLibrary</Keyword>

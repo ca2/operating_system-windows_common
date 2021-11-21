@@ -51,7 +51,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="factory_exchange.cpp" />
+    <ClCompile Include="_factory.cpp" />
     <ClCompile Include="wave_in.cpp" />
     <ClCompile Include="wave_out.cpp" />
     <ClCompile Include="framework.cpp">
@@ -79,9 +79,7 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="_audio_xaudio.h" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="u_audio_xaudio.def" />
-  </ItemGroup>
+  
   <ItemGroup>
     <ProjectReference Include="..\..\..\source\app-core\audio\u_audio.vcxproj">
       <Project>{1935706b-4846-4a53-808f-9123fcba7dfd}</Project>

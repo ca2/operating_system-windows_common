@@ -20,7 +20,7 @@ list(APPEND imaging_wic_source
         _.h
         context_image.cpp
         context_image.h
-        factory_exchange.cpp
+        _factory.cpp
         factory_exchange.h
         framework.cpp
         framework.h

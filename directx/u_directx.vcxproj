@@ -69,7 +69,7 @@
   <ItemGroup>
     <ClCompile Include="directx.cpp" />
     <ClCompile Include="dxgi_debug.cpp" />
-    <ClCompile Include="factory_exchange.cpp" />
+    <ClCompile Include="_factory.cpp" />
     <ClCompile Include="framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='cube_basis|Win32'">Create</PrecompiledHeader>
@@ -119,9 +119,7 @@
       <Project>{4a44d9ca-a46e-4bb3-8ad5-8bcace5228ce}</Project>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="u_directx.def" />
-  </ItemGroup>
+  
   <PropertyGroup Label="Globals">
     <ProjectGuid>{41f27c23-968d-49a8-b050-e1643437b612}</ProjectGuid>
     <Keyword>DynamicLibrary</Keyword>

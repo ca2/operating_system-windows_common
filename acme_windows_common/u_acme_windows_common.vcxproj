@@ -112,7 +112,7 @@
     <ClCompile Include="exception\engine.cpp" />
     <ClCompile Include="exception\hresult.cpp" />
     <ClCompile Include="exception\translator.cpp" />
-    <ClCompile Include="factory_exchange.cpp" />
+    <ClCompile Include="_factory.cpp" />
     <ClCompile Include="file.cpp" />
     <ClCompile Include="file1.cpp" />
     <ClCompile Include="framework.cpp">
@@ -139,9 +139,7 @@
     <ClCompile Include="standard_exception.cpp" />
     <ClCompile Include="_.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="u_acme_windows_common.def" />
-  </ItemGroup>
+  
   <ItemGroup>
     <ProjectReference Include="..\..\..\source\app\acme\u_acme.vcxproj">
       <Project>{74a3ea71-9358-4441-a0cc-d5771df8dfbd}</Project>

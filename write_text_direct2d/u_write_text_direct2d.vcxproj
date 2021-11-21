@@ -67,7 +67,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="factory_exchange.cpp" />
+    <ClCompile Include="_factory.cpp" />
     <ClCompile Include="fonts.cpp" />
     <ClCompile Include="font_enumeration.cpp" />
     <ClCompile Include="framework.cpp">

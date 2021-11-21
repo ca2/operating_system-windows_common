@@ -72,12 +72,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='stage|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='cube_stage|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="factory_exchange.cpp" />
+    <ClCompile Include="_factory.cpp" />
     <ClCompile Include="translation.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="u_multimedia_xaudio.def" />
-  </ItemGroup>
+  
   <ItemGroup>
     <ProjectReference Include="..\..\..\source\app-core\audio\u_audio.vcxproj">
       <Project>{1935706b-4846-4a53-808f-9123fcba7dfd}</Project>

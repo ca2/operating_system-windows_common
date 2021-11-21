@@ -58,7 +58,7 @@ namespace multimedia
 
 
 
-#include "audio_mixer_mmsystem_factory_exchange.h"
+#include "([a-z0-9_]+)_factory.h"
 
 
 

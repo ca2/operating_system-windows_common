@@ -21,7 +21,7 @@ namespace imaging_wic
    factory_exchange::factory_exchange()
    {
 
-      create_factory < ::imaging_wic::context_image, ::context_image >();
+      ::factory::add_factory_item < ::imaging_wic::context_image, ::context_image >();
 
    }
 
@@ -35,11 +35,10 @@ namespace imaging_wic
 } // namespace imaging_wic
 //
 
-extern "C"
-void imaging_wic_factory_exchange(::factory_map * pfactorymap)
+__FACTORY_EXPORT void imaging_wic_factory(::factory::factory * pfactory)
 {
 
-   pfactorymap->create_factory < ::imaging_wic::context_image, ::context_image >();
+   pfactory->add_factory_item < ::imaging_wic::context_image, ::context_image >();
 
 }
 

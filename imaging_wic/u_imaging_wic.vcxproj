@@ -75,7 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="context_image.cpp" />
-    <ClCompile Include="factory_exchange.cpp" />
+    <ClCompile Include="_factory.cpp" />
     <ClCompile Include="framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='cube_basis|Win32'">Create</PrecompiledHeader>
@@ -99,9 +99,7 @@
     <ClCompile Include="saving.cpp" />
     <ClCompile Include="_.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="u_imaging_wic.def" />
-  </ItemGroup>
+  
   <ItemGroup>
     <ProjectReference Include="..\..\..\source\app\acme\u_acme.vcxproj">
       <Project>{74a3ea71-9358-4441-a0cc-d5771df8dfbd}</Project>

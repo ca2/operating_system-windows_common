@@ -127,8 +127,8 @@
       <SubSystem Condition="'$(Configuration)|$(Platform)'=='memdleak|Win32'">Windows</SubSystem>
       <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">$(SolutionDir)../../time/library/x86/$(ConfigurationName);$(__archive)third-universal_windows/thirdparty/library;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='memdleak|Win32'">$(SolutionDir)../../time/library/x86/$(ConfigurationName);$(__archive)third-universal_windows/thirdparty/library;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ModuleDefinitionFile Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">$(TargetName).def</ModuleDefinitionFile>
-      <ModuleDefinitionFile Condition="'$(Configuration)|$(Platform)'=='memdleak|Win32'">$(TargetName).def</ModuleDefinitionFile>
+      
+      
       <ImportLibrary Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">$(OutDir)$(TargetName).lib</ImportLibrary>
       <ImportLibrary Condition="'$(Configuration)|$(Platform)'=='memdleak|Win32'">$(OutDir)$(TargetName).lib</ImportLibrary>
     </Link>
@@ -416,9 +416,7 @@
       <Project>{af9dfa62-6f0e-47b8-a55b-5ad825571f4f}</Project>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="veriwell_multimedia.def" />
-  </ItemGroup>
+  
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

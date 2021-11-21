@@ -870,7 +870,5 @@
       <Filter>Source Files\video_decode</Filter>
     </ClCompile>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="veriwell_multimedia.def" />
-  </ItemGroup>
+  
 </Project>

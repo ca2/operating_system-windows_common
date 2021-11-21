@@ -2,8 +2,7 @@
 #include "framework.h"
 
 
-extern "C"
-void directx_factory_exchange(::factory_map * pfactorymap)
+__FACTORY_EXPORT void directx_factory(::factory::factory * pfactory)
 {
 
 

@@ -74,7 +74,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='cube_stage|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="_.cpp" />
-    <ClCompile Include="factory_exchange.cpp" />
+    <ClCompile Include="_factory.cpp" />
     <ClCompile Include="out.cpp" />
     <ClCompile Include="translation.cpp" />
   </ItemGroup>
@@ -113,9 +113,7 @@
       <Project>{65070f1f-14db-474e-96de-cb920740dcc4}</Project>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="u_music_midi_xaudio.def" />
-  </ItemGroup>
+  
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7D2387EB-A3DE-4EA5-B061-48A856DD7211}</ProjectGuid>
     <Keyword>DynamicLibrary</Keyword>

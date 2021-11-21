@@ -136,7 +136,7 @@ namespace Platform {
 *                                                                 *
 *  geometry_sink_text_renderer::geometry_sink_text_renderer                         *
 *                                                                 *
-*  The constructor stores the Direct2D factory, the render        *
+*  The constructor stores the Direct2D factory_item, the render        *
 *  target, and the outline and fill brushes used for drawing the  *
 *  glyphs, underlines, and strikethroughs.                        *
 *                                                                 *

@@ -27,8 +27,7 @@
 //
 
 
-extern "C"
-void multimedia_xaudio_factory_exchange(::factory_map * pfactorymap)
+__FACTORY_EXPORT void multimedia_xaudio_factory(::factory::factory * pfactory)
 {
 
    //::multimedia::xaudio::factory_exchange factoryexchange();
