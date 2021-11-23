@@ -174,9 +174,4 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="u_acme_windows_common.def">
-      <Filter>Source Files</Filter>
-    </None>
-  </ItemGroup>
 </Project>
