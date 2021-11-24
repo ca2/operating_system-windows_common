@@ -48,9 +48,4 @@
       <UniqueIdentifier>{bdbee658-d29c-4dfa-8652-183771d24552}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="u_imaging_wic.def">
-      <Filter>Source Files</Filter>
-    </None>
-  </ItemGroup>
 </Project>
