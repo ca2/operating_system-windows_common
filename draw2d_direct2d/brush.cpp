@@ -99,7 +99,7 @@ namespace draw2d_direct2d
             // declared array of D2D1_GRADIENT_STOP structs.
             HRESULT hr = pgraphics->m_prendertarget->CreateGradientStopCollection(gradientstops, 2, D2D1_GAMMA_2_2, D2D1_EXTEND_MODE_CLAMP, &pstopcollection);
 
-            D2D1_BRUSH_PROPERTIES brushproperties;
+            D2D1_BRUSH_PROPERTIES brushproperties = {};
 
             brushproperties.opacity = 1.0f;
             brushproperties.transform =  D2D1::IdentityMatrix();

@@ -1069,7 +1069,21 @@ namespace draw2d_direct2d
 
       HRESULT hrFlush = pgraphics2d->m_pdevicecontext->Flush();
 
+      if (::failed(hrFlush))
+      {
+
+         throw ::exception(error_failed);
+
+      }
+
       m_hrEndDraw = pgraphics2d->m_pdevicecontext->EndDraw();
+
+      if (::failed(m_hrEndDraw))
+      {
+
+         throw ::exception(error_failed);
+
+      }
 
       auto pbitmap = m_pbitmap->get_os_data < ID2D1Bitmap * >(data_bitmap);
 
@@ -1080,6 +1094,13 @@ namespace draw2d_direct2d
       auto props = D2D1::BitmapProperties1(options, pbitmap->GetPixelFormat());
 
       HRESULT hr = pgraphics2d->m_pdevicecontext->CreateBitmap(size, nullptr, 0, props, &m_pbitmap1Map);
+
+      if (FAILED(hr))
+      {
+
+         throw ::exception(error_failed);
+
+      }
 
       D2D1_POINT_2U pointDst = {};
 
