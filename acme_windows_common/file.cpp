@@ -11,60 +11,38 @@
 //#endif
 
 
-CLASS_DECL_ACME_WINDOWS_COMMON ::u32 windows_get_file_attributes(const char* path)
-{
-
-   wstring wstr(path);
-
-   u32 dwFileAttributes = ::GetFileAttributesW(wstr);
-
-   if (dwFileAttributes == INVALID_FILE_ATTRIBUTES)
-   {
-
-      if (windows_get_alternate_path(wstr))
-      {
-
-         dwFileAttributes = GetFileAttributesW(wstr);
-
-      }
-
-   }
-
-   return dwFileAttributes;
-
-}
 
 
-int_bool windows_create_directory(const char* path, LPSECURITY_ATTRIBUTES lpSecurityAttributes)
-{
-
-   wstring wstr(path);
-
-
-   if (::CreateDirectoryW(wstr, lpSecurityAttributes))
-   {
-
-      return true;
-
-   }
-
-   if (windows_get_alternate_path(wstr))
-   {
-
-      if (::CreateDirectoryW(wstr, lpSecurityAttributes))
-      {
-
-         return true;
-
-      }
-
-   }
-
-   return false;
-
-}
-
-
+//int_bool windows_create_directory(const char* path, LPSECURITY_ATTRIBUTES lpSecurityAttributes)
+//{
+//
+//   wstring wstr(path);
+//
+//
+//   if (::CreateDirectoryW(wstr, lpSecurityAttributes))
+//   {
+//
+//      return true;
+//
+//   }
+//
+//   if (windows_get_alternate_path(wstr))
+//   {
+//
+//      if (::CreateDirectoryW(wstr, lpSecurityAttributes))
+//      {
+//
+//         return true;
+//
+//      }
+//
+//   }
+//
+//   return false;
+//
+//}
+//
+//
 
 
 

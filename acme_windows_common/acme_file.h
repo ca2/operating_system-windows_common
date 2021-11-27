@@ -19,7 +19,7 @@ namespace windows_common
 
 
       ::e_status copy(const char * pszNew, const char * pszSrc, bool bOverwrite) override;
-      bool exists(const char * path) override;
+      //bool exists(const char * path) override;
 
 
       ::e_status ensure_exists(const char* path) override;
@@ -38,7 +38,7 @@ namespace windows_common
       //memsize as_memory(const char * path, void * p, memsize s) override;
       //bool as_memory(memory_base & memory, const char * path, memsize iReadAtMostByteCount) override;
       memory as_memory(const char* path, strsize iReadAtMostByteCount) override;
-      ::e_status delete_file(const char * pszFileName) override;
+      //::e_status delete_file(const char * pszFileName) override;
 
 
    };

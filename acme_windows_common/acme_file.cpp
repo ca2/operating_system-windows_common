@@ -72,32 +72,6 @@ namespace windows_common
 
    }
 
-   bool acme_file::exists(const char * path)
-   {
-
-      //wstring wstr(path);
-
-      auto attributes = windows_get_file_attributes(path);
-
-      if (attributes == INVALID_FILE_ATTRIBUTES)
-      {
-
-         return false;
-
-      }
-
-      if (attributes & FILE_ATTRIBUTE_DIRECTORY)
-      {
-
-         return false;
-
-      }
-
-      return true;
-
-   }
-
-
    ::e_status acme_file::ensure_exists(const char* path)
    {
 
@@ -483,7 +457,7 @@ namespace windows_common
    //}
 
 
-   ::e_status acme_file::delete_file(const char * pszFileName)
+   /*::e_status acme_file::delete_file(const char * pszFileName)
    {
 
       wstring wstrFilePath(pszFileName);
@@ -501,7 +475,7 @@ namespace windows_common
 
       return ::success;
 
-   }
+   }*/
 
 
 } // namespace windows_common
