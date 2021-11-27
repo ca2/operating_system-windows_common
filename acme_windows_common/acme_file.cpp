@@ -393,37 +393,52 @@ namespace windows_common
    //}
 
 
-   //memsize acme_file::as_memory(const char * path, void * p, memsize s)
-   //{
+   memory acme_file::as_memory(const char* path, strsize iReadAtMostByteCount)
+   {
 
-   //   FILE * file = FILE_open(path, "r", _SH_DENYNO);
+      ::memory memory;
 
-   //   if (file == nullptr)
-   //   {
+      FILE* pfile = _wfsopen(wstring(path), L"r", _SH_DENYNO);
+      
+      if (pfile != nullptr)
+      {
 
-   //      return false;
+         try
+         {
 
-   //   }
+            ::memory memoryBuffer;
 
-   //   memsize sRead = 0;
+            memoryBuffer.set_size(1_mb);
 
-   //   try
-   //   {
+            while (true)
+            {
 
-   //      sRead = ::fread(p, 1, (size_t)s, file);
+               auto iRead = fread(memoryBuffer.get_data(), 1, memoryBuffer.get_size(), pfile);
 
+               if (iRead <= 0)
+               {
 
-   //   }
-   //   catch (...)
-   //   {
+                  break;
 
-   //   }
+               }
 
-   //   fclose(file);
+               memory.append(memoryBuffer.get_data(), iRead);
 
-   //   return sRead;
+            };
 
-   //}
+         }
+         catch (...)
+         {
+
+         }
+
+         fclose(pfile);
+
+      }
+
+      return ::move(memory);
+
+   }
 
 
 

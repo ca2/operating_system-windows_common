@@ -193,9 +193,4 @@
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="acme_windows_common.def">
-      <Filter>Source Files</Filter>
-    </None>
-  </ItemGroup>
 </Project>
