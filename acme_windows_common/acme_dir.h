@@ -22,7 +22,7 @@ namespace windows_common
 
       ::e_status _create_directory(const char * path) override;
 
-      bool _is(const char * path) override;
+      //bool _is(const char * path) override;
 
 
    };

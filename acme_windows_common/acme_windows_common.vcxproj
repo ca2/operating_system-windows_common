@@ -932,8 +932,6 @@
     <ClInclude Include="prop_variant.h" />
     <ClInclude Include="standard_exception.h" />
     <ClInclude Include="variant.h" />
-    <ClInclude Include="_ (2).h" />
-    <ClInclude Include="_ (3).h" />
     <ClInclude Include="_.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="_acme_windows_common.h" />
