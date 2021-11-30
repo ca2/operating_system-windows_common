@@ -10,8 +10,8 @@
 CLASS_DECL_ACME_WINDOWS_COMMON HRESULT defer_co_initialize_ex(bool bMultiThread, bool bDisableOleDDE = false);
 //CLASS_DECL_ACME_WINDOWS_COMMON string get_last_error_message(DWORD dwError);
 //CLASS_DECL_ACME_WINDOWS_COMMON string get_hresult_message(HRESULT hr);
-CLASS_DECL_ACME_WINDOWS_COMMON ::u32 windows_get_file_attributes(const char * path);
-CLASS_DECL_ACME_WINDOWS_COMMON bool windows_create_directory(const char * pszPath ARG_SEC_ATTRS);
+CLASS_DECL_ACME ::u32 windows_get_file_attributes(const char * path);
+//CLASS_DECL_ACME_WINDOWS_COMMON bool windows_create_directory(const char * pszPath ARG_SEC_ATTRS);
 
 //CLASS_DECL_ACME_WINDOWS_COMMON string FormatMessageFromSystem(u32 dwError);
 

@@ -72,45 +72,6 @@ namespace windows_common
 
    }
 
-
-   ::e_status acme_file::exists(const char * path)
-   {
-
-      //wstring wstr(path);
-
-      auto attributes = windows_get_file_attributes(path);
-
-      if (attributes == INVALID_FILE_ATTRIBUTES)
-      {
-
-
-         auto uLastError = ::GetLastError();
-
-         auto estatus = last_error_to_status(uLastError);
-
-         if (::succeeded(estatus))
-         {
-
-            estatus = error_failed;
-
-         }
-
-         return estatus;
-
-      }
-
-      if (attributes & FILE_ATTRIBUTE_DIRECTORY)
-      {
-
-         return error_none;
-
-      }
-
-      return ::success;
-
-   }
-
-
    ::e_status acme_file::ensure_exists(const char* path)
    {
 
@@ -406,37 +367,52 @@ namespace windows_common
    //}
 
 
-   //memsize acme_file::as_memory(const char * path, void * p, memsize s)
-   //{
+   memory acme_file::as_memory(const char* path, strsize iReadAtMostByteCount)
+   {
 
-   //   FILE * file = FILE_open(path, "r", _SH_DENYNO);
+      ::memory memory;
 
-   //   if (file == nullptr)
-   //   {
+      FILE* pfile = _wfsopen(wstring(path), L"r", _SH_DENYNO);
+      
+      if (pfile != nullptr)
+      {
 
-   //      return false;
+         try
+         {
 
-   //   }
+            ::memory memoryBuffer;
 
-   //   memsize sRead = 0;
+            memoryBuffer.set_size(1_mb);
 
-   //   try
-   //   {
+            while (true)
+            {
 
-   //      sRead = ::fread(p, 1, (size_t)s, file);
+               auto iRead = fread(memoryBuffer.get_data(), 1, memoryBuffer.get_size(), pfile);
 
+               if (iRead <= 0)
+               {
 
-   //   }
-   //   catch (...)
-   //   {
+                  break;
 
-   //   }
+               }
 
-   //   fclose(file);
+               memory.append(memoryBuffer.get_data(), iRead);
 
-   //   return sRead;
+            };
 
-   //}
+         }
+         catch (...)
+         {
+
+         }
+
+         fclose(pfile);
+
+      }
+
+      return ::move(memory);
+
+   }
 
 
 
@@ -481,7 +457,7 @@ namespace windows_common
    //}
 
 
-   ::e_status acme_file::delete_file(const char * pszFileName)
+   /*::e_status acme_file::delete_file(const char * pszFileName)
    {
 
       wstring wstrFilePath(pszFileName);
@@ -499,7 +475,7 @@ namespace windows_common
 
       return ::success;
 
-   }
+   }*/
 
 
 } // namespace windows_common

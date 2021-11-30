@@ -59,12 +59,6 @@
     <ClInclude Include="standard_exception.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="_ (2).h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="_ (3).h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="_c.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -192,10 +186,5 @@
     <ResourceCompile Include="..\version.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="acme_windows_common.def">
-      <Filter>Source Files</Filter>
-    </None>
   </ItemGroup>
 </Project>
