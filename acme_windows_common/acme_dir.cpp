@@ -69,7 +69,7 @@ namespace windows_common
    }
 
 
-   bool acme_dir::_is(const char * path)
+   ::e_status acme_dir::_is(const char * path)
    {
 
 //#ifdef _UWP
@@ -178,11 +178,22 @@ namespace windows_common
       if (dwFileAttributes == INVALID_FILE_ATTRIBUTES || !(dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
       {
 
-         return false;
+         auto uLastError = ::GetLastError();
+
+         auto estatus = last_error_to_status(uLastError);
+
+         if (::succeeded(estatus))
+         {
+
+            estatus = error_failed;
+
+         }
+
+         return estatus;
 
       }
 
-      return true;
+      return ::success;
 
 //#else
 //

@@ -19,7 +19,7 @@ namespace windows_common
 
 
       ::e_status copy(const char * pszNew, const char * pszSrc, bool bOverwrite) override;
-      bool exists(const char * path) override;
+      ::e_status exists(const char * path) override;
 
 
       ::e_status ensure_exists(const char* path) override;

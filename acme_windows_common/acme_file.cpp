@@ -72,7 +72,8 @@ namespace windows_common
 
    }
 
-   bool acme_file::exists(const char * path)
+
+   ::e_status acme_file::exists(const char * path)
    {
 
       //wstring wstr(path);
@@ -82,18 +83,30 @@ namespace windows_common
       if (attributes == INVALID_FILE_ATTRIBUTES)
       {
 
-         return false;
+
+         auto uLastError = ::GetLastError();
+
+         auto estatus = last_error_to_status(uLastError);
+
+         if (::succeeded(estatus))
+         {
+
+            estatus = error_failed;
+
+         }
+
+         return estatus;
 
       }
 
       if (attributes & FILE_ATTRIBUTE_DIRECTORY)
       {
 
-         return false;
+         return error_none;
 
       }
 
-      return true;
+      return ::success;
 
    }
 
