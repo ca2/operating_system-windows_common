@@ -56,6 +56,17 @@ namespace windows_common
 
       wstring wstrSrc(strSrc);
 
+      auto pathFolder = file_path_folder(strNew);
+
+      auto bDir = m_pacmedir->is(pathFolder);
+
+      if (!bDir)
+      {
+       
+         m_pacmedir->create(pathFolder);
+
+      }
+
       //return ::CopyFileExW(wstrSrc,wstrNew, nullptr, nullptr, nullptr, COPY_FILE_NO_BUFFERING | (bOverwrite ? 0 : COPY_FILE_FAIL_IF_EXISTS)) ? true : false;
       auto bCopy = ::CopyFileExW(wstrSrc, wstrNew, nullptr, nullptr, nullptr, (bOverwrite ? 0 : COPY_FILE_FAIL_IF_EXISTS)) ? true : false;
 
