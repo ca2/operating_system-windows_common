@@ -19,7 +19,7 @@ namespace windows_common
 
 //#ifdef _UWP
 //
-//         DWORD dwLastError = ::GetLastError();
+         DWORD dwLastError = ::GetLastError();
 //
 //         string strPrefix;
 //

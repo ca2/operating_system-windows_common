@@ -68,7 +68,7 @@ namespace windows_common
       }
 
       //return ::CopyFileExW(wstrSrc,wstrNew, nullptr, nullptr, nullptr, COPY_FILE_NO_BUFFERING | (bOverwrite ? 0 : COPY_FILE_FAIL_IF_EXISTS)) ? true : false;
-      auto bCopy = ::CopyFileExW(wstrSrc, wstrNew, nullptr, nullptr, nullptr, (bOverwrite ? 0 : COPY_FILE_FAIL_IF_EXISTS)) ? true : false;
+      auto bCopy = ::CopyFileExW(wstrSrc, wstrNew, nullptr, nullptr, nullptr, (bOverwrite ? 0 : COPY_FILE_FAIL_IF_EXISTS)) ;
 
       if (!bCopy)
       {
@@ -111,7 +111,6 @@ namespace windows_common
    }
 
 
-
    ::e_status acme_file::clear_read_only(const char* path)
    {
 
@@ -126,7 +125,47 @@ namespace windows_common
 
       }
 
+      if (!(attributes & FILE_ATTRIBUTE_READONLY))
+      {
+
+         return ::success_none;
+
+      }
+
       if (!::SetFileAttributesW(wstrPath, attributes & ~FILE_ATTRIBUTE_READONLY))
+      {
+
+         return ::error_failed;
+
+      }
+
+      return ::success;
+
+   }
+
+
+   ::e_status acme_file::set_file_normal(const char* path)
+   {
+
+      wstring wstrPath(path);
+
+      auto attributes = ::GetFileAttributesW(wstrPath);
+
+      if (attributes == INVALID_FILE_ATTRIBUTES)
+      {
+
+         return ::error_failed;
+
+      }
+
+      if (attributes == FILE_ATTRIBUTE_NORMAL)
+      {
+
+         return ::success_none;
+
+      }
+
+      if (!::SetFileAttributesW(wstrPath, FILE_ATTRIBUTE_NORMAL))
       {
 
          return ::error_failed;
@@ -487,6 +526,54 @@ namespace windows_common
       return ::success;
 
    }*/
+
+
+
+   ::e_status acme_file::put_block(const char* path, const block& block)
+   {
+
+      wstring wstr(path);
+
+      m_pacmedir->create(file_path_folder(path));
+
+      HANDLE h = ::CreateFileW(wstr, GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
+
+      if (h == INVALID_HANDLE_VALUE)
+      {
+
+         DWORD dwLastError = ::GetLastError();
+
+         auto estatus = last_error_to_status(dwLastError);
+
+         return estatus;
+
+      }
+
+      ::e_status estatus = success;
+
+      DWORD dwWritten = 0;
+
+      if (!WriteFile(h, block.get_data(), (DWORD) block.get_size(), &dwWritten,nullptr))
+      {
+
+         DWORD dwLastError = ::GetLastError();
+
+         estatus = last_error_to_status(dwLastError);
+
+      }
+
+      if (dwWritten != block.get_size())
+      {
+
+         estatus = error_failed;
+
+      }
+
+      ::CloseHandle(h);
+
+      return estatus;
+
+   }
 
 
 } // namespace windows_common

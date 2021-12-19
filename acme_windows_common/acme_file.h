@@ -26,6 +26,9 @@ namespace windows_common
       ::e_status touch(const char* path) override;
       ::e_status clear_read_only(const char* path) override;
 
+
+      ::e_status set_file_normal(const char* path) override;
+
       ::e_status put_contents(const char * path, const char * contents, memsize len) override;
 
 
@@ -39,6 +42,8 @@ namespace windows_common
       //bool as_memory(memory_base & memory, const char * path, memsize iReadAtMostByteCount) override;
       memory as_memory(const char* path, strsize iReadAtMostByteCount) override;
       //::e_status delete_file(const char * pszFileName) override;
+
+      ::e_status put_block(const char* path, const block& block) override;
 
 
    };
