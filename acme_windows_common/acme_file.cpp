@@ -274,7 +274,7 @@ namespace windows_common
    }
 
 
-   filesize acme_file::get_size(const char * path)
+   holding_status < filesize > acme_file::get_size(const char * path)
    {
 
 #ifdef WINDOWS_DESKTOP
@@ -290,7 +290,11 @@ namespace windows_common
       if (hfile == INVALID_HANDLE_VALUE)
       {
 
-         return 0;
+         DWORD dwLastError = ::GetLastError();
+
+         auto estatus = last_error_to_status(dwLastError);
+
+         return estatus;
 
       }
 
@@ -301,7 +305,13 @@ namespace windows_common
       if (!GetFileSizeEx(hfile, &largeintegerFileSize))
       {
 
-         return 0;
+         DWORD dwLastError = ::GetLastError();
+
+         auto estatus = last_error_to_status(dwLastError);
+
+         ::CloseHandle(hfile);
+
+         return estatus;
 
       }
 
@@ -417,48 +427,54 @@ namespace windows_common
    //}
 
 
-   memory acme_file::as_memory(const char* path, strsize iReadAtMostByteCount)
+   status < memory > acme_file::as_memory(const char* path, strsize iReadAtMostByteCount)
    {
-
-      ::memory memory;
 
       FILE* pfile = _wfsopen(wstring(path), L"r", _SH_DENYNO);
       
-      if (pfile != nullptr)
+      if (pfile == nullptr)
       {
 
-         try
-         {
+         int iErrNo = errno;
 
-            ::memory memoryBuffer;
+         auto estatus = errno_to_status(iErrNo);
 
-            memoryBuffer.set_size(1_mb);
-
-            while (true)
-            {
-
-               auto iRead = fread(memoryBuffer.get_data(), 1, memoryBuffer.get_size(), pfile);
-
-               if (iRead <= 0)
-               {
-
-                  break;
-
-               }
-
-               memory.append(memoryBuffer.get_data(), iRead);
-
-            };
-
-         }
-         catch (...)
-         {
-
-         }
-
-         fclose(pfile);
+         return estatus;
 
       }
+
+      ::memory memory;
+
+      try
+      {
+
+         ::memory memoryBuffer;
+
+         memoryBuffer.set_size(1_mb);
+
+         while (true)
+         {
+
+            auto iRead = fread(memoryBuffer.get_data(), 1, memoryBuffer.get_size(), pfile);
+
+            if (iRead <= 0)
+            {
+
+               break;
+
+            }
+
+            memory.append(memoryBuffer.get_data(), iRead);
+
+         };
+
+      }
+      catch (...)
+      {
+
+      }
+
+      fclose(pfile);
 
       return ::move(memory);
 
