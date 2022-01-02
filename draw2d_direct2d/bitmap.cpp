@@ -1,4 +1,6 @@
 #include "framework.h"
+#include "aura/graphics/draw2d/lock.h"
+#include "aura/graphics/draw2d/device_lock.h"
 
 
 namespace draw2d_direct2d

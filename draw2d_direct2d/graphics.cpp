@@ -1,6 +1,9 @@
 #include "framework.h"
 #include "aura/user/_user.h"
 #include "CustomRenderer.h"
+#include "aura/graphics/draw2d/lock.h"
+#include "aura/graphics/draw2d/device_lock.h"
+#include "aura/graphics/draw2d/context_image.h"
 #include <math.h>
 
 
@@ -2192,24 +2195,24 @@ namespace draw2d_direct2d
    //}
 
 
-   ::size_f64 graphics::GetOutputTabbedTextExtent(const ::string & lpszString, strsize nCount, count nTabPositions, LPINT lpnTabStopPositions)
-   {
+   //::size_f64 graphics::GetOutputTabbedTextExtent(const ::string & lpszString, strsize nCount, count nTabPositions, LPINT lpnTabStopPositions)
+   //{
 
-      __throw(todo);
+   //   __throw(todo);
 
-      return nullptr;
+   //   return nullptr;
 
-   }
+   //}
 
 
-   ::size_f64 graphics::GetOutputTabbedTextExtent(const ::string & str, count nTabPositions, LPINT lpnTabStopPositions)
-   {
+   //::size_f64 graphics::GetOutputTabbedTextExtent(const ::string & str, count nTabPositions, LPINT lpnTabStopPositions)
+   //{
 
-      __throw(todo);
+   //   __throw(todo);
 
-      return nullptr;
+   //   return nullptr;
 
-   }
+   //}
 
 
    //bool graphics::GrayString(::draw2d::brush* pBrush, bool (CALLBACK* lpfnOutput)(HDC, LPARAM, int), LPARAM lpData, double dCount,double x, double y, double dWidth, double dHeight)
@@ -4981,24 +4984,24 @@ namespace draw2d_direct2d
    }
 
 
-   ::size_f64 graphics::GetOutputTextExtent(const char * lpszString, strsize nCount)
-   {
+   //::size_f64 graphics::GetOutputTextExtent(const char * lpszString, strsize nCount)
+   //{
 
-      __throw(todo);
+   //   __throw(todo);
 
-      return nullptr;
+   //   return nullptr;
 
-   }
+   //}
 
 
-   ::size_f64 graphics::GetOutputTextExtent(const ::string & str)
-   {
+   //::size_f64 graphics::GetOutputTextExtent(const ::string & str)
+   //{
 
-      __throw(todo);
+   //   __throw(todo);
 
-      return nullptr;
+   //   return nullptr;
 
-   }
+   //}
 
 
    bool graphics::get_text_extent(size_f64 & size, const char * lpszString, strsize nCount, strsize iIndex)

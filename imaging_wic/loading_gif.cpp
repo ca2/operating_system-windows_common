@@ -1,4 +1,5 @@
 #include "framework.h"
+#include "aura/graphics/draw2d/image_frame_array.h"
 #include <Wincodec.h>
 
 
@@ -9,6 +10,8 @@
 #include <ShCore.h>
 #endif
 
+
+CLASS_DECL_ACME void cra_from_quada(colorref_array& colorrefa, WINRGBQUAD* prgbquad, int iCount);
 
 
 namespace imaging_wic

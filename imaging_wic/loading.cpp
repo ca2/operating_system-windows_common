@@ -2,6 +2,7 @@
 #include "apex/parallelization/handler_manager.h"
 #include <wincodec.h>
 #include <shcore.h>
+#include "aura/graphics/draw2d/load_image.h"
 
 
 namespace imaging_wic

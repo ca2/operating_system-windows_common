@@ -1,6 +1,9 @@
 #pragma once
 
 
+#include "aura/graphics/draw2d/palette.h"
+
+
 namespace draw2d_direct2d
 {
 
