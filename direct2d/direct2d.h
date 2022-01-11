@@ -31,7 +31,7 @@ namespace direct2d
       ~direct2d() override;
 
 
-      ::e_status initialize(::object * pobject) override;
+      void initialize(::object * pobject) override;
 
 
       IDWriteFactory * dwrite_factory(bool bCreate = true);

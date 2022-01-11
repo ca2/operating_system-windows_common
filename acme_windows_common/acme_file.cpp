@@ -31,7 +31,7 @@ namespace windows_common
    //}
 
 
-   ::e_status acme_file::copy(const char * pszNew, const char * pszSrc, bool bOverwrite)
+   void acme_file::copy(const char * pszNew, const char * pszSrc, bool bOverwrite)
    {
 
       string strNew(pszNew);
@@ -83,7 +83,7 @@ namespace windows_common
 
    }
 
-   ::e_status acme_file::ensure_exists(const char* path)
+   void acme_file::ensure_exists(const char* path)
    {
 
       if (exists(path))
@@ -111,7 +111,7 @@ namespace windows_common
    }
 
 
-   ::e_status acme_file::clear_read_only(const char* path)
+   void acme_file::clear_read_only(const char* path)
    {
 
       wstring wstrPath(path);
@@ -144,7 +144,7 @@ namespace windows_common
    }
 
 
-   ::e_status acme_file::set_file_normal(const char* path)
+   void acme_file::set_file_normal(const char* path)
    {
 
       wstring wstrPath(path);
@@ -177,7 +177,7 @@ namespace windows_common
    }
 
 
-   ::e_status acme_file::touch(const char* path)
+   void acme_file::touch(const char* path)
    {
 
       
@@ -220,7 +220,7 @@ namespace windows_common
    }
 
 
-   ::e_status acme_file::put_contents(const char * path, const char * contents, memsize len)
+   void acme_file::put_contents(const char * path, const char * contents, memsize len)
    {
 
       auto estatus = m_pacmedir->create(file_path_folder(path));
@@ -523,7 +523,7 @@ namespace windows_common
    //}
 
 
-   /*::e_status acme_file::delete_file(const char * pszFileName)
+   /*void acme_file::delete_file(const char * pszFileName)
    {
 
       wstring wstrFilePath(pszFileName);
@@ -545,7 +545,7 @@ namespace windows_common
 
 
 
-   ::e_status acme_file::put_block(const char* path, const block& block)
+   void acme_file::put_block(const char* path, const block& block)
    {
 
       wstring wstr(path);
@@ -565,7 +565,7 @@ namespace windows_common
 
       }
 
-      ::e_status estatus = success;
+      void estatus = success;
 
       DWORD dwWritten = 0;
 

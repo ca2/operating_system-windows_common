@@ -62,7 +62,7 @@ namespace multimedia
 
       //}
 
-      ::e_status     translate(HRESULT hr)
+      void     translate(HRESULT hr)
       {
 
          if(SUCCEEDED(hr))

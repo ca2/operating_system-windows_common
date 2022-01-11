@@ -394,7 +394,7 @@ namespace draw2d_direct2d
    }
 
 
-   ::e_status region::destroy()
+   void region::destroy()
    {
 
       m_pgeometry = nullptr;

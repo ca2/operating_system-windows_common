@@ -49,7 +49,7 @@ namespace imaging_wic
    }
 
 
-   ::e_status context_image::initialize(::object * pobject)
+   void context_image::initialize(::object * pobject)
    {
 
       auto estatus = ::context_image::initialize(pobject);
@@ -311,7 +311,7 @@ namespace imaging_wic
 #endif
 
 
-   //::e_status context_image::_load_icon(::draw2d::icon * picon, const ::payload & payloadFile)
+   //void context_image::_load_icon(::draw2d::icon * picon, const ::payload & payloadFile)
 
 
 

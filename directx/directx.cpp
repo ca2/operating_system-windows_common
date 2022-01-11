@@ -27,7 +27,7 @@ namespace directx
    }
 
 
-   ::e_status directx::initialize(::object * pobject)
+   void directx::initialize(::object * pobject)
    {
 
       // This flag adds support for surfaces with a different color channel ordering

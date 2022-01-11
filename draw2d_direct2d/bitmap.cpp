@@ -416,7 +416,7 @@ namespace draw2d_direct2d
    }
 
 
-   ::e_status bitmap::destroy()
+   void bitmap::destroy()
    {
 
       m_pbitmap = nullptr;

@@ -18,12 +18,12 @@ namespace draw2d_direct2d
       ~draw2d() override;
 
 
-      virtual ::e_status initialize(::object * pobject) override;
+      virtual void initialize(::object * pobject) override;
 
       virtual string write_text_get_default_library_name() override;
 
-      ::e_status lock_device() override;
-      ::e_status unlock_device() override;
+      void lock_device() override;
+      void unlock_device() override;
 
 
    };

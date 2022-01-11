@@ -445,7 +445,7 @@ namespace draw2d_direct2d
    }
 
 
-   ::e_status path::destroy()
+   void path::destroy()
    {
 
       ::draw2d::path::destroy();

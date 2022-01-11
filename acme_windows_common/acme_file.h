@@ -18,18 +18,18 @@ namespace windows_common
       //::file::path _final(const char * path) override;
 
 
-      ::e_status copy(const char * pszNew, const char * pszSrc, bool bOverwrite) override;
+      void copy(const char * pszNew, const char * pszSrc, bool bOverwrite) override;
       //bool exists(const char * path) override;
 
 
-      ::e_status ensure_exists(const char* path) override;
-      ::e_status touch(const char* path) override;
-      ::e_status clear_read_only(const char* path) override;
+      void ensure_exists(const char* path) override;
+      void touch(const char* path) override;
+      void clear_read_only(const char* path) override;
 
 
-      ::e_status set_file_normal(const char* path) override;
+      void set_file_normal(const char* path) override;
 
-      ::e_status put_contents(const char * path, const char * contents, memsize len) override;
+      void put_contents(const char * path, const char * contents, memsize len) override;
 
 
       using ::acme_file::get_size;
@@ -42,9 +42,9 @@ namespace windows_common
       //memsize as_memory(const char * path, void * p, memsize s) override;
       //bool as_memory(memory_base & memory, const char * path, memsize iReadAtMostByteCount) override;
       status < memory > as_memory(const char* path, strsize iReadAtMostByteCount) override;
-      //::e_status delete_file(const char * pszFileName) override;
+      //void delete_file(const char * pszFileName) override;
 
-      ::e_status put_block(const char* path, const block& block) override;
+      void put_block(const char* path, const block& block) override;
 
 
    };

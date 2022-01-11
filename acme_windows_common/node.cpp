@@ -26,7 +26,7 @@ namespace acme
       }
 
 
-      ::e_status node::initialize_matter(::matter* pmatter)
+      void node::initialize_matter(::matter* pmatter)
       {
 
          auto estatus = ::matter::initialize_matter(pmatter);
@@ -178,7 +178,7 @@ namespace acme
       //
       //
       //
-      //   ::e_status node::set_system_dark_mode1(bool bSet)
+      //   void node::set_system_dark_mode1(bool bSet)
       //   {
       //
       //      ::windows::registry::key key(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", true);
@@ -199,7 +199,7 @@ namespace acme
       //   }
       //
       //
-      //   ::e_status node::set_app_dark_mode1(bool bSet)
+      //   void node::set_app_dark_mode1(bool bSet)
       //   {
       //
       //      ::windows::registry::key key(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", true);
@@ -279,7 +279,7 @@ namespace acme
       //   }
       //
       //
-      //   ::e_status node::open_folder(::file::path & pathFolder)
+      //   void node::open_folder(::file::path & pathFolder)
       //   {
       //
       //      wstring wstrFolder(pathFolder);
@@ -337,7 +337,7 @@ namespace acme
       //   }
       //
       //
-      //   ::e_status node::register_dll(const ::file::path & pathDll)
+      //   void node::register_dll(const ::file::path & pathDll)
       //   {
       //
       //
@@ -410,7 +410,7 @@ namespace acme
       //   }
       //
       //
-      //   ::e_status node::start()
+      //   void node::start()
       //   {
       //
       //      auto estatus = m_psystem->m_papexsystem->m_papex->thread_initialize(m_psystem->m_papexsystem);
@@ -455,7 +455,7 @@ namespace acme
       //   }
       //
       //
-      //   ::e_status node::get_firefox_installation_info(string& strPathToExe, string& strInstallDirectory)
+      //   void node::get_firefox_installation_info(string& strPathToExe, string& strInstallDirectory)
       //   {
       //
       //#ifdef WINDOWS_DESKTOP
@@ -476,7 +476,7 @@ namespace acme
       //         key.get("Install Directory", strInstallDirectory);
       //
       //      }
-      //      catch (const ::e_status& estatus)
+      //      catch (const void& estatus)
       //      {
       //
       //         return estatus;
@@ -494,7 +494,7 @@ namespace acme
       //   }
       //
       //
-      //   ::e_status node::_001InitializeShellOpen()
+      //   void node::_001InitializeShellOpen()
       //   {
       //
       //      //ASSERT(m_atomApp == nullptr && m_atomSystemTopic == nullptr); // do once
@@ -508,7 +508,7 @@ namespace acme
       //   }
       //
       //
-      //   ::e_status node::process_init()
+      //   void node::process_init()
       //   {
       //
       //      
@@ -651,7 +651,7 @@ namespace acme
       //
 
 
-      ::e_status node::datetime_to_filetime(::filetime_t* pfiletime, const ::datetime::time& time)
+      void node::datetime_to_filetime(::filetime_t* pfiletime, const ::datetime::time& time)
       {
 
          SYSTEMTIME sysTime;
@@ -693,7 +693,7 @@ namespace acme
       }
 
 
-      ::e_status node::last_error_to_status(DWORD dwLastError)
+      void node::last_error_to_status(DWORD dwLastError)
       {
 
          if (dwLastError == 0)
@@ -721,7 +721,7 @@ namespace acme
       }
 
 
-      //::e_status node::on_start_system()
+      //void node::on_start_system()
       //{
 
       //   if (m_bHasNodeSystemStarted)

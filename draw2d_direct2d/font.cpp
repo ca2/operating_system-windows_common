@@ -137,7 +137,7 @@ namespace draw2d_direct2d
    }
 
 
-   ::e_status font::destroy()
+   void font::destroy()
    {
 
       ::write_text::font::destroy();

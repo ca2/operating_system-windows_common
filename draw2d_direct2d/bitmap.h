@@ -36,8 +36,8 @@ namespace draw2d_direct2d
       void dump(dump_context& dumpcontext) const override;
 
 
-      ::e_status map();
-      ::e_status unmap();
+      void map();
+      void unmap();
 
 
       bool LoadBitmap(const ::string & lpszResourceName);
@@ -65,7 +65,7 @@ namespace draw2d_direct2d
 
       
 
-      ::e_status destroy() override;
+      void destroy() override;
 
 
    };

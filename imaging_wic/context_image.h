@@ -23,29 +23,29 @@ namespace imaging_wic
       ~context_image() override;
 
 
-      virtual ::e_status initialize(::object * pobject) override;
+      virtual void initialize(::object * pobject) override;
 
 
-      //virtual ::e_status _load_image(::context_image * pcontextimage, ::image * pimageParam, const ::payload & payloadFile, bool bSync, bool bCreateHelperMaps) override;
-      ::e_status _load_image(image* pimage, const ::payload& payloadFile, const ::image::load_options & loadoptions = ::image::load_options()) override;
+      //virtual void _load_image(::context_image * pcontextimage, ::image * pimageParam, const ::payload & payloadFile, bool bSync, bool bCreateHelperMaps) override;
+      void _load_image(image* pimage, const ::payload& payloadFile, const ::image::load_options & loadoptions = ::image::load_options()) override;
 
-      ::e_status _load_image(::image * pimage, __pointer(image_frame_array) & pframea, ::memory & memory) override;
-      ::e_status save_image(memory & memory, const ::image * pimage, const ::save_image * psaveimage) override;
-
-
-      //::e_status _load_icon(::draw2d::icon * picon, const ::payload & payloadFile);
+      void _load_image(::image * pimage, __pointer(image_frame_array) & pframea, ::memory & memory) override;
+      void save_image(memory & memory, const ::image * pimage, const ::save_image * psaveimage) override;
 
 
-      //virtual ::e_status _load_image(::image* pimage, const ::payload& payloadFile, bool bSync, bool bCreateHelperMaps);
+      //void _load_icon(::draw2d::icon * picon, const ::payload & payloadFile);
 
 
-      //virtual ::e_status _load_image(::image* pimage, __pointer(image_frame_array)& pframea, ::memory_pointer pmemory);
-      //virtual ::e_status save_image(memory& memory, const ::image* pimage, ::save_image* psaveimage);
+      //virtual void _load_image(::image* pimage, const ::payload& payloadFile, bool bSync, bool bCreateHelperMaps);
 
 
-      //virtual ::e_status load_cursor(::draw2d::cursor* pcursor, ::file::path path, bool bSync, bool bCache = true) override;
+      //virtual void _load_image(::image* pimage, __pointer(image_frame_array)& pframea, ::memory_pointer pmemory);
+      //virtual void save_image(memory& memory, const ::image* pimage, ::save_image* psaveimage);
 
-      //virtual ::e_status load_svg(::image* pimage, ::memory_pointer pmemory);
+
+      //virtual void load_cursor(::draw2d::cursor* pcursor, ::file::path path, bool bSync, bool bCache = true) override;
+
+      //virtual void load_svg(::image* pimage, ::memory_pointer pmemory);
 
 
 #ifdef _UWP

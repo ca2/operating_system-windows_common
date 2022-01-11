@@ -318,7 +318,7 @@ namespace music
 
       }
 
-      //::e_status     FillTypeCombo(__pointer(simple_combo_box)lpcombo)
+      //void     FillTypeCombo(__pointer(simple_combo_box)lpcombo)
       //{
       //   __UNREFERENCED_PARAMETER(lpcombo);
       //   /*   lpcombo->reset_content();
@@ -347,7 +347,7 @@ namespace music
       //   return ::success;
       //}
 
-      //::e_status     FillPitchCombo(__pointer(simple_combo_box)lpcombo)
+      //void     FillPitchCombo(__pointer(simple_combo_box)lpcombo)
       //{
       //   __UNREFERENCED_PARAMETER(lpcombo);
       //   /*    lpcombo->reset_content();

@@ -27,13 +27,13 @@ namespace apex
          ~node() override;
 
 
-         virtual ::e_status initialize(::object* pobject) override;
+         virtual void initialize(::object* pobject) override;
 
-         virtual ::e_status process_init();
+         virtual void process_init();
 
-         virtual ::e_status _001InitializeShellOpen() override;
+         virtual void _001InitializeShellOpen() override;
 
-         //virtual ::e_status shell_create_link(::file::path pathObj, ::file::path pathLnk, string strDesc, ::file::path pathIco, int iIcon);
+         //virtual void shell_create_link(::file::path pathObj, ::file::path pathLnk, string strDesc, ::file::path pathIco, int iIcon);
 
          virtual bool _os_calc_app_dark_mode();
 
@@ -43,19 +43,19 @@ namespace apex
 
          virtual void set_console_colors(::u32 dwScreenColors, ::u32 dwPopupColors, ::u32 dwWindowAlpha);
 
-         virtual ::e_status set_system_dark_mode1(bool bSet = true);
+         virtual void set_system_dark_mode1(bool bSet = true);
 
-         virtual ::e_status set_app_dark_mode1(bool bSet = true);
+         virtual void set_app_dark_mode1(bool bSet = true);
 
          virtual double get_time_zone();
 
-         virtual ::e_status open_folder(::file::path& pathFolder);
+         virtual void open_folder(::file::path& pathFolder);
 
-         virtual ::e_status register_dll(const ::file::path& pathDll);
+         virtual void register_dll(const ::file::path& pathDll);
 
-         virtual ::e_status system_main() override;
+         virtual void system_main() override;
 
-         ::e_status get_firefox_installation_info(string& strPathToExe, string& strInstallDirectory);
+         void get_firefox_installation_info(string& strPathToExe, string& strInstallDirectory);
 
          //virtual string veriwell_multimedia_music_midi_get_default_library_name() override;
 
@@ -74,7 +74,7 @@ namespace apex
          //virtual ::u32       get_temp_path(string& str);
          //virtual ::i32        reg_query_value(HKEY hkey, const ::string & pszSubKey, string& str);
          //virtual  HICON       extract_icon(HINSTANCE hInst, const ::string & pszExeFileName, ::u32 nIconIndex);
-         //virtual  ::e_status        delete_file(const ::string & pFileName);
+         //virtual  void        delete_file(const ::string & pFileName);
          // virtual  i32     get_menu_string(HMENU hMenu, ::u32 uDItem, string& str, ::u32 flags);
          //virtual  void        time_to_filetime(::matter* pobject, const ::datetime::time& time, LPFILETIME pFileTime);
 

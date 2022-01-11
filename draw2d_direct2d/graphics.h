@@ -74,7 +74,7 @@ namespace draw2d_direct2d
       virtual bool on_begin_draw() override;
 
       using ::draw2d::graphics::set;
-      virtual ::e_status set(::draw2d::bitmap* pbitmap) override;
+      virtual void set(::draw2d::bitmap* pbitmap) override;
 
 
       oswindow get_window_handle();
@@ -144,11 +144,11 @@ namespace draw2d_direct2d
   //                    int (CALLBACK* lpfn)(LPVOID, LPARAM), LPARAM lpData) override;
 
       //virtual ::draw2d::object* set_stock_object(int nIndex) override;
-      //virtual ::e_status set(::write_text::font * pfont) override;
-      //virtual ::e_status set(::draw2d::pen* pPen) override;
-      //virtual ::e_status set(::draw2d::brush* pBrush) override;
-      //virtual ::e_status set(::write_text::font* pFont) override;
-      //virtual ::e_status set(::draw2d::bitmap* pBitmap) override;
+      //virtual void set(::write_text::font * pfont) override;
+      //virtual void set(::draw2d::pen* pPen) override;
+      //virtual void set(::draw2d::brush* pBrush) override;
+      //virtual void set(::write_text::font* pFont) override;
+      //virtual void set(::draw2d::bitmap* pBitmap) override;
       //virtual i32 SelectObject(::draw2d::region* pRgn) override;       // special return for regions
       //::draw2d::object* SelectObject(::draw2d::object* pObject) override;
       // ::draw2d::object* provided so compiler doesn't use SelectObject(HGDIOBJ)
@@ -186,7 +186,7 @@ namespace draw2d_direct2d
       virtual bool _get(::draw2d::matrix & matrix) override;
       virtual bool _set(const ::draw2d::matrix & matrix) override;
 
-      virtual ::e_status clear_current_point() override;
+      virtual void clear_current_point() override;
 
       virtual bool draw_path(::draw2d::path * ppath) override;
       virtual bool fill_path(::draw2d::path * ppath) override;
@@ -254,14 +254,14 @@ namespace draw2d_direct2d
       virtual int get_clip_box(::rectangle_f64 * prectangle) override;
 
 
-      virtual ::e_status add_shapes(const shape_array& shapea);
-      virtual ::e_status reset_clip();
-      virtual ::e_status intersect_clip(const ::rectangle & rectangle);
-      //virtual ::e_status intersect_clip(const ::rectangle_f64& rectangle);
-      //virtual ::e_status intersect_clip(const ::oval& oval);
-      virtual ::e_status intersect_clip(const ::ellipse & ellipse);
-      //virtual ::e_status intersect_clip(const ::polygon_i32& polygon_i32);
-      virtual ::e_status intersect_clip(const ::polygon & polygon);
+      virtual void add_shapes(const shape_array& shapea);
+      virtual void reset_clip();
+      virtual void intersect_clip(const ::rectangle & rectangle);
+      //virtual void intersect_clip(const ::rectangle_f64& rectangle);
+      //virtual void intersect_clip(const ::oval& oval);
+      virtual void intersect_clip(const ::ellipse & ellipse);
+      //virtual void intersect_clip(const ::polygon_i32& polygon_i32);
+      virtual void intersect_clip(const ::polygon & polygon);
 
       //virtual bool PtVisible(double x, double y) override;
       //bool PtVisible(const ::point_f64 & point) override;
@@ -403,7 +403,7 @@ namespace draw2d_direct2d
       // Text Functions
       //virtual bool text_out(double x, double y, const ::string & lpszString, strsize nCount) override;
       //virtual bool text_out(double x, double y, const block & block) override;
-      virtual ::e_status TextOutRaw(double x, double y, const block & block) override;
+      virtual void TextOutRaw(double x, double y, const block & block) override;
       //virtual bool text_out(double x, double y, const ::string & str) override;
       //virtual bool ExtTextOut(double x, double y, ::u32 nOptions, const ::rectangle_f64 & rectangle, const ::string & lpszString, strsize nCount, LPINT lpDxWidths) override;
       //virtual bool ExtTextOut(double x, double y, ::u32 nOptions, const ::rectangle_f64 & rectangle, const ::string & str, LPINT lpDxWidths) override;
@@ -433,7 +433,7 @@ namespace draw2d_direct2d
       virtual ::u32 SetTextAlign(::u32 nFlags) override;
       //virtual int GetTextFace(count nCount, char * lpszFacename) override;
       //virtual int GetTextFace(string & rString) override;
-      virtual ::e_status get_text_metrics(::write_text::text_metric * lpMetrics) override;
+      virtual void get_text_metrics(::write_text::text_metric * lpMetrics) override;
       virtual bool get_output_text_metrics(::write_text::text_metric * lpMetrics) override;
       //virtual int SetTextJustification(int nBreakExtra, int nBreakCount) override;
       //virtual int GetTextCharacterExtra() override;
@@ -558,7 +558,7 @@ namespace draw2d_direct2d
       bool blur(bool bExpand, double dRadius, const ::rectangle_f64 & rectangle) override;
 
 
-      ::e_status destroy() override;
+      void destroy() override;
 
       //IDWriteTextFormat * get_os_font(::write_text::font * pfont);
       //ID2D1Brush * get_os_brush(::draw2d::brush * pbrush);

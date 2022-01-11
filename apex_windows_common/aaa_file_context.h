@@ -28,10 +28,10 @@ namespace windows
       virtual ~file_context();
 
 
-      virtual ::e_status initialize(::object * pobject) override;
+      virtual void initialize(::object * pobject) override;
 
 
-      virtual ::e_status init_system() override;
+      virtual void init_system() override;
 
 
       virtual bool get_status(const ::file::path & path, ::file::file_status & status);
@@ -59,7 +59,7 @@ namespace windows
 
       virtual bool get_last_write_time(FILETIME * pfiletime, const ::string & strFilename);
 
-      virtual ::e_status update_module_path() override;
+      virtual void update_module_path() override;
 
       virtual file_transport get_file(const ::payload & payloadFile, const ::file::e_open & nOpenFlags) override;
 

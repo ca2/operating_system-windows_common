@@ -31,7 +31,7 @@ namespace apex
       }
 
 
-      ::e_status node::initialize(::object* pobject)
+      void node::initialize(::object* pobject)
       {
 
          auto estatus = ::acme::windows_common::node::initialize(pobject);
@@ -187,7 +187,7 @@ namespace apex
 
 
 
-      ::e_status node::set_system_dark_mode1(bool bSet)
+      void node::set_system_dark_mode1(bool bSet)
       {
 
          //::windows::registry::key key(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", true);
@@ -208,7 +208,7 @@ namespace apex
       }
 
 
-      ::e_status node::set_app_dark_mode1(bool bSet)
+      void node::set_app_dark_mode1(bool bSet)
       {
 
          //::windows::registry::key key(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", true);
@@ -288,7 +288,7 @@ namespace apex
       }
 
 
-      ::e_status node::open_folder(::file::path& pathFolder)
+      void node::open_folder(::file::path& pathFolder)
       {
 
         
@@ -297,7 +297,7 @@ namespace apex
       }
 
 
-      ::e_status node::register_dll(const ::file::path& pathDll)
+      void node::register_dll(const ::file::path& pathDll)
       {
 
 
@@ -370,7 +370,7 @@ namespace apex
       }
 
 
-      ::e_status node::system_main()
+      void node::system_main()
       {
 
          auto estatus = m_psystem->m_papexsystem->m_papexnode->thread_initialize(m_psystem->m_papexsystem);
@@ -415,7 +415,7 @@ namespace apex
       }
 
 
-      ::e_status node::get_firefox_installation_info(string& strPathToExe, string& strInstallDirectory)
+      void node::get_firefox_installation_info(string& strPathToExe, string& strInstallDirectory)
       {
 
 #ifdef WINDOWS_DESKTOP
@@ -436,7 +436,7 @@ namespace apex
          //   key.get("Install Directory", strInstallDirectory);
 
          //}
-         //catch (const ::e_status& estatus)
+         //catch (const void& estatus)
          //{
 
          //   return estatus;
@@ -454,7 +454,7 @@ namespace apex
       }
 
 
-      ::e_status node::_001InitializeShellOpen()
+      void node::_001InitializeShellOpen()
       {
 
          //ASSERT(m_atomApp == nullptr && m_atomSystemTopic == nullptr); // do once
@@ -468,7 +468,7 @@ namespace apex
       }
 
 
-      ::e_status node::process_init()
+      void node::process_init()
       {
 
 

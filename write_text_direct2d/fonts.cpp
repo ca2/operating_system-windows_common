@@ -20,7 +20,7 @@ namespace write_text_direct2d
    }
 
 
-   ::e_status fonts::initialize(::object * pobject)
+   void fonts::initialize(::object * pobject)
    {
 
       auto estatus = ::write_text::fonts::initialize(pobject);

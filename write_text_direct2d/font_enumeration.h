@@ -16,7 +16,7 @@ namespace write_text_direct2d
       ~font_enumeration() override;
 
 
-      ::e_status on_enumerate_fonts() override;
+      void on_enumerate_fonts() override;
 
 
    };

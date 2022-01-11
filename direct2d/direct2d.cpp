@@ -93,7 +93,7 @@ namespace direct2d
    }
 
 
-   ::e_status direct2d::initialize(::object * pobject)
+   void direct2d::initialize(::object * pobject)
    {
 
       ::directx::defer_initialize(pobject);

@@ -75,7 +75,7 @@ namespace directx
       //virtual bool on_begin_draw() override;
 
       //using ::draw2d::graphics::set;
-      //virtual ::e_status set(::draw2d::bitmap* pbitmap) override;
+      //virtual void set(::draw2d::bitmap* pbitmap) override;
 
 
       //oswindow get_window_handle();
@@ -145,11 +145,11 @@ namespace directx
 //  //                    int (CALLBACK* lpfn)(LPVOID, LPARAM), LPARAM lpData) override;
 //
 //      //virtual ::draw2d::object* set_stock_object(int nIndex) override;
-//      //virtual ::e_status set(::write_text::font * pfont) override;
-//      //virtual ::e_status set(::draw2d::pen* pPen) override;
-//      //virtual ::e_status set(::draw2d::brush* pBrush) override;
-//      //virtual ::e_status set(::write_text::font* pFont) override;
-//      //virtual ::e_status set(::draw2d::bitmap* pBitmap) override;
+//      //virtual void set(::write_text::font * pfont) override;
+//      //virtual void set(::draw2d::pen* pPen) override;
+//      //virtual void set(::draw2d::brush* pBrush) override;
+//      //virtual void set(::write_text::font* pFont) override;
+//      //virtual void set(::draw2d::bitmap* pBitmap) override;
 //      //virtual i32 SelectObject(::draw2d::region* pRgn) override;       // special return for regions
 //      //::draw2d::object* SelectObject(::draw2d::object* pObject) override;
 //      // ::draw2d::object* provided so compiler doesn't use SelectObject(HGDIOBJ)
@@ -187,7 +187,7 @@ namespace directx
 //      virtual bool _get(::draw2d::matrix & matrix) override;
 //      virtual bool _set(const ::draw2d::matrix & matrix) override;
 //
-//      virtual ::e_status clear_current_point() override;
+//      virtual void clear_current_point() override;
 //
 //      virtual bool draw_path(::draw2d::path * ppath) override;
 //      virtual bool fill_path(::draw2d::path * ppath) override;
@@ -255,14 +255,14 @@ namespace directx
 //      virtual int get_clip_box(::rectangle_f64 * prectangle) override;
 //
 //
-//      virtual ::e_status add_shapes(const shape_array& shapea);
-//      virtual ::e_status reset_clip();
-//      virtual ::e_status intersect_clip(const ::rectangle_f64& rectangle);
-//      //virtual ::e_status intersect_clip(const ::rectangle_f64& rectangle);
-//      //virtual ::e_status intersect_clip(const ::ellipse& ellipse);
-//      virtual ::e_status intersect_clip(const ::ellipse& ellipse);
-//      //virtual ::e_status intersect_clip(const ::polygon_i32& polygon_i32);
-//      virtual ::e_status intersect_clip(const ::polygon_f64& polygon_i32);
+//      virtual void add_shapes(const shape_array& shapea);
+//      virtual void reset_clip();
+//      virtual void intersect_clip(const ::rectangle_f64& rectangle);
+//      //virtual void intersect_clip(const ::rectangle_f64& rectangle);
+//      //virtual void intersect_clip(const ::ellipse& ellipse);
+//      virtual void intersect_clip(const ::ellipse& ellipse);
+//      //virtual void intersect_clip(const ::polygon_i32& polygon_i32);
+//      virtual void intersect_clip(const ::polygon_f64& polygon_i32);
 //
 //      //virtual bool PtVisible(double x, double y) override;
 //      //bool PtVisible(const ::point_f64 & point) override;

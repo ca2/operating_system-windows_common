@@ -12,7 +12,7 @@ namespace imaging_wic
    bool windows_image_from_bitmap_source(::image * pimageFrame, IWICBitmapSource * pbitmapsource, IWICImagingFactory * pimagingfactory);
 
 
-   ::e_status context_image::_load_image(::image * pimageParam, const ::payload & payloadFile, const ::image::load_options & loadoptions)
+   void context_image::_load_image(::image * pimageParam, const ::payload & payloadFile, const ::image::load_options & loadoptions)
    {
 
       auto ploadimage = __new(::load_image(this));

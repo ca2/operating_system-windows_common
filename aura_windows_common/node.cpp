@@ -150,7 +150,7 @@ namespace aura
 
 
 
-      //::e_status node::set_system_dark_mode1(bool bSet)
+      //void node::set_system_dark_mode1(bool bSet)
       //{
 
       //   //::windows::registry::key key(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", true);
@@ -171,7 +171,7 @@ namespace aura
       //}
 
 
-      //::e_status node::set_app_dark_mode1(bool bSet)
+      //void node::set_app_dark_mode1(bool bSet)
       //{
 
       //   //::windows::registry::key key(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", true);
@@ -252,7 +252,7 @@ namespace aura
 
 
 
-      ::e_status node::system_main()
+      void node::system_main()
       {
 
          auto psystem = m_psystem;

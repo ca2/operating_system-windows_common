@@ -61,11 +61,11 @@ namespace windows
       virtual bool browse_folder(property_set & set) override;
       virtual bool browse_file_or_folder(property_set & set) override;
 
-      virtual ::e_status enable_service() override;
-      virtual ::e_status disable_service() override;
+      virtual void enable_service() override;
+      virtual void disable_service() override;
 
-      virtual ::e_status start_service() override;
-      virtual ::e_status stop_service() override;
+      virtual void start_service() override;
+      virtual void stop_service() override;
 
       virtual bool _getCredentialsForService(const string& strService, WCHAR* szUsername, WCHAR* szPassword);
 

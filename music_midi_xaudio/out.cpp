@@ -29,7 +29,7 @@ namespace music
          }
 
 
-         ::e_status     out::open()
+         void     out::open()
          {
 
             //MMRESULT estatus;
@@ -48,7 +48,7 @@ namespace music
 
          }
 
-         ::e_status     out::close()
+         void     out::close()
          {
 
       /*      if (m_hmidiout != nullptr)
@@ -62,7 +62,7 @@ namespace music
 
          }
 
-         ::e_status     out::send_short_message(::music::midi::e_message emessage, int iChannel, int iData1, int iData2)
+         void     out::send_short_message(::music::midi::e_message emessage, int iChannel, int iData1, int iData2)
          {
 
             // return midiOutShortMsg(m_hmidiout, MIDIMSG(((int)etype) >> 4, iChannel, iData1, iData2));

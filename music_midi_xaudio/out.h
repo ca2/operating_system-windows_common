@@ -25,10 +25,10 @@ namespace music
             ~out() override;
 
 
-            virtual ::e_status     open();
-            virtual ::e_status     close();
+            virtual void     open();
+            virtual void     close();
 
-            ::e_status     send_short_message(::music::midi::e_message emessage, int iChannel, int iData1, int iData2) override;
+            void     send_short_message(::music::midi::e_message emessage, int iChannel, int iData1, int iData2) override;
 
 
          };

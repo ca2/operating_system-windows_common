@@ -19,7 +19,7 @@ namespace draw2d_direct2d
 
       //void defer_update();
 
-      ::e_status destroy() override;
+      void destroy() override;
       bool create(::draw2d::graphics * pgraphics, i8 iCreate) override;
 
 

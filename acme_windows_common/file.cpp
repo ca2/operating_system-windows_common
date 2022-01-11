@@ -111,7 +111,7 @@ CLASS_DECL_ACME_WINDOWS_COMMON memsize hfile_read(hfile hfile, void* p, memsize 
 }
 
 
-CLASS_DECL_ACME_WINDOWS_COMMON ::e_status hfile_write(hfile hfile, const void* p, memsize s)
+CLASS_DECL_ACME_WINDOWS_COMMON void hfile_write(hfile hfile, const void* p, memsize s)
 {
 
    memsize dwWrittenTotal = 0;

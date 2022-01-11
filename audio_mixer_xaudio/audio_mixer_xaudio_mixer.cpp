@@ -44,10 +44,10 @@ namespace multimedia
       }
 
 
-      ::e_status     audio_mixer::set_new_device(u32 uiMixerId)
+      void     audio_mixer::set_new_device(u32 uiMixerId)
       {
 
-         ::e_status                mmrc;
+         void                mmrc;
 
          if(MMSYSERR_NOERROR != (mmrc = m_pdevice->open(uiMixerId, (u32) m_window.get_handle(), 0,  CALLBACK_WINDOW)))
          {

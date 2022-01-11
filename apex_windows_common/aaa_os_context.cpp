@@ -21,7 +21,7 @@
 #include "acme/filesystem/filesystem/acme_path.h"
 
 
-::e_status hresult_to_estatus(HRESULT hresult)
+void hresult_to_estatus(HRESULT hresult)
 {
 
    if (SUCCEEDED(hresult))
@@ -340,7 +340,7 @@ namespace windows
          }
 
       }
-      catch (const ::e_status & estatus)
+      catch (const void & estatus)
       {
 
          return estatus;
@@ -365,7 +365,7 @@ namespace windows
          key.get("AutoConfigURL", strUrl);
 
       }
-      catch (const ::e_status & estatus)
+      catch (const void & estatus)
       {
 
          return estatus;
@@ -626,7 +626,7 @@ namespace windows
    bool os_context::file_association_set_shell_open_command(const ::string & pszExtension, const ::string & pszExtensionNamingClass,  const char * pszCommand, const ::string & pszParam)
    {
 
-      ::e_status estatus = ::success;
+      void estatus = ::success;
 
       try
       {
@@ -1240,7 +1240,7 @@ retry:
    }
 
 
-   ::e_status os_context::enable_service()
+   void os_context::enable_service()
    {
 
       string strServiceName = calc_service_name();
@@ -1314,7 +1314,7 @@ retry:
    }
 
 
-   ::e_status os_context::disable_service()
+   void os_context::disable_service()
    {
 
       string strServiceName = calc_service_name();
@@ -1331,7 +1331,7 @@ retry:
    }
 
 
-   ::e_status os_context::start_service()
+   void os_context::start_service()
    {
 
       string strServiceName = calc_service_name();
@@ -1462,7 +1462,7 @@ retry:
 
    }
 
-   ::e_status  os_context::stop_service()
+   void  os_context::stop_service()
    {
 
       string strServiceName = calc_service_name();
@@ -2511,7 +2511,7 @@ repeat:
       strTargetProgId.replace("\\", "_");
       strTargetProgId.replace("/", "_");
 
-      ::e_status estatus = ::success;
+      void estatus = ::success;
 
       {
 
@@ -3647,7 +3647,7 @@ namespace windows
    {
 
 
-      ::e_status node::shell_create_link(::file::path pathObj, ::file::path pathLnk, string strDesc, ::file::path pathIco, int iIcon)
+      void node::shell_create_link(::file::path pathObj, ::file::path pathLnk, string strDesc, ::file::path pathIco, int iIcon)
       {
 
          wstring wstrObj(pathObj);

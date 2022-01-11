@@ -32,7 +32,7 @@ namespace directx
       ~directx() override;
 
 
-      ::e_status initialize(::object * pobject) override;
+      void initialize(::object * pobject) override;
 
 
       ID3D11Device * draw_get_d3d11_device();

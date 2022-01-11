@@ -13,7 +13,7 @@ namespace music
       {
 
 
-         //::e_status     MMRESULT mmr
+         //void     MMRESULT mmr
          //{
 
          //   if(mmr == MMSYSERR_NOERROR)

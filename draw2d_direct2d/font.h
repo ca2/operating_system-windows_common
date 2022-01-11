@@ -24,7 +24,7 @@ namespace draw2d_direct2d
       // virtual IDWriteTextFormat* get_os_data(::draw2d::graphics * pgraphics, index i) const;
       //virtual void * _get_os_data(::draw2d::graphics * pgraphics, index i) const override;
 
-      ::e_status destroy() override;
+      void destroy() override;
       bool create(::draw2d::graphics * pgraphics, i8 iCreate) override;
 
 

@@ -35,7 +35,7 @@ namespace acme
          ~node() override;
 
 
-         ::e_status initialize_matter(::matter* pmatter) override;
+         void initialize_matter(::matter* pmatter) override;
 
          //virtual ::string dir_root() override;
 
@@ -53,10 +53,10 @@ namespace acme
 
          //virtual ::file::path memcnts_base_path();
 
-         ::e_status datetime_to_filetime(filetime_t* pFileTime, const ::datetime::time& time) override;
+         void datetime_to_filetime(filetime_t* pFileTime, const ::datetime::time& time) override;
 
 
-         virtual ::e_status last_error_to_status(DWORD dwLastError);
+         virtual void last_error_to_status(DWORD dwLastError);
 
 
          string audio_get_default_library_name() override;

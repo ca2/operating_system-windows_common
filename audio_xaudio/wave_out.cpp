@@ -33,7 +33,7 @@ namespace multimedia
       }
 
 
-      ::e_status out::init_thread()
+      void out::init_thread()
       {
 
          if (!::wave::out::init_thread())
@@ -50,7 +50,7 @@ namespace multimedia
       }
 
 
-      ::e_status     out::out_open_ex(thread * pthreadCallback, u32 uiSamplesPerSec, u32 uiChannelCount, u32 uiBitsPerSample, ::wave::e_purpose epurpose)
+      void     out::out_open_ex(thread * pthreadCallback, u32 uiSamplesPerSec, u32 uiChannelCount, u32 uiBitsPerSample, ::wave::e_purpose epurpose)
       {
 
          single_lock sLock(mutex(), true);
@@ -61,7 +61,7 @@ namespace multimedia
          m_iBuffer = 0;
 
          m_pthreadCallback = pthreadCallback;
-         ::e_status     estatus;
+         void     estatus;
          ASSERT(m_pxaudio.is_null());
          ASSERT(m_pvoice == nullptr);
          ASSERT(m_psourcevoice == nullptr);
@@ -178,7 +178,7 @@ namespace multimedia
 
 
 
-      ::e_status     out::out_close()
+      void     out::out_close()
       {
 
          single_lock sLock(mutex(), true);
@@ -191,7 +191,7 @@ namespace multimedia
          if(m_estate != e_state_opened)
             return ::success;
 
-         ::e_status     estatus;
+         void     estatus;
 
 //         i32 i, iSize;
          //i32 iSize;
@@ -297,7 +297,7 @@ namespace multimedia
 
          ::wave::buffer::item * pbuffer = pwbuffer->get_buffer(iBuffer);
 
-         ::e_status     estatus;
+         void     estatus;
 
          XAUDIO2_BUFFER b;
 
@@ -348,7 +348,7 @@ namespace multimedia
       }
 
 
-      ::e_status     out::out_stop()
+      void     out::out_stop()
       {
 
          single_lock sLock(mutex(), true);
@@ -379,7 +379,7 @@ namespace multimedia
       }
 
 
-      ::e_status     out::out_pause()
+      void     out::out_pause()
       {
 
          single_lock sLock(mutex(), true);
@@ -409,7 +409,7 @@ namespace multimedia
       }
 
 
-      ::e_status     out::out_start(const ::duration & position)
+      void     out::out_start(const ::duration & position)
       {
 
          synchronous_lock synchronouslock(mutex());
@@ -448,7 +448,7 @@ namespace multimedia
       }
 
 
-      ::e_status     out::out_restart()
+      void     out::out_restart()
       {
 
          single_lock sLock(mutex(), true);
@@ -484,7 +484,7 @@ namespace multimedia
 
          single_lock sLock(mutex(), true);
 
-//         ::e_status                    estatus;
+//         void                    estatus;
 
          XAUDIO2_VOICE_STATE s;
 
@@ -521,7 +521,7 @@ namespace multimedia
 //
 //         single_lock sLock(mutex(), true);
 //
-////         ::e_status                    estatus;
+////         void                    estatus;
 //
 //         XAUDIO2_VOICE_STATE s;
 //

@@ -20,7 +20,7 @@ namespace windows_common
    }
 
 
-   ::e_status acme_dir::_create_directory(const char * path)
+   void acme_dir::_create_directory(const char * path)
    {
 
       wstring wstr;

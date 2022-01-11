@@ -63,7 +63,7 @@ namespace draw2d_direct2d
    }
 
 
-   ::e_status pen::destroy()
+   void pen::destroy()
    {
 
       m_pbrush = nullptr;

@@ -46,7 +46,7 @@ namespace draw2d_direct2d
    }
 
 
-   ::e_status image::create_ex(const ::size_i32 & size, ::color32_t * pcolorref, int iScan, ::enum_flag eflagCreate, int iGoodStride, bool bPreserve)
+   void image::create_ex(const ::size_i32 & size, ::color32_t * pcolorref, int iScan, ::enum_flag eflagCreate, int iGoodStride, bool bPreserve)
    {
 
       ::draw2d::lock draw2dlock;
@@ -149,7 +149,7 @@ namespace draw2d_direct2d
    }
 
 
-   ::e_status image::create(const ::size_i32 & size, ::enum_flag eflagCreate, int iGoodStride, bool bPreserve)
+   void image::create(const ::size_i32 & size, ::enum_flag eflagCreate, int iGoodStride, bool bPreserve)
    {
 
       auto estatus = create_ex(size, nullptr, 0, eflagCreate, iGoodStride, bPreserve);
@@ -166,7 +166,7 @@ namespace draw2d_direct2d
    }
 
 
-   ::e_status image::initialize(const ::size_i32 & size, ::color32_t * pcolorref, int iScan, ::enum_flag eflagCreate)
+   void image::initialize(const ::size_i32 & size, ::color32_t * pcolorref, int iScan, ::enum_flag eflagCreate)
    {
 
       auto estatus = create_ex(size, pcolorref, iScan, eflagCreate);
@@ -254,7 +254,7 @@ namespace draw2d_direct2d
    }
 
 
-   ::e_status image::destroy()
+   void image::destroy()
    {
 
       ::draw2d::lock draw2dlock;
@@ -286,7 +286,7 @@ namespace draw2d_direct2d
 
 
 
-   ::e_status image::SetIconMask(::draw2d::icon * picon, int cx, int cy)
+   void image::SetIconMask(::draw2d::icon * picon, int cx, int cy)
    {
 
       if (cx <= 0 || cy <= 0)

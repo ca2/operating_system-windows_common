@@ -148,7 +148,7 @@ namespace music
             void player::CloseFile()
             {
 
-               ::e_status                estatus;
+               void                estatus;
 
                if(::success != (estatus = get_sequence()->CloseFile()) && estatus != error_unsupported_function)
                {
@@ -269,7 +269,7 @@ namespace music
             void player::SaveFile(const ::string & lpszPathName)
             {
 
-               ::e_status                estatus;
+               void                estatus;
 
                if((estatus = get_sequence()->SaveFile(lpszPathName)) != ::success)
                {
@@ -308,7 +308,7 @@ namespace music
             }
 
 
-            ::e_status     player::Initialize(thread * pthread)
+            void     player::Initialize(thread * pthread)
             {
                __UNREFERENCED_PARAMETER(pthread);
                return ::success;
@@ -319,7 +319,7 @@ namespace music
             //    m_pView = pview;
             //}
 
-            ::e_status     player::SetInterface(player_interface * pinterface)
+            void     player::SetInterface(player_interface * pinterface)
             {
                m_pinterface = pinterface;
                get_sequence()->m_pthread   = m_psequencethread;
@@ -488,7 +488,7 @@ namespace music
             void player::SendReset()
             {
                HMIDIOUT hmidiout = nullptr;
-               ::e_status     estatus;
+               void     estatus;
                u32 uDeviceID = 0;
                estatus = midiOutOpen(&hmidiout, uDeviceID,  0, 0, CALLBACK_NULL);
                if(estatus != MMSYSERR_NOERROR)

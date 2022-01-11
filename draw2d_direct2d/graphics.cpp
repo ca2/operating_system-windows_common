@@ -632,7 +632,7 @@ namespace draw2d_direct2d
    }
 
 
-   ::e_status graphics::set(::draw2d::bitmap* pbitmapParam)
+   void graphics::set(::draw2d::bitmap* pbitmapParam)
    {
 
       ::draw2d::lock draw2dlock;
@@ -2249,7 +2249,7 @@ namespace draw2d_direct2d
    //}
 
 
-   ::e_status graphics::get_text_metrics(::write_text::text_metric * lpMetrics)
+   void graphics::get_text_metrics(::write_text::text_metric * lpMetrics)
    {
 
       if (m_pfont.is_null())
@@ -4004,7 +4004,7 @@ namespace draw2d_direct2d
    }
 
    
-   ::e_status graphics::reset_clip()
+   void graphics::reset_clip()
    {
 
       ::draw2d::lock draw2dlock;
@@ -4047,7 +4047,7 @@ namespace draw2d_direct2d
    }
 
 
-   ::e_status graphics::add_shapes(const shape_array& shapea)
+   void graphics::add_shapes(const shape_array& shapea)
    {
 
       for (int i = 0; i < shapea.get_count(); i++)
@@ -4095,7 +4095,7 @@ namespace draw2d_direct2d
    }
 
 
-   //::e_status graphics::intersect_clip(const ::rectangle_f64 & rectangle)
+   //void graphics::intersect_clip(const ::rectangle_f64 & rectangle)
    //{
 
    //   ::draw2d::device_lock devicelock(this);
@@ -4131,7 +4131,7 @@ namespace draw2d_direct2d
    //}
 
 
-   ::e_status graphics::intersect_clip(const ::rectangle_f64 & rectangle)
+   void graphics::intersect_clip(const ::rectangle_f64 & rectangle)
    {
 
       ::draw2d::lock draw2dlock;
@@ -4168,7 +4168,7 @@ namespace draw2d_direct2d
 
 
 
-   //::e_status graphics::intersect_clip(const ::oval& oval)
+   //void graphics::intersect_clip(const ::oval& oval)
    //{
 
    //   ::draw2d::device_lock devicelock(this);
@@ -4199,7 +4199,7 @@ namespace draw2d_direct2d
    //}
 
 
-   ::e_status graphics::intersect_clip(const ::ellipse & ellipse)
+   void graphics::intersect_clip(const ::ellipse & ellipse)
    {
 
       ::draw2d::lock draw2dlock;
@@ -4232,7 +4232,7 @@ namespace draw2d_direct2d
    }
 
 
-   //::e_status graphics::intersect_clip(const ::polygon_i32& polygon_i32)
+   //void graphics::intersect_clip(const ::polygon_i32& polygon_i32)
    //{
 
    //   ::draw2d::device_lock devicelock(this);
@@ -4263,7 +4263,7 @@ namespace draw2d_direct2d
    //}
 
 
-   ::e_status graphics::intersect_clip(const ::polygon_f64& polygon_i32)
+   void graphics::intersect_clip(const ::polygon_f64& polygon_i32)
    {
 
       ::draw2d::lock draw2dlock;
@@ -5189,7 +5189,7 @@ namespace draw2d_direct2d
    //}
 
 
-   ::e_status graphics::TextOutRaw(double x, double y, const block & block)
+   void graphics::TextOutRaw(double x, double y, const block & block)
    {
 
       if (block.is_empty())
@@ -5636,7 +5636,7 @@ namespace draw2d_direct2d
    }
 
 
-   ::e_status graphics::destroy()
+   void graphics::destroy()
    {
 
       ::draw2d::lock draw2dlock;
@@ -5667,7 +5667,7 @@ namespace draw2d_direct2d
    }
 
 
-   ::e_status graphics::clear_current_point()
+   void graphics::clear_current_point()
    {
 
       return ::success;

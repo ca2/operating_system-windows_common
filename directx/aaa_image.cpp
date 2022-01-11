@@ -50,7 +50,7 @@ namespace draw2d_directx
    }
 
 
-   ::e_status image::create(const ::size_i32 & size, ::eobject eobjectCreate, int iGoodStride, bool bPreserve)
+   void image::create(const ::size_i32 & size, ::eobject eobjectCreate, int iGoodStride, bool bPreserve)
    {
 
       if (m_pbitmap.is_set() && size == this->size())
@@ -273,7 +273,7 @@ namespace draw2d_directx
    //}
 
 
-   ::e_status image::SetIconMask(::draw2d::icon * picon, int cx, int cy)
+   void image::SetIconMask(::draw2d::icon * picon, int cx, int cy)
    {
 
       if (cx <= 0 || cy <= 0)

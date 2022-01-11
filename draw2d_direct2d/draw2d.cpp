@@ -21,7 +21,7 @@ namespace draw2d_direct2d
    }
 
 
-   ::e_status draw2d::initialize(::object * pobject)
+   void draw2d::initialize(::object * pobject)
    {
 
       auto estatus = ::draw2d::draw2d::initialize(pobject);
@@ -57,7 +57,7 @@ namespace draw2d_direct2d
    }
 
 
-   ::e_status draw2d::lock_device()
+   void draw2d::lock_device()
    {
 
       direct2d::direct2d()->m_d2dMultithread->Enter();
@@ -67,7 +67,7 @@ namespace draw2d_direct2d
    }
 
 
-   ::e_status draw2d::unlock_device()
+   void draw2d::unlock_device()
    {
 
       direct2d::direct2d()->m_d2dMultithread->Leave();

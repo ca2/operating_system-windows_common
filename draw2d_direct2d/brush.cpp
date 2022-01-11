@@ -250,7 +250,7 @@ namespace draw2d_direct2d
    }
 
 
-   ::e_status brush::destroy_os_data()
+   void brush::destroy_os_data()
    {
 
       if(m_psolidbrush != nullptr)
