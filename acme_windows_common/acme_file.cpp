@@ -561,7 +561,7 @@ namespace windows_common
 
       }
 
-      ::e_status3 estatus = success;
+      ::e_status estatus = success;
 
       DWORD dwWritten = 0;
 

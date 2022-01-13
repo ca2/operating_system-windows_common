@@ -477,7 +477,7 @@ namespace acme
       //         key.get("Install Directory", strInstallDirectory);
       //
       //      }
-      //      catch (const ::e_status3 & estatus)
+      //      catch (const ::e_status & estatus)
       //      {
       //
       //         return estatus;
@@ -698,7 +698,7 @@ namespace acme
       }
 
 
-      ::e_status3 node::last_error_to_status(DWORD dwLastError)
+      ::e_status node::last_error_to_status(DWORD dwLastError)
       {
 
          if (dwLastError == 0)

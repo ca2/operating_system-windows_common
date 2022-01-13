@@ -56,7 +56,7 @@ namespace acme
          void datetime_to_filetime(filetime_t* pFileTime, const ::datetime::time& time) override;
 
 
-         virtual ::e_status3 last_error_to_status(DWORD dwLastError);
+         virtual ::e_status last_error_to_status(DWORD dwLastError);
 
 
          string audio_get_default_library_name() override;

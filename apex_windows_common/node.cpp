@@ -444,7 +444,7 @@ namespace apex
          //   key.get("Install Directory", strInstallDirectory);
 
          //}
-         //catch (const ::e_status3 & estatus)
+         //catch (const ::e_status & estatus)
          //{
 
          //   return estatus;
