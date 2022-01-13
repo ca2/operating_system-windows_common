@@ -126,14 +126,15 @@ CLASS_DECL_ACME_WINDOWS_COMMON void hfile_write(hfile hfile, const void* p, mems
       if (!WriteFile(hfile, p, iWrite, &dwWritten, nullptr))
       {
 
-         return ::error_failed;
+         //return ::error_failed;
+         throw_status(::error_failed);
 
       }
 
       if (dwWritten != iWrite)
       {
 
-         return ::error_failed;
+         throw_status(::error_failed);
 
       }
 
@@ -141,7 +142,7 @@ CLASS_DECL_ACME_WINDOWS_COMMON void hfile_write(hfile hfile, const void* p, mems
 
    }
 
-   return ::success;
+   //return ::success;
 
 }
 

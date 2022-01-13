@@ -75,11 +75,11 @@ namespace windows_common
 
          TRACELASTERROR();
 
-         return false;
+         throw_status(::error_failed);
 
       }
 
-      return true;
+      //return true;
 
    }
 
@@ -89,7 +89,9 @@ namespace windows_common
       if (exists(path))
       {
 
-         return ::success;
+         //return ::success;
+
+         return;
 
       }
       
@@ -100,13 +102,13 @@ namespace windows_common
       if (fd < 0) // Couldn't open that path.
       {
          
-         return error_io;
+         throw_status(::error_io);
 
       }
 
       ::close(fd);
 
-      return ::success;
+      //return ::success;
 
    }
 
@@ -121,25 +123,31 @@ namespace windows_common
       if (attributes == INVALID_FILE_ATTRIBUTES)
       {
 
-         return ::error_failed;
+         //return ::error_failed;
+
+         throw_status(::error_failed);
 
       }
 
       if (!(attributes & FILE_ATTRIBUTE_READONLY))
       {
 
-         return ::success_none;
+         //return ::success_none;
+
+         return;
 
       }
 
       if (!::SetFileAttributesW(wstrPath, attributes & ~FILE_ATTRIBUTE_READONLY))
       {
 
-         return ::error_failed;
+         //return ::error_failed;
+
+         throw_status(::error_failed);
 
       }
 
-      return ::success;
+      //return ::success;
 
    }
 
@@ -154,25 +162,31 @@ namespace windows_common
       if (attributes == INVALID_FILE_ATTRIBUTES)
       {
 
-         return ::error_failed;
+         //return ::error_failed;
+
+         throw_status(::error_failed);
 
       }
 
       if (attributes == FILE_ATTRIBUTE_NORMAL)
       {
 
-         return ::success_none;
+         //return ::success_none;
+
+         throw_status(::error_failed);
 
       }
 
       if (!::SetFileAttributesW(wstrPath, FILE_ATTRIBUTE_NORMAL))
       {
 
-         return ::error_failed;
+         //return ::error_failed;
+
+         throw_status(::error_failed);
 
       }
 
-      return ::success;
+      //return ::success;
 
    }
 
@@ -193,7 +207,7 @@ namespace windows_common
       if (fd < 0) // Couldn't open that path.
       {
 
-         return error_io;
+         throw_status(::error_io);
 
       }
 
@@ -212,10 +226,11 @@ namespace windows_common
       if (rc)
       {
 
-         return error_io;
+         throw_status(::error_io);
+
       }
 
-      return ::success;
+      //return ::success;
 
    }
 
@@ -223,14 +238,14 @@ namespace windows_common
    void acme_file::put_contents(const char * path, const char * contents, memsize len)
    {
 
-      auto estatus = m_pacmedir->create(file_path_folder(path));
+      /*auto estatus =*/ m_pacmedir->create(file_path_folder(path));
 
-      if (!estatus)
-      {
+      //if (!estatus)
+      //{
 
-         return estatus;
+      //   return estatus;
 
-      }
+      //}
 
       wstring wstrPath(path);
 
@@ -239,7 +254,7 @@ namespace windows_common
       if (!pfile)
       {
 
-         return pfile;
+         throw_status(::error_io);
 
       }
 
@@ -250,31 +265,12 @@ namespace windows_common
 
       }
 
-      try
-      {
-
-         pfile->write(contents, len);
-
-      }
-      catch (const ::exception & e)
-      {
-
-         return e.m_estatus;
-
-      }
-      catch (...)
-      {
-         
-         return error_exception;
-
-      }
-
-      return success;
+      pfile->write(contents, len);
 
    }
 
 
-   holding_status < filesize > acme_file::get_size(const char * path)
+   filesize acme_file::get_size(const char * path)
    {
 
 #ifdef WINDOWS_DESKTOP
@@ -427,7 +423,7 @@ namespace windows_common
    //}
 
 
-   status < memory > acme_file::as_memory(const char* path, strsize iReadAtMostByteCount)
+   memory acme_file::as_memory(const char* path, strsize iReadAtMostByteCount)
    {
 
       FILE* pfile = _wfsopen(wstring(path), L"r", _SH_DENYNO);
@@ -439,7 +435,7 @@ namespace windows_common
 
          auto estatus = errno_to_status(iErrNo);
 
-         return estatus;
+         throw_status(estatus);
 
       }
 
@@ -561,11 +557,11 @@ namespace windows_common
 
          auto estatus = last_error_to_status(dwLastError);
 
-         return estatus;
+         throw_status(::error_io);
 
       }
 
-      void estatus = success;
+      ::e_status3 estatus = success;
 
       DWORD dwWritten = 0;
 
@@ -587,7 +583,7 @@ namespace windows_common
 
       ::CloseHandle(h);
 
-      return estatus;
+      //return estatus;
 
    }
 

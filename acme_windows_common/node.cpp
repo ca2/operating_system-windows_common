@@ -29,16 +29,17 @@ namespace acme
       void node::initialize_matter(::matter* pmatter)
       {
 
-         auto estatus = ::matter::initialize_matter(pmatter);
+         /*auto estatus =*/
+         ::matter::initialize_matter(pmatter);
 
-         if (!estatus)
-         {
+         //if (!estatus)
+         //{
 
-            return estatus;
+         //   return estatus;
 
-         }
+         //}
 
-         return estatus;
+         //return estatus;
 
       }
 
@@ -476,7 +477,7 @@ namespace acme
       //         key.get("Install Directory", strInstallDirectory);
       //
       //      }
-      //      catch (const void& estatus)
+      //      catch (const ::e_status3 & estatus)
       //      {
       //
       //         return estatus;
@@ -674,7 +675,9 @@ namespace acme
 
             DWORD dwLastError = ::GetLastError();
 
-            return last_error_to_status(dwLastError);
+            auto estatus= last_error_to_status(dwLastError);
+
+            throw_status(estatus);
 
          }
 
@@ -684,16 +687,18 @@ namespace acme
 
             DWORD dwLastError = ::GetLastError();
 
-            return last_error_to_status(dwLastError);
+            auto estatus = last_error_to_status(dwLastError);
+
+            throw_status(estatus);
 
          }
 
-         return ::success;
+         //return ::success;
 
       }
 
 
-      void node::last_error_to_status(DWORD dwLastError)
+      ::e_status3 node::last_error_to_status(DWORD dwLastError)
       {
 
          if (dwLastError == 0)
@@ -701,14 +706,15 @@ namespace acme
 
             return ::success;
 
+            //return;
+
          }
          else
          {
 
-            return error_failed;
+            return ::error_failed;
 
          }
-
 
       }
 

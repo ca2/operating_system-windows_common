@@ -61,7 +61,7 @@ namespace windows
 
       virtual void update_module_path() override;
 
-      virtual file_transport get_file(const ::payload & payloadFile, const ::file::e_open & nOpenFlags) override;
+      virtual file_pointer get_file(const ::payload & payloadFile, const ::file::e_open & nOpenFlags) override;
 
 
 

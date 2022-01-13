@@ -34,14 +34,14 @@ namespace windows_common
 
       using ::acme_file::get_size;
       
-      holding_status < filesize > get_size(const char * path) override;
+      filesize get_size(const char * path) override;
       
       //int_bool file_is_equal_path_dup(const char * psz1, const char * psz2)
 
       //string as_string(const char * path, strsize iReadAtMostByteCount) override;
       //memsize as_memory(const char * path, void * p, memsize s) override;
       //bool as_memory(memory_base & memory, const char * path, memsize iReadAtMostByteCount) override;
-      status < memory > as_memory(const char* path, strsize iReadAtMostByteCount) override;
+      memory as_memory(const char* path, strsize iReadAtMostByteCount) override;
       //void delete_file(const char * pszFileName) override;
 
       void put_block(const char* path, const block& block) override;

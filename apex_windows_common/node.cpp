@@ -34,14 +34,16 @@ namespace apex
       void node::initialize(::object* pobject)
       {
 
-         auto estatus = ::acme::windows_common::node::initialize(pobject);
+         //auto estatus = ::acme::windows_common::node::initialize(pobject);
 
-         if (!estatus)
-         {
+         ::acme::windows_common::node::initialize(pobject);
 
-            return estatus;
+         //if (!estatus)
+         //{
 
-         }
+         //   return estatus;
+
+         //}
 
          //if (!__node_apex_pre_init())
          //{
@@ -57,7 +59,7 @@ namespace apex
 
          //}
 
-         return estatus;
+         //return estatus;
 
       }
 
@@ -203,7 +205,7 @@ namespace apex
          //}
 
          //key._set("SystemUsesLightTheme", dwSystemUseLightTheme);
-         return ::success;
+         //return ::success;
 
       }
 
@@ -225,7 +227,7 @@ namespace apex
 
          //key._set("AppsUseLightTheme", dwAppsUseLightTheme);
 
-         return ::success;
+         //return ::success;
 
       }
 
@@ -292,7 +294,7 @@ namespace apex
       {
 
         
-         return ::error_failed;
+         //return ::error_failed;
 
       }
 
@@ -341,12 +343,13 @@ namespace apex
 
          set["privileged"] = true;
 
-         if (!call_sync(path, strParam, path.folder(), ::e_display_none, 3_minute, set))
-         {
+         //if (!call_sync(path, strParam, path.folder(), ::e_display_none, 3_minute, set))
+         call_sync(path, strParam, path.folder(), ::e_display_none, 3_minute, set);
+         //{
 
-            return false;
+         //   return false;
 
-         }
+         //}
 
          //if (CreateProcessW(wstrPath, wstrParam, nullptr, nullptr, false, 0, nullptr, wstrSystem, &si, &pi))
          //{
@@ -365,7 +368,7 @@ namespace apex
 
          //CloseHandle(pi.hthread);
 
-         return true;
+         //return true;
 
       }
 
@@ -373,43 +376,48 @@ namespace apex
       void node::system_main()
       {
 
-         auto estatus = m_psystem->m_papexsystem->m_papexnode->thread_initialize(m_psystem->m_papexsystem);
+         //auto estatus = 
+         m_psystem->m_papexsystem->m_papexnode->thread_initialize(m_psystem->m_papexsystem);
 
-         if (!estatus)
-         {
+         //if (!estatus)
+         //{
 
-            return estatus;
+         //   return estatus;
 
-         }
+         //}
 
-         estatus = m_psystem->on_start_system();
+         //estatus = 
+         m_psystem->on_start_system();
 
-         if (!estatus)
-         {
+         //if (!estatus)
+         //{
 
-            return estatus;
+         //   return estatus;
 
-         }
+         //}
 
-         estatus = m_psystem->main();
+         //estatus = 
+         m_psystem->main();
 
-         if (!estatus)
-         {
+         //if (!estatus)
+         //{
 
-            return estatus;
+         //   return estatus;
 
-         }
+         //}
 
-         estatus = m_psystem->inline_term();
+         //estatus = 
+         
+         m_psystem->inline_term();
 
-         if (!estatus)
-         {
+         //if (!estatus)
+         //{
 
-            return estatus;
+         //   return estatus;
 
-         }
+         //}
 
-         return estatus;
+         //return estatus;
 
 
       }
@@ -436,14 +444,14 @@ namespace apex
          //   key.get("Install Directory", strInstallDirectory);
 
          //}
-         //catch (const void& estatus)
+         //catch (const ::e_status3 & estatus)
          //{
 
          //   return estatus;
 
          //}
 
-         return ::success;
+         //return ::success;
 
 #else
 
@@ -463,7 +471,7 @@ namespace apex
 
          //m_atomSystemTopic    = ::GlobalAddAtomW(L"system");
 
-         return ::success;
+         //return ::success;
 
       }
 
@@ -474,7 +482,7 @@ namespace apex
 
 
          defer_initialize_winsock();
-         return success;
+         //return success;
 
       }
 

@@ -20,7 +20,7 @@ namespace windows_common
    }
 
 
-   void acme_dir::_create_directory(const char * path)
+   void acme_dir::__create(const char * path)
    {
 
       wstring wstr;
@@ -45,7 +45,9 @@ namespace windows_common
 
          auto estatus = last_error_to_status(dwLastError);
 
-         return false;
+         throw_status(estatus);
+
+         //return false;
 
       }
 
@@ -64,7 +66,7 @@ namespace windows_common
       //
       //#endif
 
-      return true;
+      //return true;
 
    }
 
