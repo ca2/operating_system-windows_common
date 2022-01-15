@@ -17,14 +17,16 @@ namespace imaging_wic
 
       auto ploadimage = __new(::load_image(this));
 
-      auto estatus = ploadimage->initialize(this);
+      //auto estatus = 
+      
+      ploadimage->initialize(this);
 
-      if (!estatus)
+      /*if (!estatus)
       {
 
          return estatus;
 
-      }
+      }*/
 
       ploadimage->m_pimage = pimageParam;
 
@@ -38,7 +40,7 @@ namespace imaging_wic
 
       m_pmanagerImageLoad->handle(ploadimage, loadoptions.sync);
 
-      return ploadimage->m_estatus;
+      //return ploadimage->m_estatus;
 
    }
 

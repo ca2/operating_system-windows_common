@@ -52,14 +52,16 @@ namespace imaging_wic
    void context_image::initialize(::object * pobject)
    {
 
-      auto estatus = ::context_image::initialize(pobject);
+      //auto estatus = 
+      
+      ::context_image::initialize(pobject);
 
-      if (!estatus)
-      {
+      //if (!estatus)
+      //{
 
-         return estatus;
+      //   return estatus;
 
-      }
+      //}
 
 
 #ifdef _UWP
@@ -75,18 +77,20 @@ namespace imaging_wic
       if (!m_pmanagerImageLoad)
       {
 
-         return ::error_failed;
+         throw_status(error_null_pointer);
 
       }
 
-      estatus = m_pmanagerImageLoad->initialize_handler_manager(this, "imaging_load_image", true);
+      //estatus = 
+      
+      m_pmanagerImageLoad->initialize_handler_manager(this, "imaging_load_image", true);
 
-      if (!estatus)
-      {
+      //if (!estatus)
+      //{
 
-         return estatus;
+      //   return estatus;
 
-      }
+      //}
 
 #ifdef WINDOWS
 
@@ -94,7 +98,7 @@ namespace imaging_wic
 
 #endif
 
-      return estatus;
+      //return estatus;
 
    }
 

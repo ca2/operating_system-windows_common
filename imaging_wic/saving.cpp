@@ -17,7 +17,7 @@ namespace imaging_wic
       if (::is_null(pimage))
       {
 
-         return false;
+         throw_status(error_invalid_argument);
 
       }
 
@@ -77,7 +77,7 @@ namespace imaging_wic
 
       //pstream->Release();
 
-      return true;
+      //return true;
 
    }
 

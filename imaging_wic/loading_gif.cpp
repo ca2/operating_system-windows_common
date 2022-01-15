@@ -37,7 +37,8 @@ namespace imaging_wic
 
          if (FAILED(hr))
          {
-            return false;
+            
+            throw_status(error_resource);
 
          }
 
@@ -46,7 +47,7 @@ namespace imaging_wic
          if (FAILED(hr))
          {
 
-            return false;
+            throw_status(error_resource);
 
          }
 
@@ -57,7 +58,7 @@ namespace imaging_wic
          if (FAILED(hr))
          {
 
-            return false;
+            throw_status(error_resource);
 
          }
 
@@ -72,7 +73,7 @@ namespace imaging_wic
             if (FAILED(hr))
             {
 
-               return false;
+               throw_status(error_resource);
 
             }
 
@@ -88,7 +89,7 @@ namespace imaging_wic
          if (FAILED(hr))
          {
 
-            return false;
+            throw_status(error_resource);
 
          }
 
@@ -117,7 +118,7 @@ namespace imaging_wic
          if (FAILED(hr))
          {
 
-            return false;
+            throw_status(error_resource);
 
          }
 
@@ -144,7 +145,7 @@ namespace imaging_wic
          if (FAILED(hr))
          {
 
-            return false;
+            throw_status(error_resource);
 
          }
 
@@ -161,27 +162,31 @@ namespace imaging_wic
 
             __defer_construct_new(pframe);
 
-            auto estatus = __construct(pframe->m_pimage);
+            //auto estatus =
+            
+            __construct(pframe->m_pimage);
 
-            if (!estatus)
-            {
+            //if (!estatus)
+            //{
 
-               return false;
+            //   throw_status(error_resource);
 
-            }
+            //}
 
             pframe->m_iFrame = iFrame;
 
             __defer_construct(pimageFrame);
 
-            estatus = pimageFrame->create(pframea->m_size, e_flag_none);
+            //estatus = 
+            
+            pimageFrame->create(pframea->m_size, e_flag_none);
 
-            if (!estatus)
-            {
+            //if (!estatus)
+            //{
 
-               return false;
+            //   throw_status(error_resource);
 
-            }
+            //}
 
             // pframe->m_pimage->fill(0);
 
@@ -430,7 +435,7 @@ namespace imaging_wic
 
       }
 
-      return SUCCEEDED(hr);
+      //return SUCCEEDED(hr);
 
    }
 

@@ -257,25 +257,29 @@ namespace aura
 
          auto psystem = m_psystem;
 
-         auto estatus = psystem->main();
+         //auto estatus = 
+         
+         psystem->main();
 
-         if (!estatus)
-         {
+         //if (!estatus)
+         //{
 
-            return estatus;
+         //   return estatus;
 
-         }
+         //}
 
-         estatus = psystem->inline_term();
+         ///estatus = 
+         
+         psystem->inline_term();
 
-         if (!estatus)
-         {
+         //if (!estatus)
+         //{
 
-            return estatus;
+         //   return estatus;
 
-         }
+         //}
 
-         return estatus;
+         //return estatus;
 
 
       }
