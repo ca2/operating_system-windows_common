@@ -341,7 +341,7 @@ namespace draw2d_direct2d
    }
 
 
-   bool path::create(::draw2d::graphics* pgraphicsParam, ::i8 iCreate)
+   void path::create(::draw2d::graphics* pgraphicsParam, ::i8 iCreate)
    {
 
       auto pgraphics = __graphics(pgraphicsParam);
@@ -359,7 +359,7 @@ namespace draw2d_direct2d
 
                m_osdata[path_hollow] = m_ppathHollow;
 
-               return m_osdata[path_hollow] != nullptr;
+               return;
 
             }
 
@@ -378,7 +378,7 @@ namespace draw2d_direct2d
 
             m_osdata[path_filled] = m_ppathFilled;
 
-            return m_osdata[path_filled] != nullptr;
+            return;
 
          }
 
@@ -430,7 +430,7 @@ namespace draw2d_direct2d
 
       m_psink = nullptr;
 
-      return m_ppath != nullptr;
+      //return m_ppath != nullptr;
 
    }
 
@@ -458,7 +458,7 @@ namespace draw2d_direct2d
 
       m_ppathFilled = nullptr;
 
-      return ::success;
+      //return ::success;
 
    }
 

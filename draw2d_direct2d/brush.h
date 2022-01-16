@@ -30,7 +30,7 @@ namespace draw2d_direct2d
 
 
       void destroy_os_data() override;
-      bool create(::draw2d::graphics * pgraphics, i8 iCreate) override;
+      void create(::draw2d::graphics * pgraphics, i8 iCreate) override;
 
       //virtual ID2D1Brush * get_os_brush(::draw2d_direct2d::graphics * pgraphics) const;
 

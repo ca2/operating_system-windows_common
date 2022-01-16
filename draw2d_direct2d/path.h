@@ -37,7 +37,7 @@ namespace draw2d_direct2d
       ~path() override;
 
 
-      bool create(::draw2d::graphics * pgraphics, i8 iCreate) override;
+      void create(::draw2d::graphics * pgraphics, i8 iCreate) override;
       void destroy() override;
 
 

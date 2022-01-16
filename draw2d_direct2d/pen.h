@@ -26,7 +26,7 @@ namespace draw2d_direct2d
 
 
       void destroy() override;
-      bool create(::draw2d::graphics * pgraphics, i8 iCreate) override;
+      void create(::draw2d::graphics * pgraphics, i8 iCreate) override;
 
       /*virtual void construct(int nPenStyle, double nWidth, ::color::color crColor);
       virtual void construct(int nPenStyle, double nWidth, const LOGBRUSH* pLogBrush, int nStyleCount = 0, const ::u32* lpStyle = nullptr);

@@ -158,12 +158,12 @@ namespace draw2d_direct2d
    }
 
 
-   bool region::create(::draw2d::graphics * pgraphics, i8 iCreate)
+   void region::create(::draw2d::graphics * pgraphics, i8 iCreate)
    {
 
       m_osdata[0] = get(pgraphics);
 
-      return m_pgeometry != nullptr;
+      //return m_pgeometry != nullptr;
 
    }
 
@@ -399,7 +399,7 @@ namespace draw2d_direct2d
 
       m_pgeometry = nullptr;
 
-      return ::success;
+      //return ::success;
 
    }
 

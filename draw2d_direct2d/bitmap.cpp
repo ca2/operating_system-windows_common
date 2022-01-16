@@ -22,7 +22,7 @@ namespace draw2d_direct2d
    }
 
 
-   bool bitmap::CreateBitmap(::draw2d::graphics* pgraphics, const ::size_i32& sizeParam, ::u32 nPlanes, ::u32 nBitcount, const void * lpBits, int stride)
+   void bitmap::CreateBitmap(::draw2d::graphics* pgraphics, const ::size_i32& sizeParam, ::u32 nPlanes, ::u32 nBitcount, const void * lpBits, int stride)
    {
 
       ::draw2d::lock draw2dlock;
@@ -66,7 +66,7 @@ namespace draw2d_direct2d
       if (FAILED(hr))
       {
 
-         return false;
+         throw_status(error_failed);
 
       }
 
@@ -77,7 +77,7 @@ namespace draw2d_direct2d
       // *ppdata = (::color::color *) m_map.bits;
       m_osdata[0] = m_pbitmap;
 
-      return true;
+      //return true;
 
    }
 
@@ -90,7 +90,7 @@ namespace draw2d_direct2d
    }
 
 
-   bool bitmap::create_bitmap(::draw2d::graphics* pgraphics, const ::size_i32 & size, void **ppdata, int * pstride)
+   void bitmap::create_bitmap(::draw2d::graphics* pgraphics, const ::size_i32 & size, void **ppdata, int * pstride)
    {
 
       ::draw2d::lock draw2dlock;
@@ -121,7 +121,7 @@ namespace draw2d_direct2d
       if (!::is_set(pgraphics2d))
       {
 
-         return false;
+         throw_status(error_failed);
 
       }
 
@@ -130,7 +130,7 @@ namespace draw2d_direct2d
       if (!prendertarget)
       {
 
-         return false;
+         throw_status(error_failed);
 
       }
 
@@ -145,14 +145,14 @@ namespace draw2d_direct2d
       if (FAILED(hr) || m_pbitmap1 == nullptr)
       {
 
-         return false;
+         throw_status(error_failed);
 
       }
 
       if (FAILED(m_pbitmap1.as(m_pbitmap)))
       {
 
-         return false;
+         throw_status(error_failed);
 
       }
 
@@ -181,15 +181,15 @@ namespace draw2d_direct2d
 
       m_osdata[1] = m_pbitmap1;
 
-      return true;
+      //return true;
 
    }
 
 
-   bool bitmap::CreateDIBitmap(::draw2d::graphics* pgraphics, int cx, int cy, u32 flInit, const void *pjBits, ::u32 iUsage)
+   void bitmap::CreateDIBitmap(::draw2d::graphics* pgraphics, int cx, int cy, u32 flInit, const void *pjBits, ::u32 iUsage)
    {
 
-      return false;
+      //return false;
 
    }
 
@@ -259,7 +259,7 @@ namespace draw2d_direct2d
    }
 
 
-   bool bitmap::CreateCompatibleBitmap(::draw2d::graphics* pgraphics, int nWidth, int nHeight)
+   void bitmap::CreateCompatibleBitmap(::draw2d::graphics* pgraphics, int nWidth, int nHeight)
    {
 
       ::draw2d::lock draw2dlock;
@@ -304,12 +304,12 @@ namespace draw2d_direct2d
 
       m_osdata[1] = m_pbitmap1;
 
-      return true;
+      //return true;
 
    }
 
 
-   bool bitmap::CreateDiscardableBitmap(::draw2d::graphics* pgraphics, int nWidth, int nHeight)
+   void bitmap::CreateDiscardableBitmap(::draw2d::graphics* pgraphics, int nWidth, int nHeight)
    {
 
       ::draw2d::lock draw2dlock;
@@ -359,7 +359,7 @@ namespace draw2d_direct2d
       // *ppdata = (::color::color *) m_map.bits;
 
 
-      return true;
+      //return true;
 
    }
 
@@ -382,7 +382,7 @@ namespace draw2d_direct2d
    }
 
 
-   bool bitmap::attach(void * hbitmap)
+   void bitmap::attach(void * hbitmap)
    {
 
       if (m_pbitmap != nullptr)
@@ -400,9 +400,10 @@ namespace draw2d_direct2d
 
       m_osdata[1] = m_pbitmap1;
 
-      return true;
+      //return true;
 
    }
+
 
    void * bitmap::detach()
    {
@@ -425,7 +426,7 @@ namespace draw2d_direct2d
 
       clear_os_data();
 
-      return ::success;
+      //return ::success;
 
    }
 

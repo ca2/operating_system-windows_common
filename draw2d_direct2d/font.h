@@ -25,7 +25,7 @@ namespace draw2d_direct2d
       //virtual void * _get_os_data(::draw2d::graphics * pgraphics, index i) const override;
 
       void destroy() override;
-      bool create(::draw2d::graphics * pgraphics, i8 iCreate) override;
+      void create(::draw2d::graphics * pgraphics, i8 iCreate) override;
 
 
       /*      virtual void construct(const ::write_text::font & pfontParam);

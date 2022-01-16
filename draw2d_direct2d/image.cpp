@@ -58,7 +58,9 @@ namespace draw2d_direct2d
       if (m_pbitmap.is_set() && size == sizeCurrent)
       {
 
-         return true;
+         //return true;
+
+         return;
 
       }
 
@@ -67,7 +69,7 @@ namespace draw2d_direct2d
       if (size.is_empty())
       {
 
-         return false;
+         throw_status(error_failed);
 
       }
 
@@ -97,34 +99,38 @@ namespace draw2d_direct2d
       if (::is_null(pbitmap) || ::is_null(pgraphics))
       {
 
-         return false;
+         throw_status(error_failed);
 
       }
 
       pgraphics->create_memory_graphics();
 
-      if (!pbitmap->create_bitmap(pgraphics, size, (void **)&pcolorref, &iScan))
-      {
+      pbitmap->create_bitmap(pgraphics, size, (void**)&pcolorref, &iScan);
 
-         return false;
+      //if (!pbitmap->create_bitmap(pgraphics, size, (void **)&pcolorref, &iScan))
+      //{
 
-      }
+      //   return false;
+
+      //}
 
       if (pbitmap->m_osdata[0] == nullptr)
       {
 
-         return false;
+         return;
 
       }
 
-      auto estatus = pgraphics->set(pbitmap);
+      //auto estatus = 
+      
+      pgraphics->set(pbitmap);
 
-      if (!estatus)
-      {
+      //if (!estatus)
+      //{
 
-         return false;
+      //   return false;
 
-      }
+      //}
 
       m_pgraphics = pgraphics;
 
@@ -144,7 +150,7 @@ namespace draw2d_direct2d
 
       set(eflagCreate);
 
-      return true;
+      //return true;
 
    }
 
@@ -152,16 +158,18 @@ namespace draw2d_direct2d
    void image::create(const ::size_i32 & size, ::enum_flag eflagCreate, int iGoodStride, bool bPreserve)
    {
 
-      auto estatus = create_ex(size, nullptr, 0, eflagCreate, iGoodStride, bPreserve);
+      //auto estatus = 
+      
+      create_ex(size, nullptr, 0, eflagCreate, iGoodStride, bPreserve);
 
-      if (!estatus)
-      {
+      //if (!estatus)
+      //{
 
-         return estatus;
+      //   return estatus;
 
-      }
+      //}
 
-      return estatus;
+      //return estatus;
 
    }
 
@@ -169,25 +177,26 @@ namespace draw2d_direct2d
    void image::initialize(const ::size_i32 & size, ::color32_t * pcolorref, int iScan, ::enum_flag eflagCreate)
    {
 
-      auto estatus = create_ex(size, pcolorref, iScan, eflagCreate);
+      //auto estatus =
+      
+      create_ex(size, pcolorref, iScan, eflagCreate);
 
-      if (!estatus)
-      {
+      //if (!estatus)
+      //{
 
-         return estatus;
+      //   return estatus;
 
-      }
+      //}
 
-      return estatus;
+      //return estatus;
 
    }
 
 
-
-   bool image::dc_select(bool bSelect)
+   void image::dc_select(bool bSelect)
    {
 
-      return true;
+      //return true;
 
    }
 
@@ -206,12 +215,14 @@ namespace draw2d_direct2d
 
       ::size_i32 size = pbitmap->get_size();
 
-      if (!create(size))
-      {
+      create(size);
 
-         return false;
+      //if (!create(size))
+      //{
 
-      }
+      //   return false;
+
+      //}
 
       copy_from(pgraphicsParam->m_pimage);
 
@@ -220,36 +231,43 @@ namespace draw2d_direct2d
    }
 
 
-
-   bool image::copy_from(::image * pimage, ::enum_flag eflagCreate)
+   void image::copy_from(::image * pimage, ::enum_flag eflagCreate)
    {
 
       ::size_i32 s(pimage->width(), pimage->height());
 
-      if (size() != s && pimage->map()
-         && ::is_set(pimage->m_pcolorrefRaw)
-         && pimage->m_iScan > 0)
+      if (size() != s)
       {
 
-         if (initialize(s, pimage->m_pcolorrefRaw, pimage->m_iScan, eflagCreate))
+         pimage->map();
+         
+         if (::is_set(pimage->m_pcolorrefRaw) && pimage->m_iScan > 0)
          {
 
-            return true;
+            initialize(s, pimage->m_pcolorrefRaw, pimage->m_iScan, eflagCreate);
+
+            //if (initialize(s, pimage->m_pcolorrefRaw, pimage->m_iScan, eflagCreate))
+            //{
+
+            //   return true;
+
+            //}
 
          }
 
       }
 
-      auto bOk = ::image::copy_from(pimage, 0, eflagCreate);
+      //auto bOk = 
+      ::image::copy_from(pimage, 0, eflagCreate);
 
-      if (!bOk)
-      {
+      //if (!bOk)
+      //{
 
-         return bOk;
+      //   return bOk;
 
-      }
+      //}
 
-      return true;
+      //return true;
 
    }
 
@@ -272,7 +290,7 @@ namespace draw2d_direct2d
 
       m_pgraphics.release();
 
-      return true;
+      //return true;
 
    }
 
@@ -292,19 +310,21 @@ namespace draw2d_direct2d
       if (cx <= 0 || cy <= 0)
       {
 
-         return error_invalid_argument;
+         throw_status(error_invalid_argument);
 
       }
 
-      auto estatus = create({ cx, cy });
+      //auto estatus = 
+      
+      create({ cx, cy });
 
-      if (!estatus)
-      {
+      //if (!estatus)
+      //{
 
 
-         return estatus;
+      //   return estatus;
 
-      }
+      //}
 
       // White blend image
       auto pimage1 = m_pcontext->context_image()->create_image({cx,  cy});
@@ -399,7 +419,7 @@ namespace draw2d_direct2d
          r2 += 4;
       }
 
-      return true;
+      //return true;
 
    }
 
@@ -1043,7 +1063,7 @@ namespace draw2d_direct2d
    }
 
 
-   bool image::_map(bool bApplyAlphaTransform)
+   void image::_map(bool bApplyAlphaTransform)
    {
 
       ::draw2d::lock draw2dlock;
@@ -1053,14 +1073,14 @@ namespace draw2d_direct2d
       if (m_bMapped)
       {
 
-         return true;
+         throw_status(error_invalid_empty_argument);
 
       }
 
       if (m_pbitmap.is_null())
       {
 
-         return false;
+         throw_status(error_invalid_empty_argument);
 
       }
 
@@ -1139,12 +1159,12 @@ namespace draw2d_direct2d
 
       m_bMapped = true;
 
-      return true;
+      //return true;
 
    }
 
 
-   bool image::_unmap()
+   void image::_unmap()
    {
 
       ::draw2d::lock draw2dlock;
@@ -1152,14 +1172,14 @@ namespace draw2d_direct2d
       if (!m_bMapped)
       {
 
-         return false;
+         throw_status(error_wrong_state);
 
       }
 
       if (m_pbitmap.is_null())
       {
 
-         return false;
+         throw_status(error_wrong_state);
 
       }
 
@@ -1212,7 +1232,7 @@ namespace draw2d_direct2d
 
       m_bTrans = false;
 
-      return true;
+      //return true;
 
    }
 
@@ -1228,13 +1248,15 @@ namespace draw2d_direct2d
    }*/
 
 
-   bool image::defer_realize(::draw2d::graphics* pgraphics) const
+   void image::defer_realize(::draw2d::graphics* pgraphics) const
    {
 
       if (is_realized())
       {
          
-         return true;
+         //return true;
+
+         return;
 
       }
 
@@ -1365,7 +1387,7 @@ namespace draw2d_direct2d
    ////}
 
 
-   bool image::unrealize() const
+   void image::unrealize() const
    {
 
       //if (!is_realized())
@@ -1389,7 +1411,7 @@ namespace draw2d_direct2d
 
       //((image *) this)->m_pgraphics.release();
 
-      return true;
+      //return true;
 
    }
 
@@ -1434,10 +1456,12 @@ namespace draw2d_direct2d
    //}
 
 
-   bool image::blend(const ::point_i32 & pointDst, ::image * pimageSrc, const ::point_i32 & pointSrc, const ::size_i32 & sizeParam, byte bA)
+   void image::blend(const ::point_i32 & pointDst, ::image * pimageSrc, const ::point_i32 & pointSrc, const ::size_i32 & sizeParam, byte bA)
    {
 
-      return ::image::blend(pointDst, pimageSrc, pointSrc, sizeParam, bA);
+      //return 
+      
+      //::image::blend(pointDst, pimageSrc, pointSrc, sizeParam, bA);
 
       //::size_i32 size(sizeParam);
 
@@ -1601,10 +1625,12 @@ namespace draw2d_direct2d
    }
 
 
-   bool image::tint(::image * pimage, const ::color::color & color)
+   void image::tint(::image * pimage, const ::color::color & color)
    {
 
-      return ::image::tint(pimage, color);
+      //return 
+      
+      ::image::tint(pimage, color);
 
       //if (!::is_ok(pimage)) // || pimage->get_bitmap() || !pimage->get_bitmap()->m_osdata[0])
       //{

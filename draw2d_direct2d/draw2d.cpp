@@ -24,14 +24,16 @@ namespace draw2d_direct2d
    void draw2d::initialize(::object * pobject)
    {
 
-      auto estatus = ::draw2d::draw2d::initialize(pobject);
+      //auto estatus = 
+      
+      ::draw2d::draw2d::initialize(pobject);
 
-      if (!estatus)
-      {
+      //if (!estatus)
+      //{
 
-         return estatus;
+      //   return estatus;
 
-      }
+      //}
    
       ::direct2d::defer_initialize(this);
 
@@ -44,7 +46,7 @@ namespace draw2d_direct2d
 
       //}
 
-      return estatus;
+      //return estatus;
    
    }
 
@@ -62,7 +64,7 @@ namespace draw2d_direct2d
 
       direct2d::direct2d()->m_d2dMultithread->Enter();
 
-      return success;
+      //return success;
 
    }
 
@@ -72,7 +74,7 @@ namespace draw2d_direct2d
 
       direct2d::direct2d()->m_d2dMultithread->Leave();
 
-      return success;
+      //return success;
 
    }
 

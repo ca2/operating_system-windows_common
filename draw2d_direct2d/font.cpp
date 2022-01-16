@@ -30,7 +30,7 @@ namespace draw2d_direct2d
    }
 
 
-   bool font::create(::draw2d::graphics * pgraphics, i8 iCreate)
+   void font::create(::draw2d::graphics * pgraphics, i8 iCreate)
    {
 
       if(m_pformat == nullptr || is_modified())
@@ -98,7 +98,9 @@ namespace draw2d_direct2d
          if (fFontSize <= 0.000001)
          {
 
-            return false;
+            //return false;
+            throw_status(error_failed);
+
 
          }
 
@@ -117,7 +119,9 @@ namespace draw2d_direct2d
 
             trace_hr("font::get_os_font", hr);
 
-            return false;
+            //return false;
+
+            throw_status(error_failed);
 
          }
 
@@ -132,7 +136,7 @@ namespace draw2d_direct2d
 
       m_osdata[0] = m_pformat;
 
-      return (IDWriteTextFormat *) m_pformat;
+      //return (IDWriteTextFormat *) m_pformat;
 
    }
 
@@ -145,13 +149,13 @@ namespace draw2d_direct2d
       if (m_pformat == nullptr)
       {
 
-         return ::error_failed;
+         throw_status(error_failed);
 
       }
 
       m_pformat = nullptr;
 
-      return ::success;
+      //return ::success;
 
    }
 

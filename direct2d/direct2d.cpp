@@ -105,7 +105,7 @@ namespace direct2d
 
       d2d1_factory1()->QueryInterface(IID_PPV_ARGS(&m_d2dMultithread));
 
-      return ::success;
+      //return ::success;
 
    }
 

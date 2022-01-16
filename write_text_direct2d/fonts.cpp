@@ -23,16 +23,18 @@ namespace write_text_direct2d
    void fonts::initialize(::object * pobject)
    {
 
-      auto estatus = ::write_text::fonts::initialize(pobject);
+      //auto estatus = 
+      
+      ::write_text::fonts::initialize(pobject);
 
-      if (!estatus)
-      {
+      //if (!estatus)
+      //{
 
-         return estatus;
+      //   return estatus;
 
-      }
+      //}
 
-      return estatus;
+      //return estatus;
 
    }
 

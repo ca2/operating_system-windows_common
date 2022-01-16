@@ -25,11 +25,11 @@ namespace draw2d_direct2d
       ~image() override;
 
 
-      virtual bool _map(bool bApplyAlphaTransform = true) override;
-      virtual bool _unmap() override;
+      virtual void _map(bool bApplyAlphaTransform = true) override;
+      virtual void _unmap() override;
 
 
-      bool copy_from(::image * pimage, enum_flag eflagCreate = e_flag_success) override;
+      void copy_from(::image * pimage, enum_flag eflagCreate = e_flag_success) override;
 
 
       virtual ::draw2d::graphics * _get_graphics() const override;
@@ -37,7 +37,7 @@ namespace draw2d_direct2d
       virtual ::draw2d::bitmap_pointer detach_bitmap();
 
 
-      bool dc_select(bool bSelect = true);
+      void dc_select(bool bSelect = true);
 
 
       using ::image::create;
@@ -56,16 +56,16 @@ namespace draw2d_direct2d
       virtual void SetIconMask(::draw2d::icon * picon, i32 cx, i32 cy) override;
 
 
-      virtual bool defer_realize(::draw2d::graphics * pgraphics) const;
+      virtual void defer_realize(::draw2d::graphics * pgraphics) const;
       //virtual bool realize(::draw2d::graphics * pgraphics) const;
-      virtual bool unrealize() const;
+      virtual void unrealize() const;
       virtual bool is_realized() const;
 
       using ::image::blend;
-      virtual bool blend(const ::point_i32 & pointDst, ::image * pimageSrc, const ::point_i32 & pointSrc, const ::size_i32 & size, byte bA) override;
+      virtual void blend(const ::point_i32 & pointDst, ::image * pimageSrc, const ::point_i32 & pointSrc, const ::size_i32 & size, byte bA) override;
 
       using ::image::tint;
-      virtual bool tint(::image * pimage, const ::color::color & color32) override;
+      virtual void tint(::image * pimage, const ::color::color & color32) override;
 
       
 

@@ -138,7 +138,7 @@ namespace write_text_direct2d
 
       }
 
-      return ::success;
+      //return ::success;
 
    }
 

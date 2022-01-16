@@ -29,7 +29,7 @@ namespace draw2d_direct2d
    }
 
 
-   bool brush::create(::draw2d::graphics* pgraphicsParam, ::i8 iCreate)
+   void brush::create(::draw2d::graphics* pgraphicsParam, ::i8 iCreate)
    {
 
       auto pgraphics = __graphics(pgraphicsParam);
@@ -37,7 +37,7 @@ namespace draw2d_direct2d
       if (pgraphics->m_prendertarget == nullptr)
       {
 
-         return false;
+         throw_status(error_null_pointer);
 
       }
 
@@ -64,7 +64,7 @@ namespace draw2d_direct2d
 
          }
 
-         return m_psolidbrush;
+         //return m_psolidbrush;
 
       }
       else if(m_etype == type_linear_gradient_point_color)
@@ -117,7 +117,7 @@ namespace draw2d_direct2d
 
          }
 
-         return (ID2D1Brush *) m_plineargradientbrush;
+         //return (ID2D1Brush *) m_plineargradientbrush;
 
       }
       else if(m_etype == type_radial_gradient_color)
@@ -184,7 +184,7 @@ namespace draw2d_direct2d
 
          }
 
-         return (ID2D1Brush *)m_pradialgradientbrush;
+         //return (ID2D1Brush *)m_pradialgradientbrush;
 
       }
       else if (m_etype == type_pattern)
@@ -195,7 +195,7 @@ namespace draw2d_direct2d
 
             // succeeded and resume if and/or when there is a valid image.
 
-            return false;
+            throw_status(error_failed);
 
          }
 
@@ -235,17 +235,17 @@ namespace draw2d_direct2d
 
          }
 
-         return (ID2D1Brush*) m_pimagebrush;
+         //return (ID2D1Brush*) m_pimagebrush;
 
       }
       else
       {
 
-         return (ID2D1Brush *) m_pbrush;
+         //return (ID2D1Brush *) m_pbrush;
 
       }
 
-      return false;
+      //return false;
 
    }
 
@@ -281,7 +281,7 @@ namespace draw2d_direct2d
 
       }
 
-      return ::success;
+      //return ::success;
 
    }
 

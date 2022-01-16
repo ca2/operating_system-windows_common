@@ -96,7 +96,7 @@ namespace directx
 
 #endif
 
-      return ::success;
+      //return ::success;
 
    }
 
