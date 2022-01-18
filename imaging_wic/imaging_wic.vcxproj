@@ -902,8 +902,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='cube_stage|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="context_image.cpp" />
-    <ClCompile Include="loading_gif.cpp" />
-    <ClCompile Include="loading.cpp" />
+    <ClCompile Include="load_multi_frame.cpp" />
+    <ClCompile Include="load.cpp" />
     <ClCompile Include="saving.cpp" />
     <ClCompile Include="_.cpp" />
   </ItemGroup>

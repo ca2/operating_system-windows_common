@@ -37,10 +37,10 @@
     <ClCompile Include="_factory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="loading.cpp">
+    <ClCompile Include="load.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="loading_gif.cpp">
+    <ClCompile Include="load_multi_frame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="saving.cpp">

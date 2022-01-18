@@ -73,9 +73,11 @@ namespace windows_common
       if (!bCopy)
       {
 
-         TRACELASTERROR();
+         auto lastError = ::GetLastError();
 
-         throw_status(::error_failed);
+         auto estatus = last_error_to_status(lastError);
+
+         throw io_exception(estatus);
 
       }
 
