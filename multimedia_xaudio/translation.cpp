@@ -62,16 +62,6 @@ namespace multimedia
 
       //}
 
-      void     translate(HRESULT hr)
-      {
-
-         if(SUCCEEDED(hr))
-            return ::success;
-         else
-            return error_failed;
-
-      }
-
 
    } // namespace xaudio
 

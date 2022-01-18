@@ -36,16 +36,18 @@ namespace multimedia
       void out::init_thread()
       {
 
-         if (!::wave::out::init_thread())
-         {
+         ::wave::out::init_thread();
 
-            return false;
+         //if (!::wave::out::init_thread())
+         //{
 
-         }
+         //   return false;
+
+         //}
 
          set_thread_priority(::e_priority_time_critical);
 
-         return true;
+         //return true;
 
       }
 
@@ -55,13 +57,17 @@ namespace multimedia
 
          single_lock sLock(mutex(), true);
 
-         if(m_pxaudio.is_set() && m_pvoice != nullptr && m_psourcevoice != nullptr && m_estate != e_state_initial)
-            return ::success;
+         if (m_pxaudio.is_set() && m_pvoice != nullptr && m_psourcevoice != nullptr && m_estate != e_state_initial)
+         {
+
+            return;
+
+         }
 
          m_iBuffer = 0;
 
          m_pthreadCallback = pthreadCallback;
-         void     estatus;
+         ::e_status     estatus;
          ASSERT(m_pxaudio.is_null());
          ASSERT(m_pvoice == nullptr);
          ASSERT(m_psourcevoice == nullptr);
@@ -72,7 +78,7 @@ namespace multimedia
          if(FAILED(XAudio2Create(&m_pxaudio,0,XAUDIO2_DEFAULT_PROCESSOR)))
          {
 
-            return error_failed;
+            throw_status(error_failed);
 
          }
 
@@ -93,7 +99,7 @@ namespace multimedia
 
          if(FAILED(hr = m_pxaudio->CreateMasteringVoice(&m_pvoice,uiChannelCount, uiSamplesPerSec)))
          {
-            return error_failed;
+            throw_status(error_failed);
          }
          int iSampleRate = XAUDIO2_MIN_SAMPLE_RATE;
          estatus = ::success;
@@ -114,7 +120,7 @@ namespace multimedia
          //if(FAILED(hr = m_pxaudio->CreateSourceVoice(&m_psourcevoice,wave_format(),XAUDIO2_VOICE_NOSRC | XAUDIO2_VOICE_NOPITCH,1.0f,this)))
          if(FAILED(hr = m_pxaudio->CreateSourceVoice(&m_psourcevoice,wave_format(),0,1.0f,this)))
          {
-            return error_failed;
+            throw_status(error_failed);
          }
 
          if(estatus != ::success)
@@ -122,7 +128,7 @@ namespace multimedia
 
             TRACE(status_message(estatus));
 
-            return estatus;
+            throw_status(estatus);
 
          }
          ::count iBufferCount;
@@ -172,7 +178,7 @@ namespace multimedia
 
          m_epurpose = epurpose;
 
-         return ::success;
+         //return ::success;
 
       }
 
@@ -188,10 +194,16 @@ namespace multimedia
             out_stop();
          }
 
-         if(m_estate != e_state_opened)
-            return ::success;
+         if (m_estate != e_state_opened)
+         {
 
-         void     estatus;
+            //return ::success;
+
+            return;
+
+         }
+
+         ::e_status estatus;
 
 //         i32 i, iSize;
          //i32 iSize;
@@ -201,7 +213,9 @@ namespace multimedia
          //for(i = 0; i < iSize; i++)
          //{
 
-         estatus = xaudio::translate(m_psourcevoice->Stop());
+         HRESULT hresult = m_psourcevoice->Stop();
+
+         estatus = hresult_to_status(hresult);
 
 
          //for(i = 0; i < iSize; i++)
@@ -273,7 +287,7 @@ namespace multimedia
 
          ::wave::out::out_close();
 
-         return ::success;
+         //return ::success;
 
       }
 
@@ -297,7 +311,7 @@ namespace multimedia
 
          ::wave::buffer::item * pbuffer = pwbuffer->get_buffer(iBuffer);
 
-         void     estatus;
+         ::e_status estatus;
 
          XAUDIO2_BUFFER b;
 
@@ -334,7 +348,9 @@ namespace multimedia
 
          m_iBufferedCount++;
 
-         estatus = xaudio::translate(m_psourcevoice->SubmitSourceBuffer(&b));
+         HRESULT hresult = m_psourcevoice->SubmitSourceBuffer(&b);
+
+         estatus = hresult_to_status(hresult);
 
          VERIFY(::success == estatus);
 
@@ -348,13 +364,17 @@ namespace multimedia
       }
 
 
-      void     out::out_stop()
+      void out::out_stop()
       {
 
          single_lock sLock(mutex(), true);
 
-         if(m_estate != e_state_playing && m_estate != e_state_paused)
-            return error_failed;
+         if (m_estate != e_state_playing && m_estate != e_state_paused)
+         {
+
+            throw_status(error_wrong_state);
+
+         }
 
          //m_pprebuffer->stop();
 
@@ -365,7 +385,9 @@ namespace multimedia
          //// waveform-audio_xaudio output device and resets the current position
          //// to zero. All pending playback buffers are marked as done and
          //// returned to the application.
-         m_estatusWave = xaudio::translate(m_psourcevoice->Stop());
+         HRESULT hresult = m_psourcevoice->Stop();
+
+         m_estatusWave = hresult_to_status(hresult);
 
          if(m_estatusWave == ::success)
          {
@@ -374,20 +396,24 @@ namespace multimedia
 
          }
 
-         return m_estatusWave;
+         //return m_estatusWave;
 
       }
 
 
-      void     out::out_pause()
+      void out::out_pause()
       {
 
          single_lock sLock(mutex(), true);
 
          ASSERT(m_estate == e_state_playing);
 
-         if(m_estate != e_state_playing)
-            return error_failed;
+         if (m_estate != e_state_playing)
+         {
+
+            throw_status(error_wrong_state);
+
+         }
 
          // waveOutReset
          // The waveOutReset function stops playback on the given
@@ -395,21 +421,25 @@ namespace multimedia
          // to zero. All pending playback buffers are marked as done and
          // returned to the application.
 
-         m_estatusWave = xaudio::translate(m_psourcevoice->Stop());
+          HRESULT hresult = m_psourcevoice->Stop();
+
+          m_estatusWave = hresult_to_status(hresult);
 
          ASSERT(m_estatusWave == ::success);
 
          if(m_estatusWave == ::success)
          {
+            
             m_estate = e_state_paused;
+
          }
 
-         return m_estatusWave;
+         //return m_estatusWave;
 
       }
 
 
-      void     out::out_start(const ::duration & position)
+      void out::out_start(const ::duration & position)
       {
 
          synchronous_lock synchronouslock(mutex());
@@ -432,18 +462,22 @@ namespace multimedia
 
          //}
 
-         m_estatusWave = ::wave::out::out_start(position);
+         ::wave::out::out_start(position);
 
          if(m_estatusWave != ::success)
          {
 
-            return m_estatusWave;
+            //return m_estatusWave;
+
+            return;
 
          }
 
-         m_estatusWave = xaudio::translate(m_psourcevoice->Start(0,XAUDIO2_COMMIT_NOW));
+         HRESULT hresult = m_psourcevoice->Start(0,XAUDIO2_COMMIT_NOW);
 
-         return ::success;
+         m_estatusWave = hresult_to_status(hresult);
+
+         //return ::success;
 
       }
 
@@ -455,15 +489,21 @@ namespace multimedia
 
          ASSERT(m_estate == e_state_paused);
 
-         if(m_estate != e_state_paused)
-            return error_failed;
+         if (m_estate != e_state_paused)
+         {
+
+            throw_status(error_wrong_state, "Expected to be paused.");
+
+         }
 
          // waveOutReset
          // The waveOutReset function stops playback on the given
          // waveform-audio_xaudio output device and resets the current position
          // to zero. All pending playback buffers are marked as done and
          // returned to the application.
-         m_estatusWave = xaudio::translate(m_psourcevoice->Start(0,XAUDIO2_COMMIT_NOW));
+         HRESULT hresult = m_psourcevoice->Start(0,XAUDIO2_COMMIT_NOW);
+
+         m_estatusWave = hresult_to_status(hresult);
 
          ASSERT(m_estatusWave == ::success);
 
@@ -474,7 +514,7 @@ namespace multimedia
 
          }
 
-         return m_estatusWave;
+         //return m_estatusWave;
 
       }
 

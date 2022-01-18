@@ -38,7 +38,7 @@ namespace multimedia
 
 //         m_evInitialized.SetEvent();
 
-         return true;
+         //return true;
 
       }
 
@@ -221,7 +221,7 @@ namespace multimedia
 //
 //         m_estate = e_state_opened;
 //
-         return ::success;
+         //return ::success;
 
       }
 
@@ -261,22 +261,35 @@ namespace multimedia
 
          //m_estate = e_state_initial;
 
-         return ::success;
+         //return ::success;
 
       }
 
-      void     in::in_start()
+
+      void in::in_start()
       {
 
          single_lock sLock(mutex(), true);
 
-         if(m_estate == state_recording)
-            return ::success;
+         if (m_estate == state_recording)
+         {
+
+            //return ::success;
+
+            return;
+
+         }
 
          //ASSERT(m_estate == e_state_opened || m_estate == state_stopped);
 
-         if(m_estate != e_state_opened && m_estate != state_stopped)
-            return ::success;
+         if (m_estate != e_state_opened && m_estate != state_stopped)
+         {
+            
+            // return ::success;
+
+            return;
+
+         }
 
          //void     estatus;
 
@@ -288,17 +301,22 @@ namespace multimedia
 
          m_estate = state_recording;
 
-         return ::success;
+         //return ::success;
 
       }
 
-      void     in::in_stop()
+
+      void in::in_stop()
       {
 
          single_lock sLock(mutex(), true);
 
-         if(m_estate != state_recording)
-            return error_failed;
+         if (m_estate != state_recording)
+         {
+
+            throw_status(error_failed);
+
+         }
 
 //         void     estatus;
 
@@ -326,7 +344,7 @@ namespace multimedia
 
          m_eventStopped.SetEvent();
 
-         return ::success;
+         //return ::success;
 
       }
 
@@ -414,7 +432,7 @@ namespace multimedia
 
          m_bResetting = false;
 
-         return ::success;
+         //return ::success;
 
       }
 
@@ -461,7 +479,7 @@ namespace multimedia
 
          //return in_add_buffer(wave_hdr(iBuffer));
 
-         return ::success;
+         //return ::success;
 
       }
 
