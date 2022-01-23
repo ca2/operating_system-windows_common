@@ -132,7 +132,7 @@ namespace dx
 } // namespace dx
 
 
-CLASS_DECL_AURA void directx_debug();
+//CLASS_DECL_AURA void directx_debug();
 
 
 #include "geometry_sink_text_renderer.h"

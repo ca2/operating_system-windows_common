@@ -14,11 +14,11 @@ void dpi_initialize(ID2D1Factory* pFactory);
 #define multi_threaded D2D1_FACTORY_TYPE_MULTI_THREADED // ???? muliple performance multi thread hidden option there exists cost uses?
 
 
-#ifdef WINDOWS_DESKTOP
-
-CLASS_DECL_AURA void directx_debug();
-
-#endif
+//#if defined(WINDOWS_DESKTOP
+//
+//CLASS_DECL_AURA void directx_debug();
+//
+//#endif
 
 
 namespace draw2d_direct2d
@@ -6189,7 +6189,7 @@ namespace draw2d_direct2d
    void graphics::debug()
    {
 
-#ifdef WINDOWS_DESKTOP
+#ifdef _DEBUG
       directx_debug();
 #endif
 

@@ -58,9 +58,4 @@
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="direct2d.def">
-      <Filter>Source Files</Filter>
-    </None>
-  </ItemGroup>
 </Project>
