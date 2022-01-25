@@ -11,8 +11,8 @@ elseif(UWP)
 endif()
 
 
-set(LIBRARY_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../../time-${PLATFORM_NAME}/cmake)
-set(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../../time-${PLATFORM_NAME}/cmake)
+set(LIBRARY_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../../time-${OPERATING_SYSTEM_NAME}/cmake)
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../../time-${OPERATING_SYSTEM_NAME}/cmake)
 
 
 list(APPEND imaging_wic_source
@@ -24,8 +24,8 @@ list(APPEND imaging_wic_source
         factory_exchange.h
         framework.cpp
         framework.h
-        loading.cpp
-        loading_gif.cpp
+        load.cpp
+        load_multi_frame.cpp
         saving.cpp)
 
 
@@ -55,8 +55,8 @@ endif()
 
 
 target_link_directories(imaging_wic PRIVATE ${LIBRARY_OUTPUT_PATH})
-target_link_directories(imaging_wic PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../operating-system/storage-${PLATFORM_NAME}/library/x64/basis)
-target_link_directories(imaging_wic PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../operating-system/storage-${PLATFORM_NAME}/third/library/x64/basis)
+target_link_directories(imaging_wic PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../operating-system/storage-${OPERATING_SYSTEM_NAME}/library/x64/basis)
+target_link_directories(imaging_wic PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../operating-system/storage-${OPERATING_SYSTEM_NAME}/third/library/x64/basis)
 
 
 target_include_directories(imaging_wic PRIVATE .)
@@ -68,11 +68,11 @@ target_include_directories(imaging_wic PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../..
 target_include_directories(imaging_wic PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../source/app)
 target_include_directories(imaging_wic PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../source/app/_include)
 target_include_directories(imaging_wic PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../source/include)
-target_include_directories(imaging_wic PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../operating-system/operating-system-${PLATFORM_NAME})
-target_include_directories(imaging_wic PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../operating-system/operating-system-${PLATFORM_NAME}/_include)
-target_include_directories(imaging_wic PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../operating-system/third-${PLATFORM_NAME}/include)
-target_include_directories(imaging_wic PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../operating-system/third-${PLATFORM_NAME}/third/include)
-target_include_directories(imaging_wic PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../operating-system/third-${PLATFORM_NAME}/third/include/include)
+target_include_directories(imaging_wic PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../operating-system/operating-system-${OPERATING_SYSTEM_NAME})
+target_include_directories(imaging_wic PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../operating-system/operating-system-${OPERATING_SYSTEM_NAME}/_include)
+target_include_directories(imaging_wic PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../operating-system/third-${OPERATING_SYSTEM_NAME}/include)
+target_include_directories(imaging_wic PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../operating-system/third-${OPERATING_SYSTEM_NAME}/third/include)
+target_include_directories(imaging_wic PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../operating-system/third-${OPERATING_SYSTEM_NAME}/third/include/include)
 
 
 target_compile_definitions(imaging_wic PRIVATE _IMAGING_WIC_LIBRARY)
