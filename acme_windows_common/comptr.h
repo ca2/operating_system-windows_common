@@ -85,7 +85,7 @@ public:
 
       }
 
-      return m_p->QueryInterface< IFACE >(&iface);
+      return m_p->QueryInterface(__uuidof(IFACE), (void **) & iface);
 
    }
 
