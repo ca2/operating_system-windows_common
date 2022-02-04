@@ -76,11 +76,11 @@ namespace music
             __pointer(::user::message) pusermessage(pmessage);
 
             ::music::midi::sequence::event * pevent = (::music::midi::sequence::event *) pusermessage->m_lparam.m_lparam;
-            ::music::midi::sequence * pseq = (::music::midi::sequence *) psubject->m_psequence;
+            ::music::midi::sequence * pseq = (::music::midi::sequence *) ptopic->m_psequence;
 
             pseq->OnEvent(pevent);
 
-            switch(psubject->m_id)
+            switch(ptopic->m_id)
             {
             case ::music::midi::sequence::EventStopped:
             {
