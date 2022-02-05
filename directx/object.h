@@ -23,7 +23,7 @@ namespace directx
       bool operator!=(const object& obj) const;
 
       void dump(dump_context & dumpcontext) const override;
-      void assert_valid() const override;
+      void assert_ok() const override;
 
 
       //::directx::draw2d * draw2d()

@@ -279,7 +279,7 @@ namespace draw2d_directx
       if (cx <= 0 || cy <= 0)
       {
 
-         return error_invalid_argument;
+         return error_bad_argument;
 
       }
 
