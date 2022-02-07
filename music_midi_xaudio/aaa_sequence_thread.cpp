@@ -80,7 +80,7 @@ namespace music
 
             pseq->OnEvent(pevent);
 
-            switch(ptopic->m_id)
+            switch(ptopic->m_atom)
             {
             case ::music::midi::sequence::EventStopped:
             {
@@ -231,7 +231,7 @@ namespace music
 
                /* super merge module      CVmsMusDll::load_string(str, IDS_PREROLLUSERERROR001);
                pme->SetUserText(str);*/
-               __throw(pme);
+               throw ::exception(pme);
             }
 
          }
@@ -255,11 +255,11 @@ namespace music
             }
             catch (::exception_pointer e)
             {
-               __throw(error_not_implemented);
+               throw ::not_implemented();
                /*string str;
                str.load_string(IDS_PREROLLUSERERROR001);
                pme->SetUserText(str);*/
-               __throw(pme);
+               throw ::exception(pme);
             }
 
             //    if(!get_sequence()->IsInSpecialModeV001())
@@ -363,7 +363,7 @@ namespace music
                link.ModifyFlag(::music::midi::sequence::e_flag_stop, ::music::midi::sequence::e_flag_null);
                if(MMSYSERR_NOERROR != (estatus = get_sequence()->Stop()))
                {
-                  __throw(multimedia::exception(multimedia::exception_midi, EMidiPlayerStop));
+                  throw ::exception(multimedia::exception(multimedia::exception_midi, EMidiPlayerStop));
                }
             }
             break;
@@ -378,7 +378,7 @@ namespace music
                link.m_tkRestart = get_sequence()->GetPositionTicks();
                if(::success != (estatus = get_sequence()->Stop()))
                {
-                  __throw(multimedia::exception(multimedia::exception_midi, EMidiPlayerStop));
+                  throw ::exception(multimedia::exception(multimedia::exception_midi, EMidiPlayerStop));
                }
             }
             break;

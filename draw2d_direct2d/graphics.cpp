@@ -103,7 +103,7 @@ namespace draw2d_direct2d
 
    //void graphics::CreateDC(const ::string & lpszDriverName, const ::string & lpszDeviceName, const ::string & lpszOutput, const void * lpInitData)
    //{
-   //   __throw(todo);
+   //   throw ::exception(todo);
    //   //return Attach(::CreateDC(lpszDriverName, lpszDeviceName, lpszOutput, (const DEVMODE*)lpInitData));
    //}
 
@@ -111,7 +111,7 @@ namespace draw2d_direct2d
    //void graphics::CreateIC(const ::string & lpszDriverName, const ::string & lpszDeviceName, const ::string & lpszOutput, const void * lpInitData)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //}
 
@@ -263,14 +263,14 @@ namespace draw2d_direct2d
    //int graphics::GetDeviceCaps(double dIndex)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //}
 
 
    point_f64 graphics::GetBrushOrg()
    {
-      //__throw(todo);
+      //throw ::exception(todo);
       //ASSERT(get_handle1() != nullptr);
       //::point_f64 point;
       //VERIFY(::GetBrushOrgEx(get_handle1(), &point));
@@ -283,7 +283,7 @@ namespace draw2d_direct2d
    
    point_f64 graphics::SetBrushOrg(double x, double y)
    {
-      //__throw(todo);
+      //throw ::exception(todo);
       //ASSERT(get_handle1() != nullptr);
       //::point_f64 point;
       //VERIFY(::SetBrushOrgEx(get_handle1(), x, y, &point));
@@ -297,7 +297,7 @@ namespace draw2d_direct2d
    point_f64 graphics::SetBrushOrg(const ::point_f64 & point)
    {
 
-      //__throw(todo);
+      //throw ::exception(todo);
       //ASSERT(get_handle1() != nullptr);
       //VERIFY(::SetBrushOrgEx(get_handle1(), point.x, point.y, &point));
       //return point;
@@ -309,7 +309,7 @@ namespace draw2d_direct2d
 
    //int graphics::EnumObjects(double dObjectType, int (CALLBACK* lpfn)(LPVOID, LPARAM), LPARAM lpData)
    //{
-   //   __throw(todo);
+   //   throw ::exception(todo);
    //   //ASSERT(get_handle2() != nullptr);
    //   //return ::EnumObjects(get_handle2(), nObjectType, (GOBJENUMPROC)lpfn, lpData);
    //}
@@ -789,7 +789,7 @@ namespace draw2d_direct2d
    //::color::color graphics::GetNearestColor(const ::color::color & color)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //}
 
@@ -797,7 +797,7 @@ namespace draw2d_direct2d
    //::u32 graphics::RealizePalette()
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
    //   
    //}
 
@@ -805,7 +805,7 @@ namespace draw2d_direct2d
    //void graphics::UpdateColors()
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
    //   //::UpdateColors(get_handle1());
 
    //}
@@ -813,31 +813,31 @@ namespace draw2d_direct2d
 
    //int graphics::GetPolyFillMode()
    //{
-   //   __throw(todo);
+   //   throw ::exception(todo);
    //   //return ::GetPolyFillMode(get_handle2());
    //}
 
    //int graphics::GetROP2()
    //{
-   //   __throw(todo);
+   //   throw ::exception(todo);
    //   //return ::GetROP2(get_handle2());
    //}
 
    //int graphics::GetStretchBltMode()
    //{
-   //   __throw(todo);
+   //   throw ::exception(todo);
    //   //return ::GetStretchBltMode(get_handle2());
    //}
 
    //int graphics::GetMapMode()
    //{
-   //   __throw(todo);
+   //   throw ::exception(todo);
    //   //return ::GetMapMode(get_handle2());
    //}
 
    //int graphics::GetGraphicsMode()
    //{
-   //   __throw(todo);
+   //   throw ::exception(todo);
    //   //return ::GetGraphicsMode(get_handle2());
    //}
 
@@ -845,7 +845,7 @@ namespace draw2d_direct2d
    //void graphics::GetWorldTransform(XFORM* pXform)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //}
 
@@ -908,7 +908,7 @@ namespace draw2d_direct2d
    size_f64 graphics::GetViewportExt()
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       return nullptr;
 
@@ -918,7 +918,7 @@ namespace draw2d_direct2d
    point_f64 graphics::GetWindowOrg()
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       return nullptr;
 
@@ -927,7 +927,7 @@ namespace draw2d_direct2d
 
    size_f64 graphics::GetWindowExt()
    {
-      __throw(todo);
+      throw ::exception(todo);
       //::size_f64::size_f64;
       //::GetWindowExtEx(get_handle2(), &::size_f64);
       //return ::size_f64;
@@ -970,7 +970,7 @@ namespace draw2d_direct2d
    void graphics::DPtoLP(::point_f64 * ppoints, count nCount)
    {
 
-      __throw(todo);
+      throw ::exception(todo);
       //::DPtoLP(get_handle2(), ppoints, nCount);
 
    }
@@ -979,7 +979,7 @@ namespace draw2d_direct2d
    void graphics::DPtoLP(::rectangle_f64 * prectangle)
    {
 
-      __throw(todo);
+      throw ::exception(todo);
       //::DPtoLP(get_handle2(), (::point_f64 *)rectangle, 2);
 
    }
@@ -988,7 +988,7 @@ namespace draw2d_direct2d
    void graphics::LPtoDP(::point_f64 * ppoints, count nCount)
    {
 
-      __throw(todo);
+      throw ::exception(todo);
       //::LPtoDP(get_handle2(), ppoints, nCount);
 
    }
@@ -997,7 +997,7 @@ namespace draw2d_direct2d
    void graphics::LPtoDP(::rectangle_f64 * prectangle)
    {
 
-      __throw(todo);
+      throw ::exception(todo);
       //::LPtoDP(get_handle2(), (::point_f64 *)rectangle, 2);
 
    }
@@ -1006,7 +1006,7 @@ namespace draw2d_direct2d
    void graphics::fill_region(::draw2d::region* pRgn, ::draw2d::brush* pBrush)
    {
 
-      __throw(todo);
+      throw ::exception(todo);
       //return ::FillRgn(get_handle1(), (HRGN)pRgn->get_os_data(), (HBRUSH)pBrush->get_os_data()) != false;
 
       //return false;
@@ -1017,7 +1017,7 @@ namespace draw2d_direct2d
    void graphics::frame_region(::draw2d::region* pRgn, ::draw2d::brush* pBrush, double nWidth, double nHeight)
    {
 
-      __throw(todo);
+      throw ::exception(todo);
       //return ::FrameRgn(get_handle1(), (HRGN)pRgn->get_os_data(), (HBRUSH)pBrush->get_os_data(), nWidth, nHeight) != false;
 
       //return false;
@@ -1027,7 +1027,7 @@ namespace draw2d_direct2d
 
    void graphics::invert_region(::draw2d::region* pregion)
    {
-      __throw(todo);
+      throw ::exception(todo);
 
       //ASSERT(get_handle1() != nullptr);
 
@@ -1041,7 +1041,7 @@ namespace draw2d_direct2d
    void graphics::paint_region(::draw2d::region* pregion)
    {
 
-      __throw(todo);
+      throw ::exception(todo);
       //ASSERT(get_handle1() != nullptr);
 
       //return ::PaintRgn(get_handle1(), (HRGN)pRgn->get_os_data())  != false;
@@ -1053,7 +1053,7 @@ namespace draw2d_direct2d
    //void graphics::PtVisible(double x, double y)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
    //   //ASSERT(get_handle1() != nullptr);
 
    //   //return ::PtVisible(get_handle1(), x, y) != false;
@@ -1073,7 +1073,7 @@ namespace draw2d_direct2d
    //void graphics::rectVisible(const ::rectangle_i32 & rectangle)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //   //ASSERT(get_handle1() != nullptr);
 
@@ -1085,7 +1085,7 @@ namespace draw2d_direct2d
    point_f64 graphics::current_position()
    {
 
-      __throw(todo);
+      throw ::exception(todo);
       //ASSERT(get_handle2() != nullptr);
       //::point_f64 point;
       //VERIFY(::GetCurrentPositionEx(get_handle2(), &point));
@@ -1219,7 +1219,7 @@ namespace draw2d_direct2d
    void graphics::invert_rectangle(const ::rectangle_f64 & rectangle)
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       //return false;
 
@@ -1228,7 +1228,7 @@ namespace draw2d_direct2d
 
    //void graphics::DrawIcon(double x, double y, ::draw2d::icon * picon)
    //{
-   //   __throw(todo);
+   //   throw ::exception(todo);
    //   //ASSERT(get_handle1() != nullptr);
 
    //   //if(picon == nullptr)
@@ -1240,7 +1240,7 @@ namespace draw2d_direct2d
 
    //void graphics::DrawIcon(const ::point_f64 & point, ::draw2d::icon * picon)
    //{
-   //   __throw(todo);
+   //   throw ::exception(todo);
    //   //ASSERT(get_handle1() != nullptr);
 
    //   //if(picon == nullptr)
@@ -1255,7 +1255,7 @@ namespace draw2d_direct2d
 //
 //#ifdef _UWP
 //
-//      //throw interface_only_exception();
+//      //throw ::interface_only();
 //      return false;
 //
 //#else
@@ -1342,7 +1342,7 @@ namespace draw2d_direct2d
 //   void graphics::DrawState(const ::point_f64 & point, const ::size_f64& ::size_f64, HBITMAP hBitmap, ::u32 nFlags, HBRUSH hBrush)
 //   {
 //
-//      __throw(todo);
+//      throw ::exception(todo);
 //      //ASSERT(get_handle1() != nullptr);
 //      //return ::DrawState(get_handle1(), hBrush, nullptr, (LPARAM)hBitmap, 0, point.x, point.y, size.cx, size.cy, nFlags|DST_BITMAP) != false;
 //
@@ -1351,7 +1351,7 @@ namespace draw2d_direct2d
 //   void graphics::DrawState(const ::point_f64 & point, const ::size_f64& ::size_f64, ::draw2d::bitmap* pBitmap, ::u32 nFlags, ::draw2d::brush* pBrush)
 //   {
 //
-//      __throw(todo);
+//      throw ::exception(todo);
 //
 //      //ASSERT(get_handle1() != nullptr);
 //      //return ::DrawState(get_handle1(), (HBRUSH)pBrush->get_os_data(), nullptr, (LPARAM)pBitmap->get_os_data(), 0, point.x, point.y, size.cx, size.cy, nFlags|DST_BITMAP) != false;
@@ -1362,7 +1362,7 @@ namespace draw2d_direct2d
 //   {
 //
 //
-//      __throw(todo);
+//      throw ::exception(todo);
 //
 //      //ASSERT(get_handle1() != nullptr);
 //      //return ::DrawState(get_handle1(), hBrush, nullptr, (LPARAM)hIcon, 0, point.x, point.y, size.cx, size.cy, nFlags|DST_ICON) != false;
@@ -1374,7 +1374,7 @@ namespace draw2d_direct2d
 //   {
 //
 //
-//      __throw(todo);
+//      throw ::exception(todo);
 //
 //      //ASSERT(get_handle1() != nullptr);
 //      //return ::DrawState(get_handle1(), (HBRUSH)pBrush->get_os_data(), nullptr, (LPARAM)hIcon, 0, point.x, point.y, size.cx, size.cy, nFlags|DST_ICON) != false;
@@ -1384,7 +1384,7 @@ namespace draw2d_direct2d
 //   void graphics::DrawState(const ::point_f64 & point, const ::size_f64& ::size_f64, const ::string & lpszText, ::u32 nFlags, bool bPrefixText, double dTextLen, HBRUSH hBrush)
 //   {
 //
-//      __throw(todo);
+//      throw ::exception(todo);
 //
 //      //ASSERT(get_handle1() != nullptr);
 //      //return ::DrawState(get_handle1(), hBrush,  nullptr, (LPARAM)lpszText, (WPARAM)nTextLen, point.x, point.y, size.cx, size.cy, nFlags|(bPrefixText ? DST_PREFIXTEXT : DST_TEXT)) != false;
@@ -1394,7 +1394,7 @@ namespace draw2d_direct2d
 //   void graphics::DrawState(const ::point_f64 & point, const ::size_f64& ::size_f64, const ::string & lpszText, ::u32 nFlags, bool bPrefixText, double dTextLen, ::draw2d::brush* pBrush)
 //   {
 //
-//      __throw(todo);
+//      throw ::exception(todo);
 //
 //      //ASSERT(get_handle1() != nullptr);
 //      //return ::DrawState(get_handle1(), (HBRUSH)pBrush->get_os_data(), nullptr, (LPARAM)lpszText, (WPARAM)nTextLen, point.x, point.y, size.cx, size.cy, nFlags|(bPrefixText ? DST_PREFIXTEXT : DST_TEXT)) != false;
@@ -1407,7 +1407,7 @@ namespace draw2d_direct2d
 //   void graphics::DrawState(const ::point_f64 & point, const ::size_f64& ::size_f64, DRAWSTATEPROC lpDrawProc, LPARAM lData, ::u32 nFlags, HBRUSH hBrush)
 //   {
 //
-//      __throw(todo);
+//      throw ::exception(todo);
 //
 //      //ASSERT(get_handle1() != nullptr); return ::DrawState(get_handle1(), hBrush, lpDrawProc, lData, 0, point.x, point.y, size.cx, size.cy, nFlags|DST_COMPLEX) != false;
 //
@@ -1416,7 +1416,7 @@ namespace draw2d_direct2d
 //   void graphics::DrawState(const ::point_f64 & point, const ::size_f64& ::size_f64, DRAWSTATEPROC lpDrawProc, LPARAM lData, ::u32 nFlags, ::draw2d::brush* pBrush)
 //   {
 //
-//      __throw(todo);
+//      throw ::exception(todo);
 //
 //      //ASSERT(get_handle1() != nullptr); return ::DrawState(get_handle1(), (HBRUSH)pBrush->get_os_data(), lpDrawProc, lData, 0, point.x, point.y, size.cx, size.cy, nFlags|DST_COMPLEX) != false;
 //
@@ -1429,7 +1429,7 @@ namespace draw2d_direct2d
    //void graphics::DrawEdge(::rectangle_f64 * prectangle, ::u32 nEdge, ::u32 nFlags)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //   ASSERT(get_handle1() != nullptr);
 
@@ -1441,7 +1441,7 @@ namespace draw2d_direct2d
    //void graphics::DrawFrameControl(::rectangle_f64 * prectangle, ::u32 nType, ::u32 nState)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //   //ASSERT(get_handle1() != nullptr); return ::DrawFrameControl(get_handle1(), rectangle, nType, nState) != false;
 
@@ -1450,7 +1450,7 @@ namespace draw2d_direct2d
    void graphics::Chord(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4)
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       //ASSERT(get_handle1() != nullptr);
 
@@ -1463,7 +1463,7 @@ namespace draw2d_direct2d
    void graphics::Chord(const ::rectangle_f64 & rectangle, const ::point_f64 & pointStart, const ::point_f64 & pointEnd)
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       //ASSERT(get_handle1() != nullptr);
 
@@ -1477,7 +1477,7 @@ namespace draw2d_direct2d
    void graphics::DrawFocusRect(const ::rectangle_f64 & rectangle)
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
 //      ASSERT(get_handle1() != nullptr);
 
@@ -1563,7 +1563,7 @@ namespace draw2d_direct2d
    void graphics::Pie(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4)
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       //return false;
 
@@ -1573,7 +1573,7 @@ namespace draw2d_direct2d
    void graphics::Pie(const ::rectangle_f64 & rectangle, const ::point_f64 & pointStart, const ::point_f64 & pointEnd)
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       //return false;
 
@@ -1855,7 +1855,7 @@ namespace draw2d_direct2d
    //void graphics::PatBlt(double x, double y, double dWidth, double dHeight)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //}
 
@@ -2123,7 +2123,7 @@ namespace draw2d_direct2d
    ::color::color graphics::GetPixel(double x, double y)
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
 
       return false;
@@ -2134,7 +2134,7 @@ namespace draw2d_direct2d
    ::color::color graphics::GetPixel(const ::point_f64 & point)
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       return false;
 
@@ -2144,7 +2144,7 @@ namespace draw2d_direct2d
    ::color::color graphics::SetPixel(double x, double y, const ::color::color & color)
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       return false;
 
@@ -2154,7 +2154,7 @@ namespace draw2d_direct2d
    ::color::color graphics::SetPixel(const ::point_f64 & point, const ::color::color & color)
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       return false;
 
@@ -2164,7 +2164,7 @@ namespace draw2d_direct2d
 //   void graphics::FloodFill(double x, double y, const ::color::color & color)
 //   {
 //
-//      __throw(todo);
+//      throw ::exception(todo);
 //
 //   }
 //
@@ -2172,7 +2172,7 @@ namespace draw2d_direct2d
 //   void graphics::ExtFloodFill(double x, double y, const ::color::color & color, ::u32 nFillType)
 //   {
 //
-//      __throw(todo);
+//      throw ::exception(todo);
 //
 //   }
 
@@ -2196,7 +2196,7 @@ namespace draw2d_direct2d
    //void graphics::ExtTextOut(double x, double y, ::u32 nOptions, const ::rectangle_f64 & rectangle, const ::string & lpszString, strsize nCount, LPINT lpDxWidths)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //}
 
@@ -2204,7 +2204,7 @@ namespace draw2d_direct2d
    //void graphics::ExtTextOut(double x, double y, ::u32 nOptions, const ::rectangle_f64 & rectangle, const ::string & str, LPINT lpDxWidths)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //}
 
@@ -2212,7 +2212,7 @@ namespace draw2d_direct2d
    //::size_f64 graphics::TabbedTextOut(double x, double y, const ::string & lpszString, strsize nCount, count nTabPositions, LPINT lpnTabStopPositions, i32 nTabOrigin)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //}
 
@@ -2220,7 +2220,7 @@ namespace draw2d_direct2d
    //::size_f64 graphics::TabbedTextOut(double x, double y, const ::string & str, count nTabPositions, LPINT lpnTabStopPositions, i32 nTabOrigin)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //}
 
@@ -2228,7 +2228,7 @@ namespace draw2d_direct2d
    //::size_f64 graphics::GetTabbedTextExtent(const ::string & lpszString, strsize nCount, count nTabPositions, LPINT lpnTabStopPositions)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //}
 
@@ -2236,7 +2236,7 @@ namespace draw2d_direct2d
    //::size_f64 graphics::GetTabbedTextExtent(const ::string & str, count nTabPositions, LPINT lpnTabStopPositions)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //}
 
@@ -2244,7 +2244,7 @@ namespace draw2d_direct2d
    //::size_f64 graphics::GetOutputTabbedTextExtent(const ::string & lpszString, strsize nCount, count nTabPositions, LPINT lpnTabStopPositions)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //   return nullptr;
 
@@ -2254,7 +2254,7 @@ namespace draw2d_direct2d
    //::size_f64 graphics::GetOutputTabbedTextExtent(const ::string & str, count nTabPositions, LPINT lpnTabStopPositions)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //   return nullptr;
 
@@ -2264,7 +2264,7 @@ namespace draw2d_direct2d
    //void graphics::GrayString(::draw2d::brush* pBrush, bool (CALLBACK* lpfnOutput)(HDC, LPARAM, int), LPARAM lpData, double dCount,double x, double y, double dWidth, double dHeight)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //}
 
@@ -2272,7 +2272,7 @@ namespace draw2d_direct2d
    ::u32 graphics::GetTextAlign()
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       return false;
 
@@ -2282,7 +2282,7 @@ namespace draw2d_direct2d
    //int graphics::GetTextFace(count nCount, char * lpszFacename)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //}
 
@@ -2290,7 +2290,7 @@ namespace draw2d_direct2d
    //int graphics::GetTextFace(string & rString)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //}
 
@@ -2438,7 +2438,7 @@ namespace draw2d_direct2d
    void graphics::get_output_text_metrics(::write_text::text_metric * lpMetrics)
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       //ASSERT(get_handle1() != nullptr);
 
@@ -2452,7 +2452,7 @@ namespace draw2d_direct2d
 //   int graphics::GetTextCharacterExtra()
 //   {
 //
-//      __throw(todo);
+//      throw ::exception(todo);
 //
 //      //ASSERT(get_handle2() != nullptr);
 //
@@ -2464,7 +2464,7 @@ namespace draw2d_direct2d
 //   void graphics::GetCharWidth(::u32 nFirstChar, ::u32 nLastChar, LPINT lpBuffer)
 //   {
 //
-//      __throw(todo);
+//      throw ::exception(todo);
 //
 //      //ASSERT(get_handle2() != nullptr);
 //
@@ -2475,7 +2475,7 @@ namespace draw2d_direct2d
 //   void graphics::GetOutputCharWidth(::u32 nFirstChar, ::u32 nLastChar, LPINT lpBuffer)
 //   {
 //
-//      __throw(todo);
+//      throw ::exception(todo);
 //
 //      //ASSERT(get_handle1() != nullptr);
 //
@@ -2486,7 +2486,7 @@ namespace draw2d_direct2d
 //   u32 graphics::GetFontLanguageInfo()
 //   {
 //
-//      __throw(todo);
+//      throw ::exception(todo);
 //
 //      //ASSERT(get_handle1() != nullptr);
 //
@@ -2499,7 +2499,7 @@ namespace draw2d_direct2d
 //   /*   u32 graphics::GetCharacterPlacement(const ::string & lpString, double dCount, double dMaxExtent, LPGCP_RESULTS lpResults, u32 dwFlags)
 //      {
 //
-//         __throw(todo);
+//         throw ::exception(todo);
 //
 //         //ASSERT(get_handle1() != nullptr);
 //
@@ -2510,7 +2510,7 @@ namespace draw2d_direct2d
 //      u32 graphics::GetCharacterPlacement(string & str, double dMaxExtent, LPGCP_RESULTS lpResults, u32 dwFlags)
 //      {
 //
-//         __throw(todo);
+//         throw ::exception(todo);
 //
 //         //ASSERT(get_handle1() != nullptr);
 //
@@ -2523,7 +2523,7 @@ namespace draw2d_direct2d
 //   ::size_f64 graphics::GetAspectRatioFilter()
 //   {
 //
-//      __throw(todo);
+//      throw ::exception(todo);
 //
 //      //ASSERT(get_handle2() != nullptr);
 //      //::size_f64::size_f64;
@@ -2535,7 +2535,7 @@ namespace draw2d_direct2d
 //   void graphics::ScrollDC(int dx, int dy, const ::rectangle_i32 & rectangleScroll, const ::rectangle_i32 & rectangleClip, ::draw2d::region* pRgnUpdate, RECTANGLE_I32 * lpRectUpdate)
 //   {
 //
-//      __throw(todo);
+//      throw ::exception(todo);
 //
 //      //ASSERT(get_handle1() != nullptr);
 //
@@ -2547,7 +2547,7 @@ namespace draw2d_direct2d
 //   int graphics::Escape(double dEscape, double dCount, const ::string & lpszInData, LPVOID lpOutData)
 //   {
 //
-//      __throw(todo);
+//      throw ::exception(todo);
 //
 //      //ASSERT(get_handle1() != nullptr);
 //
@@ -2559,7 +2559,7 @@ namespace draw2d_direct2d
    ::u32 graphics::SetBoundsRect(const ::rectangle_f64 & rectangleBounds, ::u32 flags)
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       //ASSERT(get_handle1() != nullptr);
 
@@ -2573,7 +2573,7 @@ namespace draw2d_direct2d
    ::u32 graphics::GetBoundsRect(::rectangle_f64 * prectBounds, ::u32 flags)
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       //ASSERT(get_handle2() != nullptr);
 
@@ -2587,7 +2587,7 @@ namespace draw2d_direct2d
    //void graphics::ResetDC(const DEVMODE* lpDevMode)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //   //ASSERT(get_handle2() != nullptr);
 
@@ -2600,7 +2600,7 @@ namespace draw2d_direct2d
    /*   ::u32 graphics::GetOutlineTextMetrics(::u32 cbData, LPOUTLINETEXTMETRICW lpotm)
       {
 
-         __throw(todo);
+         throw ::exception(todo);
 
          //ASSERT(get_handle2() != nullptr);
 
@@ -2611,7 +2611,7 @@ namespace draw2d_direct2d
       void graphics::GetCharABCWidths(::u32 nFirstChar, ::u32 nLastChar, LPABC lpabc)
       {
 
-         __throw(todo);
+         throw ::exception(todo);
 
          //ASSERT(get_handle2() != nullptr);
 
@@ -2624,7 +2624,7 @@ namespace draw2d_direct2d
 //   u32 graphics::GetFontData(u32 dwTable, u32 dwOffset, LPVOID lpData, u32 cbData)
 //   {
 //
-//      __throw(todo);
+//      throw ::exception(todo);
 //
 //      //ASSERT(get_handle2() != nullptr);
 //
@@ -2638,7 +2638,7 @@ namespace draw2d_direct2d
 //   int graphics::GetKerningPairs(double dPairs, LPKERNINGPAIR lpkrnpair)
 //   {
 //
-//      __throw(todo);
+//      throw ::exception(todo);
 //
 //      //ASSERT(get_handle2() != nullptr);
 //
@@ -2649,7 +2649,7 @@ namespace draw2d_direct2d
 //   u32 graphics::GetGlyphOutline(::u32 nChar, const ::e_align & ealign, const ::e_draw_text & edrawtext, LPGLYPHMETRICS lpgm,  u32 cbBuffer, LPVOID lpBuffer, const MAT2* lpmat2)
 //   {
 //
-//      __throw(todo);
+//      throw ::exception(todo);
 //
 //      //ASSERT(get_handle2() != nullptr);
 //
@@ -2661,7 +2661,7 @@ namespace draw2d_direct2d
 //   int graphics::StartDoc(LPDOCINFO lpDocInfo)
 //   {
 //
-//      __throw(todo);
+//      throw ::exception(todo);
 //
 //      //ASSERT(get_handle1() != nullptr);
 //
@@ -2674,7 +2674,7 @@ namespace draw2d_direct2d
    int graphics::StartPage()
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       //ASSERT(get_handle1() != nullptr);
 
@@ -2687,7 +2687,7 @@ namespace draw2d_direct2d
    int graphics::EndPage()
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       //ASSERT(get_handle1() != nullptr);
 
@@ -2700,7 +2700,7 @@ namespace draw2d_direct2d
    //int graphics::SetAbortProc(bool (CALLBACK* lpfn)(HDC, int))
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //   //ASSERT(get_handle1() != nullptr);
 
@@ -2712,7 +2712,7 @@ namespace draw2d_direct2d
    int graphics::AbortDoc()
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       //ASSERT(get_handle1() != nullptr);
 
@@ -2726,7 +2726,7 @@ namespace draw2d_direct2d
    int graphics::EndDoc()
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       //ASSERT(get_handle1() != nullptr);
 
@@ -2740,7 +2740,7 @@ namespace draw2d_direct2d
 //   void graphics::MaskBlt(double x, double y, double dWidth, double dHeight, ::draw2d::graphics * pgraphicsSrc, double xSrc, double ySrc, ::draw2d::bitmap& maskBitmap, double xMask, double yMask)
 //   {
 //
-//      __throw(todo);
+//      throw ::exception(todo);
 //
 //      //ASSERT(get_handle1() != nullptr);
 //
@@ -2752,7 +2752,7 @@ namespace draw2d_direct2d
 //   void graphics::PlgBlt(::point_f64 * lpPoint, ::draw2d::graphics * pgraphicsSrc, double xSrc, double ySrc, double dWidth, double dHeight, ::draw2d::bitmap& maskBitmap, double xMask, double yMask)
 //   {
 //
-//      __throw(todo);
+//      throw ::exception(todo);
 //
 //      //ASSERT(get_handle1() != nullptr);
 //
@@ -2764,7 +2764,7 @@ namespace draw2d_direct2d
    //void graphics::SetPixelV(double x, double y, const ::color::color & color)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //   //ASSERT(get_handle1() != nullptr);
 
@@ -2777,7 +2777,7 @@ namespace draw2d_direct2d
    //void graphics::SetPixelV(const ::point_f64 & point, const ::color::color & color)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //   //ASSERT(get_handle1() != nullptr);
 
@@ -2790,7 +2790,7 @@ namespace draw2d_direct2d
    void graphics::AngleArc(double x, double y, double nRadius, angle fStartAngle, angle fSweepAngle)
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       //ASSERT(get_handle1() != nullptr);
 
@@ -2804,7 +2804,7 @@ namespace draw2d_direct2d
    void graphics::ArcTo(const ::rectangle_f64 & rectangle, const ::point_f64 & pointStart, const ::point_f64 & pointEnd)
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       //ASSERT(get_handle1() != nullptr);
 
@@ -2817,7 +2817,7 @@ namespace draw2d_direct2d
    //int graphics::GetArcDirection()
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //   //ASSERT(get_handle2() != nullptr);
 
@@ -2828,7 +2828,7 @@ namespace draw2d_direct2d
    void graphics::poly_polyline(const ::point_f64* ppoints, const ::i32 * lpPolyPoints, count nCount)
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       //ASSERT(get_handle1() != nullptr);
 
@@ -2843,7 +2843,7 @@ namespace draw2d_direct2d
       void graphics::GetColorAdjustment(LPCOLORADJUSTMENT lpColorAdjust)
       {
 
-         __throw(todo);
+         throw ::exception(todo);
 
          //ASSERT(get_handle2() != nullptr);
 
@@ -2857,7 +2857,7 @@ namespace draw2d_direct2d
    void graphics::poly_bezier(const ::point_f64* ppoints, count nCount)
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       //ASSERT(get_handle1() != nullptr);
 
@@ -2871,7 +2871,7 @@ namespace draw2d_direct2d
 //   int graphics::DrawEscape(double dEscape, double dInputSize, const ::string & lpszInputData)
 //   {
 //
-//      __throw(todo);
+//      throw ::exception(todo);
 //
 //      //ASSERT(get_handle1() != nullptr);
 //
@@ -2883,7 +2883,7 @@ namespace draw2d_direct2d
 //   int graphics::Escape(double dEscape, double dInputSize, const ::string & lpszInputData, double dOutputSize, char * lpszOutputData)
 //   {
 //
-//      __throw(todo);
+//      throw ::exception(todo);
 //
 //      //ASSERT(get_handle1() != nullptr);
 //
@@ -2897,7 +2897,7 @@ namespace draw2d_direct2d
 //      void graphics::GetCharABCWidths(::u32 nFirstChar, ::u32 nLastChar, LPABCFLOAT lpABCF)
 //      {
 //
-//         __throw(todo);
+//         throw ::exception(todo);
 //
 //         //ASSERT(get_handle2() != nullptr);
 //         //
@@ -2910,7 +2910,7 @@ namespace draw2d_direct2d
 //   void graphics::GetCharWidth(::u32 nFirstChar, ::u32 nLastChar, float* lpFloatBuffer)
 //   {
 //
-//      __throw(todo);
+//      throw ::exception(todo);
 //
 //      //ASSERT(get_handle2() != nullptr);
 //
@@ -2922,7 +2922,7 @@ namespace draw2d_direct2d
    void graphics::abort_path()
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       //if(m_ppath != nullptr)
       //{
@@ -2939,7 +2939,7 @@ namespace draw2d_direct2d
    void graphics::begin_path()
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       //return false;
 
@@ -2949,7 +2949,7 @@ namespace draw2d_direct2d
    void graphics::close_figure()
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       //ASSERT(m_ppath != nullptr);
       //return m_ppath->CloseFigure() == Gdiplus::Status::Ok;
@@ -2962,7 +2962,7 @@ namespace draw2d_direct2d
    void graphics::end_path()
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       //if(m_ppath == nullptr)
       //   return false;
@@ -2980,7 +2980,7 @@ namespace draw2d_direct2d
    void graphics::fill_path()
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       //return m_prendertarget->FillPath(direct2d_brush(), m_ppath) == Gdiplus::Status::Ok;
 
@@ -2993,7 +2993,7 @@ namespace draw2d_direct2d
    void graphics::flatten_path()
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       //return m_ppath->Flatten() == Gdiplus::Status::Ok;
       //return false;
@@ -3005,7 +3005,7 @@ namespace draw2d_direct2d
    float graphics::GetMiterLimit()
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       //ASSERT(get_handle1() != nullptr);
       //float fMiterLimit;
@@ -3020,7 +3020,7 @@ namespace draw2d_direct2d
    //i32 graphics::GetPath(::point_f64 * ppoints, byte * lpTypes, ::count nCount)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //   //ASSERT(get_handle1() != nullptr);
    //   //return ::GetPath(get_handle1(), ppoints, lpTypes, nCount);
@@ -3031,7 +3031,7 @@ namespace draw2d_direct2d
    void graphics::SetMiterLimit(float fMiterLimit)
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       //ASSERT(get_handle1() != nullptr);
       //return ::SetMiterLimit(get_handle1(), fMiterLimit, nullptr) != false;
@@ -3044,7 +3044,7 @@ namespace draw2d_direct2d
    void graphics::stroke_and_fill_path()
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       //bool bOk1 = m_prendertarget->FillPath(direct2d_brush(), m_ppathPaint) == Gdiplus::Status::Ok;
 
@@ -3060,7 +3060,7 @@ namespace draw2d_direct2d
    void graphics::stroke_path()
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
 //      return m_prendertarget->DrawPath(direct2d_pen(), m_ppathPaint) == Gdiplus::Status::Ok;
 
@@ -3072,7 +3072,7 @@ namespace draw2d_direct2d
    void graphics::widen_path()
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
 
 //      return m_ppath->Widen(direct2d_pen()) == Gdiplus::Status::Ok;
@@ -3085,7 +3085,7 @@ namespace draw2d_direct2d
    void graphics::AddMetaFileComment(::u32 nDataSize, const byte* pCommentData)
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
 
       //ASSERT(get_handle1() != nullptr);
@@ -3137,7 +3137,7 @@ namespace draw2d_direct2d
    //void graphics::PlayMetaFile(HENHMETAFILE hEnhMF, const ::rectangle_f64 & rectangleBounds)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //   //Gdiplus::RectF rectangle_i32((Gdiplus::REAL) lpBounds->left, (Gdiplus::REAL) lpBounds->top, (Gdiplus::REAL) width(lpBounds), (Gdiplus::REAL) height(lpBounds));
 
@@ -3292,7 +3292,7 @@ namespace draw2d_direct2d
    ::draw2d::graphics * pgraphicsSrc, double xSrc, double ySrc, double dSrcWidth, double dSrcHeight, BLENDFUNCTION blend)
    {
 
-   __throw(not_implemented_exception());
+   throw ::exception(not_implemented_exception());
    //if(get_handle1() == nullptr)
    // return false;
 
@@ -3377,7 +3377,7 @@ namespace draw2d_direct2d
 //   void graphics::TransparentBlt(double xDest, double yDest, double dDestWidth, double dDestHeight, ::draw2d::graphics * pgraphicsSrc, double xSrc, double ySrc, double dSrcWidth, double dSrcHeight, ::u32 crTransparent)
 //   {
 //
-//      __throw(todo);
+//      throw ::exception(todo);
 //
 //      //ASSERT(get_handle1() != nullptr);
 //
@@ -3388,7 +3388,7 @@ namespace draw2d_direct2d
 //   void graphics::GradientFill(TRIVERTEX* pVertices, ULONG nVertices, void * pMesh, ULONG nMeshElements, u32 dwMode)
 //   {
 //
-//      __throw(todo);
+//      throw ::exception(todo);
 //
 //      //ASSERT(get_handle1() != nullptr);
 //      //
@@ -3411,7 +3411,7 @@ namespace draw2d_direct2d
    //inline ::color::color graphics::GetDCBrushColor()
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //   //ASSERT(get_handle1() != nullptr);
 
@@ -3421,7 +3421,7 @@ namespace draw2d_direct2d
    //inline ::color::color graphics::SetDCBrushColor(const ::color::color & color)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //   //ASSERT(get_handle1() != nullptr);
 
@@ -3432,7 +3432,7 @@ namespace draw2d_direct2d
    //inline ::color::color graphics::GetDCPenColor()
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //   //ASSERT(get_handle1() != nullptr);
 
@@ -3442,7 +3442,7 @@ namespace draw2d_direct2d
    //inline ::color::color graphics::SetDCPenColor(const ::color::color & color)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //   //ASSERT(get_handle1() != nullptr);
 
@@ -3455,7 +3455,7 @@ namespace draw2d_direct2d
       inline void graphics::GetCharABCWidthsI(::u32 giFirst, ::u32 cgi, LPWORD pgi, LPABC lpabc)
       {
 
-         __throw(todo);
+         throw ::exception(todo);
 
          //ASSERT(get_handle1() != nullptr);
 
@@ -3468,7 +3468,7 @@ namespace draw2d_direct2d
    //inline void graphics::GetCharWidthI(::u32 giFirst, ::u32 cgi, LPWORD pgi, LPINT lpBuffer)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //   //ASSERT(get_handle1() != nullptr);
 
@@ -3479,7 +3479,7 @@ namespace draw2d_direct2d
    //inline void graphics::GetTextExtentExPointI(LPWORD pgiIn, int cgi, double dMaxExtent, LPINT lpnFit, LPINT alpDx, LPSIZE32 LPSIZE32)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //   //ENSURE(LPSIZE32 != nullptr);
    //   //ASSERT(get_handle1() != nullptr);
@@ -3491,7 +3491,7 @@ namespace draw2d_direct2d
    //inline void graphics::GetTextExtentPointI(LPWORD pgiIn, int cgi, LPSIZE32 LPSIZE32)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //   //ENSURE(LPSIZE32 != nullptr);
    //   //ASSERT(get_handle1() != nullptr);
@@ -3629,7 +3629,7 @@ namespace draw2d_direct2d
    //void graphics::DrawDragRect(const ::rectangle_i32 & rectangle, const ::size_f64& ::size_f64, const ::rectangle_i32 & rectangleLast, const ::size_f64& sizeLast, ::draw2d::brush* pBrush, ::draw2d::brush* pBrushLast)
    //{
 
-   //   throw interface_only_exception();
+   //   throw ::interface_only();
 
    //   /*
    //   ASSERT(__is_valid_address(rectangle, sizeof(::rectangle_f64), false));
@@ -3776,7 +3776,7 @@ namespace draw2d_direct2d
    //int graphics::StartDoc(const ::string & lpszDocName)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //   //DOCINFO di;
    //   //__memset(&di, 0, sizeof(DOCINFO));
@@ -3863,7 +3863,7 @@ namespace draw2d_direct2d
    //int graphics::SetPolyFillMode(int nPolyFillMode)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //}
 
@@ -3871,7 +3871,7 @@ namespace draw2d_direct2d
    //int graphics::SetROP2(int nDrawMode)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //   //double dRetVal = 0;
    //   //if(get_handle1() != nullptr && get_handle1() != get_handle2())
@@ -3924,7 +3924,7 @@ namespace draw2d_direct2d
    //int graphics::SetGraphicsMode(int iMode)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //   //double dRetVal = 0;
    //   //if(get_handle1() != nullptr && get_handle1() != get_handle2())
@@ -3941,7 +3941,7 @@ namespace draw2d_direct2d
    //void graphics::SetWorldTransform(const XFORM* pXform)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //   //bool nRetVal = 0;
    //   //if(get_handle1() != nullptr && get_handle1() != get_handle2())
@@ -3958,7 +3958,7 @@ namespace draw2d_direct2d
    //void graphics::ModifyWorldTransform(const XFORM* pXform,u32 iMode)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //   //bool nRetVal = 0;
    //   //if(get_handle1() != nullptr && get_handle1() != get_handle2())
@@ -4000,7 +4000,7 @@ namespace draw2d_direct2d
    ::size_f64 graphics::SetViewportExt(double x, double y)
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
 
       return nullptr;
@@ -4019,7 +4019,7 @@ namespace draw2d_direct2d
    point_f64 graphics::SetWindowOrg(double x, double y)
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       return nullptr;
 
@@ -4029,7 +4029,7 @@ namespace draw2d_direct2d
    point_f64 graphics::offset_window_org(double dWidth, double dHeight)
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       return nullptr;
 
@@ -4039,7 +4039,7 @@ namespace draw2d_direct2d
    ::size_f64 graphics::set_window_ext(double x, double y)
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       return nullptr;
 
@@ -4049,7 +4049,7 @@ namespace draw2d_direct2d
    ::size_f64 graphics::scale_window_ext(double xNum, double xDenom, double yNum, double yDenom)
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
 
       return nullptr;
@@ -4060,7 +4060,7 @@ namespace draw2d_direct2d
    int graphics::get_clip_box(::rectangle_f64 * prectangle)
    {
       return 0;
-      //__throw(todo);
+      //throw ::exception(todo);
 
       //return ::get_clip_box(get_handle1(), rectangle);
    }
@@ -4380,7 +4380,7 @@ namespace draw2d_direct2d
 
    //   return 0;
 
-   //   //__throw(todo);
+   //   //throw ::exception(todo);
 
 
    //   //if(pregion == nullptr)
@@ -4453,7 +4453,7 @@ namespace draw2d_direct2d
    //int graphics::OffsetClipRgn(double x, double y)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //}
 
@@ -4461,7 +4461,7 @@ namespace draw2d_direct2d
    //int graphics::OffsetClipRgn(const ::size_f64& ::size_f64)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //}
 
@@ -4469,7 +4469,7 @@ namespace draw2d_direct2d
    ::u32 graphics::SetTextAlign(::u32 nFlags)
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       return 0;
 
@@ -4479,7 +4479,7 @@ namespace draw2d_direct2d
    //int graphics::SetTextJustification(double dBreakExtra, double dBreakCount)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //}
 
@@ -4487,7 +4487,7 @@ namespace draw2d_direct2d
    //int graphics::SetTextCharacterExtra(double dCharExtra)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //}
 
@@ -4495,7 +4495,7 @@ namespace draw2d_direct2d
    //u32 graphics::SetMapperFlags(u32 dwFlag)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //}
 
@@ -4615,7 +4615,7 @@ namespace draw2d_direct2d
    u32 graphics::GetLayout()
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       return 0;
 
@@ -4625,7 +4625,7 @@ namespace draw2d_direct2d
    u32 graphics::SetLayout(u32 dwSetLayout)
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       return 0;
 
@@ -4635,7 +4635,7 @@ namespace draw2d_direct2d
    void graphics::ArcTo(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4)
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       //return false;
 
@@ -4645,7 +4645,7 @@ namespace draw2d_direct2d
    //int graphics::SetArcDirection(double dArcDirection)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //}
 
@@ -4653,7 +4653,7 @@ namespace draw2d_direct2d
    void graphics::polydraw(const ::point_f64* ppoints, const byte* lpTypes, count nCount)
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       //return false;
 
@@ -4663,7 +4663,7 @@ namespace draw2d_direct2d
    void graphics::polyline_to(const ::point_f64* ppoints, count nCount)
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       //return false;
 
@@ -4673,7 +4673,7 @@ namespace draw2d_direct2d
    void graphics::poly_bezier_to(const ::point_f64* ppoints, count nCount)
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       //return false;
 
@@ -4683,7 +4683,7 @@ namespace draw2d_direct2d
    void graphics::SelectClipPath(int nMode)
    {
 
-      //__throw(todo);
+      //throw ::exception(todo);
 
       //return false;
 
@@ -4783,7 +4783,7 @@ namespace draw2d_direct2d
             //if (hObjOld == hStockFont)
             //{
             //   // got the stock object back, so must be selecting a font
-            //   __throw(error_not_implemented);
+            //   throw ::not_implemented();
             //   //                  (dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->SelectObject(::draw2d_direct2d::font::from_handle_dup(pgraphics->get_application(), (HFONT)hObject));
             //   break;  // don't play the default record
             //}
@@ -4799,7 +4799,7 @@ namespace draw2d_direct2d
          {
             // play back as graphics::SelectObject(::write_text::font*)
             //               (dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->SelectObject(::draw2d_direct2d::font::from_handle_dup(pgraphics->get_application(), (HFONT)hObject));
-            __throw(error_not_implemented);
+            throw ::not_implemented();
             break;  // don't play the default record
          }
       }
@@ -4818,7 +4818,7 @@ namespace draw2d_direct2d
    //void graphics::PlayMetaFile(HMETAFILE hMF)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //}
 
@@ -5065,7 +5065,7 @@ namespace draw2d_direct2d
    //::size_f64 graphics::GetOutputTextExtent(const char * lpszString, strsize nCount)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //   return nullptr;
 
@@ -5075,7 +5075,7 @@ namespace draw2d_direct2d
    //::size_f64 graphics::GetOutputTextExtent(const ::string & str)
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //   return nullptr;
 
@@ -5552,7 +5552,7 @@ namespace draw2d_direct2d
    //HDC graphics::get_handle() const
    //{
 
-   //   __throw(todo);
+   //   throw ::exception(todo);
 
    //   return
 
@@ -5722,7 +5722,7 @@ namespace draw2d_direct2d
    void graphics::blur(bool bExpand, double dRadius, const ::rectangle_f64 & rectangle)
    {
 
-      __throw(todo);
+      throw ::exception(todo);
 
       //return false;
 

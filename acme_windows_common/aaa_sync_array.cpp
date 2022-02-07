@@ -144,7 +144,7 @@ void synchronization_array::erase(index index)
    if (index >= m_synchronizationa.size())
    {
 
-      __throw(range_error("synchronization_array::erase: index out of bounds"));
+      throw ::exception(range_error("synchronization_array::erase: index out of bounds"));
 
    }
 
@@ -329,7 +329,7 @@ synchronization_result synchronization_array::contains( const synchronization_re
    throw todo();
 
    //if ( !result.abandoned() && !result.signaled() )
-   //   __throw(range_error("no matter signaled"));
+   //   throw ::exception(range_error("no matter signaled"));
 
    //index position = result.abandoned() ? result.abandoned_index() : result.signaled_index();
 

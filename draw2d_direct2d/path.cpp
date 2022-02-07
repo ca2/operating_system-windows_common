@@ -495,7 +495,7 @@ namespace draw2d_direct2d
    //      internal_end_figure(e.u.m_end.m_bClose);
    //      break;
    //   default:
-   //      __throw(::exception("unexpected simple os graphics matter type"));
+   //      throw ::exception(::exception("unexpected simple os graphics matter type"));
    //   }
 
    //   return false;

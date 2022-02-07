@@ -4,11 +4,11 @@
 struct mq_message 
 {
 
-   ::atom        m_id;
+   ::atom        m_atom;
    MESSAGE     m_message;
 
    mq_message(const ::atom & atom) :
-      m_id(atom)
+      m_atom(atom)
    {
       m_message.message = atom.umessage();
 
@@ -21,7 +21,7 @@ struct mq_message
    }
 
    mq_message(const MESSAGE& message) :
-      m_id((enum_message) message.message)
+      m_atom((enum_message) message.message)
    {
 
       memcpy(&m_message, &message, sizeof(MESSAGE));
@@ -41,7 +41,7 @@ struct mq_message
    {
 
 
-      m_id = (enum_message)message.message;
+      m_atom = (enum_message)message.message;
 
       memcpy(&m_message, &message, sizeof(MESSAGE));
 

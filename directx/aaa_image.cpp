@@ -304,7 +304,7 @@ namespace draw2d_directx
 
 #else
 
-      __throw(todo);
+      throw ::exception(todo);
 
 #endif
 
@@ -1125,7 +1125,7 @@ namespace draw2d_directx
       if (FAILED(hr) || pbitmap->m_map.bits == nullptr)
       {
 
-         __throw(::exception(""));
+         throw ::exception(::exception(""));
 
       }
 
@@ -1251,7 +1251,7 @@ namespace draw2d_directx
 
             ((image *) this)->m_bMapped = false;
 
-            __throw(::exception(""));
+            throw ::exception(::exception(""));
 
          }
 

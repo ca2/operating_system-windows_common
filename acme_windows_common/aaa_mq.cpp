@@ -374,7 +374,7 @@
 //   if (atom.m_etype != ::atom::e_type_message)
 //   {
 //
-//      __throw(error_bad_argument);
+//      throw ::exception(error_bad_argument);
 //
 //   }
 //
