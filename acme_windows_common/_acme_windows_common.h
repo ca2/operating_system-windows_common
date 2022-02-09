@@ -28,6 +28,9 @@ CLASS_DECL_ACME_WINDOWS_COMMON ::e_status hresult_to_status(HRESULT hr);
 //CLASS_DECL_ACME_WINDOWS_COMMON string bstr_to_str(BSTR bstr);
 
 
+#include "_c.h"
+
+
 #include "comptr.h"
 #include "cotaskptr.h"
 
