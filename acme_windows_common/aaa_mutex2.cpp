@@ -125,7 +125,7 @@ static int g_iMutex = 0;
 
          DWORD dwError2 = ::GetLastError();
 
-         __throw(error_resource);
+         throw ::exception(error_resource);
 
       }
 
@@ -199,7 +199,7 @@ pacmedir->create(::file::path(strName).folder());
          if (err != EEXIST)
          {
 
-            __throw(error_resource);
+            throw ::exception(error_resource);
 
          }
 
@@ -210,7 +210,7 @@ pacmedir->create(::file::path(strName).folder());
          if (m_psem == SEM_FAILED)
          {
 
-            __throw(resource_exception(););
+            throw ::exception(resource_exception(););
 
          }
 
@@ -296,7 +296,7 @@ pacmedir->create(path.folder());
 
          const char * pszError = strerror(iErr);
 
-         __throw(error_resource);
+         throw ::exception(error_resource);
 
       }
 
@@ -404,7 +404,7 @@ get_existing:
       if(m_semid < 0)
       {
 
-         __throw(error_resource);
+         throw ::exception(error_resource);
 
       }
 
@@ -1536,8 +1536,8 @@ __pointer(::mutex) open_mutex(const ::string & lpszName)
       if (psem == SEM_FAILED)
       {
 
-         //__throw(resource_exception(papp,"failed to create named ::mutex"));
-         __throw(error_resource);
+         //throw ::exception(resource_exception(papp,"failed to create named ::mutex"));
+         throw ::exception(error_resource);
 
       }
 
@@ -1598,7 +1598,7 @@ pacmedir->create(path.folder());
    if (iFd < 0)
    {
 
-      __throw(error_resource);
+      throw ::exception(error_resource);
 
    }
 

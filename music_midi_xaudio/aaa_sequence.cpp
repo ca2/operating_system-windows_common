@@ -86,7 +86,7 @@ namespace music
             if (nullptr == m_lpbAlloc)
             return MCIERR_OUT_OF_MEMORY;
 
-            // Initialize all MIDIHDR's and __throw( them into a free list
+            // Initialize all MIDIHDR's and throw ::exception( them into a free list
             //
             m_lpmhFree = nullptr;
 
@@ -507,7 +507,7 @@ Seq_Open_File_Cleanup:
                   if(bThrow)
                   {
                      SetState(e_state_opened);
-                     __throw(multimedia::exception(multimedia::exception_music, EMidiPlayerPrerollStreamOpen));
+                     throw ::exception(multimedia::exception(multimedia::exception_music, EMidiPlayerPrerollStreamOpen));
                   }
                   TRACE("midiStreamOpenError %d\n", estatus);
                   //goto seq_Preroll_Cleanup;
@@ -543,7 +543,7 @@ Seq_Open_File_Cleanup:
 
                      SetState(e_state_opened);
 
-                     __throw(multimedia::exception(multimedia::exception_midi, estatus));
+                     throw ::exception(multimedia::exception(multimedia::exception_midi, estatus));
 
                   }
 
@@ -628,7 +628,7 @@ Seq_Open_File_Cleanup:
 
                   SetState(e_state_opened);
 
-                  __throw(multimedia::exception(multimedia::exception_midi, estatus));
+                  throw ::exception(multimedia::exception(multimedia::exception_midi, estatus));
 
                }
                else
@@ -646,7 +646,7 @@ Seq_Open_File_Cleanup:
                if(bThrow)
                {
                   SetState(e_state_opened);
-                  __throw(multimedia::exception(multimedia::exception_midi, EMidiPlayerPrerollPrepareHeader2));
+                  throw ::exception(multimedia::exception(multimedia::exception_midi, EMidiPlayerPrerollPrepareHeader2));
                }
                else
                {
@@ -1534,7 +1534,7 @@ seq_Preroll_Cleanup:
          {
             __UNREFERENCED_PARAMETER(pevent);
             single_lock synchronouslock(&m_mutex, true);
-            //   LPMIDIHDR lpmh = psubject->m_lpmh;
+            //   LPMIDIHDR lpmh = ptopic->m_lpmh;
             //   midi_callback_data * lpData = &m_midicallbackdata;
             void     estatus;
 
@@ -1565,7 +1565,7 @@ seq_Preroll_Cleanup:
 
          void sequence::OnEvent(::music::midi::sequence::event * pevent)
          {
-            switch(psubject->m_id)
+            switch(ptopic->m_atom)
             {
             case EventSpecialModeV001End:
             {
@@ -2541,9 +2541,9 @@ seq_Preroll_Cleanup:
 
             event * pevent          = new event();
 
-            psubject->m_id        = eevent;
-            psubject->m_psequence     = this;
-            psubject->m_lpmh          = lpmidihdr;
+            ptopic->m_atom        = eevent;
+            ptopic->m_psequence     = this;
+            ptopic->m_lpmh          = lpmidihdr;
 
             return pevent;
 

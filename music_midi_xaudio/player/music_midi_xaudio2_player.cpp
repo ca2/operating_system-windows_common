@@ -153,7 +153,7 @@ namespace music
                if(::success != (estatus = get_sequence()->CloseFile()) && estatus != error_unsupported_function)
                {
 
-                  __throw(multimedia::exception(multimedia::exception_midi, EMidiPlayerClose));
+                  throw ::exception(multimedia::exception(multimedia::exception_midi, EMidiPlayerClose));
 
                }
 
@@ -242,7 +242,7 @@ namespace music
                //   }
                if(pusermessage->m_puserinteraction == nullptr)
                {
-                  switch(pusermessage->m_id)
+                  switch(pusermessage->m_atom)
                   {
                   case WM_USER + 100:
                   {
@@ -253,13 +253,13 @@ namespace music
                   return;
                   }
                }
-               if(pusermessage->m_id == MMSG_DONE)
+               if(pusermessage->m_atom == MMSG_DONE)
                {
                   OnMmsgDone((::music::midi::sequence *) pusermessage->m_wparam);
                   pusermessage->m_bRet = true;
                   return;
                }
-               else if(pusermessage->m_id == WM_USER)
+               else if(pusermessage->m_atom == WM_USER)
                {
                   //      OnUserMessage(pMsg->wParam, pMsg->lParam);
                }
@@ -274,7 +274,7 @@ namespace music
                if((estatus = get_sequence()->SaveFile(lpszPathName)) != ::success)
                {
 
-                  __throw(multimedia::exception(multimedia::exception_midi, EMidiPlayerSave));
+                  throw ::exception(multimedia::exception(multimedia::exception_midi, EMidiPlayerSave));
 
                }
 

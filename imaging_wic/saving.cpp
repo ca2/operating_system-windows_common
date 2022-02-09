@@ -17,7 +17,7 @@ namespace imaging_wic
       if (::is_null(pimage))
       {
 
-         throw_status(error_invalid_argument);
+         throw_status(error_bad_argument);
 
       }
 

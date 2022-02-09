@@ -117,7 +117,7 @@ bool PreventSetUnhandledExceptionFilter()
       //      sigaddset(&set, SIGSEGV);
       //      pthread_sigmask(SIG_UNBLOCK, &set, nullptr);
 
-      __throw(standard_access_violation(signal, psiginfo, pc));
+      throw ::exception(standard_access_violation(signal, psiginfo, pc));
 
    }
 
@@ -130,7 +130,7 @@ bool PreventSetUnhandledExceptionFilter()
       //sigaddset(&set, SIGSEGV);
       //sigprocmask(SIG_UNBLOCK, &set, nullptr);
 
-      __throw(standard_sigfpe(signal, psiginfo, pc));
+      throw ::exception(standard_sigfpe(signal, psiginfo, pc));
 
    }
 
@@ -143,7 +143,7 @@ bool PreventSetUnhandledExceptionFilter()
       //      sigaddset(&set, SIGSEGV);
       //      sigprocmask(SIG_UNBLOCK, &set, nullptr);
 
-      //       __throw(standard_sigfpe(nullptr, signal, psiginfo, pc));
+      //       throw ::exception(standard_sigfpe(nullptr, signal, psiginfo, pc));
 
    }
 

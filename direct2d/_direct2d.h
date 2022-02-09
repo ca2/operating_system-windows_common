@@ -124,7 +124,7 @@ namespace dx
       if (FAILED(hr))
          throw hresult_exception(hr);
       //if(FAILED(hr))
-      // __throw(hr);
+      // throw ::exception(hr);
 
    }
 

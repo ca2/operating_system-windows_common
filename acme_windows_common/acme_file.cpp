@@ -196,43 +196,54 @@ namespace windows_common
    void acme_file::touch(const char* path)
    {
 
-      
       m_pacmedir->create(file_path_folder(path));
-
 
       wstring wstrPath(path);
 
-
-
-      int fd = _wopen(wstrPath, O_WRONLY | O_CREAT);
-
-      if (fd < 0) // Couldn't open that path.
+      if (exists(path))
       {
 
-         throw_status(::error_io);
+         auto time = ::time(nullptr);
+
+         _utimbuf ut;
+
+         ut.actime = time;
+
+         ut.modtime = time;
+
+         int rc = _wutime(wstrPath, &ut);
+
+         if (rc)
+         {
+
+            int iErrNo = errno;
+
+            auto estatus = failed_errno_to_status(iErrNo);
+
+            throw_status(estatus);
+
+         }
 
       }
-
-      ::close(fd);
-
-      auto time = ::time(nullptr);
-
-      _utimbuf ut;
-
-      ut.actime = time;
-
-      ut.modtime = time;
-
-      int rc = _wutime(wstrPath, &ut);
-
-      if (rc)
+      else
       {
 
-         throw_status(::error_io);
+         int fd = _wopen(wstrPath, O_WRONLY | O_CREAT);
+
+         if (fd < 0)
+         {
+
+            int iErrNo = errno;
+
+            auto estatus = failed_errno_to_status(iErrNo);
+
+            throw_status(estatus);
+
+         }
+
+         ::close(fd);
 
       }
-
-      //return ::success;
 
    }
 

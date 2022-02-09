@@ -53,7 +53,7 @@ event::event(char * sz, bool bInitiallyOwn, bool bManualReset, const ::string & 
    if (m_hsync == NULL)
    {
 
-      __throw(error_resource);
+      throw ::exception(error_resource);
 
    }
 
@@ -80,7 +80,7 @@ event::event(char * sz, bool bInitiallyOwn, bool bManualReset, const ::string & 
    if (m_hsync == nullptr)
    {
 
-      __throw(error_resource);
+      throw ::exception(error_resource);
 
    }
 
@@ -103,7 +103,7 @@ event::event(char * sz, bool bInitiallyOwn, bool bManualReset, const ::string & 
       m_mutex = new pthread_mutex_t;
       if((rc = pthread_mutex_init((pthread_mutex_t *) m_mutex,&attr)))
       {
-         __throw(::exception("RC_OBJECT_NOT_CREATED"));
+         throw ::exception(::exception("RC_OBJECT_NOT_CREATED"));
       }
 
 
@@ -366,7 +366,7 @@ bool event::ResetEvent()
    else
    {
 
-      __throw(::exception("It does not make sense to Reset a Event that is Automatic. It can be only Pulsed/Broadcasted."));
+      throw ::exception(::exception("It does not make sense to Reset a Event that is Automatic. It can be only Pulsed/Broadcasted."));
 
    }
 
@@ -380,7 +380,7 @@ bool event::ResetEvent()
 synchronization_result event::wait ()
 {
 
-   //__throw(todo("thread"));
+   //throw ::exception(todo("thread"));
    //if(m_eobject & e_object_alertable_wait)
    //{
 
@@ -488,7 +488,7 @@ synchronization_result event::wait ()
 
 #endif
 
-   //__throw(todo("thread"));
+   //throw ::exception(todo("thread"));
    //if(m_eobject & e_object_alertable_wait)
    //{
 
@@ -515,7 +515,7 @@ synchronization_result event::wait (const duration & durationTimeout)
 
    synchronization_result result;
 
-   //__throw(todo("thread"));
+   //throw ::exception(todo("thread"));
    //if(durationTimeout > 1_s && m_eobject & e_object_alertable_wait)
    //{
 
@@ -720,7 +720,7 @@ synchronization_result event::wait (const duration & durationTimeout)
 
 #endif
 
-   ////__throw(todo("thread"));
+   ////throw ::exception(todo("thread"));
    //if(durationTimeout > 1_s && m_eobject & e_object_alertable_wait)
    //{
 

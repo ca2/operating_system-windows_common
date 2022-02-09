@@ -7,7 +7,7 @@
 //void CLASS_DECL_ACME_WINDOWS_COMMON __cdecl _ca2_purecall()
 //{
 //
-//   __throw(::exception());
+//   throw ::exception(::exception());
 //
 //}
 
@@ -59,7 +59,7 @@ namespace windows_common
 } // namespace windows
 
 
-//LRESULT CALLBACK __window_procedure(HWND oswindow, const ::id & id, wparam wparam, lparam lparam);
+//LRESULT CALLBACK __window_procedure(HWND oswindow, const ::atom & atom, wparam wparam, lparam lparam);
 //
 //WNDPROC get_window_procedure()
 //{

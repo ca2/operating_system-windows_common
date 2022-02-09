@@ -83,10 +83,10 @@ namespace directx
    }
 
 
-   void object::assert_valid() const
+   void object::assert_ok() const
    {
 
-      ::draw2d::object::assert_valid();
+      ::draw2d::object::assert_ok();
 
    }
 

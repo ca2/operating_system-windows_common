@@ -279,7 +279,7 @@ namespace draw2d_direct2d
       if (cx <= 0 || cy <= 0)
       {
 
-         return error_invalid_argument;
+         return error_bad_argument;
 
       }
 
@@ -304,7 +304,7 @@ namespace draw2d_direct2d
 
 #else
 
-      __throw(todo);
+      throw ::exception(todo);
 
 #endif
 
@@ -1125,7 +1125,7 @@ namespace draw2d_direct2d
       if (FAILED(hr) || pbitmap->m_map.bits == nullptr)
       {
 
-         __throw(::exception(""));
+         throw ::exception(::exception(""));
 
       }
 
@@ -1251,7 +1251,7 @@ namespace draw2d_direct2d
 
             ((image *) this)->m_bMapped = false;
 
-            __throw(::exception(""));
+            throw ::exception(::exception(""));
 
          }
 

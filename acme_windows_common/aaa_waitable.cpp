@@ -126,7 +126,7 @@
 //
 //   if(!lock(duration::infinite()))
 //      if(!lock(duration::infinite()))
-//         __throw(::exception("failure to lock matter"));
+//         throw ::exception(::exception("failure to lock matter"));
 //
 //}
 //
