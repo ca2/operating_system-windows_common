@@ -69,7 +69,7 @@ namespace draw2d_direct2d
       if (size.is_empty())
       {
 
-         throw_status(error_failed);
+         throw ::exception(error_failed);
 
       }
 
@@ -99,7 +99,7 @@ namespace draw2d_direct2d
       if (::is_null(pbitmap) || ::is_null(pgraphics))
       {
 
-         throw_status(error_failed);
+         throw ::exception(error_failed);
 
       }
 
@@ -310,7 +310,7 @@ namespace draw2d_direct2d
       if (cx <= 0 || cy <= 0)
       {
 
-         throw_status(error_bad_argument);
+         throw ::exception(error_bad_argument);
 
       }
 
@@ -1073,14 +1073,14 @@ namespace draw2d_direct2d
       if (m_bMapped)
       {
 
-         throw_status(error_invalid_empty_argument);
+         throw ::exception(error_invalid_empty_argument);
 
       }
 
       if (m_pbitmap.is_null())
       {
 
-         throw_status(error_invalid_empty_argument);
+         throw ::exception(error_invalid_empty_argument);
 
       }
 
@@ -1172,14 +1172,14 @@ namespace draw2d_direct2d
       if (!m_bMapped)
       {
 
-         throw_status(error_wrong_state);
+         throw ::exception(error_wrong_state);
 
       }
 
       if (m_pbitmap.is_null())
       {
 
-         throw_status(error_wrong_state);
+         throw ::exception(error_wrong_state);
 
       }
 

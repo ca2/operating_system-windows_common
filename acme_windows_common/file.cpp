@@ -127,14 +127,14 @@ CLASS_DECL_ACME_WINDOWS_COMMON void hfile_write(hfile hfile, const void* p, mems
       {
 
          //return ::error_failed;
-         throw_status(::error_failed);
+         throw ::exception(::error_failed);
 
       }
 
       if (dwWritten != iWrite)
       {
 
-         throw_status(::error_failed);
+         throw ::exception(::error_failed);
 
       }
 

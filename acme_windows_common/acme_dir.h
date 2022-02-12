@@ -20,7 +20,7 @@ namespace windows_common
 
 
 
-      void __create(const char * path) override;
+      //void __create(const char * path) override;
 
       //bool _is(const char * path) override;
 

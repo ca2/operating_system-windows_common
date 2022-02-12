@@ -66,7 +66,7 @@ namespace draw2d_direct2d
       if (FAILED(hr))
       {
 
-         throw_status(error_failed);
+         throw ::exception(error_failed);
 
       }
 
@@ -121,7 +121,7 @@ namespace draw2d_direct2d
       if (!::is_set(pgraphics2d))
       {
 
-         throw_status(error_failed);
+         throw ::exception(error_failed);
 
       }
 
@@ -130,7 +130,7 @@ namespace draw2d_direct2d
       if (!prendertarget)
       {
 
-         throw_status(error_failed);
+         throw ::exception(error_failed);
 
       }
 
@@ -145,14 +145,14 @@ namespace draw2d_direct2d
       if (FAILED(hr) || m_pbitmap1 == nullptr)
       {
 
-         throw_status(error_failed);
+         throw ::exception(error_failed);
 
       }
 
       if (FAILED(m_pbitmap1.as(m_pbitmap)))
       {
 
-         throw_status(error_failed);
+         throw ::exception(error_failed);
 
       }
 

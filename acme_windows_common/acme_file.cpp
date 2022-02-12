@@ -104,7 +104,7 @@ namespace windows_common
       if (fd < 0) // Couldn't open that path.
       {
          
-         throw_status(::error_io);
+         throw ::exception(::error_io);
 
       }
 
@@ -127,7 +127,7 @@ namespace windows_common
 
          //return ::error_failed;
 
-         throw_status(::error_failed);
+         throw ::exception(::error_failed);
 
       }
 
@@ -145,7 +145,7 @@ namespace windows_common
 
          //return ::error_failed;
 
-         throw_status(::error_failed);
+         throw ::exception(::error_failed);
 
       }
 
@@ -166,7 +166,7 @@ namespace windows_common
 
          //return ::error_failed;
 
-         throw_status(::error_failed);
+         throw ::exception(::error_failed);
 
       }
 
@@ -175,7 +175,7 @@ namespace windows_common
 
          //return ::success_none;
 
-         throw_status(::error_failed);
+         throw ::exception(::error_failed);
 
       }
 
@@ -184,7 +184,7 @@ namespace windows_common
 
          //return ::error_failed;
 
-         throw_status(::error_failed);
+         throw ::exception(::error_failed);
 
       }
 
@@ -220,7 +220,7 @@ namespace windows_common
 
             auto estatus = failed_errno_to_status(iErrNo);
 
-            throw_status(estatus);
+            throw ::exception(estatus);
 
          }
 
@@ -237,7 +237,7 @@ namespace windows_common
 
             auto estatus = failed_errno_to_status(iErrNo);
 
-            throw_status(estatus);
+            throw ::exception(estatus);
 
          }
 
@@ -267,7 +267,7 @@ namespace windows_common
       if (!pfile)
       {
 
-         throw_status(::error_io);
+         throw ::exception(::error_io);
 
       }
 
@@ -448,7 +448,7 @@ namespace windows_common
 
          auto estatus = errno_to_status(iErrNo);
 
-         throw_status(estatus);
+         throw ::exception(estatus);
 
       }
 
@@ -570,7 +570,7 @@ namespace windows_common
 
          auto estatus = last_error_to_status(dwLastError);
 
-         throw_status(::error_io);
+         throw ::exception(::error_io);
 
       }
 

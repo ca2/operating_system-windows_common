@@ -99,7 +99,7 @@ namespace draw2d_direct2d
          {
 
             //return false;
-            throw_status(error_failed);
+            throw ::exception(error_failed);
 
 
          }
@@ -121,7 +121,7 @@ namespace draw2d_direct2d
 
             //return false;
 
-            throw_status(error_failed);
+            throw ::exception(error_failed);
 
          }
 
@@ -149,7 +149,7 @@ namespace draw2d_direct2d
       if (m_pformat == nullptr)
       {
 
-         throw_status(error_failed);
+         throw ::exception(error_failed);
 
       }
 

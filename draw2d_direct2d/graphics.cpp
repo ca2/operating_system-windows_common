@@ -148,7 +148,7 @@ namespace draw2d_direct2d
 
          //return false;
 
-         throw_status(error_failed);
+         throw ::exception(error_failed);
 
       }
 
@@ -171,7 +171,7 @@ namespace draw2d_direct2d
 
          ASSERT(false);
 
-         throw_status(error_failed);
+         throw ::exception(error_failed);
 
       }
 
@@ -182,7 +182,7 @@ namespace draw2d_direct2d
 
          trace_hr("graphics::CreateCompatibleDC, QueryInterface (2) ",hr);
 
-         throw_status(error_failed);
+         throw ::exception(error_failed);
 
       }
 
@@ -204,7 +204,7 @@ namespace draw2d_direct2d
 
          trace_hr("graphics::CreateCompatibleDC, CreateCompatibleRenderTarget (3) ", hr);
 
-         throw_status(error_failed);
+         throw ::exception(error_failed);
 
       }
 
@@ -215,7 +215,7 @@ namespace draw2d_direct2d
 
          m_pbitmaprendertarget = nullptr;
 
-         throw_status(error_failed);
+         throw ::exception(error_failed);
 
       }
 
@@ -228,7 +228,7 @@ namespace draw2d_direct2d
 
          m_pbitmaprendertarget = nullptr;
 
-         throw_status(error_failed);
+         throw ::exception(error_failed);
 
       }
 
@@ -243,7 +243,7 @@ namespace draw2d_direct2d
 
          m_pbitmaprendertarget = nullptr;
 
-         throw_status(error_failed);
+         throw ::exception(error_failed);
 
       }
 
@@ -538,7 +538,7 @@ namespace draw2d_direct2d
       if (block.is_empty())
       {
 
-         throw_status(error_invalid_empty_argument);
+         throw ::exception(error_invalid_empty_argument);
 
       }
 
@@ -644,7 +644,7 @@ namespace draw2d_direct2d
       if (::is_null(pbitmapParam))
       {
 
-         throw_status(error_invalid_empty_argument);
+         throw ::exception(error_invalid_empty_argument);
 
       }
 
@@ -877,7 +877,7 @@ namespace draw2d_direct2d
       if (!m_prendertarget)
       {
 
-         throw_status(error_null_pointer);
+         throw ::exception(error_null_pointer);
 
       }
 
@@ -1201,7 +1201,7 @@ namespace draw2d_direct2d
       if (m_prendertarget == nullptr)
       {
 
-         throw_status(error_null_pointer);
+         throw ::exception(error_null_pointer);
 
       }
 
@@ -1490,7 +1490,7 @@ namespace draw2d_direct2d
       if (m_pbrush.is_null())
       {
 
-         //throw_status(error_null_pointer);return false;
+         //throw ::exception(error_null_pointer);return false;
 
       }
 
@@ -1501,7 +1501,7 @@ namespace draw2d_direct2d
 
          //return false;
 
-         throw_status(error_null_pointer);
+         throw ::exception(error_null_pointer);
 
       }
 
@@ -1529,7 +1529,7 @@ namespace draw2d_direct2d
 
          //return false;
 
-         throw_status(error_null_pointer);
+         throw ::exception(error_null_pointer);
 
       }
 
@@ -1540,7 +1540,7 @@ namespace draw2d_direct2d
 
          //return false;
 
-         throw_status(error_null_pointer);
+         throw ::exception(error_null_pointer);
 
       }
 
@@ -1588,7 +1588,7 @@ namespace draw2d_direct2d
 
          //return false;
 
-         throw_status(error_null_pointer);
+         throw ::exception(error_null_pointer);
 
       }
 
@@ -1640,7 +1640,7 @@ namespace draw2d_direct2d
 
          //return false;
 
-         throw_status(error_invalid_empty_argument);
+         throw ::exception(error_invalid_empty_argument);
 
       }
 
@@ -1688,7 +1688,7 @@ namespace draw2d_direct2d
 
          //return false;
 
-         throw_status(error_invalid_empty_argument);
+         throw ::exception(error_invalid_empty_argument);
 
       }
 
@@ -1756,7 +1756,7 @@ namespace draw2d_direct2d
 
          //return false;
 
-         throw_status(error_null_pointer);
+         throw ::exception(error_null_pointer);
 
       }
 
@@ -1790,7 +1790,7 @@ namespace draw2d_direct2d
       if (pbrush == nullptr)
       {
 
-         throw_status(error_null_pointer);
+         throw ::exception(error_null_pointer);
 
       }
 
@@ -1875,7 +1875,7 @@ namespace draw2d_direct2d
 
             //return false;
 
-            throw_status(error_null_pointer);
+            throw ::exception(error_null_pointer);
 
          }
 
@@ -2027,7 +2027,7 @@ namespace draw2d_direct2d
 
             //return false;
 
-            throw_status(error_failed);
+            throw ::exception(error_failed);
 
          }
 
@@ -2036,7 +2036,7 @@ namespace draw2d_direct2d
 
             //return false;
 
-            throw_status(error_failed);
+            throw ::exception(error_failed);
 
          }
 
@@ -2045,7 +2045,7 @@ namespace draw2d_direct2d
 
             //return false;
 
-            throw_status(error_failed);
+            throw ::exception(error_failed);
 
          }
 
@@ -2310,7 +2310,7 @@ namespace draw2d_direct2d
 
          //return false;
 
-         throw_status(error_failed);
+         throw ::exception(error_failed);
 
       }
 
@@ -3814,7 +3814,7 @@ namespace draw2d_direct2d
 
          //return false;
 
-         throw_status(error_failed);
+         throw ::exception(error_failed);
 
       }
 
@@ -3823,7 +3823,7 @@ namespace draw2d_direct2d
 
          //return false;
 
-         throw_status(error_failed);
+         throw ::exception(error_failed);
 
       }
 
@@ -4881,7 +4881,7 @@ namespace draw2d_direct2d
 
          //return false;
 
-         throw_status(error_invalid_empty_argument);
+         throw ::exception(error_invalid_empty_argument);
 
       }
 
@@ -4890,7 +4890,7 @@ namespace draw2d_direct2d
 
          //return false;
 
-         throw_status(error_null_pointer);
+         throw ::exception(error_null_pointer);
 
       }
 
@@ -4899,7 +4899,7 @@ namespace draw2d_direct2d
 
          //return false;
 
-         throw_status(error_null_pointer);
+         throw ::exception(error_null_pointer);
 
       }
 
@@ -4910,7 +4910,7 @@ namespace draw2d_direct2d
 
          //return false;
 
-         throw_status(error_null_pointer);
+         throw ::exception(error_null_pointer);
 
       }
 
@@ -4921,7 +4921,7 @@ namespace draw2d_direct2d
 
          //return false;
 
-         throw_status(error_null_pointer);
+         throw ::exception(error_null_pointer);
 
       }
 
@@ -5128,7 +5128,7 @@ namespace draw2d_direct2d
 
          //return false;
 
-         throw_status(error_null_pointer);
+         throw ::exception(error_null_pointer);
 
       }
 
@@ -5138,7 +5138,7 @@ namespace draw2d_direct2d
       {
 
          //return false;
-         throw_status(error_null_pointer);
+         throw ::exception(error_null_pointer);
 
       }
 
@@ -5188,7 +5188,7 @@ namespace draw2d_direct2d
 
          //return false;
 
-         throw_status(error_null_pointer);
+         throw ::exception(error_null_pointer);
 
       }
 
@@ -5240,7 +5240,7 @@ namespace draw2d_direct2d
 
          //return false;
 
-         throw_status(error_null_pointer);
+         throw ::exception(error_null_pointer);
 
       }
 
@@ -5286,7 +5286,7 @@ namespace draw2d_direct2d
 
          //return false;
 
-         throw_status(error_invalid_empty_argument);
+         throw ::exception(error_invalid_empty_argument);
 
       }
 
@@ -5295,7 +5295,7 @@ namespace draw2d_direct2d
 
          //return false;
 
-         throw_status(error_wrong_state);
+         throw ::exception(error_wrong_state);
 
       }
 
@@ -5306,14 +5306,14 @@ namespace draw2d_direct2d
 
          //return false;
 
-         throw_status(error_null_pointer);
+         throw ::exception(error_null_pointer);
 
       }
 
       if (m_pbrush.is_null())
       {
 
-         throw_status(error_null_pointer);
+         throw ::exception(error_null_pointer);
 
       }
 
@@ -5322,7 +5322,7 @@ namespace draw2d_direct2d
       if (::is_null(pbrush))
       {
 
-         throw_status(error_null_pointer);
+         throw ::exception(error_null_pointer);
 
       }
 
@@ -5462,7 +5462,7 @@ namespace draw2d_direct2d
 
          //return false;
 
-         throw_status(error_null_pointer);
+         throw ::exception(error_null_pointer);
 
       }
 
@@ -5499,7 +5499,7 @@ namespace draw2d_direct2d
 
          //return false;
 
-         throw_status(error_null_pointer);
+         throw ::exception(error_null_pointer);
 
       }
 
@@ -5612,7 +5612,7 @@ namespace draw2d_direct2d
 
          //return false;
 
-         throw_status(error_null_pointer);
+         throw ::exception(error_null_pointer);
 
       }
 
@@ -5869,7 +5869,7 @@ namespace draw2d_direct2d
 
          //return false;
 
-         throw_status(error_null_pointer);
+         throw ::exception(error_null_pointer);
 
       }
 
@@ -5917,7 +5917,7 @@ namespace draw2d_direct2d
 
          //return false;
 
-         throw_status(error_null_pointer);
+         throw ::exception(error_null_pointer);
 
       }
 
@@ -5928,7 +5928,7 @@ namespace draw2d_direct2d
 
          //return false;
 
-         throw_status(error_null_pointer);
+         throw ::exception(error_null_pointer);
 
       }
 
@@ -5976,7 +5976,7 @@ namespace draw2d_direct2d
 
          //return false;
 
-         throw_status(error_null_pointer);
+         throw ::exception(error_null_pointer);
 
       }
 
@@ -6175,7 +6175,7 @@ namespace draw2d_direct2d
 
          //return false;
 
-         throw_status(error_null_pointer);
+         throw ::exception(error_null_pointer);
 
       }
 

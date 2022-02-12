@@ -29,6 +29,9 @@ namespace windows_common
 
       void set_file_normal(const char* path) override;
 
+
+      using ::acme_file::put_contents;
+
       void put_contents(const char * path, const char * contents, memsize len) override;
 
 

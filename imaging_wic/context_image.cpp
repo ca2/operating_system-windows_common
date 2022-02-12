@@ -77,7 +77,7 @@ namespace imaging_wic
       if (!m_pmanagerImageLoad)
       {
 
-         throw_status(error_null_pointer);
+         throw ::exception(error_null_pointer);
 
       }
 

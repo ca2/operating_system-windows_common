@@ -314,7 +314,7 @@ namespace multimedia
          if (m_estate != state_recording)
          {
 
-            throw_status(error_failed);
+            throw ::exception(error_failed);
 
          }
 

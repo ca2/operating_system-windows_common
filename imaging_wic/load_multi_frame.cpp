@@ -38,7 +38,7 @@ namespace imaging_wic
          if (FAILED(hr))
          {
             
-            throw_status(error_resource);
+            throw ::exception(error_resource);
 
          }
 
@@ -47,7 +47,7 @@ namespace imaging_wic
          if (FAILED(hr))
          {
 
-            throw_status(error_resource);
+            throw ::exception(error_resource);
 
          }
 
@@ -58,7 +58,7 @@ namespace imaging_wic
          if (FAILED(hr))
          {
 
-            throw_status(error_resource);
+            throw ::exception(error_resource);
 
          }
 
@@ -73,7 +73,7 @@ namespace imaging_wic
             if (FAILED(hr))
             {
 
-               throw_status(error_resource);
+               throw ::exception(error_resource);
 
             }
 
@@ -89,7 +89,7 @@ namespace imaging_wic
          if (FAILED(hr))
          {
 
-            throw_status(error_resource);
+            throw ::exception(error_resource);
 
          }
 
@@ -118,7 +118,7 @@ namespace imaging_wic
          if (FAILED(hr))
          {
 
-            throw_status(error_resource);
+            throw ::exception(error_resource);
 
          }
 
@@ -145,7 +145,7 @@ namespace imaging_wic
          if (FAILED(hr))
          {
 
-            throw_status(error_resource);
+            throw ::exception(error_resource);
 
          }
 
@@ -169,7 +169,7 @@ namespace imaging_wic
             //if (!estatus)
             //{
 
-            //   throw_status(error_resource);
+            //   throw ::exception(error_resource);
 
             //}
 
@@ -184,7 +184,7 @@ namespace imaging_wic
             //if (!estatus)
             //{
 
-            //   throw_status(error_resource);
+            //   throw ::exception(error_resource);
 
             //}
 

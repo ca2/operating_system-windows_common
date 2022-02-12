@@ -677,7 +677,7 @@ namespace acme
 
             auto estatus= last_error_to_status(dwLastError);
 
-            throw_status(estatus);
+            throw ::exception(estatus);
 
          }
 
@@ -689,7 +689,7 @@ namespace acme
 
             auto estatus = last_error_to_status(dwLastError);
 
-            throw_status(estatus);
+            throw ::exception(estatus);
 
          }
 

@@ -37,7 +37,7 @@ namespace draw2d_direct2d
       if (pgraphics->m_prendertarget == nullptr)
       {
 
-         throw_status(error_null_pointer);
+         throw ::exception(error_null_pointer);
 
       }
 
@@ -195,7 +195,7 @@ namespace draw2d_direct2d
 
             // succeeded and resume if and/or when there is a valid image.
 
-            throw_status(error_failed);
+            throw ::exception(error_failed);
 
          }
 

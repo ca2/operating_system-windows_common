@@ -78,7 +78,7 @@ namespace multimedia
          if(FAILED(XAudio2Create(&m_pxaudio,0,XAUDIO2_DEFAULT_PROCESSOR)))
          {
 
-            throw_status(error_failed);
+            throw ::exception(error_failed);
 
          }
 
@@ -99,7 +99,7 @@ namespace multimedia
 
          if(FAILED(hr = m_pxaudio->CreateMasteringVoice(&m_pvoice,uiChannelCount, uiSamplesPerSec)))
          {
-            throw_status(error_failed);
+            throw ::exception(error_failed);
          }
          int iSampleRate = XAUDIO2_MIN_SAMPLE_RATE;
          estatus = ::success;
@@ -120,15 +120,15 @@ namespace multimedia
          //if(FAILED(hr = m_pxaudio->CreateSourceVoice(&m_psourcevoice,wave_format(),XAUDIO2_VOICE_NOSRC | XAUDIO2_VOICE_NOPITCH,1.0f,this)))
          if(FAILED(hr = m_pxaudio->CreateSourceVoice(&m_psourcevoice,wave_format(),0,1.0f,this)))
          {
-            throw_status(error_failed);
+            throw ::exception(error_failed);
          }
 
          if(estatus != ::success)
          {
 
-            TRACE(status_message(estatus));
+            TRACE(status_short_description(estatus));
 
-            throw_status(estatus);
+            throw ::exception(estatus);
 
          }
          ::count iBufferCount;
@@ -372,7 +372,7 @@ namespace multimedia
          if (m_estate != e_state_playing && m_estate != e_state_paused)
          {
 
-            throw_status(error_wrong_state);
+            throw ::exception(error_wrong_state);
 
          }
 
@@ -411,7 +411,7 @@ namespace multimedia
          if (m_estate != e_state_playing)
          {
 
-            throw_status(error_wrong_state);
+            throw ::exception(error_wrong_state);
 
          }
 
@@ -492,7 +492,7 @@ namespace multimedia
          if (m_estate != e_state_paused)
          {
 
-            throw_status(error_wrong_state, "Expected to be paused.");
+            throw ::exception(error_wrong_state, "Expected to be paused.");
 
          }
 
