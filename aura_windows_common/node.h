@@ -23,6 +23,9 @@ namespace aura
       public:
 
 
+         __creatable_from_library(node, ::acme::node, "aura_windows_common");
+
+
          node();
          ~node() override;
 

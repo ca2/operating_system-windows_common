@@ -23,6 +23,9 @@ namespace apex
       public:
 
 
+         __creatable_from_library(node, ::acme::node, "apex_windows_common");
+
+
          node();
          ~node() override;
 

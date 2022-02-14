@@ -15,6 +15,8 @@ namespace windows_common
    public:
 
 
+      __creatable_from_library(acme_path, ::acme_path, "acme_windows_common");
+
       ::file::path _final(const char * path) override;
       bool is_file_or_dir(const char * path, ::file::enum_type * petype) override;
 
