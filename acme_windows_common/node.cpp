@@ -5,6 +5,14 @@
 #include "acme/filesystem/filesystem/acme_dir.h"
 
 
+// #define FONT_SANS "Segoe UI"
+// #define FONT_SERIF "Times New Roman"
+// #define FONT_MONO "Courier New"
+// #define FONT_SANS_EX "Geneva"
+// #define FONT_SERIF_EX "Palatino Linotype"
+// #define FONT_SANS_FX "Tahoma"
+// #define FONT_SERIF_FX "Georgia"
+
 namespace acme
 {
 
@@ -751,6 +759,58 @@ namespace acme
       //   return estatus;
 
       //}
+
+
+      string node::font_name(enum_font efont)
+      {
+
+         if (efont == e_font_sans)
+         {
+
+            return "Segoe UI";
+
+         }
+         else if (efont == e_font_sans_ex)
+         {
+
+            return "Geneva";
+
+         }
+         else if (efont == e_font_sans_fx)
+         {
+
+            return "Tahoma";
+
+         }
+         else if (efont == e_font_serif)
+         {
+
+            return "Times New Roman";
+
+         }
+         else if (efont == e_font_serif_ex)
+         {
+
+            return "Palatino Linotype";
+
+         }
+         else if (efont == e_font_serif_fx)
+         {
+
+            return "Georgia";
+
+         }
+         else if (efont == e_font_monospace)
+         {
+
+            return "Courier New";
+
+         }
+
+         return "Helvetica";
+
+      }
+
 
 
    } // namespace windows_common
