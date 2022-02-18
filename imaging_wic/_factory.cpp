@@ -1,6 +1,12 @@
 #include "framework.h"
 
 
+//BEGIN_FACTORY(imaging_wic)
+//FACTORY_ITEM(::imaging_wic::context_image)
+//END_FACTORY()
+
+
+
 namespace imaging_wic
 {
 

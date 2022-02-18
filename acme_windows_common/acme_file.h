@@ -15,7 +15,7 @@ namespace windows_common
    public:
 
 
-      __creatable_from_library(acme_file, ::acme_file, "acme_windows_common");
+      //__creatable_from_base(acme_file, ::acme_file);
 
 
       //::file::path _final(const char * path) override;

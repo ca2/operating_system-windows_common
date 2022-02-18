@@ -14,6 +14,7 @@ namespace imaging_wic
    public:
 
 
+      //__creatable_from_base(context_image, ::context_image);
 
 
       __composite(handler_manager)        m_pmanagerImageLoad;

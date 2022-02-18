@@ -12,7 +12,7 @@ namespace windows_common
    public:
 
 
-      __creatable_from_library(exception_translator, ::exception_translator, "acme_windows_common");
+      ///__creatable_from_base(exception_translator, ::exception_translator);
 
 
       _se_translator_function   m_pfn;

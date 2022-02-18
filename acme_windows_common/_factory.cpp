@@ -1,13 +1,21 @@
 #include "framework.h"
 
 
-void CLASS_DECL_ACME __cdecl _ca2_purecall();
+//__FACTORY_EXCHANGE void acme_windows_common()
+//FACTORY_ITEM(::windows_common::acme_dir)
+//FACTORY_ITEM(::windows_common::acme_file)
+//FACTORY_ITEM(::windows_common::acme_path)
+//FACTORY_ITEM(::acme::windows_common::node)
+//END_FACTORY()
+
+
+//void CLASS_DECL_ACME __cdecl _ca2_purecall();
 
 
 __FACTORY_EXPORT void acme_windows_common_factory(::factory::factory * pfactory)
 {
 
-   _set_purecall_handler(_ca2_purecall);
+   //_set_purecall_handler(_ca2_purecall);
 
    //pfactory->add_factory_item < ::windows::dir_system, ::dir_system >();
    //pfactory->add_factory_item < ::windows::file_system, ::file_system >();
@@ -25,10 +33,10 @@ __FACTORY_EXPORT void acme_windows_common_factory(::factory::factory * pfactory)
    //pfactory->add_factory_item < ::windows::crypto, ::crypto::crypto >();
    //pfactory->add_factory_item < ::windows::ip_enum, ::net::ip_enum >();
 
-   //pfactory->add_factory_item < ::acme::windows_common::node, ::acme::node >();
-   //pfactory->add_factory_item < ::windows_common::acme_dir, ::acme_dir >();
-   //pfactory->add_factory_item < ::windows_common::acme_file, ::acme_path >();
-   //pfactory->add_factory_item < ::windows_common::acme_path, ::acme_path >();
+   pfactory->add_factory_item < ::acme::windows_common::node, ::acme::node >();
+   pfactory->add_factory_item < ::windows_common::acme_dir, ::acme_dir >();
+   pfactory->add_factory_item < ::windows_common::acme_file, ::acme_path >();
+   pfactory->add_factory_item < ::windows_common::acme_path, ::acme_path >();
 
    //pfactory->add_factory_item < ::windows::interprocess_communication_base, ::interprocess_communication::base >();
    //pfactory->add_factory_item < ::windows::interprocess_communication_rx, ::interprocess_communication::rx >();
