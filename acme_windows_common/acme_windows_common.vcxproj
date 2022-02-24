@@ -880,7 +880,6 @@
     <ClInclude Include="bstring.h" />
     <ClInclude Include="comptr.h" />
     <ClInclude Include="cotaskptr.h" />
-    <ClInclude Include="exception\engine.h" />
     <ClInclude Include="exception\translator.h" />
     <ClInclude Include="exception\hresult.h" />
     <ClInclude Include="file.h" />
@@ -917,7 +916,6 @@
     <ClCompile Include="bstring.cpp" />
     <ClCompile Include="com.cpp" />
     <ClCompile Include="debug.cpp" />
-    <ClCompile Include="exception\engine.cpp" />
     <ClCompile Include="exception\hresult.cpp" />
     <ClCompile Include="exception\translator.cpp" />
     <ClCompile Include="file.cpp" />

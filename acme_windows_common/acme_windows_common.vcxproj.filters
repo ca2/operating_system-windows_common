@@ -113,9 +113,6 @@
     <ClInclude Include="acme_dir.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="exception\engine.h">
-      <Filter>Header Files\exception</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="framework.cpp">
@@ -173,9 +170,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="exception\translator.cpp">
-      <Filter>Source Files\exception</Filter>
-    </ClCompile>
-    <ClCompile Include="exception\engine.cpp">
       <Filter>Source Files\exception</Filter>
     </ClCompile>
     <ClCompile Include="acme_dir.cpp">

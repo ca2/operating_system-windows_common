@@ -45,7 +45,7 @@ CLASS_DECL_ACME_WINDOWS_COMMON ::e_status hresult_to_status(HRESULT hr);
 
 #include "exception/translator.h"
 
-#include "exception/engine.h"
+//#include "exception/engine.h"
 
 #include "standard_exception.h"
 

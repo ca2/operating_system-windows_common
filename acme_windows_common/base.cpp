@@ -3,7 +3,7 @@
 
 
 
-#include "acme/platform/static_start.h"
+//#include "acme/platform/static_start.h"
 
 //
 //VOID

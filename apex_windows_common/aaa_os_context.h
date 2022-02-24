@@ -105,7 +105,7 @@ namespace windows
 
       virtual bool add_default_program(string_array & straExtension, string_array & straMimeType) override;
 
-      virtual void list_process(::file::patha & patha, u32_array & uaPid) override;
+      virtual void list_process(::file::path_array & patha, u32_array & uaPid) override;
 
       //virtual icon_pointer load_icon(const ::payload & payloadFile) override;
 
