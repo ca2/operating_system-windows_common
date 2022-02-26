@@ -22,7 +22,7 @@ namespace multimedia
 
 
          in();
-         virtual ~in();
+         ~in() override;
 
 
          virtual bool in_initialize_encoder();
@@ -33,16 +33,16 @@ namespace multimedia
          //HWAVEIN in_get_safe_HWAVEIN();
          virtual void * get_os_data();
 
-         void     in_open(i32 iBufferCount, i32 iBufferSampleCount);
-         void     in_close();
-         void     in_stop();
-         void     in_start();
-         void     in_reset();
+         void in_open(i32 iBufferCount, i32 iBufferSampleCount);
+         void in_close() override;
+         void in_stop() override;
+         void in_start() override;
+         void in_reset() override;
 
          virtual void translate_in_message(::message::message * pmessage);
 
-         virtual void init_thread() override;
-         virtual void term_thread() override;
+         void init_task() override;
+         void term_task() override;
          virtual void pre_translate_message(::message::message * pmessage);
 
          //static void CALLBACK in_proc(HWAVEIN hwi, ::u32 uMsg, ::u32 dwInstance, ::u32 dwParam1, ::u32 dwParam2);

@@ -51,34 +51,32 @@ namespace multimedia
 
          WAVEFORMATEX                     m_waveformatex;
 
-
-
          out();
-         virtual ~out();
+         ~out() override;
 
 
          void     out_start(const ::duration & position);
          //virtual bool  on_run_step();
          void install_message_routing(::channel * pchannel);
 
-         virtual ::duration out_get_position() override;
-         virtual void out_filled(index iBuffer) override;
+         ::duration out_get_position() override;
+         void out_filled(index iBuffer) override;
          //virtual void out_buffer_ready(LPWAVEHDR lpwavehdr);
 
 //         virtual void     out_open(::thread * pthreadCallback, ::count iBufferCount, ::count iBufferSampleCount) override;
-         virtual void     out_open_ex(::thread * pthreadCallback, u32 uiSamplesPerSec, u32 uiChannelCount, u32 uiBitsPerSample,::wave::e_purpose epurpose) override;
-         virtual void     out_stop() override;
-         virtual void     out_close() override;
-         virtual void     out_pause() override;
-         virtual void     out_restart() override;
+         void     out_open_ex(::thread * pthreadCallback, u32 uiSamplesPerSec, u32 uiChannelCount, u32 uiBitsPerSample,::wave::e_purpose epurpose) override;
+         void     out_stop() override;
+         void     out_close() override;
+         void     out_pause() override;
+         void     out_restart() override;
          virtual void * get_os_data();
          //HWAVEOUT out_get_safe_HWAVEOUT();
 
-         virtual void out_on_playback_end() override;
-         virtual void out_free(index iBuffer) override;
+         void out_on_playback_end() override;
+         void out_free(index iBuffer) override;
          //virtual void out_free(LPWAVEHDR lpwavehdr);
 
-         virtual void init_thread() override;
+         void init_task() override;
          //virtual i32 exit_instance();
 
          ::count out_get_buffered_buffer_count() override;
@@ -95,7 +93,7 @@ namespace multimedia
          WAVEFORMATEX * wave_format();
          //LPWAVEHDR wave_hdr(int iBuffer);
          //virtual void out_run_step();
-         virtual void out_prebuffer_eof() override;
+         void out_prebuffer_eof() override;
 
       };
 

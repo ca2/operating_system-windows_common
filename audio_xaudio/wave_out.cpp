@@ -33,10 +33,10 @@ namespace multimedia
       }
 
 
-      void out::init_thread()
+      void out::init_task()
       {
 
-         ::wave::out::init_thread();
+         ::wave::out::init_task();
 
          //if (!::wave::out::init_thread())
          //{
@@ -52,7 +52,7 @@ namespace multimedia
       }
 
 
-      void     out::out_open_ex(thread * pthreadCallback, u32 uiSamplesPerSec, u32 uiChannelCount, u32 uiBitsPerSample, ::wave::e_purpose epurpose)
+      void out::out_open_ex(thread * pthreadCallback, u32 uiSamplesPerSec, u32 uiChannelCount, u32 uiBitsPerSample, ::wave::e_purpose epurpose)
       {
 
          single_lock sLock(mutex(), true);

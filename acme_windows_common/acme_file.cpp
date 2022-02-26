@@ -203,6 +203,10 @@ namespace windows_common
       if (exists(path))
       {
 
+         set_file_normal(path);
+
+         clear_read_only(path);
+
          auto time = ::time(nullptr);
 
          _utimbuf ut;

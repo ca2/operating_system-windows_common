@@ -25,7 +25,7 @@ namespace multimedia
       }
 
 
-      void in::init_thread()
+      void in::init_task()
       {
 
          TRACE("in::init_instance %X\n", get_ithread());
@@ -43,12 +43,12 @@ namespace multimedia
       }
 
 
-      void in::term_thread()
+      void in::term_task()
       {
 
          m_eventExitInstance.SetEvent();
 
-         thread::term_thread();
+         thread::term_task();
 
       }
 
