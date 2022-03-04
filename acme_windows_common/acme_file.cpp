@@ -1,7 +1,7 @@
 // From acme/filesystem/file/_.cpp by camilo on 2021-08-09 
 // 14:17 BRT <3ThomasBorregaardS�rensen
 #include "framework.h"
-//#include "acme/operating_system.h"
+#include "acme/filesystem/filesystem/acme_path.h"
 #include <stdio.h>
 #include <fcntl.h>
 #include <sys/types.h>
@@ -52,9 +52,13 @@ namespace windows_common
 
       }
 
-      wstring wstrNew(strNew);
+      auto pathNew = m_psystem->m_pacmepath->defer_process_relative_path(strNew);
 
-      wstring wstrSrc(strSrc);
+      auto pathSrc = m_psystem->m_pacmepath->defer_process_relative_path(strSrc);
+
+      wstring wstrNew(pathNew);
+
+      wstring wstrSrc(pathSrc);
 
       auto pathFolder = file_path_folder(strNew);
 
@@ -85,10 +89,10 @@ namespace windows_common
 
    }
 
-   void acme_file::ensure_exists(const char* path)
+   void acme_file::ensure_exists(const char* pathParam)
    {
 
-      if (exists(path))
+      if (exists(pathParam))
       {
 
          //return ::success;
@@ -96,6 +100,8 @@ namespace windows_common
          return;
 
       }
+
+      auto path = m_psystem->m_pacmepath->defer_process_relative_path(pathParam);
       
       wstring wstrPath(path);
       
@@ -115,8 +121,10 @@ namespace windows_common
    }
 
 
-   void acme_file::clear_read_only(const char* path)
+   void acme_file::clear_read_only(const char* pathParam)
    {
+
+      auto path = m_psystem->m_pacmepath->defer_process_relative_path(pathParam);
 
       wstring wstrPath(path);
 
@@ -154,8 +162,10 @@ namespace windows_common
    }
 
 
-   void acme_file::set_file_normal(const char* path)
+   void acme_file::set_file_normal(const char* pathParam)
    {
+
+      auto path = m_psystem->m_pacmepath->defer_process_relative_path(pathParam);
 
       wstring wstrPath(path);
 
@@ -193,8 +203,10 @@ namespace windows_common
    }
 
 
-   void acme_file::touch(const char* path)
+   void acme_file::touch(const char* pathParam)
    {
+
+      auto path = m_psystem->m_pacmepath->defer_process_relative_path(pathParam);
 
       m_pacmedir->create(file_path_folder(path));
 
@@ -252,8 +264,10 @@ namespace windows_common
    }
 
 
-   void acme_file::put_contents(const char * path, const char * contents, memsize len)
+   void acme_file::put_contents(const char * pathParam, const char * contents, memsize len)
    {
+
+      auto path = m_psystem->m_pacmepath->defer_process_relative_path(pathParam);
 
       /*auto estatus =*/ m_pacmedir->create(file_path_folder(path));
 
@@ -287,8 +301,10 @@ namespace windows_common
    }
 
 
-   filesize acme_file::get_size(const char * path)
+   filesize acme_file::get_size(const char * pathParam)
    {
+
+      auto path = m_psystem->m_pacmepath->defer_process_relative_path(pathParam);
 
 #ifdef WINDOWS_DESKTOP
 
@@ -339,48 +355,52 @@ namespace windows_common
    }
 
 
-   int_bool file_is_equal_path_dup(const char * psz1, const char * psz2)
-   {
+   //int_bool file_is_equal_path_dup(const char * psz1, const char * psz2)
+   //{
 
-      const i32 iBufSize = MAX_PATH * 8;
+   //   auto path1 = ::g_psystem->m_pacmepath->defer_process_relative_path(psz1);
 
-      wstring pwsz1 = ::str::international::utf8_to_unicode(psz1);
+   //   auto path2 = ::g_psystem->m_pacmepath->defer_process_relative_path(psz2);
 
-      wstring pwsz2 = ::str::international::utf8_to_unicode(psz2);
+   //   const i32 iBufSize = MAX_PATH * 8;
 
-      unichar * pwszFile1;
+   //   wstring pwsz1 = ::str::international::utf8_to_unicode(path1);
 
-      unichar * pwszFile2;
+   //   wstring pwsz2 = ::str::international::utf8_to_unicode(path2);
 
-      unichar * pwszPath1 = new unichar[iBufSize];
+   //   unichar * pwszFile1;
 
-      unichar * pwszPath2 = new unichar[iBufSize];
+   //   unichar * pwszFile2;
 
-      i32 iCmp = -1;
+   //   unichar * pwszPath1 = new unichar[iBufSize];
 
-      if (GetFullPathNameW(pwsz1, iBufSize, pwszPath1, &pwszFile1))
-      {
+   //   unichar * pwszPath2 = new unichar[iBufSize];
 
-         if (GetFullPathNameW(pwsz2, iBufSize, pwszPath2, &pwszFile2))
-         {
+   //   i32 iCmp = -1;
 
-            string path1 = ::str::international::unicode_to_utf8(pwszPath1);
+   //   if (GetFullPathNameW(pwsz1, iBufSize, pwszPath1, &pwszFile1))
+   //   {
 
-            string path2 = ::str::international::unicode_to_utf8(pwszPath2);
+   //      if (GetFullPathNameW(pwsz2, iBufSize, pwszPath2, &pwszFile2))
+   //      {
 
-            iCmp = ansi_compare_ci(path1, path2);
+   //         string path1 = ::str::international::unicode_to_utf8(pwszPath1);
 
-         }
+   //         string path2 = ::str::international::unicode_to_utf8(pwszPath2);
 
-      }
+   //         iCmp = ansi_compare_ci(path1, path2);
 
-      delete pwszPath1;
+   //      }
 
-      delete pwszPath2;
+   //   }
 
-      return iCmp == 0;
+   //   delete pwszPath1;
 
-   }
+   //   delete pwszPath2;
+
+   //   return iCmp == 0;
+
+   //}
 
 
    //string acme_file::as_string(const char * path, strsize iReadAtMostByteCount)
@@ -440,8 +460,10 @@ namespace windows_common
    //}
 
 
-   memory acme_file::as_memory(const char* path, strsize iReadAtMostByteCount)
+   memory acme_file::as_memory(const char* pathParam, strsize iReadAtMostByteCount)
    {
+
+      auto path = m_psystem->m_pacmepath->defer_process_relative_path(pathParam);
 
       FILE* pfile = _wfsopen(wstring(path), L"r", _SH_DENYNO);
       
@@ -558,8 +580,10 @@ namespace windows_common
 
 
 
-   void acme_file::put_block(const char* path, const block& block)
+   void acme_file::put_block(const char* pathParam, const block& block)
    {
+
+      auto path = m_psystem->m_pacmepath->defer_process_relative_path(pathParam);
 
       wstring wstr(path);
 
