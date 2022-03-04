@@ -55,7 +55,7 @@ namespace acme
 
          //virtual ::file::path memcnts_base_path();
 
-         void datetime_to_filetime(filetime_t* pFileTime, const ::datetime::time& time) override;
+         //void datetime_to_filetime(file_time_t* pFileTime, const ::earth::time& time) override;
 
 
          virtual ::e_status last_error_to_status(DWORD dwLastError);

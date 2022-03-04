@@ -552,7 +552,7 @@ namespace apex
 
       //CLASS_DECL_ACME::file::path user_appdata_local();
 
-      //void node::time_to_filetime(::matter* pobject, const ::datetime::time& time, LPFILETIME pFileTime)
+      //void node::time_to_filetime(::matter* pobject, const ::earth::time& time, LPFILETIME pFileTime)
       //{
 
       //   SYSTEMTIME sysTime;

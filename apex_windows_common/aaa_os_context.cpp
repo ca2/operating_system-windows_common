@@ -1610,7 +1610,7 @@ retry:
       if (status.m_mtime.get_time() != 0)
       {
 
-         m_psystem->m_pnode->datetime_to_filetime((filetime_t *) &lastWriteTime, status.m_mtime);
+         m_psystem->m_pnode->datetime_to_filetime((file_time_t *) &lastWriteTime, status.m_mtime);
 
          pLastWriteTime = &lastWriteTime;
 
@@ -1623,7 +1623,7 @@ retry:
 
          //auto pnode = m_psystem->m_papexsystem->node();
 
-         ::time_to_file_time((filetime_t*)&lastAccessTime, &status.m_atime.m_time);
+         ::time_to_file_time((file_time_t*)&lastAccessTime, &status.m_atime.m_time);
 
          pLastAccessTime = &lastAccessTime;
 
@@ -1634,7 +1634,7 @@ retry:
       if (status.m_ctime.get_time() != 0)
       {
 
-         time_to_file_time((filetime_t *)&creationTime, &status.m_ctime.m_time);
+         time_to_file_time((file_time_t *)&creationTime, &status.m_ctime.m_time);
 
          pCreationTime = &creationTime;
 
