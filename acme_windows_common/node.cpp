@@ -721,7 +721,7 @@ namespace acme
          if (efont == e_font_sans)
          {
 
-            return "Segoe UI";
+            return "Arial";
 
          }
          else if (efont == e_font_sans_ex)
@@ -734,6 +734,12 @@ namespace acme
          {
 
             return "Tahoma";
+
+         }
+         else if (efont == e_font_sans_ui)
+         {
+
+            return "Segoe UI";
 
          }
          else if (efont == e_font_serif)
