@@ -1,5 +1,5 @@
 #include "framework.h"
-#include "aura/graphics/draw2d/image_frame_array.h"
+#include "aura/graphics/image/frame_array.h"
 #include <Wincodec.h>
 
 

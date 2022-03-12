@@ -75,6 +75,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="context_image.cpp" />
+    <ClCompile Include="load.cpp" />
+    <ClCompile Include="load_multi_frame.cpp" />
     <ClCompile Include="_factory.cpp" />
     <ClCompile Include="framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='basis|Win32'">Create</PrecompiledHeader>
@@ -94,8 +96,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='cube_basis|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='stage|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="loading.cpp" />
-    <ClCompile Include="loading_gif.cpp" />
     <ClCompile Include="saving.cpp" />
     <ClCompile Include="_.cpp" />
   </ItemGroup>

@@ -109,7 +109,6 @@
     <ClCompile Include="bstring.cpp" />
     <ClCompile Include="com.cpp" />
     <ClCompile Include="debug.cpp" />
-    <ClCompile Include="exception\engine.cpp" />
     <ClCompile Include="exception\hresult.cpp" />
     <ClCompile Include="exception\translator.cpp" />
     <ClCompile Include="_factory.cpp" />

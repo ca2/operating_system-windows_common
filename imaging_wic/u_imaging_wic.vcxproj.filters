@@ -13,13 +13,13 @@
     <ClCompile Include="_factory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="loading.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="loading_gif.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="saving.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="load.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="load_multi_frame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

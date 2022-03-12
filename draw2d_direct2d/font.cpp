@@ -149,7 +149,7 @@ namespace draw2d_direct2d
       if (m_pformat == nullptr)
       {
 
-         throw ::exception(error_failed);
+         return;
 
       }
 

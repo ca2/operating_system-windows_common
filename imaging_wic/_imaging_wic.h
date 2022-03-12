@@ -14,7 +14,7 @@
 #include <wincodec.h>
 
 
-#include "aura/graphics/draw2d/save_image.h"
+#include "aura/graphics/image/save_image.h"
 
 
 namespace imaging_wic

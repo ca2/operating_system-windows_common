@@ -1,8 +1,8 @@
 #include "framework.h"
 #include "aura/graphics/draw2d/lock.h"
 #include "aura/graphics/draw2d/device_lock.h"
-#include "aura/graphics/draw2d/context_image.h"
-#include "aura/graphics/draw2d/icon.h"
+#include "aura/graphics/image/context_image.h"
+#include "aura/graphics/image/icon.h"
 
 
 extern CLASS_DECL_AURA image_array * g_pimagea;

@@ -589,7 +589,15 @@ namespace windows_common
 
       m_pacmedir->create(file_path_folder(path));
 
+#ifdef _UWP
+
+      HANDLE h = ::CreateFile2(wstr, GENERIC_WRITE, FILE_SHARE_READ, CREATE_ALWAYS, nullptr);
+
+#else
+
       HANDLE h = ::CreateFileW(wstr, GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
+
+#endif
 
       if (h == INVALID_HANDLE_VALUE)
       {

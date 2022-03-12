@@ -161,9 +161,6 @@
     <ClCompile Include="standard_exception.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="exception\engine.cpp">
-      <Filter>Source Files\exception</Filter>
-    </ClCompile>
     <ClCompile Include="exception\hresult.cpp">
       <Filter>Source Files\exception</Filter>
     </ClCompile>

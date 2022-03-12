@@ -455,7 +455,7 @@ namespace apex
 
 #else
 
-         return ::error_failed;
+         //return ::error_failed;
 
 #endif
 

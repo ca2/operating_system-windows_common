@@ -3,7 +3,7 @@
 #include "CustomRenderer.h"
 #include "aura/graphics/draw2d/lock.h"
 #include "aura/graphics/draw2d/device_lock.h"
-#include "aura/graphics/draw2d/context_image.h"
+#include "aura/graphics/image/context_image.h"
 #include <math.h>
 
 
