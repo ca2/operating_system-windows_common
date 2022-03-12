@@ -44,9 +44,10 @@ namespace music
             //   return error_failed;
 
 
-            return ::success;
+            //return ::success;
 
          }
+
 
          void     out::close()
          {
@@ -58,15 +59,16 @@ namespace music
 
             }*/
 
-            return ::success;
+            //return ::success;
 
          }
 
-         void     out::send_short_message(::music::midi::e_message emessage, int iChannel, int iData1, int iData2)
+
+         void out::send_short_message(::music::midi::e_message emessage, int iChannel, int iData1, int iData2)
          {
 
             // return midiOutShortMsg(m_hmidiout, MIDIMSG(((int)etype) >> 4, iChannel, iData1, iData2));
-            return error_not_implemented;
+            //return error_not_implemented;
 
          }
 

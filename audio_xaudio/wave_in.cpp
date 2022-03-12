@@ -28,7 +28,7 @@ namespace multimedia
       void in::init_task()
       {
 
-         TRACE("in::init_instance %X\n", get_ithread());
+         TRACE("in::init_instance %X\n", get_itask());
 
          //SetMainWnd(nullptr);
 
@@ -503,16 +503,18 @@ namespace multimedia
       //}
 
 
-      bool in::in_initialize_encoder()
+      void in::in_initialize_encoder()
       {
 
          if(m_pencoder == nullptr)
-            return false;
+            return;
 
-         if(!::wave::in::in_initialize_encoder())
-            return false;
+         ::wave::in::in_initialize_encoder();
 
-         return true;
+         //if(!::wave::in::in_initialize_encoder())
+         //   return false;
+
+         //return true;
 
       }
 

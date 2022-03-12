@@ -25,7 +25,7 @@ namespace multimedia
          ~in() override;
 
 
-         virtual bool in_initialize_encoder();
+         void in_initialize_encoder() override;
 
          virtual void     in_add_buffer(i32 iBuffer);
          //virtual void     in_add_buffer(LPWAVEHDR lpwavehdr);

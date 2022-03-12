@@ -698,7 +698,7 @@ namespace multimedia
 
          i32 iBuffer = (i32)pbuffer->m_iIndex;
 
-         m_psynththread->on_free(iBuffer);
+         m_psynthtask->on_free(iBuffer);
 
          ::u64 endTime;
          QueryPerformanceCounter((LARGE_INTEGER *)&endTime);

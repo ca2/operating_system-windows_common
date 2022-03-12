@@ -5284,9 +5284,10 @@ namespace draw2d_direct2d
       if (block.is_empty())
       {
 
-         //return false;
+         return;
+         ////return false;
 
-         throw ::exception(error_invalid_empty_argument);
+         //throw ::exception(error_invalid_empty_argument);
 
       }
 

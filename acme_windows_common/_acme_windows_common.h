@@ -14,7 +14,6 @@ CLASS_DECL_ACME_WINDOWS_COMMON HRESULT defer_co_initialize_ex(bool bMultiThread,
 //CLASS_DECL_ACME_WINDOWS_COMMON string get_hresult_message(HRESULT hr);
 CLASS_DECL_ACME ::u32 windows_get_file_attributes(const char * path);
 
-CLASS_DECL_ACME_WINDOWS_COMMON ::e_status hresult_to_status(HRESULT hr);
 
 //DECLARE_FACTORY(CLASS_DECL_ACME_WINDOWS_COMMON, acme_windows_common);
 
