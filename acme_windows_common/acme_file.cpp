@@ -62,12 +62,12 @@ namespace windows_common
 
       auto pathFolder = file_path_folder(strNew);
 
-      auto bDir = m_pacmedir->is(pathFolder);
+      auto bDir = m_pacmedirectory->is(pathFolder);
 
       if (!bDir)
       {
        
-         m_pacmedir->create(pathFolder);
+         m_pacmedirectory->create(pathFolder);
 
       }
 
@@ -183,9 +183,7 @@ namespace windows_common
       if (attributes == FILE_ATTRIBUTE_NORMAL)
       {
 
-         //return ::success_none;
-
-         throw ::exception(::error_failed);
+         return;
 
       }
 
@@ -208,7 +206,7 @@ namespace windows_common
 
       auto path = m_psystem->m_pacmepath->defer_process_relative_path(pathParam);
 
-      m_pacmedir->create(file_path_folder(path));
+      m_pacmedirectory->create(file_path_folder(path));
 
       wstring wstrPath(path);
 
@@ -269,7 +267,7 @@ namespace windows_common
 
       auto path = m_psystem->m_pacmepath->defer_process_relative_path(pathParam);
 
-      /*auto estatus =*/ m_pacmedir->create(file_path_folder(path));
+      /*auto estatus =*/ m_pacmedirectory->create(file_path_folder(path));
 
       //if (!estatus)
       //{
@@ -587,7 +585,7 @@ namespace windows_common
 
       wstring wstr(path);
 
-      m_pacmedir->create(file_path_folder(path));
+      m_pacmedirectory->create(file_path_folder(path));
 
 #ifdef _UWP
 

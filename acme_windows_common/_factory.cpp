@@ -2,7 +2,7 @@
 
 
 //__FACTORY_EXCHANGE void acme_windows_common()
-//FACTORY_ITEM(::windows_common::acme_dir)
+//FACTORY_ITEM(::windows_common::acme_directory)
 //FACTORY_ITEM(::windows_common::acme_file)
 //FACTORY_ITEM(::windows_common::acme_path)
 //FACTORY_ITEM(::acme::windows_common::node)
@@ -34,7 +34,7 @@ __FACTORY_EXPORT void acme_windows_common_factory(::factory::factory * pfactory)
    //pfactory->add_factory_item < ::windows::ip_enum, ::net::ip_enum >();
 
    pfactory->add_factory_item < ::acme::windows_common::node, ::acme::node >();
-   pfactory->add_factory_item < ::windows_common::acme_dir, ::acme_dir >();
+   pfactory->add_factory_item < ::windows_common::acme_directory, ::acme_directory >();
    pfactory->add_factory_item < ::windows_common::acme_file, ::acme_path >();
    pfactory->add_factory_item < ::windows_common::acme_path, ::acme_path >();
 

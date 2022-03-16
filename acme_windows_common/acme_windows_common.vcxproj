@@ -874,7 +874,7 @@
     <Lib />
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="acme_dir.h" />
+    <ClInclude Include="acme_directory.h" />
     <ClInclude Include="acme_file.h" />
     <ClInclude Include="acme_path.h" />
     <ClInclude Include="bstring.h" />
@@ -907,7 +907,7 @@
     <ClInclude Include="_windows_common.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="acme_dir.cpp" />
+    <ClCompile Include="acme_directory.cpp" />
     <ClCompile Include="acme_file.cpp" />
     <ClCompile Include="acme_path.cpp" />
     <ClCompile Include="aura.cpp" />

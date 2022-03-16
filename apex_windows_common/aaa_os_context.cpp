@@ -16,8 +16,8 @@
 #include "apex/platform/node.h"
 #include "acme_windows/node.h"
 #include "node.h"
-#include "acme/filesystem/filesystem/acme_dir.h"
-#include "acme_windows/acme_dir.h"
+#include "acme/filesystem/filesystem/acme_directory.h"
+#include "acme_windows/acme_directory.h"
 #include "acme/filesystem/filesystem/acme_path.h"
 
 
@@ -1985,7 +1985,7 @@ retry:
 
          ::file::path pathFolder;
 
-         m_psystem->m_pacmedir->m_pplatformdir->_shell_get_special_folder_path(nullptr, pathFolder, CSIDL_WINDOWS, false);
+         m_psystem->m_pacmedirectory->m_pplatformdir->_shell_get_special_folder_path(nullptr, pathFolder, CSIDL_WINDOWS, false);
 
          pathFolder /= "Web/Wallpaper";
 

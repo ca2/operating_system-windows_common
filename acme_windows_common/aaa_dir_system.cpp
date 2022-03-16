@@ -57,7 +57,7 @@ namespace windows
 
       m_pathCa2Config =          auto psystem = m_psystem;
 
-         auto pacmedir = psystem->m_pacmedir;
+         auto pacmedir = psystem->m_pacmedirectory;
 
 pacmedir->roaming();
 
@@ -109,21 +109,21 @@ pacmedir->roaming();
 
                auto psystem = m_psystem;
 
-         auto pacmedir = psystem->m_pacmedir;
+         auto pacmedir = psystem->m_pacmedirectory;
 
 pacmedir->create(m_strTimeFolder);
       //xxdebug_box("win_dir::initialize (m_strTimeFolder)", "win_dir::initialize", 0);
 
       if (!         auto psystem = m_psystem;
 
-         auto pacmedir = psystem->m_pacmedir;
+         auto pacmedir = psystem->m_pacmedirectory;
 
 pacmedir->is(m_strTimeFolder))
          return false;
 
                auto psystem = m_psystem;
 
-         auto pacmedir = psystem->m_pacmedir;
+         auto pacmedir = psystem->m_pacmedirectory;
 
 pacmedir->create(m_strTimeFolder / "time");
 

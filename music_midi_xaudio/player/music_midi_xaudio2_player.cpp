@@ -314,9 +314,9 @@ namespace music
                return ::success;
             }
 
-            //void player::SetView(CXfplayerView *pview)
+            //void player::SetView(CXfplayerView *pimpact)
             //{
-            //    m_pView = pview;
+            //    m_pView = pimpact;
             //}
 
             void     player::SetInterface(player_interface * pinterface)

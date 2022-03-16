@@ -56,7 +56,7 @@ CLASS_DECL_ACME ::u32 windows_get_file_attributes(const char * path);
 #include "node.h"
 
 
-#include "acme_dir.h"
+#include "acme_directory.h"
 
 
 #include "acme_file.h"

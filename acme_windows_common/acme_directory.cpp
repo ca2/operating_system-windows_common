@@ -6,21 +6,21 @@ namespace windows_common
 {
 
 
-   acme_dir::acme_dir()
+   acme_directory::acme_directory()
    {
 
 
    }
 
 
-   acme_dir::~acme_dir()
+   acme_directory::~acme_directory()
    {
 
 
    }
 
 
-   //void acme_dir::__create(const char * path)
+   //void acme_directory::__create(const char * path)
    //{
 
    //   wstring wstr;

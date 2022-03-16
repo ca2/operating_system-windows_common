@@ -3,7 +3,7 @@
 #include <shlobj.h>
 #include <string.h>
 #include "explorer_restart.h"
-#include "acme/filesystem/filesystem/acme_dir.h"
+#include "acme/filesystem/filesystem/acme_directory.h"
 
 
 CLSID CLSID_DeskBandSample = { 0x19970ca2, 0x71a, 0x4b7e,{ 0x8a, 0xa2, 0xe5, 0x60, 0x81, 0xd, 0xab, 0x35 } };
@@ -40,7 +40,7 @@ bool register_desk_toolbar(::aura::system* psystem)
 
    auto pnode = psystem->node();
 
-   ::file::path pathDll = psystem->m_pacmedir->module() / "_desk_tb.dll";
+   ::file::path pathDll = psystem->m_pacmedirectory->module() / "_desk_tb.dll";
 
    pnode->register_dll(pathDll);
 
@@ -74,11 +74,11 @@ bool register_desk_toolbar(::aura::system* psystem)
 //
 //   //#ifdef _DEBUG
 //
-//   strPathDll = m_psystem->m_pacmedir->module() / "_desk_tb.dll";
+//   strPathDll = m_psystem->m_pacmedirectory->module() / "_desk_tb.dll";
 //
 //   //#else
 //   //
-//   //   strPathDll = m_psystem->m_pacmedir->matter() / "time" / process_platform_dir_name() /"stage/_desk_tb.dll";
+//   //   strPathDll = m_psystem->m_pacmedirectory->matter() / "time" / process_platform_dir_name() /"stage/_desk_tb.dll";
 //   //
 //   //#endif
 //

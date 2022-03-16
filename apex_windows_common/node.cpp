@@ -1,5 +1,5 @@
 #include "framework.h"
-#include "acme/filesystem/filesystem/acme_dir.h"
+#include "acme/filesystem/filesystem/acme_directory.h"
 #include "acme/filesystem/filesystem/acme_path.h"
 
 
@@ -311,7 +311,7 @@ namespace apex
 
          //#else
          //
-         //   strPathDll = m_psystem->m_pacmedir->matter() / "time" / process_platform_dir_name() /"stage/_desk_tb.dll";
+         //   strPathDll = m_psystem->m_pacmedirectory->matter() / "time" / process_platform_dir_name() /"stage/_desk_tb.dll";
          //
          //#endif
 
@@ -508,10 +508,10 @@ namespace apex
 
       //   string str;
 
-      //   if (m_psystem->m_pacmefile->exists(m_psystem->m_pacmedir->system() / "config\\system\\audio.txt"))
+      //   if (m_psystem->m_pacmefile->exists(m_psystem->m_pacmedirectory->system() / "config\\system\\audio.txt"))
       //   {
 
-      //      str = m_psystem->m_pacmefile->as_string(m_psystem->m_pacmedir->system() / "config\\system\\audio.txt");
+      //      str = m_psystem->m_pacmefile->as_string(m_psystem->m_pacmedirectory->system() / "config\\system\\audio.txt");
 
       //   }
       //   else
@@ -519,7 +519,7 @@ namespace apex
 
       //      ::file::path strPath;
 
-      //      strPath = m_psystem->m_pacmedir->appdata() / "audio.txt";
+      //      strPath = m_psystem->m_pacmedirectory->appdata() / "audio.txt";
 
       //      str = m_psystem->m_pacmefile->as_string(strPath);
 
