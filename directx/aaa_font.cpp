@@ -74,7 +74,7 @@ namespace draw2d_directx
 
          }
 
-         if(m_eunitFontSize == ::draw2d::unit_point)
+         if(m_eunitFontSize == ::draw2d::e_unit_point)
          {
 
             fFontSize = point_dpi(oswindow, (float)m_dFontSize);

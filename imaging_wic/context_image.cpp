@@ -283,7 +283,7 @@ namespace imaging_wic
 
       ::save_image saveimage;
 
-      saveimage.m_eformat = ::draw2d::format_png;
+      saveimage.m_eformat = ::draw2d::e_format_png;
 
       saveimage.m_iQuality = 100;
 

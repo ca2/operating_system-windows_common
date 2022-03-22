@@ -259,7 +259,7 @@ namespace draw2d_direct2d
       }*/
 
       /*
-      if(m_efillmode == ::draw2d::fill_mode_alternate)
+      if(m_efillmode == ::draw2d::e_fill_mode_alternate)
       {
          path.SetFillMode(Gdiplus::FillModeAlternate);
       }
@@ -285,7 +285,7 @@ namespace draw2d_direct2d
 
       point_f64_array pa;
 
-      /*if(m_efillmode == ::draw2d::fill_mode_alternate)
+      /*if(m_efillmode == ::draw2d::e_fill_mode_alternate)
       {
          path.SetFillMode(Gdiplus::FillModeAlternate);
       }

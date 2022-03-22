@@ -484,16 +484,16 @@ namespace imaging_wic
 
          switch (psaveimage->m_eformat)
          {
-         case draw2d::format_bmp:
+         case draw2d::e_format_bmp:
             hr = pimagingfactory->CreateEncoder(GUID_ContainerFormatBmp, nullptr, &piEncoder);
             break;
-         case draw2d::format_gif:
+         case draw2d::e_format_gif:
             hr = pimagingfactory->CreateEncoder(GUID_ContainerFormatGif, nullptr, &piEncoder);
             break;
-         case draw2d::format_jpeg:
+         case draw2d::e_format_jpeg:
             hr = pimagingfactory->CreateEncoder(GUID_ContainerFormatJpeg, nullptr, &piEncoder);
             break;
-         case draw2d::format_png:
+         case draw2d::e_format_png:
             hr = pimagingfactory->CreateEncoder(GUID_ContainerFormatPng, nullptr, &piEncoder);
             break;
          default:
@@ -570,7 +570,7 @@ namespace imaging_wic
          //      hr = pPropertybag->Write(1,&option,&varValue);
          //   }
          //}
-         if (psaveimage->m_eformat == draw2d::format_jpeg)
+         if (psaveimage->m_eformat == draw2d::e_format_jpeg)
          {
 
             PROPBAG2 option = { 0 };

@@ -1111,7 +1111,7 @@ namespace draw2d_direct2d
    //   double start      = atan2(y3 - centery, x3 - centerx) * 180.0 / pi;
    //   double end        = atan2(y4 - centery, x4 - centerx) * 180.0 / pi;
 
-   //   //ppath->begin_figure(false, ::draw2d::fill_mode_winding);
+   //   //ppath->begin_figure(false, ::draw2d::e_fill_mode_winding);
    //   ppath->begin_figure();
    //   ppath->add_arc(rectangle, (int) start, (int) fmod(end + 360.0 - start, 360.0));
    //   //ppath->end_figure(false);
@@ -1128,7 +1128,7 @@ namespace draw2d_direct2d
 
       ::rectangle_i32 rectangle((::i32) x1, (::i32)y1, (::i32)(x1 + w), (::i32)(y1 + h));
 
-      //ppath->begin_figure(false, ::draw2d::fill_mode_winding);
+      //ppath->begin_figure(false, ::draw2d::e_fill_mode_winding);
       ppath->begin_figure();
       ppath->add_arc(rectangle, start, extends);
       //ppath->end_figure(false);
@@ -1154,7 +1154,7 @@ namespace draw2d_direct2d
       double start = atan2(y3 - centery, x3 - centerx) * 180.0 / pi;
       double end = atan2(y4 - centery, x4 - centerx) * 180.0 / pi;
 
-      //ppath->begin_figure(false, ::draw2d::fill_mode_winding);
+      //ppath->begin_figure(false, ::draw2d::e_fill_mode_winding);
       ppath->begin_figure();
       ppath->add_arc(rectangle, start, end - start);
       //ppath->end_figure(false);
@@ -1180,7 +1180,7 @@ namespace draw2d_direct2d
 
       auto ppath = __create < ::draw2d::path > ();
 
-      //ppath->begin_figure(false, ::draw2d::fill_mode_winding);
+      //ppath->begin_figure(false, ::draw2d::e_fill_mode_winding);
 
       ppath->begin_figure();
 
@@ -1190,7 +1190,7 @@ namespace draw2d_direct2d
 
       //ppath->end_figure();
 
-      this->draw_path(ppath);
+      this->draw(ppath);
 
    }
 
@@ -4303,7 +4303,7 @@ namespace draw2d_direct2d
 
    //      auto pregion = __create < ::draw2d::region > ();
 
-   //      pregion->create_polygon(polygon_i32.get_data(), (::i32) polygon_i32.get_count(), ::draw2d::fill_mode_winding);
+   //      pregion->create_polygon(polygon_i32.get_data(), (::i32) polygon_i32.get_count(), ::draw2d::e_fill_mode_winding);
 
    //      D2D1::Matrix3x2F m = {};
 
@@ -4336,7 +4336,7 @@ namespace draw2d_direct2d
 
          auto pregion = __create < ::draw2d::region > ();
 
-         pregion->create_polygon(polygon_i32.get_data(), (::i32) polygon_i32.get_count(), ::draw2d::fill_mode_winding);
+         pregion->create_polygon(polygon_i32.get_data(), (::i32) polygon_i32.get_count(), ::draw2d::e_fill_mode_winding);
 
          D2D1::Matrix3x2F m = {};
 
@@ -5780,7 +5780,7 @@ namespace draw2d_direct2d
    void graphics::draw_path(::draw2d::path * ppath)
    {
 
-      return draw_path(ppath, m_ppen);
+      return draw(ppath, m_ppen);
 
    }
 
@@ -5983,11 +5983,11 @@ namespace draw2d_direct2d
 
       //bool bOk1 = 
       
-      fill_path(ppath);
+      fill(ppath);
 
       //bool bOk2 = 
       
-      draw_path(ppath);
+      draw(ppath);
 
       //return bOk1 && bOk2;
 

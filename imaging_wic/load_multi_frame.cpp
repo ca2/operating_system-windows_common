@@ -425,7 +425,7 @@ namespace imaging_wic
 
             }
 
-            //::draw2d::e_disposal edisposal = edisposaliFrame <= 0 ? ::draw2d::disposal_none : pframea->element_at(iFrame - 1)->m_edisposal;
+            //::draw2d::enum_disposal edisposal = edisposaliFrame <= 0 ? ::draw2d::e_disposal_none : pframea->element_at(iFrame - 1)->m_edisposal;
 
             //pframe->m_edisposal = edisposal;
 
@@ -821,7 +821,7 @@ namespace imaging_wic
             if (SUCCEEDED(hr))
             {
 
-               pframe->m_edisposal = (::draw2d::e_disposal) propValue.bVal;
+               pframe->m_edisposal = (::draw2d::enum_disposal) propValue.bVal;
 
             }
 
@@ -831,7 +831,7 @@ namespace imaging_wic
 
             // Failed to get the disposal method, use default. Possibly a
             // non-animated gif.
-            pframe->m_edisposal = ::draw2d::disposal_undefined;
+            pframe->m_edisposal = ::draw2d::e_disposal_undefined;
 
          }
 

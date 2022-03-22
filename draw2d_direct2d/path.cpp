@@ -250,13 +250,13 @@ namespace draw2d_direct2d
 
       }
 
-      if (m_efillmode == ::draw2d::fill_mode_winding)
+      if (m_efillmode == ::draw2d::e_fill_mode_winding)
       {
 
          m_psink->SetFillMode(D2D1_FILL_MODE_WINDING);
 
       }
-      else if (m_efillmode == ::draw2d::fill_mode_alternate)
+      else if (m_efillmode == ::draw2d::e_fill_mode_alternate)
       {
 
          m_psink->SetFillMode(D2D1_FILL_MODE_ALTERNATE);

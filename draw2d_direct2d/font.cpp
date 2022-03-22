@@ -75,7 +75,7 @@ namespace draw2d_direct2d
 
          }
 
-         if(m_eunitFontSize == ::draw2d::unit_point)
+         if(m_eunitFontSize == ::draw2d::e_unit_point)
          {
 
             fFontSize = pgraphics->m_puserinteraction->get_window()->point_dpi((float)m_dFontSize);
