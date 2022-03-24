@@ -41,7 +41,7 @@ namespace draw2d_direct2d
 
       }
 
-      if(m_etype == type_solid)
+      if(m_ebrush == ::draw2d::e_brush_solid)
       {
 
          if(m_psolidbrush == nullptr)
@@ -67,7 +67,7 @@ namespace draw2d_direct2d
          //return m_psolidbrush;
 
       }
-      else if(m_etype == type_linear_gradient_point_color)
+      else if(m_ebrush == ::draw2d::e_brush_linear_gradient_point_color)
       {
 
          if(m_plineargradientbrush == nullptr)
@@ -120,7 +120,7 @@ namespace draw2d_direct2d
          //return (ID2D1Brush *) m_plineargradientbrush;
 
       }
-      else if(m_etype == type_radial_gradient_color)
+      else if(m_ebrush == ::draw2d::e_brush_radial_gradient_color)
       {
 
          if(m_plineargradientbrush == nullptr)
@@ -135,8 +135,8 @@ namespace draw2d_direct2d
             __copy(gradientstops[0].color, m_color1);
             gradientstops[0].position = 0.0f;
 
-            __copy(gradientstops[1].color, m_color1);
-               gradientstops[1].position = 1.0f;
+            __copy(gradientstops[1].color, m_color2);
+            gradientstops[1].position = 1.0f;
 
             // Create the ID2D1GradientStopCollection from a previously
             // declared array of D2D1_GRADIENT_STOP structs.
@@ -153,17 +153,17 @@ namespace draw2d_direct2d
             if(SUCCEEDED(hr))
             {
 
-               double centerx = m_size.cx - m_point.x;
-               double centery = m_size.cy - m_point.y;
-               double originx = m_size.cx / 2 -m_point.x;
-               double originy = m_size.cy / 2 -m_point.y;
-               double radiusx = m_size.cx / 2;
-               double radiusy = m_size.cy / 2;
+               double centerx = m_point.x;
+               double centery = m_point.y;
+               double offsetx = 0.0;
+               double offsety = 0.0;
+               double radiusx = m_size.cx;
+               double radiusy = m_size.cy;
 
                hr = pgraphics->m_prendertarget->CreateRadialGradientBrush(
                     D2D1::RadialGradientBrushProperties(
                     D2D1::Point2F((FLOAT) (centerx), (FLOAT)(centery)),
-                    D2D1::Point2F((FLOAT)(originx), (FLOAT)(originy)),
+                    D2D1::Point2F((FLOAT)(offsetx), (FLOAT)(offsety)),
                     (FLOAT)(radiusx), (FLOAT)(radiusy)),
                     pgradientstops,
                     &m_pradialgradientbrush
@@ -187,7 +187,7 @@ namespace draw2d_direct2d
          //return (ID2D1Brush *)m_pradialgradientbrush;
 
       }
-      else if (m_etype == type_pattern)
+      else if (m_ebrush == ::draw2d::e_brush_pattern)
       {
 
          if (!::is_ok(m_pimage))

@@ -1,5 +1,5 @@
 #include "framework.h"
-#include "aura/user/_user.h"
+#include "aura/user/user/_user.h"
 #include "CustomRenderer.h"
 #include "aura/graphics/draw2d/lock.h"
 #include "aura/graphics/draw2d/device_lock.h"
@@ -1121,7 +1121,7 @@ namespace draw2d_direct2d
 
    //}
 
-   void graphics::Arc(double x1, double y1, double w, double h, angle start, angle extends)
+   void graphics::arc(double x1, double y1, double w, double h, angle start, angle extends)
    {
 
       auto ppath = __create < ::draw2d::path > ();
@@ -1139,7 +1139,7 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::Arc(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4)
+   void graphics::arc(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4)
    {
 
       auto ppath = __create < ::draw2d::path > ();
@@ -1164,12 +1164,12 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::Arc(const ::rectangle_f64 & rectangle, const ::point_f64 & pointStart, const ::point_f64 & pointEnd)
+   void graphics::arc(const ::rectangle_f64 & rectangle, const ::point_f64 & pointStart, const ::point_f64 & pointEnd)
    {
 
       //ASSERT(get_handle1() != nullptr);
 
-      Arc(rectangle.left, rectangle.top, rectangle.right, rectangle.bottom, pointStart.x, pointStart.y, pointEnd.x, pointEnd.y);
+      arc(rectangle.left, rectangle.top, rectangle.right, rectangle.bottom, pointStart.x, pointStart.y, pointEnd.x, pointEnd.y);
 
 
    }
@@ -1490,7 +1490,47 @@ namespace draw2d_direct2d
       if (m_pbrush.is_null())
       {
 
-         //throw ::exception(error_null_pointer);return false;
+         throw ::exception(error_null_pointer);
+
+      }
+
+      if (m_pbrush->m_ebrush == ::draw2d::e_brush_box_gradient)
+      {
+
+         //comptr < ID2D1PathGeometry1 > pgeometry;
+
+         //HRESULT hr = ::direct2d::direct2d()->d2d1_factory1()->CreatePathGeometry(&pgeometry);
+
+         //if (FAILED(hr))
+         //{
+
+         //   throw ::hresult_exception(hr);
+
+         //}
+
+         //comptr < ID2D1GeometrySink > psink;
+
+         //pgeometry->Open(&psink)
+
+         //if (FAILED(hr))
+         //{
+
+         //   throw ::hresult_exception(hr);
+
+         //}
+
+         //psink->SetFillMode(D2D1_FILL_MODE_WINDING);
+         //psink->BeginFigure(D2D1::Point2F(20, 50), D2D1_FIGURE_BEGIN_FILLED);
+         //psink->AddLine(D2D1::Point2F(130, 50));
+         //psink->AddLine(D2D1::Point2F(20, 130));
+         //psink->AddLine(D2D1::Point2F(80, 0));
+         //psink->AddLine(D2D1::Point2F(130, 130));
+         //psink->EndFigure(D2D1_FIGURE_END_CLOSED);
+
+         //   hr = pSink->Close();
+         //}
+
+         //SafeRelease(&pSink);
 
       }
 
@@ -1621,11 +1661,11 @@ namespace draw2d_direct2d
 
       //bool bOk = 
       
-      fill_path(pgeometry, m_pbrush);
+      fill(pgeometry, m_pbrush);
 
       //bOk = bOk && 
       
-      draw_path(pgeometry, m_ppen);
+      draw(pgeometry, m_ppen);
 
       //return bOk;
 
@@ -1673,7 +1713,7 @@ namespace draw2d_direct2d
 
       //bool bOk = 
       
-      draw_path(pgeometry, m_ppen);
+      draw(pgeometry, m_ppen);
 
       //return bOk;
 
@@ -1721,7 +1761,7 @@ namespace draw2d_direct2d
 
       //bool bOk = 
       
-      fill_path(pgeometry, m_pbrush);
+      fill(pgeometry, m_pbrush);
 
       //return bOk;
 
@@ -1731,19 +1771,9 @@ namespace draw2d_direct2d
    void graphics::rectangle(const ::rectangle_f64 & rectangle)
    {
 
-      //bool bOk1;
-
-      //bOk1 = 
-      
       fill_rectangle(rectangle);
 
-      //bool bOk2;
-
-      //bOk2 = 
-      
       draw_rectangle(rectangle);
-
-      //return bOk1 && bOk2;
 
    }
 
@@ -1794,8 +1824,17 @@ namespace draw2d_direct2d
 
       }
 
-      if (pbrush->m_etype == ::draw2d::brush::e_type_null)
+      if (pbrush->m_ebrush == ::draw2d::e_brush_null)
       {
+
+         return;
+
+      }
+
+      if (pbrush->m_ebrush == ::draw2d::e_brush_box_gradient)
+      {
+
+
 
          return;
 
@@ -1816,34 +1855,61 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::round_rectangle(const ::rectangle_f64 & rectangleParam, double dRadius)
+   void graphics::fill_round_rectangle(const ::rectangle_f64 & rectangleParam, ::draw2d::brush * pbrush, double dRadius)
    {
 
-      D2D1_ROUNDED_RECT rectangle;
-
-      __copy(rectangle, rectangleParam);
-
-      rectangle.radiusX = (FLOAT) dRadius;
-
-      if (m_pbrush.is_set() && m_pbrush->m_etype != ::draw2d::brush::e_type_null)
+      if (pbrush->m_ebrush == ::draw2d::e_brush_box_gradient)
       {
 
-         auto pbrush = m_pbrush.cast <::draw2d_direct2d::brush > ();
+         ::draw2d::graphics::fill_round_rectangle(rectangleParam, pbrush, dRadius);
 
-         defer_primitive_blend();
-
-         m_prendertarget->FillRoundedRectangle(rectangle, pbrush->get_os_data < ID2D1Brush * > (this));
+         return;
 
       }
 
-      if (m_pbrush.is_set() && m_pbrush->m_etype != ::draw2d::brush::e_type_null)
+      if (m_pbrush.is_set() && m_pbrush->m_ebrush != ::draw2d::e_brush_null)
       {
 
+         D2D1_ROUNDED_RECT rectangle;
+
+         __copy(rectangle, rectangleParam);
+
+         rectangle.radiusX = (FLOAT)dRadius;
+
+         auto pbrush = m_pbrush.cast <::draw2d_direct2d::brush >();
+
+         ID2D1Brush * pd2d1brush = pbrush->get_os_data < ID2D1Brush * >(this);
+
+         defer_primitive_blend();
+
+         m_prendertarget->FillRoundedRectangle(rectangle, pd2d1brush);
+
+      }
+
+   }
+
+   
+   void graphics::draw_round_rectangle(const ::rectangle_f64 & rectangleParam, ::draw2d::pen * ppen, double dRadius)
+   {
+
+      if (m_ppen.is_set() && m_ppen->m_epen != ::draw2d::e_pen_null)
+      {
+
+         D2D1_ROUNDED_RECT rectangle;
+
+         __copy(rectangle.rect, rectangleParam);
+
+         rectangle.radiusX = (FLOAT)dRadius;
+
+         rectangle.radiusY = (FLOAT)dRadius;
+
          auto ppen = m_ppen.cast <::draw2d_direct2d::pen >();
+
+         ID2D1Brush * pd2d1brush = ppen->get_os_data < ID2D1Brush * >(this);
          
          defer_primitive_blend();
 
-         m_prendertarget->DrawRoundedRectangle(rectangle, ppen->get_os_data < ID2D1Brush * > (this), (FLOAT) ppen->m_dWidth);
+         m_prendertarget->DrawRoundedRectangle(rectangle, pd2d1brush, (FLOAT) ppen->m_dWidth);
 
       }
 
@@ -2787,7 +2853,7 @@ namespace draw2d_direct2d
 
    //}
 
-   void graphics::AngleArc(double x, double y, double nRadius, angle fStartAngle, angle fSweepAngle)
+   void graphics::angle_arc(double x, double y, double nRadius, angle fStartAngle, angle fSweepAngle)
    {
 
       throw ::exception(todo);
@@ -2801,18 +2867,18 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::ArcTo(const ::rectangle_f64 & rectangle, const ::point_f64 & pointStart, const ::point_f64 & pointEnd)
-   {
+   //void graphics::arc_to(const ::rectangle_f64 & rectangle, const ::point_f64 & pointStart, const ::point_f64 & pointEnd)
+   //{
 
-      throw ::exception(todo);
+   //   throw ::exception(todo);
 
-      //ASSERT(get_handle1() != nullptr);
+   //   //ASSERT(get_handle1() != nullptr);
 
-      //return ArcTo(rectangle.left, rectangle.top, rectangle.right, rectangle.bottom, pointStart.x, pointStart.y, pointEnd.x, pointEnd.y);
-      //return false;
+   //   //return ArcTo(rectangle.left, rectangle.top, rectangle.right, rectangle.bottom, pointStart.x, pointStart.y, pointEnd.x, pointEnd.y);
+   //   //return false;
 
 
-   }
+   //}
 
    //int graphics::GetArcDirection()
    //{
@@ -4632,14 +4698,14 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::ArcTo(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4)
-   {
+   //void graphics::arc_to(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4)
+   //{
 
-      throw ::exception(todo);
+   //   throw ::exception(todo);
 
-      //return false;
+   //   //return false;
 
-   }
+   //}
 
 
    //int graphics::SetArcDirection(double dArcDirection)
@@ -5777,7 +5843,7 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::draw_path(::draw2d::path * ppath)
+   void graphics::draw(::draw2d::path * ppath)
    {
 
       return draw(ppath, m_ppen);
@@ -5785,7 +5851,7 @@ namespace draw2d_direct2d
    }
 
 
-   bool graphics::draw_path(ID2D1PathGeometry * pgeometry, ::draw2d::pen * ppen)
+   bool graphics::draw(ID2D1PathGeometry * pgeometry, ::draw2d::pen * ppen)
    {
 
       ::ID2D1Brush * pbrush = ppen->get_os_data < ID2D1Brush * >(this);
@@ -5804,26 +5870,208 @@ namespace draw2d_direct2d
    }
 
 
-   bool graphics::fill_path(ID2D1PathGeometry * pgeometry, ::draw2d::brush * pbrushParam)
+   bool graphics::fill(ID2D1PathGeometry * pgeometry, ::draw2d::brush * pbrush)
    {
 
-      ::ID2D1Brush * pbrush = pbrushParam->get_os_data < ID2D1Brush * >(this);
+      if (pbrush->m_ebrush == ::draw2d::e_brush_box_gradient)
+      {
 
-      if (pbrush == nullptr)
+         layer layerShape(m_prendertarget, pgeometry);
+
+         double radius = pbrush->m_dRadius;
+
+         double radius2 = radius * 2.0;
+
+         auto w = pbrush->m_size.cx;
+
+         auto h = pbrush->m_size.cy;
+
+         if (radius2 > w || radius2 > h)
+         {
+
+            return false;
+
+         }
+
+         ::rectangle_f64 outer(pbrush->m_point, pbrush->m_size);
+
+         ::rectangle_f64 inner(outer);
+
+         inner.deflate(radius);
+
+         ::rectangle_f64 cornerClip(pbrush->m_point, ::size_f64(radius, radius));
+         
+         ::rectangle_f64 cornerBrush(pbrush->m_point, ::size_f64(radius * 2.0, radius * 2.0));
+
+         auto pstopcollection = _create_simple_full_range_flat_gradient_stop_collection(pbrush->m_color1, pbrush->m_color2);
+
+         {
+
+            //layer layerShape(m_prendertarget, pgeometry);
+
+            auto pbrush = _create_simple_radial_gradient(cornerBrush, pstopcollection);
+
+            m_prendertarget->FillRectangle(
+               { (FLOAT)cornerClip.left, (FLOAT)cornerClip.top,
+               (FLOAT)cornerClip.right, (FLOAT)cornerClip.bottom },
+               pbrush);
+
+         }
+
+         cornerClip.Align(e_align_top_right, outer);
+
+         cornerBrush.Align(e_align_top_right, outer);
+
+         {
+
+            //layer layerShape(m_prendertarget, pgeometry);
+
+            auto pbrush = _create_simple_radial_gradient(cornerBrush, pstopcollection);
+
+            m_prendertarget->FillRectangle(
+               { (FLOAT)cornerClip.left, (FLOAT)cornerClip.top,
+               (FLOAT)cornerClip.right, (FLOAT)cornerClip.bottom },
+               pbrush);
+
+         }
+
+         cornerClip.Align(e_align_bottom_right, outer);
+
+         cornerBrush.Align(e_align_bottom_right, outer);
+
+         {
+
+            //layer layerShape(m_prendertarget, pgeometry);
+
+            auto pbrush = _create_simple_radial_gradient(cornerBrush, pstopcollection);
+
+            m_prendertarget->FillRectangle(
+               { (FLOAT)cornerClip.left, (FLOAT)cornerClip.top,
+               (FLOAT)cornerClip.right, (FLOAT)cornerClip.bottom },
+               pbrush);
+
+         }
+
+         cornerClip.Align(e_align_bottom_left, outer);
+
+         cornerBrush.Align(e_align_bottom_left, outer);
+
+         {
+
+            //layer layerShape(m_prendertarget, pgeometry);
+
+            auto pbrush = _create_simple_radial_gradient(cornerBrush, pstopcollection);
+
+            m_prendertarget->FillRectangle(
+               { (FLOAT)cornerClip.left, (FLOAT)cornerClip.top,
+               (FLOAT)cornerClip.right, (FLOAT)cornerClip.bottom },
+               pbrush);
+
+         }
+
+
+         cornerClip.Align(e_align_top_right, outer);
+
+         cornerBrush.Align(e_align_top_right, outer);
+
+         {
+
+            //layer layerShape(m_prendertarget, pgeometry);
+
+            auto pd2d1brush = _create_solid_brush(pbrush->m_color1);
+
+            m_prendertarget->FillRectangle(
+               { (FLOAT)inner.left, (FLOAT)inner.top,
+               (FLOAT)inner.right, (FLOAT)inner.bottom },
+               pd2d1brush);
+
+         }
+
+         {
+
+            ::rectangle_f64 side(0, 0, inner.width(), radius);
+
+            side.Align(e_align_top_center, outer);
+
+            {
+
+               auto pbrush = _create_simple_linear_gradient(side.bottom_left(), side.top_left(), pstopcollection);
+
+               m_prendertarget->FillRectangle(
+                  { (FLOAT)side.left, (FLOAT)side.top,
+                  (FLOAT)side.right, (FLOAT)side.bottom },
+                  pbrush);
+
+            }
+
+            side.Align(e_align_bottom_center, outer);
+
+            {
+
+               auto pbrush = _create_simple_linear_gradient(side.top_left(), side.bottom_left(), pstopcollection);
+
+               m_prendertarget->FillRectangle(
+                  { (FLOAT)side.left, (FLOAT)side.top,
+                  (FLOAT)side.right, (FLOAT)side.bottom },
+                  pbrush);
+
+            }
+
+         }
+
+
+         {
+
+            ::rectangle_f64 side(0, 0, radius, inner.height());
+
+            side.Align(e_align_left_center, outer);
+
+            {
+
+               auto pbrush = _create_simple_linear_gradient(side.top_right(), side.top_left(), pstopcollection);
+
+               m_prendertarget->FillRectangle(
+                  { (FLOAT)side.left, (FLOAT)side.top,
+                  (FLOAT)side.right, (FLOAT)side.bottom },
+                  pbrush);
+
+            }
+
+            side.Align(e_align_right_center, outer);
+
+            {
+
+               auto pbrush = _create_simple_linear_gradient(side.top_left(), side.top_right(), pstopcollection);
+
+               m_prendertarget->FillRectangle(
+                  { (FLOAT)side.left, (FLOAT)side.top,
+                  (FLOAT)side.right, (FLOAT)side.bottom },
+                  pbrush);
+
+            }
+
+         }
+         return true;
+
+      }
+
+      ::ID2D1Brush * pd2d1brush = pbrush->get_os_data < ID2D1Brush * >(this);
+
+      if (pd2d1brush == nullptr)
       {
 
          return false;
 
       }
 
-      m_prendertarget->FillGeometry(pgeometry, pbrush);
+      m_prendertarget->FillGeometry(pgeometry, pd2d1brush);
 
       return true;
 
    }
 
 
-   void graphics::draw_path(::draw2d::path * ppath, ::draw2d::pen * ppen)
+   void graphics::draw(::draw2d::path * ppath, ::draw2d::pen * ppen)
    {
 
       __stack(m_bOutline, true);
@@ -5835,7 +6083,7 @@ namespace draw2d_direct2d
       if(pgeometry != nullptr)
       {
 
-         draw_path(pgeometry, ppen);
+         draw(pgeometry, ppen);
 
       }
 
@@ -5862,15 +6110,20 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::fill_path(::draw2d::path * ppath)
+   void graphics::fill(::draw2d::path * ppath)
    {
 
       if (ppath == nullptr)
       {
 
-         //return false;
-
          throw ::exception(error_null_pointer);
+
+      }
+
+      if (ppath->m_shapea.is_empty())
+      {
+
+         return;
 
       }
 
@@ -5883,7 +6136,7 @@ namespace draw2d_direct2d
       if (pgeometry != nullptr)
       {
 
-         fill_path(pgeometry, m_pbrush);
+         fill(pgeometry, m_pbrush);
 
       }
 
@@ -5910,7 +6163,7 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::fill_path(::draw2d::path * ppath, ::draw2d::brush * pbrushParam)
+   void graphics::fill(::draw2d::path * ppath, ::draw2d::brush * pbrush)
    {
 
       if (ppath == nullptr)
@@ -5922,16 +6175,17 @@ namespace draw2d_direct2d
 
       }
 
-      ID2D1Brush * pbrush = pbrushParam->get_os_data < ID2D1Brush * >(this);
 
-      if (pbrush == nullptr)
-      {
+      //ID2D1Brush * pbrush = pbrushParam->get_os_data < ID2D1Brush * >(this);
 
-         //return false;
+      //if (pbrush == nullptr)
+      //{
 
-         throw ::exception(error_null_pointer);
+      //   //return false;
 
-      }
+      //   throw ::exception(error_null_pointer);
+
+      //}
 
       __stack(m_bOutline, false);
 
@@ -5942,7 +6196,9 @@ namespace draw2d_direct2d
       if (pgeometry != nullptr)
       {
 
-         m_prendertarget->FillGeometry(pgeometry, pbrush);
+         fill(pgeometry, pbrush);
+
+         //m_prendertarget->FillGeometry(pgeometry, pbrush);
 
       }
 
@@ -6210,6 +6466,134 @@ namespace draw2d_direct2d
    //   ::direct2d::direct2d() = pplugin;
 
    //}
+
+   comptr < ID2D1SolidColorBrush > graphics::_create_solid_brush(const ::color::color & color)
+   {
+
+      comptr<ID2D1SolidColorBrush> pbrush;
+
+      D2D1_COLOR_F d2d1color;
+
+      __copy(d2d1color, color);
+
+      HRESULT hr = m_prendertarget->CreateSolidColorBrush(d2d1color, &pbrush);
+
+      if (FAILED(hr))
+      {
+
+         throw hresult_exception(hr);
+
+      }
+
+      return pbrush;
+
+   }
+
+   comptr<ID2D1RadialGradientBrush> graphics::_create_simple_radial_gradient(const ::rectangle_f64 & r, ID2D1GradientStopCollection * pstopcollection)
+   {
+
+      comptr<ID2D1RadialGradientBrush> pbrush;
+
+      double centerx = r.center_x();
+      double centery = r.center_y();
+      double offsetx = 0.0;
+      double offsety = 0.0;
+      double radiusx = r.width() / 2.0;
+      double radiusy = r.height() / 2.0;
+
+      HRESULT hr = m_prendertarget->CreateRadialGradientBrush(
+         D2D1::RadialGradientBrushProperties(
+            D2D1::Point2F((FLOAT)(centerx), (FLOAT)(centery)),
+            D2D1::Point2F((FLOAT)(offsetx), (FLOAT)(offsety)),
+            (FLOAT)(radiusx), (FLOAT)(radiusy)),
+         pstopcollection,
+         &pbrush
+      );
+
+      if (FAILED(hr))
+      {
+
+         throw hresult_exception(hr);
+
+      }
+
+      return pbrush;
+
+   }
+
+
+   comptr<ID2D1LinearGradientBrush> graphics::_create_simple_linear_gradient(const ::point_f64 & p1, const ::point_f64 & p2, ID2D1GradientStopCollection * pstopcollection)
+   {
+
+      comptr<ID2D1LinearGradientBrush> pbrush;
+
+      D2D1_LINEAR_GRADIENT_BRUSH_PROPERTIES prop{};
+
+      ::point_i32 pointViewport(0, 0);
+
+      prop.startPoint.x = (FLOAT)p1.x + pointViewport.x;
+      prop.startPoint.y = (FLOAT)p1.y + pointViewport.y;
+      prop.endPoint.x = (FLOAT)p2.x + pointViewport.x;
+      prop.endPoint.y = (FLOAT)p2.y + pointViewport.y;
+
+      D2D1_BRUSH_PROPERTIES brushproperties = {};
+
+      brushproperties.opacity = 1.0f;
+      brushproperties.transform = D2D1::IdentityMatrix();
+
+      HRESULT hr = m_prendertarget->CreateLinearGradientBrush(&prop, &brushproperties, pstopcollection, &pbrush);
+
+      if (FAILED(hr))
+      {
+
+         throw hresult_exception(hr);
+
+      }
+
+      return pbrush;
+
+   }
+
+
+
+   comptr <ID2D1GradientStopCollection > graphics::_create_simple_full_range_flat_gradient_stop_collection(const ::color::color & color1, const ::color::color & color2)
+   {
+
+      // Create an array of gradient stops to put in the gradient stop
+      // collection that will be used in the gradient brush.
+      comptr <ID2D1GradientStopCollection > pgradientstops;
+
+      D2D1_GRADIENT_STOP gradientstops[2];
+
+      __copy(gradientstops[0].color, color1);
+      gradientstops[0].position = 0.0f;
+
+      __copy(gradientstops[1].color, color2);
+      gradientstops[1].position = 1.0f;
+
+      // Create the ID2D1GradientStopCollection from a previously
+      // declared array of D2D1_GRADIENT_STOP structs.
+      HRESULT hr = m_prendertarget->CreateGradientStopCollection(
+         gradientstops,
+         2,
+         D2D1_GAMMA_2_2,
+         D2D1_EXTEND_MODE_CLAMP,
+         &pgradientstops
+      );
+
+      if (FAILED(hr))
+      {
+
+         throw hresult_exception(hr);
+
+      }
+
+      return pgradientstops;
+
+   }
+
+
+
 
 
 } // namespace draw2d_direct2d

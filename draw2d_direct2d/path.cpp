@@ -11,7 +11,7 @@ namespace draw2d_direct2d
    {
 
       m_pthis = this;
-      m_bFigureOpened = false;
+      //m_bFigureOpened = false;
 
    }
 
@@ -47,7 +47,7 @@ namespace draw2d_direct2d
 
       }
 
-      m_bFigureOpened = false;
+      m_bHasPoint = false;
 
       return true;
 
@@ -63,21 +63,46 @@ namespace draw2d_direct2d
 
       internal_get_arc(point, arcseg, arc);
 
-      if (!internal_start_figure(pgraphics, point.x, point.y))
+      if (!m_bHasPoint)
       {
 
-         return false;
+         if (!internal_start_figure(pgraphics, point.x, point.y))
+         {
+
+            return false;
+
+         }
+
+      }
+      else
+      {
+
+         auto dDistance = point.distance(m_pointEnd);
+
+         if (dDistance > 0.001)
+         {
+
+            m_psink->AddLine({(FLOAT) point.x, (FLOAT) point.y});
+
+         }
+
 
       }
 
+
+
       m_psink->AddArc(arcseg);
+
+      m_pointEnd.x = arcseg.point.x;
+
+      m_pointEnd.y = arcseg.point.y;
 
       return true;
 
    }
 
 
-   bool path::internal_add_rect(::draw2d::graphics* pgraphics, double x, double y, double cx, double cy)
+   bool path::internal_add_rectangle(::draw2d::graphics* pgraphics, double x, double y, double cx, double cy)
    {
 
       internal_start_figure(pgraphics, x, y);
@@ -86,6 +111,48 @@ namespace draw2d_direct2d
       internal_add_line(pgraphics, x + cx,y + cy);
       internal_add_line(pgraphics, x,y + cy);
       
+      internal_end_figure(true);
+
+      return true;
+
+   }
+
+
+   bool path::internal_add_ellipse(::draw2d::graphics * pgraphics, double x, double y, double cx, double cy)
+   {
+
+      internal_start_figure(pgraphics, x + cx, y + cy / 2.0);
+
+      ::arc arc{};
+
+      arc.m_pointCenter.x = x + cx / 2.0;
+      arc.m_pointCenter.y = y + cy / 2.0;
+      arc.m_sizeRadius.cx = cx / 2.0;
+      arc.m_sizeRadius.cy = cy / 2.0;
+      arc.m_pointBegin.x = x + cx;
+      arc.m_pointBegin.y = y + cy / 2.0;
+      arc.m_pointEnd.x = x;
+      arc.m_pointEnd.y = y + cy / 2.0;
+      arc.m_angleBeg = 0.0;
+      arc.m_angleEnd2 = MATH_PI;
+      arc.m_angleExt = MATH_PI;
+
+      internal_add_arc(pgraphics, arc);
+
+      arc.m_pointCenter.x = x + cx / 2.0;
+      arc.m_pointCenter.y = y + cy / 2.0;
+      arc.m_sizeRadius.cx = cx / 2.0;
+      arc.m_sizeRadius.cy = cy / 2.0;
+      arc.m_pointBegin.x = x;
+      arc.m_pointBegin.y = y + cy / 2.0;
+      arc.m_pointEnd.x = x + cx;
+      arc.m_pointEnd.y = y + cy / 2.0;
+      arc.m_angleBeg = MATH_PI;
+      arc.m_angleEnd2 = MATH_PI * 2.0;
+      arc.m_angleExt = MATH_PI;
+
+      internal_add_arc(pgraphics, arc);
+
       internal_end_figure(true);
 
       return true;
@@ -236,7 +303,7 @@ namespace draw2d_direct2d
    bool path::internal_start_figure(::draw2d::graphics* pgraphics)
    {
 
-      if (m_bFigureOpened)
+      if (m_bHasPoint)
       {
 
          internal_end_figure(false);
@@ -280,7 +347,12 @@ namespace draw2d_direct2d
 
       m_psink->BeginFigure({ (FLOAT)x, (FLOAT)y }, pgraphics->m_bOutline ? D2D1_FIGURE_BEGIN_HOLLOW : D2D1_FIGURE_BEGIN_FILLED);
 
-      m_bFigureOpened = true;
+      m_pointBegin.x = x;
+      m_pointBegin.y = y;
+      m_pointEnd.x = x;
+      m_pointEnd.y = y;
+
+      m_bHasPoint = true;
 
       return true;
 
@@ -392,6 +464,10 @@ namespace draw2d_direct2d
 
       m_psink  = nullptr;
 
+      m_estatus = error_failed;
+
+      m_bHasPoint = false;
+
       _set_create(pgraphics);
 
       /*for(i32 i = 0; i < m_elementa.get_count(); i++)
@@ -406,25 +482,36 @@ namespace draw2d_direct2d
 
       }*/
 
-      if (m_bFigureOpened)
+      if (!m_estatus)
       {
 
-         internal_end_figure(false);
-
-      }
-
-      if(m_psink != nullptr)
-      {
-         
-         HRESULT hr = m_psink->Close();
-
-         m_osdata[iCreate] = m_ppath;
+         m_ppath = nullptr;
 
       }
       else
       {
 
-         m_ppath = nullptr;
+         if (m_bHasPoint)
+         {
+
+            internal_end_figure(false);
+
+         }
+
+         if (m_psink != nullptr)
+         {
+
+            HRESULT hr = m_psink->Close();
+
+            m_osdata[iCreate] = m_ppath;
+
+         }
+         else
+         {
+
+            m_ppath = nullptr;
+
+         }
 
       }
 
@@ -528,7 +615,7 @@ namespace draw2d_direct2d
       if (eshape == e_shape_begin_figure)
       {
 
-         if (m_bFigureOpened)
+         if (m_bHasPoint)
          {
 
             internal_end_figure(false);
@@ -541,13 +628,12 @@ namespace draw2d_direct2d
       else if (eshape == e_shape_close_figure)
       {
 
-         if (m_bFigureOpened)
+         if (m_bHasPoint)
          {
 
             internal_end_figure(true);
 
          }
-
 
          return true;
 
@@ -555,7 +641,7 @@ namespace draw2d_direct2d
       else if (eshape == e_shape_end_figure)
       {
 
-         if (m_bFigureOpened)
+         if (m_bHasPoint)
          {
 
             internal_end_figure(false);
@@ -631,7 +717,7 @@ namespace draw2d_direct2d
    bool path::_set(::draw2d::graphics* pgraphics, const ::rectangle & rectangle)
    {
 
-      return internal_add_rect(pgraphics, rectangle.left, rectangle.top, rectangle.width(), rectangle.height());
+      return internal_add_rectangle(pgraphics, rectangle.left, rectangle.top, rectangle.width(), rectangle.height());
 
    }
 
@@ -642,6 +728,15 @@ namespace draw2d_direct2d
    //   return internal_add_rect(pgraphics, rectangle.left, rectangle.top, rectangle.width(), rectangle.height());
 
    //}
+
+
+   bool path::_set(::draw2d::graphics * pgraphics, const ::ellipse & ellipse)
+   {
+
+      return internal_add_ellipse(pgraphics, ellipse.left, ellipse.top, ellipse.width(), ellipse.height());
+
+   }
+
 
 
    bool path::_set(::draw2d::graphics* pgraphics, const ::lines & lines)

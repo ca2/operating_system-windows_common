@@ -28,9 +28,9 @@ namespace draw2d_direct2d
       comptr<ID2D1PathGeometry>          m_ppathFilled;
       comptr<ID2D1PathGeometry>          m_ppath;
       comptr<ID2D1GeometrySink>          m_psink;
-      bool                                               m_bFigureOpened;
-      ::point_i32                                            m_point;
-      D2D1_FIGURE_BEGIN                                  m_d2d2figurebegin;
+      //bool                               m_bFigureOpened;
+      //::point_i32                                            m_point;
+      D2D1_FIGURE_BEGIN                  m_d2d2figurebegin;
 
 
       path();
@@ -53,7 +53,9 @@ namespace draw2d_direct2d
 
       virtual bool internal_add_line(::draw2d::graphics* pgraphics, double x, double y);
 
-      virtual bool internal_add_rect(::draw2d::graphics* pgraphics, double x, double y, double cx, double cy);
+      virtual bool internal_add_rectangle(::draw2d::graphics* pgraphics, double x, double y, double cx, double cy);
+
+      virtual bool internal_add_ellipse(::draw2d::graphics * pgraphics, double x, double y, double cx, double cy);
 
       virtual bool internal_add_lines(::draw2d::graphics* pgraphics, const ::point_i32_array & pointa, bool bClose);
 
@@ -92,6 +94,8 @@ namespace draw2d_direct2d
       virtual bool _set(::draw2d::graphics* pgraphics, const ::lines& pline);
 
       virtual bool _set(::draw2d::graphics* pgraphics, const ::rectangle & rectangle);
+
+      virtual bool _set(::draw2d::graphics* pgraphics, const ::ellipse & ellipse);
 
       virtual bool _set(::draw2d::graphics* pgraphics, const ::polygon & polygon);
 

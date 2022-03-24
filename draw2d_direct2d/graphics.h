@@ -188,15 +188,15 @@ namespace draw2d_direct2d
 
       virtual void clear_current_point() override;
 
-      virtual void draw_path(::draw2d::path * ppath) override;
-      virtual void fill_path(::draw2d::path * ppath) override;
+      virtual void draw(::draw2d::path * ppath) override;
+      virtual void fill(::draw2d::path * ppath) override;
       virtual void path(::draw2d::path * ppath) override;
 
-      virtual bool draw_path(ID2D1PathGeometry * pgeometry, ::draw2d::pen * ppen);
-      virtual bool fill_path(ID2D1PathGeometry * pgeometry, ::draw2d::brush * pbrush);
+      virtual bool draw(ID2D1PathGeometry * pgeometry, ::draw2d::pen * ppen);
+      virtual bool fill(ID2D1PathGeometry * pgeometry, ::draw2d::brush * pbrush);
 
-      virtual void draw_path(::draw2d::path * ppath, ::draw2d::pen * ppen) override;
-      virtual void fill_path(::draw2d::path * ppath, ::draw2d::brush * pbrush) override;
+      virtual void draw(::draw2d::path * ppath, ::draw2d::pen * ppen) override;
+      virtual void fill(::draw2d::path * ppath, ::draw2d::brush * pbrush) override;
 
       // World transform
       //bool SetWorldTransform(const XFORM* pXform) override;
@@ -284,15 +284,15 @@ namespace draw2d_direct2d
       void line_to(double x, double y) override;
       void draw_line(double x1, double y1, double x2, double y2, ::draw2d::pen * ppen) override;
       //  bool line_to(const ::point_f64 & point) override;
-      void Arc(double x1, double y1, double w, double h, angle start, angle extends) override;
-      void Arc(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4) override;
+      void arc(double x1, double y1, double w, double h, angle start, angle extends) override;
+      void arc(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4) override;
       //bool Arc(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4) override;
-      void Arc(const ::rectangle_f64 & rectangle, const ::point_f64 & pointStart, const ::point_f64 & pointEnd) override;
+      void arc(const ::rectangle_f64 & rectangle, const ::point_f64 & pointStart, const ::point_f64 & pointEnd) override;
       void polyline(const ::point_f64* ppoints,count nCount) override;
 
-      void AngleArc(double x, double y, double nRadius, angle fStartAngle, angle fSweepAngle) override;
-      void ArcTo(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4) override;
-      void ArcTo(const ::rectangle_f64 & rectangle, const ::point_f64 & pointStart, const ::point_f64 & pointEnd) override;
+      void angle_arc(double x, double y, double nRadius, angle fStartAngle, angle fSweepAngle) override;
+      //void arc(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4) override;
+      //void arc(const ::rectangle_f64 & rectangle, const ::point_f64 & pointStart, const ::point_f64 & pointEnd) override;
       //int GetArcDirection() override;
       //int SetArcDirection(int nArcDirection) override;
 
@@ -358,10 +358,13 @@ namespace draw2d_direct2d
       using ::draw2d::graphics::draw_rectangle;
       using ::draw2d::graphics::fill_rectangle;
       using ::draw2d::graphics::round_rectangle;
+      using ::draw2d::graphics::draw_round_rectangle;
+      using ::draw2d::graphics::fill_round_rectangle;
       virtual void rectangle(const ::rectangle_f64 & rectangle) override;
-      virtual void draw_rectangle(const ::rectangle_f64 & rectangle, ::draw2d::pen * ppen) override;
-      virtual void fill_rectangle(const ::rectangle_f64 & rectangle, ::draw2d::brush * ppen) override;
-      virtual void round_rectangle(const ::rectangle_f64 & rectangle, double dRadius) override;
+      void draw_rectangle(const ::rectangle_f64 & rectangle, ::draw2d::pen * ppen) override;
+      void fill_rectangle(const ::rectangle_f64 & rectangle, ::draw2d::brush * pbrush) override;
+      void draw_round_rectangle(const ::rectangle_f64 & rectangle, ::draw2d::pen * ppen, double dRadius) override;
+      void fill_round_rectangle(const ::rectangle_f64 & rectangle, ::draw2d::brush * pbrush, double dRadius) override;
 
 
       //virtual bool _draw_raw(const ::rectangle_f64 & rectangleTarget, ::image * pimage, const ::image_drawing_options & imagedrawingoptions, const ::point_f64 & rectangleSource = ::point_f64()) override;
@@ -590,8 +593,51 @@ namespace draw2d_direct2d
 
       //virtual bool update_window(::image* pimage) override;
 
+      comptr < ID2D1SolidColorBrush > _create_solid_brush(const ::color::color & color);
+      comptr < ID2D1RadialGradientBrush > _create_simple_radial_gradient(const ::rectangle_f64 & r, ID2D1GradientStopCollection * pcollection);
+      comptr < ID2D1LinearGradientBrush > _create_simple_linear_gradient(const ::point_f64 & p1, const ::point_f64 & p2, ID2D1GradientStopCollection * pcollection);
+      comptr < ID2D1GradientStopCollection > _create_simple_full_range_flat_gradient_stop_collection(const ::color::color & color1, const ::color::color & color2);
+
+
    };
 
+
+   class CLASS_DECL_DRAW2D_DIRECT2D layer
+   {
+   public:
+
+      comptr<ID2D1RenderTarget>                          m_prendertarget;
+
+
+
+      layer(ID2D1RenderTarget * ptarget, const D2D1_LAYER_PARAMETERS & parameters) :
+         m_prendertarget(ptarget)
+      {
+
+         m_prendertarget->PushLayer(parameters, nullptr);
+
+      }
+
+      layer(ID2D1RenderTarget * ptarget, ID2D1PathGeometry * ppathgeometry) :
+         layer(ptarget, D2D1::LayerParameters(D2D1::InfiniteRect(), ppathgeometry))
+      {
+
+      }
+
+      layer(ID2D1RenderTarget * ptarget, ID2D1PathGeometry1 * ppathgeometry) :
+         layer(ptarget, D2D1::LayerParameters(D2D1::InfiniteRect(), ppathgeometry))
+      {
+
+      }
+
+      ~layer()
+      {
+
+         m_prendertarget->PopLayer();
+
+      }
+
+   };
 
 } // namespace draw2d_direct2d
 

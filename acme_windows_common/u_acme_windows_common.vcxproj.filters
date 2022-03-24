@@ -108,6 +108,9 @@
     <ClInclude Include="exception\hresult.h">
       <Filter>Header Files\exception</Filter>
     </ClInclude>
+    <ClInclude Include="acme_directory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="framework.cpp">
@@ -167,7 +170,7 @@
     <ClCompile Include="exception\translator.cpp">
       <Filter>Source Files\exception</Filter>
     </ClCompile>
-    <ClCompile Include="acme_dir.cpp">
+    <ClCompile Include="acme_directory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

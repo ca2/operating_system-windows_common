@@ -175,6 +175,44 @@ namespace direct2d
    }
 
 
+   comptr < ID2D1PathGeometry1 > direct2d::create_rectangle_path_geometry(const ::rectangle_f64 & rectangle)
+   {
+
+      comptr < ID2D1PathGeometry1 > ppathgeometry;
+
+      HRESULT hr = d2d1_factory1()->CreatePathGeometry(&ppathgeometry);
+
+      if (FAILED(hr))
+      {
+
+         throw ::hresult_exception(hr);
+
+      }
+
+      comptr < ID2D1GeometrySink > psink;
+
+      ppathgeometry->Open(&psink);
+
+      if (FAILED(hr))
+      {
+
+         throw ::hresult_exception(hr);
+
+      }
+
+      psink->SetFillMode(D2D1_FILL_MODE_WINDING);
+      psink->BeginFigure(D2D1::Point2F(rectangle.left, rectangle.top), D2D1_FIGURE_BEGIN_FILLED);
+      psink->AddLine(D2D1::Point2F(rectangle.right, rectangle.top));
+      psink->AddLine(D2D1::Point2F(rectangle.right, rectangle.bottom));
+      psink->AddLine(D2D1::Point2F(rectangle.left, rectangle.bottom));
+      psink->EndFigure(D2D1_FIGURE_END_CLOSED);
+
+      return ppathgeometry;
+
+   }
+
+
+
    CLASS_DECL_DIRECT2D void defer_initialize(::object * pobject)
    {
 
