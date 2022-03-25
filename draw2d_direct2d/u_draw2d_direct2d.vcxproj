@@ -99,7 +99,6 @@
     <ClCompile Include="preview_dc.cpp" />
     <ClCompile Include="region.cpp" />
     <ClCompile Include="_.cpp" />
-    <ClCompile Include="_uwp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bitmap.h" />

@@ -97,7 +97,6 @@
     <ClInclude Include="draw2d1.h" />
     <ClInclude Include="dxgi_debug.h" />
     <ClInclude Include="framework.h" />
-    <ClInclude Include="graphics.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="_.h" />
     <ClInclude Include="_directx.h" />

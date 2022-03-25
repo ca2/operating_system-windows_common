@@ -20,8 +20,9 @@ namespace draw2d_direct2d
 
 
          D2D1::Matrix3x2F                    m_m;
-         array < D2D1::Matrix3x2F >          m_maRegion;
-         __pointer_array(::draw2d::region)        m_sparegionClip;
+         //array < D2D1::Matrix3x2F >          m_maRegion;
+         //__pointer_array(::draw2d::region)   m_sparegionClip;
+         int                                 m_iLayerIndex;
          D2D1_LAYER_PARAMETERS               m_layerparameters;
 
          state();
@@ -29,6 +30,9 @@ namespace draw2d_direct2d
 
 
       };
+
+
+      int                                                m_iLayerCount;
 
       comptr<ID2D1DeviceContext>                         m_pdevicecontext; // 0
       comptr<ID2D1RenderTarget>                          m_prendertarget; // 1
@@ -72,6 +76,7 @@ namespace draw2d_direct2d
 
       
       virtual void on_begin_draw() override;
+      void on_end_draw(oswindow wnd) override;
 
       using ::draw2d::graphics::set;
       virtual void set(::draw2d::bitmap* pbitmap) override;
@@ -252,6 +257,11 @@ namespace draw2d_direct2d
 
       // Clipping Functions
       virtual int get_clip_box(::rectangle_f64 * prectangle) override;
+
+
+      virtual void _push_layer(ID2D1Geometry * pgeometry);
+      virtual void _pop_layer();
+      virtual void _pop_all_layers();
 
 
       virtual void add_shapes(const shape_array& shapea);

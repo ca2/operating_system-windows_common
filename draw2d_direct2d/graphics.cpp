@@ -40,6 +40,8 @@ namespace draw2d_direct2d
    graphics::graphics()
    {
 
+      m_iLayerCount = 0;
+
       m_ealphamodeDevice = ::draw2d::e_alpha_mode_none;
 
       clear_os_data();
@@ -3863,6 +3865,8 @@ namespace draw2d_direct2d
 
       m_pstate = __new(state);
 
+      m_pstate->m_iLayerIndex = m_iLayerCount;
+
       //m_pstate->m_layerparameters = D2D1::LayerParameters();
 
       //m_prendertarget->PushLayer(m_pstate->m_layerparameters, nullptr);
@@ -3893,27 +3897,34 @@ namespace draw2d_direct2d
 
       }
 
-      for (index iState = m_statea.get_upper_bound(); iState > nSavedDC; iState--)
-      {
+      //for (index iState = m_statea.get_upper_bound(); iState > nSavedDC; iState--)
+      //{
 
-         auto state = m_statea[iState];
+      //   auto state = m_statea[iState];
 
-         for (index iItem = state->m_maRegion.get_upper_bound(); iItem >= 0; iItem--)
-         {
+      //   for (index iItem = state->m_maRegion.get_upper_bound(); iItem >= 0; iItem--)
+      //   {
 
-            m_prendertarget->PopLayer();
+      //      m_prendertarget->PopLayer();
 
-         }
+      //   }
 
-         state->m_maRegion.erase_all();
+      //   state->m_maRegion.erase_all();
 
-         state->m_sparegionClip.erase_all();
+      //   state->m_sparegionClip.erase_all();
 
-         m_statea.erase_at(iState);
+      //   m_statea.erase_at(iState);
 
-      }
+      //}
 
       m_pstate = m_statea[nSavedDC];
+
+      while (m_iLayerCount > m_pstate->m_iLayerIndex)
+      {
+
+         _pop_layer();
+
+      }
 
       m_prendertarget->SetTransform(&m_pstate->m_m);
 
@@ -4137,43 +4148,94 @@ namespace draw2d_direct2d
 
       ::draw2d::device_lock devicelock(this);
 
-      for (index iState = m_statea.get_upper_bound(); iState >= 0; iState--)
+      while (m_iLayerCount > m_pstate->m_iLayerIndex)
       {
 
-         auto state = m_statea[iState];
-
-         for (index iItem = state->m_maRegion.get_upper_bound(); iItem >= 0; iItem--)
-         {
-
-            m_prendertarget->PopLayer();
-
-         }
-
-         state->m_maRegion.erase_all();
-
-         state->m_sparegionClip.erase_all();
+         _pop_layer();
 
       }
 
-      auto& pstate = m_pstate;
+      //for (index iState = m_statea.get_upper_bound(); iState >= 0; iState--)
+      //{
 
-      if (pstate)
-      {
+      //   auto state = m_statea[iState];
 
-         for (index iItem = pstate->m_maRegion.get_upper_bound(); iItem >= 0; iItem--)
-         {
+      //   for (index iItem = state->m_maRegion.get_upper_bound(); iItem >= 0; iItem--)
+      //   {
 
-            m_prendertarget->PopLayer();
+      //      m_prendertarget->PopLayer();
 
-         }
+      //   }
 
-         pstate->m_maRegion.erase_all();
+      //   state->m_maRegion.erase_all();
 
-         pstate->m_sparegionClip.erase_all();
+      //   state->m_sparegionClip.erase_all();
 
-      }
+      //}
+
+      //auto& pstate = m_pstate;
+
+      //if (pstate)
+      //{
+
+      //   for (index iItem = pstate->m_maRegion.get_upper_bound(); iItem >= 0; iItem--)
+      //   {
+
+      //      m_prendertarget->PopLayer();
+
+      //   }
+
+      //   pstate->m_maRegion.erase_all();
+
+      //   pstate->m_sparegionClip.erase_all();
+
+      //}
 
       //return ::success;
+
+   }
+
+
+   void graphics::_push_layer(ID2D1Geometry * pgeometry)
+   {
+
+      auto layerparameters = D2D1::LayerParameters(
+         D2D1::InfiniteRect(),
+         pgeometry);
+
+      m_prendertarget->PushLayer(layerparameters, nullptr);
+
+      m_iLayerCount++;
+
+   }
+
+
+   void graphics::_pop_layer()
+   {
+
+      if (m_iLayerCount <= 0)
+      {
+
+         return;
+
+      }
+
+      m_prendertarget->PopLayer();
+
+      m_iLayerCount--;
+
+   }
+
+
+   void graphics::_pop_all_layers()
+   {
+
+      while (m_iLayerCount > 0)
+      {
+
+         _pop_layer();
+
+      }
 
    }
 
@@ -4279,17 +4341,13 @@ namespace draw2d_direct2d
 
       m_prendertarget->GetTransform(&m);
 
-      m_pstate->m_sparegionClip.add(pregion);
+      //m_pstate->m_sparegionClip.add(pregion);
 
-      m_pstate->m_maRegion.add(m);
+      //m_pstate->m_maRegion.add(m);
 
       ID2D1Geometry* pgeometry = (ID2D1Geometry*)pregion->get_os_data(this);
 
-      auto layerparameters = D2D1::LayerParameters(
-         D2D1::InfiniteRect(),
-         pgeometry);
-
-      m_prendertarget->PushLayer(layerparameters, nullptr);
+      _push_layer(pgeometry);
 
       //return 0;
 
@@ -4347,13 +4405,15 @@ namespace draw2d_direct2d
 
          m_prendertarget->GetTransform(&m);
 
-         m_pstate->m_sparegionClip.add(pregion);
+         //m_pstate->m_sparegionClip.add(pregion);
 
-         m_pstate->m_maRegion.add(m);
+         //m_pstate->m_maRegion.add(m);
 
          ID2D1Geometry* pgeometry = (ID2D1Geometry*)pregion->get_os_data(this);
 
-         m_prendertarget->PushLayer(D2D1::LayerParameters(D2D1::InfiniteRect(), pgeometry), nullptr);
+         //m_prendertarget->PushLayer(D2D1::LayerParameters(D2D1::InfiniteRect(), pgeometry), nullptr);
+
+         _push_layer(pgeometry);
 
       }
 
@@ -4411,13 +4471,15 @@ namespace draw2d_direct2d
 
          m_prendertarget->GetTransform(&m);
 
-         m_pstate->m_sparegionClip.add(pregion);
+         //m_pstate->m_sparegionClip.add(pregion);
 
-         m_pstate->m_maRegion.add(m);
+         //m_pstate->m_maRegion.add(m);
 
          ID2D1Geometry* pgeometry = (ID2D1Geometry*)pregion->get_os_data(this);
 
-         m_prendertarget->PushLayer(D2D1::LayerParameters(D2D1::InfiniteRect(), pgeometry), nullptr);
+         _push_layer(pgeometry);
+
+         //m_prendertarget->PushLayer(D2D1::LayerParameters(D2D1::InfiniteRect(), pgeometry), nullptr);
 
       }
 
@@ -5604,6 +5666,23 @@ namespace draw2d_direct2d
    }
 
 
+   void graphics::on_end_draw(oswindow wnd)
+   {
+
+      ::draw2d::graphics::on_end_draw(wnd);
+
+      if (m_iLayerCount > 0)
+      {
+
+         WARNING("Layers left to pop on end draw!");
+
+         _pop_all_layers();
+
+      }
+
+   }
+
+
    void graphics::set_alpha_mode(::draw2d::enum_alpha_mode ealphamode)
    {
 
@@ -5814,14 +5893,7 @@ namespace draw2d_direct2d
 
       ::draw2d::device_lock devicelock(this);
 
-      if(m_player != nullptr)
-      {
-
-         m_prendertarget->PopLayer();
-
-         m_player = nullptr;
-
-      }
+      _pop_all_layers();
 
       m_ppathgeometryClip = nullptr;
 
