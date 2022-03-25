@@ -6078,10 +6078,10 @@ namespace draw2d_direct2d
 
       ID2D1PathGeometry * pgeometry = ppath->get_os_data < ID2D1PathGeometry * >(this, path_hollow);
 
-      defer_primitive_blend();
-
       if(pgeometry != nullptr)
       {
+
+         defer_primitive_blend();
 
          draw(pgeometry, ppen);
 
@@ -6131,10 +6131,10 @@ namespace draw2d_direct2d
 
       ID2D1PathGeometry * pgeometry = ppath->get_os_data < ID2D1PathGeometry * >(this, path_filled);
 
-      defer_primitive_blend();
-
       if (pgeometry != nullptr)
       {
+
+         defer_primitive_blend();
 
          fill(pgeometry, m_pbrush);
 
@@ -6191,10 +6191,10 @@ namespace draw2d_direct2d
 
       ID2D1PathGeometry * pgeometry = ppath->get_os_data < ID2D1PathGeometry * >(this, path_filled);
 
-      defer_primitive_blend();
-
       if (pgeometry != nullptr)
       {
+
+         defer_primitive_blend();
 
          fill(pgeometry, pbrush);
 

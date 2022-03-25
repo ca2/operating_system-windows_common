@@ -11,7 +11,6 @@ namespace draw2d_direct2d
    {
 
       m_pthis = this;
-      //m_bFigureOpened = false;
 
    }
 
@@ -89,13 +88,13 @@ namespace draw2d_direct2d
 
       }
 
-
-
       m_psink->AddArc(arcseg);
 
       m_pointEnd.x = arcseg.point.x;
 
       m_pointEnd.y = arcseg.point.y;
+
+      m_estatus = ::success;
 
       return true;
 
@@ -274,6 +273,8 @@ namespace draw2d_direct2d
 
       playout->Draw(nullptr, &renderer, (FLOAT)x, (FLOAT)y);
 
+      m_estatus = ::success;
+
       return true;
 
    }
@@ -294,6 +295,8 @@ namespace draw2d_direct2d
       m_pointEnd.x = x;
 
       m_pointEnd.y = y;
+
+      m_estatus = ::success;
 
       return true;
 
