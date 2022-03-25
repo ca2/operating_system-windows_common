@@ -3893,8 +3893,6 @@ namespace draw2d_direct2d
 
       }
 
-      m_statea.add(m_pstate);
-
       for (index iState = m_statea.get_upper_bound(); iState > nSavedDC; iState--)
       {
 
@@ -3915,9 +3913,9 @@ namespace draw2d_direct2d
 
       }
 
-      m_prendertarget->SetTransform(&m_statea[nSavedDC]->m_m);
-
       m_pstate = m_statea[nSavedDC];
+
+      m_prendertarget->SetTransform(&m_pstate->m_m);
 
       m_statea.set_size(nSavedDC);
 
@@ -4157,18 +4155,23 @@ namespace draw2d_direct2d
 
       }
 
-      auto& state = m_pstate;
+      auto& pstate = m_pstate;
 
-      for (index iItem = state->m_maRegion.get_upper_bound(); iItem >= 0; iItem--)
+      if (pstate)
       {
 
-         m_prendertarget->PopLayer();
+         for (index iItem = pstate->m_maRegion.get_upper_bound(); iItem >= 0; iItem--)
+         {
+
+            m_prendertarget->PopLayer();
+
+         }
+
+         pstate->m_maRegion.erase_all();
+
+         pstate->m_sparegionClip.erase_all();
 
       }
-
-      state->m_maRegion.erase_all();
-
-      state->m_sparegionClip.erase_all();
 
       //return ::success;
 
