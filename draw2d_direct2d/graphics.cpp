@@ -1990,22 +1990,29 @@ namespace draw2d_direct2d
 
          }
 
-         if (get_current_bitmap() && get_current_bitmap()->is_set())
+         if (get_current_bitmap())
          {
 
-            D2D1_SIZE_U sz = get_current_bitmap()->get_os_data < ID2D1Bitmap * >()->GetPixelSize();
+            auto pd2d1bitmap = get_current_bitmap()->get_os_data < ID2D1Bitmap * >();
 
-            if (nWidth + x + GetViewportOrg().x > sz.width)
+            if (::is_set(pd2d1bitmap))
             {
 
-               nWidth = sz.width - x - GetViewportOrg().x;
+               D2D1_SIZE_U sz = pd2d1bitmap->GetPixelSize();
 
-            }
+               if (nWidth + x + GetViewportOrg().x > sz.width)
+               {
 
-            if (nHeight + y + GetViewportOrg().y > sz.height)
-            {
+                  nWidth = sz.width - x - GetViewportOrg().x;
 
-               nHeight = sz.height - y - GetViewportOrg().y;
+               }
+
+               if (nHeight + y + GetViewportOrg().y > sz.height)
+               {
+
+                  nHeight = sz.height - y - GetViewportOrg().y;
+
+               }
 
             }
 

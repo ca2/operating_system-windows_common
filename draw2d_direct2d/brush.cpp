@@ -58,7 +58,7 @@ namespace draw2d_direct2d
 
                m_osdata[0] = (ID2D1Brush*)m_psolidbrush;
                
-               set_updated();
+               m_baCalculated[0] = true;
 
             }
 
@@ -111,7 +111,7 @@ namespace draw2d_direct2d
                
                m_osdata[0] = (ID2D1Brush*)m_plineargradientbrush;
 
-               set_updated();
+               m_baCalculated[0] = true;
 
             }
 
@@ -178,7 +178,7 @@ namespace draw2d_direct2d
 
                m_osdata[0] = (ID2D1Brush*)m_pradialgradientbrush;
 
-               set_updated();
+               m_baCalculated[0] = true;
 
             }
 
@@ -229,7 +229,7 @@ namespace draw2d_direct2d
 
                m_osdata[0] = (ID2D1Brush*)m_pimagebrush;
 
-               set_updated();
+               m_baCalculated[0] = true;
 
             }
 

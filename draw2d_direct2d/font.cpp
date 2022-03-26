@@ -33,7 +33,7 @@ namespace draw2d_direct2d
    void font::create(::draw2d::graphics * pgraphics, i8 iCreate)
    {
 
-      if(m_pformat == nullptr || is_modified())
+      if(m_pformat == nullptr || is_modified(::draw2d::e_default_object))
       {
 
          if(m_pformat)
@@ -127,14 +127,9 @@ namespace draw2d_direct2d
 
       }
 
-      if(m_pformat != nullptr)
-      {
-
-         set_updated();
-
-      }
-
       m_osdata[0] = m_pformat;
+
+      m_baCalculated[0] = true;
 
       //return (IDWriteTextFormat *) m_pformat;
 
