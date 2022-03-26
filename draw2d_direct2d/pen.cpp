@@ -31,6 +31,48 @@ namespace draw2d_direct2d
    }
 
 
+   comptr < ID2D1StrokeStyle1 > pen::_create_stroke_style(::draw2d::graphics * pgraphicsParam)
+   {
+
+      bool bProperties = false;
+
+      D2D1_STROKE_STYLE_PROPERTIES1 properties1{};
+
+      if (m_elinecapBeg == ::draw2d::e_line_cap_round)
+      {
+
+         properties1.startCap = D2D1_CAP_STYLE_ROUND;
+
+         bProperties = true;
+
+      }
+
+
+      if (m_elinecapEnd == ::draw2d::e_line_cap_round)
+      {
+
+         properties1.endCap = D2D1_CAP_STYLE_ROUND;
+
+         bProperties = true;
+
+      }
+
+
+      if (!bProperties)
+      {
+
+         return nullptr;
+
+      }
+
+      comptr < ID2D1StrokeStyle1 > pstrokestyle;
+
+      HRESULT hr = ::direct2d::direct2d()->d2d1_factory1()->CreateStrokeStyle(&properties1, nullptr, 0, &pstrokestyle);
+
+      return pstrokestyle;
+
+   }
+
    void pen::create(::draw2d::graphics* pgraphicsParam, ::i8 iCreate)
    {
 
@@ -55,6 +97,16 @@ namespace draw2d_direct2d
             m_bMetroColor   = true;
             
          }
+
+         m_pstrokestyle = _create_stroke_style(pgraphicsParam);
+
+         if (m_pstrokestyle != nullptr)
+         {
+
+            m_osdata[1] = (ID2D1StrokeStyle1 *)m_pstrokestyle;
+
+         }
+
 
       }
 

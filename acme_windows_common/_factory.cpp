@@ -24,7 +24,7 @@ __FACTORY_EXPORT void acme_windows_common_factory(::factory::factory * pfactory)
    //pfactory->add_factory_item < ::windows::file_context, ::file_context >();
 
    //add_factory_item < ::windows::stdio_file, ::file::text_file >();
-   //add_factory_item < ::windows::file, ::file::file >();
+   pfactory->add_factory_item < ::windows_common::file, ::file::file >();
    //pfactory->add_factory_item < ::windows::os_context, ::os_context >();
    //pfactory->add_factory_item < ::windows::pipe, ::operating_system::pipe >();
    //pfactory->add_factory_item < ::windows::process, ::operating_system::process >();

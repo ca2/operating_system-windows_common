@@ -4728,19 +4728,19 @@ namespace draw2d_direct2d
    }
 
 
-   oswindow graphics::get_window_handle()
-   {
+   //oswindow graphics::get_window_handle()
+   //{
 
-      if (::is_null(m_puserinteraction))
-      {
+   //   if (::is_null(m_puserinteraction))
+   //   {
 
-         return nullptr;
+   //      return nullptr;
 
-      }
+   //   }
 
-      return m_puserinteraction->get_oswindow();
+   //   return m_puserinteraction->get_oswindow();
 
-   }
+   //}
 
 
    u32 graphics::GetLayout()
@@ -5938,7 +5938,9 @@ namespace draw2d_direct2d
 
       }
 
-      m_prendertarget->DrawGeometry(pgeometry, pbrush, (FLOAT)ppen->m_dWidth);
+      ::ID2D1StrokeStyle1 * pstrokestyle = ppen->get_os_data < ID2D1StrokeStyle1 * >(this, 1);
+
+      m_prendertarget->DrawGeometry(pgeometry, pbrush, (FLOAT)ppen->m_dWidth, pstrokestyle);
 
       return true;
 

@@ -92,7 +92,7 @@ namespace windows
       wstrFileIn = ::str::international::utf8_to_unicode(pszFileIn);
 
       wstring wstrFileOut;
-      bool b = vfxFullPath(wstrFileOut.get_string_buffer(MAX_PATH * 8), wstrFileIn) != false;
+      bool b = windows_full_path(wstrFileOut.get_string_buffer(MAX_PATH * 8), wstrFileIn) != false;
       if (b)
       {
          ::str::international::unicode_to_utf8(str, wstrFileOut);
@@ -117,7 +117,7 @@ namespace windows
          return true;
       }
 
-      return vfxFullPath(wstrFullPath, wstrPath) != false;
+      return windows_full_path(wstrFullPath, wstrPath) != false;
 
    }
 
@@ -473,7 +473,7 @@ namespace windows
       wstring wstrFullName;
       wstring wstrFileName;
       wstrFileName = ::str::international::utf8_to_unicode(path);
-      if (!vfxFullPath(wstrFullName, wstrFileName))
+      if (!windows_full_path(wstrFullName, wstrFileName))
       {
          rStatus.m_strFullName.Empty();
          return false;

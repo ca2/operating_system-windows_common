@@ -1,9 +1,9 @@
 #pragma once
 
 
-CLASS_DECL_APEX_WINDOWS_COMMON bool vfxFullPath(unichar * pszPathOut, const unichar * pszFileIn);
+CLASS_DECL_APEX_WINDOWS_COMMON bool windows_full_path(unichar * pszPathOut, const unichar * pszFileIn);
 
-CLASS_DECL_APEX_WINDOWS_COMMON bool vfxFullPath(wstring & wstrFullPath, const wstring & wstrPath);
+CLASS_DECL_APEX_WINDOWS_COMMON bool windows_full_path(wstring & wstrFullPath, const wstring & wstrPath);
 CLASS_DECL_APEX_WINDOWS_COMMON ::u32 vfxGetFileName(const unichar * pszPathName, unichar * pszTitle, ::u32 nMax);
 
 CLASS_DECL_APEX_WINDOWS_COMMON void vfxGetModuleShortFileName(HINSTANCE hInst, string & strShortName);

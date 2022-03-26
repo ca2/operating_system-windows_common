@@ -82,7 +82,7 @@ namespace draw2d_direct2d
       virtual void set(::draw2d::bitmap* pbitmap) override;
 
 
-      oswindow get_window_handle();
+      //oswindow get_window_handle();
 
       void apply_primitive_blend();
 

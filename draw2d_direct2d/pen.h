@@ -16,6 +16,7 @@ namespace draw2d_direct2d
 
 
       comptr<ID2D1SolidColorBrush>    m_pbrush;
+      comptr<ID2D1StrokeStyle1>    m_pstrokestyle;
       bool                                            m_bMetroColor;
       ::color::color                                        m_colorMetro;
 
@@ -27,6 +28,8 @@ namespace draw2d_direct2d
 
       void destroy() override;
       void create(::draw2d::graphics * pgraphics, i8 iCreate) override;
+
+      comptr < ID2D1StrokeStyle1 > _create_stroke_style(::draw2d::graphics * pgraphicsParam);
 
       /*virtual void construct(int nPenStyle, double nWidth, ::color::color crColor);
       virtual void construct(int nPenStyle, double nWidth, const LOGBRUSH* pLogBrush, int nStyleCount = 0, const ::u32* lpStyle = nullptr);
