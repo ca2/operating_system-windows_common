@@ -756,7 +756,6 @@
     <ClCompile Include="preview_dc.cpp" />
     <ClCompile Include="region.cpp" />
     <ClCompile Include="_.cpp" />
-    <ClCompile Include="_uwp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="draw2d_direct2d.def" />
