@@ -362,7 +362,9 @@ namespace windows_common
       if (eopen & ::file::e_open_create)
       {
          if (eopen & ::file::e_open_no_truncate)
+         {
             dwCreateFlag = OPEN_ALWAYS;
+         }
          else
             dwCreateFlag = CREATE_ALWAYS;
       }
