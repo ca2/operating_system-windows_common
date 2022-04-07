@@ -317,7 +317,7 @@ namespace draw2d_direct2d
    //}
 
    
-   void graphics::_draw_blend(const ::image_drawing & imagedrawing)
+   bool graphics::_draw_blend(const ::image_drawing & imagedrawing)
    {
 
       //return ::draw2d::graphics::BitBltAlphaBlend(x, y, nWidth, nHeight, pgraphicsSrc, xSrc, ySrc);
@@ -524,17 +524,18 @@ namespace draw2d_direct2d
 
             //}
 
-            //return true;
+            return true;
 
          }
 
       }
 
-      //return false;
+      return false;
+
    }
 
 
-   void graphics::TextOutAlphaBlend(double x, double y, const block & block)
+   bool graphics::TextOutAlphaBlend(double x, double y, const block & block)
    {
 
       if (block.is_empty())
@@ -625,11 +626,11 @@ namespace draw2d_direct2d
 
          draw(imagedrawing);
 
-         //return true;
+         return true;
 
       }
 
-      //return false;
+      return false;
 
    }
 

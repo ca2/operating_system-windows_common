@@ -68,8 +68,8 @@ namespace draw2d_direct2d
       ~graphics() override;
 
 
-      virtual void TextOutAlphaBlend(double x, double y, const block & block) override;
-      virtual void _draw_blend(const ::image_drawing & imagedrawing) override;
+      virtual bool TextOutAlphaBlend(double x, double y, const block & block) override;
+      virtual bool _draw_blend(const ::image_drawing & imagedrawing) override;
 
 
       //bool IsPrinting() override;            // true if being used for printing
