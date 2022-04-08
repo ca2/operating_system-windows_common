@@ -79,6 +79,15 @@ namespace windows_common
 
          auto lastError = ::GetLastError();
 
+         if (lastError == ERROR_INVALID_PARAMETER)
+         {
+
+            ::acme_file::copy(pszNew, pszSrc, bOverwrite);
+
+            return;
+
+         }
+
          auto estatus = last_error_to_status(lastError);
 
          throw io_exception(estatus);
