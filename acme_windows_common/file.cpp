@@ -1145,7 +1145,7 @@ bool CLASS_DECL_ACME_WINDOWS_COMMON window_get_full_path(wstring & wstrFullPath,
          
          FindClose(h);
          
-         i32 iLenFileName = wcslen(data.cFileName);
+         auto iLenFileName = wcslen(data.cFileName);
 
          if (iLenFileName >= MAX_PATH)
          {
