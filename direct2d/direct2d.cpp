@@ -201,10 +201,10 @@ namespace direct2d
       }
 
       psink->SetFillMode(D2D1_FILL_MODE_WINDING);
-      psink->BeginFigure(D2D1::Point2F(rectangle.left, rectangle.top), D2D1_FIGURE_BEGIN_FILLED);
-      psink->AddLine(D2D1::Point2F(rectangle.right, rectangle.top));
-      psink->AddLine(D2D1::Point2F(rectangle.right, rectangle.bottom));
-      psink->AddLine(D2D1::Point2F(rectangle.left, rectangle.bottom));
+      psink->BeginFigure(D2D1::Point2F((FLOAT) rectangle.left, (FLOAT)rectangle.top), D2D1_FIGURE_BEGIN_FILLED);
+      psink->AddLine(D2D1::Point2F((FLOAT)rectangle.right, (FLOAT)rectangle.top));
+      psink->AddLine(D2D1::Point2F((FLOAT)rectangle.right, (FLOAT)rectangle.bottom));
+      psink->AddLine(D2D1::Point2F((FLOAT)rectangle.left, (FLOAT)rectangle.bottom));
       psink->EndFigure(D2D1_FIGURE_END_CLOSED);
 
       return ppathgeometry;
