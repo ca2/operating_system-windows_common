@@ -26,52 +26,16 @@
     <ClInclude Include="_.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="factory_exchange.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="node.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="_acme_windows_common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="_node_windows.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="_node_windows_private.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="_windows.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="_impl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="_thread_os_create_impl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="_types.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="_windows_common.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="standard_exception.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="_c.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="_default_dll_impl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="_file_c.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="_geometry2.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="_unicode_c.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="bstring.h">
@@ -84,12 +48,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="file.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="new_api.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="parallelization.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="prop_variant.h">
@@ -113,6 +71,9 @@
     <ClInclude Include="acme_directory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="exception\standard.h">
+      <Filter>Header Files\exception</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="framework.cpp">
@@ -127,31 +88,10 @@
     <ClCompile Include="node.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="os_usleep.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="standard_exception.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="aura.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="base.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="bstring.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="com.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="debug.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="file.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="file1.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="networking.cpp">
@@ -166,13 +106,13 @@
     <ClCompile Include="acme_path.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="bstr.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="exception\translator.cpp">
       <Filter>Source Files\exception</Filter>
     </ClCompile>
     <ClCompile Include="acme_directory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="file.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

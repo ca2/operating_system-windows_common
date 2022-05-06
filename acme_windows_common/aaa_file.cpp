@@ -1,6 +1,76 @@
 #include "framework.h"
-#include "acme/operating_system/time.h"
-#include "file.h"
+//#include "acme/operating_system.h"
+
+
+//#include "_file_c.h"
+//#include "file.h"
+
+
+//#ifdef _UWP
+//CLASS_DECL_ACME::winrt::Windows::Storage::StorageFolder^ winrt_folder(string& strPath, string& strPrefix);
+//#endif
+
+
+
+
+//int_bool windows_create_directory(const char* path, LPSECURITY_ATTRIBUTES lpSecurityAttributes)
+//{
+//
+//   wstring wstr(path);
+//
+//
+//   if (::CreateDirectoryW(wstr, lpSecurityAttributes))
+//   {
+//
+//      return true;
+//
+//   }
+//
+//   if (windows_get_alternate_path(wstr))
+//   {
+//
+//      if (::CreateDirectoryW(wstr, lpSecurityAttributes))
+//      {
+//
+//         return true;
+//
+//      }
+//
+//   }
+//
+//   return false;
+//
+//}
+//
+//
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//bool context::_os_resolve_alias(::file::path & path, const char * psz, ::user::primitive * pinteraction, bool bNoUI, bool bNoMount)
+//{
+//
+//   if (os_is_alias(psz))
+//   {
+//
+//      return os().resolve_link(path, psz, nullptr, nullptr, pinteraction);
+//
+//   }
+//
+//   return false;
+//
+//}
 
 
 CLASS_DECL_ACME_WINDOWS_COMMON bool _os_may_have_alias(const char * psz)
@@ -11,6 +81,17 @@ CLASS_DECL_ACME_WINDOWS_COMMON bool _os_may_have_alias(const char * psz)
    return str.ends_ci(".lnk") || str.contains_ci(".lnk/") || str.contains_ci(".lnk\\");
 
 }
+
+//
+//bool context::os_is_alias(const char * psz)
+//{
+//
+//   return ::str::ends_ci(psz, ".lnk");
+//
+//}
+
+
+
 
 
 CLASS_DECL_ACME_WINDOWS_COMMON memsize hfile_read(hfile hfile, void* p, memsize s)
@@ -30,7 +111,60 @@ CLASS_DECL_ACME_WINDOWS_COMMON memsize hfile_read(hfile hfile, void* p, memsize 
 }
 
 
-namespace acme_windows_common
+//CLASS_DECL_ACME_WINDOWS_COMMON void hfile_write(hfile hfile, const void* p, memsize s)
+//{
+//
+//   memsize dwWrittenTotal = 0;
+//
+//   while (s > 0)
+//   {
+//
+//      int iWrite = (int) minimum(INT_MAX, s);
+//
+//      DWORD dwWritten = 0;
+//
+//      if (!WriteFile(hfile, p, iWrite, &dwWritten, nullptr))
+//      {
+//
+//         auto lastError = ::GetLastError();
+//         //return ::error_failed;
+//         throw ::file_exception(::error_failed, lastError);
+//
+//      }
+//
+//      if (dwWritten != iWrite)
+//      {
+//
+//         throw ::exception(::error_failed);
+//
+//      }
+//
+//      s -= iWrite;
+//
+//   }
+//
+//   //return ::success;
+//
+//}
+
+// namespace path
+// {
+
+
+
+// } // namespace path 
+
+
+
+
+
+
+//#include "framework.h"
+#include "acme/operating_system/time.h"
+#include "file.h"
+
+
+namespace windows_common
 {
 
 
@@ -881,6 +1015,7 @@ namespace acme_windows_common
    }
 
 
+
    file::operator HANDLE() const
    {
 
@@ -888,8 +1023,29 @@ namespace acme_windows_common
 
    }
 
+   //u64 file::ReadHuge(void * pBuffer, u64 dwCount)
 
-} // namespace acme_windows_common
+   //{
+
+   //   return (u64) read(pBuffer, (::u32)dwCount);
+
+
+   //}
+
+   //void file::WriteHuge(const void * pBuffer, u64 dwCount)
+
+   //{
+
+   //   write(pBuffer, (::u32)dwCount);
+
+
+   //}
+
+
+
+} // namespace windows_common
+
+
 
 
 #define _wcsdec(_cpc1, _cpc2) ((_cpc1)>=(_cpc2) ? nullptr : (_cpc2)-1)
@@ -1035,5 +1191,188 @@ string CLASS_DECL_ACME_WINDOWS_COMMON windows_string_from_clsid(REFCLSID rclsid)
 
 }
 
+
+
+
+//
+//// turn a file, relative path or other into an absolute path
+//bool CLASS_DECL_ACME_WINDOWS_COMMON windows_full_path(wstring & wstrPathOut, const ::wstring & wstrPathIn)
+//{
+//
+//   // first, fully qualify the path name
+//   unichar * pszFilePart;
+//
+//   if (!GetFullPathNameW(pszFileIn, _MAX_PATH, wstrPathOut, &pszFilePart))
+//   {
+//
+//      wcsncpy(pszPathOut, pszFileIn, _MAX_PATH); // take it literally
+//
+//      return false;
+//
+//   }
+//
+//   wstring wstrRoot;
+//
+//   // determine the root name of the volume
+//   wstrRoot = windows_get_root(pszPathOut);
+//
+//   // get file system information for the volume
+//   DWORD dwFlags, dwDummy;
+//
+//   if (!GetVolumeInformationW(wstrRoot, nullptr, 0, nullptr, &dwDummy, &dwFlags, nullptr, 0))
+//   {
+//      
+//      //      TRACE1("Warning: could not get volume information '%s'.\n", strRoot);
+//      return false;   // preserving case may not be correct
+//
+//   }
+//
+//   // not all characters have complete uppercase/lowercase
+//   if (!(dwFlags & FS_CASE_IS_PRESERVED))
+//   {
+//
+//      ::str::make_upper(pszPathOut);
+//
+//   }
+//
+//   // assume non-UNICODE file systems, use OEM character set
+//   if (!(dwFlags & FS_UNICODE_STORED_ON_DISK))
+//   {
+//
+//      WIN32_FIND_DATAW data;
+//
+//      HANDLE h = FindFirstFileW(pszFileIn, &data);
+//
+//      if (h != INVALID_HANDLE_VALUE)
+//      {
+//
+//         FindClose(h);
+//
+//         wcscpy(pszFilePart, data.cFileName);
+//
+//      }
+//
+//   }
+//
+//   return true;
+//
+//}
+//
+
+//::u32 CLASS_DECL_ACME_WINDOWS_COMMON vfxGetFileName(const unichar * pszPathName, unichar * pszTitle, ::u32 nMax)
+//
+//{
+//   ASSERT(pszTitle == nullptr ||
+//
+//      __is_valid_address(pszTitle, _MAX_FNAME));
+//
+//   ASSERT(__is_valid_string(pszPathName));
+//
+//
+//   // always capture the complete file name including extension (if present)
+//   unichar * pszTemp = (unichar *)pszPathName;
+//
+//   for (const unichar * psz = pszPathName; *psz != '\0'; psz = _wcsinc(psz))
+//
+//   {
+//      // remember last directory/drive separator
+//      if (*psz == '\\' || *psz == '/' || *psz == ':')
+//
+//         pszTemp = (unichar *)_wcsinc(psz);
+//
+//   }
+//
+//   // pszTitle can be nullptr which just returns the number of bytes
+//
+//   if (pszTitle == nullptr)
+//   {
+//
+//      return wcslen(pszTemp) + 1;
+//
+//
+//   }
+//
+//
+//   // otherwise copy it into the buffer provided
+//   lstrcpynW(pszTitle, pszTemp, nMax);
+//
+//   return 0;
+//}
+
+
+
+
+
+
+
+//namespace windows
+//{
+//
+//   //void ::file::errno_to_status(i32 nErrno)
+//   //{
+//   //   switch(nErrno)
+//   //   {
+//   //   case EPERM:
+//   //   case EACCES:
+//   //      return error_file_access_denied;
+//   //   case EBADF:
+//   //      return error_invalid_file;
+//   //   case EDEADLOCK:
+//   //      return ::file::exception::sharingViolation;
+//   //   case EMFILE:
+//   //      return error_too_many_open_files;
+//   //   case ENOENT:
+//   //   case ENFILE:
+//   //      return error_file_not_found;
+//   //   case ENOSPC:
+//   //      return error_disk_full;
+//   //   case EINVAL:
+//   //   case EIO:
+//   //      return error_hard_io;
+//   //   default:
+//   //      return ::file::exception::type_generic;
+//   //   }
+//
+//   //}
+//
+//
+//} // namespace windows
+
+
+
+
+
+
+
+
+
+
+
+
+//CLASS_DECL_ACME_WINDOWS_COMMON HANDLE hfile_create(
+//   const char * pFileName,
+//
+//   ::u32                   dwDesiredAccess,
+//   ::u32                   dwShareMode,
+//   void * pSecurityAttributes,
+//   ::u32                   dwCreationDisposition,
+//   ::u32                   dwFlagsAndAttributes,
+//   HANDLE                  hTemplateFile
+//)
+//{
+//
+//   wstring wstr(pFileName);
+//
+//   return ::CreateFile2(
+//      wstr,
+//      dwDesiredAccess,
+//      dwShareMode,
+//      (LPSECURITY_ATTRIBUTES)pSecurityAttributes,
+//      dwCreationDisposition,
+//      dwFlagsAndAttributes,
+//      hTemplateFile);
+//
+//}
+//
 
 

@@ -1,9 +1,6 @@
 #pragma once
 
 
-#ifdef WINDOWS
-
-
 class CLASS_DECL_ACME_WINDOWS_COMMON hresult_exception :
    public ::exception
 {
@@ -17,13 +14,7 @@ public:
 };
 
 
-#endif
-
-
-
-#ifdef WINDOWS
 CLASS_DECL_ACME_WINDOWS_COMMON int trace_hr(const char * psz, HRESULT hr);
-#endif
 
 
 inline void throw_if_failed(HRESULT hr)

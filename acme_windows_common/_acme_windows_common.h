@@ -6,32 +6,12 @@
 #include "acme/operating_system.h"
 
 
-//#include "exception_engine.h"
-
-
 CLASS_DECL_ACME_WINDOWS_COMMON HRESULT defer_co_initialize_ex(bool bMultiThread, bool bDisableOleDDE = false);
-//CLASS_DECL_ACME_WINDOWS_COMMON string get_last_error_message(DWORD dwError);
-//CLASS_DECL_ACME_WINDOWS_COMMON string get_hresult_message(HRESULT hr);
 CLASS_DECL_ACME ::u32 windows_get_file_attributes(const char * path);
 
 
+using hfile = HANDLE;
 
-//DECLARE_FACTORY(CLASS_DECL_ACME_WINDOWS_COMMON, acme_windows_common);
-
-
-
-//CLASS_DECL_ACME_WINDOWS_COMMON bool windows_create_directory(const char * pszPath ARG_SEC_ATTRS);
-
-//CLASS_DECL_ACME_WINDOWS_COMMON string FormatMessageFromSystem(u32 dwError);
-
-//CLASS_DECL_ACME_WINDOWS_COMMON BSTR AllocSysString(const ::string & str) noexcept;
-////CLASS_DECL_ACME_WINDOWS_COMMON bool ReAllocSysString(BSTR * pbstr, const ansichar * pchData, strsize nDataLength) noexcept;
-//CLASS_DECL_ACME_WINDOWS_COMMON BSTR SetSysString(BSTR * pbstr, const ::string & str);
-//CLASS_DECL_ACME_WINDOWS_COMMON wstring bstr_to_wstr(BSTR bstr);
-//CLASS_DECL_ACME_WINDOWS_COMMON string bstr_to_str(BSTR bstr);
-
-
-#include "_c.h"
 
 
 #include "comptr.h"
@@ -42,12 +22,8 @@ CLASS_DECL_ACME ::u32 windows_get_file_attributes(const char * path);
 
 
 #include "exception/hresult.h"
-
 #include "exception/translator.h"
-
-//#include "exception/engine.h"
-
-#include "standard_exception.h"
+#include "exception/standard.h"
 
 #include "file.h"
 

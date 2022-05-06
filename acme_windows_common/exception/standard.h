@@ -1,11 +1,43 @@
 #pragma once
 
 
-namespace windows
+#include <eh.h>
+
+
+#if OSBIT == 64
+
+#define DEFAULT_SE_EXCEPTION_CALLSTACK_SKIP 3000
+
+#else
+
+#define DEFAULT_SE_EXCEPTION_CALLSTACK_SKIP 0
+
+#endif
+
+
+#define DECLARE_SE_EXCEPTION_CLASS(name) class CLASS_DECL_ACME_WINDOWS_COMMON name : public standard_exception \
+   { \
+   \
+      friend class translator; \
+   \
+   public: \
+   \
+         name (EXCEPTION_POINTERS * ppointers) : \
+            standard_exception(ppointers) \
+      { \
+        \
+      } \
+      \
+      \
+   };
+
+
+
+namespace acme_windows_common
 {
 
 
-   class CLASS_DECL_ACME standard_exception :
+   class CLASS_DECL_ACME_WINDOWS_COMMON standard_exception :
       public ::exception
    {
    public:
@@ -27,79 +59,31 @@ namespace windows
 
 
 
-#ifdef WINDOWS
       u32         code() const { return m_ppointers->ExceptionRecord->ExceptionCode; }
       void * address() const { return m_ppointers->ExceptionRecord->ExceptionAddress; }
       EXCEPTION_POINTERS * info() const { return m_ppointers; }
-      const char * name() const { return ::exception_translator::name(code()); }
-      const char * description() const { return ::exception_translator::description(code()); }
-#else
-      u32         code() const;
-      void * address() const;
-      const void * info() const;    // siginfo_t *
-      const char * name() const;
-      const char * description() const;
-#ifndef ANDROID
-      const ucontext_t * context() const;
-#endif
-#endif
+      const char * name() const { return exception_translator::_get_standard_exception_name(code()); }
+      const char * description() const { return exception_translator::_get_standard_exception_description(code()); }
       bool is_read_op() const { return !info()->ExceptionRecord->ExceptionInformation[0]; }
       uptr inaccessible_address() const { return info()->ExceptionRecord->ExceptionInformation[1]; }
 
 
 
       standard_exception(EXCEPTION_POINTERS * ppointers) :
-         exception(error_exception, nullptr, DEFAULT_SE_EXCEPTION_CALLSTACK_SKIP),
+         exception(error_exception, nullptr, 0),
          m_ppointers(ppointers)
       {
 
       }
 
 
-#ifdef WINDOWS
-
-
-      //standard_exception(EXCEPTION_POINTERS * ppointers) :
-      //   exception(error_exception, DEFAULT_SE_EXCEPTION_CALLSTACK_SKIP),
-      //   m_ppointers(ppointers)
-      //{
-
-      //}
-
-#else
-
-      static void * siginfodup(void * psiginfo);
-      static void siginfofree(void * psiginfo);
-
-      standard_exception(i32 iSignal, void * psiginfo, void * pc, i32 iSkip = DEFAULT_SE_EXCEPTION_CALLSTACK_SKIP, void * caller_address = nullptr) :
-         exception(error_exception, iSkip, caller_address),
-         m_iSignal(iSignal),
-         m_psiginfo(siginfodup(psiginfo))
-#ifndef ANDROID
-         , m_ucontext(*(ucontext_t *)pc)
-#endif
-      { /*_ASSERTE(psiginfo != 0);*/
-      }
-
-#endif
-
-
       virtual ~standard_exception()
       {
-#ifndef WINDOWS
-         siginfofree(m_psiginfo);
-#endif
       }
-
-
-      //u32         code() const { return m_ppointers->ExceptionRecord->ExceptionCode; }
-      //void * address() const { return m_ppointers->ExceptionRecord->ExceptionAddress; }
 
 
    };
 
-
-#ifdef WINDOWS
 
    class standard_no_memory : public standard_exception
    {
@@ -153,10 +137,8 @@ namespace windows
    DECLARE_SE_EXCEPTION_CLASS(standard_microsoft_cpp)
    DECLARE_SE_EXCEPTION_CLASS(standard_winrt_originate_error)
 
-#endif
 
-
-} // namespace windows
+} // namespace acme_windows_common
 
 
 

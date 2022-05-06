@@ -1,8 +1,4 @@
 #include "framework.h"
-#include "acme/operating_system/windows_common/_.h"
-
-
-//#ifdef WINDOWS
 
 
 hresult_exception::hresult_exception(HRESULT hresult, const char * pszMessage)
@@ -56,7 +52,4 @@ CLASS_DECL_ACME_WINDOWS_COMMON int trace_hr(const char * psz,HRESULT hr)
    return 0;
 
 }
-
-
-//#endif
 

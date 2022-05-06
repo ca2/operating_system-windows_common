@@ -5,7 +5,7 @@
 #include "acme/filesystem/filesystem/acme_directory.h"
 
 
-namespace windows_common
+namespace acme_windows_common
 {
 
 
@@ -31,7 +31,7 @@ namespace windows_common
    };
 
 
-} // namespace windows_common
+} // namespace acme_windows_common
 
 
 
