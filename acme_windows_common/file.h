@@ -16,7 +16,7 @@
 //void CLASS_DECL_ACME_WINDOWS vfxGetRoot(wstring & wstrRoot, const wstring & wstrPath);
 
 
-namespace windows_common
+namespace acme_windows_common
 {
 
 

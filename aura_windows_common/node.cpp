@@ -2,309 +2,286 @@
 #include "aura/operating_system.h"
 
 
-namespace aura
+namespace aura_windows_common
 {
 
 
-   namespace windows_common
+   node::node()
+   {
+
+      m_pauranode = this;
+
+   }
+
+
+   node::~node()
    {
 
 
-      node::node()
+   }
+
+
+
+
+   bool node::_os_calc_app_dark_mode()
+   {
+
+      //try
+      //{
+
+      //   ::acme_windows::registry::key key;
+
+      //   key.open(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize");
+
+      //   ::u32 dw;
+
+      //   auto estatus = key._get("AppsUseLightTheme", dw);
+
+      //   if (::failed(estatus))
+      //   {
+
+      //      estatus = key._get("SystemUseLightTheme", dw);
+
+      //      if (::failed(estatus))
+      //      {
+
+      //         return false;
+
+      //      }
+
+      //   }
+
+      //   return dw == 0;
+
+      //}
+      //catch (...)
+      //{
+
+      //   return false;
+
+      //}
+
+      return false;
+
+   }
+
+
+   bool node::_os_calc_system_dark_mode()
+   {
+
+      //try
+      //{
+
+      //   ::acme_windows::registry::key key;
+
+      //   key.open(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize");
+
+      //   ::u32 dw;
+
+      //   auto estatus = key._get("SystemUseLightTheme", dw);
+
+      //   if (::failed(estatus))
+      //   {
+
+      //      estatus = key._get("AppsUseLightTheme", dw);
+
+      //      if (::failed(estatus))
+      //      {
+
+      //         return false;
+
+      //      }
+
+      //   }
+
+      //   return dw == 0;
+
+      //}
+      //catch (...)
       {
-
-         m_pauranode = this;
-
-      }
-
-
-      node::~node()
-      {
-
-
-      }
-
-
-
-
-      bool node::_os_calc_app_dark_mode()
-      {
-
-         //try
-         //{
-
-         //   ::windows::registry::key key;
-
-         //   key.open(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize");
-
-         //   ::u32 dw;
-
-         //   auto estatus = key._get("AppsUseLightTheme", dw);
-
-         //   if (::failed(estatus))
-         //   {
-
-         //      estatus = key._get("SystemUseLightTheme", dw);
-
-         //      if (::failed(estatus))
-         //      {
-
-         //         return false;
-
-         //      }
-
-         //   }
-
-         //   return dw == 0;
-
-         //}
-         //catch (...)
-         //{
-
-         //   return false;
-
-         //}
 
          return false;
 
       }
 
+   }
 
-      bool node::_os_calc_system_dark_mode()
+
+   ::color::color node::get_default_color(::u64 u)
+   {
+
+      switch (u)
       {
-
-         //try
-         //{
-
-         //   ::windows::registry::key key;
-
-         //   key.open(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize");
-
-         //   ::u32 dw;
-
-         //   auto estatus = key._get("SystemUseLightTheme", dw);
-
-         //   if (::failed(estatus))
-         //   {
-
-         //      estatus = key._get("AppsUseLightTheme", dw);
-
-         //      if (::failed(estatus))
-         //      {
-
-         //         return false;
-
-         //      }
-
-         //   }
-
-         //   return dw == 0;
-
-         //}
-         //catch (...)
-         {
-
-            return false;
-
-         }
-
+      case COLOR_3DFACE:
+         return argb(127, 192, 192, 200);
+      case COLOR_WINDOW:
+         return argb(127, 255, 255, 255);
+      case COLOR_3DLIGHT:
+         return argb(127, 218, 218, 210);
+      case COLOR_3DHIGHLIGHT:
+         return argb(127, 238, 238, 230);
+      case COLOR_3DSHADOW:
+         return argb(127, 138, 138, 130);
+      case COLOR_3DDKSHADOW:
+         return argb(127, 90, 90, 80);
+      default:
+         break;
       }
 
+      return argb(127, 0, 0, 0);
 
-      ::color::color node::get_default_color(::u64 u)
-      {
-
-         switch (u)
-         {
-         case COLOR_3DFACE:
-            return argb(127, 192, 192, 200);
-         case COLOR_WINDOW:
-            return argb(127, 255, 255, 255);
-         case COLOR_3DLIGHT:
-            return argb(127, 218, 218, 210);
-         case COLOR_3DHIGHLIGHT:
-            return argb(127, 238, 238, 230);
-         case COLOR_3DSHADOW:
-            return argb(127, 138, 138, 130);
-         case COLOR_3DDKSHADOW:
-            return argb(127, 90, 90, 80);
-         default:
-            break;
-         }
-
-         return argb(127, 0, 0, 0);
-
-      }
+   }
 
 
-      void node::set_console_colors(::u32 dwScreenColors, ::u32 dwPopupColors, ::u32 dwWindowAlpha)
-      {
+   void node::set_console_colors(::u32 dwScreenColors, ::u32 dwPopupColors, ::u32 dwWindowAlpha)
+   {
 
-         //::windows::registry::key key(HKEY_CURRENT_USER, "Console", true);
+      //::acme_windows::registry::key key(HKEY_CURRENT_USER, "Console", true);
 
-         //key._set("ScreenColors", dwScreenColors);
-         //key._set("PopupColors", dwPopupColors);
-         //key._set("WindowAlpha", dwWindowAlpha);
+      //key._set("ScreenColors", dwScreenColors);
+      //key._set("PopupColors", dwPopupColors);
+      //key._set("WindowAlpha", dwWindowAlpha);
 
-      }
+   }
 
 
 
-      //void node::set_system_dark_mode1(bool bSet)
-      //{
+   //void node::set_system_dark_mode1(bool bSet)
+   //{
 
-      //   //::windows::registry::key key(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", true);
+   //   //::acme_windows::registry::key key(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", true);
 
-      //   //::u32 dwSystemUseLightTheme;
-      //   //if (bSet)
-      //   //{
-      //   //   dwSystemUseLightTheme = 0;
-      //   //}
-      //   //else
-      //   //{
-      //   //   dwSystemUseLightTheme = 1;
-      //   //}
+   //   //::u32 dwSystemUseLightTheme;
+   //   //if (bSet)
+   //   //{
+   //   //   dwSystemUseLightTheme = 0;
+   //   //}
+   //   //else
+   //   //{
+   //   //   dwSystemUseLightTheme = 1;
+   //   //}
 
-      //   //key._set("SystemUsesLightTheme", dwSystemUseLightTheme);
-      //   return ::success;
+   //   //key._set("SystemUsesLightTheme", dwSystemUseLightTheme);
+   //   return ::success;
 
-      //}
-
-
-      //void node::set_app_dark_mode1(bool bSet)
-      //{
-
-      //   //::windows::registry::key key(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", true);
-
-      //   //::u32 dwAppsUseLightTheme;
-      //   //if (bSet)
-      //   //{
-      //   //   dwAppsUseLightTheme = 0;
-      //   //}
-      //   //else
-      //   //{
-      //   //   dwAppsUseLightTheme = 1;
-      //   //}
-
-      //   //key._set("AppsUseLightTheme", dwAppsUseLightTheme);
-
-      //   return ::success;
-
-      //}
+   //}
 
 
-      double node::get_time_zone()
-      {
+   //void node::set_app_dark_mode1(bool bSet)
+   //{
 
-         double dTimeZone = 0.;
+   //   //::acme_windows::registry::key key(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", true);
+
+   //   //::u32 dwAppsUseLightTheme;
+   //   //if (bSet)
+   //   //{
+   //   //   dwAppsUseLightTheme = 0;
+   //   //}
+   //   //else
+   //   //{
+   //   //   dwAppsUseLightTheme = 1;
+   //   //}
+
+   //   //key._set("AppsUseLightTheme", dwAppsUseLightTheme);
+
+   //   return ::success;
+
+   //}
+
+
+   double node::get_time_zone()
+   {
+
+      double dTimeZone = 0.;
 
 #ifdef WINDOWS
-         {
-            //time_t t = time(nullptr);
+      {
+         //time_t t = time(nullptr);
 
-            //struct tm *p = localtime(&t);
+         //struct tm *p = localtime(&t);
 
-            DYNAMIC_TIME_ZONE_INFORMATION i = {};
+         DYNAMIC_TIME_ZONE_INFORMATION i = {};
 
-            ::u32 dw = GetDynamicTimeZoneInformation(&i);
+         ::u32 dw = GetDynamicTimeZoneInformation(&i);
 
-            if (dw == TIME_ZONE_ID_STANDARD)
-            {
-
-               dTimeZone = -((double)(i.Bias + i.StandardBias) / 60.0);
-
-            }
-            else if (dw == TIME_ZONE_ID_DAYLIGHT)
-            {
-
-               dTimeZone = -((double)(i.Bias + i.DaylightBias) / 60.0);
-
-            }
-            else
-            {
-
-               dTimeZone = -((double)i.Bias / 60.0);
-
-            }
-
-         }
-#else
+         if (dw == TIME_ZONE_ID_STANDARD)
          {
 
-            time_t t = time(nullptr);
-
-            struct tm lt = { 0 };
-
-            localtime_r(&t, &lt);
-
-            //printf("Offset to GMT is %lds.\n", lt.tm_gmtoff);
-
-            //printf("The time zone is '%s'.\n", lt.tm_zone);
-
-            dTimeZone = +((double)lt.tm_gmtoff / (60.0 * 60.0));
+            dTimeZone = -((double)(i.Bias + i.StandardBias) / 60.0);
 
          }
-#endif
+         else if (dw == TIME_ZONE_ID_DAYLIGHT)
+         {
 
-         return dTimeZone;
+            dTimeZone = -((double)(i.Bias + i.DaylightBias) / 60.0);
+
+         }
+         else
+         {
+
+            dTimeZone = -((double)i.Bias / 60.0);
+
+         }
 
       }
-
-
-
-      void node::system_main()
+#else
       {
 
-         auto psystem = m_psystem;
+         time_t t = time(nullptr);
 
-         //auto estatus = 
-         
-         psystem->main();
+         struct tm lt = { 0 };
 
-         //if (!estatus)
-         //{
+         localtime_r(&t, &lt);
 
-         //   return estatus;
+         //printf("Offset to GMT is %lds.\n", lt.tm_gmtoff);
 
-         //}
+         //printf("The time zone is '%s'.\n", lt.tm_zone);
 
-         ///estatus = 
-         
-         psystem->inline_term();
-
-         //if (!estatus)
-         //{
-
-         //   return estatus;
-
-         //}
-
-         //return estatus;
-
+         dTimeZone = +((double)lt.tm_gmtoff / (60.0 * 60.0));
 
       }
+#endif
+
+      return dTimeZone;
+
+   }
 
 
-      //int _os_message_box(const ::string & pszMessage, const ::string & pszTitle, const ::e_message_box& emessagebox)
+
+   void node::system_main()
+   {
+
+      auto psystem = m_psystem;
+
+      //auto estatus = 
+
+      psystem->main();
+
+      //if (!estatus)
       //{
 
-      //   int iMessageBox = emessagebox.m_eenum & 0x7f;
-
-      //   wstring wstrText(pszMessage);
-
-      //   wstring wstrTitle(pszTitle);
-
-      //   int iResult = ::MessageBox(nullptr, wstrText, wstrTitle, iMessageBox);
-
-      //   return iResult;
+      //   return estatus;
 
       //}
 
+      ///estatus = 
 
-   } // namespace windows_common
+      psystem->inline_term();
+
+      //if (!estatus)
+      //{
+
+      //   return estatus;
+
+      //}
+
+      //return estatus;
 
 
-} // namespace aura
+   }
+
+
+} // namespace aura_windows_common
 
 
 

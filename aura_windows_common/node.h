@@ -8,16 +8,12 @@
 #pragma once
 
 
-namespace aura
+namespace aura_windows_common
 {
 
 
-   namespace windows_common
-   {
-
-
       class CLASS_DECL_AURA_WINDOWS_COMMON node :
-         virtual public ::apex::windows_common::node,
+         virtual public ::apex_windows_common::node,
          virtual public ::aura::node
       {
       public:
@@ -59,10 +55,7 @@ namespace aura
       };
 
 
-   } // namespace windows_common
-
-
-} // namespace aura
+} // namespace aura_windows_common
 
 
 

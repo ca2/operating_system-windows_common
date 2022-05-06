@@ -15,21 +15,8 @@
 CLASS_DECL_ACME void TRACELASTERROR();
 
 
-namespace windows_common
+namespace acme_windows_common
 {
-
-
-   //::file::path acme_file::_final(const char * path)
-   //{
-
-   //   WCHAR wszPath[8192];
-
-   //   ::u32 dw = GetFullPathNameW(L"\\\\?\\" + wstring(path), sizeof(wszPath) / sizeof(WCHAR), wszPath, nullptr);
-
-   //   return wszPath;
-
-   //}
-
 
    void acme_file::copy(const char * pszNew, const char * pszSrc, bool bOverwrite)
    {
@@ -644,56 +631,7 @@ namespace windows_common
    }
 
 
-} // namespace windows_common
+} // namespace acme_windows_common
 
 
 
-
-
-
-
-//#include <sys/types.h>
-//#include <sys/stat.h>
-//#include <sys/time.h>
-//#include <fcntl.h>
-//#include <unistd.h>
-//#include <utime.h>
-//
-//#include <iostream>
-//#include <string>
-//
-//#include <cstdlib>
-
-//void touch(const std::string& pathname)
-//{
-//   int fd = open(pathname.c_str(),
-//      O_WRONLY | O_CREAT | O_NOCTTY | O_NONBLOCK,
-//      0666);
-//   if (fd < 0) // Couldn't open that path.
-//   {
-//      std::cerr
-//         << __PRETTY_FUNCTION__
-//         << ": Couldn't open() path \""
-//         << pathname
-//         << "\"\n";
-//      return;
-//   }
-//   int rc = utimensat(AT_FDCWD,
-//      pathname.c_str(),
-//      nullptr,
-//      0);
-//   if (rc)
-//   {
-//      std::cerr
-//         << __PRETTY_FUNCTION__
-//         << ": Couldn't utimensat() path \""
-//         << pathname
-//         << "\"\n";
-//      return;
-//   }
-//   std::clog
-//      << __PRETTY_FUNCTION__
-//      << ": Completed touch() on path \""
-//      << pathname
-//      << "\"\n";
-//}

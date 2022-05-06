@@ -7,73 +7,66 @@
 #pragma once
 
 
-namespace acme
+namespace acme_windows_common
 {
 
 
-   namespace windows_common
+   class CLASS_DECL_ACME_WINDOWS_COMMON node :
+      virtual public ::acme::node
    {
-
-
-      class CLASS_DECL_ACME_WINDOWS_COMMON node :
-         virtual public ::acme::node
-      {
-      public:
+   public:
 
          
-         //__creatable_from_base(node, ::acme::node);
+      //__creatable_from_base(node, ::acme::node);
 
 
-         ::file::path            m_strTimeFolder;
-         ::file::path            m_strNetSeedFolder;
+      ::file::path            m_strTimeFolder;
+      ::file::path            m_strNetSeedFolder;
 
-         ::file::path            m_strCommonAppData;
-         ::file::path            m_strAppData;
-         ::file::path            m_strPrograms;
-         ::file::path            m_strCommonPrograms;
-
-
-         node();
-         ~node() override;
+      ::file::path            m_strCommonAppData;
+      ::file::path            m_strAppData;
+      ::file::path            m_strPrograms;
+      ::file::path            m_strCommonPrograms;
 
 
-         void initialize_matter(::matter* pmatter) override;
-
-         //virtual ::string dir_root() override;
-
-         //virtual ::file::path get_memory_map_base_folder_path() const override;
-
-         //virtual ::file::path home() override;
-
-         //virtual ::file::path program_data() override;
-
-         //virtual ::file::path roaming() override;
-
-         void install_crash_dump_reporting(const string& strModuleNameWithTheExeExtension) override;
-
-         //virtual bool memcnts();
-
-         //virtual ::file::path memcnts_base_path();
-
-         //void datetime_to_filetime(file_time_t* pFileTime, const ::earth::time& time) override;
+      node();
+      ~node() override;
 
 
-         virtual ::e_status last_error_to_status(DWORD dwLastError);
+      void initialize_matter(::matter* pmatter) override;
+
+      //virtual ::string dir_root() override;
+
+      //virtual ::file::path get_memory_map_base_folder_path() const override;
+
+      //virtual ::file::path home() override;
+
+      //virtual ::file::path program_data() override;
+
+      //virtual ::file::path roaming() override;
+
+      void install_crash_dump_reporting(const string& strModuleNameWithTheExeExtension) override;
+
+      //virtual bool memcnts();
+
+      //virtual ::file::path memcnts_base_path();
+
+      //void datetime_to_filetime(file_time_t* pFileTime, const ::earth::time& time) override;
 
 
-         string audio_get_default_library_name() override;
+      virtual ::e_status last_error_to_status(DWORD dwLastError);
 
 
-         string font_name(enum_font efont) override;
+      string audio_get_default_library_name() override;
 
 
-      };
+      string font_name(enum_font efont) override;
 
 
-   } // namespace windows_common
+   };
 
 
-} // namespace acme
+} // namespace acme_windows_common
 
 
 
