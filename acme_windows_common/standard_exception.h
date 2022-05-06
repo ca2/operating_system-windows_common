@@ -33,7 +33,7 @@
 
 
 
-namespace windows
+namespace acme_windows_common
 {
 
 
@@ -188,7 +188,7 @@ namespace windows
 #endif
 
 
-} // namespace windows
+} // namespace acme_windows_common
 
 
 
