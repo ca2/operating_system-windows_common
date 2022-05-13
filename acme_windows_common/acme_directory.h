@@ -15,17 +15,8 @@ namespace acme_windows_common
    public:
 
 
-      //__creatable_from_base(acme_directory, ::acme_directory);
-
-
       acme_directory();
       ~acme_directory() override;
-
-
-
-      //void __create(const char * path) override;
-
-      //bool _is(const char * path) override;
 
 
    };
