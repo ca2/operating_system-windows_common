@@ -5,7 +5,7 @@
 #include "aura/graphics/image/icon.h"
 
 
-extern CLASS_DECL_AURA image_array * g_pimagea;
+//extern CLASS_DECL_AURA image_array * g_pimagea;
 
 
 namespace draw2d_direct2d
@@ -17,7 +17,7 @@ namespace draw2d_direct2d
 
       defer_create_mutex();
 
-      g_pimagea->add(this);
+      //g_pimagea->add(this);
 
    }
 

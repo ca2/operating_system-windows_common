@@ -6,7 +6,7 @@
 CLASS_DECL_AURA void init_draw2d_mutex();
 
 
-extern CLASS_DECL_AURA image_array * g_pimagea;
+//extern CLASS_DECL_AURA image_array * g_pimagea;
 
 
 //namespace draw2d_direct2d
@@ -15,12 +15,12 @@ extern CLASS_DECL_AURA image_array * g_pimagea;
 __FACTORY_EXPORT void draw2d_direct2d_factory(::factory::factory * pfactory)
    {
 
-      if (g_pimagea == nullptr)
-      {
+      //if (g_pimagea == nullptr)
+      //{
 
-         g_pimagea = new image_array;
+      //   g_pimagea = new image_array;
 
-      }
+      //}
 
 
       pfactory->add_factory_item < ::draw2d_direct2d::image, ::image >();
