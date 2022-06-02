@@ -8,7 +8,7 @@ namespace promise
    class sync_routine;
 
 
-   inline __pointer(sync_routine) ___sync_routine(const ::routine & routine);
+   inline __pointer(sync_routine) ___sync_routine(const ::procedure & procedure);
 
 
    class CLASS_DECL_ACME sync_routine :
@@ -19,7 +19,7 @@ namespace promise
       friend __pointer(sync_routine) ___sync_routine(const ::routine &routine);
 
 
-      sync_routine(const ::routine & routine) :
+      sync_routine(const ::procedure & procedure) :
          m_procedure(routine)
       {
 
@@ -63,7 +63,7 @@ namespace promise
    };
 
 
-   inline __pointer(sync_routine) ___sync_routine(const ::routine & routine)
+   inline __pointer(sync_routine) ___sync_routine(const ::procedure & procedure)
    {
 
       return __new(sync_routine(routine));

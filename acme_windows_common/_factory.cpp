@@ -24,7 +24,7 @@ __FACTORY_EXPORT void acme_windows_common_factory(::factory::factory * pfactory)
 
    pfactory->add_factory_item < ::acme_windows_common::node, ::acme::node >();
    pfactory->add_factory_item < ::acme_windows_common::acme_directory, ::acme_directory >();
-   pfactory->add_factory_item < ::acme_windows_common::acme_file, ::acme_path >();
+   pfactory->add_factory_item < ::acme_windows_common::acme_file, ::acme_file >();
    pfactory->add_factory_item < ::acme_windows_common::acme_path, ::acme_path >();
 
    //pfactory->add_factory_item < ::windows::interprocess_communication_base, ::interprocess_communication::base >();
