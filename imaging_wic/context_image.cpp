@@ -133,7 +133,7 @@ namespace imaging_wic
 
       bool bOk = true;
 
-      m_psystem->m_paurasystem->m_paurasession->m_puser->m_pwindowing->windowing_send(__routine(15_s, [&]()
+      m_psystem->m_paurasystem->m_paurasession->m_puser->m_pwindowing->windowing_send({ e_timeout, 15_s, [&]()
          {
 
             auto dataPackage = ::winrt::Windows::ApplicationModel::DataTransfer::Clipboard::GetContent();
@@ -169,7 +169,7 @@ namespace imaging_wic
 
                if (p == nullptr)
                {
-                  
+
                   p = dataPackage.GetDataAsync(L"DeviceInterchangeFormat").get();
 
                   if (p == nullptr)
@@ -201,12 +201,12 @@ namespace imaging_wic
 
             memsize s = (memsize)stream.Size();
 
-            ::winrt::Windows::Storage::Streams::Buffer buffer((::u32) s);
+            ::winrt::Windows::Storage::Streams::Buffer buffer((::u32)s);
 
             if (buffer == nullptr)
                return;
 
-            stream.ReadAsync(buffer, (::u32) s, ::winrt::Windows::Storage::Streams::InputStreamOptions::ReadAhead).get();
+            stream.ReadAsync(buffer, (::u32)s, ::winrt::Windows::Storage::Streams::InputStreamOptions::ReadAhead).get();
 
             memory m;
 
@@ -243,7 +243,7 @@ namespace imaging_wic
 
             //}
 
-         }));
+         } });
 
       return bOk;
 
@@ -254,15 +254,16 @@ namespace imaging_wic
 
       bool bOk = false;
 
-      m_psystem->m_paurasession->m_puser->m_pwindowing->windowing_send(__routine(15_s, [&bOk]()
+      m_psystem->m_paurasession->m_puser->m_pwindowing->windowing_send({ e_timeout, 15_s, [&bOk]()
          {
 
 
-         }));
+         } });
 
       return bOk;
 
    }
+
 
    // platform implementation may use this context_image-"routing" to manipulate the image/clipboard
    bool context_image::_image_to_desk(const ::image* pimage)
@@ -300,12 +301,12 @@ namespace imaging_wic
 
       package.SetBitmap(object);
 
-      m_psystem->m_paurasystem->m_paurasession->m_puser->m_pwindowing->windowing_send(__routine(15_s, [&package, this]()
+      m_psystem->m_paurasystem->m_paurasession->m_puser->m_pwindowing->windowing_send({ e_timeout, 15_s, [&package, this]()
          {
 
             ::winrt::Windows::ApplicationModel::DataTransfer::Clipboard::SetContent(package);
 
-         }));
+         } });
 
       return true;
 

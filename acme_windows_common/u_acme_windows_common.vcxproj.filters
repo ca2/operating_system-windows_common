@@ -125,22 +125,10 @@
     <ClCompile Include="acme_path.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="aura.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="base.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="bstr.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="bstring.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="com.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="debug.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="_factory.cpp">
@@ -149,19 +137,10 @@
     <ClCompile Include="file.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="file1.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="networking.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="node.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="os_usleep.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="standard_exception.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="exception\hresult.cpp">
