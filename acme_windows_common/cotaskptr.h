@@ -293,7 +293,9 @@ public:
 
 };
 
+
 #define __comptr_array(a) &a.m_pp, &a.m_cCount
+
 
 #define cotaskp(POINTER_TYPE) cotaskptr < POINTER_TYPE >
 
@@ -308,52 +310,52 @@ inline auto __string(const cotaskptr < POINTER_TYPE > & ptr)
 }
 
 
+//
+//namespace str
+//{
 
-namespace str
+
+inline ansistring & assign(ansistring & ansistrDst, const cotaskptr < PWSTR > & pwidesz)
 {
 
+   ansistrDst.assign(pwidesz.operator const PWSTR());
 
-   inline ansistring & assign(ansistring & ansistrDst, const cotaskptr < PWSTR > & pwidesz)
-   {
+   return ansistrDst;
 
-      ansistrDst.assign(pwidesz.operator const PWSTR());
-
-      return ansistrDst;
-
-   }
+}
 
 
-   inline widestring & assign(widestring & widestrDst, const cotaskptr < PSTR > & pansisz)
-   {
+inline widestring & assign(widestring & widestrDst, const cotaskptr < PSTR > & pansisz)
+{
 
-      widestrDst.assign(pansisz.operator const PSTR());
+   widestrDst.assign(pansisz.operator const PSTR());
 
-      return widestrDst;
+   return widestrDst;
 
-   }
-
-
-   inline ansistring & assign(ansistring & ansistrDst, const cotaskptr < PSTR > & pansisz)
-   {
-
-      ansistrDst.assign(pansisz.operator const PSTR());
-
-      return ansistrDst;
-
-   }
+}
 
 
-   inline widestring & assign(widestring & widestrDst, const cotaskptr < PWSTR > & pwidesz)
-   {
+inline ansistring & assign(ansistring & ansistrDst, const cotaskptr < PSTR > & pansisz)
+{
 
-      widestrDst.assign(pwidesz.operator const PWSTR());
+   ansistrDst.assign(pansisz.operator const PSTR());
 
-      return widestrDst;
+   return ansistrDst;
 
-   }
-
-
-} // namespace str
+}
 
 
+inline widestring & assign(widestring & widestrDst, const cotaskptr < PWSTR > & pwidesz)
+{
+
+   widestrDst.assign(pwidesz.operator const PWSTR());
+
+   return widestrDst;
+
+}
+
+
+//} // namespace str
+//
+//
 
