@@ -358,9 +358,9 @@ namespace acme_windows_common
 
    //   const i32 iBufSize = MAX_PATH * 8;
 
-   //   wstring pwsz1 = ::str::international::utf8_to_unicode(path1);
+   //   wstring pwsz1 = utf8_to_unicode(path1);
 
-   //   wstring pwsz2 = ::str::international::utf8_to_unicode(path2);
+   //   wstring pwsz2 = utf8_to_unicode(path2);
 
    //   unichar * pwszFile1;
 
@@ -378,9 +378,9 @@ namespace acme_windows_common
    //      if (GetFullPathNameW(pwsz2, iBufSize, pwszPath2, &pwszFile2))
    //      {
 
-   //         string path1 = ::str::international::unicode_to_utf8(pwszPath1);
+   //         string path1 = unicode_to_utf8(pwszPath1);
 
-   //         string path2 = ::str::international::unicode_to_utf8(pwszPath2);
+   //         string path2 = unicode_to_utf8(pwszPath2);
 
    //         iCmp = ansi_compare_ci(path1, path2);
 

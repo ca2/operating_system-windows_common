@@ -107,7 +107,7 @@ namespace windows
 
       wstring wstrCommandLine;
 
-      if(::str::ends_ci(szCmdline,".bat"))
+      if(::str().ends_ci(szCmdline,".bat"))
       {
 
          string strCmd;
@@ -228,7 +228,7 @@ namespace windows
 
       HANDLE h = nullptr;
 
-      ::str::parse parse(pszCmdLine,strlen(pszCmdLine), "= ");
+      ::str().parse parse(pszCmdLine,strlen(pszCmdLine), "= ");
 
       parse.EnableQuote(true);
 

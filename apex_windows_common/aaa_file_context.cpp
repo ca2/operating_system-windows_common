@@ -68,7 +68,7 @@ namespace windows
 
       // return true;
 
-      if (::str::begins_ci(pszFileIn, "http://"))
+      if (::str().begins_ci(pszFileIn, "http://"))
 
       {
 
@@ -78,7 +78,7 @@ namespace windows
          return true;
 
       }
-      else if (::str::begins_ci(pszFileIn, "https://"))
+      else if (::str().begins_ci(pszFileIn, "https://"))
 
       {
 
@@ -89,13 +89,13 @@ namespace windows
 
       }
       wstring wstrFileIn;
-      wstrFileIn = ::str::international::utf8_to_unicode(pszFileIn);
+      wstrFileIn = utf8_to_unicode(pszFileIn);
 
       wstring wstrFileOut;
       bool b = windows_full_path(wstrFileOut.get_string_buffer(MAX_PATH * 8), wstrFileIn) != false;
       if (b)
       {
-         ::str::international::unicode_to_utf8(str, wstrFileOut);
+         unicode_to_utf8(str, wstrFileOut);
       }
       return b;
    }
@@ -106,12 +106,12 @@ namespace windows
       /*      if(::apex::file_context::FullPath(wstrFullPath, wstrPath))
       return true;*/
 
-      if (::str::begins_ci(wstrPath, L"http://"))
+      if (::str().begins_ci(wstrPath, L"http://"))
       {
          wstrFullPath = wstrPath;
          return true;
       }
-      else if (::str::begins_ci(wstrPath, L"https://"))
+      else if (::str().begins_ci(wstrPath, L"https://"))
       {
          wstrFullPath = wstrPath;
          return true;
@@ -127,11 +127,11 @@ namespace windows
    {
       i32 nMax = MAX_PATH * 8;
       wstring wstrPathName;
-      wstrPathName = ::str::international::utf8_to_unicode(pszPathName);
+      wstrPathName = utf8_to_unicode(pszPathName);
 
       wstring wstrTitle;
       ::u32 user = vfxGetFileName(wstrPathName, wstrTitle.get_string_buffer(nMax), nMax);
-      str = ::str::international::unicode_to_utf8(wstrTitle);
+      str = unicode_to_utf8(wstrTitle);
       return user;
    }
 
@@ -155,7 +155,7 @@ namespace windows
 
       WIN32_FILE_ATTRIBUTE_DATA data;
 
-      if (!GetFileAttributesExW(::str::international::utf8_to_unicode(path), GetFileExInfoStandard, &data))
+      if (!GetFileAttributesExW(utf8_to_unicode(path), GetFileExInfoStandard, &data))
       {
          varRet.set_type(::e_type_null);
       }
@@ -202,8 +202,8 @@ namespace windows
 #ifdef WINDOWS_DESKTOP
 
       if (!::MoveFileW(
-         ::str::international::utf8_to_unicode(psz),
-         ::str::international::utf8_to_unicode(pszNew)))
+         utf8_to_unicode(psz),
+         utf8_to_unicode(pszNew)))
       {
 
          DWORD dwError = ::GetLastError();
@@ -212,12 +212,12 @@ namespace windows
          {
 
             if (::CopyFileW(
-               ::str::international::utf8_to_unicode(psz),
-               ::str::international::utf8_to_unicode(pszNew),
+               utf8_to_unicode(psz),
+               utf8_to_unicode(pszNew),
                false))
             {
 
-               if (!::DeleteFileW(::str::international::utf8_to_unicode(psz)))
+               if (!::DeleteFileW(utf8_to_unicode(psz)))
                {
 
                   dwError = ::GetLastError();
@@ -310,7 +310,7 @@ namespace windows
 
 #ifdef WINDOWS_DESKTOP
 
-      HANDLE h = ::CreateFileW(::str::international::utf8_to_unicode(string("\\\\?\\") + psz),
+      HANDLE h = ::CreateFileW(utf8_to_unicode(string("\\\\?\\") + psz),
          GENERIC_READ | GENERIC_WRITE, 0, nullptr, OPEN_EXISTING,
          FILE_FLAG_OPEN_REPARSE_POINT | FILE_FLAG_DELETE_ON_CLOSE, nullptr);
 
@@ -339,7 +339,7 @@ namespace windows
          ::CloseHandle(h);
       }
 
-      /*      if(!::DeleteFileW(::str::international::utf8_to_unicode(string("\\\\?\\") + psz)))
+      /*      if(!::DeleteFileW(utf8_to_unicode(string("\\\\?\\") + psz)))
       {
       u32 dwError = ::get_last_error();
       if(dwError == 2) // the file does not exist, so delete "failed"
@@ -472,13 +472,13 @@ namespace windows
       // attempt to fully qualify path first
       wstring wstrFullName;
       wstring wstrFileName;
-      wstrFileName = ::str::international::utf8_to_unicode(path);
+      wstrFileName = utf8_to_unicode(path);
       if (!windows_full_path(wstrFullName, wstrFileName))
       {
          rStatus.m_strFullName.Empty();
          return false;
       }
-      ::str::international::unicode_to_utf8(rStatus.m_strFullName, wstrFullName);
+      unicode_to_utf8(rStatus.m_strFullName, wstrFullName);
 
       WIN32_FIND_DATAW findFileData;
       HANDLE hFind = FindFirstFileW((LPWSTR)(const widechar *)wstrFullName, &findFileData);

@@ -86,7 +86,7 @@ CLASS_DECL_ACME_WINDOWS_COMMON bool _os_may_have_alias(const char * psz)
 //bool context::os_is_alias(const char * psz)
 //{
 //
-//   return ::str::ends_ci(psz, ".lnk");
+//   return ::str().ends_ci(psz, ".lnk");
 //
 //}
 
@@ -384,7 +384,7 @@ namespace windows_common
       wstring wstrFileName(m_path);
 
       // attempt file creation
-      //HANDLE handleFile = shell::CreateFile(::str::international::utf8_to_unicode(m_path), dwAccess, dwShareMode, &sa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, nullptr);
+      //HANDLE handleFile = shell::CreateFile(utf8_to_unicode(m_path), dwAccess, dwShareMode, &sa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, nullptr);
 
       handleFile = ::CreateFile2(wstrFileName, dwAccess, dwShareMode, dwCreateFlag, pextendedparameters);
 
@@ -1231,7 +1231,7 @@ string CLASS_DECL_ACME_WINDOWS_COMMON windows_string_from_clsid(REFCLSID rclsid)
 //   if (!(dwFlags & FS_CASE_IS_PRESERVED))
 //   {
 //
-//      ::str::make_upper(pszPathOut);
+//      ::str().make_upper(pszPathOut);
 //
 //   }
 //
