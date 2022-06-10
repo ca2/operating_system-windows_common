@@ -309,9 +309,9 @@ inline auto __string(const cotaskptr < POINTER_TYPE > & ptr)
 
 
 
-namespace str
-{
-
+//namespace str
+//{
+//
 
    inline ansistring & assign(ansistring & ansistrDst, const cotaskptr < PWSTR > & pwidesz)
    {
@@ -351,9 +351,9 @@ namespace str
       return widestrDst;
 
    }
-
-
-} // namespace str
+//
+//
+//} // namespace str
 
 
 

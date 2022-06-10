@@ -21,11 +21,11 @@ namespace windows_common
 
 #ifdef WINDOWS_DESKTOP
 
-      return ::LoadLibraryW(::str::international::utf8_to_unicode(psz));
+      return ::LoadLibraryW(utf8_to_unicode(psz));
 
 #else
 
-      return ::LoadPackagedLibrary(::str::international::utf8_to_unicode(psz), 0);
+      return ::LoadPackagedLibrary(utf8_to_unicode(psz), 0);
 
 #endif
 
@@ -51,7 +51,7 @@ namespace windows_common
    bool delete_file(const ::string & pFileName)
    {
 
-      return ::DeleteFileW(::str::international::utf8_to_unicode(pFileName)) != false;
+      return ::DeleteFileW(utf8_to_unicode(pFileName)) != false;
 
    }
 

@@ -9,7 +9,7 @@ BSTR bstring::string_byte_len(const char * psz, strsize len)
 
    BSTR bstr = nullptr;
 
-   auto dstlen = ::str::utf_to_utf_length(bstr, psz, srclen);
+   auto dstlen = ::str().utf_to_utf_length(bstr, psz, srclen);
 
    bstr = ::SysAllocStringLen(nullptr, (::u32) dstlen);
 
@@ -20,7 +20,7 @@ BSTR bstring::string_byte_len(const char * psz, strsize len)
 
    }
 
-   ::str::utf_to_utf(bstr, psz, srclen);
+   ::str().utf_to_utf(bstr, psz, srclen);
 
    return bstr;
 

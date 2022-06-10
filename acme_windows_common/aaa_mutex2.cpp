@@ -116,7 +116,7 @@ static int g_iMutex = 0;
       if(pstrName != nullptr)
       {
 
-         m_hsync = ::OpenMutexW(SYNCHRONIZE,false,::str::international::utf8_to_unicode(pstrName));
+         m_hsync = ::OpenMutexW(SYNCHRONIZE,false,utf8_to_unicode(pstrName));
 
       }
 
@@ -1501,7 +1501,7 @@ __pointer(::mutex) open_mutex(const ::string & lpszName)
 
 #ifdef WINDOWS
 
-   HANDLE h = ::OpenMutexW(SYNCHRONIZE, false, ::str::international::utf8_to_unicode(lpszName));
+   HANDLE h = ::OpenMutexW(SYNCHRONIZE, false, utf8_to_unicode(lpszName));
 
    if (h == nullptr || h == INVALID_HANDLE_VALUE)
    {

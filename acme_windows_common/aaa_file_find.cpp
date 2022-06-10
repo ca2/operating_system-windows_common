@@ -74,9 +74,9 @@ namespace windows
       if (pstrName == nullptr)
          pstrName = "*.*";
 
-      ::str::international::MultiByteToUnicode(CP_UTF8, m_pNextInfo->cFileName, MAX_PATH, pstrName);
+      multibyte_to_unicode(CP_UTF8, m_pNextInfo->cFileName, MAX_PATH, pstrName);
 
-      wstring wstrName = ::str::international::utf8_to_unicode(pstrName);
+      wstring wstrName = utf8_to_unicode(pstrName);
 
       m_hContext = ::FindFirstFileW(wstrName, m_pNextInfo);
 
@@ -145,7 +145,7 @@ namespace windows
 
       }
 
-      m_strRoot = ::str::international::unicode_to_utf8(wstrRoot);
+      m_strRoot = unicode_to_utf8(wstrRoot);
 
       return true;
 

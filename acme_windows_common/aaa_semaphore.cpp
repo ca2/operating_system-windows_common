@@ -22,7 +22,7 @@ semaphore::semaphore(::i32 lInitialCount, ::i32 lMaxCount, const ::string & pstr
 
 #ifdef WINDOWS
 
-   m_hsync = ::CreateSemaphoreExW(psaAttributes, lInitialCount, lMaxCount, pstrName == nullptr ? nullptr : (const wchar_t *)  ::str::international::utf8_to_unicode(pstrName), 0, SEMAPHORE_MODIFY_STATE | DELETE | SYNCHRONIZE);
+   m_hsync = ::CreateSemaphoreExW(psaAttributes, lInitialCount, lMaxCount, pstrName == nullptr ? nullptr : (const wchar_t *)  utf8_to_unicode(pstrName), 0, SEMAPHORE_MODIFY_STATE | DELETE | SYNCHRONIZE);
 
    if (m_hsync == nullptr)
       throw ::exception(error_resource);
