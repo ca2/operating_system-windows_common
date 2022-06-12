@@ -141,8 +141,8 @@ namespace draw2d_direct2d
       comptr<ID2D1DeviceContext> pdevicecontextTemplate;
 
       if (FAILED(hr = ::direct2d::direct2d()->m_pd2device->CreateDeviceContext(
-                      D2D1_DEVICE_CONTEXT_OPTIONS_NONE,
-                      //D2D1_DEVICE_CONTEXT_OPTIONS_ENABLE_MULTITHREADED_OPTIMIZATIONS,
+                      //D2D1_DEVICE_CONTEXT_OPTIONS_NONE,
+                      D2D1_DEVICE_CONTEXT_OPTIONS_ENABLE_MULTITHREADED_OPTIMIZATIONS,
                       &pdevicecontextTemplate)))
       {
 
@@ -188,7 +188,7 @@ namespace draw2d_direct2d
 
       }
 
-      D2D1_SIZE_U sizeu = D2D1::SizeU(1, 1);
+      D2D1_SIZE_U sizeu = D2D1::SizeU(256, 256);
 
       D2D1_PIXEL_FORMAT pixelformat;
 
@@ -200,7 +200,7 @@ namespace draw2d_direct2d
                       nullptr,
                       &sizeu,
                       &pixelformat,
-         D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS_GDI_COMPATIBLE,
+         D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS_NONE,
                       &m_pbitmaprendertarget)))
       {
 
