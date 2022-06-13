@@ -25,7 +25,7 @@ namespace draw2d_direct2d
    void bitmap::CreateBitmap(::draw2d::graphics* pgraphics, const ::size_i32& sizeParam, ::u32 nPlanes, ::u32 nBitcount, const void * lpBits, int stride)
    {
 
-      ::draw2d::lock draw2dlock;
+      //::draw2d::lock draw2dlock;
 
       ::draw2d::device_lock devicelock(this);
 
@@ -93,7 +93,7 @@ namespace draw2d_direct2d
    void bitmap::create_bitmap(::draw2d::graphics* pgraphics, const ::size_i32 & size, void **ppdata, int * pstride)
    {
 
-      ::draw2d::lock draw2dlock;
+      //::draw2d::lock draw2dlock;
 
       ::draw2d::device_lock devicelock(this);
 
@@ -262,7 +262,7 @@ namespace draw2d_direct2d
    void bitmap::CreateCompatibleBitmap(::draw2d::graphics* pgraphics, int nWidth, int nHeight)
    {
 
-      ::draw2d::lock draw2dlock;
+      //::draw2d::lock draw2dlock;
 
       ::draw2d::device_lock devicelock(this);
 
@@ -312,7 +312,7 @@ namespace draw2d_direct2d
    void bitmap::CreateDiscardableBitmap(::draw2d::graphics* pgraphics, int nWidth, int nHeight)
    {
 
-      ::draw2d::lock draw2dlock;
+      //::draw2d::lock draw2dlock;
 
       ::draw2d::device_lock devicelock(this);
 

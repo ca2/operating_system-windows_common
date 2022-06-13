@@ -49,7 +49,7 @@ namespace draw2d_direct2d
    void image::create_ex(const ::size_i32 & size, ::color32_t * pcolorref, int iScan, ::enum_flag eflagCreate, int iGoodStride, bool bPreserve)
    {
 
-      ::draw2d::lock draw2dlock;
+      //::draw2d::lock draw2dlock;
 
       ::draw2d::device_lock devicelock(this);
 
@@ -275,7 +275,7 @@ namespace draw2d_direct2d
    void image::destroy()
    {
 
-      ::draw2d::lock draw2dlock;
+      //::draw2d::lock draw2dlock;
 
       ::draw2d::device_lock devicelock(this);
 
@@ -1066,7 +1066,7 @@ namespace draw2d_direct2d
    void image::_map(bool bApplyAlphaTransform)
    {
 
-      ::draw2d::lock draw2dlock;
+      //::draw2d::lock draw2dlock;
 
       ::draw2d::device_lock devicelock(this);
 
@@ -1167,7 +1167,7 @@ namespace draw2d_direct2d
    void image::_unmap()
    {
 
-      ::draw2d::lock draw2dlock;
+      //::draw2d::lock draw2dlock;
 
       if (!m_bMapped)
       {

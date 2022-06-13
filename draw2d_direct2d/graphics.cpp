@@ -121,7 +121,7 @@ namespace draw2d_direct2d
    void graphics::CreateCompatibleDC(::draw2d::graphics * pgraphics)
    {
 
-      ::draw2d::lock draw2dlock;
+      //::draw2d::lock draw2dlock;
 
       ::draw2d::device_lock devicelock(this);
 
@@ -562,7 +562,7 @@ namespace draw2d_direct2d
       if (rectangleIntersect.intersect(rectangleAlphaBlend, rectangleText))
       {
 
-         ::draw2d::lock draw2dlock;
+         //::draw2d::lock draw2dlock;
 
          ::draw2d::device_lock devicelock(this);
 
@@ -638,7 +638,7 @@ namespace draw2d_direct2d
    void graphics::set(::draw2d::bitmap* pbitmapParam)
    {
 
-      ::draw2d::lock draw2dlock;
+      //::draw2d::lock draw2dlock;
 
       ::draw2d::device_lock devicelock(this);
 
@@ -1932,7 +1932,7 @@ namespace draw2d_direct2d
    void graphics::_draw_raw(const ::rectangle_f64 & rectangleTarget, ::image * pimage, const image_drawing_options & imagedrawingoptions, const ::point_f64 & pointSrc)
    {
 
-      ::draw2d::lock draw2dlock;
+      //::draw2d::lock draw2dlock;
 
       ::draw2d::device_lock devicelock(this);
 
@@ -4152,7 +4152,7 @@ namespace draw2d_direct2d
    void graphics::reset_clip()
    {
 
-      ::draw2d::lock draw2dlock;
+      //::draw2d::lock draw2dlock;
 
       ::draw2d::device_lock devicelock(this);
 
@@ -4335,7 +4335,7 @@ namespace draw2d_direct2d
    void graphics::intersect_clip(const ::rectangle_f64 & rectangle)
    {
 
-      ::draw2d::lock draw2dlock;
+      //::draw2d::lock draw2dlock;
 
       ::draw2d::device_lock devicelock(this);
 
@@ -4399,7 +4399,7 @@ namespace draw2d_direct2d
    void graphics::intersect_clip(const ::ellipse & ellipse)
    {
 
-      ::draw2d::lock draw2dlock;
+      //::draw2d::lock draw2dlock;
 
       ::draw2d::device_lock devicelock(this);
 
@@ -4465,7 +4465,7 @@ namespace draw2d_direct2d
    void graphics::intersect_clip(const ::polygon_f64& polygon_i32)
    {
 
-      ::draw2d::lock draw2dlock;
+      //::draw2d::lock draw2dlock;
 
       ::draw2d::device_lock devicelock(this);
 
@@ -5897,7 +5897,7 @@ namespace draw2d_direct2d
    void graphics::destroy()
    {
 
-      ::draw2d::lock draw2dlock;
+      //::draw2d::lock draw2dlock;
 
       ::draw2d::device_lock devicelock(this);
 
