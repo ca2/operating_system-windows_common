@@ -4,11 +4,12 @@
 namespace draw2d_direct2d
 {
 
-
    draw2d::draw2d()
    {
 
       defer_create_mutex();
+
+      //m_pmutexObjectList = __new(::mutex());
       
    }
 

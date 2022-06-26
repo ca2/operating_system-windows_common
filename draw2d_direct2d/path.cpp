@@ -538,7 +538,15 @@ namespace draw2d_direct2d
    void path::destroy()
    {
 
+      destroy_os_data();
+
       ::draw2d::path::destroy();
+
+   }
+
+
+   void path::destroy_os_data()
+   {
 
       m_psink = nullptr;
 
@@ -548,9 +556,10 @@ namespace draw2d_direct2d
 
       m_ppathFilled = nullptr;
 
-      //return ::success;
+      object::destroy_os_data();
 
    }
+
 
 
    bool path::create()

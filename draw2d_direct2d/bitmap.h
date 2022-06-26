@@ -66,6 +66,7 @@ namespace draw2d_direct2d
       
 
       void destroy() override;
+      void destroy_os_data() override;
 
 
    };

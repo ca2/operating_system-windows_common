@@ -96,7 +96,6 @@
     <ClCompile Include="palette.cpp" />
     <ClCompile Include="path.cpp" />
     <ClCompile Include="pen.cpp" />
-    <ClCompile Include="preview_dc.cpp" />
     <ClCompile Include="region.cpp" />
     <ClCompile Include="_.cpp" />
   </ItemGroup>
@@ -115,7 +114,6 @@
     <ClInclude Include="palette.h" />
     <ClInclude Include="path.h" />
     <ClInclude Include="pen.h" />
-    <ClInclude Include="printer.h" />
     <ClInclude Include="region.h" />
     <ClInclude Include="_.h" />
     <ClInclude Include="_draw2d_direct2d.h" />
@@ -439,6 +437,7 @@
       <EnableModules>false</EnableModules>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeaderOutputFile>$(IntDir)framework.pch</PrecompiledHeaderOutputFile>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
     </ClCompile>
     <Link>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
@@ -547,6 +546,7 @@
       <EnableModules>false</EnableModules>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeaderOutputFile>$(IntDir)framework.pch</PrecompiledHeaderOutputFile>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
     </ClCompile>
     <Link>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
@@ -650,6 +650,7 @@
       <PreprocessorDefinitions>_DRAW2D_DIRECT2D_LIBRARY;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
     </ClCompile>
     <Link>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
@@ -731,6 +732,7 @@
       <EnableModules>false</EnableModules>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeaderOutputFile>$(IntDir)framework.pch</PrecompiledHeaderOutputFile>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
     </ClCompile>
     <Link>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>

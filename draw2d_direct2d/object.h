@@ -16,7 +16,7 @@ namespace draw2d_direct2d
 
 
       object();
-      virtual ~object();
+      ~object() override;
 
 
       int get_object(int nCount, LPVOID lpObject) const;

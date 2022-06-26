@@ -123,7 +123,7 @@ namespace draw2d_direct2d
 
       //::draw2d::lock draw2dlock;
 
-      ::draw2d::device_lock devicelock(this);
+      // ::draw2d::device_lock devicelock(this);
 
       if (m_iType != 0)
       {
@@ -564,7 +564,7 @@ namespace draw2d_direct2d
 
          //::draw2d::lock draw2dlock;
 
-         ::draw2d::device_lock devicelock(this);
+         // ::draw2d::device_lock devicelock(this);
 
          auto pimage1 = m_pcontext->m_pauracontext->create_image(size);
 
@@ -640,7 +640,7 @@ namespace draw2d_direct2d
 
       //::draw2d::lock draw2dlock;
 
-      ::draw2d::device_lock devicelock(this);
+      // ::draw2d::device_lock devicelock(this);
 
       __pointer(::draw2d_direct2d::bitmap) pbitmap = pbitmapParam;
 
@@ -1934,7 +1934,9 @@ namespace draw2d_direct2d
 
       //::draw2d::lock draw2dlock;
 
-      ::draw2d::device_lock devicelock(this);
+      // ::draw2d::device_lock devicelock(this);
+
+      pimage->defer_update_image();
 
       //try
       //{
@@ -2104,6 +2106,60 @@ namespace draw2d_direct2d
             //return false;
 
             throw ::exception(error_failed);
+
+         }
+
+         if (pimage->m_pextension && pimage->m_pextension->m_pframea)
+         {
+
+            if (m_pimage)
+            {
+
+               auto & pframeaSource = pimage->m_pextension->m_pframea;
+
+               auto & pframeaTarget = m_pimage->get_extension()->m_pframea;
+
+               __defer_construct_new(pframeaTarget);
+
+               if (pframeaTarget->get_size() != pframeaSource->get_size())
+               {
+
+                  pframeaTarget->set_size(pframeaSource->get_size());
+
+                  for (::index i = 0; i < pframeaTarget->get_size(); i++)
+                  {
+
+                     auto & pframeSource = pframeaSource->element_at(i);
+
+                     auto & pframeTarget = pframeaTarget->element_at(i);
+
+                     __defer_construct_new(pframeTarget);
+
+                     pframeTarget->m_duration = pframeSource->m_duration;
+
+                     pframeTarget->m_iFrame = pframeSource->m_iFrame;
+
+                     auto & pimageSource = pframeSource->m_pimage;
+
+                     pimageSource->set_ok();
+
+                     auto & pimageTarget = pframeTarget->m_pimage;
+
+                     __defer_construct(pimageTarget);
+
+                     pimageTarget->create(m_pimage->size());
+
+                     pimageTarget->g()->_stretch_raw(rectangleTarget, pimageSource, imagedrawingoptions, rectangleSource);
+
+                  }
+
+                  pframeaTarget->m_durationTotal = pframeaSource->m_durationTotal;
+
+               }
+
+               return;
+
+            }
 
          }
 
@@ -2371,7 +2427,7 @@ namespace draw2d_direct2d
    //}
 
 
-   void graphics::get_text_metrics(::write_text::text_metric * lpMetrics)
+   void graphics::get_text_metrics(::write_text::text_metric * pmetrics)
    {
 
       if (m_pfont.is_null())
@@ -2390,121 +2446,10 @@ namespace draw2d_direct2d
 
       }
 
-      comptr<IDWriteFontCollection> pcollection;
+      m_pfont->get_os_data(this);
 
-      WCHAR name[256];
-      ::u32 findex;
-      BOOL exists;
+      memcpy(pmetrics, &m_pfont->m_textmetric2, sizeof(m_pfont->m_textmetric2));
 
-      auto pwritetextformat = m_pfont->get_os_data < IDWriteTextFormat * >(this);
-
-      if (::is_null(pwritetextformat))
-      {
-
-         lpMetrics->m_dAscent = 0;
-         lpMetrics->m_dDescent = 0;
-         lpMetrics->m_dHeight = 24;
-         lpMetrics->m_dInternalLeading = 0;
-         lpMetrics->m_dExternalLeading = 0;
-
-         //return true;
-
-         return;
-
-      }
-
-      pwritetextformat->GetFontFamilyName(name, 256);
-
-      pwritetextformat->GetFontCollection(&pcollection);
-
-      if (pcollection == nullptr)
-      {
-
-         lpMetrics->m_dAscent = 0;
-         lpMetrics->m_dDescent = 0;
-         lpMetrics->m_dHeight = 24;
-         lpMetrics->m_dInternalLeading = 0;
-         lpMetrics->m_dExternalLeading = 0;
-
-         return;
-
-         //return true;
-
-      }
-
-      pcollection->FindFamilyName(name, &findex, &exists);
-
-      if (!exists)
-      {
-
-         pcollection->FindFamilyName(L"Arial", &findex, &exists);
-
-         if (!exists)
-         {
-
-            lpMetrics->m_dAscent = 0;
-            lpMetrics->m_dDescent = 0;
-            lpMetrics->m_dHeight = 24;
-            lpMetrics->m_dInternalLeading = 0;
-            lpMetrics->m_dExternalLeading = 0;
-
-            //return true;
-
-            return;
-
-         }
-
-      }
-
-      comptr<IDWriteFontFamily> ffamily;
-
-      pcollection->GetFontFamily(findex, &ffamily);
-
-      if (ffamily == nullptr)
-      {
-
-         lpMetrics->m_dAscent = 0;
-         lpMetrics->m_dDescent = 0;
-         lpMetrics->m_dHeight = 24;
-         lpMetrics->m_dInternalLeading = 0;
-         lpMetrics->m_dExternalLeading = 0;
-
-         //return true;
-
-         return;
-
-      }
-
-      comptr<IDWriteFont> pfont;
-
-      ffamily->GetFirstMatchingFont(pwritetextformat->GetFontWeight(), pwritetextformat->GetFontStretch(), pwritetextformat->GetFontStyle(), &pfont);
-
-      if (pfont == nullptr)
-      {
-
-         lpMetrics->m_dAscent = 0;
-         lpMetrics->m_dDescent = 0;
-         lpMetrics->m_dHeight = 24;
-         lpMetrics->m_dInternalLeading = 0;
-         lpMetrics->m_dExternalLeading = 0;
-
-         //return true;
-
-         return;
-
-      }
-
-      DWRITE_FONT_METRICS metrics;
-
-      pfont->GetMetrics(&metrics);
-
-      double ratio = pwritetextformat->GetFontSize() / (float)metrics.designUnitsPerEm;
-
-      lpMetrics->m_dAscent = (::i32) (metrics.ascent * ratio);
-      lpMetrics->m_dDescent = (::i32) (metrics.descent * ratio);
-      lpMetrics->m_dInternalLeading = (::i32) 0;
-      lpMetrics->m_dExternalLeading = (::i32) (metrics.lineGap * ratio);
-      lpMetrics->m_dHeight = (::i32) ((metrics.ascent + metrics.descent + metrics.lineGap) * ratio);
 
       //return true;
 
@@ -3246,7 +3191,7 @@ namespace draw2d_direct2d
    //void graphics::_alpha_blend_raw(const ::rectangle_f64 & rectangleTarget, ::draw2d::graphics * pgraphicsSrc, const ::rectangle_f64 & rectangleSource, double dRate)
    //{
 
-   //   ::draw2d::device_lock devicelock(this);
+   //   // ::draw2d::device_lock devicelock(this);
 
    //   /*      float fA = (float) dRate;
 
@@ -4154,7 +4099,7 @@ namespace draw2d_direct2d
 
       //::draw2d::lock draw2dlock;
 
-      ::draw2d::device_lock devicelock(this);
+      // ::draw2d::device_lock devicelock(this);
 
       while (m_iLayerCount > m_pstate->m_iLayerIndex)
       {
@@ -4248,58 +4193,58 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::add_shapes(const shape_array& shapea)
-   {
+   //void graphics::add_shapes(const shape_array& shapea)
+   //{
 
-      for (int i = 0; i < shapea.get_count(); i++)
-      {
+   //   for (int i = 0; i < shapea.get_count(); i++)
+   //   {
 
-         if (i + 1 < shapea.get_count())
-         {
+   //      if (i + 1 < shapea.get_count())
+   //      {
 
-            if (shapea[i + 1]->eshape() == e_shape_intersect_clip)
-            {
+   //         if (shapea[i + 1]->eshape() == e_shape_intersect_clip)
+   //         {
 
-               switch (shapea[i]->eshape())
-               {
-               //case e_shape_rect:
-               //   intersect_clip(shapea[i]->shape < ::rectangle_i32>());
-               //   break;
-               case e_shape_rectangle:
-                  intersect_clip(shapea[i]->shape < ::rectangle >());
-                  break;
-               //case e_shape_oval:
-               //   intersect_clip(shapea[i]->shape < ::oval>());
-               //   break;
-               case e_shape_ellipse:
-                  intersect_clip(shapea[i]->shape < ::ellipse >());
-                  break;
-               //case e_shape_polygon:
-               //   intersect_clip(shapea[i]->shape < ::polygon_i32>());
-               //   break;
-               case e_shape_polygon:
-                  intersect_clip(shapea[i]->shape < ::polygon >());
-                  break;
+   //            switch (shapea[i]->eshape())
+   //            {
+   //            //case e_shape_rect:
+   //            //   intersect_clip(shapea[i]->shape < ::rectangle_i32>());
+   //            //   break;
+   //            case e_shape_rectangle:
+   //               intersect_clip(shapea[i]->shape < ::rectangle >());
+   //               break;
+   //            //case e_shape_oval:
+   //            //   intersect_clip(shapea[i]->shape < ::oval>());
+   //            //   break;
+   //            case e_shape_ellipse:
+   //               intersect_clip(shapea[i]->shape < ::ellipse >());
+   //               break;
+   //            //case e_shape_polygon:
+   //            //   intersect_clip(shapea[i]->shape < ::polygon_i32>());
+   //            //   break;
+   //            case e_shape_polygon:
+   //               intersect_clip(shapea[i]->shape < ::polygon >());
+   //               break;
 
-               }
+   //            }
 
-               i++;
+   //            i++;
 
-            }
+   //         }
 
-         }
+   //      }
 
-      }
+   //   }
 
-      //return ::success;
+   //   //return ::success;
 
-   }
+   //}
 
 
    //void graphics::intersect_clip(const ::rectangle_f64 & rectangle)
    //{
 
-   //   ::draw2d::device_lock devicelock(this);
+   //   // ::draw2d::device_lock devicelock(this);
 
    //   {
 
@@ -4332,18 +4277,30 @@ namespace draw2d_direct2d
    //}
 
 
-   void graphics::intersect_clip(const ::rectangle_f64 & rectangle)
+
+   void graphics::_intersect_clip()
+   {
+
+   }
+   
+
+   void graphics::_add_clipping_shape(const ::rectangle_f64 & rectangle, __pointer(::draw2d::region) & pregion)
    {
 
       //::draw2d::lock draw2dlock;
 
-      ::draw2d::device_lock devicelock(this);
+      // ::draw2d::device_lock devicelock(this);
 
-      auto pregion = __create < ::draw2d::region >();
+      if (!pregion)
+      {
 
-      auto rectangleClip = rectangle + m_pointAddShapeTranslate;
+         __construct(pregion);
 
-      pregion->create_rectangle(rectangleClip);
+         auto rectangleClip = rectangle + m_pointAddShapeTranslate;
+
+         pregion->create_rectangle(rectangleClip);
+
+      }
 
       D2D1::Matrix3x2F m = {};
 
@@ -4368,7 +4325,7 @@ namespace draw2d_direct2d
    //void graphics::intersect_clip(const ::oval& oval)
    //{
 
-   //   ::draw2d::device_lock devicelock(this);
+   //   // ::draw2d::device_lock devicelock(this);
 
    //   {
 
@@ -4396,18 +4353,23 @@ namespace draw2d_direct2d
    //}
 
 
-   void graphics::intersect_clip(const ::ellipse & ellipse)
+   void graphics::_add_clipping_shape(const ::ellipse & ellipse, __pointer(::draw2d::region) & pregion)
    {
 
       //::draw2d::lock draw2dlock;
 
-      ::draw2d::device_lock devicelock(this);
+      // ::draw2d::device_lock devicelock(this);
 
       {
 
-         auto pregion = __create < ::draw2d::region > ();
+         if (!pregion)
+         {
 
-         pregion->create_ellipse(ellipse);
+            pregion = __create < ::draw2d::region >();
+
+            pregion->create_ellipse(ellipse);
+
+         }
 
          D2D1::Matrix3x2F m = {};
 
@@ -4434,7 +4396,7 @@ namespace draw2d_direct2d
    //void graphics::intersect_clip(const ::polygon_i32& polygon_i32)
    //{
 
-   //   ::draw2d::device_lock devicelock(this);
+   //   // ::draw2d::device_lock devicelock(this);
 
    //   {
 
@@ -4462,18 +4424,23 @@ namespace draw2d_direct2d
    //}
 
 
-   void graphics::intersect_clip(const ::polygon_f64& polygon_i32)
+   void graphics::_add_clipping_shape(const ::polygon_f64& polygon_i32, __pointer(::draw2d::region) & pregion)
    {
 
       //::draw2d::lock draw2dlock;
 
-      ::draw2d::device_lock devicelock(this);
+      // ::draw2d::device_lock devicelock(this);
 
       {
 
-         auto pregion = __create < ::draw2d::region > ();
+         if (!pregion)
+         {
 
-         pregion->create_polygon(polygon_i32.get_data(), (::i32) polygon_i32.get_count(), ::draw2d::e_fill_mode_winding);
+            pregion = __create < ::draw2d::region >();
+
+            pregion->create_polygon(polygon_i32.get_data(), (::i32)polygon_i32.get_count(), ::draw2d::e_fill_mode_winding);
+
+         }
 
          D2D1::Matrix3x2F m = {};
 
@@ -4544,7 +4511,7 @@ namespace draw2d_direct2d
    //int graphics::ExcludeClipRect(double x1, double y1, double x2, double y2)
    //{
 
-   //   ::draw2d::device_lock devicelock(this);
+   //   // ::draw2d::device_lock devicelock(this);
 
    //   {
 
@@ -5383,11 +5350,13 @@ namespace draw2d_direct2d
 
       }
 
-      auto pbrush = __create < ::draw2d::brush > ();
+      D2D1_COLOR_F d2d1color;
 
-      pbrush->create_solid(color);
+      __copy(d2d1color, color);
 
-      auto posbrush = pbrush->get_os_data < ID2D1Brush * >(this);
+      comptr< ID2D1SolidColorBrush> psolidbrush;
+
+      m_prendertarget->CreateSolidColorBrush(d2d1color, &psolidbrush);
 
       D2D1_RECT_F rectangle;
 
@@ -5395,7 +5364,7 @@ namespace draw2d_direct2d
 
       defer_primitive_blend();
 
-      m_pdevicecontext->FillRectangle(&rectangle, posbrush);
+      m_pdevicecontext->FillRectangle(&rectangle, psolidbrush);
 
       //return true;
 
@@ -5897,9 +5866,19 @@ namespace draw2d_direct2d
    void graphics::destroy()
    {
 
-      //::draw2d::lock draw2dlock;
 
-      ::draw2d::device_lock devicelock(this);
+      destroy_os_data();
+    
+      ::draw2d::graphics::destroy();
+
+   }
+
+
+   void graphics::destroy_os_data()
+   {
+
+
+      // ::draw2d::device_lock devicelock(this);
 
       _pop_all_layers();
 
@@ -5911,9 +5890,7 @@ namespace draw2d_direct2d
 
       m_pbitmaprendertarget = nullptr;
 
-      clear_os_data();
-
-      //return ::success;
+      ::draw2d::graphics::destroy_os_data();
 
    }
 
@@ -6205,7 +6182,7 @@ namespace draw2d_direct2d
 
       }
 
-      if (ppath->m_shapea.is_empty())
+      if (ppath->is_empty())
       {
 
          return;

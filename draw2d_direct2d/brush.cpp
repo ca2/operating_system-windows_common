@@ -250,38 +250,26 @@ namespace draw2d_direct2d
    }
 
 
+   void brush::destroy()
+   {
+
+      destroy_os_data();
+
+      ::draw2d::brush::destroy();
+
+   }
+
+
    void brush::destroy_os_data()
    {
 
-      if(m_psolidbrush != nullptr)
-      {
+      m_psolidbrush = nullptr;
+      m_plineargradientbrush = nullptr;
+      m_pradialgradientbrush = nullptr;
+      m_pbrush = nullptr;
+      m_pimagebrush = nullptr;
 
-         m_psolidbrush = nullptr;
-
-      }
-
-      if(m_plineargradientbrush != nullptr)
-      {
-
-         m_plineargradientbrush = nullptr;
-
-      }
-
-      if(m_pbrush != nullptr)
-      {
-
-         m_pbrush = nullptr;
-
-      }
-
-      if (m_pimagebrush)
-      {
-
-         m_pimagebrush = nullptr;
-
-      }
-
-      //return ::success;
+      object::destroy_os_data();
 
    }
 

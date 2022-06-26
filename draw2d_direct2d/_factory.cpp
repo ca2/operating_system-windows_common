@@ -1,6 +1,6 @@
 #include "framework.h"
 //#include "aura/printer.h"
-#include "printer.h"
+//#include "printer.h"
 
 
 CLASS_DECL_AURA void init_draw2d_mutex();

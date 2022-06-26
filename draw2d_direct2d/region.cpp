@@ -219,7 +219,11 @@ namespace draw2d_direct2d
 
       }
 
-      D2D1_RECT_F r{ (FLOAT)m_x1, (FLOAT)m_y1, (FLOAT)m_x2, (FLOAT)m_y2 };
+      __pointer(rectangle_item) pitem = m_pitem;
+
+      D2D1_RECT_F r;
+      
+      __copy(r, pitem->m_rectangle);
 
       ::direct2d::direct2d()->d2d1_factory1()->CreateRectangleGeometry(r, &pgeometry);
 
@@ -233,10 +237,15 @@ namespace draw2d_direct2d
 
       D2D1_ELLIPSE ellipse;
 
-      ellipse.point.x = (float)(m_x2 + m_x1) / 2.f;
-      ellipse.point.y = (float)(m_y2 + m_y1) / 2.f;
-      ellipse.radiusX = (float)(m_x2 - m_x1) / 2.f;
-      ellipse.radiusY = (float)(m_y2 - m_y1) / 2.f;
+      __pointer(ellipse_item) pitem = m_pitem;
+
+      auto pointCenter = pitem->m_rectangle.center();
+      auto sizeRadius = pitem->m_rectangle.size() / 2.0;
+
+      ellipse.point.x = (float)pointCenter.x;
+      ellipse.point.y = (float)pointCenter.y;
+      ellipse.radiusX = (float)sizeRadius.cx;
+      ellipse.radiusY = (float)sizeRadius.cy;
 
       ID2D1EllipseGeometry * pgeometry = nullptr;
 
@@ -270,8 +279,10 @@ namespace draw2d_direct2d
       }
       */
 
+      __pointer(polygon_item) pitem = m_pitem;
+
       ppath->begin_figure();
-      ppath->add_lines(m_lppoints, m_nCount);
+      ppath->add_lines(pitem->m_polygon.get_data(), pitem->m_polygon.get_size());
       ppath->close_figure();
 
       return (ID2D1PathGeometry *) ppath->detach();
@@ -297,18 +308,21 @@ namespace draw2d_direct2d
 
       int n = 0;
 
-      for(int i = 0; i < m_nCount; i++)
+      __pointer(poly_polygon_item) pitem = m_pitem;
+
+      for(int i = 0; i < pitem->m_polygona.get_size(); i++)
       {
-         int jCount = m_lppolycounts[i];
-         pa.erase_all();
-         for(int j = 0; j < jCount; j++)
-         {
-            pa.add(point_f64(m_lppoints[n].x, m_lppoints[n].y));
-            n++;
-         }
+         auto ppolygon = pitem->m_polygona[i];
+         int jCount = ppolygon->get_size();
+         //pa.erase_all();
+         //for(int j = 0; j < jCount; j++)
+         //{
+         //   pa.add(point_f64(m_lppoints[n].x, m_lppoints[n].y));
+         //   n++;
+         //}
          //ppath->begin_figure(true, m_efillmode);
          ppath->begin_figure();
-         ppath->add_lines(pa.get_data(), (int) pa.get_count());
+         ppath->add_lines(ppolygon->get_data(), (int) ppolygon->get_size());
          //ppath->end_figure(true);
          ppath->close_figure();
       }
@@ -343,23 +357,25 @@ namespace draw2d_direct2d
 
       }
 
-      auto pgeometry1 = m_pregion1->get_os_data < ID2D1Geometry * >(pgraphics);
+      __pointer(combine_item) pitem = m_pitem;
 
-      auto pgeometry2 = m_pregion2->get_os_data < ID2D1Geometry * >(pgraphics);
+      auto pgeometry1 = pitem->m_pregion1->get_os_data < ID2D1Geometry * >(pgraphics);
 
-      if(m_ecombine == ::draw2d::e_combine_add)
+      auto pgeometry2 = pitem->m_pregion2->get_os_data < ID2D1Geometry * >(pgraphics);
+
+      if(pitem->m_ecombine == ::draw2d::e_combine_add)
       {
 
          hr = pgeometry1->CombineWithGeometry(pgeometry2, D2D1_COMBINE_MODE_UNION, nullptr, 0.f, psink);
 
       }
-      else if(m_ecombine == ::draw2d::e_combine_exclude)
+      else if(pitem->m_ecombine == ::draw2d::e_combine_exclude)
       {
 
          hr = pgeometry1->CombineWithGeometry(pgeometry2, D2D1_COMBINE_MODE_EXCLUDE, nullptr, 0.f, psink);
 
       }
-      else if(m_ecombine == ::draw2d::e_combine_intersect)
+      else if(pitem->m_ecombine == ::draw2d::e_combine_intersect)
       {
 
          hr = pgeometry1->CombineWithGeometry(pgeometry2, D2D1_COMBINE_MODE_INTERSECT, nullptr, 0.f, psink);
@@ -397,9 +413,17 @@ namespace draw2d_direct2d
    void region::destroy()
    {
 
+      destroy_os_data();
+
+   }
+
+
+   void region::destroy_os_data()
+   {
+
       m_pgeometry = nullptr;
 
-      //return ::success;
+      object::destroy_os_data();
 
    }
 

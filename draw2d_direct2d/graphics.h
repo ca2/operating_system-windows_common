@@ -264,14 +264,15 @@ namespace draw2d_direct2d
       virtual void _pop_all_layers();
 
 
-      virtual void add_shapes(const shape_array& shapea);
+      //virtual void add_shapes(const shape_array& shapea);
       virtual void reset_clip();
-      virtual void intersect_clip(const ::rectangle & rectangle);
+      void _intersect_clip() override;
+      void _add_clipping_shape(const ::rectangle & rectangle, __pointer(::draw2d::region)  & pregion) override;
       //virtual void intersect_clip(const ::rectangle_f64& rectangle);
       //virtual void intersect_clip(const ::oval& oval);
-      virtual void intersect_clip(const ::ellipse & ellipse);
+      void _add_clipping_shape(const ::ellipse & ellipse, __pointer(::draw2d::region) & pregion) override;
       //virtual void intersect_clip(const ::polygon_i32& polygon_i32);
-      virtual void intersect_clip(const ::polygon & polygon);
+      void _add_clipping_shape(const ::polygon & polygon, __pointer(::draw2d::region) & pregion) override;
 
       //virtual bool PtVisible(double x, double y) override;
       //bool PtVisible(const ::point_f64 & point) override;
@@ -572,6 +573,8 @@ namespace draw2d_direct2d
 
 
       void destroy() override;
+
+      void destroy_os_data() override;
 
       //IDWriteTextFormat * get_os_font(::write_text::font * pfont);
       //ID2D1Brush * get_os_brush(::draw2d::brush * pbrush);

@@ -12,13 +12,7 @@ namespace draw2d_direct2d
 
 
       HRESULT                             m_hrEndDraw;
-//      BITMAPINFO                          m_info;
-      //bool                                m_bTrans;
-
-
-      //D2D1_MAPPED_RECT                    m_map;
       comptr<ID2D1Bitmap1>                m_pbitmap1Map;
-      //memory                              m_memory;
 
 
       image();
@@ -46,6 +40,7 @@ namespace draw2d_direct2d
       void initialize(const ::size_i32 & size, ::color32_t * pcolorref, int iScan, ::enum_flag eflagCreate = DEFAULT_CREATE_IMAGE_FLAG) override;
       bool _create(::draw2d::graphics * pgraphics);
       void destroy() override;
+      void destroy_os_data() override;
 
 
       virtual void create_ex(const ::size_i32 & size, ::color32_t * pcolorref, int iScan, ::enum_flag eflagCreate = DEFAULT_CREATE_IMAGE_FLAG, int iStride = -1, bool bPreserve = false);

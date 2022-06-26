@@ -118,14 +118,24 @@ namespace draw2d_direct2d
    void pen::destroy()
    {
 
-      m_pbrush = nullptr;
+      destroy_os_data();
 
       ::draw2d::pen::destroy();
 
-      //return ::success;
-
    }
 
+
+
+   void pen::destroy_os_data()
+   {
+
+      m_pbrush = nullptr;
+
+      m_pstrokestyle = nullptr;
+
+      object::destroy_os_data();
+
+   }
 
    HRESULT pen::s_RenderPatternToCommandList(ID2D1RenderTarget * pgraphics,D2D1_COLOR_F *pcr)
    {

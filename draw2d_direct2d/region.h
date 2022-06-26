@@ -6,6 +6,7 @@ namespace draw2d_direct2d
 
 
    class region :
+      virtual public ::draw2d_direct2d::object,
       virtual public ::draw2d::region
    {
    public:
@@ -20,6 +21,7 @@ namespace draw2d_direct2d
       //void defer_update();
 
       void destroy() override;
+      void destroy_os_data() override;
       void create(::draw2d::graphics * pgraphics, i8 iCreate) override;
 
 

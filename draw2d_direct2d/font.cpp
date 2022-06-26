@@ -125,6 +125,8 @@ namespace draw2d_direct2d
 
          }
 
+         create_text_metrics(pgraphics);
+
       }
 
       m_osdata[0] = m_pformat;
@@ -136,21 +138,142 @@ namespace draw2d_direct2d
    }
 
 
-   void font::destroy()
+   void font::create_text_metrics(::draw2d::graphics * pgraphics)
    {
 
-      ::write_text::font::destroy();
+      comptr<IDWriteFontCollection> pcollection;
 
-      if (m_pformat == nullptr)
+      WCHAR name[256];
+      ::u32 findex;
+      BOOL exists;
+
+      if (::is_null(m_pformat))
       {
+
+         m_textmetric2.m_dAscent = 0;
+         m_textmetric2.m_dDescent = 0;
+         m_textmetric2.m_dHeight = m_dFontSize;
+         m_textmetric2.m_dInternalLeading = 0;
+         m_textmetric2.m_dExternalLeading = 0;
+
+         //return true;
 
          return;
 
       }
 
+      m_pformat->GetFontFamilyName(name, 256);
+
+      m_pformat->GetFontCollection(&pcollection);
+
+      if (pcollection == nullptr)
+      {
+
+         m_textmetric2.m_dAscent = 0;
+         m_textmetric2.m_dDescent = 0;
+         m_textmetric2.m_dHeight = m_dFontSize;
+         m_textmetric2.m_dInternalLeading = 0;
+         m_textmetric2.m_dExternalLeading = 0;
+
+         return;
+
+         //return true;
+
+      }
+
+      pcollection->FindFamilyName(name, &findex, &exists);
+
+      if (!exists)
+      {
+
+         pcollection->FindFamilyName(L"Arial", &findex, &exists);
+
+         if (!exists)
+         {
+
+            m_textmetric2.m_dAscent = 0;
+            m_textmetric2.m_dDescent = 0;
+            m_textmetric2.m_dHeight = m_dFontSize;
+            m_textmetric2.m_dInternalLeading = 0;
+            m_textmetric2.m_dExternalLeading = 0;
+
+            //return true;
+
+            return;
+
+         }
+
+      }
+
+      comptr<IDWriteFontFamily> ffamily;
+
+      pcollection->GetFontFamily(findex, &ffamily);
+
+      if (ffamily == nullptr)
+      {
+
+         m_textmetric2.m_dAscent = 0;
+         m_textmetric2.m_dDescent = 0;
+         m_textmetric2.m_dHeight = m_dFontSize;
+         m_textmetric2.m_dInternalLeading = 0;
+         m_textmetric2.m_dExternalLeading = 0;
+
+         //return true;
+
+         return;
+
+      }
+
+      comptr<IDWriteFont> pfont;
+
+      ffamily->GetFirstMatchingFont(m_pformat->GetFontWeight(), m_pformat->GetFontStretch(), m_pformat->GetFontStyle(), &pfont);
+
+      if (pfont == nullptr)
+      {
+
+         m_textmetric2.m_dAscent = 0;
+         m_textmetric2.m_dDescent = 0;
+         m_textmetric2.m_dHeight = m_dFontSize;
+         m_textmetric2.m_dInternalLeading = 0;
+         m_textmetric2.m_dExternalLeading = 0;
+
+         //return true;
+
+         return;
+
+      }
+
+      DWRITE_FONT_METRICS metrics;
+
+      pfont->GetMetrics(&metrics);
+
+      double ratio = m_pformat->GetFontSize() / (float)metrics.designUnitsPerEm;
+
+      m_textmetric2.m_dAscent = (::i32)(metrics.ascent * ratio);
+      m_textmetric2.m_dDescent = (::i32)(metrics.descent * ratio);
+      m_textmetric2.m_dInternalLeading = (::i32)0;
+      m_textmetric2.m_dExternalLeading = (::i32)(metrics.lineGap * ratio);
+      m_textmetric2.m_dHeight = (::i32)((metrics.ascent + metrics.descent + metrics.lineGap) * ratio);
+
+   }
+
+
+   void font::destroy()
+   {
+
+      destroy_os_data();
+
+      ::write_text::font::destroy();
+
+   }
+
+
+   void font::destroy_os_data()
+   {
+
       m_pformat = nullptr;
 
-      //return ::success;
+      object::destroy_os_data();
 
    }
 

@@ -12,9 +12,6 @@ namespace draw2d_direct2d
    public:
 
 
-      //      Gdiplus::Brush * m_pbrush;
-
-
       comptr<ID2D1Brush>                 m_pbrush;
       comptr<ID2D1SolidColorBrush>       m_psolidbrush;
       comptr<ID2D1LinearGradientBrush>   m_plineargradientbrush;
@@ -29,6 +26,7 @@ namespace draw2d_direct2d
       void dump(dump_context& dumpcontext) const override;
 
 
+      void destroy() override;
       void destroy_os_data() override;
       void create(::draw2d::graphics * pgraphics, i8 iCreate) override;
 

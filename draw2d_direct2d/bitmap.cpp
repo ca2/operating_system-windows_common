@@ -420,13 +420,21 @@ namespace draw2d_direct2d
    void bitmap::destroy()
    {
 
+      destroy_os_data();
+
+      ::draw2d::bitmap::destroy();
+
+   }
+
+
+   void bitmap::destroy_os_data()
+   {
+
       m_pbitmap = nullptr;
 
       m_pbitmap1 = nullptr;
 
-      clear_os_data();
-
-      //return ::success;
+      object::destroy_os_data();
 
    }
 

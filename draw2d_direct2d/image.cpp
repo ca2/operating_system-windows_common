@@ -275,7 +275,13 @@ namespace draw2d_direct2d
    void image::destroy()
    {
 
-      //::draw2d::lock draw2dlock;
+      destroy_os_data();
+
+   }
+
+
+   void image::destroy_os_data()
+   {
 
       ::draw2d::device_lock devicelock(this);
 
@@ -290,9 +296,9 @@ namespace draw2d_direct2d
 
       m_pgraphics.release();
 
-      //return true;
-
    }
+
+
 
 
    //bool image::draw(::draw2d::graphics* pgraphics, const ::point_i32 & point, const ::size_i32 & size, const ::point_i32 & pointSrc)

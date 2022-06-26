@@ -18,8 +18,8 @@ namespace draw2d_direct2d
 
 
    class CLASS_DECL_DRAW2D_DIRECT2D path :
-      virtual public ::draw2d::path,
-      virtual public ::draw2d::object
+      virtual public ::draw2d_direct2d::object,
+      virtual public ::draw2d::path
    {
    public:
 
@@ -28,8 +28,6 @@ namespace draw2d_direct2d
       comptr<ID2D1PathGeometry>          m_ppathFilled;
       comptr<ID2D1PathGeometry>          m_ppath;
       comptr<ID2D1GeometrySink>          m_psink;
-      //bool                               m_bFigureOpened;
-      //::point_i32                                            m_point;
       D2D1_FIGURE_BEGIN                  m_d2d2figurebegin;
 
 
@@ -39,6 +37,7 @@ namespace draw2d_direct2d
 
       void create(::draw2d::graphics * pgraphics, i8 iCreate) override;
       void destroy() override;
+      void destroy_os_data() override;
 
 
       //virtual bool internal_begin_figure(bool bFill, ::draw2d::enum_fill_mode efillmode);

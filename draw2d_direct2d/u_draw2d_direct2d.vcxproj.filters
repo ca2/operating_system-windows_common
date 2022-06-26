@@ -48,9 +48,6 @@
     <ClCompile Include="pen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="preview_dc.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="region.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -102,9 +99,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="pen.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="printer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="region.h">

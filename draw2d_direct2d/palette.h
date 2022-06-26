@@ -19,19 +19,6 @@ namespace draw2d_direct2d
       ~palette() override;
 
 
-      //bool CreatePalette(LPLOGPALETTE lpLogPalette);
-      //bool CreateHalftonePalette(::image * pimage);
-
-      //operator HPALETTE() const;
-      //int GetEntryCount();
-      //::u32 GetPaletteEntries(::u32 nStartIndex, ::u32 nNumEntries, LPPALETTEENTRY lpPaletteColors) const;
-      //::u32 SetPaletteEntries(::u32 nStartIndex, ::u32 nNumEntries, LPPALETTEENTRY lpPaletteColors);
-
-      //void AnimatePalette(::u32 nStartIndex, ::u32 nNumEntries, LPPALETTEENTRY lpPaletteColors);
-      //::u32 GetNearestPaletteIndex(::color::color crColor) const;
-      //bool ResizePalette(::u32 nNumEntries);
-
-
    };
 
 

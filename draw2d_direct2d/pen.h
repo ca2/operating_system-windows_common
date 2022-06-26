@@ -15,10 +15,10 @@ namespace draw2d_direct2d
    public:
 
 
-      comptr<ID2D1SolidColorBrush>    m_pbrush;
-      comptr<ID2D1StrokeStyle1>    m_pstrokestyle;
-      bool                                            m_bMetroColor;
-      ::color::color                                        m_colorMetro;
+      comptr<ID2D1SolidColorBrush>                 m_pbrush;
+      comptr<ID2D1StrokeStyle1>                    m_pstrokestyle;
+      bool                                         m_bMetroColor;
+      ::color::color                               m_colorMetro;
 
 
       pen();
@@ -27,6 +27,7 @@ namespace draw2d_direct2d
 
 
       void destroy() override;
+      void destroy_os_data() override;
       void create(::draw2d::graphics * pgraphics, i8 iCreate) override;
 
       comptr < ID2D1StrokeStyle1 > _create_stroke_style(::draw2d::graphics * pgraphicsParam);
