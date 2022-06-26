@@ -4302,9 +4302,9 @@ namespace draw2d_direct2d
 
       }
 
-      D2D1::Matrix3x2F m = {};
+      //D2D1::Matrix3x2F m = {};
 
-      m_prendertarget->GetTransform(&m);
+      //m_prendertarget->GetTransform(&m);
 
       //m_pstate->m_sparegionClip.add(pregion);
 
