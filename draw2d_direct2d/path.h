@@ -12,7 +12,9 @@ namespace draw2d_direct2d
    {
 
       path_hollow,
-      path_filled
+      path_filled,
+      path_hollow_geometry_realization,
+      path_filled_geometry_realization,
 
    };
 
@@ -24,11 +26,15 @@ namespace draw2d_direct2d
    public:
 
 
-      comptr<ID2D1PathGeometry>          m_ppathHollow;
-      comptr<ID2D1PathGeometry>          m_ppathFilled;
-      comptr<ID2D1PathGeometry>          m_ppath;
-      comptr<ID2D1GeometrySink>          m_psink;
-      D2D1_FIGURE_BEGIN                  m_d2d2figurebegin;
+      comptr<ID2D1PathGeometry>           m_ppathHollow;
+      comptr<ID2D1PathGeometry>           m_ppathFilled;
+      comptr<ID2D1PathGeometry>           m_ppath;
+      comptr<ID2D1GeometrySink>           m_psink;
+      D2D1_FIGURE_BEGIN                   m_d2d2figurebegin;
+      bool                                m_bUseGeometryRealization;
+      // width 
+      i32_map < comptr<ID2D1GeometryRealization> > m_mapGeometryHollowRealization;
+      comptr<ID2D1GeometryRealization>    m_geometryFilledRealization;
 
 
       path();
@@ -42,11 +48,14 @@ namespace draw2d_direct2d
 
       //virtual bool internal_begin_figure(bool bFill, ::draw2d::enum_fill_mode efillmode);
       virtual bool internal_end_figure(bool bClose);
-
+      void * detach() override;
 
       //virtual bool is_empty();
       //virtual bool has_current_point();
       //virtual point_i32 current_point();
+
+      ID2D1GeometryRealization * _get_stroked_geometry_realization(::draw2d::graphics * pgraphics, int iWidth);
+      ID2D1GeometryRealization * _get_filled_geometry_realization(::draw2d::graphics * pgraphics);
 
       virtual bool internal_add_arc(::draw2d::graphics * pgraphics, const ::arc & arc);
 

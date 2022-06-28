@@ -11,23 +11,14 @@ namespace draw2d_direct2d
    public:
 
 
-      class state :
-         virtual public ::object
+      class state
       {
       public:
 
 
-
-
          D2D1::Matrix3x2F                    m_m;
-         //array < D2D1::Matrix3x2F >          m_maRegion;
-         //__pointer_array(::draw2d::region)   m_sparegionClip;
          int                                 m_iLayerIndex;
          D2D1_LAYER_PARAMETERS               m_layerparameters;
-
-         state();
-         ~state() override;
-
 
       };
 
@@ -38,14 +29,15 @@ namespace draw2d_direct2d
       comptr<ID2D1RenderTarget>                          m_prendertarget; // 1
       comptr<ID2D1BitmapRenderTarget>                    m_pbitmaprendertarget; // 2
       comptr<ID2D1DCRenderTarget>                        m_pdcrendertarget; // 3
+      comptr<ID2D1DeviceContext1>                        m_pdevicecontext1; // 4
 
       comptr<IDXGIAdapter>                               m_padapter;
       comptr<IDXGIFactory2>                              m_pfactory2;
       comptr<ID2D1Layer>                                 m_player;
       comptr<ID2D1PathGeometry>                          m_ppathgeometryClip;
 
-      __pointer_array(state)                             m_statea;
-      __pointer(state)                                   m_pstate;
+      ::array < state >                                  m_statea;
+      state                                              m_state;
 
       bool                                               m_bSaveClip;
 
@@ -199,6 +191,8 @@ namespace draw2d_direct2d
 
       virtual bool draw(ID2D1PathGeometry * pgeometry, ::draw2d::pen * ppen);
       virtual bool fill(ID2D1PathGeometry * pgeometry, ::draw2d::brush * pbrush);
+      virtual bool draw(ID2D1GeometryRealization * prealization, ::draw2d::pen * ppen);
+      virtual bool fill(ID2D1GeometryRealization * prealization, ::draw2d::brush * ppen);
 
       virtual void draw(::draw2d::path * ppath, ::draw2d::pen * ppen) override;
       virtual void fill(::draw2d::path * ppath, ::draw2d::brush * pbrush) override;

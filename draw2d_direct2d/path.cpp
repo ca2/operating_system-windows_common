@@ -11,6 +11,7 @@ namespace draw2d_direct2d
    {
 
       m_pthis = this;
+      m_bUseGeometryRealization = true;
 
    }
 
@@ -362,6 +363,15 @@ namespace draw2d_direct2d
    }
 
 
+   void * path::detach()
+   {
+
+      return m_ppath.detach();
+
+   }
+
+
+
    bool path::internal_get_arc(::point_f64 & pointStart,D2D1_ARC_SEGMENT & arcseg, const ::arc & arc)
    {
 
@@ -523,6 +533,57 @@ namespace draw2d_direct2d
       //return m_ppath != nullptr;
 
    }
+
+
+   ID2D1GeometryRealization * path::_get_stroked_geometry_realization(::draw2d::graphics * pgraphicsParam, int iWidth)
+   {
+
+      auto & prealization = m_mapGeometryHollowRealization[iWidth];
+
+      if (!prealization)
+      {
+
+         auto pgraphics = __graphics(pgraphicsParam);
+
+         HRESULT hr = pgraphics->m_pdevicecontext1->CreateStrokedGeometryRealization(
+            m_ppathHollow,
+            1.0f,
+            (FLOAT)iWidth,
+            nullptr,
+            &prealization);
+
+         throw_if_failed(hr);
+
+      }
+
+      return prealization;
+
+   }
+
+
+   ID2D1GeometryRealization * path::_get_filled_geometry_realization(::draw2d::graphics * pgraphicsParam)
+   {
+
+      auto & prealization = m_geometryFilledRealization;
+
+      if (!prealization)
+      {
+
+         auto pgraphics = __graphics(pgraphicsParam);
+
+         HRESULT hr = pgraphics->m_pdevicecontext1->CreateFilledGeometryRealization(
+            m_ppathFilled,
+            1.0f,
+            &prealization);
+
+         throw_if_failed(hr);
+
+      }
+
+      return prealization;
+
+   }
+
 
 
    void * path::detach(::draw2d::graphics* pgraphicsParam)
@@ -770,7 +831,7 @@ namespace draw2d_direct2d
    bool path::_set(::draw2d::graphics* pgraphics, const ::polygon & polygon)
    {
 
-      return internal_add_lines(pgraphics, (const ::point_i32_array&)polygon, true);
+      return internal_add_lines(pgraphics, (const ::point_f64_array&)polygon, true);
 
    }
 

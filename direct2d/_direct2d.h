@@ -17,6 +17,7 @@
 #include <DXGI1_2.h>
 #include <Dwrite.h>
 #include <D2D1.h>
+#include <d2d1_2.h>
 #include <D2D1_1.h>
 #include <D3D11.h>
 #include <D3D11_1.h>

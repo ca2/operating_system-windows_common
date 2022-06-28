@@ -25,16 +25,16 @@ namespace draw2d_direct2d
 {
 
 
-   graphics::state::state()
-   {
+   //graphics::state::state()
+   //{
 
-   }
+   //}
 
 
-   graphics::state::~state()
-   {
+   //graphics::state::~state()
+   //{
 
-   }
+   //}
 
 
    graphics::graphics()
@@ -49,8 +49,6 @@ namespace draw2d_direct2d
       m_pthis = this;
 
       defer_create_mutex();
-
-      m_pstate = __new(state);
 
       m_bSaveClip = false;
 
@@ -222,6 +220,8 @@ namespace draw2d_direct2d
       }
 
       hr = m_pbitmaprendertarget.as(m_pdevicecontext);
+
+      m_pdevicecontext.as(m_pdevicecontext1);
 
       if(FAILED(hr))
       {
@@ -2061,7 +2061,53 @@ namespace draw2d_direct2d
 
             defer_primitive_blend();
 
-            m_pdevicecontext->DrawBitmap(pd2d1bitmap, rectangleTarget, 1.0, D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR, rectangleSource);
+            if (imagedrawingoptions.is_identity())
+            {
+
+               m_pdevicecontext->DrawBitmap(pd2d1bitmap, rectangleTarget, (FLOAT) imagedrawingoptions.opacity().get_opacity_rate(), D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR, rectangleSource);
+
+            }
+            else
+            {
+
+               comptr<ID2D1Effect> colorMatrixEffect;
+               HRESULT hr = m_pdevicecontext->CreateEffect(CLSID_D2D1ColorMatrix, &colorMatrixEffect);
+
+               throw_if_failed(hr);
+
+               colorMatrixEffect->SetInput(0, pd2d1bitmap);
+               D2D1_MATRIX_5X4_F matrix =
+                  D2D1::Matrix5x4F(
+                     (FLOAT) imagedrawingoptions.matrix().a1,
+                     (FLOAT) imagedrawingoptions.matrix().a2,
+                     (FLOAT) imagedrawingoptions.matrix().a3,
+                     (FLOAT) imagedrawingoptions.matrix().a4,
+                     (FLOAT) imagedrawingoptions.matrix().b1,
+                     (FLOAT) imagedrawingoptions.matrix().b2,
+                     (FLOAT) imagedrawingoptions.matrix().b3,
+                     (FLOAT) imagedrawingoptions.matrix().b4,
+                     (FLOAT) imagedrawingoptions.matrix().c1,
+                     (FLOAT) imagedrawingoptions.matrix().c2,
+                     (FLOAT) imagedrawingoptions.matrix().c3,
+                     (FLOAT) imagedrawingoptions.matrix().c4,
+                     (FLOAT) imagedrawingoptions.matrix().d1,
+                     (FLOAT) imagedrawingoptions.matrix().d2,
+                     (FLOAT) imagedrawingoptions.matrix().d3,
+                     (FLOAT) imagedrawingoptions.matrix().d4,
+                     (FLOAT) imagedrawingoptions.matrix().e1,
+                     (FLOAT) imagedrawingoptions.matrix().e2,
+                     (FLOAT) imagedrawingoptions.matrix().e3,
+                     (FLOAT) imagedrawingoptions.matrix().e4);
+               colorMatrixEffect->SetValue(D2D1_COLORMATRIX_PROP_COLOR_MATRIX, matrix);
+               D2D1_POINT_2F pointTarget;
+               pointTarget.x = rectangleTarget.left;
+               pointTarget.y = rectangleTarget.top;
+               //m_pdevicecontext->BeginDraw();
+               m_pdevicecontext->DrawImage(colorMatrixEffect, &pointTarget, &rectangleSource, D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR);
+               //m_pdevicecontext->EndDraw();
+
+            }
+
 
             if (SUCCEEDED(hrEndDraw))
             {
@@ -3810,15 +3856,13 @@ namespace draw2d_direct2d
    int graphics::SaveDC()
    {
 
-      m_prendertarget->GetTransform(&m_pstate->m_m);
+      m_prendertarget->GetTransform(&m_state.m_m);
 
       ::count iSaveDC = m_statea.get_size();
 
-      m_statea.add(m_pstate);
+      m_statea.add(m_state);
 
-      m_pstate = __new(state);
-
-      m_pstate->m_iLayerIndex = m_iLayerCount;
+      m_state.m_iLayerIndex = m_iLayerCount;
 
       //m_pstate->m_layerparameters = D2D1::LayerParameters();
 
@@ -3870,16 +3914,17 @@ namespace draw2d_direct2d
 
       //}
 
-      m_pstate = m_statea[nSavedDC];
+      m_state = m_statea[nSavedDC];
 
-      while (m_iLayerCount > m_pstate->m_iLayerIndex)
+
+      while (m_iLayerCount > m_state.m_iLayerIndex)
       {
 
          _pop_layer();
 
       }
 
-      m_prendertarget->SetTransform(&m_pstate->m_m);
+      m_prendertarget->SetTransform(&m_state.m_m);
 
       m_statea.set_size(nSavedDC);
 
@@ -4101,7 +4146,7 @@ namespace draw2d_direct2d
 
       // ::draw2d::device_lock devicelock(this);
 
-      while (m_iLayerCount > m_pstate->m_iLayerIndex)
+      while (m_iLayerCount > m_state.m_iLayerIndex)
       {
 
          _pop_layer();
@@ -5727,16 +5772,29 @@ namespace draw2d_direct2d
 
       m_pdevicecontext = (ID2D1DeviceContext *) pdata;
 
-      HRESULT hr = m_pdevicecontext.as(m_prendertarget);
+      HRESULT hr = m_pdevicecontext.as(m_pdevicecontext1);
+
+      if (FAILED(hr))
+      {
+
+         m_pdevicecontext = nullptr;
+
+         m_pdevicecontext1 = nullptr;
+
+         throw ::exception(error_null_pointer);
+
+      }
+
+      hr = m_pdevicecontext.as(m_prendertarget);
 
       if(FAILED(hr))
       {
 
          m_pdevicecontext = nullptr;
 
-         m_prendertarget = nullptr;
+         m_pdevicecontext1 = nullptr;
 
-         //return false;
+         m_prendertarget = nullptr;
 
          throw ::exception(error_null_pointer);
 
@@ -6133,15 +6191,66 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::draw(::draw2d::path * ppath, ::draw2d::pen * ppen)
+   bool graphics::draw(ID2D1GeometryRealization * prealization, ::draw2d::pen * ppen)
+   {
+
+      ::ID2D1Brush * pbrush = ppen->get_os_data < ID2D1Brush * >(this);
+
+      if (pbrush == nullptr)
+      {
+
+         return false;
+
+      }
+
+      m_pdevicecontext1->DrawGeometryRealization(prealization, pbrush);
+
+      return true;
+
+   }
+
+
+   bool graphics::fill(ID2D1GeometryRealization * prealization, ::draw2d::brush * pbrush)
+   {
+
+      ::ID2D1Brush * pd2d1brush = pbrush->get_os_data < ID2D1Brush * >(this);
+
+      if (pbrush == nullptr)
+      {
+
+         return false;
+
+      }
+
+      m_pdevicecontext1->DrawGeometryRealization(prealization, pd2d1brush);
+
+      return true;
+
+   }
+
+
+   void graphics::draw(::draw2d::path * ppathParam, ::draw2d::pen * ppen)
    {
 
       __stack(m_bOutline, true);
+
+      __pointer(class path) ppath = ppathParam;
 
       ID2D1PathGeometry * pgeometry = ppath->get_os_data < ID2D1PathGeometry * >(this, path_hollow);
 
       if(pgeometry != nullptr)
       {
+
+         if (ppath && ppath->m_bUseGeometryRealization)
+         {
+
+            auto prealization = ppath->_get_stroked_geometry_realization(this, ppen->m_dWidth);
+
+            draw(prealization, ppen);
+
+            return;
+
+         }
 
          defer_primitive_blend();
 
@@ -6175,7 +6284,77 @@ namespace draw2d_direct2d
    void graphics::fill(::draw2d::path * ppath)
    {
 
-      if (ppath == nullptr)
+      fill(ppath, m_pbrush);
+
+      //__pointer(class path) ppath = ppathParam;
+
+      //if (!ppath)
+      //{
+
+      //   throw ::exception(error_null_pointer);
+
+      //}
+
+      //if (ppath->is_empty())
+      //{
+
+      //   return;
+
+      //}
+
+      //__stack(m_bOutline, false);
+
+      //ID2D1PathGeometry * pgeometry = ppath->get_os_data < ID2D1PathGeometry * >(this, path_filled);
+
+      //if (pgeometry != nullptr)
+      //{
+
+      //   if (ppath && ppath->m_bUseGeometryRealization)
+      //   {
+
+      //      auto prealization = ppath->_get_filled_geometry_realization(this);
+
+      //      fill(prealization, m_pbrush);
+
+      //      return;
+
+      //   }
+
+      //   defer_primitive_blend();
+
+      //   fill(pgeometry, m_pbrush);
+
+      //}
+
+      ////for (index i = 0; i < ppath->m_shapea.get_size(); i++)
+      ////{
+
+      ////   if (ppath->m_shapea[i]->eshape() == ::e_shape_text_out)
+      ////   {
+
+      ////      fill(ppath->m_shapea[i]->shape < ::write_text::text_out >(), m_pbrush);
+
+      ////   }
+      ////   else if (ppath->m_shapea[i]->eshape() == ::e_shape_draw_text)
+      ////   {
+
+      ////      fill(ppath->m_shapea[i]->shape < ::write_text::draw_text >(), m_pbrush);
+
+      ////   }
+
+      ////}
+
+      ////return true;
+
+   }
+
+
+   void graphics::fill(::draw2d::path * ppathParam, ::draw2d::brush * pbrush)
+   {
+
+      __pointer(class path) ppath = ppathParam;
+
+      if (!ppath)
       {
 
          throw ::exception(error_null_pointer);
@@ -6189,53 +6368,6 @@ namespace draw2d_direct2d
 
       }
 
-      __stack(m_bOutline, false);
-
-      ID2D1PathGeometry * pgeometry = ppath->get_os_data < ID2D1PathGeometry * >(this, path_filled);
-
-      if (pgeometry != nullptr)
-      {
-
-         defer_primitive_blend();
-
-         fill(pgeometry, m_pbrush);
-
-      }
-
-      //for (index i = 0; i < ppath->m_shapea.get_size(); i++)
-      //{
-
-      //   if (ppath->m_shapea[i]->eshape() == ::e_shape_text_out)
-      //   {
-
-      //      fill(ppath->m_shapea[i]->shape < ::write_text::text_out >(), m_pbrush);
-
-      //   }
-      //   else if (ppath->m_shapea[i]->eshape() == ::e_shape_draw_text)
-      //   {
-
-      //      fill(ppath->m_shapea[i]->shape < ::write_text::draw_text >(), m_pbrush);
-
-      //   }
-
-      //}
-
-      //return true;
-
-   }
-
-
-   void graphics::fill(::draw2d::path * ppath, ::draw2d::brush * pbrush)
-   {
-
-      if (ppath == nullptr)
-      {
-
-         //return false;
-
-         throw ::exception(error_null_pointer);
-
-      }
 
 
       //ID2D1Brush * pbrush = pbrushParam->get_os_data < ID2D1Brush * >(this);
@@ -6255,6 +6387,19 @@ namespace draw2d_direct2d
 
       if (pgeometry != nullptr)
       {
+
+         if (ppath && ppath->m_bUseGeometryRealization)
+         {
+
+            auto prealization = ppath->_get_filled_geometry_realization(this);
+
+            fill(prealization, m_pbrush);
+
+            return;
+
+         }
+
+
 
          defer_primitive_blend();
 

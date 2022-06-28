@@ -71,7 +71,6 @@
     <ClInclude Include="multithreading_lock.h" />
     <ClInclude Include="direct2d.h" />
     <ClInclude Include="_.h" />
-    <ClInclude Include="factory_exchange.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="_direct2d.h" />
   </ItemGroup>

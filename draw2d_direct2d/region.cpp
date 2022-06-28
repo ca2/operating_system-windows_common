@@ -282,10 +282,14 @@ namespace draw2d_direct2d
       __pointer(polygon_item) pitem = m_pitem;
 
       ppath->begin_figure();
-      ppath->add_lines(pitem->m_polygon.get_data(), pitem->m_polygon.get_size());
+      ppath->add_polygon(pitem->m_polygon.get_data(), pitem->m_polygon.get_size());
       ppath->close_figure();
 
-      return (ID2D1PathGeometry *) ppath->detach();
+      ppath->get_os_data(pgraphics, path_filled);
+
+      m_pgeometry = ::move((ID2D1PathGeometry *) ppath->detach());
+
+      return m_pgeometry;
 
    }
 

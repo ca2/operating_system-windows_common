@@ -51,7 +51,7 @@ namespace draw2d_direct2d
 
       //::draw2d::lock draw2dlock;
 
-      ::draw2d::device_lock devicelock(this);
+      //::draw2d::device_lock devicelock(this);
 
       auto sizeCurrent = this->size();
 
@@ -283,7 +283,7 @@ namespace draw2d_direct2d
    void image::destroy_os_data()
    {
 
-      ::draw2d::device_lock devicelock(this);
+      //::draw2d::device_lock devicelock(this);
 
       if (m_bMapped)
       {
@@ -1074,7 +1074,7 @@ namespace draw2d_direct2d
 
       //::draw2d::lock draw2dlock;
 
-      ::draw2d::device_lock devicelock(this);
+      //::draw2d::device_lock devicelock(this);
 
       if (m_bMapped)
       {
