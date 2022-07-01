@@ -263,7 +263,9 @@ namespace acme_windows_common
 
       auto path = m_psystem->m_pacmepath->defer_process_relative_path(pathParam);
 
-      /*auto estatus =*/ m_pacmedirectory->create(file_path_folder(path));
+      auto pathFolder = file_path_folder(path);
+
+      m_pacmedirectory->create(pathFolder);
 
       //if (!estatus)
       //{

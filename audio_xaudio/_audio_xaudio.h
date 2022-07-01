@@ -7,8 +7,8 @@
 #include "acme_windows_common/_acme_windows_common.h"
 
 
-#include "wave_out.h"
-#include "wave_in.h"
+#include "out.h"
+#include "in.h"
 
 
 #include "factory_exchange.h"

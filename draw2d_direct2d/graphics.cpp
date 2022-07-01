@@ -160,7 +160,7 @@ namespace draw2d_direct2d
 
       auto puser = paurasession->user();
 
-      auto pwindowing = puser->windowing();
+      auto pwindowing = puser->windowing1();
 
       auto pdisplay = pwindowing->display();
 
@@ -4509,6 +4509,24 @@ namespace draw2d_direct2d
    }
 
 
+   void graphics::intersect_clip(const ::rectangle_f64 & rectangle)
+   {
+
+      auto r = rectangle + m_pointAddShapeTranslate;
+
+      D2D1_RECT_F rf;
+
+      __copy(rf, r);
+
+      auto layerparameters = D2D1::LayerParameters(rf);
+
+      m_prendertarget->PushLayer(layerparameters, nullptr);
+
+      m_iLayerCount++;
+
+   }
+
+
    //void graphics::
 
    //   }
@@ -6215,7 +6233,7 @@ namespace draw2d_direct2d
 
       ::ID2D1Brush * pd2d1brush = pbrush->get_os_data < ID2D1Brush * >(this);
 
-      if (pbrush == nullptr)
+      if (pd2d1brush == nullptr)
       {
 
          return false;
@@ -6388,7 +6406,7 @@ namespace draw2d_direct2d
       if (pgeometry != nullptr)
       {
 
-         if (ppath && ppath->m_bUseGeometryRealization)
+         if (ppath && ppath->m_bUseGeometryRealization && pbrush->m_ebrush != ::draw2d::e_brush_box_gradient)
          {
 
             auto prealization = ppath->_get_filled_geometry_realization(this);

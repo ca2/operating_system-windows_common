@@ -339,12 +339,14 @@ namespace multimedia
 
 #endif
 
-         if(m_durationLastBuffer.timeout(50_ms))
+         if(m_durationLastBuffer.elapsed() > 50_ms)
          {
 
             output_debug_string("too much delay for submitting audio buffer\n");
 
          }
+
+         m_durationLastBuffer.Now();
 
          m_iBufferedCount++;
 

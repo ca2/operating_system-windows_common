@@ -31,7 +31,6 @@ namespace draw2d_direct2d
       comptr<ID2D1PathGeometry>           m_ppath;
       comptr<ID2D1GeometrySink>           m_psink;
       D2D1_FIGURE_BEGIN                   m_d2d2figurebegin;
-      bool                                m_bUseGeometryRealization;
       // width 
       i32_map < comptr<ID2D1GeometryRealization> > m_mapGeometryHollowRealization;
       comptr<ID2D1GeometryRealization>    m_geometryFilledRealization;
