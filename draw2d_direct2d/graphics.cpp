@@ -4329,21 +4329,23 @@ namespace draw2d_direct2d
    }
    
 
-   void graphics::_add_clipping_shape(const ::rectangle_f64 & rectangle, __pointer(::draw2d::region) & pregion)
+   void graphics::_add_clipping_shape(const ::rectangle_f64 & rectangle, ___shape<::draw2d::region >* pshaperegion)
    {
 
       //::draw2d::lock draw2dlock;
 
       // ::draw2d::device_lock devicelock(this);
 
-      if (!pregion)
+      if (!pshaperegion->holdee())
       {
 
-         __construct(pregion);
+         auto pregion = __create < ::draw2d::region >();
 
          auto rectangleClip = rectangle + m_pointAddShapeTranslate;
 
          pregion->create_rectangle(rectangleClip);
+
+         pshaperegion->holdee(pregion);
 
       }
 
@@ -4355,7 +4357,7 @@ namespace draw2d_direct2d
 
       //m_pstate->m_maRegion.add(m);
 
-      ID2D1Geometry* pgeometry = (ID2D1Geometry*)pregion->get_os_data(this);
+      ID2D1Geometry* pgeometry = (ID2D1Geometry*)pshaperegion->holdee()->get_os_data(this);
 
       _push_layer(pgeometry);
 
@@ -4398,7 +4400,7 @@ namespace draw2d_direct2d
    //}
 
 
-   void graphics::_add_clipping_shape(const ::ellipse & ellipse, __pointer(::draw2d::region) & pregion)
+   void graphics::_add_clipping_shape(const ::ellipse & ellipse, ___shape<::draw2d::region >* pshaperegion)
    {
 
       //::draw2d::lock draw2dlock;
@@ -4407,12 +4409,16 @@ namespace draw2d_direct2d
 
       {
 
-         if (!pregion)
+         if (!pshaperegion->holdee())
          {
 
-            pregion = __create < ::draw2d::region >();
+            auto pregion = __create < ::draw2d::region >();
+
+            auto rectangleClip = ellipse + m_pointAddShapeTranslate;
 
             pregion->create_ellipse(ellipse);
+
+            pshaperegion->holdee(pregion);
 
          }
 
@@ -4424,7 +4430,7 @@ namespace draw2d_direct2d
 
          //m_pstate->m_maRegion.add(m);
 
-         ID2D1Geometry* pgeometry = (ID2D1Geometry*)pregion->get_os_data(this);
+         ID2D1Geometry* pgeometry = (ID2D1Geometry*)pshaperegion->holdee()->get_os_data(this);
 
          //m_prendertarget->PushLayer(D2D1::LayerParameters(D2D1::InfiniteRect(), pgeometry), nullptr);
 
@@ -4469,7 +4475,7 @@ namespace draw2d_direct2d
    //}
 
 
-   void graphics::_add_clipping_shape(const ::polygon_f64& polygon_i32, __pointer(::draw2d::region) & pregion)
+   void graphics::_add_clipping_shape(const ::polygon_f64& polygon_i32, ___shape<::draw2d::region >* pshaperegion)
    {
 
       //::draw2d::lock draw2dlock;
@@ -4478,12 +4484,16 @@ namespace draw2d_direct2d
 
       {
 
-         if (!pregion)
+         if (!pshaperegion->holdee())
          {
 
-            pregion = __create < ::draw2d::region >();
+            auto pregion = __create < ::draw2d::region >();
+
+            pregion->m_pointOffset = m_pointAddShapeTranslate;
 
             pregion->create_polygon(polygon_i32.get_data(), (::i32)polygon_i32.get_count(), ::draw2d::e_fill_mode_winding);
+
+            pshaperegion->holdee(pregion);
 
          }
 
@@ -4495,7 +4505,7 @@ namespace draw2d_direct2d
 
          //m_pstate->m_maRegion.add(m);
 
-         ID2D1Geometry* pgeometry = (ID2D1Geometry*)pregion->get_os_data(this);
+         ID2D1Geometry* pgeometry = (ID2D1Geometry*)pshaperegion->holdee()->get_os_data(this);
 
          _push_layer(pgeometry);
 

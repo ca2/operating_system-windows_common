@@ -261,9 +261,9 @@ namespace draw2d_direct2d
       //virtual void add_shapes(const shape_array& shapea);
       virtual void reset_clip();
       void _intersect_clip() override;
-      void _add_clipping_shape(const ::rectangle & rectangle, __pointer(::draw2d::region)  & pregion) override;
-      void _add_clipping_shape(const ::ellipse & ellipse, __pointer(::draw2d::region) & pregion) override;
-      void _add_clipping_shape(const ::polygon & polygon, __pointer(::draw2d::region) & pregion) override;
+      void _add_clipping_shape(const ::rectangle & rectangle, ___shape<::draw2d::region > * pshaperegion) override;
+      void _add_clipping_shape(const ::ellipse & ellipse, ___shape<::draw2d::region >* pshaperegion) override;
+      void _add_clipping_shape(const ::polygon & polygon, ___shape<::draw2d::region >* pshaperegion) override;
       void intersect_clip(const ::rectangle_f64& rectangle) override;
       //virtual void intersect_clip(const ::oval& oval);
       //virtual void intersect_clip(const ::polygon_i32& polygon_i32);
