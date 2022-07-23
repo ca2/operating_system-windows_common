@@ -3,13 +3,13 @@
 
 
 #include "aura/operating_system.h"
-#include "aura_windows_common/_aura_windows_common.h"
+#include "aura_windows_common/_library.h"
 #ifdef _UWP
-#include "aura_universal_windows/_aura_universal_windows.h"
+#include "aura_universal_windows/_library.h"
 #include <winrt/Windows.ApplicationModel.DataTransfer.h>
 #endif
 #ifdef WINDOWS_DESKTOP
-#include "aura_windows/_aura_windows.h"
+#include "aura_windows/_library.h"
 #endif
 #include <wincodec.h>
 
