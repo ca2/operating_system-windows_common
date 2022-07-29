@@ -817,7 +817,7 @@
     <ClInclude Include="variant.h" />
     <ClInclude Include="_.h" />
     <ClInclude Include="framework.h" />
-    <ClInclude Include="_acme_windows_common.h" />
+    <ClInclude Include="_library.h" />
     <ClInclude Include="_geometry2.h" />
     <ClInclude Include="_types.h" />
   </ItemGroup>
