@@ -26,7 +26,7 @@
     <ClInclude Include="context_image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="_imaging_wic.h">
+    <ClInclude Include="_library.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
