@@ -843,9 +843,6 @@
     <ClCompile Include="_.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\..\..\operating-system\operating-system-windows\deployment\deployment.rc" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\..\source\app\acme\acme.vcxproj">
       <Project>{638b242f-0f21-41c3-9f66-724660046133}</Project>
     </ProjectReference>
@@ -864,6 +861,9 @@
     <ProjectReference Include="..\apex_windows_common\apex_windows_common.vcxproj">
       <Project>{a094e038-d195-4400-82ce-44a7edf91b78}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\operating-system-windows\deployment\deployment.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
