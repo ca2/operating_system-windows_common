@@ -953,7 +953,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\version.rc" />
+    <ResourceCompile Include="..\..\operating-system-windows\deployment\deployment.rc" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\source\app\aqua\aqua.vcxproj">

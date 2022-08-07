@@ -298,6 +298,8 @@ namespace acme_windows_common
 
          m_estatus = estatus;
 
+         set_nok();
+
          if (eopenParam & ::file::e_open_no_exception_on_open)
          {
 

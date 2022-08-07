@@ -180,22 +180,22 @@
     <ClInclude Include="karaoke\karaoke_bouncing_ball.h">
       <Filter>Header Files\karaoke</Filter>
     </ClInclude>
-    <ClInclude Include="karaoke\karaoke_view.h">
+    <ClInclude Include="karaoke\karaoke_impact.h">
       <Filter>Header Files\karaoke</Filter>
     </ClInclude>
-    <ClInclude Include="karaoke\karaoke_lyric_view_line.h">
+    <ClInclude Include="karaoke\karaoke_lyric_impact_line.h">
       <Filter>Header Files\karaoke</Filter>
     </ClInclude>
-    <ClInclude Include="karaoke\karaoke_lyric_view_lines.h">
+    <ClInclude Include="karaoke\karaoke_lyric_impact_lines.h">
       <Filter>Header Files\karaoke</Filter>
     </ClInclude>
-    <ClInclude Include="karaoke\karaoke_lyric_view_line_selection.h">
+    <ClInclude Include="karaoke\karaoke_lyric_impact_line_selection.h">
       <Filter>Header Files\karaoke</Filter>
     </ClInclude>
-    <ClInclude Include="karaoke\karaoke_lyric_view_line_template.h">
+    <ClInclude Include="karaoke\karaoke_lyric_impact_line_template.h">
       <Filter>Header Files\karaoke</Filter>
     </ClInclude>
-    <ClInclude Include="karaoke\karaoke_lyric_view_line_templates.h">
+    <ClInclude Include="karaoke\karaoke_lyric_impact_line_templates.h">
       <Filter>Header Files\karaoke</Filter>
     </ClInclude>
     <ClInclude Include="karaoke\karaoke_scoring.h">
@@ -216,16 +216,16 @@
     <ClInclude Include="mediaalbum\mediaalbum_frame.h">
       <Filter>Header Files\mediaalbum</Filter>
     </ClInclude>
-    <ClInclude Include="mediaalbum\mediaalbum_html_view.h">
+    <ClInclude Include="mediaalbum\mediaalbum_html_impact.h">
       <Filter>Header Files\mediaalbum</Filter>
     </ClInclude>
-    <ClInclude Include="mediaalbum\mediaalbum_main_view.h">
+    <ClInclude Include="mediaalbum\mediaalbum_main_impact.h">
       <Filter>Header Files\mediaalbum</Filter>
     </ClInclude>
-    <ClInclude Include="mediaalbum\mediaalbum_options_view.h">
+    <ClInclude Include="mediaalbum\mediaalbum_options_impact.h">
       <Filter>Header Files\mediaalbum</Filter>
     </ClInclude>
-    <ClInclude Include="mediaalbum\mediaalbum_search_form_view.h">
+    <ClInclude Include="mediaalbum\mediaalbum_search_form_impact.h">
       <Filter>Header Files\mediaalbum</Filter>
     </ClInclude>
     <ClInclude Include="mediaalbum\mediaalbum_song_check_list.h">
@@ -237,19 +237,19 @@
     <ClInclude Include="mediaalbum\mediaalbum_tree.h">
       <Filter>Header Files\mediaalbum</Filter>
     </ClInclude>
-    <ClInclude Include="mediaalbum\aaa_want_to_erase_mediaalbum_view_update_hint.h">
+    <ClInclude Include="mediaalbum\aaa_want_to_erase_mediaalbum_impact_update_hint.h">
       <Filter>Header Files\mediaalbum</Filter>
     </ClInclude>
     <ClInclude Include="mediafun\mediafun.h">
       <Filter>Header Files\mediafun</Filter>
     </ClInclude>
-    <ClInclude Include="mediafun\mediafun_list_view.h">
+    <ClInclude Include="mediafun\mediafun_list_impact.h">
       <Filter>Header Files\mediafun</Filter>
     </ClInclude>
     <ClInclude Include="mediafun\mediafun_tree.h">
       <Filter>Header Files\mediafun</Filter>
     </ClInclude>
-    <ClInclude Include="mediafun\mediafun_view.h">
+    <ClInclude Include="mediafun\mediafun_impact.h">
       <Filter>Header Files\mediafun</Filter>
     </ClInclude>
     <ClInclude Include="medialibrary\medialibrary.h">
@@ -264,19 +264,19 @@
     <ClInclude Include="medialibrary\medialibrary_document.h">
       <Filter>Header Files\medialibrary</Filter>
     </ClInclude>
-    <ClInclude Include="medialibrary\medialibrary_explorer_tree_view.h">
+    <ClInclude Include="medialibrary\medialibrary_explorer_tree_impact.h">
       <Filter>Header Files\medialibrary</Filter>
     </ClInclude>
-    <ClInclude Include="medialibrary\medialibrary_explorer_view.h">
+    <ClInclude Include="medialibrary\medialibrary_explorer_impact.h">
       <Filter>Header Files\medialibrary</Filter>
     </ClInclude>
-    <ClInclude Include="medialibrary\medialibrary_list_view.h">
+    <ClInclude Include="medialibrary\medialibrary_list_impact.h">
       <Filter>Header Files\medialibrary</Filter>
     </ClInclude>
-    <ClInclude Include="medialibrary\medialibrary_pane_view.h">
+    <ClInclude Include="medialibrary\medialibrary_pane_impact.h">
       <Filter>Header Files\medialibrary</Filter>
     </ClInclude>
-    <ClInclude Include="medialibrary\aaa_want_to_erase_medialibrary_view_update_hint.h">
+    <ClInclude Include="medialibrary\aaa_want_to_erase_medialibrary_impact_update_hint.h">
       <Filter>Header Files\medialibrary</Filter>
     </ClInclude>
     <ClInclude Include="mediaplay\mediaplay.h">
@@ -291,16 +291,16 @@
     <ClInclude Include="mediaplay\mediaplay_karaoke.h">
       <Filter>Header Files\mediaplay</Filter>
     </ClInclude>
-    <ClInclude Include="mediaplay\mediaplay_record_notify_view.h">
+    <ClInclude Include="mediaplay\mediaplay_record_notify_impact.h">
       <Filter>Header Files\mediaplay</Filter>
     </ClInclude>
-    <ClInclude Include="mediaplay\mediaplay_view.h">
+    <ClInclude Include="mediaplay\mediaplay_impact.h">
       <Filter>Header Files\mediaplay</Filter>
     </ClInclude>
-    <ClInclude Include="mediaplay\mediaplay_view_interface.h">
+    <ClInclude Include="mediaplay\mediaplay_impact_interface.h">
       <Filter>Header Files\mediaplay</Filter>
     </ClInclude>
-    <ClInclude Include="mediaplay\aaa_want_to_erase_mediaplay_view_update_hint.h">
+    <ClInclude Include="mediaplay\aaa_want_to_erase_mediaplay_impact_update_hint.h">
       <Filter>Header Files\mediaplay</Filter>
     </ClInclude>
     <ClInclude Include="multimedia\multimedia.h">
@@ -393,7 +393,7 @@
     <ClInclude Include="music\midi\music_midi_util.h">
       <Filter>Header Files\music\midi</Filter>
     </ClInclude>
-    <ClInclude Include="music\midi\music_midi_view_helper.h">
+    <ClInclude Include="music\midi\music_midi_impact_helper.h">
       <Filter>Header Files\music\midi</Filter>
     </ClInclude>
     <ClInclude Include="music\midi\player\music_midi_player.h">
@@ -516,10 +516,10 @@
     <ClInclude Include="music_user\music_user_midi_track_selection_selection.h">
       <Filter>Header Files\music_user\midi\track_selection</Filter>
     </ClInclude>
-    <ClInclude Include="music_user\music_user_midi_track_selection_view.h">
+    <ClInclude Include="music_user\music_user_midi_track_selection_impact.h">
       <Filter>Header Files\music_user\midi\track_selection</Filter>
     </ClInclude>
-    <ClInclude Include="music_user\aaa_want_to_erase_music_user_midi_track_selection_view_update_hint.h">
+    <ClInclude Include="music_user\aaa_want_to_erase_music_user_midi_track_selection_impact_update_hint.h">
       <Filter>Header Files\music_user\midi\track_selection</Filter>
     </ClInclude>
     <ClInclude Include="video\video.h">
@@ -584,25 +584,25 @@
     <ClCompile Include="karaoke\karaoke_bouncing_ball.cpp">
       <Filter>Source Files\karaoke</Filter>
     </ClCompile>
-    <ClCompile Include="karaoke\karaoke_view.cpp">
+    <ClCompile Include="karaoke\karaoke_impact.cpp">
       <Filter>Source Files\karaoke</Filter>
     </ClCompile>
     <ClCompile Include="karaoke\karaoke_karaoke.cpp">
       <Filter>Source Files\karaoke</Filter>
     </ClCompile>
-    <ClCompile Include="karaoke\karaoke_lyric_view_line.cpp">
+    <ClCompile Include="karaoke\karaoke_lyric_impact_line.cpp">
       <Filter>Source Files\karaoke</Filter>
     </ClCompile>
-    <ClCompile Include="karaoke\karaoke_lyric_view_lines.cpp">
+    <ClCompile Include="karaoke\karaoke_lyric_impact_lines.cpp">
       <Filter>Source Files\karaoke</Filter>
     </ClCompile>
-    <ClCompile Include="karaoke\karaoke_lyric_view_line_selection.cpp">
+    <ClCompile Include="karaoke\karaoke_lyric_impact_line_selection.cpp">
       <Filter>Source Files\karaoke</Filter>
     </ClCompile>
-    <ClCompile Include="karaoke\karaoke_lyric_view_line_template.cpp">
+    <ClCompile Include="karaoke\karaoke_lyric_impact_line_template.cpp">
       <Filter>Source Files\karaoke</Filter>
     </ClCompile>
-    <ClCompile Include="karaoke\karaoke_lyric_view_line_templates.cpp">
+    <ClCompile Include="karaoke\karaoke_lyric_impact_line_templates.cpp">
       <Filter>Source Files\karaoke</Filter>
     </ClCompile>
     <ClCompile Include="karaoke\karaoke_scoring.cpp">
@@ -620,16 +620,16 @@
     <ClCompile Include="mediaalbum\mediaalbum_frame.cpp">
       <Filter>Source Files\mediaalbum</Filter>
     </ClCompile>
-    <ClCompile Include="mediaalbum\mediaalbum_html_view.cpp">
+    <ClCompile Include="mediaalbum\mediaalbum_html_impact.cpp">
       <Filter>Source Files\mediaalbum</Filter>
     </ClCompile>
-    <ClCompile Include="mediaalbum\mediaalbum_main_view.cpp">
+    <ClCompile Include="mediaalbum\mediaalbum_main_impact.cpp">
       <Filter>Source Files\mediaalbum</Filter>
     </ClCompile>
-    <ClCompile Include="mediaalbum\mediaalbum_options_view.cpp">
+    <ClCompile Include="mediaalbum\mediaalbum_options_impact.cpp">
       <Filter>Source Files\mediaalbum</Filter>
     </ClCompile>
-    <ClCompile Include="mediaalbum\mediaalbum_search_form_view.cpp">
+    <ClCompile Include="mediaalbum\mediaalbum_search_form_impact.cpp">
       <Filter>Source Files\mediaalbum</Filter>
     </ClCompile>
     <ClCompile Include="mediaalbum\mediaalbum_song_check_list.cpp">
@@ -641,16 +641,16 @@
     <ClCompile Include="mediaalbum\mediaalbum_tree.cpp">
       <Filter>Source Files\mediaalbum</Filter>
     </ClCompile>
-    <ClCompile Include="mediaalbum\aaa_want_to_erase_mediaalbum_view_update_hint.cpp">
+    <ClCompile Include="mediaalbum\aaa_want_to_erase_mediaalbum_impact_update_hint.cpp">
       <Filter>Source Files\mediaalbum</Filter>
     </ClCompile>
-    <ClCompile Include="mediafun\mediafun_list_view.cpp">
+    <ClCompile Include="mediafun\mediafun_list_impact.cpp">
       <Filter>Source Files\mediafun</Filter>
     </ClCompile>
     <ClCompile Include="mediafun\mediafun_tree.cpp">
       <Filter>Source Files\mediafun</Filter>
     </ClCompile>
-    <ClCompile Include="mediafun\mediafun_view.cpp">
+    <ClCompile Include="mediafun\mediafun_impact.cpp">
       <Filter>Source Files\mediafun</Filter>
     </ClCompile>
     <ClCompile Include="medialibrary\medialibrary_child_frame.cpp">
@@ -659,19 +659,19 @@
     <ClCompile Include="medialibrary\medialibrary_document.cpp">
       <Filter>Source Files\medialibrary</Filter>
     </ClCompile>
-    <ClCompile Include="medialibrary\medialibrary_explorer_tree_view.cpp">
+    <ClCompile Include="medialibrary\medialibrary_explorer_tree_impact.cpp">
       <Filter>Source Files\medialibrary</Filter>
     </ClCompile>
-    <ClCompile Include="medialibrary\medialibrary_explorer_view.cpp">
+    <ClCompile Include="medialibrary\medialibrary_explorer_impact.cpp">
       <Filter>Source Files\medialibrary</Filter>
     </ClCompile>
-    <ClCompile Include="medialibrary\medialibrary_list_view.cpp">
+    <ClCompile Include="medialibrary\medialibrary_list_impact.cpp">
       <Filter>Source Files\medialibrary</Filter>
     </ClCompile>
-    <ClCompile Include="medialibrary\medialibrary_pane_view.cpp">
+    <ClCompile Include="medialibrary\medialibrary_pane_impact.cpp">
       <Filter>Source Files\medialibrary</Filter>
     </ClCompile>
-    <ClCompile Include="medialibrary\aaa_want_to_erase_medialibrary_view_update_hint.cpp">
+    <ClCompile Include="medialibrary\aaa_want_to_erase_medialibrary_impact_update_hint.cpp">
       <Filter>Source Files\medialibrary</Filter>
     </ClCompile>
     <ClCompile Include="mediaplay\mediaplay_data.cpp">
@@ -683,16 +683,16 @@
     <ClCompile Include="mediaplay\mediaplay_karaoke.cpp">
       <Filter>Source Files\mediaplay</Filter>
     </ClCompile>
-    <ClCompile Include="mediaplay\mediaplay_record_notify_view.cpp">
+    <ClCompile Include="mediaplay\mediaplay_record_notify_impact.cpp">
       <Filter>Source Files\mediaplay</Filter>
     </ClCompile>
-    <ClCompile Include="mediaplay\mediaplay_view.cpp">
+    <ClCompile Include="mediaplay\mediaplay_impact.cpp">
       <Filter>Source Files\mediaplay</Filter>
     </ClCompile>
-    <ClCompile Include="mediaplay\mediaplay_view_interface.cpp">
+    <ClCompile Include="mediaplay\mediaplay_impact_interface.cpp">
       <Filter>Source Files\mediaplay</Filter>
     </ClCompile>
-    <ClCompile Include="mediaplay\aaa_want_to_erase_mediaplay_view_update_hint.cpp">
+    <ClCompile Include="mediaplay\aaa_want_to_erase_mediaplay_impact_update_hint.cpp">
       <Filter>Source Files\mediaplay</Filter>
     </ClCompile>
     <ClCompile Include="multimedia\multimedia_application.cpp">
@@ -755,7 +755,7 @@
     <ClCompile Include="music\midi\music_midi_util.cpp">
       <Filter>Source Files\music\midi</Filter>
     </ClCompile>
-    <ClCompile Include="music\midi\music_midi_view_helper.cpp">
+    <ClCompile Include="music\midi\music_midi_impact_helper.cpp">
       <Filter>Source Files\music\midi</Filter>
     </ClCompile>
     <ClCompile Include="music\midi\player\music_midi_player.cpp">
@@ -848,10 +848,10 @@
     <ClCompile Include="music_user\music_user_midi_track_selection_selection.cpp">
       <Filter>Source Files\music_user\midi\track_selection</Filter>
     </ClCompile>
-    <ClCompile Include="music_user\music_user_midi_track_selection_view.cpp">
+    <ClCompile Include="music_user\music_user_midi_track_selection_impact.cpp">
       <Filter>Source Files\music_user\midi\track_selection</Filter>
     </ClCompile>
-    <ClCompile Include="music_user\aaa_want_to_erase_music_user_midi_track_selection_view_update_hint.cpp">
+    <ClCompile Include="music_user\aaa_want_to_erase_music_user_midi_track_selection_impact_update_hint.cpp">
       <Filter>Source Files\music_user\midi\track_selection</Filter>
     </ClCompile>
     <ClCompile Include="video\video_player.cpp">
