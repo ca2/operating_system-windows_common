@@ -827,9 +827,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\..\operating-system-windows\deployment\deployment.rc" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\..\source\app\aqua\aqua.vcxproj">
       <Project>{1b06fe5f-f783-41a1-ac68-0e02880dbbac}</Project>
     </ProjectReference>
@@ -848,6 +845,9 @@
     <ProjectReference Include="..\apex_windows_common\apex_windows_common.vcxproj">
       <Project>{a094e038-d195-4400-82ce-44a7edf91b78}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="deployment.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

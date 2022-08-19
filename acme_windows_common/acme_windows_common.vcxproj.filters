@@ -117,9 +117,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\..\operating-system-windows\deployment\deployment.rc">
+    <ResourceCompile Include="..\..\operating-system-windows\acme_windows\deployment.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
-
   </ItemGroup>
 </Project>
