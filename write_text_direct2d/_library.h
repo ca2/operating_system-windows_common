@@ -3,7 +3,7 @@
 
 
 #include "aura/operating_system.h"
-#include "direct2d/_direct2d.h"
+#include "direct2d/_library.h"
 
 
 #include "font_enumeration.h"

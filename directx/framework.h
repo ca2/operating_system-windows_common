@@ -8,7 +8,13 @@
 #include "_.h"
 
 
-#include "_directx.h"
+#if BROAD_PRECOMPILED_HEADER
+
+
+#include "_library.h"
+
+
+#endif
 
 
 #include "aura/_defer.h"

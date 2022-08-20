@@ -729,7 +729,7 @@
     <ClInclude Include="printer.h" />
     <ClInclude Include="region.h" />
     <ClInclude Include="_.h" />
-    <ClInclude Include="_draw2d_direct2d.h" />
+    <ClInclude Include="_library.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="bitmap.cpp" />
@@ -760,9 +760,6 @@
     <None Include="draw2d_direct2d.def" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\..\..\operating-system\operating-system-windows\deployment\deployment.rc" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\..\source\app\acme\acme.vcxproj">
       <Project>{638b242f-0f21-41c3-9f66-724660046133}</Project>
     </ProjectReference>
@@ -784,6 +781,9 @@
     <ProjectReference Include="..\directx\directx.vcxproj">
       <Project>{a149252d-1de3-4cba-b1cb-7e9868793e6e}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="deployment.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

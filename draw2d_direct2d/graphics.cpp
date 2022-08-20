@@ -1,5 +1,5 @@
 #include "framework.h"
-#include "aura/user/user/_user.h"
+#include "aura/user/user/_component.h"
 #include "CustomRenderer.h"
 #include "aura/graphics/draw2d/lock.h"
 #include "aura/graphics/draw2d/device_lock.h"
@@ -489,7 +489,7 @@ namespace draw2d_direct2d
             //if (m_pimage->is_set() && pgraphicsSrc->m_pimage->is_set())
             //{
 
-            //   ::point_f64 pointOff = GetViewportOrg();
+            //   ::point_f64 pointOff = get_origin();
 
             //   x += pointOff.x;
 
@@ -900,15 +900,15 @@ namespace draw2d_direct2d
    }
 
 
-   point_f64 graphics::GetViewportOrg()
+   point_f64 graphics::get_origin()
    {
 
-      return ::draw2d::graphics::GetViewportOrg();
+      return ::draw2d::graphics::get_origin();
 
    }
 
 
-   size_f64 graphics::GetViewportExt()
+   size_f64 graphics::get_extents()
    {
 
       throw ::exception(todo);
@@ -938,18 +938,18 @@ namespace draw2d_direct2d
    }
 
 
-   point_f64 graphics::SetViewportOrg(const ::point_f64 & point)
+   point_f64 graphics::set_origin(const ::point_f64 & point)
    {
 
-      return ::draw2d::graphics::SetViewportOrg(point.x, point.y);
+      return ::draw2d::graphics::set_origin(point.x, point.y);
 
    }
 
 
-   ::size_f64 graphics::SetViewportExt(const ::size_f64 & size)
+   ::size_f64 graphics::set_extents(const ::size_f64 & size)
    {
 
-      return ::draw2d::graphics::SetViewportExt(size.cx, size.cy);
+      return ::draw2d::graphics::set_extents(size.cx, size.cy);
 
    }
 
@@ -2003,17 +2003,17 @@ namespace draw2d_direct2d
 
                D2D1_SIZE_U sz = pd2d1bitmap->GetPixelSize();
 
-               if (nWidth + x + GetViewportOrg().x > sz.width)
+               if (nWidth + x + get_origin().x > sz.width)
                {
 
-                  nWidth = sz.width - x - GetViewportOrg().x;
+                  nWidth = sz.width - x - get_origin().x;
 
                }
 
-               if (nHeight + y + GetViewportOrg().y > sz.height)
+               if (nHeight + y + get_origin().y > sz.height)
                {
 
-                  nHeight = sz.height - y - GetViewportOrg().y;
+                  nHeight = sz.height - y - get_origin().y;
 
                }
 
@@ -4054,23 +4054,23 @@ namespace draw2d_direct2d
    //}
 
 
-   point_f64 graphics::SetViewportOrg(double x, double y)
+   point_f64 graphics::set_origin(double x, double y)
    {
 
-      return ::draw2d::graphics::SetViewportOrg(x, y);
+      return ::draw2d::graphics::set_origin(x, y);
 
    }
 
 
-   point_f64 graphics::OffsetViewportOrg(double dWidth, double dHeight)
+   point_f64 graphics::offset_origin(double dWidth, double dHeight)
    {
 
-      return ::draw2d::graphics::OffsetViewportOrg(dWidth, dHeight);
+      return ::draw2d::graphics::offset_origin(dWidth, dHeight);
 
    }
 
 
-   ::size_f64 graphics::SetViewportExt(double x, double y)
+   ::size_f64 graphics::set_extents(double x, double y)
    {
 
       throw ::exception(todo);
@@ -4081,10 +4081,10 @@ namespace draw2d_direct2d
    }
 
 
-   ::size_f64 graphics::ScaleViewportExt(double xNum, double xDenom, double yNum, double yDenom)
+   ::size_f64 graphics::scale_extents(double xNum, double xDenom, double yNum, double yDenom)
    {
 
-      return ::draw2d::graphics::ScaleViewportExt(xNum, xDenom, yNum, yDenom);
+      return ::draw2d::graphics::scale_extents(xNum, xDenom, yNum, yDenom);
 
    }
 
@@ -4902,11 +4902,11 @@ namespace draw2d_direct2d
          (int)(short)pMetaRec->rdParm[1], (int)(short)pMetaRec->rdParm[0]);
          break;
       case META_SETVIEWPORTEXT:
-         (dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->SetViewportExt(
+         (dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->set_extents(
          (int)(short)pMetaRec->rdParm[1], (int)(short)pMetaRec->rdParm[0]);
          break;
       case META_SETVIEWPORTORG:
-         (dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->SetViewportOrg(
+         (dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->set_origin(
          (int)(short)pMetaRec->rdParm[1], (int)(short)pMetaRec->rdParm[0]);
          break;
       case META_SCALEWINDOWEXT:
@@ -4915,12 +4915,12 @@ namespace draw2d_direct2d
          (int)(short)pMetaRec->rdParm[1], (int)(short)pMetaRec->rdParm[0]);
          break;
       case META_SCALEVIEWPORTEXT:
-         (dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->ScaleViewportExt(
+         (dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->scale_extents(
          (int)(short)pMetaRec->rdParm[3], (int)(short)pMetaRec->rdParm[2],
          (int)(short)pMetaRec->rdParm[1], (int)(short)pMetaRec->rdParm[0]);
          break;
       case META_OFFSETVIEWPORTORG:
-         (dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->OffsetViewportOrg(
+         (dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->offset_origin(
          (int)(short)pMetaRec->rdParm[1], (int)(short)pMetaRec->rdParm[0]);
          break;
       case META_SAVEDC:
@@ -5008,7 +5008,7 @@ namespace draw2d_direct2d
       ASSERT(__is_valid_address(psize, sizeof(::size_f64)));
 
       ::size_f64 sizeWinExt = GetWindowExt();
-      ::size_f64 sizeVpExt = GetViewportExt();
+      ::size_f64 sizeVpExt = get_extents();
       psize->cx = psize->cx * abs(sizeVpExt.cx) / abs(sizeWinExt.cx);
       psize->cy = psize->cy * abs(sizeVpExt.cy) / abs(sizeWinExt.cy);
 
@@ -5021,7 +5021,7 @@ namespace draw2d_direct2d
       ASSERT(__is_valid_address(psize, sizeof(::size_f64)));
 
       ::size_f64 sizeWinExt = GetWindowExt();
-      ::size_f64 sizeVpExt = GetViewportExt();
+      ::size_f64 sizeVpExt = get_extents();
       psize->cx = psize->cx * abs(sizeWinExt.cx) / abs(sizeVpExt.cx);
       psize->cy = psize->cy * abs(sizeWinExt.cy) / abs(sizeVpExt.cy);
 

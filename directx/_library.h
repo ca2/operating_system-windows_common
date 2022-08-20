@@ -4,7 +4,7 @@
 
 #include "aura_windows_common/_library.h"
 #include "aura/operating_system.h"
-#include "aura/user/user/_user.h"
+#include "aura/user/user/_component.h"
 
 
 #include <winapifamily.h>

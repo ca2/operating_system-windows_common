@@ -2,7 +2,7 @@
 #pragma once
 
 
-#include "directx/_directx.h"
+#include "directx/_library.h"
 
 
 //#include "global.h"

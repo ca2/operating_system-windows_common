@@ -103,7 +103,7 @@
     <ClInclude Include="draw2d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="_draw2d_direct2d.h">
+    <ClInclude Include="_library.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -113,7 +113,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\..\..\operating-system\operating-system-windows\deployment\deployment.rc">
+    <ResourceCompile Include="deployment.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>

@@ -2,7 +2,7 @@
 #pragma once
 
 
-#include "direct2d/_direct2d.h"
+#include "direct2d/_library.h"
 
 
 namespace draw2d_direct2d

@@ -718,7 +718,7 @@
     <ClInclude Include="dxgi_debug.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="_.h" />
-    <ClInclude Include="_directx.h" />
+    <ClInclude Include="_library.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="directx.cpp" />
@@ -737,9 +737,7 @@
     <ClCompile Include="_.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\..\..\operating-system\operating-system-windows\deployment\deployment.rc" />
-  </ItemGroup>
-  <ItemGroup>
+    <ResourceCompile Include="deployment.rc" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\source\app\acme\acme.vcxproj">

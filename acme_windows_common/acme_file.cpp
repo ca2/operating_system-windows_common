@@ -58,28 +58,60 @@ namespace acme_windows_common
 
       }
 
-      //return ::CopyFileExW(wstrSrc,wstrNew, nullptr, nullptr, nullptr, COPY_FILE_NO_BUFFERING | (bOverwrite ? 0 : COPY_FILE_FAIL_IF_EXISTS)) ? true : false;
-      auto bCopy = ::CopyFileExW(wstrSrc, wstrNew, nullptr, nullptr, nullptr, (bOverwrite ? 0 : COPY_FILE_FAIL_IF_EXISTS)) ;
+      auto pfileSrc = open(pathSrc, ::file::e_open_read);
 
-      if (!bCopy)
+      auto pfileNew = open(pathNew, ::file::e_open_defer_create_directory |
+         (bOverwrite ? ::file::e_open_create | ::file::e_open_truncate : 0) | ::file::e_open_write);
+
+      if (::nok(pfileSrc) || ::nok(pfileNew))
       {
 
-         auto lastError = ::GetLastError();
+         return;
+         
+      }
 
-         if (lastError == ERROR_INVALID_PARAMETER)
+      memory m;
+
+      m.set_size(1_mb);
+
+      while (auto read = pfileSrc->read(m.get_data(), m.get_size()))
+      {
+
+         if (read <= 0)
          {
 
-            ::acme_file::copy(pszNew, pszSrc, bOverwrite);
-
-            return;
+            break;
 
          }
 
-         auto estatus = last_error_to_status(lastError);
-
-         throw io_exception(estatus);
+         pfileNew->write(m.get_data(), read);
 
       }
+
+
+
+      ///return ::CopyFileExW(wstrSrc,wstrNew, nullptr, nullptr, nullptr, COPY_FILE_NO_BUFFERING | (bOverwrite ? 0 : COPY_FILE_FAIL_IF_EXISTS)) ? true : false;
+      //auto bCopy = ::CopyFileExW(wstrSrc, wstrNew, nullptr, nullptr, nullptr, (bOverwrite ? 0 : COPY_FILE_FAIL_IF_EXISTS)) ;
+
+      //if (!bCopy)
+      //{
+
+      //   auto lastError = ::GetLastError();
+
+      //   if (lastError == ERROR_INVALID_PARAMETER)
+      //   {
+
+      //      ::acme_file::copy(pszNew, pszSrc, bOverwrite);
+
+      //      return;
+
+      //   }
+
+      //   auto estatus = last_error_to_status(lastError);
+
+      //   throw io_exception(estatus);
+
+      //}
 
       //return true;
 

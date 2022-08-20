@@ -1,5 +1,5 @@
 #include "framework.h"
-#include "aura/user/user/_user.h"
+#include "aura/user/user/_component.h"
 
 
 namespace draw2d_direct2d
@@ -78,13 +78,13 @@ namespace draw2d_direct2d
          if(m_eunitFontSize == ::draw2d::e_unit_point)
          {
 
-            fFontSize = (float) pgraphics->m_phost->point_dpi(m_dFontSize);
+            fFontSize = (float) pgraphics->m_pdraw2dhost->point_dpi(m_dFontSize);
 
          }
          else
          {
 
-            fFontSize = (float) pgraphics->m_phost->dpiy(m_dFontSize);
+            fFontSize = (float) pgraphics->m_pdraw2dhost->dpiy(m_dFontSize);
 
          }
 

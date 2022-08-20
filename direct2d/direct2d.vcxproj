@@ -720,7 +720,7 @@
     <ClInclude Include="geometry_sink_text_renderer.h" />
     <ClInclude Include="global.h" />
     <ClInclude Include="_.h" />
-    <ClInclude Include="_direct2d.h" />
+    <ClInclude Include="_library.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="direct2d.cpp" />
@@ -739,9 +739,7 @@
     <ClCompile Include="_.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\..\..\operating-system\operating-system-windows\deployment\deployment.rc" />
-  </ItemGroup>
-  <ItemGroup>
+    <ResourceCompile Include="deployment.rc" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\source\app\acme\acme.vcxproj">

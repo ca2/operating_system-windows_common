@@ -36,15 +36,9 @@
     <ClInclude Include="font_enumeration.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="_write_text_direct2d.h">
+    <ClInclude Include="_library.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-        <ResourceCompile Include="..\..\operating-system-windows\deployment\deployment.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
-
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -53,10 +47,18 @@
     <Filter Include="Source Files">
       <UniqueIdentifier>{1a0d5a53-517a-4f81-9310-89f1091231c9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{ab6c16e1-d24d-4772-bc34-97b9ecb4bb3f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="write_text_direct2d.def">
       <Filter>Source Files</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="deployment.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

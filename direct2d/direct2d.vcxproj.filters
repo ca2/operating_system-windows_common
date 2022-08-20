@@ -40,7 +40,7 @@
     <ClInclude Include="direct2d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="_direct2d.h">
+    <ClInclude Include="_library.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="aaa_multithreading_lock.h">
@@ -54,7 +54,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\..\..\operating-system\operating-system-windows\deployment\deployment.rc">
+    <ResourceCompile Include="deployment.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>

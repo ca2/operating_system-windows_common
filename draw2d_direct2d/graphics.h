@@ -204,18 +204,18 @@ namespace draw2d_direct2d
 
       // Mapping Functions
       //virtual int GetMapMode() override;
-      virtual ::point_f64 GetViewportOrg() override;
+      virtual ::point_f64 get_origin() override;
       //virtual int SetMapMode(int nMapMode) override;
       // Viewport Origin
-      virtual ::point_f64 SetViewportOrg(double x, double y) override;
-      virtual ::point_f64 SetViewportOrg(const ::point_f64 & point) override;
-      virtual ::point_f64 OffsetViewportOrg(double nWidth, double nHeight) override;
+      virtual ::point_f64 set_origin(double x, double y) override;
+      virtual ::point_f64 set_origin(const ::point_f64 & point) override;
+      virtual ::point_f64 offset_origin(double nWidth, double nHeight) override;
 
       // Viewport Extent
-      virtual size_f64 GetViewportExt() override;
-      virtual size_f64 SetViewportExt(double cx, double cy) override;
-      virtual size_f64 SetViewportExt(const ::size_f64 & size) override;
-      virtual size_f64 ScaleViewportExt(double xNum, double xDenom, double yNum, double yDenom) override;
+      virtual size_f64 get_extents() override;
+      virtual size_f64 set_extents(double cx, double cy) override;
+      virtual size_f64 set_extents(const ::size_f64 & size) override;
+      virtual size_f64 scale_extents(double xNum, double xDenom, double yNum, double yDenom) override;
 
       // Window Origin
       ::point_f64 GetWindowOrg() override;

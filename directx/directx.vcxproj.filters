@@ -40,7 +40,7 @@
     <ClInclude Include="directx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="_directx.h">
+    <ClInclude Include="_library.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="dxgi_debug.h">
@@ -48,7 +48,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\..\..\operating-system\operating-system-windows\deployment\deployment.rc">
+    <ResourceCompile Include="deployment.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
