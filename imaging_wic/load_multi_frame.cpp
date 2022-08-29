@@ -10,8 +10,9 @@
 #include <ShCore.h>
 #endif
 
-
-CLASS_DECL_ACME void cra_from_quada(colorref_array& colorrefa, WINRGBQUAD* prgbquad, int iCount);
+//namespac
+//
+//CLASS_DECL_ACME void cra_from_quada(colorref_array& colorrefa, WINRGBQUAD* prgbquad, int iCount);
 
 
 namespace imaging_wic
@@ -924,7 +925,7 @@ namespace imaging_wic
 
       colorref_array colorrefa;
 
-      cra_from_quada(colorrefa, (WINRGBQUAD *)rgColors, iUsed);
+      ::draw2d::cra_from_quada(colorrefa, (WINRGBQUAD *)rgColors, iUsed);
 
       if (uFrameIndex == 0)
       {

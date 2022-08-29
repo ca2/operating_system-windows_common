@@ -6,8 +6,6 @@
 #include "acme/operating_system.h"
 
 
-CLASS_DECL_ACME_WINDOWS_COMMON HRESULT defer_co_initialize_ex(bool bMultiThread, bool bDisableOleDDE = false);
-CLASS_DECL_ACME ::u32 windows_get_file_attributes(const char * path);
 
 
 using hfile = HANDLE;
