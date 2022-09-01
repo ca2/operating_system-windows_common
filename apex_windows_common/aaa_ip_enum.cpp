@@ -87,7 +87,7 @@ namespace windows
    return true;
    }
    */
-   ::count ip_enum::enumerate(array < ::net::address > & ipa)
+   ::count ip_enum::enumerate(array < ::networking::address > & ipa)
    {
 
       //get this machines host name
@@ -223,7 +223,7 @@ namespace windows
 
                {
                   auto ipv6 = (struct sockaddr_in6 *) ptr->ai_addr;
-                  ipa.add(::net::address(*ipv6, (int)ptr->ai_addrlen));
+                  ipa.add(::networking::address(*ipv6, (int)ptr->ai_addrlen));
                }
 
 

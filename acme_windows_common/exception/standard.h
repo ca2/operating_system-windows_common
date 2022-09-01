@@ -2,7 +2,7 @@
 
 
 #include <eh.h>
-
+#include "translator.h"
 
 #if OSBIT == 64
 

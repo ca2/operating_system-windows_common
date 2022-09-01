@@ -1,6 +1,4 @@
 #include "framework.h"
-//#include "acme/operating_system.h"
-
 
 
 thread_local HRESULT t_hresultCoInitialize;

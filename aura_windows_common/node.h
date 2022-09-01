@@ -8,6 +8,9 @@
 #pragma once
 
 
+#include "apex_windows_common/node.h"
+
+
 namespace aura_windows_common
 {
 

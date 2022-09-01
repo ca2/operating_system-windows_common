@@ -3,6 +3,8 @@
 
 #include "aura/_.h"
 #include "apex_windows_common/_.h"
+#include "aura/operating_system.h"
+
 
 
 #if defined(_AURA_WINDOWS_COMMON_LIBRARY)

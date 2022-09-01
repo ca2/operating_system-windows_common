@@ -1,5 +1,5 @@
 #include "framework.h"
-//#include "acme/operating_system.h"
+#include "bstring.h"
 
 
 BSTR bstring::string_byte_len(const char * psz, strsize len)

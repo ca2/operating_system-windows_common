@@ -17,7 +17,7 @@
     <ClInclude Include="framework.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="factory_exchange.h">
+    <ClInclude Include="aaa_factory_exchange.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="_.h">

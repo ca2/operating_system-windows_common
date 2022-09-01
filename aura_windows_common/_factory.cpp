@@ -1,4 +1,5 @@
 #include "framework.h"
+#include "node.h"
 
 
 __FACTORY_EXPORT void apex_windows_common_factory(::factory::factory* pfactory);

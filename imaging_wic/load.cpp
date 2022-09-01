@@ -1,8 +1,10 @@
 #include "framework.h"
+#include "context_image.h"
 #include "apex/parallelization/handler_manager.h"
 #include <wincodec.h>
 #include <shcore.h>
 #include "aura/graphics/image/load_image.h"
+#include "aura/graphics/image/save_image.h"
 
 
 namespace imaging_wic

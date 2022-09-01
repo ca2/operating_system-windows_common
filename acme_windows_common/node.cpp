@@ -1,17 +1,7 @@
 #include "framework.h"
-//#include "acme/platform/node.h"
-//#include "acme/node/windows/registry.h"
-//#include "node.h"
+#include "node.h"
 #include "acme/filesystem/filesystem/acme_directory.h"
 
-
-// #define FONT_SANS "Segoe UI"
-// #define FONT_SERIF "Times New Roman"
-// #define FONT_MONO "Courier New"
-// #define FONT_SANS_EX "Geneva"
-// #define FONT_SERIF_EX "Palatino Linotype"
-// #define FONT_SANS_FX "Tahoma"
-// #define FONT_SERIF_FX "Georgia"
 
 namespace acme_windows_common
 {

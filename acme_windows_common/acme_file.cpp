@@ -2,6 +2,8 @@
 // 14:17 BRT <3ThomasBorregaardSørensen
 #include "framework.h"
 #include "acme/filesystem/filesystem/acme_path.h"
+#include "acme_file.h"
+#include "acme_directory.h"
 #include <stdio.h>
 #include <fcntl.h>
 #include <sys/types.h>
@@ -12,11 +14,13 @@
 #include <time.h>
 
 
+
 CLASS_DECL_ACME void TRACELASTERROR();
 
 
 namespace acme_windows_common
 {
+
 
    void acme_file::copy(const char * pszNew, const char * pszSrc, bool bOverwrite)
    {

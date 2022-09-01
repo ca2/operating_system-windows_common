@@ -1,5 +1,7 @@
 // Created on 2021-04-29 12:33 BRT <3TBS_!! Second celebration of Mummis Birthday 70!!
 #include "framework.h"
+#include "standard.h"
+#include "translator.h"
 #include <eh.h>
 
 

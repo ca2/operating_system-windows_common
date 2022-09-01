@@ -1,4 +1,5 @@
 #include "framework.h"
+#include "context_image.h"
 #include "aura/graphics/image/frame_array.h"
 #include <Wincodec.h>
 

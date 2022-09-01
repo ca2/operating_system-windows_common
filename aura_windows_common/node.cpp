@@ -1,5 +1,5 @@
 #include "framework.h"
-#include "aura/operating_system.h"
+#include "node.h"
 
 
 namespace aura_windows_common

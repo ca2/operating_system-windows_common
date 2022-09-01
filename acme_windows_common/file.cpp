@@ -1,6 +1,8 @@
 #include "framework.h"
 #include "acme/operating_system/time.h"
 #include "file.h"
+#include "acme_directory.h"
+#include "acme_file.h"
 
 
 CLASS_DECL_ACME_WINDOWS_COMMON bool _os_may_have_alias(const char * psz)
@@ -315,7 +317,9 @@ namespace acme_windows_common
                if (dwAccess & GENERIC_WRITE)
                {
 
-                  m_psystem->message_box("Couldn't write to file \"" + m_path + "\".\nAccess Denied!!\n(Is any anti-virus program blocking this program: \"" + m_psystem->m_pacmefile->module() + "\"?", m_psystem->m_pacmefile->module().title() + " - Access Denied!", e_message_box_ok);
+                  auto psequencer = m_psystem->create_message_box_sequencer("Couldn't write to file \"" + m_path + "\".\nAccess Denied!!\n(Is any anti-virus program blocking this program: \"" + m_psystem->m_pacmefile->module() + "\"?", m_psystem->m_pacmefile->module().title() + " - Access Denied!", e_message_box_ok);
+
+                  psequencer->do_asynchronously();
 
                }
 

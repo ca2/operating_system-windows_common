@@ -1,5 +1,6 @@
 #include "framework.h"
-
+#include "context_image.h"
+#include "aura/graphics/image/save_image.h"
 
 
 #ifdef _UWP

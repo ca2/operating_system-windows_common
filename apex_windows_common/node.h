@@ -8,6 +8,9 @@
 #pragma once
 
 
+#include "acme_windows_common/node.h"
+
+
 namespace apex_windows_common
 {
 

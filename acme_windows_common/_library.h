@@ -8,8 +8,6 @@
 
 
 
-using hfile = HANDLE;
-
 
 
 #include "comptr.h"
