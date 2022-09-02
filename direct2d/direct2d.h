@@ -1,6 +1,9 @@
 #pragma once
 
 
+#include "geometry_sink_text_renderer.h"
+
+
 namespace direct2d
 {
 

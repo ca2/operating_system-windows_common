@@ -1,5 +1,7 @@
 #include "framework.h"
-#include "aura/user/user/_component.h"
+#include "font.h"
+#include "direct2d/direct2d.h"
+#include "aura/graphics/draw2d/host.h"
 
 
 namespace draw2d_direct2d

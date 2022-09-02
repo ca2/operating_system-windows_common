@@ -1,5 +1,7 @@
 // Created by camilo 2021-06-05 22:57 BRT <3ThomasBS_!!
 #include "framework.h"
+#include "font_enumeration.h"
+#include "direct2d/direct2d.h"
 #include "aura/graphics/write_text/font_enumeration_item.h"
 #include <dwrite.h>
 

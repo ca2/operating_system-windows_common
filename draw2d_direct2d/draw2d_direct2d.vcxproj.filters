@@ -106,6 +106,9 @@
     <ClInclude Include="_library.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="_constant.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="draw2d_direct2d.def">

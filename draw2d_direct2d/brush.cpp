@@ -1,4 +1,6 @@
 #include "framework.h"
+#include "brush.h"
+#include "graphics.h"
 
 
 namespace draw2d_direct2d

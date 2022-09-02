@@ -729,6 +729,7 @@
     <ClInclude Include="printer.h" />
     <ClInclude Include="region.h" />
     <ClInclude Include="_.h" />
+    <ClInclude Include="_constant.h" />
     <ClInclude Include="_library.h" />
   </ItemGroup>
   <ItemGroup>
