@@ -13,10 +13,10 @@
     <ClInclude Include="factory_exchange.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="wave_in.h">
+    <ClInclude Include="in.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="wave_out.h">
+    <ClInclude Include="out.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="_audio_xaudio.h">
@@ -38,10 +38,10 @@
     <ClCompile Include="_factory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="wave_in.cpp">
+    <ClCompile Include="in.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="wave_out.cpp">
+    <ClCompile Include="out.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="_.cpp">
