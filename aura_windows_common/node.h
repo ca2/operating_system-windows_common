@@ -9,6 +9,7 @@
 
 
 #include "apex_windows_common/node.h"
+#include "aura/platform/node.h"
 
 
 namespace aura_windows_common

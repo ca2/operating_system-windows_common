@@ -13,9 +13,9 @@
 #include "aura_universal_windows/_library.h"
 #include <winrt/Windows.ApplicationModel.DataTransfer.h>
 #endif
-#ifdef WINDOWS_DESKTOP
-#include "aura_windows/_library.h"
-#endif
+//#ifdef WINDOWS_DESKTOP
+//#include "aura_windows/_library.h"
+//#endif
 #include <wincodec.h>
 
 
