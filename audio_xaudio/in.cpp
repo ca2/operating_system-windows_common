@@ -13,7 +13,7 @@ namespace multimedia
       {
 
          m_pencoder = nullptr;
-         m_estate = e_state_initial;
+         m_einstate = ::wave::e_in_state_initial;
          m_bResetting = false;
 
       }
@@ -71,7 +71,7 @@ namespace multimedia
       void     in::in_open(i32 iBufferCount, i32 iBufferSampleCount)
       {
 
-//         if(m_hwavein != nullptr && m_estate != e_state_initial)
+//         if(m_hwavein != nullptr && m_einstate != e_in_state_initial)
 //         {
 //            in_initialize_encoder();
 //
@@ -82,7 +82,7 @@ namespace multimedia
 //         single_lock sLock(mutex(), true);
 //         void     estatus;
 //         ASSERT(m_hwavein == nullptr);
-//         ASSERT(m_estate == e_state_initial);
+//         ASSERT(m_einstate == e_in_state_initial);
 //
 //         m_pwaveformat->wFormatTag = WAVE_FORMAT_PCM;
 //         m_pwaveformat->nChannels = 2;
@@ -211,7 +211,7 @@ namespace multimedia
 //         if(m_pencoder != nullptr && !in_initialize_encoder())
 //         {
 //
-//            m_estate = e_state_opened;
+//            m_einstate = e_in_state_opened;
 //
 //            in_close();
 //
@@ -219,7 +219,7 @@ namespace multimedia
 //
 //         }
 //
-//         m_estate = e_state_opened;
+//         m_einstate = e_in_state_opened;
 //
          //return ::success;
 
@@ -233,7 +233,7 @@ namespace multimedia
 
          //void     estatus;
 
-         //if(m_estate != e_state_opened && m_estate != state_stopped)
+         //if(m_einstate != e_in_state_opened && m_einstate != state_stopped)
          //   return ::success;
 
          //estatus = in_reset();
@@ -259,7 +259,7 @@ namespace multimedia
 
          //m_hwavein = nullptr;
 
-         //m_estate = e_state_initial;
+         //m_einstate = e_in_state_initial;
 
          //return ::success;
 
@@ -271,7 +271,7 @@ namespace multimedia
 
          single_lock sLock(mutex(), true);
 
-         if (m_estate == state_recording)
+         if (m_einstate == ::wave::e_in_state_recording)
          {
 
             //return ::success;
@@ -280,9 +280,9 @@ namespace multimedia
 
          }
 
-         //ASSERT(m_estate == e_state_opened || m_estate == state_stopped);
+         //ASSERT(m_einstate == e_in_state_opened || m_einstate == state_stopped);
 
-         if (m_estate != e_state_opened && m_estate != state_stopped)
+         if (m_einstate != ::wave::e_in_state_opened && m_einstate != ::wave::e_in_state_stopped)
          {
             
             // return ::success;
@@ -299,7 +299,7 @@ namespace multimedia
          //   return estatus;
          //}
 
-         m_estate = state_recording;
+         m_einstate = ::wave::e_in_state_recording;
 
          //return ::success;
 
@@ -311,7 +311,7 @@ namespace multimedia
 
          single_lock sLock(mutex(), true);
 
-         if (m_estate != state_recording)
+         if (m_einstate != ::wave::e_in_state_recording)
          {
 
             throw ::exception(error_failed);
@@ -320,7 +320,7 @@ namespace multimedia
 
 //         void     estatus;
 
-         m_estate = e_state_stopping;
+         m_einstate = ::wave::e_in_state_stopping;
 
          //try
          //{
@@ -340,7 +340,7 @@ namespace multimedia
 
          //}
 
-         m_estate = state_stopped;
+         m_einstate = ::wave::e_in_state_stopped;
 
          m_eventStopped.SetEvent();
 
@@ -396,7 +396,7 @@ namespace multimedia
 
          //void     estatus;
 
-         //if(m_estate == state_recording)
+         //if(m_einstate == state_recording)
          //{
 
          //   if(::success != (estatus = in_stop()))
@@ -428,7 +428,7 @@ namespace multimedia
          //{
          //}
 
-         //m_estate = e_state_opened;
+         //m_einstate = e_in_state_opened;
 
          m_bResetting = false;
 

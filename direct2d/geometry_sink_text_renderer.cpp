@@ -1,7 +1,7 @@
 // From direct2d_draw2d by camilo on ThomasBirthday2021 15:58 BRT
 // Renamed from CustomTextRenderer to geometry_sink_text_renderer by camilo just after ThomasBirthday2021 03:07 BRT
 #include "framework.h"
-//#include "direct2d/geometry_sink_text_renderer.h"
+#include "geometry_sink_text_renderer.h"
 
 //#undef new
 //#ifdef _UWP

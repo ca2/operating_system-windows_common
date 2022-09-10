@@ -1,9 +1,22 @@
 #include "framework.h"
-#include "aura/user/user/_component.h"
+#include "graphics.h"
+#include "bitmap.h"
+#include "path.h"
+#include "pen.h"
+#include "brush.h"
+#include "region.h"
+#include "direct2d/direct2d.h"
 #include "CustomRenderer.h"
+#include "aura/windowing/windowing.h"
+#include "aura/windowing/display.h"
+#include "aura/user/user/user.h"
 #include "aura/graphics/draw2d/lock.h"
+#include "aura/graphics/draw2d/region.h"
 #include "aura/graphics/draw2d/device_lock.h"
 #include "aura/graphics/image/context_image.h"
+#include "acme/primitive/geometry2d/_geometry2d.h"
+#include "acme/primitive/geometry2d/_collection.h"
+#include "acme/primitive/geometry2d/_defer_shape.h"
 #include <math.h>
 
 
@@ -6272,7 +6285,7 @@ namespace draw2d_direct2d
          if (ppath && ppath->m_bUseGeometryRealization)
          {
 
-            auto prealization = ppath->_get_stroked_geometry_realization(this, ppen->m_dWidth);
+            auto prealization = ppath->_get_stroked_geometry_realization(this,(::i32) ppen->m_dWidth);
 
             draw(prealization, ppen);
 

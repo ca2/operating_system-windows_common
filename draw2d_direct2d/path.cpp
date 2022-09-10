@@ -1,6 +1,11 @@
 #include "framework.h"
+#include "path.h"
+#include "graphics.h"
 #include <math.h>
 #include "CustomRenderer.h"
+#include "direct2d/direct2d.h"
+#include "aura/graphics/write_text/font.h"
+#include "aura/graphics/write_text/text_out.h"
 
 
 namespace draw2d_direct2d

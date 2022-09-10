@@ -1,6 +1,10 @@
 #pragma once
 
 
+#include "aura/graphics/write_text/font.h"
+#include "object.h"
+
+
 namespace draw2d_direct2d
 {
 

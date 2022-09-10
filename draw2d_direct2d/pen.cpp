@@ -1,4 +1,7 @@
 #include "framework.h"
+#include "pen.h"
+#include "graphics.h"
+#include "direct2d/direct2d.h"
 
 
 namespace draw2d_direct2d

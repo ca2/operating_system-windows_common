@@ -52,10 +52,7 @@ namespace directx
    
    }
 
-   
-   CLASS_DECL_DIRECTX void defer_initialize(::object * pobject);
-   CLASS_DECL_DIRECTX void finalize();
-
+ 
 
 } // namespace directx
 

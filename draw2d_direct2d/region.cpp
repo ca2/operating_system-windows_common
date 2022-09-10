@@ -1,4 +1,7 @@
 #include "framework.h"
+#include "region.h"
+#include "direct2d/direct2d.h"
+#include "path.h"
 
 
 namespace draw2d_direct2d
@@ -317,7 +320,7 @@ namespace draw2d_direct2d
       for(int i = 0; i < pitem->m_polygona.get_size(); i++)
       {
          auto ppolygon = pitem->m_polygona[i];
-         int jCount = ppolygon->get_size();
+         auto jCount = ppolygon->get_size();
          //pa.erase_all();
          //for(int j = 0; j < jCount; j++)
          //{

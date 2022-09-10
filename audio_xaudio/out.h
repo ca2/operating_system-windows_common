@@ -1,6 +1,9 @@
 #pragma once
 
 
+#include "app-core/audio/wave/out.h"
+
+
 namespace multimedia
 {
 
@@ -64,7 +67,7 @@ namespace multimedia
          //virtual void out_buffer_ready(LPWAVEHDR lpwavehdr);
 
 //         virtual void     out_open(::thread * pthreadCallback, ::count iBufferCount, ::count iBufferSampleCount) override;
-         void     out_open_ex(::thread * pthreadCallback, u32 uiSamplesPerSec, u32 uiChannelCount, u32 uiBitsPerSample,::wave::e_purpose epurpose) override;
+         void     out_open_ex(::thread * pthreadCallback, u32 uiSamplesPerSec, u32 uiChannelCount, u32 uiBitsPerSample,::wave::enum_purpose epurpose) override;
          void     out_stop() override;
          void     out_close() override;
          void     out_pause() override;
