@@ -4,7 +4,7 @@
 #include "acme/filesystem/filesystem/acme_path.h"
 
 
-CLASS_DECL_ACME_WINDOWS_COMMON bool defer_initialize_winsock();
+//CLASS_DECL_ACME_WINDOWS_COMMON bool defer_initialize_winsock();
 
 
 namespace apex_windows_common
@@ -16,7 +16,7 @@ namespace apex_windows_common
 
       m_papexnode = this;
 
-      defer_initialize_winsock();
+      //defer_initialize_winsock();
 
    }
 
@@ -476,7 +476,7 @@ namespace apex_windows_common
 
 
 
-      defer_initialize_winsock();
+      //defer_initialize_winsock();
       //return success;
 
    }
