@@ -17,6 +17,7 @@
 #include "acme/primitive/geometry2d/_geometry2d.h"
 #include "acme/primitive/geometry2d/_collection.h"
 #include "acme/primitive/geometry2d/_defer_shape.h"
+#include "aura/platform/session.h"
 #include <math.h>
 
 
