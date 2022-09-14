@@ -14,6 +14,8 @@
 #include "aura/graphics/draw2d/region.h"
 #include "aura/graphics/draw2d/device_lock.h"
 #include "aura/graphics/image/context_image.h"
+#include "aura/graphics/image/drawing.h"
+#include "aura/graphics/image/frame_array.h"
 #include "acme/primitive/geometry2d/_geometry2d.h"
 #include "acme/primitive/geometry2d/_collection.h"
 #include "acme/primitive/geometry2d/_defer_shape.h"
