@@ -828,7 +828,6 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="_audio_xaudio.h" />
     <ClInclude Include="command.h" />
     <ClInclude Include="factory_exchange.h" />
     <ClInclude Include="framework.h" />

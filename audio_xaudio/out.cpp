@@ -1,9 +1,11 @@
 #include "framework.h"
+#include "out.h"
 #include "aura/message.h"
 #include "app-core/audio/audio/audio.h"
 #include "app-core/audio/wave/player.h"
 #include "app-core/audio/wave/wave.h"
 #include "app-core/audio/iaudio/wave_stream_effect.h"
+#include "multimedia_xaudio/translation.h"
 
 
 namespace multimedia
@@ -140,14 +142,14 @@ namespace multimedia
 
          ::count iBufferSampleCount = 4096;
 
-         if(epurpose == ::wave::purpose_playback)
+         if(epurpose == ::wave::e_purpose_playback)
          {
 
             iBufferCount = 8;
             iBufferSampleCount = (1 << 9);
 
          }
-         else if(epurpose == ::wave::purpose_playground)
+         else if(epurpose == ::wave::e_purpose_playground)
          {
 
             iBufferCount = 2;

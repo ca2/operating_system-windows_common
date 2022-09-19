@@ -243,7 +243,6 @@
       <SubSystem>Windows</SubSystem>
       <EntryPointSymbol>
       </EntryPointSymbol>
-      
       <ShowProgress>NotSet</ShowProgress>
     </Link>
     <Manifest>
@@ -322,7 +321,6 @@
       <SubSystem>Windows</SubSystem>
       <EntryPointSymbol>
       </EntryPointSymbol>
-      
       <ShowProgress>NotSet</ShowProgress>
     </Link>
     <Manifest>
@@ -406,7 +404,6 @@
       <SubSystem>Windows</SubSystem>
       <EntryPointSymbol>
       </EntryPointSymbol>
-      
       <ShowProgress>NotSet</ShowProgress>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
@@ -491,7 +488,6 @@
       <SubSystem>Windows</SubSystem>
       <EntryPointSymbol>
       </EntryPointSymbol>
-      
       <ShowProgress>NotSet</ShowProgress>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
@@ -572,7 +568,6 @@
       <SubSystem>Windows</SubSystem>
       <EntryPointSymbol>
       </EntryPointSymbol>
-      
       <MapFileName>$(TargetDir)$(TargetName).map</MapFileName>
     </Link>
     <Manifest>
@@ -649,7 +644,6 @@
       <SubSystem>Windows</SubSystem>
       <EntryPointSymbol>
       </EntryPointSymbol>
-      
       <MapFileName>$(TargetDir)$(TargetName).map</MapFileName>
     </Link>
     <Manifest>
@@ -732,7 +726,6 @@
       <SubSystem>Windows</SubSystem>
       <EntryPointSymbol>
       </EntryPointSymbol>
-      
       <MapFileName>$(TargetDir)$(TargetName).map</MapFileName>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
@@ -816,7 +809,6 @@
       <SubSystem>Windows</SubSystem>
       <EntryPointSymbol>
       </EntryPointSymbol>
-      
       <MapFileName>$(TargetDir)$(TargetName).map</MapFileName>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
@@ -836,11 +828,11 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="aaa_multimedia_xaudio.h" />
     <ClInclude Include="factory_exchange.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="translation.h" />
     <ClInclude Include="_.h" />
-    <ClInclude Include="_multimedia_xaudio.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="_factory.cpp" />
@@ -857,7 +849,6 @@
     <ClCompile Include="translation.cpp" />
     <ClCompile Include="_.cpp" />
   </ItemGroup>
-  
   <ItemGroup>
     <ProjectReference Include="..\..\..\source\app-core\audio\audio.vcxproj">
       <Project>{20fd0446-aa14-4013-84e0-b5cb63fa354f}</Project>

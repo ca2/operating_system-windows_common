@@ -1,4 +1,6 @@
 #include "framework.h"
+#include "in.h"
+#include "multimedia_xaudio/translation.h"
 
 
 namespace multimedia

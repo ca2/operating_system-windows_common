@@ -1,4 +1,7 @@
 #include "framework.h"
+#include "in.h"
+#include "out.h"
+
 
 __FACTORY_EXPORT void audio_xaudio_factory(::factory::factory * pfactory)
 {

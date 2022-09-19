@@ -13,7 +13,7 @@
     <ClInclude Include="translation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="_multimedia_xaudio.h">
+    <ClInclude Include="aaa_multimedia_xaudio.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -38,10 +38,5 @@
     <ClCompile Include="_.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="multimedia_xaudio.def">
-      <Filter>Source Files</Filter>
-    </None>
   </ItemGroup>
 </Project>

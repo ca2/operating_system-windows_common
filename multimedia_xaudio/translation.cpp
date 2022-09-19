@@ -1,4 +1,5 @@
 #include "framework.h"
+#include "translation.h"
 #include "app-core/audio/wave/format.h"
 
 
