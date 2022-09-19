@@ -227,17 +227,30 @@ namespace acme_windows_common
 
       // map creation flags
       ::u32 dwCreateFlag;
+
       if (eopen & ::file::e_open_create)
       {
+
          if (eopen & ::file::e_open_no_truncate)
          {
+
             dwCreateFlag = OPEN_ALWAYS;
+
          }
          else
+         {
+
             dwCreateFlag = CREATE_ALWAYS;
+
+         }
+
       }
       else
+      {
+
          dwCreateFlag = OPEN_EXISTING;
+
+      }
 
       HANDLE handleFile = INVALID_HANDLE_VALUE;
 
@@ -253,8 +266,28 @@ namespace acme_windows_common
 
       // attempt file creation
       //HANDLE handleFile = shell::CreateFile(utf8_to_unicode(m_path), dwAccess, dwShareMode, &sa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, nullptr);
+      //HANDLE h = INVALID_HANDLE_VALUE;
+      //handleFile = ::CreateFile2(wstrFileName, dwAccess, dwShareMode, dwCreateFlag, pextendedparameters);
+#ifdef _UWP
 
       handleFile = ::CreateFile2(wstrFileName, dwAccess, dwShareMode, dwCreateFlag, pextendedparameters);
+
+#else
+
+      if (eopen & ::file::e_open_no_inherit)
+      {
+         
+         handleFile = ::CreateFileW(wstrFileName, dwAccess, dwShareMode, &securityattributes, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, nullptr);
+
+      }
+      else
+      {
+
+         handleFile = ::CreateFileW(wstrFileName, dwAccess, dwShareMode, NULL, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, nullptr);
+
+      }
+
+#endif
 
       if (handleFile == INVALID_HANDLE_VALUE)
       {
