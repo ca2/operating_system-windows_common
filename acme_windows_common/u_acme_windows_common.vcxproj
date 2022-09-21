@@ -86,7 +86,7 @@
     <ClInclude Include="standard_exception.h" />
     <ClInclude Include="variant.h" />
     <ClInclude Include="_.h" />
-    <ClInclude Include="_acme_windows_common.h" />
+    <ClInclude Include="aaa_acme_windows_common.h" />
     <ClInclude Include="_c.h" />
     <ClInclude Include="_default_dll_impl.h" />
     <ClInclude Include="_file_c.h" />
@@ -148,6 +148,7 @@
     <ApplicationType>Windows Store</ApplicationType>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+    <WindowsTargetPlatformMinVersion>10.0.19041.0</WindowsTargetPlatformMinVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='basis|Win32'" Label="Configuration">
