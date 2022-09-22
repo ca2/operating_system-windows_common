@@ -33,13 +33,16 @@
     <ClInclude Include="direct2d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="_direct2d.h">
+    <ClInclude Include="aaa_direct2d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="multithreading_lock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="geometry_sink_text_renderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="aaa__library.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

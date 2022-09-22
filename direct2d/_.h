@@ -13,23 +13,17 @@
 #endif
 
 
-#include <winapifamily.h>
-#include <windows.h>
-#include <shlwapi.h>
-#include <wrl/client.h>
-#include <DXGI1_2.h>
-#include <Dwrite.h>
+//#include <winapifamily.h>
+//#include <windows.h>
+//#include <shlwapi.h>
+//#include <wrl/client.h>
 #include <D2D1.h>
 #include <d2d1_2.h>
 #include <D2D1_1.h>
-#include <D3D11.h>
-#include <D3D11_1.h>
 
 
-#include <DXGI1_2.h>
 #include <Dwrite.h>
-#include <D2D1.h>
-#include <D2D1_1.h>
+#include <Dwrite_1.h>
 
 
 

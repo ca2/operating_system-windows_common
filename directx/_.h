@@ -6,9 +6,9 @@
 #include "aura_windows_common/_.h"
 
 
-#include <winapifamily.h>
-#include <windows.h>
-#include <shlwapi.h>
+//#include <winapifamily.h>
+//#include <windows.h>
+//#include <shlwapi.h>
 #include <wrl/client.h>
 #include <DXGI1_2.h>
 #include <D3D11.h>

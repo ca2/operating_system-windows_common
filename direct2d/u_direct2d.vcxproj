@@ -67,12 +67,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="aaa__library.h" />
     <ClInclude Include="geometry_sink_text_renderer.h" />
     <ClInclude Include="multithreading_lock.h" />
     <ClInclude Include="direct2d.h" />
     <ClInclude Include="_.h" />
     <ClInclude Include="framework.h" />
-    <ClInclude Include="_direct2d.h" />
+    <ClInclude Include="aaa_direct2d.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="geometry_sink_text_renderer.cpp" />
@@ -134,6 +135,7 @@
     <ApplicationType>Windows Store</ApplicationType>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+    <WindowsTargetPlatformMinVersion>10.0.19041.0</WindowsTargetPlatformMinVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='basis|Win32'" Label="Configuration">

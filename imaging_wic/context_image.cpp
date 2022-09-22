@@ -1,8 +1,10 @@
 #include "framework.h"
 #include "context_image.h"
+#include "aura/graphics/image/save_image.h"
 #include "apex/parallelization/handler_manager.h"
 #include "apex_windows_common/single_threaded_handler_manager.h"
 #include <wincodec.h>
+
 
 class multi_threaded_handler_manager :
    virtual public handler_manager
@@ -134,7 +136,7 @@ namespace imaging_wic
 
       bool bOk = true;
 
-      m_psystem->m_paurasystem->m_paurasession->m_puser->m_pwindowing->windowing_send({ e_timeout, 15_s, [&]()
+      m_psystem->windowing_send({ e_timeout, 15_s, [&]()
          {
 
             auto dataPackage = ::winrt::Windows::ApplicationModel::DataTransfer::Clipboard::GetContent();
@@ -255,7 +257,7 @@ namespace imaging_wic
 
       bool bOk = false;
 
-      m_psystem->m_paurasession->m_puser->m_pwindowing->windowing_send({ e_timeout, 15_s, [&bOk]()
+      m_psystem->windowing_send({ e_timeout, 15_s, [&bOk]()
          {
 
 
@@ -302,7 +304,7 @@ namespace imaging_wic
 
       package.SetBitmap(object);
 
-      m_psystem->m_paurasystem->m_paurasession->m_puser->m_pwindowing->windowing_send({ e_timeout, 15_s, [&package, this]()
+      m_psystem->windowing_send({ e_timeout, 15_s, [&package, this]()
          {
 
             ::winrt::Windows::ApplicationModel::DataTransfer::Clipboard::SetContent(package);

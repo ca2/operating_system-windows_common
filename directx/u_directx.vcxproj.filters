@@ -53,5 +53,8 @@
     <ClInclude Include="object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="aaa__library.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -5,17 +5,10 @@
 #include "aura_windows_common/_.h"
 #ifdef _UWP
 #include "aura_universal_windows/_.h"
-#endif
-#ifdef WINDOWS_DESKTOP
+#include <winrt/Windows.ApplicationModel.DataTransfer.h>
+#elif defined(WINDOWS_DESKTOP)
 #include "aura_windows/_.h"
 #endif
-#ifdef _UWP
-#include "aura_universal_windows/_library.h"
-#include <winrt/Windows.ApplicationModel.DataTransfer.h>
-#endif
-//#ifdef WINDOWS_DESKTOP
-//#include "aura_windows/_library.h"
-//#endif
 #include <wincodec.h>
 
 
