@@ -12,7 +12,7 @@
     <ClInclude Include="framework.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="_music_midi_xaudio.h">
+    <ClInclude Include="aaa_music_midi_xaudio.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="factory_exchange.h">

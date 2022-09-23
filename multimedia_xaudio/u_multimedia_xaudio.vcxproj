@@ -55,7 +55,7 @@
     <ClInclude Include="_.h" />
     <ClInclude Include="factory_exchange.h" />
     <ClInclude Include="translation.h" />
-    <ClInclude Include="_multimedia_xaudio.h" />
+    <ClInclude Include="aaa_multimedia_xaudio.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="framework.cpp">

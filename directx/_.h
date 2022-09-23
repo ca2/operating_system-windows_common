@@ -9,7 +9,7 @@
 //#include <winapifamily.h>
 //#include <windows.h>
 //#include <shlwapi.h>
-#include <wrl/client.h>
+//#include <wrl/client.h>
 #include <DXGI1_2.h>
 #include <D3D11.h>
 #include <D3D11_1.h>

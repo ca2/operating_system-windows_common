@@ -4,6 +4,11 @@
 #include "apex/parallelization/handler_manager.h"
 #include "apex_windows_common/single_threaded_handler_manager.h"
 #include <wincodec.h>
+#ifdef _UWP
+#include "acme/operating_system/universal_windows/_winrt_foundation.h"
+#include "acme_universal_windows/_winrt_stream.h"
+#include "_winrt_applicationmodel_datatransfer.h"
+#endif
 
 
 class multi_threaded_handler_manager :

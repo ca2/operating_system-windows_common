@@ -27,7 +27,7 @@
     <ClInclude Include="framework.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="_multimedia_xaudio.h">
+    <ClInclude Include="aaa_multimedia_xaudio.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

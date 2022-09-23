@@ -1,9 +1,10 @@
 #include "framework.h"
 #include "context_image.h"
 #include "aura/graphics/image/save_image.h"
-
+#include <wincodec.h>
 
 #ifdef _UWP
+#include "acme_universal_windows/_winrt_stream.h"
 #include <ShCore.h>
 #endif
 

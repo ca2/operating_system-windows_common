@@ -2,9 +2,14 @@
 #include "context_image.h"
 #include "apex/parallelization/handler_manager.h"
 #include <wincodec.h>
-#include <shcore.h>
 #include "aura/graphics/image/load_image.h"
 #include "aura/graphics/image/save_image.h"
+
+#ifdef _UWP
+#include <shcore.h>
+#include "acme_universal_windows/_winrt_stream.h"
+#include "_winrt_applicationmodel_datatransfer.h"
+#endif
 
 
 namespace imaging_wic
@@ -204,14 +209,14 @@ namespace imaging_wic
    bool node_save_image(IStream * pstream, const ::image * pimage, ::save_image * psaveimage);
 
 
-#ifdef _UWP
-
-
-   CLASS_DECL_IMAGING_WIC bool node_save_image(::winrt::Windows::Storage::Streams::InMemoryRandomAccessStream const & randomAccessStream, const ::image * pimage, ::save_image * psaveimage);
-
-
-#endif
-
+//#ifdef _UWP
+//
+//
+//   CLASS_DECL_IMAGING_WIC bool node_save_image(::winrt::Windows::Storage::Streams::InMemoryRandomAccessStream const & randomAccessStream, const ::image * pimage, ::save_image * psaveimage);
+//
+//
+//#endif
+//
    bool windows_image_from_bitmap_source(::image * pimageFrame, IWICBitmapSource * pbitmapsource, IWICImagingFactory * pimagingfactory)
    {
 

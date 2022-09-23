@@ -2,14 +2,16 @@
 
 
 #include "aura/_.h"
-#include "aura_windows_common/_.h"
+
+
 #ifdef _UWP
 #include "aura_universal_windows/_.h"
-#include <winrt/Windows.ApplicationModel.DataTransfer.h>
 #elif defined(WINDOWS_DESKTOP)
 #include "aura_windows/_.h"
 #endif
-#include <wincodec.h>
+
+
+//#include <wincodec.h>
 
 
 //#include "aura/graphics/image/save_image.h"
@@ -42,15 +44,6 @@ namespace imaging_wic
 
 
    CLASS_DECL_IMAGING_WIC bool node_save_image(IStream * pstream, const ::image * pimage, const ::save_image * psaveimage);
-
-
-#ifdef _UWP
-
-
-   CLASS_DECL_IMAGING_WIC bool node_save_image(::winrt::Windows::Storage::Streams::IRandomAccessStream const & stream, const ::image * pimage, const ::save_image * psaveimage);
-
-
-#endif
 
 
 } // namespace imaging_wic

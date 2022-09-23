@@ -1,6 +1,9 @@
 #pragma once
 
 
+#include "app-veriwell/multimedia/music/midi/out.h"
+
+
 namespace music
 {
 
@@ -11,6 +14,7 @@ namespace music
 
       namespace xaudio
       {
+
 
          class CLASS_DECL_MUSIC_MIDI_XAUDIO out :
             virtual public ::music::midi::out
@@ -25,10 +29,11 @@ namespace music
             ~out() override;
 
 
-            virtual void     open();
-            virtual void     close();
+            virtual void open();
+            virtual void close();
 
-            void     send_short_message(::music::midi::e_message emessage, int iChannel, int iData1, int iData2) override;
+
+            void send_short_message(::music::midi::enum_midi_message emessage, int iChannel, int iData1, int iData2) override;
 
 
          };
