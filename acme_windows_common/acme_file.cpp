@@ -142,7 +142,7 @@ namespace acme_windows_common
       if (fd < 0) // Couldn't open that path.
       {
          
-         throw ::exception(::error_io);
+         throw ::exception(::error_io, "ensure_exists failed to open file at path \"" + path + "\"");
 
       }
 

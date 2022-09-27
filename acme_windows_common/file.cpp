@@ -106,7 +106,7 @@ namespace acme_windows_common
          else
          {
 
-            throw file_open_exception(m_estatus, "file with empty name!!");
+            throw file_exception(m_estatus, -1, "", "file with empty name!!");
 
          }
 
@@ -358,7 +358,7 @@ namespace acme_windows_common
 
             }
 
-            throw file_open_exception(m_estatus, "Create File has failed.");
+            throw file_exception(m_estatus, dwLastError, m_path, "Create File has failed.");
 
          }
 
@@ -430,7 +430,7 @@ namespace acme_windows_common
 
          auto lastError = ::GetLastError();
 
-         throw ::file_exception(::error_io, lastError, m_path);
+         throw ::file_exception(::error_io, lastError, m_path, "!ReadFile");
 
       }
 
@@ -463,7 +463,7 @@ namespace acme_windows_common
 
          DWORD dwLastError = ::GetLastError();
 
-         throw ::file_exception(::error_io, dwLastError, m_path);
+         throw ::file_exception(::error_io, dwLastError, m_path, "!WriteFile");
 
       }
 
@@ -478,7 +478,7 @@ namespace acme_windows_common
 
          }
 
-         throw ::file_exception(error_disk_full, -1, m_path);
+         throw ::file_exception(error_disk_full, -1, m_path, "nWritten != nCount");
 
       }
 
@@ -491,7 +491,7 @@ namespace acme_windows_common
       if (m_handleFile == INVALID_HANDLE_VALUE)
       {
 
-         throw ::file_exception(::error_io, -1, m_path);
+         throw ::file_exception(::error_io, -1, m_path, "m_handleFile == INVALID_HANDLE_VALUE");
 
       }
 
@@ -510,7 +510,7 @@ namespace acme_windows_common
 
          DWORD dwLastError = ::GetLastError();
 
-         throw ::file_exception(::error_io, dwLastError, m_path);
+         throw ::file_exception(::error_io, dwLastError, m_path, "SetFilePointer == -1");
 
       }
 
@@ -580,7 +580,7 @@ namespace acme_windows_common
 
          DWORD dwLastError = ::GetLastError();
 
-         throw ::file_exception(::error_io, dwLastError, m_path);
+         throw ::file_exception(::error_io, dwLastError, m_path, "SetFilePointer == -1");
 
       }
 
@@ -619,7 +619,7 @@ namespace acme_windows_common
          else
          {
 
-            throw ::file_exception(::error_io, dwLastError, m_path);
+            throw ::file_exception(::error_io, dwLastError, m_path, "!FlushFileBuffers");
 
          }
 
@@ -663,7 +663,7 @@ namespace acme_windows_common
       if (bError)
       {
 
-         throw ::file_exception(::error_io, dwLastError, m_path);
+         throw ::file_exception(::error_io, dwLastError, m_path, "file::close");
 
       }
 
@@ -680,7 +680,7 @@ namespace acme_windows_common
 
          DWORD dwLastError = ::GetLastError();
 
-         throw ::file_exception(::error_io, dwLastError, m_path);
+         throw ::file_exception(::error_io, dwLastError, m_path, "!LockFile");
 
       }
    }
@@ -696,7 +696,7 @@ namespace acme_windows_common
 
          DWORD dwLastError = ::GetLastError();
 
-         throw ::file_exception(::error_io, dwLastError, m_path);
+         throw ::file_exception(::error_io, dwLastError, m_path, "!UnlockFile");
 
       }
 
@@ -716,7 +716,7 @@ namespace acme_windows_common
 
          DWORD dwLastError = ::GetLastError();
 
-         throw ::file_exception(::error_io, dwLastError, m_path);
+         throw ::file_exception(::error_io, dwLastError, m_path, "!SetEndOfFile");
 
       }
 

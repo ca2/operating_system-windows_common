@@ -11,7 +11,7 @@
 #endif
 
 
-//#include <wincodec.h>
+#include <wincodec.h>
 
 
 //#include "aura/graphics/image/save_image.h"
@@ -47,11 +47,6 @@ namespace imaging_wic
 
 
 } // namespace imaging_wic
-
-
-
-
-comptr < IWICImagingFactory > wic_get_imaging_factory();
 
 
 
