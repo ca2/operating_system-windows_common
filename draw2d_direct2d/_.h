@@ -93,7 +93,7 @@ namespace draw2d_direct2d
 
 
 
-#define new ACME_NEW
+//#define new ACME_NEW
 
 
 inline D2D1_COLOR_F * copy(D2D1_COLOR_F * pcolorTarget, const ::color::color * pcolor)
