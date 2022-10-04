@@ -18,3 +18,12 @@ CLASS_DECL_ACME_WINDOWS_COMMON int trace_hr(const char * psz, HRESULT hr);
 
 
 CLASS_DECL_ACME_WINDOWS_COMMON void throw_if_failed(HRESULT hr);
+
+
+inline error_code __hresult(HRESULT hresult)
+{
+
+   return { e_error_code_type_hresult, (::i64)hresult };
+
+}
+

@@ -24,7 +24,7 @@ hresult_exception::hresult_exception(HRESULT hresult, const char * pszMessage)
 
    }
 
-   m_hresult = hresult;
+   m_errorcodea.add(__hresult(hresult));
 
    m_strMessage = pszMessage;
 
