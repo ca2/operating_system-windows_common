@@ -1,9 +1,10 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "file.h"
 #include "node.h"
 #include "acme_directory.h"
 #include "acme_file.h"
 #include "acme_path.h"
+#include "exception_translator.h"
 
 
 __FACTORY_EXPORT void acme_windows_common_factory(::factory::factory * pfactory)
@@ -81,7 +82,7 @@ __FACTORY_EXPORT void acme_windows_common_factory(::factory::factory * pfactory)
    //pfactory->add_factory_item < ::windows::copydesk, ::user::copydesk >();
    //pfactory->add_factory_item < ::windows::shell, ::user::shell >();
 
-   //pfactory->add_factory_item < ::windows_common::exception_translator, ::exception_translator >();
+   pfactory->add_factory_item < ::acme_windows_common::exception_translator, ::exception_translator >();
    //pfactory->add_factory_item < ::windows_common::exception_engine, ::exception_engine >();
 
 

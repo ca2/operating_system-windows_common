@@ -794,12 +794,12 @@
     <ClInclude Include="bstring.h" />
     <ClInclude Include="comptr.h" />
     <ClInclude Include="cotaskptr.h" />
-    <ClInclude Include="exception\standard.h" />
-    <ClInclude Include="exception\translator.h" />
-    <ClInclude Include="exception\hresult.h" />
+    <ClInclude Include="exception_translator.h" />
     <ClInclude Include="file.h" />
+    <ClInclude Include="hresult_exception.h" />
     <ClInclude Include="node.h" />
     <ClInclude Include="prop_variant.h" />
+    <ClInclude Include="standard_exception.h" />
     <ClInclude Include="variant.h" />
     <ClInclude Include="_.h" />
     <ClInclude Include="framework.h" />
@@ -813,9 +813,9 @@
     <ClCompile Include="acme_path.cpp" />
     <ClCompile Include="bstring.cpp" />
     <ClCompile Include="com.cpp" />
-    <ClCompile Include="exception\hresult.cpp" />
-    <ClCompile Include="exception\translator.cpp" />
+    <ClCompile Include="exception_translator.cpp" />
     <ClCompile Include="file.cpp" />
+    <ClCompile Include="hresult_exception.cpp" />
     <ClCompile Include="networking.cpp" />
     <ClCompile Include="node.cpp" />
     <ClCompile Include="_.cpp" />

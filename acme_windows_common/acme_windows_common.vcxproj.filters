@@ -12,12 +12,6 @@
     <Filter Include="Resource Files">
       <UniqueIdentifier>{2ec8ecd0-d089-4887-98eb-a66497a4e6c3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\exception">
-      <UniqueIdentifier>{7c567043-9110-44ba-b7cb-034e0dfd206b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\exception">
-      <UniqueIdentifier>{87e202b7-167a-4013-98c5-f0773e7c43ed}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -56,12 +50,6 @@
     <ClInclude Include="variant.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="exception\hresult.h">
-      <Filter>Header Files\exception</Filter>
-    </ClInclude>
-    <ClInclude Include="exception\translator.h">
-      <Filter>Header Files\exception</Filter>
-    </ClInclude>
     <ClInclude Include="acme_file.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -71,8 +59,14 @@
     <ClInclude Include="acme_directory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="exception\standard.h">
-      <Filter>Header Files\exception</Filter>
+    <ClInclude Include="exception_translator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hresult_exception.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="standard_exception.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -97,22 +91,22 @@
     <ClCompile Include="networking.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="exception\hresult.cpp">
-      <Filter>Source Files\exception</Filter>
-    </ClCompile>
     <ClCompile Include="acme_file.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="acme_path.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="exception\translator.cpp">
-      <Filter>Source Files\exception</Filter>
-    </ClCompile>
     <ClCompile Include="acme_directory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="file.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="exception_translator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="hresult_exception.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

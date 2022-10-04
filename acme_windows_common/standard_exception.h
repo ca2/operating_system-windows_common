@@ -1,8 +1,8 @@
-#pragma once
+﻿#pragma once
 
 
 #include <eh.h>
-#include "translator.h"
+#include "exception_translator.h"
 
 #if OSBIT == 64
 

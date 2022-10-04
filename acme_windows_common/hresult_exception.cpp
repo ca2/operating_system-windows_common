@@ -1,5 +1,5 @@
-#include "framework.h"
-#include "hresult.h"
+﻿#include "framework.h"
+#include "hresult_exception.h"
 
 
 hresult_exception::hresult_exception(HRESULT hresult, const char * pszMessage)
