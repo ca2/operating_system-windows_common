@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "acme/operating_system/time.h"
 #include "file.h"
 #include "acme_directory.h"
@@ -755,9 +755,9 @@ namespace acme_windows_common
 
       ::matter::dump(dumpcontext);
 
-      dumpcontext << "with handle " << m_handleFile;
-      dumpcontext << " and name \"" << m_path << "\"";
-      dumpcontext << "\n";
+      //dumpcontext << "with handle " << m_handleFile;
+      //dumpcontext << " and name \"" << m_path << "\"";
+      //dumpcontext << "\n";
 
    }
 
