@@ -16,7 +16,7 @@ namespace multimedia
       public:
 
 
-         destination(__pointer(base_application) papp);
+         destination(::pointer<base_application>papp);
          destination(const destination & destination);
          virtual ~destination();
 

@@ -1,8 +1,8 @@
 #pragma once
 
 
-typedef __pointer_array(::matter) object_array;
-typedef map < itask_t, __pointer(task) > task_map;
+typedef pointer_array < ::matter > object_array;
+typedef map < itask_t, ::pointer<task >>task_map;
 typedef map < task *, itask_t > task_id_map;
 
 
@@ -23,10 +23,10 @@ public:
    itask_t                           m_itask;
    string                              m_strTaskName;
    string                              m_strTaskTag;
-   __pointer(::object)    m_pobjectParent;
+   ::pointer<::object>   m_pobjectParent;
 
-   __pointer(::matter)            m_pmatter;
-   __pointer(manual_reset_event)       m_pevSleep;
+   ::pointer<::matter>           m_pmatter;
+   ::pointer<manual_reset_event>      m_pevSleep;
 
 #ifdef WINDOWS
    HRESULT                          m_hresultCoInitialize;
@@ -130,7 +130,7 @@ public:
 };
 
 
-using task_array = __pointer_array(task);
+using task_array = pointer_array < task >;
 
 
 

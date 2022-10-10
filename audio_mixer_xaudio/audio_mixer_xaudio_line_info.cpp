@@ -9,7 +9,7 @@ namespace multimedia
    {
 
 
-      line_info::line_info(__pointer(base_application) papp)
+      line_info::line_info(::pointer<base_application>papp)
       {
 
       }

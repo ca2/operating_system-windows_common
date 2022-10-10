@@ -43,8 +43,8 @@ namespace music
             void PostTempoChange();
             void SendTempoChange();
 
-            void ExecuteCommand(pointer < ::music::midi::player::command > pcommand);
-            void _ExecuteCommand(pointer < ::music::midi::player::command > pcommand);
+            void ExecuteCommand(::pointer<::music::midi::player::command>pcommand);
+            void _ExecuteCommand(::pointer<::music::midi::player::command>pcommand);
 
             virtual bool initialize_thread() override;
             virtual i32 exit_instance();

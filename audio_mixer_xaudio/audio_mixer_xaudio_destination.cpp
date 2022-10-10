@@ -8,7 +8,7 @@ namespace multimedia
    namespace audio_mixer_mmsystem
    {
 
-      destination::destination(__pointer(base_application) papp) :
+      destination::destination(::pointer<base_application>papp) :
          ::object(pobject),
          ::multimedia::audio_mixer::source(pobject),
          ::multimedia::audio_mixer_mmsystem::source(pobject),
@@ -51,7 +51,7 @@ namespace multimedia
       void     destination::initialize_source_info()
       {
 
-         __pointer(::multimedia::audio_mixer_mmsystem::source)     lpSource;
+         ::pointer<::multimedia::audio_mixer_mmsystem::source>    lpSource;
 
          i32 iConnections = (i32) m_mixerline.cConnections;
 

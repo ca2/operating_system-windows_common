@@ -215,12 +215,12 @@ namespace music
             ::duration GetQuarterNote();
 
 
-            inline __pointer(::music::midi::mmsystem::buffer) file()
+            inline ::pointer<::music::midi::mmsystem::buffer>file()
             {
                return get_file();
             }
 
-            inline __pointer(::music::midi::mmsystem::sequence_thread) thread()
+            inline ::pointer<::music::midi::mmsystem::sequence_thread>thread()
             {
                return m_pthread;
             }

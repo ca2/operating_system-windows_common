@@ -7,7 +7,7 @@ class CLASS_DECL_ACME single_lock :
 public:
 
 
-   __pointer(synchronization_object)         m_psync;
+   ::pointer<synchronization_object>        m_psync;
    //HANDLE                  m_hobject;
    bool                    m_bAcquired;
 

@@ -19,7 +19,7 @@ namespace directx
       comptr<IDXGIDevice>                             m_pdxgidevice;
 
 
-      __pointer(::user::interaction_impl)             m_pimpl;
+      ::pointer<::user::interaction_impl>            m_pimpl;
 
       
       D3D_FEATURE_LEVEL                               m_featurelevel;

@@ -38,7 +38,7 @@ namespace music
 
             void window::_001OnMmsgDone(::message::message * pmessage)
             {
-               __pointer(::user::message) pusermessage(pmessage);
+               ::pointer<::user::message>pusermessage(pmessage);
                if(get_callback() != nullptr)
                {
                   ::music::midi::sequence * pseq = (::music::midi::sequence *) pusermessage->m_wparam;
@@ -56,7 +56,7 @@ namespace music
 
             void window::_001OnNotifyEvent(::message::message * pmessage)
             {
-               __pointer(::user::message) pusermessage(pmessage);
+               ::pointer<::user::message>pusermessage(pmessage);
                ::music::midi::player::notify_event * pdata = (::music::midi::player::notify_event *) pusermessage->m_lparam.m_lparam;
                if(get_callback() != nullptr)
                {
@@ -94,7 +94,7 @@ namespace music
 
             void window::_001OnUserMessage(::message::message * pmessage)
             {
-               __pointer(::user::message) pusermessage(pmessage);
+               ::pointer<::user::message>pusermessage(pmessage);
                switch(pusermessage->m_wparam)
                {
                case 3388:
@@ -114,7 +114,7 @@ namespace music
             void window::_001OnApp3388Message(::message::message * pmessage)
             {
                throw ::not_implemented();
-               __pointer(::user::message) pusermessage(pmessage);
+               ::pointer<::user::message>pusermessage(pmessage);
                /*            MSG msg;
 
                while(PeekMessage(

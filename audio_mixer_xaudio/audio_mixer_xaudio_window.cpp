@@ -9,7 +9,7 @@ namespace multimedia
    {
 
 
-      window::window(__pointer(base_application) papp) :
+      window::window(::pointer<base_application>papp) :
          ::object(pobject)
       {
          create_message_queue("");

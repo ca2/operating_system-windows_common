@@ -9,7 +9,7 @@ namespace multimedia
    {
 
 
-      department::department(__pointer(base_application) papp) :
+      department::department(::pointer<base_application>papp) :
          ::object(pobject),
          base_department(pobject)
       {

@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "bitmap.h"
 #include "graphics.h"
 #include "aura/graphics/draw2d/lock.h"
@@ -371,7 +371,7 @@ namespace draw2d_direct2d
 
       ::draw2d::object::dump(dumpcontext);
 
-      dumpcontext << "\n";
+      //dumpcontext << "\n";
 
    }
 

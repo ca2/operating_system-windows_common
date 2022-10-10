@@ -1496,7 +1496,7 @@ bool ::mutex::unlock()
 
 
 
-__pointer(::mutex) open_mutex(const ::string & lpszName)
+::pointer<::mutex>open_mutex(const ::string & lpszName)
 {
 
 #ifdef WINDOWS
@@ -1650,7 +1650,7 @@ pacmedir->create(path.folder());
 void wait_until_mutex_does_not_exist(const ::string & lpszName)
 {
 
-   __pointer(::mutex) pmutex = __new(::mutex(e_create_new, false, "Global\\::ca::account::ca2_spa::7807e510-5579-11dd-ae16-0800200c7784"));
+   ::pointer<::mutex>pmutex = __new(::mutex(e_create_new, false, "Global\\::ca::account::ca2_spa::7807e510-5579-11dd-ae16-0800200c7784"));
 
    if(::get_last_status() == ::error_already_exists)
    {

@@ -18,7 +18,7 @@ namespace multimedia
          ::multimedia::audio_mixer_mmsystem::window            m_window;
 
 
-         audio_mixer(__pointer(base_application) papp);
+         audio_mixer(::pointer<base_application>papp);
          virtual ~audio_mixer();
 
 

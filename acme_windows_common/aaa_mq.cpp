@@ -222,7 +222,7 @@
 //::mutex * g_pmutexMq;
 //
 //
-//map < itask_t, __pointer(message_queue) > * g_pmapMq;
+//map < itask_t, ::pointer<message_queue >>* g_pmapMq;
 //
 //
 //message_queue * get_message_queue(itask_t itask, bool bCreate)
@@ -450,7 +450,7 @@
 //
 //   g_pmutexMq = new mutex();
 //
-//   g_pmapMq = new map < itask_t, __pointer(message_queue) >();
+//   g_pmapMq = new map < itask_t, ::pointer<message_queue >>);
 //
 //}
 //

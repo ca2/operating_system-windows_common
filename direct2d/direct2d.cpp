@@ -1,7 +1,7 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "direct2d.h"
 #include "directx/directx.h"
-#include "acme_windows_common/exception/hresult.h"
+#include "acme_windows_common/hresult_exception.h"
 
 
 #define d2d1_fax_options D2D1_FACTORY_OPTIONS // fax of merde

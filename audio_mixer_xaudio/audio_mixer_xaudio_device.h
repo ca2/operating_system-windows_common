@@ -19,7 +19,7 @@ namespace multimedia
          MIXERCAPS                     m_mixercaps;
 
 
-         device(__pointer(base_application) papp);
+         device(::pointer<base_application>papp);
          virtual ~device();
 
          virtual bool initialize(::multimedia::audio_mixer::audio_mixer * pmixer);

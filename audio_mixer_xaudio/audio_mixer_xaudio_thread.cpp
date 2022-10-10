@@ -9,7 +9,7 @@ namespace multimedia
    {
 
 
-      thread::thread(__pointer(base_application) papp) :
+      thread::thread(::pointer<base_application>papp) :
          ::object(pobject),
          ::thread(pobject)
       {
@@ -78,7 +78,7 @@ namespace multimedia
 
       void thread::OnMixerMessage(::message::message * pmessage)
       {
-         __pointer(::user::message) pusermessage(pmessage);
+         ::pointer<::user::message>pusermessage(pmessage);
 
          if(pusermessage->m_wparam ==  23)
          {
@@ -149,14 +149,14 @@ namespace multimedia
       void thread::OnVmsmException(::message::message * pmessage)
       {
          __UNREFERENCED_PARAMETER(pmessage);
-         //__pointer(base_application) pApp = (__pointer(base_application)) System;
+         //::pointer<base_application>pApp = (::pointer<base_application>System;
          //pApp->post_thread_message(VMSM_EXCEPTION, wParam, lParam);
       }
 
 
       void thread::OnUserMessage(::message::message * pmessage)
       {
-         __pointer(::user::message) pusermessage(pmessage);
+         ::pointer<::user::message>pusermessage(pmessage);
 
          switch(pusermessage->m_wparam)
          {
@@ -208,7 +208,7 @@ namespace multimedia
          {
             /*CDBBuildAlbumThreadData * lpdata =
             (CDBBuildAlbumThreadData *)lParam;
-            __pointer(single_document_template) pAlbumDocTemplate = nullptr;
+            ::pointer<single_document_template>pAlbumDocTemplate = nullptr;
             if(GetAlbumThread())
             {
             pAlbumDocTemplate = GetAlbumThread()->GetMixerDocTemplate();

@@ -230,7 +230,7 @@ namespace music
 
             void player::pre_translate_message(::message::message * pmessage)
             {
-               __pointer(::user::message) pusermessage(pmessage);
+               ::pointer<::user::message>pusermessage(pmessage);
                //ASSERT(GetMainWnd() == nullptr);
                //   if(pMsg->message == MM_MOM_DONE ||
                //      pMsg->message == MM_MOM_POSITIONCB ||
@@ -283,7 +283,7 @@ namespace music
 
             void player::OnUserMessage(::message::message * pmessage)
             {
-               __pointer(::user::message) pusermessage(pmessage);
+               ::pointer<::user::message>pusermessage(pmessage);
                if(pusermessage->m_wparam == 3377)
                {
                   m_puserinteraction->send_message(WM_USER, pusermessage->m_wparam, pusermessage->m_lparam);
@@ -380,7 +380,7 @@ namespace music
             {
                if(m_puserinteraction != nullptr)
                {
-                  __pointer(::music::midi::player::notify_event) pdata(__new(::music::midi::player::notify_event));
+                  ::pointer<::music::midi::player::notify_event>pdata(__new(::music::midi::player::notify_event));
                   pdata->m_pplayer = this;
                   pdata->m_enotifyevent = eevent;
                   m_puserinteraction->post_object(::music::midi::player::message_notify_event, 0,pdata);
@@ -402,14 +402,14 @@ namespace music
                return papplication->midi()->GetMidiOutDevice();
             }
 
-            void player::SetCallbackWindow(__pointer(::user::interaction) puie)
+            void player::SetCallbackWindow(::pointer<::user::interaction>puie)
             {
                m_puserinteraction = puie;
             }
 
             void player::on_attribute_change(::message::message * pmessage)
             {
-               __pointer(::music::midi::attribute_message) pchange(pmessage);
+               ::pointer<::music::midi::attribute_message>pchange(pmessage);
 
                switch(pchange->m_eattribute)
                {
@@ -441,13 +441,13 @@ namespace music
             void player::OnMultimediaMidiOutputMessageDone(::message::message * pmessage)
             {
 
-               __pointer(::user::message) pusermessage(pmessage);
+               ::pointer<::user::message>pusermessage(pmessage);
 
                HMIDISTRM hmidistream = (HMIDISTRM) pusermessage->m_wparam;
 
                LPMIDIHDR lpmidihdr = (LPMIDIHDR) pusermessage->m_lparam.m_lparam;
 
-               __pointer(sequence) sequence = get_sequence();
+               ::pointer<sequence>sequence = get_sequence();
 
                ASSERT(sequence->m_hstream == hmidistream);
 
@@ -457,11 +457,11 @@ namespace music
 
             void player::OnMultimediaMidiOutputMessagePositionCB(::message::message * pmessage)
             {
-               __pointer(::user::message) pusermessage(pmessage);
+               ::pointer<::user::message>pusermessage(pmessage);
                LPMIDIHDR lpmidihdr = (LPMIDIHDR) pusermessage->m_wparam;
                //          get_sequence()->OnPositionCB(lpmidihdr);
 
-               __pointer(sequence) sequence = get_sequence();
+               ::pointer<sequence>sequence = get_sequence();
 
                //            ASSERT(sequence->m_hstream == hmidistream);
 
@@ -473,8 +473,8 @@ namespace music
 
             void player::OnNotifyEvent(::message::message * pmessage)
             {
-               __pointer(::user::message) pusermessage(pmessage);
-               __pointer(::music::midi::player::notify_event) pdata(pusermessage->m_lparam);
+               ::pointer<::user::message>pusermessage(pmessage);
+               ::pointer<::music::midi::player::notify_event>pdata(pusermessage->m_lparam);
                pdata->m_pplayer = this;
                if(m_puserinteraction != nullptr)
                {

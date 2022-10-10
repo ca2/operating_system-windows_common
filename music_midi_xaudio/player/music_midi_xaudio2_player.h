@@ -47,7 +47,7 @@ namespace music
 
 
                void SendMmsgDone(::music::midi::sequence *pSeq, ::music::midi::LPMIDIDONEDATA lpmdd);
-               void SetCallbackWindow(__pointer(::user::interaction) puie);
+               void SetCallbackWindow(::pointer<::user::interaction>puie);
                bool Play(double dRate = 0.0, u32 dwEllapse = 584);
                bool Play(::duration tkStart, u32 dwEllapse = 584);
 

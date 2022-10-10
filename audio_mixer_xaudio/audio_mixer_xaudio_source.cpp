@@ -9,7 +9,7 @@ namespace multimedia
    {
 
 
-      source::source(__pointer(base_application) papp) :
+      source::source(::pointer<base_application>papp) :
          ::object(pobject),
          ::multimedia::audio_mixer::source(pobject)
       {
@@ -60,7 +60,7 @@ namespace multimedia
             m_mixerlinecontrols.pamxctrl[i].cbStruct = sizeof(MIXERCONTROL);
          }
 
-         __pointer(::multimedia::audio_mixer_mmsystem::device) device = get_device();
+         ::pointer<::multimedia::audio_mixer_mmsystem::device>device = get_device();
 
          mmrc = mmsystem::translate(mixerGetLineControls((HMIXEROBJ) device->m_hMixer, &m_mixerlinecontrols, MIXER_GETLINECONTROLSF_ALL));
 
@@ -78,7 +78,7 @@ namespace multimedia
             //    i32         nIndex;
             PMIXERCONTROL       pamxctrl;
             //        LPMIXERCONTROLDETAILS lpmcd;
-            __pointer(::multimedia::audio_mixer_mmsystem::control)     lpMixerControl;
+            ::pointer<::multimedia::audio_mixer_mmsystem::control>    lpMixerControl;
 
             //        if (0 != (APP_OPTF_DEBUGLOG & gfuAppOptions))
             //          MixAppDebugLog(nullptr);
@@ -226,7 +226,7 @@ namespace multimedia
          m_mixerline.dwSource       = dwSource;
 
 
-         __pointer(::multimedia::audio_mixer_mmsystem::device) device = get_device();
+         ::pointer<::multimedia::audio_mixer_mmsystem::device>device = get_device();
 
          void     mmrc = mmsystem::translate(::mixerGetLineInfo((HMIXEROBJ)device->m_hMixer, &m_mixerline, fdwInfo));
 
@@ -245,7 +245,7 @@ namespace multimedia
       void     source::mixerGetLineInfo(u32 dwSource, ::multimedia::audio_mixer::destination * pdestination)
       {
 
-         __pointer(::multimedia::audio_mixer_mmsystem::destination) destination = pdestination;
+         ::pointer<::multimedia::audio_mixer_mmsystem::destination>destination = pdestination;
 
          void     mmrc = mixerGetLineInfo(dwSource, destination->m_mixerline.dwDestination, MIXER_GETLINEINFOF_SOURCE);
          SetDestination(pdestination);

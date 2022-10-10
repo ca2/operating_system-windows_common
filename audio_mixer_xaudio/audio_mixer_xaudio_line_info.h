@@ -18,7 +18,7 @@ namespace multimedia
          MIXERLINE       m_mixerLine;
 
 
-         line_info(__pointer(base_application) papp);
+         line_info(::pointer<base_application>papp);
          virtual ~line_info();
 
 

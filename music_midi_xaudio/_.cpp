@@ -318,7 +318,7 @@ namespace music
 
       }
 
-      //void     FillTypeCombo(__pointer(simple_combo_box)lpcombo)
+      //void     FillTypeCombo(::pointer<simple_combo_box>pcombo)
       //{
       //   __UNREFERENCED_PARAMETER(lpcombo);
       //   /*   lpcombo->reset_content();
@@ -347,7 +347,7 @@ namespace music
       //   return ::success;
       //}
 
-      //void     FillPitchCombo(__pointer(simple_combo_box)lpcombo)
+      //void     FillPitchCombo(::pointer<simple_combo_box>pcombo)
       //{
       //   __UNREFERENCED_PARAMETER(lpcombo);
       //   /*    lpcombo->reset_content();

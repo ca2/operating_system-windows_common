@@ -17,7 +17,7 @@ namespace imaging_wic
       //__creatable_from_base(context_image, ::context_image);
 
 
-      __composite(handler_manager)        m_pmanagerImageLoad;
+      ::pointer<handler_manager>       m_pmanagerImageLoad;
 
 
       context_image();
@@ -30,7 +30,7 @@ namespace imaging_wic
       //virtual void _load_image(::context_image * pcontextimage, ::image * pimageParam, const ::payload & payloadFile, bool bSync, bool bCreateHelperMaps) override;
       void _load_image(image* pimage, const ::payload& payloadFile, const ::image::load_options & loadoptions = ::image::load_options()) override;
 
-      void _load_image(::image * pimage, __pointer(image_frame_array) & pframea, ::memory & memory) override;
+      void _load_image(::image * pimage, ::pointer<image_frame_array>& pframea, ::memory & memory) override;
       void save_image(memory & memory, const ::image * pimage, const ::save_image * psaveimage) override;
 
 
@@ -40,7 +40,7 @@ namespace imaging_wic
       //virtual void _load_image(::image* pimage, const ::payload& payloadFile, bool bSync, bool bCreateHelperMaps);
 
 
-      //virtual void _load_image(::image* pimage, __pointer(image_frame_array)& pframea, ::memory_pointer pmemory);
+      //virtual void _load_image(::image* pimage, ::pointer<image_frame_array> pframea, ::memory_pointer pmemory);
       //virtual void save_image(memory& memory, const ::image* pimage, ::save_image* psaveimage);
 
 

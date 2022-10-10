@@ -21,7 +21,7 @@ namespace draw2d_direct2d
 
          D2D1::Matrix3x2F                    m_m;
          array < D2D1::Matrix3x2F >          m_maRegion;
-         __pointer_array(::draw2d::region)        m_sparegionClip;
+         pointer_array < ::draw2d::region >        m_sparegionClip;
          D2D1_LAYER_PARAMETERS               m_layerparameters;
 
          state();
@@ -40,8 +40,8 @@ namespace draw2d_direct2d
       comptr<ID2D1Layer>                 m_player;
       comptr<ID2D1PathGeometry>          m_ppathgeometryClip;
 
-      __pointer_array(state)                             m_statea;
-      __pointer(state)                                   m_pstate;
+      pointer_array < state >                             m_statea;
+      ::pointer<state>                                  m_pstate;
 
       bool                                               m_bSaveClip;
 

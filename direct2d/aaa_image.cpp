@@ -1116,7 +1116,7 @@ namespace draw2d_direct2d
 
       hr = pbitmap1Map->CopyFromBitmap(nullptr, pbitmap1, nullptr);
 
-      __pointer(::draw2d_direct2d::bitmap) pbitmap = m_pbitmap;
+      ::pointer<::draw2d_direct2d::bitmap>pbitmap = m_pbitmap;
 
       __zero(pbitmap->m_map);
 
@@ -1335,11 +1335,11 @@ namespace draw2d_direct2d
 
       }
 
-      __pointer(::draw2d_direct2d::graphics) pgraphicsMap = m_pgraphicsMap;
+      ::pointer<::draw2d_direct2d::graphics>pgraphicsMap = m_pgraphicsMap;
 
-      __pointer(::draw2d_direct2d::graphics) pgraphics = m_pgraphics;
+      ::pointer<::draw2d_direct2d::graphics>pgraphics = m_pgraphics;
 
-      __pointer(::draw2d_direct2d::bitmap) pbitmap = m_pbitmap;
+      ::pointer<::draw2d_direct2d::bitmap>pbitmap = m_pbitmap;
 
       pgraphics->m_pbitmaprendertarget = nullptr;
 

@@ -121,7 +121,7 @@ namespace multimedia
 
          auto paudio = psystem->audio()->m_paudio;
 
-         __pointer(::wave::wave) audiowave = paudio->audiowave();
+         ::pointer<::wave::wave>audiowave = paudio->audiowave();
 
          //if(FAILED(hr = m_pxaudio->CreateSourceVoice(&m_psourcevoice,wave_format(),XAUDIO2_VOICE_NOSRC | XAUDIO2_VOICE_NOPITCH,1.0f,this)))
          if(FAILED(hr = m_pxaudio->CreateSourceVoice(&m_psourcevoice,wave_format(),0,1.0f,this)))

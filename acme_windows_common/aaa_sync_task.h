@@ -8,7 +8,7 @@
 //
 //
 //   manual_reset_event               m_event;
-//   __pointer(::matter)      m_pobjectRunnable;
+//   ::pointer<::matter>     m_pobjectRunnable;
 //
 //
 //   sync_task(::matter* pobjectRunnable);

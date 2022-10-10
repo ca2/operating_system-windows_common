@@ -32,7 +32,7 @@ namespace music
                virtual bool OnOpenMidiPlayer();
 
 
-               virtual bool Initialize(__pointer(::music::midi::midi) pcentral);
+               virtual bool Initialize(::pointer<::music::midi::midi>pcentral);
                virtual bool Finalize();
 
 

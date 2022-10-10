@@ -222,7 +222,7 @@ namespace draw2d_direct2d
 
       }
 
-      __pointer(rectangle_item) pitem = m_pitem;
+      ::pointer<rectangle_item>pitem = m_pitem;
 
       D2D1_RECT_F r;
       
@@ -240,7 +240,7 @@ namespace draw2d_direct2d
 
       D2D1_ELLIPSE ellipse;
 
-      __pointer(ellipse_item) pitem = m_pitem;
+      ::pointer<ellipse_item>pitem = m_pitem;
 
       auto pointCenter = pitem->m_rectangle.center();
       auto sizeRadius = pitem->m_rectangle.size() / 2.0;
@@ -282,7 +282,7 @@ namespace draw2d_direct2d
       }
       */
 
-      __pointer(polygon_item) pitem = m_pitem;
+      ::pointer<polygon_item>pitem = m_pitem;
 
       ppath->begin_figure();
       ppath->add_polygon(pitem->m_polygon.get_data(), pitem->m_polygon.get_size());
@@ -315,7 +315,7 @@ namespace draw2d_direct2d
 
       int n = 0;
 
-      __pointer(poly_polygon_item) pitem = m_pitem;
+      ::pointer<poly_polygon_item>pitem = m_pitem;
 
       for(int i = 0; i < pitem->m_polygona.get_size(); i++)
       {
@@ -364,7 +364,7 @@ namespace draw2d_direct2d
 
       }
 
-      __pointer(combine_item) pitem = m_pitem;
+      ::pointer<combine_item>pitem = m_pitem;
 
       auto pgeometry1 = pitem->m_pregion1->get_os_data < ID2D1Geometry * >(pgraphics);
 

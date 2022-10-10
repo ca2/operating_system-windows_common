@@ -100,11 +100,11 @@ namespace draw2d_direct2d
 
       object::dump(dumpcontext);
 
-      //dumpcontext << "get_handle1() = " << (::iptr) get_handle1();
-      //dumpcontext << "\nm_hAttribDC = " << (::iptr) get_handle2();
-      dumpcontext << "\nm_bPrinting = " << m_bPrinting;
+      ////dumpcontext << "get_handle1() = " << (::iptr) get_handle1();
+      ////dumpcontext << "\nm_hAttribDC = " << (::iptr) get_handle2();
+      //dumpcontext << "\nm_bPrinting = " << m_bPrinting;
 
-      dumpcontext << "\n";
+      //dumpcontext << "\n";
 
    }
 
@@ -411,9 +411,9 @@ namespace draw2d_direct2d
 
       //      }
 
-      //      __pointer(::draw2d_direct2d::graphics) pgraphicsDib1 = pimage1->get_graphics();
+      //      ::pointer<::draw2d_direct2d::graphics>pgraphicsDib1 = pimage1->get_graphics();
 
-      //      __pointer(::draw2d_direct2d::graphics) pgraphicsDib2 = pimage2->get_graphics();
+      //      ::pointer<::draw2d_direct2d::graphics>pgraphicsDib2 = pimage2->get_graphics();
 
       //      HRESULT hr = ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->EndDraw();
 
@@ -606,9 +606,9 @@ namespace draw2d_direct2d
 
          pimage2->_draw_raw(rectangleIntersect.size(), m_pimageAlphaBlend, __pointd(point - m_pointAlphaBlend));
 
-         __pointer(::draw2d_direct2d::graphics) pgraphicsDib1 = pimage1->get_graphics();
+         ::pointer<::draw2d_direct2d::graphics>pgraphicsDib1 = pimage1->get_graphics();
 
-         __pointer(::draw2d_direct2d::graphics) pgraphicsDib2 = pimage2->get_graphics();
+         ::pointer<::draw2d_direct2d::graphics>pgraphicsDib2 = pimage2->get_graphics();
 
          pimage2->unmap();
 
@@ -658,7 +658,7 @@ namespace draw2d_direct2d
 
       // ::draw2d::device_lock devicelock(this);
 
-      __pointer(::draw2d_direct2d::bitmap) pbitmap = pbitmapParam;
+      ::pointer<::draw2d_direct2d::bitmap>pbitmap = pbitmapParam;
 
       if (::is_null(pbitmapParam))
       {
@@ -702,11 +702,11 @@ namespace draw2d_direct2d
 
          //}
 
-         //__pointer(::draw2d_direct2d::graphics) pgraphicsMap = m_pgraphicsMap;
+         //::pointer<::draw2d_direct2d::graphics>pgraphicsMap = m_pgraphicsMap;
 
-         //__pointer(::draw2d_direct2d::graphics) pgraphics = m_pgraphics;
+         //::pointer<::draw2d_direct2d::graphics>pgraphics = m_pgraphics;
 
-         //__pointer(::draw2d_direct2d::bitmap) pbitmap = m_pbitmap;
+         //::pointer<::draw2d_direct2d::bitmap>pbitmap = m_pbitmap;
 
       //   m_pbitmaprendertarget = nullptr;
 
@@ -6278,7 +6278,7 @@ namespace draw2d_direct2d
 
       __stack(m_bOutline, true);
 
-      __pointer(class path) ppath = ppathParam;
+      ::pointer<class path> ppath = ppathParam;
 
       ID2D1PathGeometry * pgeometry = ppath->get_os_data < ID2D1PathGeometry * >(this, path_hollow);
 
@@ -6330,7 +6330,7 @@ namespace draw2d_direct2d
 
       fill(ppath, m_pbrush);
 
-      //__pointer(class path) ppath = ppathParam;
+      //::pointer<class path> ppath = ppathParam;
 
       //if (!ppath)
       //{
@@ -6396,7 +6396,7 @@ namespace draw2d_direct2d
    void graphics::fill(::draw2d::path * ppathParam, ::draw2d::brush * pbrush)
    {
 
-      __pointer(class path) ppath = ppathParam;
+      ::pointer<class path> ppath = ppathParam;
 
       if (!ppath)
       {

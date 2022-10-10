@@ -26,7 +26,7 @@ namespace multimedia
          };
 
 
-         department(__pointer(base_application) papp);
+         department(::pointer<base_application>papp);
          virtual ~department();
 
 

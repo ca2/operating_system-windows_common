@@ -32,7 +32,7 @@ namespace music
 
             }
 
-            bool player_interface::Initialize(__pointer(::music::midi::midi) pcentral)
+            bool player_interface::Initialize(::pointer<::music::midi::midi>pcentral)
             {
 
                if(!initialize())

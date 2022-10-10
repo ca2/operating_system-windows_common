@@ -64,7 +64,7 @@ namespace music
          bool sequence_thread::PostMidiSequenceEvent(::music::midi::sequence * pseq, ::music::midi::sequence::e_event eevent, LPMIDIHDR lpmh)
          {
 
-            __pointer(sequence) seq = pseq;
+            ::pointer<sequence>seq = pseq;
 
             return post_thread_message(::music::midi::sequenceEVENT_MESSAGE,  (WPARAM) pseq, (LPARAM) seq->create_new_event(eevent, lpmh));
 
@@ -73,7 +73,7 @@ namespace music
          void sequence_thread::OnMidiSequenceEvent(::message::message * pmessage)
          {
 
-            __pointer(::user::message) pusermessage(pmessage);
+            ::pointer<::user::message>pusermessage(pmessage);
 
             ::music::midi::sequence::event * pevent = (::music::midi::sequence::event *) pusermessage->m_lparam.m_lparam;
             ::music::midi::sequence * pseq = (::music::midi::sequence *) ptopic->m_psequence;
@@ -185,7 +185,7 @@ namespace music
          {
             if(m_pplayer != nullptr)
             {
-               __pointer(::music::midi::player::notify_event) pdata(__new(::music::midi::player::notify_event));
+               ::pointer<::music::midi::player::notify_event>pdata(__new(::music::midi::player::notify_event));
                pdata->m_enotifyevent = eevent;
                m_pplayer->post_object(::music::midi::player::message_notify_event, 0,pdata);
             }
@@ -295,7 +295,7 @@ namespace music
          }
 
 
-         void sequence_thread::ExecuteCommand(pointer < ::music::midi::player::command > spcommand)
+         void sequence_thread::ExecuteCommand(::pointer<::music::midi::player::command>spcommand)
          {
             spcommand->increment_reference_count(OBJECT_REFERENCE_COUNT_DEBUG_ARGS);
             post_thread_message(
@@ -307,8 +307,8 @@ namespace music
 
          void sequence_thread::OnCommand(::message::message * pmessage)
          {
-            __pointer(::user::message) pusermessage(pmessage);
-            pointer < ::music::midi::player::command > spcommand;
+            ::pointer<::user::message>pusermessage(pmessage);
+            ::pointer<::music::midi::player::command>spcommand;
             spcommand = (::music::midi::player::command *) pusermessage->m_lparam.m_lparam;
             try
             {
@@ -324,7 +324,7 @@ namespace music
          }
 
 
-         void sequence_thread::_ExecuteCommand(pointer < ::music::midi::player::command > spcommand)
+         void sequence_thread::_ExecuteCommand(::pointer<::music::midi::player::command>spcommand)
          {
             switch(spcommand->GetCommand())
             {

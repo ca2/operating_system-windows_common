@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "context_image.h"
 #include "aura/graphics/image/save_image.h"
 #include "apex/parallelization/handler_manager.h"
@@ -74,11 +74,11 @@ namespace imaging_wic
 
 #ifdef _UWP
 
-      __own(this, m_pmanagerImageLoad, __new(multi_threaded_handler_manager));
+      m_pmanagerImageLoad = __new(multi_threaded_handler_manager);
 
 #else
 
-      __own(this, m_pmanagerImageLoad, __new(single_threaded_handler_manager));
+      m_pmanagerImageLoad = __new(single_threaded_handler_manager);
 
 #endif
 

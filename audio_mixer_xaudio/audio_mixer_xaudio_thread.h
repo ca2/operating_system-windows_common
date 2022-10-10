@@ -23,10 +23,10 @@ namespace multimedia
 
          bool                                m_bPendingShowCommand;
 
-         __pointer(::multimedia::audio_mixer::department) m_psection;
+         ::pointer<::multimedia::audio_mixer::department>m_psection;
 
 
-         thread(__pointer(base_application) papp);
+         thread(::pointer<base_application>papp);
          virtual ~thread();
 
 

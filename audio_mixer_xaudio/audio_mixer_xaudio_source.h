@@ -19,7 +19,7 @@ namespace multimedia
          MIXERLINECONTROLS             m_mixerlinecontrols;
 
 
-         source(__pointer(base_application) papp);
+         source(::pointer<base_application>papp);
          source(source & source);
          virtual ~source();
 

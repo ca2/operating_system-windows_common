@@ -111,7 +111,7 @@ inline i32 __invariant_stricmp(const unichar *pwszLeft,const unichar *pwszRight)
 CLASS_DECL_ACME ::i32 delete_registry_tree_helper(HKEY hParentKey,const ::string & strKeyName);
 
 
-//CLASS_DECL_ACME __pointer(::acme::application) __get_app();
+//CLASS_DECL_ACME ::pointer<::acme::application>__get_app();
 CLASS_DECL_ACME HINSTANCE __get_resource_handle();
 CLASS_DECL_ACME void __set_resource_handle(HINSTANCE hInstResource);
 
