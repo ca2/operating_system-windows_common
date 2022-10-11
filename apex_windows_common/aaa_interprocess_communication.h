@@ -7,7 +7,7 @@ namespace windows
 
 
    class CLASS_DECL_APEX_WINDOWS_COMMON interprocess_communication_base :
-      virtual public interprocess_communication::base
+      virtual public inteprocess_channel::base
    {
    public:
 
@@ -26,15 +26,15 @@ namespace windows
    };
 
 
-   class CLASS_DECL_APEX_WINDOWS_COMMON interprocess_communication_tx :
+   class CLASS_DECL_APEX_WINDOWS_COMMON interprocess_caller :
       virtual public interprocess_communication_base,
-      virtual public interprocess_communication::tx
+      virtual public inteprocess_channel::caller
    {
    public:
 
 
-      interprocess_communication_tx();
-      virtual ~interprocess_communication_tx();
+      interprocess_caller();
+      virtual ~interprocess_caller();
 
 
 
@@ -58,24 +58,24 @@ namespace windows
    class rx_private;
 
 
-   class CLASS_DECL_APEX_WINDOWS_COMMON interprocess_communication_rx :
+   class CLASS_DECL_APEX_WINDOWS_COMMON interprocess_handler :
       virtual public interprocess_communication_base,
-      virtual public interprocess_communication::rx
+      virtual public inteprocess_channel::handler
    {
    public:
 
 
-      interprocess_communication_rx();
-      virtual ~interprocess_communication_rx();
+      interprocess_handler();
+      virtual ~interprocess_handler();
 
 
       bool create(const ::string & pszChannel);
       bool destroy();
 
 
-      virtual void * on_interprocess_receive(::interprocess_communication::rx * prx, const ::string & pszMessage);
-      virtual void * on_interprocess_receive(::interprocess_communication::rx * prx, int message, void * pdata, memsize len);
-      virtual void * on_interprocess_post(::interprocess_communication::rx * prx, i64 a, i64 b);
+      virtual void * on_interprocess_receive(::inteprocess::handler * prx, const ::string & pszMessage);
+      virtual void * on_interprocess_receive(::inteprocess::handler * prx, int message, void * pdata, memsize len);
+      virtual void * on_interprocess_post(::inteprocess::handler * prx, i64 a, i64 b);
 
 
       virtual bool on_idle();
@@ -90,15 +90,15 @@ namespace windows
    };
 
 
-//   class CLASS_DECL_APEX_WINDOWS_COMMON interprocess_communication :
+//   class CLASS_DECL_APEX_WINDOWS_COMMON inteprocess_channel :
 //      virtual public interprocess_communication_base,
-//      virtual public ::interprocess_communication::interprocess_communication
+//      virtual public ::inteprocess_channel::inteprocess_channel
 //   {
 //   public:
 //
 //
-//      interprocess_communication();
-//      virtual ~interprocess_communication();
+//      inteprocess_channel();
+//      virtual ~inteprocess_channel();
 //
 //
 //#if defined(_UWP)

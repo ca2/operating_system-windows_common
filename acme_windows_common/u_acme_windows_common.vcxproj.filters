@@ -7,9 +7,6 @@
     <Filter Include="Source Files">
       <UniqueIdentifier>{9bbb73a0-40d0-4f09-b55c-524201fce82b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\exception">
-      <UniqueIdentifier>{78d9c32e-97c2-4138-b4d9-493e5fc453e1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\exception">
       <UniqueIdentifier>{96caaa07-2f98-4759-bae3-4b7a97beb0f5}</UniqueIdentifier>
     </Filter>
@@ -143,13 +140,13 @@
     <ClCompile Include="node.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="exception\hresult.cpp">
-      <Filter>Source Files\exception</Filter>
-    </ClCompile>
-    <ClCompile Include="exception\translator.cpp">
-      <Filter>Source Files\exception</Filter>
-    </ClCompile>
     <ClCompile Include="acme_directory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="exception_translator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="hresult_exception.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

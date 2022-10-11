@@ -106,8 +106,8 @@
     <ClCompile Include="acme_path.cpp" />
     <ClCompile Include="bstring.cpp" />
     <ClCompile Include="com.cpp" />
-    <ClCompile Include="exception\hresult.cpp" />
-    <ClCompile Include="exception\translator.cpp" />
+    <ClCompile Include="exception_translator.cpp" />
+    <ClCompile Include="hresult_exception.cpp" />
     <ClCompile Include="_factory.cpp" />
     <ClCompile Include="file.cpp" />
     <ClCompile Include="framework.cpp">

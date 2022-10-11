@@ -33,10 +33,10 @@ __FACTORY_EXPORT void acme_windows_common_factory(::factory::factory * pfactory)
    pfactory->add_factory_item < ::acme_windows_common::acme_file, ::acme_file >();
    pfactory->add_factory_item < ::acme_windows_common::acme_path, ::acme_path >();
 
-   //pfactory->add_factory_item < ::windows::interprocess_communication_base, ::interprocess_communication::base >();
-   //pfactory->add_factory_item < ::windows::interprocess_communication_rx, ::interprocess_communication::rx >();
-   //pfactory->add_factory_item < ::windows::interprocess_communication_tx, ::interprocess_communication::tx >();
-   //add_factory_item < ::windows::interprocess_communication, ::interprocess_communication::interprocess_communication >();
+   //pfactory->add_factory_item < ::windows::interprocess_communication_base, ::inteprocess_channel::base >();
+   //pfactory->add_factory_item < ::windows::interprocess_handler, ::interprocess::handler >();
+   //pfactory->add_factory_item < ::windows::interprocess_caller, ::interprocess::caller >();
+   //add_factory_item < ::windows::inteprocess_channel, ::inteprocess_channel::inteprocess_channel >();
 
 
    //add_factory_item < ::windows::buffer, ::graphics::graphics >();

@@ -2,7 +2,7 @@
 #include "framework.h"
 #include "apex/operating_system.h"
 #include "apex/platform/app_core.h"
-#include "interprocess_communication.h"
+#include "inteprocess_channel.h"
 #include "apex/platform/launcher.h"
 #include "launcher.h"
 
@@ -38,19 +38,19 @@ namespace windows
    }
 
 
-   interprocess_communication_tx::interprocess_communication_tx()
+   interprocess_caller::interprocess_caller()
    {
 
    }
 
 
-   interprocess_communication_tx::~interprocess_communication_tx()
+   interprocess_caller::~interprocess_caller()
    {
 
    }
 
 
-   bool interprocess_communication_tx::open(const ::string & pszKey, ::launcher * plauncher)
+   bool interprocess_caller::open(const ::string & pszKey, ::launcher * plauncher)
    {
 
       if (get_hwnd() != nullptr)
@@ -118,7 +118,7 @@ namespace windows
 
    }
 
-   bool interprocess_communication_tx::close()
+   bool interprocess_caller::close()
    {
 
       if (get_hwnd() == nullptr)
@@ -133,7 +133,7 @@ namespace windows
    }
 
 
-   bool interprocess_communication_tx::send(const ::string & pszMessage, duration durationTimeout)
+   bool interprocess_caller::send(const ::string & pszMessage, duration durationTimeout)
    {
 
       if (!is_tx_ok())
@@ -174,7 +174,7 @@ namespace windows
       return true;
    }
 
-   bool interprocess_communication_tx::send(int message, void * pdata, int len, duration durationTimeout)
+   bool interprocess_caller::send(int message, void * pdata, int len, duration durationTimeout)
    {
 
       if (message == 0x80000000)
@@ -232,7 +232,7 @@ namespace windows
 
 
 
-   bool interprocess_communication_tx::is_tx_ok()
+   bool interprocess_caller::is_tx_ok()
    {
 
       return ::IsWindow((HWND)get_hwnd()) != false;
@@ -242,7 +242,7 @@ namespace windows
 
 
 
-   interprocess_communication_rx::interprocess_communication_rx()
+   interprocess_handler::interprocess_handler()
    {
 
       m_preceiver = nullptr;
@@ -250,13 +250,13 @@ namespace windows
    }
 
 
-   interprocess_communication_rx::~interprocess_communication_rx()
+   interprocess_handler::~interprocess_handler()
    {
 
    }
 
 
-   bool interprocess_communication_rx::create(const ::string & pszKey)
+   bool interprocess_handler::create(const ::string & pszKey)
    {
 
 
@@ -312,7 +312,7 @@ namespace windows
    }
 
 
-   bool interprocess_communication_rx::destroy()
+   bool interprocess_handler::destroy()
    {
 
       if (get_hwnd() != nullptr)
@@ -330,7 +330,7 @@ namespace windows
 
 
 
-   void * interprocess_communication_rx::on_interprocess_receive(::interprocess_communication::rx * prx, const ::string & pszMessage)
+   void * interprocess_handler::on_interprocess_receive(::inteprocess::handler * prx, const ::string & pszMessage)
    {
 
       string strMessage(pszMessage);
@@ -370,7 +370,7 @@ namespace windows
    }
 
 
-   void * interprocess_communication_rx::on_interprocess_receive(::interprocess_communication::rx * prx, int message, void * pdata, memsize len)
+   void * interprocess_handler::on_interprocess_receive(::inteprocess::handler * prx, int message, void * pdata, memsize len)
    {
 
       if (m_preceiver != nullptr)
@@ -387,7 +387,7 @@ namespace windows
    }
 
 
-   void * interprocess_communication_rx::on_interprocess_post(::interprocess_communication::rx * prx, long long int a, long long int b)
+   void * interprocess_handler::on_interprocess_post(::inteprocess::handler * prx, long long int a, long long int b)
    {
 
       if (m_preceiver != nullptr)
@@ -409,7 +409,7 @@ namespace windows
 
       int iRet = 0;
 
-      interprocess_communication_rx * pchannel = (interprocess_communication_rx *)GetWindowLongPtr((HWND)hwnd, GWLP_USERDATA);
+      interprocess_handler * pchannel = (interprocess_handler *)GetWindowLongPtr((HWND)hwnd, GWLP_USERDATA);
 
       if (pchannel == nullptr)
       {
@@ -453,7 +453,7 @@ namespace windows
    }
 
 
-   LRESULT interprocess_communication_rx::message_queue_proc(UINT message, WPARAM wparam, LPARAM lparam)
+   LRESULT interprocess_handler::message_queue_proc(UINT message, WPARAM wparam, LPARAM lparam)
    {
 
       if (message == WM_USER + 100)
@@ -508,7 +508,7 @@ namespace windows
    }
 
 
-   bool interprocess_communication_rx::on_idle()
+   bool interprocess_handler::on_idle()
    {
 
       return false;
@@ -516,7 +516,7 @@ namespace windows
    }
 
 
-   bool interprocess_communication_rx::is_rx_ok()
+   bool interprocess_handler::is_rx_ok()
    {
 
       return ::IsWindow((HWND) get_hwnd()) != false;
@@ -524,7 +524,7 @@ namespace windows
    }
 
 
-   //interprocess_communication::interprocess_communication()
+   //inteprocess_channel::inteprocess_channel()
    //{
 
    //   m_durationTimeout = (5000) * 11;
@@ -532,14 +532,14 @@ namespace windows
    //}
 
 
-   //interprocess_communication::~interprocess_communication()
+   //inteprocess_channel::~inteprocess_channel()
    //{
 
 
    //}
 
 
-   //bool interprocess_communication::open_ab(const ::string & pszKey, const ::string & pszModule, launcher * plauncher)
+   //bool inteprocess_channel::open_ab(const ::string & pszKey, const ::string & pszModule, launcher * plauncher)
    //{
 
    //   m_strChannel = pszKey;
@@ -573,7 +573,7 @@ namespace windows
    //}
 
 
-   //bool interprocess_communication::open_ba(const ::string & pszKey, const ::string & pszModule, launcher * plauncher)
+   //bool inteprocess_channel::open_ba(const ::string & pszKey, const ::string & pszModule, launcher * plauncher)
    //{
 
    //   m_strChannel = pszKey;
@@ -608,7 +608,7 @@ namespace windows
    //}
 
 
-   //bool interprocess_communication::is_rx_tx_ok()
+   //bool inteprocess_channel::is_rx_tx_ok()
    //{
 
    //   return m_prx->is_rx_ok() && m_ptx->is_tx_ok();
@@ -616,13 +616,13 @@ namespace windows
    //}
 
 
-   //void interprocess_communication::restart_apex_ipc()
+   //void inteprocess_channel::restart_apex_ipc()
    //{
 
    //}
 
 
-   //bool interprocess_communication::close()
+   //bool inteprocess_channel::close()
    //{
 
    //   return false;
