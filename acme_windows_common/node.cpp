@@ -35,7 +35,7 @@ namespace acme_windows_common
 
    //   //return estatus;
 
-   //}
+   }
 
    //   string node::get_user_name()
    //   {
