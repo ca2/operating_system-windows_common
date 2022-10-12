@@ -20,22 +20,22 @@ namespace acme_windows_common
    }
 
 
-   void node::initialize_matter(::matter* pmatter)
-   {
+   //void node::initialize_matter(::matter* pmatter)
+   //{
 
-      /*auto estatus =*/
-      ::matter::initialize_matter(pmatter);
+   //   /*auto estatus =*/
+   //   ::matter::initialize_matter(pmatter);
 
-      //if (!estatus)
-      //{
+   //   //if (!estatus)
+   //   //{
 
-      //   return estatus;
+   //   //   return estatus;
 
-      //}
+   //   //}
 
-      //return estatus;
+   //   //return estatus;
 
-   }
+   //}
 
    //   string node::get_user_name()
    //   {
