@@ -26,16 +26,16 @@ namespace acme_windows_common
       /*auto estatus =*/
       ::acme::node::initialize(pobject);
 
-      //if (!estatus)
-      //{
+   //   //if (!estatus)
+   //   //{
 
-      //   return estatus;
+   //   //   return estatus;
 
-      //}
+   //   //}
 
-      //return estatus;
+   //   //return estatus;
 
-   }
+   //}
 
    //   string node::get_user_name()
    //   {
