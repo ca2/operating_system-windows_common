@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "node.h"
 #include "acme/filesystem/filesystem/acme_directory.h"
 
@@ -20,11 +20,11 @@ namespace acme_windows_common
    }
 
 
-   void node::initialize_matter(::matter* pmatter)
+   void node::initialize(::object * pobject)
    {
 
       /*auto estatus =*/
-      ::matter::initialize_matter(pmatter);
+      ::acme::node::initialize(pobject);
 
       //if (!estatus)
       //{
