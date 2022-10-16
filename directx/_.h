@@ -1,4 +1,4 @@
-// Created by camilo on 2021-06-05 23:48 BRT <3ThomasBS_!!
+﻿// Created by camilo on 2021-06-05 23:48 BRT <3ThomasBS_!!
 #pragma once
 
 
@@ -26,6 +26,7 @@ interface ID3D11DeviceContext;
 interface ID3D11Device1;
 interface IDXGIDevice;
 
+
 #ifdef _DIRECTX_LIBRARY
 #define CLASS_DECL_DIRECTX  CLASS_DECL_EXPORT
 #else
@@ -33,27 +34,37 @@ interface IDXGIDevice;
 #endif
 
 
+namespace directx
+{
+
+
+   class directx;
 
 
 #if defined(_DEBUG)
 
 
-namespace directx
-{
-
-   class directx;
-
    CLASS_DECL_DIRECTX void defer_dxgi_debug_initialize();
    CLASS_DECL_DIRECTX void dxgi_debug_terminate();
+
+
+#endif
 
 
    CLASS_DECL_DIRECTX void defer_initialize(::object * pobject);
    CLASS_DECL_DIRECTX void finalize();
 
-} // namespace dx
+
+} // namespace directx
+
+
+#if defined(_DEBUG)
 
 
 CLASS_DECL_DIRECTX void directx_debug();
 
 
 #endif
+
+
+
