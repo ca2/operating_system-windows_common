@@ -52,7 +52,7 @@ namespace draw2d_direct2d
 
             D2D1_COLOR_F color;
 
-            __copy(color, m_color);
+            copy(&color, &m_color);
 
             pgraphics->m_prendertarget->CreateSolidColorBrush(color, &m_psolidbrush);
 
