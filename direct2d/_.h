@@ -1,4 +1,4 @@
-// Created by camilo on 2021-06-06 00:04 BRT <3ThomasBS_!!
+﻿// Created by camilo on 2021-06-06 00:04 BRT <3ThomasBS_!!
 #pragma once
 
 
@@ -114,6 +114,40 @@ CLASS_DECL_AURA float x_dpi(oswindow hwnd, float y);
 //} // namespace draw2d
 //
 
+
+inline void copy(D2D1_POINT_2F & pointDst, const POINT_F64 & pointSrc)
+{
+   
+   pointDst.x = (FLOAT)pointSrc.x;
+   pointDst.y = (FLOAT)pointSrc.y;
+
+}
+
+
+inline D2D1_COLOR_F & copy(D2D1_COLOR_F & colorTarget, const ::color::color & color)
+{
+
+   colorTarget.a = color.alpha / 255.0f;
+   colorTarget.r = color.red / 255.0f;
+   colorTarget.g = color.green / 255.0f;
+   colorTarget.b = color.blue / 255.0f;
+
+   return colorTarget;
+
+}
+
+
+inline D2D1_COLOR_F & copy(D2D1_COLOR_F & colorTarget, const ::color32_t & color)
+{
+
+   colorTarget.a = colorref_get_a_value(color) / 255.0f;
+   colorTarget.r = colorref_get_r_value(color) / 255.0f;
+   colorTarget.g = colorref_get_g_value(color) / 255.0f;
+   colorTarget.b = colorref_get_b_value(color) / 255.0f;
+
+   return colorTarget;
+
+}
 
 
 

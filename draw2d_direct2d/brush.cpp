@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "brush.h"
 #include "graphics.h"
 #include "aura/graphics/image/image.h"
@@ -52,7 +52,7 @@ namespace draw2d_direct2d
 
             D2D1_COLOR_F color;
 
-            copy(&color, &m_color);
+            copy(color, m_color);
 
             pgraphics->m_prendertarget->CreateSolidColorBrush(color, &m_psolidbrush);
 
@@ -92,10 +92,10 @@ namespace draw2d_direct2d
 
             D2D1_GRADIENT_STOP gradientstops[2] = {};
 
-            __copy(gradientstops[0].color, m_color1);
+            copy(gradientstops[0].color, m_color1);
             gradientstops[0].position = 0.0f;
 
-            __copy(gradientstops[1].color, m_color2);
+            copy(gradientstops[1].color, m_color2);
             gradientstops[1].position = 1.0f;
 
             // Create the ID2D1GradientStopCollection from a previously
@@ -135,10 +135,10 @@ namespace draw2d_direct2d
 
             D2D1_GRADIENT_STOP gradientstops[2];
 
-            __copy(gradientstops[0].color, m_color1);
+            copy(gradientstops[0].color, m_color1);
             gradientstops[0].position = 0.0f;
 
-            __copy(gradientstops[1].color, m_color2);
+            copy(gradientstops[1].color, m_color2);
             gradientstops[1].position = 1.0f;
 
             // Create the ID2D1GradientStopCollection from a previously

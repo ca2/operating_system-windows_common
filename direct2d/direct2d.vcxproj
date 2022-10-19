@@ -720,9 +720,7 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="aaa_multithreading_lock.h" />
     <ClInclude Include="geometry_sink_text_renderer.h" />
-    <ClInclude Include="global.h" />
     <ClInclude Include="_.h" />
-    <ClInclude Include="_library.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="direct2d.cpp" />

@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "pen.h"
 #include "graphics.h"
 #include "direct2d/direct2d.h"
@@ -86,7 +86,7 @@ namespace draw2d_direct2d
 
          D2D1_COLOR_F color;
 
-         __copy(color, m_color);
+         copy(color, m_color);
 
          pgraphics->m_prendertarget->CreateSolidColorBrush(color, &m_pbrush);
 

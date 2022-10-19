@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "region.h"
 #include "direct2d/direct2d.h"
 #include "path.h"
@@ -226,7 +226,7 @@ namespace draw2d_direct2d
 
       D2D1_RECT_F r;
       
-      __copy(r, pitem->m_rectangle);
+      copy(r, pitem->m_rectangle);
 
       ::direct2d::direct2d()->d2d1_factory1()->CreateRectangleGeometry(r, &pgeometry);
 

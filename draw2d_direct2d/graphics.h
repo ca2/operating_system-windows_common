@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 #include "aura/graphics/draw2d/graphics.h"
@@ -63,18 +63,18 @@ namespace draw2d_direct2d
       ~graphics() override;
 
 
-      virtual bool TextOutAlphaBlend(double x, double y, const block & block) override;
-      virtual bool _draw_blend(const ::image_drawing & imagedrawing) override;
+      bool TextOutAlphaBlend(double x, double y, const block & block) override;
+      bool _draw_blend(const ::image_drawing & imagedrawing) override;
 
 
       //bool IsPrinting() override;            // true if being used for printing
 
       
-      virtual void on_begin_draw() override;
+      void on_begin_draw() override;
       void on_end_draw(oswindow wnd) override;
 
       using ::draw2d::graphics::set;
-      virtual void set(::draw2d::bitmap* pbitmap) override;
+      void set(::draw2d::bitmap* pbitmap) override;
 
 
       //oswindow get_window_handle();
@@ -117,7 +117,7 @@ namespace draw2d_direct2d
       //virtual bool save_clip() override;
       //virtual bool restore_clip() override;
 
-      virtual double get_dpix() override;
+      double get_dpix() override;
 
       //// Constructors
       //bool CreateDC(const ::string & lpszDriverName, const ::string & lpszDeviceName,
@@ -129,8 +129,8 @@ namespace draw2d_direct2d
       void DeleteDC() override;
 
       // Device-Context Functions
-      virtual int SaveDC() override;
-      virtual void RestoreDC(int nSavedDC) override;
+      int SaveDC() override;
+      void RestoreDC(int nSavedDC) override;
       //int GetDeviceCaps(int nIndex) override;
       ::u32 SetBoundsRect(const ::rectangle_f64 & rectangleBounds, ::u32 flags) override;
       ::u32 GetBoundsRect(::rectangle_f64 * rectangleBounds, ::u32 flags) override;
@@ -165,7 +165,7 @@ namespace draw2d_direct2d
 
       //int SetPolyFillMode(int nPolyFillMode) override;
       //int SetROP2(int nDrawMode) override;
-      virtual void set_interpolation_mode(::draw2d::enum_interpolation_mode einterpolationmode) override;
+      void set_interpolation_mode(::draw2d::enum_interpolation_mode einterpolationmode) override;
 
 
 //#if (_WIN32_WINNT >= 0x0500)
@@ -183,22 +183,22 @@ namespace draw2d_direct2d
       //int GetGraphicsMode() override;
 
 
-      virtual void _get(::draw2d::matrix & matrix) override;
-      virtual void _set(const ::draw2d::matrix & matrix) override;
+      void _get(::draw2d::matrix & matrix) override;
+      void _set(const ::draw2d::matrix & matrix) override;
 
-      virtual void clear_current_point() override;
+      void clear_current_point() override;
 
-      virtual void draw(::draw2d::path * ppath) override;
-      virtual void fill(::draw2d::path * ppath) override;
-      virtual void path(::draw2d::path * ppath) override;
+      void draw(::draw2d::path * ppath) override;
+      void fill(::draw2d::path * ppath) override;
+      void path(::draw2d::path * ppath) override;
 
       virtual bool draw(ID2D1PathGeometry * pgeometry, ::draw2d::pen * ppen);
       virtual bool fill(ID2D1PathGeometry * pgeometry, ::draw2d::brush * pbrush);
       virtual bool draw(ID2D1GeometryRealization * prealization, ::draw2d::pen * ppen);
       virtual bool fill(ID2D1GeometryRealization * prealization, ::draw2d::brush * ppen);
 
-      virtual void draw(::draw2d::path * ppath, ::draw2d::pen * ppen) override;
-      virtual void fill(::draw2d::path * ppath, ::draw2d::brush * pbrush) override;
+      void draw(::draw2d::path * ppath, ::draw2d::pen * ppen) override;
+      void fill(::draw2d::path * ppath, ::draw2d::brush * pbrush) override;
 
       // World transform
       //bool SetWorldTransform(const XFORM* pXform) override;
@@ -207,18 +207,18 @@ namespace draw2d_direct2d
 
       // Mapping Functions
       //virtual int GetMapMode() override;
-      virtual ::point_f64 get_origin() override;
+      ::point_f64 get_origin() override;
       //virtual int SetMapMode(int nMapMode) override;
       // Viewport Origin
-      virtual ::point_f64 set_origin(double x, double y) override;
-      virtual ::point_f64 set_origin(const ::point_f64 & point) override;
-      virtual ::point_f64 offset_origin(double nWidth, double nHeight) override;
+      ::point_f64 set_origin(double x, double y) override;
+      ::point_f64 set_origin(const ::point_f64 & point) override;
+      ::point_f64 offset_origin(double nWidth, double nHeight) override;
 
       // Viewport Extent
-      virtual size_f64 get_extents() override;
-      virtual size_f64 set_extents(double cx, double cy) override;
-      virtual size_f64 set_extents(const ::size_f64 & size) override;
-      virtual size_f64 scale_extents(double xNum, double xDenom, double yNum, double yDenom) override;
+      size_f64 get_extents() override;
+      size_f64 set_extents(double cx, double cy) override;
+      size_f64 set_extents(const ::size_f64 & size) override;
+      size_f64 scale_extents(double xNum, double xDenom, double yNum, double yDenom) override;
 
       // Window Origin
       ::point_f64 GetWindowOrg() override;
@@ -228,9 +228,9 @@ namespace draw2d_direct2d
 
       // Window extent
       ::size_f64 GetWindowExt() override;
-      virtual ::size_f64 set_window_ext(double cx, double cy) override;
+      ::size_f64 set_window_ext(double cx, double cy) override;
       ::size_f64 set_window_ext(const ::size_f64 & size) override;
-      virtual ::size_f64 scale_window_ext(double xNum, double xDenom, double yNum, double yDenom) override;
+      ::size_f64 scale_window_ext(double xNum, double xDenom, double yNum, double yDenom) override;
 
       // Coordinate Functions
       void DPtoLP(::point_f64 * ppoints, ::count nCount = 1) override;
@@ -247,13 +247,13 @@ namespace draw2d_direct2d
       //void HIMETRICtoLP(::size_f64 * LPSIZE32) override;
 
       // Region Functions
-      virtual void fill_region(::draw2d::region* pRgn, ::draw2d::brush* pBrush) override;
-      virtual void frame_region(::draw2d::region* pRgn, ::draw2d::brush* pBrush, double nWidth, double nHeight) override;
-      virtual void invert_region(::draw2d::region* pRgn) override;
-      virtual void paint_region(::draw2d::region* pRgn) override;
+      void fill_region(::draw2d::region* pRgn, ::draw2d::brush* pBrush) override;
+      void frame_region(::draw2d::region* pRgn, ::draw2d::brush* pBrush, double nWidth, double nHeight) override;
+      void invert_region(::draw2d::region* pRgn) override;
+      void paint_region(::draw2d::region* pRgn) override;
 
       // Clipping Functions
-      virtual int get_clip_box(::rectangle_f64 * prectangle) override;
+      int get_clip_box(::rectangle_f64 & rectangle) override;
 
 
       virtual void _push_layer(ID2D1Geometry * pgeometry);
@@ -264,9 +264,9 @@ namespace draw2d_direct2d
       //virtual void add_shapes(const shape_array& shapea);
       virtual void reset_clip();
       void _intersect_clip() override;
-      void _add_clipping_shape(const ::rectangle & rectangle, ___shape<::draw2d::region > * pshaperegion) override;
-      void _add_clipping_shape(const ::ellipse & ellipse, ___shape<::draw2d::region >* pshaperegion) override;
-      void _add_clipping_shape(const ::polygon & polygon, ___shape<::draw2d::region >* pshaperegion) override;
+      void _add_clipping_shape(const ::rectangle & rectangle, ___shape<::draw2d::region > & shaperegion) override;
+      void _add_clipping_shape(const ::ellipse & ellipse, ___shape<::draw2d::region > & shaperegion) override;
+      void _add_clipping_shape(const ::polygon & polygon, ___shape<::draw2d::region > & shaperegion) override;
       void intersect_clip(const ::rectangle_f64& rectangle) override;
       //virtual void intersect_clip(const ::oval& oval);
       //virtual void intersect_clip(const ::polygon_i32& polygon_i32);
@@ -312,10 +312,10 @@ namespace draw2d_direct2d
       void poly_bezier_to(const ::point_f64* ppoints,count nCount) override;
 
 
-      virtual void frame_rectangle(const ::rectangle_f64 & rectangle, ::draw2d::brush* pBrush) override;
+      void frame_rectangle(const ::rectangle_f64 & rectangle, ::draw2d::brush* pBrush) override;
 
 
-      virtual void invert_rectangle(const ::rectangle_f64 & rectangle) override;
+      void invert_rectangle(const ::rectangle_f64 & rectangle) override;
 
       //virtual bool draw(const ::rectangle_f64 & rectangleTarget, ::draw2d::icon * picon) override;
 
@@ -368,7 +368,7 @@ namespace draw2d_direct2d
       using ::draw2d::graphics::round_rectangle;
       using ::draw2d::graphics::draw_round_rectangle;
       using ::draw2d::graphics::fill_round_rectangle;
-      virtual void rectangle(const ::rectangle_f64 & rectangle) override;
+      void rectangle(const ::rectangle_f64 & rectangle) override;
       void draw_rectangle(const ::rectangle_f64 & rectangle, ::draw2d::pen * ppen) override;
       void fill_rectangle(const ::rectangle_f64 & rectangle, ::draw2d::brush * pbrush) override;
       void draw_round_rectangle(const ::rectangle_f64 & rectangle, ::draw2d::pen * ppen, double dRadius) override;
@@ -382,8 +382,8 @@ namespace draw2d_direct2d
 
       // Bitmap Functions
       //bool PatBlt(double x, double y, double nWidth, double nHeight) override;
-      virtual void _draw_raw(const ::rectangle_f64 & rectangleTarget, ::image * pimage, const image_drawing_options & imagedrawingoptions, const ::point_f64 & pointSrc) override;
-      virtual void _stretch_raw(const ::rectangle_f64 & rectangleTarget, ::image * pimage, const image_drawing_options & imagedrawingoptions, const ::rectangle_f64 & rectangleSource) override;
+      void _draw_raw(const ::rectangle_f64 & rectangleTarget, ::image * pimage, const image_drawing_options & imagedrawingoptions, const ::point_f64 & pointSrc) override;
+      void _stretch_raw(const ::rectangle_f64 & rectangleTarget, ::image * pimage, const image_drawing_options & imagedrawingoptions, const ::rectangle_f64 & rectangleSource) override;
 
 
       ::color::color GetPixel(double x, double y) override;
@@ -414,7 +414,7 @@ namespace draw2d_direct2d
       // Text Functions
       //virtual bool text_out(double x, double y, const ::string & lpszString, strsize nCount) override;
       //virtual bool text_out(double x, double y, const block & block) override;
-      virtual void TextOutRaw(double x, double y, const block & block) override;
+      void TextOutRaw(double x, double y, const block & block) override;
       //virtual bool text_out(double x, double y, const ::string & str) override;
       //virtual bool ExtTextOut(double x, double y, ::u32 nOptions, const ::rectangle_f64 & rectangle, const ::string & lpszString, strsize nCount, LPINT lpDxWidths) override;
       //virtual bool ExtTextOut(double x, double y, ::u32 nOptions, const ::rectangle_f64 & rectangle, const ::string & str, LPINT lpDxWidths) override;
@@ -422,17 +422,17 @@ namespace draw2d_direct2d
       //virtual ::size_f64 TabbedTextOut(double x, double y, const ::string & str, count nTabPositions, LPINT lpnTabStopPositions, i32 nTabOrigin) override;
 
       //virtual bool draw_text(const ::string & lpszString, strsize nCount, const ::rectangle_f64 & rectangle, const ::e_align & ealign = e_align_top_left, const ::e_draw_text & edrawtext = e_draw_text_none) override;
-      virtual void draw_text(const ::string & str,const ::rectangle_f64 & rectangle, const ::e_align & ealign = e_align_top_left, const ::e_draw_text & edrawtext = e_draw_text_none) override;
+      void draw_text(const ::string & str,const ::rectangle_f64 & rectangle, const ::e_align & ealign = e_align_top_left, const ::e_draw_text & edrawtext = e_draw_text_none) override;
 
 //      virtual int draw_text_ex(char * lpszString, int nCount, ::rectangle_f64 * prectangle, const ::e_align & ealign = e_align_top_left, const ::e_draw_text & edrawtext = e_draw_text_none, LPDRAWTEXTPARAMS lpDTParams) override;
       //    virtual int draw_text_ex(const ::string & str, ::rectangle_f64 * prectangle, const ::e_align & ealign = e_align_top_left, const ::e_draw_text & edrawtext = e_draw_text_none, LPDRAWTEXTPARAMS lpDTParams) override;
 
-      virtual size_f64 get_text_extent(const char * pszString, strsize nCount, strsize iIndex) override;
+      size_f64 get_text_extent(const char * pszString, strsize nCount, strsize iIndex) override;
       //virtual size_f64 get_text_extent(const ::string & lpszString, strsize nCount) override;
-      virtual size_f64 get_text_extent(const block & block) override;
-      virtual void get_text_extent(size_f64 & size, const char * pszString, strsize nCount, strsize iIndex) override;
-      virtual void get_text_extent(size_f64 & size, const char * pszString, strsize nCount) override;
-      virtual void get_text_extent(size_f64 & size, const ::string & str) override;
+      size_f64 get_text_extent(const block & block) override;
+      void get_text_extent(size_f64 & size, const char * pszString, strsize nCount, strsize iIndex) override;
+      void get_text_extent(size_f64 & size, const char * pszString, strsize nCount) override;
+      void get_text_extent(size_f64 & size, const ::string & str) override;
       //virtual ::size_f64 GetOutputTextExtent(const char * pszString, strsize nCount) override;
       //virtual ::size_f64 GetOutputTextExtent(const ::string & str) override;
       //virtual ::size_f64 GetTabbedTextExtent(const ::string & lpszString, strsize nCount, count nTabPositions, LPINT lpnTabStopPositions) override;
@@ -440,12 +440,12 @@ namespace draw2d_direct2d
       //virtual ::size_f64 GetOutputTabbedTextExtent(const ::string & lpszString, strsize nCount, count nTabPositions, LPINT lpnTabStopPositions) override;
       //virtual ::size_f64 GetOutputTabbedTextExtent(const ::string & str, count  nTabPositions, LPINT lpnTabStopPositions) override;
       //virtual bool GrayString(::draw2d::brush* pBrush, bool (CALLBACK* lpfnOutput)(HDC, LPARAM, int), LPARAM lpData, int nCount, double x, double y, double nWidth, double nHeight) override;
-      virtual ::u32 GetTextAlign() override;
-      virtual ::u32 SetTextAlign(::u32 nFlags) override;
+      ::u32 GetTextAlign() override;
+      ::u32 SetTextAlign(::u32 nFlags) override;
       //virtual int GetTextFace(count nCount, char * lpszFacename) override;
       //virtual int GetTextFace(string & rString) override;
-      virtual void get_text_metrics(::write_text::text_metric * lpMetrics) override;
-      virtual void get_output_text_metrics(::write_text::text_metric * lpMetrics) override;
+      void get_text_metrics(::write_text::text_metric * lpMetrics) override;
+      void get_output_text_metrics(::write_text::text_metric * lpMetrics) override;
       //virtual int SetTextJustification(int nBreakExtra, int nBreakCount) override;
       //virtual int GetTextCharacterExtra() override;
       //virtual int SetTextCharacterExtra(int nCharExtra) override;
@@ -588,9 +588,9 @@ namespace draw2d_direct2d
       virtual bool fill(const ::write_text::draw_text & drawtext, ::draw2d::brush* pbrush);
 
 
-      virtual void flush() override;
+      void flush() override;
 
-      virtual void debug() override;
+      void debug() override;
       //protected:
       // used for implementation of non-virtual SelectObject calls
       //static ::draw2d::object* SelectGdiObject(application * papp, HDC hDC, HGDIOBJ h) override;
@@ -648,6 +648,7 @@ namespace draw2d_direct2d
       }
 
    };
+
 
 } // namespace draw2d_direct2d
 

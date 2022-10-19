@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "graphics.h"
 #include "bitmap.h"
 #include "path.h"
@@ -1226,11 +1226,9 @@ namespace draw2d_direct2d
 
       D2D1_RECT_F rectangle;
 
-      __copy(rectangle, rectangleParam);
+      copy(rectangle, rectangleParam);
 
       m_prendertarget->DrawRectangle(rectangle, pbrush->get_os_data < ID2D1Brush * > (this));
-
-      //return true;
 
    }
 
@@ -1820,7 +1818,7 @@ namespace draw2d_direct2d
 
       D2D1_RECT_F rectangle;
 
-      __copy(rectangle, rectangleParam);
+      copy(rectangle, rectangleParam);
 
       ::draw2d_direct2d::pen * ppen2 = dynamic_cast <::draw2d_direct2d::pen *> (ppen);
 
@@ -1861,7 +1859,7 @@ namespace draw2d_direct2d
 
       D2D1_RECT_F rectangle;
 
-      __copy(rectangle, rectangleParam);
+      copy(rectangle, rectangleParam);
 
       ::draw2d_direct2d::brush * pbrush2 = dynamic_cast <::draw2d_direct2d::brush *> (pbrush);
 
@@ -1891,9 +1889,11 @@ namespace draw2d_direct2d
 
          D2D1_ROUNDED_RECT rectangle;
 
-         __copy(rectangle, rectangleParam);
+         copy(rectangle.rect, rectangleParam);
 
          rectangle.radiusX = (FLOAT)dRadius;
+
+         rectangle.radiusY = (FLOAT)dRadius;
 
          auto pbrush = m_pbrush.cast <::draw2d_direct2d::brush >();
 
@@ -1916,7 +1916,7 @@ namespace draw2d_direct2d
 
          D2D1_ROUNDED_RECT rectangle;
 
-         __copy(rectangle.rect, rectangleParam);
+         copy(rectangle.rect, rectangleParam);
 
          rectangle.radiusX = (FLOAT)dRadius;
 
@@ -4146,7 +4146,7 @@ namespace draw2d_direct2d
    }
 
 
-   int graphics::get_clip_box(::rectangle_f64 * prectangle)
+   int graphics::get_clip_box(::rectangle_f64 & rectangle)
    {
       return 0;
       //throw ::exception(todo);
@@ -4345,14 +4345,14 @@ namespace draw2d_direct2d
    }
    
 
-   void graphics::_add_clipping_shape(const ::rectangle_f64 & rectangle, ___shape<::draw2d::region >* pshaperegion)
+   void graphics::_add_clipping_shape(const ::rectangle_f64 & rectangle, ___shape<::draw2d::region > & shaperegion)
    {
 
       //::draw2d::lock draw2dlock;
 
       // ::draw2d::device_lock devicelock(this);
 
-      if (!pshaperegion->holdee())
+      if (!shaperegion.holdee())
       {
 
          auto pregion = __create < ::draw2d::region >();
@@ -4361,7 +4361,7 @@ namespace draw2d_direct2d
 
          pregion->create_rectangle(rectangleClip);
 
-         pshaperegion->holdee(pregion);
+         shaperegion.holdee(pregion);
 
       }
 
@@ -4373,7 +4373,7 @@ namespace draw2d_direct2d
 
       //m_pstate->m_maRegion.add(m);
 
-      ID2D1Geometry* pgeometry = (ID2D1Geometry*)pshaperegion->holdee()->get_os_data(this);
+      ID2D1Geometry* pgeometry = (ID2D1Geometry*)shaperegion.holdee()->get_os_data(this);
 
       _push_layer(pgeometry);
 
@@ -4416,7 +4416,7 @@ namespace draw2d_direct2d
    //}
 
 
-   void graphics::_add_clipping_shape(const ::ellipse & ellipse, ___shape<::draw2d::region >* pshaperegion)
+   void graphics::_add_clipping_shape(const ::ellipse & ellipse, ___shape<::draw2d::region > & shaperegion)
    {
 
       //::draw2d::lock draw2dlock;
@@ -4425,7 +4425,7 @@ namespace draw2d_direct2d
 
       {
 
-         if (!pshaperegion->holdee())
+         if (!shaperegion.holdee())
          {
 
             auto pregion = __create < ::draw2d::region >();
@@ -4434,7 +4434,7 @@ namespace draw2d_direct2d
 
             pregion->create_ellipse(ellipse);
 
-            pshaperegion->holdee(pregion);
+            shaperegion.holdee(pregion);
 
          }
 
@@ -4446,7 +4446,7 @@ namespace draw2d_direct2d
 
          //m_pstate->m_maRegion.add(m);
 
-         ID2D1Geometry* pgeometry = (ID2D1Geometry*)pshaperegion->holdee()->get_os_data(this);
+         ID2D1Geometry* pgeometry = (ID2D1Geometry*)shaperegion.holdee()->get_os_data(this);
 
          //m_prendertarget->PushLayer(D2D1::LayerParameters(D2D1::InfiniteRect(), pgeometry), nullptr);
 
@@ -4491,7 +4491,7 @@ namespace draw2d_direct2d
    //}
 
 
-   void graphics::_add_clipping_shape(const ::polygon_f64& polygon_i32, ___shape<::draw2d::region >* pshaperegion)
+   void graphics::_add_clipping_shape(const ::polygon_f64& polygon_i32, ___shape<::draw2d::region > & shaperegion)
    {
 
       //::draw2d::lock draw2dlock;
@@ -4500,7 +4500,7 @@ namespace draw2d_direct2d
 
       {
 
-         if (!pshaperegion->holdee())
+         if (!shaperegion.holdee())
          {
 
             auto pregion = __create < ::draw2d::region >();
@@ -4509,7 +4509,7 @@ namespace draw2d_direct2d
 
             pregion->create_polygon(polygon_i32.get_data(), (::i32)polygon_i32.get_count(), ::draw2d::e_fill_mode_winding);
 
-            pshaperegion->holdee(pregion);
+            shaperegion.holdee(pregion);
 
          }
 
@@ -4521,7 +4521,7 @@ namespace draw2d_direct2d
 
          //m_pstate->m_maRegion.add(m);
 
-         ID2D1Geometry* pgeometry = (ID2D1Geometry*)pshaperegion->holdee()->get_os_data(this);
+         ID2D1Geometry* pgeometry = (ID2D1Geometry*)shaperegion.holdee()->get_os_data(this);
 
          _push_layer(pgeometry);
 
@@ -4542,7 +4542,7 @@ namespace draw2d_direct2d
 
       D2D1_RECT_F rf;
 
-      __copy(rf, r);
+      copy(rf, r);
 
       auto layerparameters = D2D1::LayerParameters(rf);
 
@@ -5441,7 +5441,7 @@ namespace draw2d_direct2d
 
       D2D1_COLOR_F d2d1color;
 
-      __copy(d2d1color, color);
+      copy(d2d1color, color);
 
       comptr< ID2D1SolidColorBrush> psolidbrush;
 
@@ -5449,13 +5449,11 @@ namespace draw2d_direct2d
 
       D2D1_RECT_F rectangle;
 
-      __copy(rectangle, rectangleParam);
+      copy(rectangle, rectangleParam);
 
       defer_primitive_blend();
 
       m_pdevicecontext->FillRectangle(&rectangle, psolidbrush);
-
-      //return true;
 
    }
 
@@ -5682,7 +5680,7 @@ namespace draw2d_direct2d
 
       D2D1_POINT_2F p1;
 
-      __copy(p1, m_point);
+      copy(p1, m_point);
 
       D2D1_POINT_2F p2;
 
@@ -6725,7 +6723,7 @@ namespace draw2d_direct2d
 
       D2D1_COLOR_F d2d1color;
 
-      __copy(d2d1color, color);
+      copy(d2d1color, color);
 
       HRESULT hr = m_prendertarget->CreateSolidColorBrush(d2d1color, &pbrush);
 
@@ -6816,10 +6814,10 @@ namespace draw2d_direct2d
 
       D2D1_GRADIENT_STOP gradientstops[2];
 
-      __copy(gradientstops[0].color, color1);
+      copy(gradientstops[0].color, color1);
       gradientstops[0].position = 0.0f;
 
-      __copy(gradientstops[1].color, color2);
+      copy(gradientstops[1].color, color2);
       gradientstops[1].position = 1.0f;
 
       // Create the ID2D1GradientStopCollection from a previously

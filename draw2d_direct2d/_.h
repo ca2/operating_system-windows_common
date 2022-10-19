@@ -52,12 +52,6 @@ namespace d2d1
 
 } // namespace d2d1
 
-inline void copy(D2D1_POINT_2F * ppointDst, const POINT_F64 * ppointSrc)
-{
-   ppointDst->x = (FLOAT)ppointSrc->x;
-   ppointDst->y = (FLOAT)ppointSrc->y;
-}
-
 
 namespace draw2d_direct2d
 {
@@ -94,32 +88,6 @@ namespace draw2d_direct2d
 
 
 //#define new ACME_NEW
-
-
-inline D2D1_COLOR_F * copy(D2D1_COLOR_F * pcolorTarget, const ::color::color * pcolor)
-{
-
-   pcolorTarget->a = pcolor->alpha / 255.0f;
-   pcolorTarget->r = pcolor->red / 255.0f;
-   pcolorTarget->g = pcolor->green / 255.0f;
-   pcolorTarget->b = pcolor->blue / 255.0f;
-
-   return pcolorTarget;
-
-}
-
-
-inline D2D1_COLOR_F * copy(D2D1_COLOR_F * pcolorTarget, const ::color32_t * pcolor)
-{
-
-   pcolorTarget->a = colorref_get_a_value(*pcolor) / 255.0f;
-   pcolorTarget->r = colorref_get_r_value(*pcolor) / 255.0f;
-   pcolorTarget->g = colorref_get_g_value(*pcolor) / 255.0f;
-   pcolorTarget->b = colorref_get_b_value(*pcolor) / 255.0f;
-
-   return pcolorTarget;
-
-}
 
 
 
