@@ -2,6 +2,7 @@
 #include "node.h"
 #include "acme/filesystem/filesystem/acme_directory.h"
 #include "acme/filesystem/filesystem/acme_path.h"
+#include "apex/platform/system.h"
 
 
 //CLASS_DECL_ACME_WINDOWS_COMMON bool defer_initialize_winsock();

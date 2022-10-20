@@ -9,6 +9,7 @@
 
 
 #include "acme_windows_common/node.h"
+#include "apex/platform/node.h"
 
 
 namespace apex_windows_common
