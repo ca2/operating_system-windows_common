@@ -251,7 +251,7 @@ namespace aura_windows_common
    void node::system_main()
    {
 
-      auto psystem = m_psystem;
+      auto psystem = acmesystem();
 
       //auto estatus = 
 

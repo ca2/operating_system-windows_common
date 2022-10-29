@@ -1,8 +1,10 @@
 ﻿#include "framework.h"
-#include "acme/operating_system/time.h"
 #include "file.h"
 #include "acme_directory.h"
 #include "acme_file.h"
+#include "acme/operating_system/time.h"
+#include "acme/filesystem/file/exception.h"
+#include "acme/platform/system.h"
 
 
 CLASS_DECL_ACME_WINDOWS_COMMON bool _os_may_have_alias(const char * psz)
@@ -106,7 +108,7 @@ namespace acme_windows_common
          else
          {
 
-            throw file_exception(m_estatus, -1, "", "file with empty name!!");
+            throw ::file::exception(m_estatus, -1, "", "file with empty name!!");
 
          }
 
@@ -127,11 +129,7 @@ namespace acme_windows_common
       if ((eopen & ::file::e_open_defer_create_directory) && (eopen & ::file::e_open_write))
       {
 
-         auto psystem = m_psystem;
-
-         auto pacmedir = psystem->m_pacmedirectory;
-
-         pacmedir->create(path.folder());
+         acmedirectory()->create(path.folder());
 
       }
 
@@ -350,7 +348,7 @@ namespace acme_windows_common
                if (dwAccess & GENERIC_WRITE)
                {
 
-                  auto psequencer = m_psystem->create_message_box_sequencer("Couldn't write to file \"" + m_path + "\".\nAccess Denied!!\n(Is any anti-virus program blocking this program: \"" + m_psystem->m_pacmefile->module() + "\"?", m_psystem->m_pacmefile->module().title() + " - Access Denied!", e_message_box_ok);
+                  auto psequencer = acmesystem()->create_message_box_sequencer("Couldn't write to file \"" + m_path + "\".\nAccess Denied!!\n(Is any anti-virus program blocking this program: \"" + acmefile()->module() + "\"?", acmefile()->module().title() + " - Access Denied!", e_message_box_ok);
 
                   psequencer->do_asynchronously();
 
@@ -358,7 +356,7 @@ namespace acme_windows_common
 
             }
 
-            throw file_exception(m_estatus, dwLastError, m_path, "Create File has failed.");
+            throw ::file::exception(m_estatus, dwLastError, m_path, "Create File has failed.", m_eopen);
 
          }
 
@@ -430,7 +428,7 @@ namespace acme_windows_common
 
          auto lastError = ::GetLastError();
 
-         throw ::file_exception(::error_io, lastError, m_path, "!ReadFile");
+         throw ::file::exception(::error_io, lastError, m_path, "!ReadFile", m_eopen);
 
       }
 
@@ -463,7 +461,7 @@ namespace acme_windows_common
 
          DWORD dwLastError = ::GetLastError();
 
-         throw ::file_exception(::error_io, dwLastError, m_path, "!WriteFile");
+         throw ::file::exception(::error_io, dwLastError, m_path, "!WriteFile", m_eopen);
 
       }
 
@@ -478,7 +476,7 @@ namespace acme_windows_common
 
          }
 
-         throw ::file_exception(error_disk_full, -1, m_path, "nWritten != nCount");
+         throw ::file::exception(error_disk_full, -1, m_path, "nWritten != nCount", m_eopen);
 
       }
 
@@ -491,7 +489,7 @@ namespace acme_windows_common
       if (m_handleFile == INVALID_HANDLE_VALUE)
       {
 
-         throw ::file_exception(::error_io, -1, m_path, "m_handleFile == INVALID_HANDLE_VALUE");
+         throw ::file::exception(::error_io, -1, m_path, "m_handleFile == INVALID_HANDLE_VALUE", m_eopen);
 
       }
 
@@ -510,7 +508,7 @@ namespace acme_windows_common
 
          DWORD dwLastError = ::GetLastError();
 
-         throw ::file_exception(::error_io, dwLastError, m_path, "SetFilePointer == -1");
+         throw ::file::exception(::error_io, dwLastError, m_path, "SetFilePointer == -1", m_eopen);
 
       }
 
@@ -580,7 +578,7 @@ namespace acme_windows_common
 
          DWORD dwLastError = ::GetLastError();
 
-         throw ::file_exception(::error_io, dwLastError, m_path, "SetFilePointer == -1");
+         throw ::file::exception(::error_io, dwLastError, m_path, "SetFilePointer == -1", m_eopen);
 
       }
 

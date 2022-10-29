@@ -25,7 +25,7 @@ namespace music
             public:
 
 
-               player_interface(::object * pobject);
+               player_interface(::particle * pparticle);
                virtual ~player_interface();
 
 

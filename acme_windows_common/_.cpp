@@ -1,6 +1,6 @@
 #include "framework.h"
-
-
+#include "acme/primitive/string/string.h"
+#include "acme/primitive/string/string_wide_conversion.h"
 #include "acme/library.h"
 
 

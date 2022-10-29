@@ -259,11 +259,7 @@ namespace windows_common
       if ((eopen & ::file::e_open_defer_create_directory) && (eopen & ::file::e_open_write))
       {
 
-         auto psystem = m_psystem;
-
-         auto pacmedir = psystem->m_pacmedirectory;
-
-         pacmedir->create(path.folder());
+acmedirectory()create(path.folder());
 
       }
 
@@ -447,7 +443,7 @@ namespace windows_common
                if (dwAccess & GENERIC_WRITE)
                {
 
-                  m_psystem->message_box("Couldn't write to file \"" + m_path + "\".\nAccess Denied!!\n(Is any anti-virus program blocking this program: \"" + m_psystem->m_pacmefile->module() + "\"?", m_psystem->m_pacmefile->module().title() + " - Access Denied!", e_message_box_ok);
+                  acmesystem()->message_box("Couldn't write to file \"" + m_path + "\".\nAccess Denied!!\n(Is any anti-virus program blocking this program: \"" + acmefile()->module() + "\"?", acmefile()->module().title() + " - Access Denied!", e_message_box_ok);
 
                }
 

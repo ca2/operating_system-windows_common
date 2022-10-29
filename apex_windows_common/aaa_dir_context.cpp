@@ -26,7 +26,7 @@ namespace windows
    }
 
 
-   void dir_context::initialize(::object * pobject)
+   void dir_context::initialize(::particle * pparticle)
    {
 
       auto estatus = ::object::initialize(pobject);
@@ -1276,7 +1276,7 @@ namespace windows
 
       ::file::path path;
 
-      m_psystem->m_pacmedirectory->m_pplatformdir->_shell_get_special_folder_path(
+      acmedirectory()->m_pplatformdir->_shell_get_special_folder_path(
          nullptr,
          path,
          CSIDL_MYDOCUMENTS,
@@ -1291,7 +1291,7 @@ namespace windows
 
       ::file::path path;
 
-      m_psystem->m_pacmedirectory->m_pplatformdir->_shell_get_special_folder_path(
+      acmedirectory()->m_pplatformdir->_shell_get_special_folder_path(
          nullptr,
          path,
          CSIDL_DESKTOP,
@@ -1306,7 +1306,7 @@ namespace windows
 
       ::file::path path;
 
-      path = m_psystem->m_pacmedirectory->m_pplatformdir->_get_known_folder(FOLDERID_Downloads);
+      path = acmedirectory()->m_pplatformdir->_get_known_folder(FOLDERID_Downloads);
 
       return path;
 
@@ -1317,7 +1317,7 @@ namespace windows
 
       ::file::path path;
 
-      m_psystem->m_pacmedirectory->m_pplatformdir->_shell_get_special_folder_path(
+      acmedirectory()->m_pplatformdir->_shell_get_special_folder_path(
          nullptr,
          path,
          CSIDL_MYMUSIC,
@@ -1333,7 +1333,7 @@ namespace windows
 
       ::file::path path;
 
-      m_psystem->m_pacmedirectory->m_pplatformdir->_shell_get_special_folder_path(
+      acmedirectory()->m_pplatformdir->_shell_get_special_folder_path(
          nullptr,
          path,
          CSIDL_MYVIDEO,
@@ -1349,7 +1349,7 @@ namespace windows
 
       ::file::path path;
 
-      m_psystem->m_pacmedirectory->m_pplatformdir->_shell_get_special_folder_path(
+      acmedirectory()->m_pplatformdir->_shell_get_special_folder_path(
          nullptr,
          path,
          CSIDL_MYPICTURES,

@@ -19,7 +19,7 @@ namespace write_text_direct2d
       ~fonts() override;
 
 
-      virtual void initialize(::object * pobject);
+      virtual void initialize(::particle * pparticle);
 
 
    };

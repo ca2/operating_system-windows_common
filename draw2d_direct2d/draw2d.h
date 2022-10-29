@@ -17,7 +17,7 @@ namespace draw2d_direct2d
       draw2d();
       ~draw2d() override;
 
-      virtual void initialize(::object * pobject) override;
+      virtual void initialize(::particle * pparticle) override;
 
       virtual string write_text_get_default_library_name() override;
 

@@ -171,15 +171,15 @@ static int g_iMutex = 0;
 
       }
 
-               auto psystem = m_psystem;
+               auto psystem = acmesystem();
 
          auto pacmedir = psystem->m_pacmedirectory;
 
 pacmedir->create(::file::path(strName).folder());
 
-      ::m_psystem->m_pacmefile->put_contents(strName, strName);
+      ::acmefile()->put_contents(strName, strName);
 
-      string strTest = m_psystem->m_pacmefile->as_string(strName);
+      string strTest = acmefile()->as_string(strName);
 
       //int isCreator = 0;
 
@@ -238,7 +238,7 @@ pacmedir->create(::file::path(strName).folder());
 
 #ifdef ANDROID
 
-         path =          auto psystem = m_psystem;
+         path =          auto psystem = acmesystem();
 
          auto pacmedir = psystem->m_pacmedirectory;
 
@@ -256,7 +256,7 @@ pacmedir->system() / "::payload/tmp/ca2/lock/::mutex" / string(pstrName);
 
 #ifdef ANDROID
 
-         path =          auto psystem = m_psystem;
+         path =          auto psystem = acmesystem();
 
          auto pacmedir = psystem->m_pacmedirectory;
 
@@ -281,7 +281,7 @@ pacmedir->system() / "home/user/ca2/lock/::mutex" / string(pstrName);
 
       path /= pstrName;
 
-               auto psystem = m_psystem;
+               auto psystem = acmesystem();
 
          auto pacmedir = psystem->m_pacmedirectory;
 
@@ -343,13 +343,13 @@ pacmedir->create(path.folder());
 
       path /= pstrName;
 
-               auto psystem = m_psystem;
+               auto psystem = acmesystem();
 
          auto pacmedir = psystem->m_pacmedirectory;
 
 pacmedir->create(path.folder());
 
-      ::m_psystem->m_pacmefile->put_contents(path, m_pszName);
+      ::acmefile()->put_contents(path, m_pszName);
 
       m_key = ftok(path, 1); //Generate a unique key or supply a value
 
@@ -1587,7 +1587,7 @@ bool ::mutex::unlock()
 
    path /= lpszName;
 
-            auto psystem = m_psystem;
+            auto psystem = acmesystem();
 
          auto pacmedir = psystem->m_pacmedirectory;
 

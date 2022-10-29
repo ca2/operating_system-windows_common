@@ -117,7 +117,7 @@ namespace multimedia
          m_pwaveformat->m_waveformat.nAvgBytesPerSec = m_pwaveformat->m_waveformat.nSamplesPerSec * m_pwaveformat->m_waveformat.nBlockAlign;
          //m_pwaveformat->cbSize = 0;
 
-         auto psystem = m_psystem->m_paquasystem;
+         auto psystem = acmesystem()->m_paquasystem;
 
          auto paudio = psystem->audio()->m_paudio;
 

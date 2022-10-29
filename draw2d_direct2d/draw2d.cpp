@@ -24,7 +24,7 @@ namespace draw2d_direct2d
    }
 
 
-   void draw2d::initialize(::object * pobject)
+   void draw2d::initialize(::particle * pparticle)
    {
 
       //auto estatus = 

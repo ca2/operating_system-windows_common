@@ -307,7 +307,7 @@ namespace apex_windows_common
 
       //#else
       //
-      //   strPathDll = m_psystem->m_pacmedirectory->matter() / "time" / process_platform_dir_name() /"stage/_desk_tb.dll";
+      //   strPathDll = acmedirectory()->matter() / "time" / process_platform_name() /"stage/_desk_tb.dll";
       //
       //#endif
 
@@ -373,7 +373,7 @@ namespace apex_windows_common
    {
 
       //auto estatus = 
-      m_psystem->m_papexsystem->m_papexnode->thread_initialize(m_psystem->m_papexsystem);
+      acmesystem()->m_papexsystem->m_papexnode->thread_initialize(acmesystem()->m_papexsystem);
 
       //if (!estatus)
       //{
@@ -383,7 +383,7 @@ namespace apex_windows_common
       //}
 
       //estatus = 
-      m_psystem->on_start_system();
+      acmesystem()->on_start_system();
 
       //if (!estatus)
       //{
@@ -393,7 +393,7 @@ namespace apex_windows_common
       //}
 
       //estatus = 
-      m_psystem->main();
+      acmesystem()->main();
 
       //if (!estatus)
       //{
@@ -404,7 +404,7 @@ namespace apex_windows_common
 
       //estatus = 
          
-      m_psystem->inline_term();
+      acmesystem()->inline_term();
 
       //if (!estatus)
       //{

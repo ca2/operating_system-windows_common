@@ -1,5 +1,8 @@
-// From operating-system-window by camilo on 2022-02-25 18>39 <3ThomasBorregaardSørensen!!
+// From operating-system-window by camilo on 2022-02-25 18>39 <3ThomasBorregaardSï¿½rensen!!
 #pragma once
+
+
+#include "acme/filesystem/file/file.h"
 
 
 //#ifndef WINDOWS_DESKTOP
@@ -62,8 +65,8 @@ namespace acme_windows_common
       ~file() override;
 
 
-      void assert_ok() const override;
-      void dump(dump_context & dumpcontext) const override;
+      //void assert_ok() const override;
+      //void dump(dump_context & dumpcontext) const override;
 
 
 

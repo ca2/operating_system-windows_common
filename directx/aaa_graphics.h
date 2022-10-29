@@ -523,7 +523,7 @@ namespace directx
 //      bool SelectClipPath(int nMode) override;
 //
 //      // Misc Helper Functions
-//      static ::draw2d::brush* GetHalftoneBrush(::object * pobject);
+//      static ::draw2d::brush* GetHalftoneBrush(::particle * pparticle);
 //      //void DrawDragRect(const ::rectangle_f64 & rectangle, const ::size_f64 & size,
 //      //                  const ::rectangle_f64 & rectangleLast, const ::size_f64 & sizeLast,
 //      //                  ::draw2d::brush* pBrush = nullptr, ::draw2d::brush* pBrushLast = nullptr) override;

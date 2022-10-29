@@ -34,7 +34,7 @@ namespace direct2d
       ~direct2d() override;
 
 
-      void initialize(::object * pobject) override;
+      void initialize(::particle * pparticle) override;
 
 
       IDWriteFactory * dwrite_factory(bool bCreate = true);
@@ -59,7 +59,7 @@ namespace direct2d
    }
 
 
-   CLASS_DECL_DIRECT2D void defer_initialize(::object * pobject);
+   CLASS_DECL_DIRECT2D void defer_initialize(::particle * pparticle);
    CLASS_DECL_DIRECT2D void finalize();
 
 

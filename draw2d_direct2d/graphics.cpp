@@ -3684,7 +3684,7 @@ namespace draw2d_direct2d
    /////////////////////////////////////////////////////////////////////////////
    // special graphics drawing primitives/helpers
 
-   ::draw2d::brush* graphics::GetHalftoneBrush(::object * pobject)
+   ::draw2d::brush* graphics::GetHalftoneBrush(::particle * pparticle)
    {
       /*
       ::aura::LockGlobals(CRIT_HALFTONEBRUSH);

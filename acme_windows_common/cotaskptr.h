@@ -1,6 +1,8 @@
 #pragma once
 
 
+#include "acme/primitive/string/string.h"
+
 
 template < typename POINTER_TYPE >
 class cotaskptr

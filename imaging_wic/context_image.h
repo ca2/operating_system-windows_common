@@ -24,7 +24,7 @@ namespace imaging_wic
       ~context_image() override;
 
 
-      virtual void initialize(::object * pobject) override;
+      virtual void initialize(::particle * pparticle) override;
 
 
       //virtual void _load_image(::context_image * pcontextimage, ::image * pimageParam, const ::payload & payloadFile, bool bSync, bool bCreateHelperMaps) override;

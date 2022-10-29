@@ -20,7 +20,7 @@ namespace windows
    }
 
 
-   void file_context::initialize(::object * pobject)
+   void file_context::initialize(::particle * pparticle)
    {
 
       auto estatus = ::object::initialize(pobject);
@@ -809,7 +809,7 @@ namespace windows
 
       ::file::path pathJson;
 
-      pathJson = m_psystem->m_pacmedirectory->user_appdata_local() / "Dropbox/info.network_payload";
+      pathJson = acmedirectory()->user_appdata_local() / "Dropbox/info.network_payload";
 
       return pathJson;
 

@@ -65,7 +65,7 @@ namespace direct2d
    //}
 
 
-   void plugin::initialize(::object * pobject)
+   void plugin::initialize(::particle * pparticle)
    {
 
       // This flag adds support for surfaces with a different color channel ordering

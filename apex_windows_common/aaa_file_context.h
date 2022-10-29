@@ -28,7 +28,7 @@ namespace windows
       virtual ~file_context();
 
 
-      virtual void initialize(::object * pobject) override;
+      virtual void initialize(::particle * pparticle) override;
 
 
       virtual void init_system() override;
@@ -67,8 +67,8 @@ namespace windows
 
       virtual ::file::path dropbox_info_network_payload() override;
 
-      //virtual ::file::path onedrive_global_ini(::object * pobject) override;
-      //virtual ::file::path onedrive_cid_ini(::object * pobject) override;
+      //virtual ::file::path onedrive_global_ini(::particle * pparticle) override;
+      //virtual ::file::path onedrive_cid_ini(::particle * pparticle) override;
 
 
    };

@@ -3,6 +3,7 @@
 #include "framework.h"
 #include "acme_file.h"
 #include "acme_directory.h"
+#include "acme/filesystem/file/file.h"
 #include "acme/filesystem/filesystem/acme_path.h"
 #include "acme/primitive/primitive/memory.h"
 #include <stdio.h>
@@ -44,9 +45,9 @@ namespace acme_windows_common
 
       }
 
-      auto pathNew = m_psystem->m_pacmepath->defer_process_relative_path(strNew);
+      auto pathNew = acmepath()->defer_process_relative_path(strNew);
 
-      auto pathSrc = m_psystem->m_pacmepath->defer_process_relative_path(strSrc);
+      auto pathSrc = acmepath()->defer_process_relative_path(strSrc);
 
       wstring wstrNew(pathNew);
 
@@ -134,7 +135,7 @@ namespace acme_windows_common
 
       }
 
-      auto path = m_psystem->m_pacmepath->defer_process_relative_path(pathParam);
+      auto path = acmepath()->defer_process_relative_path(pathParam);
       
       wstring wstrPath(path);
       
@@ -157,7 +158,7 @@ namespace acme_windows_common
    void acme_file::clear_read_only(const char* pathParam)
    {
 
-      auto path = m_psystem->m_pacmepath->defer_process_relative_path(pathParam);
+      auto path = acmepath()->defer_process_relative_path(pathParam);
 
       wstring wstrPath(path);
 
@@ -198,7 +199,7 @@ namespace acme_windows_common
    void acme_file::set_file_normal(const char* pathParam)
    {
 
-      auto path = m_psystem->m_pacmepath->defer_process_relative_path(pathParam);
+      auto path = acmepath()->defer_process_relative_path(pathParam);
 
       wstring wstrPath(path);
 
@@ -237,7 +238,7 @@ namespace acme_windows_common
    void acme_file::touch(const char* pathParam)
    {
 
-      auto path = m_psystem->m_pacmepath->defer_process_relative_path(pathParam);
+      auto path = acmepath()->defer_process_relative_path(pathParam);
 
       m_pacmedirectory->create(file_path_folder(path));
 
@@ -298,7 +299,7 @@ namespace acme_windows_common
    void acme_file::put_contents(const char * pathParam, const char * contents, memsize len)
    {
 
-      auto path = m_psystem->m_pacmepath->defer_process_relative_path(pathParam);
+      auto path = acmepath()->defer_process_relative_path(pathParam);
 
       auto pathFolder = file_path_folder(path);
 
@@ -337,7 +338,7 @@ namespace acme_windows_common
    filesize acme_file::get_size(const char * pathParam)
    {
 
-      auto path = m_psystem->m_pacmepath->defer_process_relative_path(pathParam);
+      auto path = acmepath()->defer_process_relative_path(pathParam);
 
 #ifdef WINDOWS_DESKTOP
 
@@ -496,7 +497,7 @@ namespace acme_windows_common
    memory acme_file::as_memory(const char* pathParam, strsize iReadAtMostByteCount)
    {
 
-      auto path = m_psystem->m_pacmepath->defer_process_relative_path(pathParam);
+      auto path = acmepath()->defer_process_relative_path(pathParam);
 
       FILE* pfile = _wfsopen(wstring(path), L"r", _SH_DENYNO);
       
@@ -616,7 +617,7 @@ namespace acme_windows_common
    void acme_file::put_block(const char* pathParam, const block& block)
    {
 
-      auto path = m_psystem->m_pacmepath->defer_process_relative_path(pathParam);
+      auto path = acmepath()->defer_process_relative_path(pathParam);
 
       wstring wstr(path);
 

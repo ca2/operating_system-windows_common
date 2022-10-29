@@ -2,6 +2,9 @@
 #pragma once
 
 
+#include "acme/exception/translator.h"
+
+
 namespace acme_windows_common
 {
 

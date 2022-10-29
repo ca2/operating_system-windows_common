@@ -133,7 +133,7 @@ i32 CLASS_DECL_APEX_WINDOWS_COMMON __windows_main(::apex::system * psystem, ::cr
 //   CLASS_DECL_APEX_WINDOWS_COMMON bool        delete_file(const ::string & pFileName);
 //
 //   CLASS_DECL_APEX_WINDOWS_COMMON i32     get_menu_string(HMENU hMenu,::u32 uDItem,string & str,::u32 flags);
-//   CLASS_DECL_APEX_WINDOWS_COMMON void        time_to_filetime(::object * pobject,const ::earth::time& time,LPFILETIME pFileTime);
+//   CLASS_DECL_APEX_WINDOWS_COMMON void        time_to_filetime(::particle * pparticle,const ::earth::time& time,LPFILETIME pFileTime);
 //
 //
 //} // namespace windows

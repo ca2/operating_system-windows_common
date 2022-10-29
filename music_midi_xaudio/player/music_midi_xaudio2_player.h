@@ -39,7 +39,7 @@ namespace music
             public:
 
 
-               player(::object * pobject);
+               player(::particle * pparticle);
                virtual ~player();
 
 

@@ -55,7 +55,7 @@ namespace directx
    }
 
 
-   object * object_allocator(::object * pobject, HANDLE h)
+   object * object_allocator(::particle * pparticle, HANDLE h)
    {
 
       return nullptr;

@@ -36,7 +36,7 @@ bool register_desk_toolbar(::aura::system* psystem)
    //}
 
    //sleep(1_s);
-   //auto psystem = m_psystem->m_paurasystem;
+   //auto psystem = acmesystem()->m_paurasystem;
 
    auto pnode = psystem->node();
 
@@ -74,11 +74,11 @@ bool register_desk_toolbar(::aura::system* psystem)
 //
 //   //#ifdef _DEBUG
 //
-//   strPathDll = m_psystem->m_pacmedirectory->module() / "_desk_tb.dll";
+//   strPathDll = acmedirectory()->module() / "_desk_tb.dll";
 //
 //   //#else
 //   //
-//   //   strPathDll = m_psystem->m_pacmedirectory->matter() / "time" / process_platform_dir_name() /"stage/_desk_tb.dll";
+//   //   strPathDll = acmedirectory()->matter() / "time" / process_platform_name() /"stage/_desk_tb.dll";
 //   //
 //   //#endif
 //
@@ -455,7 +455,7 @@ bool position_desk_toolbar2()
 
          }
 
-         //::m_psystem->m_pacmefile->put_contents("C:\\archive\\hell_cached.txt", ::hex::upper_from(m.get_data(), m.get_size()));
+         //::acmefile()->put_contents("C:\\archive\\hell_cached.txt", ::hex::upper_from(m.get_data(), m.get_size()));
 
       }
 
@@ -502,7 +502,7 @@ bool position_desk_toolbar2()
 
          }
 
-         //::m_psystem->m_pacmefile->put_contents("C:\\archive\\hells.txt", ::hex::upper_from(&m[16], 56));
+         //::acmefile()->put_contents("C:\\archive\\hells.txt", ::hex::upper_from(&m[16], 56));
 
       }
 

@@ -96,7 +96,7 @@ namespace direct2d
    }
 
 
-   void direct2d::initialize(::object * pobject)
+   void direct2d::initialize(::particle * pparticle)
    {
 
       ::directx::defer_initialize(pobject);
@@ -216,7 +216,7 @@ namespace direct2d
 
 
 
-   CLASS_DECL_DIRECT2D void defer_initialize(::object * pobject)
+   CLASS_DECL_DIRECT2D void defer_initialize(::particle * pparticle)
    {
 
       if (::is_set(direct2d::s_pdirect2d))

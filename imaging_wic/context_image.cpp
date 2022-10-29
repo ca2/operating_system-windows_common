@@ -57,7 +57,7 @@ namespace imaging_wic
    }
 
 
-   void context_image::initialize(::object * pobject)
+   void context_image::initialize(::particle * pparticle)
    {
 
       //auto estatus = 
@@ -141,7 +141,7 @@ namespace imaging_wic
 
       bool bOk = true;
 
-      m_psystem->windowing_send({ e_timeout, 15_s, [&]()
+      acmesystem()->windowing_send({ e_timeout, 15_s, [&]()
          {
 
             auto dataPackage = ::winrt::Windows::ApplicationModel::DataTransfer::Clipboard::GetContent();
@@ -262,7 +262,7 @@ namespace imaging_wic
 
       bool bOk = false;
 
-      m_psystem->windowing_send({ e_timeout, 15_s, [&bOk]()
+      acmesystem()->windowing_send({ e_timeout, 15_s, [&bOk]()
          {
 
 
@@ -309,7 +309,7 @@ namespace imaging_wic
 
       package.SetBitmap(object);
 
-      m_psystem->windowing_send({ e_timeout, 15_s, [&package, this]()
+      acmesystem()->windowing_send({ e_timeout, 15_s, [&package, this]()
          {
 
             ::winrt::Windows::ApplicationModel::DataTransfer::Clipboard::SetContent(package);

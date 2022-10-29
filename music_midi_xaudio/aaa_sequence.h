@@ -107,7 +107,7 @@ namespace music
 
 
 
-            sequence(::object * pobject);
+            sequence(::particle * pparticle);
             virtual ~sequence();
 
 

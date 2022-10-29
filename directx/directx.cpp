@@ -28,7 +28,7 @@ namespace directx
    }
 
 
-   void directx::initialize(::object * pobject)
+   void directx::initialize(::particle * pparticle)
    {
 
       // This flag adds support for surfaces with a different color channel ordering
@@ -148,7 +148,7 @@ namespace directx
    typedef FN_DXGIGetDebugInterface* PFN_DXGIGetDebugInterface;
 
 
-   CLASS_DECL_DIRECTX void defer_initialize(::object * pobject)
+   CLASS_DECL_DIRECTX void defer_initialize(::particle * pparticle)
    {
 
       if (::is_set(directx::s_pdirectx))

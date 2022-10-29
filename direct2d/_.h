@@ -86,7 +86,7 @@ CLASS_DECL_AURA float x_dpi(oswindow hwnd, float y);
 //
 //      D3D_FEATURE_LEVEL m_featurelevel;
 //
-//      virtual void initialize(::object * pobject) override;
+//      virtual void initialize(::particle * pparticle) override;
 //
 //
 //      static IDWriteFactory * dwrite_factory(bool bCreate = true);

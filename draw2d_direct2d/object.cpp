@@ -56,7 +56,7 @@ namespace draw2d_direct2d
    }
 
 
-   object * object_allocator(::object * pobject, HANDLE h)
+   object * object_allocator(::particle * pparticle, HANDLE h)
    {
 
       return nullptr;

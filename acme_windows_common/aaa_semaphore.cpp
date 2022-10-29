@@ -81,7 +81,7 @@ semaphore::semaphore(::i32 lInitialCount, ::i32 lMaxCount, const ::string & pstr
 
       if(::str().begins_ci(pstrName, "Local\\") || ::str().begins_ci(pstrName, "Local\\"))
       {
-         strPath =          auto psystem = m_psystem;
+         strPath =          auto psystem = acmesystem();
 
          auto pacmedir = psystem->m_pacmedirectory;
 
@@ -92,7 +92,7 @@ pacmedir->home() / ".ca2/ftok/semaphore/" + string(pstrName);
          strPath = "/::payload/tmp/ca2/ftok/semaphore/" + string(pstrName);
       }
 
-               auto psystem = m_psystem;
+               auto psystem = acmesystem();
 
          auto pacmedir = psystem->m_pacmedirectory;
 

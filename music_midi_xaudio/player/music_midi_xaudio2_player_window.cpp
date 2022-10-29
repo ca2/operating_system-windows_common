@@ -17,7 +17,7 @@ namespace music
          {
 
 
-            window::window(::object * pobject) :
+            window::window(::particle * pparticle) :
                ::object(pobject)
             {
                m_pcallback = nullptr;

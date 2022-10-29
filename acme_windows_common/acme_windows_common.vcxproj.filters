@@ -68,6 +68,15 @@
     <ClInclude Include="standard_exception.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="mutex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="synchronization_object.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="exclusive.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="framework.cpp">
@@ -107,6 +116,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="hresult_exception.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mutex.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="synchronization_object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="exclusive.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

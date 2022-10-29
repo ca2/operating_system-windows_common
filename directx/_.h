@@ -51,7 +51,7 @@ namespace directx
 #endif
 
 
-   CLASS_DECL_DIRECTX void defer_initialize(::object * pobject);
+   CLASS_DECL_DIRECTX void defer_initialize(::particle * pparticle);
    CLASS_DECL_DIRECTX void finalize();
 
 

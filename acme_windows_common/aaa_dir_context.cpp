@@ -22,7 +22,7 @@ namespace windows
    }
 
 
-   void dir_context::initialize(::object * pobject)
+   void dir_context::initialize(::particle * pparticle)
    {
 
       auto estatus = ::object::initialize(pobject);

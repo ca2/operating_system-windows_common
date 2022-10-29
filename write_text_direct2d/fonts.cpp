@@ -21,7 +21,7 @@ namespace write_text_direct2d
    }
 
 
-   void fonts::initialize(::object * pobject)
+   void fonts::initialize(::particle * pparticle)
    {
 
       //auto estatus = 

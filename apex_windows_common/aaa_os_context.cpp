@@ -1610,7 +1610,7 @@ retry:
       if (status.m_mtime.get_time() != 0)
       {
 
-         m_psystem->m_pnode->datetime_to_filetime((file_time_t *) &lastWriteTime, status.m_mtime);
+         acmesystem()->m_pnode->datetime_to_filetime((file_time_t *) &lastWriteTime, status.m_mtime);
 
          pLastWriteTime = &lastWriteTime;
 
@@ -1621,7 +1621,7 @@ retry:
       if (status.m_atime.get_time() != 0)
       {
 
-         //auto pnode = m_psystem->m_papexsystem->node();
+         //auto pnode = acmesystem()->m_papexsystem->node();
 
          ::time_to_file_time((file_time_t*)&lastAccessTime, &status.m_atime.m_time);
 
@@ -1985,7 +1985,7 @@ retry:
 
          ::file::path pathFolder;
 
-         m_psystem->m_pacmedirectory->m_pplatformdir->_shell_get_special_folder_path(nullptr, pathFolder, CSIDL_WINDOWS, false);
+         acmedirectory()->m_pplatformdir->_shell_get_special_folder_path(nullptr, pathFolder, CSIDL_WINDOWS, false);
 
          pathFolder /= "Web/Wallpaper";
 
@@ -2230,7 +2230,7 @@ repeat:
       ::application * papp = get_application();
 
       string strTargetProgId;
-      string strModule = solve_relative(m_psystem->m_pacmepath->app_module());
+      string strModule = solve_relative(acmepath()->app_module());
 
       strTargetProgId = get_application()->m_strAppName;
 
@@ -2493,7 +2493,7 @@ repeat:
 
       string strTargetProgId;
 
-      string strModule = solve_relative(m_psystem->m_pacmepath->app_module());
+      string strModule = solve_relative(acmepath()->app_module());
 
       string strApplicationRegistryPath = find_string("ApplicationRegistryPath");
 

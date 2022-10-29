@@ -1,6 +1,9 @@
 #pragma once
 
 
+#include "acme/exception/exception.h"
+
+
 class CLASS_DECL_ACME_WINDOWS_COMMON hresult_exception :
    public ::exception
 {
@@ -8,7 +11,7 @@ public:
 
 
    hresult_exception(HRESULT hresult, const char * pszMessage = nullptr);
-   virtual ~hresult_exception();
+   ~hresult_exception() override;
 
 
 };

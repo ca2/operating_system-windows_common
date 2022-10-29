@@ -24,7 +24,7 @@ namespace draw2d_directx
          HDC            m_hdc;
 
 
-         document_properties(::object * pobject);
+         document_properties(::particle * pparticle);
          virtual ~document_properties();
 
 

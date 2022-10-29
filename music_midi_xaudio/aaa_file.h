@@ -20,7 +20,7 @@ namespace music
 
 
 
-            buffer(::object * pobject);
+            buffer(::particle * pparticle);
             virtual ~buffer();
 
 

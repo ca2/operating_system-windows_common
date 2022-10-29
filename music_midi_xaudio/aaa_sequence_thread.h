@@ -20,7 +20,7 @@ namespace music
          public:
 
 
-            sequence_thread(::object * pobject);
+            sequence_thread(::particle * pparticle);
             virtual ~sequence_thread();
 
 

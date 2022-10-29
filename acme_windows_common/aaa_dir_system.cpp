@@ -28,7 +28,7 @@ namespace windows
 
 
 
-   void dir_system::initialize(::object * pobject)
+   void dir_system::initialize(::particle * pparticle)
    {
 
       auto estatus = ::dir_system::initialize(pobject);
@@ -55,7 +55,7 @@ namespace windows
 
       m_pathHome = get_known_folder(FOLDERID_Profile);
 
-      m_pathCa2Config =          auto psystem = m_psystem;
+      m_pathCa2Config =          auto psystem = acmesystem();
 
          auto pacmedir = psystem->m_pacmedirectory;
 
@@ -107,21 +107,21 @@ pacmedir->roaming();
 
       }
 
-               auto psystem = m_psystem;
+               auto psystem = acmesystem();
 
          auto pacmedir = psystem->m_pacmedirectory;
 
 pacmedir->create(m_strTimeFolder);
       //xxdebug_box("win_dir::initialize (m_strTimeFolder)", "win_dir::initialize", 0);
 
-      if (!         auto psystem = m_psystem;
+      if (!         auto psystem = acmesystem();
 
          auto pacmedir = psystem->m_pacmedirectory;
 
 pacmedir->is(m_strTimeFolder))
          return false;
 
-               auto psystem = m_psystem;
+               auto psystem = acmesystem();
 
          auto pacmedir = psystem->m_pacmedirectory;
 

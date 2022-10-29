@@ -13,9 +13,9 @@ namespace draw2d
 //
 ////#ifdef _UWP
 ////
-////      m_psystem = pinteraction->m_psystem;
+////      acmesystem() = pinteraction->acmesystem();
 ////
-////      ::pointer<::aura::system>psystem = m_psystem;
+////      ::pointer<::aura::system>psystem = acmesystem();
 ////
 ////      auto pdraw2d = psystem->draw2d();
 ////
@@ -35,7 +35,7 @@ namespace draw2d
 ////
 ////      //m_D2DMultithread->Leave();
 ////
-////      ::pointer<::aura::system>psystem = m_psystem;
+////      ::pointer<::aura::system>psystem = acmesystem();
 ////
 ////      auto pdraw2d = psystem->draw2d();
 ////
