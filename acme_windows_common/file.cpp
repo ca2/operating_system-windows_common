@@ -714,7 +714,7 @@ namespace acme_windows_common
 
          DWORD dwLastError = ::GetLastError();
 
-         throw ::file_exception(::error_io, dwLastError, m_path, "!SetEndOfFile");
+         throw ::file::exception(::error_io, dwLastError, m_path, "!SetEndOfFile", m_eopen);
 
       }
 

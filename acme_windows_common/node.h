@@ -51,7 +51,7 @@ namespace acme_windows_common
       void install_crash_dump_reporting(const string& strModuleNameWithTheExeExtension) override;
 
 
-      virtual ::pointer < ::mutex > create_named_mutex(::particle * pparticleContext, bool bInitiallyOwn, const char * pszName);
+      virtual ::pointer < ::mutex > create_named_mutex(::particle * pparticleContext, bool bInitiallyOwn, const char * pszName, void * psaAttributes = nullptr);
 
 
       ::pointer < ::mutex > create_local_named_mutex(::particle * pparticleContext, bool bInitiallyOwned, const ::string & strName) override;

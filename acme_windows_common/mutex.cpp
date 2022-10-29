@@ -1,5 +1,6 @@
 // From acme/parallelization/mutex.cpp by camilo on 2022-10-28 14:04 <3ThomasBorregaardSorensen!!
 #include "framework.h"
+#include "mutex.h"
 #include "acme/operating_system.h"
 #include "acme/filesystem/filesystem/acme_directory.h"
 #include "acme/platform/system.h"

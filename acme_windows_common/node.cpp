@@ -758,10 +758,12 @@ namespace acme_windows_common
 
    }
 
-   ::pointer < ::mutex > node::create_named_mutex(::particle * pparticleContext, bool bInitiallyOwn, const char * pszName)
+
+   ::pointer < ::mutex > node::create_named_mutex(::particle * pparticleContext, bool bInitiallyOwn, const char * pszName, void * psaAttributes)
    {
 
-      return __new(mutex(pparticleContext, bInitiallyOwn, pszName ADD_PARAM_SEC_ATTRS));
+      //return __new(mutex(pparticleContext, bInitiallyOwn, pszName ADD_PARAM_SEC_ATTRS));
+      return __new(mutex(pparticleContext, bInitiallyOwn, pszName, psaAttributes));
 
    }
 

@@ -1,14 +1,14 @@
 // From acme/platform/exclusive.h by camilo on 2022-10-28 15:25 <3ThomasBorregaardSorensen!!
 #include "framework.h"
+#include "exclusive.h"
 #include "acme/operating_system.h"
 #include "acme/filesystem/filesystem/acme_directory.h"
 #include "acme/platform/node.h"
 #include "acme/platform/system.h"
 #include "acme/primitive/primitive/object.h"
-#include "exclusive.h"
 
 
-namespace acme
+namespace acme_windows_common
 {
 
 
@@ -120,7 +120,7 @@ namespace acme
    }
 
 
-} // namespace acme
+} // namespace acme_windows_common
 
 
 

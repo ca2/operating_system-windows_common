@@ -3,6 +3,7 @@
 
 
 #include "acme/parallelization/mutex.h"
+#include "synchronization_object.h"
 
 
 namespace acme_windows_common

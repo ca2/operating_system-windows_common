@@ -2,17 +2,20 @@
 #pragma once
 
 
-namespace acme
+#include "acme/platform/exclusive.h"
+
+
+namespace acme_windows_common
 {
 
 
    class CLASS_DECL_ACME exclusive :
-      virtual public ::matter
+      virtual public ::acme::exclusive
    {
    public:
 
 
-      string                  m_strId;
+      //string                  m_strId;
 
       // #ifdef WINDOWS
 
@@ -33,7 +36,7 @@ namespace acme
       ~exclusive() override;
 
 
-      bool exclusive_fails() const;
+      bool exclusive_fails() const override;
 
 
    };
