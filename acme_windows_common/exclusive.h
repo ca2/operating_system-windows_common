@@ -9,7 +9,7 @@ namespace acme_windows_common
 {
 
 
-   class CLASS_DECL_ACME exclusive :
+   class CLASS_DECL_ACME_WINDOWS_COMMON exclusive :
       virtual public ::acme::exclusive
    {
    public:

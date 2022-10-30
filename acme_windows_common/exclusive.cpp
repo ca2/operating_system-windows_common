@@ -1,6 +1,7 @@
 // From acme/platform/exclusive.h by camilo on 2022-10-28 15:25 <3ThomasBorregaardSorensen!!
 #include "framework.h"
 #include "exclusive.h"
+#include "mutex.h"
 #include "acme/operating_system.h"
 #include "acme/filesystem/filesystem/acme_directory.h"
 #include "acme/platform/node.h"
@@ -40,7 +41,7 @@ namespace acme_windows_common
          try
          {
 
-            m_pmutex = __new(::pointer < ::mutex >(pparticle, false, strId));
+            m_pmutex = __new(mutex(pparticle, false, strId));
 
             m_dwLastError = ::GetLastError();
 

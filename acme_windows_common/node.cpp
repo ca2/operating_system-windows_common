@@ -763,7 +763,7 @@ namespace acme_windows_common
    {
 
       //return __new(mutex(pparticleContext, bInitiallyOwn, pszName ADD_PARAM_SEC_ATTRS));
-      return __new(mutex(pparticleContext, bInitiallyOwn, pszName, psaAttributes));
+      return __new(::acme_windows_common::mutex(pparticleContext, bInitiallyOwn, pszName, psaAttributes));
 
    }
 

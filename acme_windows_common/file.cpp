@@ -2,6 +2,9 @@
 #include "file.h"
 #include "acme_directory.h"
 #include "acme_file.h"
+#include "acme/exception/ios.h"
+#include "acme/filesystem/file/exception.h"
+#include "acme/filesystem/file/status.h"
 #include "acme/operating_system/time.h"
 #include "acme/filesystem/file/exception.h"
 #include "acme/platform/system.h"
@@ -740,24 +743,24 @@ namespace acme_windows_common
    }
 
 
-   void file::assert_ok() const
-   {
+   //void file::assert_ok() const
+   //{
 
-      ::matter::assert_ok();
+   //   ::matter::assert_ok();
 
-   }
+   //}
 
 
-   void file::dump(dump_context & dumpcontext) const
-   {
+   //void file::dump(dump_context & dumpcontext) const
+   //{
 
-      ::matter::dump(dumpcontext);
+   //   ::matter::dump(dumpcontext);
 
-      //dumpcontext << "with handle " << m_handleFile;
-      //dumpcontext << " and name \"" << m_path << "\"";
-      //dumpcontext << "\n";
+   //   //dumpcontext << "with handle " << m_handleFile;
+   //   //dumpcontext << " and name \"" << m_path << "\"";
+   //   //dumpcontext << "\n";
 
-   }
+   //}
 
 
 #define EPERM           1
