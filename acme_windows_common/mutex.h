@@ -88,7 +88,7 @@ namespace acme_windows_common
       //#endif
 
       using particle::unlock;
-      virtual void unlock() override = 0;
+      virtual bool _wait(sconst class ::wait & wait) override;
 
 
       //virtual bool already_exists();

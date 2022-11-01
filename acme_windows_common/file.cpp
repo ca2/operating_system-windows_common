@@ -2,7 +2,7 @@
 #include "file.h"
 #include "acme_directory.h"
 #include "acme_file.h"
-#include "acme/exception/ios.h"
+#include "acme/exception/io.h"
 #include "acme/filesystem/file/exception.h"
 #include "acme/filesystem/file/status.h"
 #include "acme/operating_system/time.h"

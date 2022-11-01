@@ -25,7 +25,7 @@ namespace acme_windows_common
    {
 
       /*auto estatus =*/
-      ::acme::node::initialize(pobject);
+      ::acme::node::initialize(pparticle);
 
    //   //if (!estatus)
    //   //{
