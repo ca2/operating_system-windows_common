@@ -111,7 +111,7 @@ namespace acme_windows_common
          else
          {
 
-            throw ::file::exception(m_estatus, -1, "", "file with empty name!!");
+            throw ::file::exception(m_estatus, -1, "", "file with empty name!!", m_eopen);
 
          }
 

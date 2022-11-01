@@ -1,6 +1,7 @@
 // From acme/parallelization/mutex.cpp by camilo on 2022-10-28 14:04 <3ThomasBorregaardSorensen!!
 #include "framework.h"
 #include "mutex.h"
+#include "acme/exception/exception.h"
 #include "acme/operating_system.h"
 #include "acme/filesystem/filesystem/acme_directory.h"
 #include "acme/platform/system.h"
@@ -1404,14 +1405,14 @@ namespace acme_windows_common
 #endif
 
 
-         if (!::ReleaseMutex(m_hsync))
+         if (!::ReleaseMutex(m_hsynchronization))
          {
 
             auto last_error = GetLastError();
 
             auto estatus = failed_errno_to_status(last_error);
 
-            //throw ::exception(estatus);
+            throw ::exception(estatus);
 
          }
 
@@ -1767,14 +1768,14 @@ namespace acme_windows_common
       }
 
 
-      mutex * g_pmutexUiDestroyed = nullptr;
+      //::pointer <::mutex > g_pmutexUiDestroyed;
 
-      CLASS_DECL_ACME mutex * get_ui_destroyed_mutex()
-      {
+      //CLASS_DECL_ACME_WINDOWS_COMMON particle * get_ui_destroyed_synchronization()
+      //{
 
-         return g_pmutexUiDestroyed;
+      //   return g_pmutexUiDestroyed;
 
-      }
+      //}
 
 
 
