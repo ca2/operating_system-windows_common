@@ -26,7 +26,7 @@
     <ClInclude Include="_library.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="_types.h">
+    <ClInclude Include="_operating_system.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="_geometry2.h">

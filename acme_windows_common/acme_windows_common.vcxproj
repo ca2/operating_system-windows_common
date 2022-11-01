@@ -808,7 +808,7 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="_library.h" />
     <ClInclude Include="_geometry2.h" />
-    <ClInclude Include="_types.h" />
+    <ClInclude Include="_operating_system.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="acme_directory.cpp" />

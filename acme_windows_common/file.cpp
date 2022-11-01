@@ -21,7 +21,7 @@ CLASS_DECL_ACME_WINDOWS_COMMON bool _os_may_have_alias(const char * psz)
 }
 
 
-CLASS_DECL_ACME_WINDOWS_COMMON memsize hfile_read(hfile hfile, void* p, memsize s)
+CLASS_DECL_ACME_WINDOWS_COMMON memsize hfile_read(HANDLE hfile, void* p, memsize s)
 {
 
    DWORD dwRead = 0;

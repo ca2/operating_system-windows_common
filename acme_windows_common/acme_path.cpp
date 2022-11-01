@@ -3,7 +3,7 @@
 #include "framework.h"
 #include "acme_path.h"
 #include "acme_file.h"
-#include <stdio.h>
+#include "acme/operating_system.h"
 
 
 namespace acme_windows_common

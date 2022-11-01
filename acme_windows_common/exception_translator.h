@@ -3,6 +3,7 @@
 
 
 #include "acme/exception/translator.h"
+#include "acme/operating_system.h"
 
 
 namespace acme_windows_common

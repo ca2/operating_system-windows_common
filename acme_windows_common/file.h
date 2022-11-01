@@ -3,6 +3,7 @@
 
 
 #include "acme/filesystem/file/file.h"
+#include "acme/operating_system.h"
 
 
 //#ifndef WINDOWS_DESKTOP

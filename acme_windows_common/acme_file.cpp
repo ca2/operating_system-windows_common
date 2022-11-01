@@ -6,6 +6,7 @@
 #include "acme/filesystem/file/file.h"
 #include "acme/filesystem/filesystem/acme_path.h"
 #include "acme/primitive/primitive/memory.h"
+#include "acme/operating_system.h"
 #include <stdio.h>
 #include <fcntl.h>
 #include <sys/types.h>

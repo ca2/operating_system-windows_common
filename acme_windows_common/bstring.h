@@ -1,6 +1,9 @@
 #pragma once
 
 
+#include "acme/operating_system.h"
+
+
 class CLASS_DECL_ACME_WINDOWS_COMMON bstring
 {
 public:
