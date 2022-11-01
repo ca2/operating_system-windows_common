@@ -1,6 +1,6 @@
 #include "framework.h"
 #include "acme/primitive/string/string.h"
-#include "acme/primitive/string/string_wide_conversion.h"
+#include "acme/primitive/string/wstring_adaptor.h"
 #include "acme/library.h"
 
 
@@ -35,7 +35,7 @@ namespace windows_common
    ::u32 get_current_directory(string& str)
    {
 
-      return ::GetCurrentDirectoryW(MAX_PATH * 8, wtostring(str, MAX_PATH * 8));
+      return ::GetCurrentDirectoryW(MAX_PATH * 8, wstring_adaptor(str, MAX_PATH * 8));
 
    }
 
@@ -43,7 +43,7 @@ namespace windows_common
    ::u32 get_temp_path(string& str)
    {
 
-      return ::GetTempPathW(MAX_PATH * 8, wtostring(str, MAX_PATH * 8));
+      return ::GetTempPathW(MAX_PATH * 8, wstring_adaptor(str, MAX_PATH * 8));
 
    }
 
