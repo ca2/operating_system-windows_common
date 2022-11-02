@@ -2,10 +2,10 @@
 #include "framework.h"
 #include "mutex.h"
 #include "acme/exception/exception.h"
-#include "acme/operating_system.h"
 #include "acme/filesystem/filesystem/acme_directory.h"
 #include "acme/platform/system.h"
 #include "acme/exception/exception.h"
+#include "acme/_operating_system.h"
 
 
 //#ifdef MACOS
@@ -125,7 +125,7 @@ namespace acme_windows_common
    }
 
 
-   mutex::mutex(::particle * pparticle, bool bInitiallyOwn, const char * pstrName ARG_SEC_ATTRS)
+   mutex::mutex(::particle * pparticle, bool bInitiallyOwn, const char * pszName, const security_attributes & securityattributes)
    {
 
 #ifdef _DEBUG
@@ -138,13 +138,16 @@ namespace acme_windows_common
 
 //#ifdef WINDOWS
 
-      wstring wstrName(pstrName);
+      wstring wstrName(pszName);
 
-      const unichar * pwszName = pstrName == nullptr ? nullptr : (const unichar *)wstrName;
+      const unichar * pwszName = pszName == nullptr ? nullptr : (const unichar *)wstrName;
 
-      auto psa = (LPSECURITY_ATTRIBUTES)PARAM_SEC_ATTRS;
+      auto psecurityattributes = (LPSECURITY_ATTRIBUTES)securityattributes.m_pOsSecurityAttributes;
 
-      m_hsynchronization = ::CreateMutexExW(psa, pwszName, bInitiallyOwn ? CREATE_MUTEX_INITIAL_OWNER : 0, MUTEX_ALL_ACCESS);
+      m_hsynchronization = ::CreateMutexExW(
+         psecurityattributes, 
+         pwszName, 
+         bInitiallyOwn ? CREATE_MUTEX_INITIAL_OWNER : 0, MUTEX_ALL_ACCESS);
 
       DWORD dwLastError = ::GetLastError();
 
@@ -155,10 +158,10 @@ namespace acme_windows_common
 
          DWORD dwError1 = ::GetLastError();
 
-         if (pstrName != nullptr)
+         if (pszName != nullptr)
          {
 
-            m_hsynchronization = ::OpenMutexW(SYNCHRONIZE, false, utf8_to_unicode(pstrName));
+            m_hsynchronization = ::OpenMutexW(SYNCHRONIZE, false, utf8_to_unicode(pszName));
 
          }
 
@@ -484,7 +487,7 @@ namespace acme_windows_common
 
 //#ifdef WINDOWS
 
-   mutex::mutex(enum_create_new, const char * pstrName, void * h, bool bOwner)
+   mutex::mutex(enum_create_new, const char * pstrName, HANDLE handleSyncObject, bool bOwner)
    {
 
 #ifdef _DEBUG
@@ -492,7 +495,8 @@ namespace acme_windows_common
 #endif
 
       set_own_synchronization(bOwner);
-      m_hsynchronization = h;
+
+      m_hsynchronization = handleSyncObject;
 
    }
 

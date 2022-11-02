@@ -3,7 +3,7 @@
 #include "framework.h"
 #include "acme_path.h"
 #include "acme_file.h"
-#include "acme/operating_system.h"
+#include "acme/_operating_system.h"
 
 
 namespace acme_windows_common
@@ -27,7 +27,7 @@ namespace acme_windows_common
    ::file::enum_type acme_path::get_type(const char * path)
    {
 
-      auto dwFileAttributes = windows_get_file_attributes(path);
+      auto dwFileAttributes = ::windows::get_file_attributes(path);
 
       if (dwFileAttributes == INVALID_FILE_ATTRIBUTES)
       {

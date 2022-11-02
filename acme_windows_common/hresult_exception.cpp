@@ -1,6 +1,6 @@
 ﻿#include "framework.h"
 #include "hresult_exception.h"
-#include "acme/operating_system/windows_common/_c.h"
+#include "acme/_operating_system.h"
 
 
 hresult_exception::hresult_exception(HRESULT hresult, const char * pszMessage)
@@ -45,7 +45,7 @@ hresult_exception::~hresult_exception()
 CLASS_DECL_ACME_WINDOWS_COMMON int trace_hr(const char * psz,HRESULT hr)
 {
 
-   string strError = last_error_message((DWORD) hr);
+   string strError = ::windows::last_error_message((DWORD) hr);
 
    strError.trim();
 

@@ -17,7 +17,7 @@
 
 
 CLASS_DECL_ACME_WINDOWS_COMMON HRESULT defer_co_initialize_ex(bool bMultiThread, bool bDisableOleDDE = false);
-CLASS_DECL_ACME::u32 windows_get_file_attributes(const char * path);
+
 
 
 CLASS_DECL_ACME_WINDOWS_COMMON int trace_hr(const char * psz, HRESULT hr);

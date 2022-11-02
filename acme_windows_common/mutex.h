@@ -4,6 +4,7 @@
 
 #include "acme/parallelization/mutex.h"
 #include "synchronization_object.h"
+#include "acme/operating_system/security_attributes.h"
 
 
 namespace acme_windows_common
@@ -61,7 +62,7 @@ namespace acme_windows_common
 
 
       //#ifdef WINDOWS
-         mutex(enum_create_new ecreatenew, const char * pstrName, void * posdata, bool bOwner = true);
+         mutex(enum_create_new ecreatenew, const char * pszName, void * handleSyncObject, bool bOwner = true);
       //#elif defined(MUTEX_NAMED_POSIX)
       //   mutex(enum_create_new ecreatenew = create_new, const char * psz = nullptr, const char * pstrName,sem_t * psem,bool bOwner = true);
       //#elif defined(MUTEX_NAMED_FD)
@@ -69,7 +70,7 @@ namespace acme_windows_common
       //#elif defined(MUTEX_NAMED_VSEM)
       //   mutex(enum_create_new ecreatenew, const char * pstrName,key_t key, i32 semid, bool bOwner = true);
       //#endif
-         mutex(::particle * pparticle, bool bInitiallyOwn, const char * lpszName ARG_SEC_ATTRS_DEF);
+         mutex(::particle * pparticle, bool bInitiallyOwn, const char * pszName, const security_attributes & securityattributes = nullptr);
          mutex(enum_create_new ecreatenew = e_create_new, bool bInitiallyOwn = false);
       // mutex();
       ~mutex() override;

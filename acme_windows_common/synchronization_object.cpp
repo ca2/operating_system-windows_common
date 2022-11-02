@@ -2,7 +2,7 @@
 #include "framework.h"
 #include "synchronization_object.h"
 #include "acme/exception/exception.h"
-#include "acme/operating_system.h"
+#include "acme/_operating_system.h"
 
 
 namespace acme_windows_common
@@ -42,7 +42,7 @@ namespace acme_windows_common
 
       DWORD dwResult = ::WaitForSingleObjectEx(m_hsynchronization, wait, false);
 
-      auto estatus = windows_wait_result_to_status(dwResult);
+      auto estatus = ::windows::wait_result_status(dwResult);
 
       if (estatus == error_wait_timeout)
       {

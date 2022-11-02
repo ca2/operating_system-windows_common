@@ -32,7 +32,7 @@ namespace acme_windows_common
              ::pointer < ::mutex >     m_pmutex;
 
 
-      exclusive(::particle * pparticle, string str ARG_SEC_ATTRS_DEF);
+      exclusive(::particle * pparticle, string str, const security_attributes & securityattributes);
       ~exclusive() override;
 
 

@@ -1,7 +1,7 @@
 #include "framework.h"
 #include "acme/primitive/string/string.h"
 #include "acme/primitive/string/wstring_adaptor.h"
-#include "acme/library.h"
+#include "acme/_library.h"
 
 
 //void CLASS_DECL_ACME_WINDOWS_COMMON __cdecl _ca2_purecall()

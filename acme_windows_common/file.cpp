@@ -326,7 +326,7 @@ namespace acme_windows_common
 
          }
 
-         ::e_status estatus = last_error_to_status(dwLastError);
+         ::e_status estatus = ::windows::last_error_status(dwLastError);
 
          auto errorcode = __last_error(dwLastError);
 
@@ -436,7 +436,7 @@ namespace acme_windows_common
 
          auto dwLastError = ::GetLastError();
 
-         auto estatus = last_error_to_status(dwLastError);
+         auto estatus = ::windows::last_error_status(dwLastError);
 
          auto errorcode = __last_error(dwLastError);
 
@@ -473,7 +473,7 @@ namespace acme_windows_common
 
          auto dwLastError = ::GetLastError();
 
-         auto estatus = last_error_to_status(dwLastError);
+         auto estatus = ::windows::last_error_status(dwLastError);
 
          auto errorcode = __last_error(dwLastError);
 
@@ -494,7 +494,7 @@ namespace acme_windows_common
 
          auto dwLastError = ::GetLastError();
 
-         auto estatus = last_error_to_status(dwLastError);
+         auto estatus = ::windows::last_error_status(dwLastError);
 
          auto errorcode = __last_error(dwLastError);
 
@@ -513,7 +513,7 @@ namespace acme_windows_common
 
          auto dwLastError = ::GetLastError();
 
-         auto estatus = last_error_to_status(dwLastError);
+         auto estatus = ::windows::last_error_status(dwLastError);
 
          auto errorcode = __last_error(dwLastError);
 
@@ -536,7 +536,7 @@ namespace acme_windows_common
 
          auto dwLastError = ::GetLastError();
 
-         auto estatus = last_error_to_status(dwLastError);
+         auto estatus = ::windows::last_error_status(dwLastError);
 
          auto errorcode = __last_error(dwLastError);
 
@@ -610,7 +610,7 @@ namespace acme_windows_common
 
          auto dwLastError = ::GetLastError();
 
-         auto estatus = last_error_to_status(dwLastError);
+         auto estatus = ::windows::last_error_status(dwLastError);
 
          auto errorcode = __last_error(dwLastError);
 
@@ -655,7 +655,7 @@ namespace acme_windows_common
 
             auto dwLastError = ::GetLastError();
 
-            auto estatus = last_error_to_status(dwLastError);
+            auto estatus = ::windows::last_error_status(dwLastError);
 
             auto errorcode = __last_error(dwLastError);
 
@@ -705,7 +705,7 @@ namespace acme_windows_common
 
          auto dwLastError = ::GetLastError();
 
-         auto estatus = last_error_to_status(dwLastError);
+         auto estatus = ::windows::last_error_status(dwLastError);
 
          auto errorcode = __last_error(dwLastError);
 
@@ -726,7 +726,7 @@ namespace acme_windows_common
 
          auto dwLastError = ::GetLastError();
 
-         auto estatus = last_error_to_status(dwLastError);
+         auto estatus = ::windows::last_error_status(dwLastError);
 
          auto errorcode = __last_error(dwLastError);
 
@@ -746,7 +746,7 @@ namespace acme_windows_common
 
          auto dwLastError = ::GetLastError();
 
-         auto estatus = last_error_to_status(dwLastError);
+         auto estatus = ::windows::last_error_status(dwLastError);
 
          auto errorcode = __last_error(dwLastError);
 
@@ -770,7 +770,7 @@ namespace acme_windows_common
 
          auto dwLastError = ::GetLastError();
 
-         auto estatus = last_error_to_status(dwLastError);
+         auto estatus = ::windows::last_error_status(dwLastError);
 
          auto errorcode = __last_error(dwLastError);
 
@@ -1051,7 +1051,7 @@ bool CLASS_DECL_ACME_WINDOWS_COMMON window_get_full_path(wstring & wstrFullPath,
    wstring wstrRoot;
 
    // determine the root name of the volume
-   wstrRoot = windows_get_root(wstrFullPath);
+   wstrRoot = ::windows::get_file_path_root(wstrFullPath);
 
    // get file system information for the volume
    DWORD dwFlags, dwDummy;

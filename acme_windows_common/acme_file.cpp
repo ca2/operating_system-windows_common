@@ -6,7 +6,7 @@
 #include "acme/filesystem/file/file.h"
 #include "acme/filesystem/filesystem/acme_path.h"
 #include "acme/primitive/primitive/memory.h"
-#include "acme/operating_system.h"
+#include "acme/_operating_system.h"
 #include <stdio.h>
 #include <fcntl.h>
 #include <sys/types.h>
@@ -15,7 +15,6 @@
 #include <io.h>
 #include <stdlib.h>
 #include <time.h>
-
 
 
 CLASS_DECL_ACME void TRACELASTERROR();
@@ -114,7 +113,7 @@ namespace acme_windows_common
 
       //   }
 
-      //   auto estatus = last_error_to_status(lastError);
+      //   auto estatus = ::windows::last_error_status(lastError);
 
       //   throw io_exception(estatus);
 
@@ -356,7 +355,7 @@ namespace acme_windows_common
 
          DWORD dwLastError = ::GetLastError();
 
-         auto estatus = last_error_to_status(dwLastError);
+         auto estatus = ::windows::last_error_status(dwLastError);
 
          return estatus;
 
@@ -371,7 +370,7 @@ namespace acme_windows_common
 
          DWORD dwLastError = ::GetLastError();
 
-         auto estatus = last_error_to_status(dwLastError);
+         auto estatus = ::windows::last_error_status(dwLastError);
 
          ::CloseHandle(hfile);
 
@@ -603,7 +602,7 @@ namespace acme_windows_common
 
          auto dwLastError = ::GetLastError();
 
-         auto estatus = last_error_to_status(dwLastError);
+         auto estatus = ::windows::last_error_status(dwLastError);
 
          return estatus;
 
@@ -639,7 +638,7 @@ namespace acme_windows_common
 
          DWORD dwLastError = ::GetLastError();
 
-         auto estatus = last_error_to_status(dwLastError);
+         auto estatus = ::windows::last_error_status(dwLastError);
 
          throw ::exception(::error_io);
 
@@ -654,7 +653,7 @@ namespace acme_windows_common
 
          DWORD dwLastError = ::GetLastError();
 
-         estatus = last_error_to_status(dwLastError);
+         estatus = ::windows::last_error_status(dwLastError);
 
       }
 

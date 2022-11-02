@@ -2,11 +2,11 @@
 #include "framework.h"
 #include "exclusive.h"
 #include "mutex.h"
-#include "acme/operating_system.h"
 #include "acme/filesystem/filesystem/acme_directory.h"
 #include "acme/platform/node.h"
 #include "acme/platform/system.h"
 #include "acme/primitive/primitive/object.h"
+#include "acme/_operating_system.h"
 
 
 namespace acme_windows_common
@@ -16,7 +16,7 @@ namespace acme_windows_common
    //#ifdef WINDOWS
    //
 
-   exclusive::exclusive(::particle * pparticle, string strId ARG_SEC_ATTRS)
+   exclusive::exclusive(::particle * pparticle, string strId, const security_attributes & securityattributes)
    {
 
       m_strId = strId;

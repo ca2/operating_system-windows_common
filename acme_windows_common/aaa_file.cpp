@@ -417,7 +417,7 @@ acmedirectory()create(path.folder());
 
          }
 
-         ::e_status estatus = last_error_to_status(dwLastError);
+         ::e_status estatus = ::windows::last_error_status(dwLastError);
 
          //if (::file::should_ignore_file_exception_callstack(estatus))
          //{

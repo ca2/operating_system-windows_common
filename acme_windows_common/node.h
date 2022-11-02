@@ -70,7 +70,7 @@ namespace acme_windows_common
       //void datetime_to_filetime(file_time_t* pFileTime, const ::earth::time& time) override;
 
 
-      virtual ::e_status last_error_to_status(DWORD dwLastError);
+      //virtual ::e_status ::windows::last_error_status(DWORD dwLastError);
 
 
       string audio_get_default_library_name() override;
