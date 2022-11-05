@@ -3,6 +3,7 @@
 #include "acme/filesystem/filesystem/acme_directory.h"
 #include "acme/filesystem/filesystem/acme_path.h"
 #include "apex/platform/system.h"
+#include "acme/_operating_system.h"
 
 
 //CLASS_DECL_ACME_WINDOWS_COMMON bool defer_initialize_winsock();
@@ -29,10 +30,10 @@ namespace apex_windows_common
    }
 
 
-   void node::initialize(::object* pobject)
+   void node::initialize(::particle * pparticle)
    {
 
-      ::acme_windows_common::node::initialize(pobject);
+      ::acme_windows_common::node::initialize(pparticle);
 
       //if (!estatus)
       //{
@@ -338,9 +339,9 @@ namespace apex_windows_common
       property_set set;
 
       set["privileged"] = true;
-
+      ::i32 iExitCode = -1;
       //if (!call_sync(path, strParam, path.folder(), ::e_display_none, 3_minute, set))
-      call_sync(path, strParam, path.folder(), ::e_display_none, 3_minute, set);
+      call_sync(path, strParam, path.folder(), ::e_display_none, 3_minute, set, &iExitCode);
       //{
 
       //   return false;

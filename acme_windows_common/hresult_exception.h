@@ -17,16 +17,13 @@ public:
 };
 
 
-CLASS_DECL_ACME_WINDOWS_COMMON int trace_hr(const char * psz, HRESULT hr);
+CLASS_DECL_ACME_WINDOWS_COMMON int trace_hresult(const char * psz, HRESULT hresult);
 
 
-CLASS_DECL_ACME_WINDOWS_COMMON void throw_if_failed(HRESULT hr);
+CLASS_DECL_ACME_WINDOWS_COMMON void throw_hresult_if_failed(HRESULT hresult);
 
 
-inline error_code __hresult(HRESULT hresult)
-{
+CLASS_DECL_ACME_WINDOWS_COMMON error_code hresult_error_code(HRESULT hresult);
 
-   return { e_error_code_type_hresult, (::i64)hresult };
 
-}
 

@@ -51,17 +51,20 @@ namespace acme_windows_common
       void install_crash_dump_reporting(const string& strModuleNameWithTheExeExtension) override;
 
 
-      virtual ::pointer < ::mutex > create_named_mutex(::particle * pparticleContext, bool bInitiallyOwn, const char * pszName, void * psaAttributes = nullptr);
+      virtual ::pointer < ::mutex > create_named_mutex(::particle * pparticleContext, bool bInitiallyOwn, const char * pszName, security_attributes * psecurityattributes = nullptr);
 
 
-      ::pointer < ::mutex > create_local_named_mutex(::particle * pparticleContext, bool bInitiallyOwned, const ::string & strName) override;
-      ::pointer < ::mutex > create_global_named_mutex(::particle * pparticleContext, bool bInitiallyOwned, const ::string & strName) override;
+      ::pointer < ::mutex > create_local_named_mutex(::particle * pparticleContext, bool bInitiallyOwned, const ::string & strName, security_attributes * psecurityattributes = nullptr) override;
+      ::pointer < ::mutex > create_global_named_mutex(::particle * pparticleContext, bool bInitiallyOwned, const ::string & strName, security_attributes * psecurityattributes = nullptr) override;
 
       ::pointer < ::mutex > open_local_named_mutex(::particle * pparticleContext, const ::string & strName) override;
       ::pointer < ::mutex > open_global_named_mutex(::particle * pparticleContext, const ::string & strName) override;
 
 
       ::pointer < ::mutex > get_install_mutex(::particle * pparticleContext, const ::string & strPlatform, const ::string & strSuffix) override;
+
+
+//      ::pointer < ::acme::exclusive > _get_exclusive(::particle * pparticleContext, const ::string & strName, const ::security_attributes & securityattributes = nullptr) override;
 
       //virtual bool memcnts();
 

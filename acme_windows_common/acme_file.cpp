@@ -506,7 +506,7 @@ namespace acme_windows_common
 
          int iErrNo = errno;
 
-         auto estatus = errno_to_status(iErrNo);
+         auto estatus = errno_status(iErrNo);
 
          throw ::exception(estatus);
 

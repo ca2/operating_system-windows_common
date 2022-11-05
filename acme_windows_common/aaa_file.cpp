@@ -1304,7 +1304,7 @@ string CLASS_DECL_ACME_WINDOWS_COMMON windows_string_from_clsid(REFCLSID rclsid)
 //namespace windows
 //{
 //
-//   //void ::file::errno_to_status(i32 nErrno)
+//   //void ::file::errno_status(i32 nErrno)
 //   //{
 //   //   switch(nErrno)
 //   //   {

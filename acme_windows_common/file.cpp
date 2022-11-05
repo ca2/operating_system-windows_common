@@ -328,7 +328,7 @@ namespace acme_windows_common
 
          ::e_status estatus = ::windows::last_error_status(dwLastError);
 
-         auto errorcode = __last_error(dwLastError);
+         auto errorcode = ::windows::last_error_error_code(dwLastError);
 
          //if (::file::should_ignore_file_exception_callstack(estatus))
          //{
@@ -438,7 +438,7 @@ namespace acme_windows_common
 
          auto estatus = ::windows::last_error_status(dwLastError);
 
-         auto errorcode = __last_error(dwLastError);
+         auto errorcode = ::windows::last_error_error_code(dwLastError);
 
          throw ::file::exception(estatus, errorcode, m_path, "!ReadFile", m_eopen);
 
@@ -475,7 +475,7 @@ namespace acme_windows_common
 
          auto estatus = ::windows::last_error_status(dwLastError);
 
-         auto errorcode = __last_error(dwLastError);
+         auto errorcode = ::windows::last_error_error_code(dwLastError);
 
          throw ::file::exception(estatus, errorcode, m_path, "!WriteFile", m_eopen);
 
@@ -496,7 +496,7 @@ namespace acme_windows_common
 
          auto estatus = ::windows::last_error_status(dwLastError);
 
-         auto errorcode = __last_error(dwLastError);
+         auto errorcode = ::windows::last_error_error_code(dwLastError);
 
          throw ::file::exception(estatus, errorcode, m_path, "nWritten != nCount", m_eopen);
 
@@ -515,7 +515,7 @@ namespace acme_windows_common
 
          auto estatus = ::windows::last_error_status(dwLastError);
 
-         auto errorcode = __last_error(dwLastError);
+         auto errorcode = ::windows::last_error_error_code(dwLastError);
 
          throw ::file::exception(estatus, errorcode, m_path, "m_handleFile == INVALID_HANDLE_VALUE", m_eopen);
 
@@ -538,7 +538,7 @@ namespace acme_windows_common
 
          auto estatus = ::windows::last_error_status(dwLastError);
 
-         auto errorcode = __last_error(dwLastError);
+         auto errorcode = ::windows::last_error_error_code(dwLastError);
 
          throw ::file::exception(estatus, errorcode, m_path, "SetFilePointer == -1", m_eopen);
 
@@ -612,7 +612,7 @@ namespace acme_windows_common
 
          auto estatus = ::windows::last_error_status(dwLastError);
 
-         auto errorcode = __last_error(dwLastError);
+         auto errorcode = ::windows::last_error_error_code(dwLastError);
 
          throw ::file::exception(estatus, errorcode, m_path, "SetFilePointer == -1", m_eopen);
 
@@ -657,7 +657,7 @@ namespace acme_windows_common
 
             auto estatus = ::windows::last_error_status(dwLastError);
 
-            auto errorcode = __last_error(dwLastError);
+            auto errorcode = ::windows::last_error_error_code(dwLastError);
 
             throw ::file::exception(estatus, errorcode, m_path, "!FlushFileBuffers");
 
@@ -707,7 +707,7 @@ namespace acme_windows_common
 
          auto estatus = ::windows::last_error_status(dwLastError);
 
-         auto errorcode = __last_error(dwLastError);
+         auto errorcode = ::windows::last_error_error_code(dwLastError);
 
          throw ::file::exception(estatus, errorcode, m_path, "file::close", m_eopen);
 
@@ -728,7 +728,7 @@ namespace acme_windows_common
 
          auto estatus = ::windows::last_error_status(dwLastError);
 
-         auto errorcode = __last_error(dwLastError);
+         auto errorcode = ::windows::last_error_error_code(dwLastError);
 
          throw ::file::exception(estatus, errorcode,m_path, "!LockFile");
 
@@ -748,7 +748,7 @@ namespace acme_windows_common
 
          auto estatus = ::windows::last_error_status(dwLastError);
 
-         auto errorcode = __last_error(dwLastError);
+         auto errorcode = ::windows::last_error_error_code(dwLastError);
 
          throw ::file::exception(estatus, errorcode, m_path, "!UnlockFile");
 
@@ -772,7 +772,7 @@ namespace acme_windows_common
 
          auto estatus = ::windows::last_error_status(dwLastError);
 
-         auto errorcode = __last_error(dwLastError);
+         auto errorcode = ::windows::last_error_error_code(dwLastError);
 
          throw ::file::exception(estatus, errorcode, m_path, "!SetEndOfFile", m_eopen);
 

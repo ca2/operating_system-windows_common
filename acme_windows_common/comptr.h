@@ -1,5 +1,9 @@
 #pragma once
 
+
+#include "acme/_operating_system.h"
+
+
 template <class T> void SafeRelease(T ** ppT)
 {
    if (*ppT)

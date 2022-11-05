@@ -221,7 +221,7 @@ namespace multimedia
 
          HRESULT hresult = m_psourcevoice->Stop();
 
-         estatus = hresult_to_status(hresult);
+         estatus = ::windows::hresult_status(hresult);
 
 
          //for(i = 0; i < iSize; i++)
@@ -358,7 +358,7 @@ namespace multimedia
 
          HRESULT hresult = m_psourcevoice->SubmitSourceBuffer(&b);
 
-         estatus = hresult_to_status(hresult);
+         estatus = ::windows::hresult_status(hresult);
 
          VERIFY(::success == estatus);
 
@@ -395,7 +395,7 @@ namespace multimedia
          //// returned to the application.
          HRESULT hresult = m_psourcevoice->Stop();
 
-         m_estatusWave = hresult_to_status(hresult);
+         m_estatusWave = ::windows::hresult_status(hresult);
 
          if(m_estatusWave == ::success)
          {
@@ -431,7 +431,7 @@ namespace multimedia
 
           HRESULT hresult = m_psourcevoice->Stop();
 
-          m_estatusWave = hresult_to_status(hresult);
+          m_estatusWave = ::windows::hresult_status(hresult);
 
          ASSERT(m_estatusWave == ::success);
 
@@ -483,7 +483,7 @@ namespace multimedia
 
          HRESULT hresult = m_psourcevoice->Start(0,XAUDIO2_COMMIT_NOW);
 
-         m_estatusWave = hresult_to_status(hresult);
+         m_estatusWave = ::windows::hresult_status(hresult);
 
          //return ::success;
 
@@ -511,7 +511,7 @@ namespace multimedia
          // returned to the application.
          HRESULT hresult = m_psourcevoice->Start(0,XAUDIO2_COMMIT_NOW);
 
-         m_estatusWave = hresult_to_status(hresult);
+         m_estatusWave = ::windows::hresult_status(hresult);
 
          ASSERT(m_estatusWave == ::success);
 

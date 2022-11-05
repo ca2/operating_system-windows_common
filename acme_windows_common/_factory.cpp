@@ -6,7 +6,7 @@
 #include "acme_path.h"
 #include "exception_translator.h"
 #include "mutex.h"
-#include "exclusive.h"
+//#include "exclusive.h"
 
 
 __FACTORY_EXPORT void acme_windows_common_factory(::factory::factory * pfactory)

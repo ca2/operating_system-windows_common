@@ -125,11 +125,13 @@ namespace acme_windows_common
    }
 
 
-   mutex::mutex(::particle * pparticle, bool bInitiallyOwn, const char * pszName, const security_attributes & securityattributes)
+   mutex::mutex(::particle * pparticle, bool bInitiallyOwn, const char * pszName, security_attributes * psecurityattributes)
    {
 
 #ifdef _DEBUG
+
       m_itask = -1;
+
 #endif
 
       initialize(pparticle);
@@ -142,10 +144,8 @@ namespace acme_windows_common
 
       const unichar * pwszName = pszName == nullptr ? nullptr : (const unichar *)wstrName;
 
-      auto psecurityattributes = (LPSECURITY_ATTRIBUTES)securityattributes.m_pOsSecurityAttributes;
-
       m_hsynchronization = ::CreateMutexExW(
-         psecurityattributes, 
+         (LPSECURITY_ATTRIBUTES)psecurityattributes->get_os_security_attributes(),
          pwszName, 
          bInitiallyOwn ? CREATE_MUTEX_INITIAL_OWNER : 0, MUTEX_ALL_ACCESS);
 
@@ -161,7 +161,9 @@ namespace acme_windows_common
          if (pszName != nullptr)
          {
 
-            m_hsynchronization = ::OpenMutexW(SYNCHRONIZE, false, utf8_to_unicode(pszName));
+            wstring wstrName(pszName);
+
+            m_hsynchronization = ::OpenMutexW(SYNCHRONIZE, false, wstrName);
 
          }
 
@@ -1604,7 +1606,7 @@ namespace acme_windows_common
 
 #ifdef WINDOWS
 
-         HANDLE h = ::OpenMutexW(SYNCHRONIZE, false, utf8_to_unicode(lpszName));
+         HANDLE h = ::OpenMutexW(SYNCHRONIZE, false, wstring(lpszName));
 
          if (h == nullptr || h == INVALID_HANDLE_VALUE)
          {

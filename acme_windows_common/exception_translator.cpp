@@ -1,8 +1,6 @@
 ﻿// Created on 2021-04-29 12:33 BRT <3TBS_!! Second celebration of Mummis Birthday 70!!
 #include "framework.h"
 #include "standard_exception.h"
-#include "exception_translator.h"
-#include <eh.h>
 
 
 bool g_bExiting;
@@ -93,7 +91,7 @@ namespace acme_windows_common
       case EXCEPTION_INVALID_HANDLE:            throw ::acme_windows_common::standard_invalid_handle(ppointers);             break;
       case 0xE06D7363:                          throw ::acme_windows_common::standard_microsoft_cpp(ppointers);              break;
       case 0x40080201:                          throw ::acme_windows_common::standard_winrt_originate_error(ppointers);      break;
-      default:                                  throw ::acme_windows_common::standard_exception(ppointers);                  break;
+      default:                                  throw ::acme_windows_common::standard_exception(error_standard_exception, nullptr, nullptr, ppointers); break;
       };
 
    }
@@ -412,6 +410,32 @@ namespace acme_windows_common
       return pszDescription;
 
    }
+
+
+
+      DEFINE_SE_EXCEPTION_CLASS(standard_datatype_misalignment)
+      DEFINE_SE_EXCEPTION_CLASS(standard_breakpoint)
+      DEFINE_SE_EXCEPTION_CLASS(standard_single_step)
+      DEFINE_SE_EXCEPTION_CLASS(standard_array_bounds_exceeded)
+      DEFINE_SE_EXCEPTION_CLASS(standard_flt_denormal_operand)
+      DEFINE_SE_EXCEPTION_CLASS(standard_flt_divide_by_zero)
+      DEFINE_SE_EXCEPTION_CLASS(standard_flt_inexact_result)
+      DEFINE_SE_EXCEPTION_CLASS(standard_flt_invalid_operation)
+      DEFINE_SE_EXCEPTION_CLASS(standard_flt_overflow)
+      DEFINE_SE_EXCEPTION_CLASS(standard_flt_stack_check)
+      DEFINE_SE_EXCEPTION_CLASS(standard_flt_underflow)
+      DEFINE_SE_EXCEPTION_CLASS(standard_int_divide_by_zero)
+      DEFINE_SE_EXCEPTION_CLASS(standard_int_overflow)
+      DEFINE_SE_EXCEPTION_CLASS(standard_priv_instruction)
+      DEFINE_SE_EXCEPTION_CLASS(standard_in_page_error)
+      DEFINE_SE_EXCEPTION_CLASS(standard_illegal_instruction)
+      DEFINE_SE_EXCEPTION_CLASS(standard_noncontinuable_exception)
+      DEFINE_SE_EXCEPTION_CLASS(standard_stack_overflow)
+      DEFINE_SE_EXCEPTION_CLASS(standard_invalid_disposition)
+      DEFINE_SE_EXCEPTION_CLASS(standard_guard_page)
+      DEFINE_SE_EXCEPTION_CLASS(standard_invalid_handle)
+      DEFINE_SE_EXCEPTION_CLASS(standard_microsoft_cpp)
+      DEFINE_SE_EXCEPTION_CLASS(standard_winrt_originate_error)
 
 
 } // namespace acme_windows_common

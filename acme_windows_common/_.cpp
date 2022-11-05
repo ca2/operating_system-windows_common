@@ -4,6 +4,13 @@
 #include "acme/_library.h"
 
 
+CLASS_DECL_ACME_WINDOWS_COMMON HRESULT defer_co_initialize_ex(bool bMultiThread, bool bDisableOleDDE = false);
+
+
+CLASS_DECL_ACME_WINDOWS_COMMON int trace_hr(const char * psz, HRESULT hr);
+CLASS_DECL_ACME_WINDOWS_COMMON void throw_if_failed(HRESULT hr);
+
+
 //void CLASS_DECL_ACME_WINDOWS_COMMON __cdecl _ca2_purecall()
 //{
 //
@@ -16,12 +23,12 @@ namespace windows_common
 {
 
 
-   HINSTANCE load_library(const ::string & psz)
+   HINSTANCE load_library(const ::string & str)
    {
 
 #ifdef WINDOWS_DESKTOP
 
-      return ::LoadLibraryW(utf8_to_unicode(psz));
+      return ::LoadLibraryW(wstring(str));
 
 #else
 
@@ -48,10 +55,10 @@ namespace windows_common
    }
 
 
-   bool delete_file(const ::string & pFileName)
+   bool delete_file(const ::string & strFileName)
    {
 
-      return ::DeleteFileW(utf8_to_unicode(pFileName)) != false;
+      return ::DeleteFileW(wstring(strFileName)) != false;
 
    }
 

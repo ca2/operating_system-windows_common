@@ -15,21 +15,26 @@
 #endif
 
 
-#define DECLARE_SE_EXCEPTION_CLASS(name) class CLASS_DECL_ACME_WINDOWS_COMMON name : public standard_exception \
+#define DECLARE_SE_EXCEPTION_CLASS(name) \
+   class CLASS_DECL_ACME_WINDOWS_COMMON name : \
+      public standard_exception \
    { \
    \
       friend class translator; \
    \
    public: \
    \
-         name (EXCEPTION_POINTERS * ppointers) : \
-            standard_exception(ppointers) \
+         name (EXCEPTION_POINTERS * ppointers); \
+      \
+      \
+   }; 
+
+#define DEFINE_SE_EXCEPTION_CLASS(name) \
+         name::name (EXCEPTION_POINTERS * ppointers) : \
+            standard_exception(DECLARE_SE_EXCEPTION_ERROR(name), nullptr, nullptr, ppointers) \
       { \
         \
-      } \
-      \
-      \
-   };
+      } 
 
 
 
@@ -69,17 +74,8 @@ namespace acme_windows_common
 
 
 
-      standard_exception(EXCEPTION_POINTERS * ppointers) :
-         exception(error_exception, nullptr, 0),
-         m_ppointers(ppointers)
-      {
-
-      }
-
-
-      virtual ~standard_exception()
-      {
-      }
+      standard_exception(const ::e_status & estatus, const ::string & strMessage, const ::string & strDetails, EXCEPTION_POINTERS * ppointers);
+      ~standard_exception() override;
 
 
    };
@@ -91,7 +87,7 @@ namespace acme_windows_common
 
 
       standard_no_memory(EXCEPTION_POINTERS * ppointers) :
-         standard_exception(ppointers)
+         standard_exception(error_no_memory, nullptr, nullptr, ppointers)
       {
 
       }
@@ -105,7 +101,7 @@ namespace acme_windows_common
    public:
 
       standard_access_violation(EXCEPTION_POINTERS * ppointers) :
-         standard_exception(ppointers)
+         standard_exception(error_segmentation_fault, nullptr, nullptr, ppointers)
       {
 
       }

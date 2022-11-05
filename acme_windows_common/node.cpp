@@ -759,35 +759,35 @@ namespace acme_windows_common
    }
 
 
-   ::pointer < ::mutex > node::create_named_mutex(::particle * pparticleContext, bool bInitiallyOwn, const char * pszName, void * psaAttributes)
+   ::pointer < ::mutex > node::create_named_mutex(::particle * pparticleContext, bool bInitiallyOwn, const char * pszName, security_attributes * psecurityattributes)
    {
 
       //return __new(mutex(pparticleContext, bInitiallyOwn, pszName ADD_PARAM_SEC_ATTRS));
-      return __new(::acme_windows_common::mutex(pparticleContext, bInitiallyOwn, pszName, psaAttributes));
+      return __new(::acme_windows_common::mutex(pparticleContext, bInitiallyOwn, pszName, psecurityattributes));
 
    }
 
 
-   ::pointer < ::mutex > node::create_local_named_mutex(::particle * pparticleContext, bool bInitiallyOwned, const ::string & strName)
+   ::pointer < ::mutex > node::create_local_named_mutex(::particle * pparticleContext, bool bInitiallyOwned, const ::string & strName, security_attributes * psecurityattributes)
    {
 
       ::string strLocalName;
 
       strLocalName = "Local\\" + strName;
 
-      return create_named_mutex(pparticleContext, bInitiallyOwned, strLocalName);
+      return create_named_mutex(pparticleContext, bInitiallyOwned, strLocalName, psecurityattributes);
 
    }
 
 
-   ::pointer < ::mutex > node::create_global_named_mutex(::particle * pparticleContext, bool bInitiallyOwned, const ::string & strName)
+   ::pointer < ::mutex > node::create_global_named_mutex(::particle * pparticleContext, bool bInitiallyOwned, const ::string & strName, security_attributes * psecurityattributes)
    {
 
       ::string strGlobalName;
 
       strGlobalName = "Global\\" + strName;
 
-      return create_named_mutex(pparticleContext, bInitiallyOwned, strGlobalName);
+      return create_named_mutex(pparticleContext, bInitiallyOwned, strGlobalName, psecurityattributes);
 
    }
 
@@ -814,6 +814,9 @@ namespace acme_windows_common
       return nullptr;
 
    }
+
+
+   
 
 
 } // namespace acme_windows_common
