@@ -86,7 +86,7 @@ CLASS_DECL_ACME_WINDOWS_COMMON bool _os_may_have_alias(const char * psz)
 //bool context::os_is_alias(const char * psz)
 //{
 //
-//   return ::str().ends_ci(psz, ".lnk");
+//   return psz.ends_ci(".lnk");
 //
 //}
 

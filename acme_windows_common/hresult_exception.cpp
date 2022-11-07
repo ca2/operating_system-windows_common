@@ -1,6 +1,6 @@
 ﻿#include "framework.h"
 #include "hresult_exception.h"
-#include "acme/_operating_system.h"
+//#include "acme/_operating_system.h"
 
 
 hresult_exception::hresult_exception(HRESULT hresult, const char * pszMessage)

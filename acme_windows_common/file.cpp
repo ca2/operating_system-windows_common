@@ -11,6 +11,9 @@
 #include "acme/platform/system.h"
 
 
+#include <intsafe.h>
+
+
 CLASS_DECL_ACME_WINDOWS_COMMON bool _os_may_have_alias(const char * psz)
 {
 

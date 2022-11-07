@@ -305,7 +305,7 @@ namespace windows
    //         return path((const ::string &) string(pcszSource, pszRequest - lpcszSource), lpcszRelative, psz2);
 
    //      }
-   //      else if(*pszRequest == '\0' || ::str().ends(pcszSource, "/"))
+   //      else if(*pszRequest == '\0' || pcszSource.ends("/"))
 
    //      {
    //         return path(pcszSource, lpcszRelative, psz2);
@@ -319,7 +319,7 @@ namespace windows
    //   }
    //   else
    //   {
-   //      if(::str().ends(pcszSource, "\\") || ::str().ends(lpcszSource, "/"))
+   //      if(pcszSource.ends("\\") || lpcszSource.ends("/"))
 
    //      {
    //         return path(pcszSource, lpcszRelative, psz2);
@@ -1196,7 +1196,7 @@ namespace windows
    bool dir_context::is_inside(const ::file::path & pszDir, const ::file::path & pszPath)
    {
 
-      return ::str().begins_ci(pszDir, pszPath);
+      return pszDir.begins_ci(pszPath);
 
    }
 

@@ -150,7 +150,7 @@ static int g_iMutex = 0;
       strName.replace(":", "_");
       strName.replace("/", "_");
 
-      if(::str().begins_ci(pstrName, "Global"))
+      if(pstrName.begins_ci("Global"))
       {
 
 #ifdef ANDROID
@@ -233,7 +233,7 @@ pacmedir->create(::file::path(strName).folder());
 
       ::file::path path;
 
-      if(::str().begins_ci(pstrName, "Global"))
+      if(pstrName.begins_ci("Global"))
       {
 
 #ifdef ANDROID
@@ -326,7 +326,7 @@ pacmedir->create(path.folder());
 
       ::file::path path;
 
-      if(::str().begins_ci(pstrName, "Global"))
+      if(pstrName.begins_ci("Global"))
       {
 
          path = "/::payload/lock/ca2/::mutex/named";
@@ -1560,7 +1560,7 @@ bool ::mutex::unlock()
 
    ::file::path path;
 
-   if (::str().begins_ci(lpszName, "Global"))
+   if (lpszName.begins_ci("Global"))
    {
 
       path = "/::payload/tmp/ca2/lock/::mutex/named";

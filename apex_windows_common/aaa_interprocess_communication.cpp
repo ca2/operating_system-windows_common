@@ -335,7 +335,7 @@ namespace windows
 
       string strMessage(pszMessage);
 
-      if (::str().begins_ci(strMessage, "synch_"))
+      if (strMessage.begins_ci("synch_"))
       {
 
          if (m_preceiver != nullptr)

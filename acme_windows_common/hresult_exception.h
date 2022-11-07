@@ -2,6 +2,7 @@
 
 
 #include "acme/exception/exception.h"
+#include "acme/_operating_system.h"
 
 
 class CLASS_DECL_ACME_WINDOWS_COMMON hresult_exception :
