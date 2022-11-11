@@ -127,6 +127,9 @@
     <ClCompile Include="standard_exception.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="security_attributes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\operating-system-windows\acme_windows\deployment.rc">

@@ -2,6 +2,10 @@
 #pragma once
 
 
+#include "acme/primitive/primitive/memory.h"
+#include "acme/operating_system/security_attributes.h"
+
+
 namespace acme_windows_common
 {
 

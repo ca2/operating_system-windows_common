@@ -2,6 +2,9 @@
 #pragma once
 
 
+#include "acme/primitive/primitive/particle.h"
+
+
 namespace acme_windows_common
 {
 
@@ -10,7 +13,6 @@ namespace acme_windows_common
       virtual public ::particle
    {
    public:
-
 
 
       ~synchronization_object();

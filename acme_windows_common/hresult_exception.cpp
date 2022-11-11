@@ -1,9 +1,10 @@
 ﻿#include "framework.h"
 #include "hresult_exception.h"
-//#include "acme/_operating_system.h"
+#include "acme/operating_system/windows_common/__string.h"
 
 
-hresult_exception::hresult_exception(HRESULT hresult, const char * pszMessage)
+hresult_exception::hresult_exception(HRESULT hresult, const char * pszMessage) :
+   ::exception(::error_hresult, pszMessage)
 {
 
    if (hresult == S_OK)
@@ -27,7 +28,7 @@ hresult_exception::hresult_exception(HRESULT hresult, const char * pszMessage)
 
    m_errorcodea.add(hresult_error_code(hresult));
 
-   m_strMessage = pszMessage;
+   //m_strMessage = pszMessage;
 
 }
 
@@ -49,7 +50,7 @@ CLASS_DECL_ACME_WINDOWS_COMMON int trace_hresult(const char * psz, HRESULT hresu
 
    strError.trim();
 
-   //TRACE("%s hr=%d:\"%s\"",psz,hr,strError.c_str());
+   ////TRACE("%s hr=%d:\"%s\"",psz,hr,strError.c_str());
 
    return 0;
 

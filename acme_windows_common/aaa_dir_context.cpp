@@ -417,10 +417,10 @@ namespace windows
 
                listing.m_pathUser = dir_context;
 
-               if (listing.m_eextract != extract_all)
+               if (listing.m_eextract != e_extract_all)
                {
 
-                  listing.m_eextract = extract_none;
+                  listing.m_eextract = e_extract_none;
 
                }
 
@@ -605,10 +605,10 @@ namespace windows
 
                listing.m_pathUser = dir_context;
 
-               if (listing.m_eextract != extract_all)
+               if (listing.m_eextract != e_extract_all)
                {
 
-                  listing.m_eextract = extract_none;
+                  listing.m_eextract = e_extract_none;
 
                }
 

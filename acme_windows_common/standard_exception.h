@@ -2,6 +2,7 @@
 
 
 #include <eh.h>
+#include "acme/exception/exception.h"
 #include "exception_translator.h"
 
 #if OSBIT == 64

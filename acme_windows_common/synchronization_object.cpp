@@ -15,7 +15,7 @@ namespace acme_windows_common
       if (m_hsynchronization != nullptr)
       {
 
-         if (is_own_synchronization())
+         if (has_own_synchronization_flag())
          {
 
             ::CloseHandle(m_hsynchronization);

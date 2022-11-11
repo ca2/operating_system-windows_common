@@ -77,7 +77,7 @@ namespace acme_windows_common
 
 //      set_already_exists(dwLastError == ERROR_ALREADY_EXISTS);
 
-      set_own_synchronization();
+      set_own_synchronization_flag();
 
 //#else
 //
@@ -151,7 +151,7 @@ namespace acme_windows_common
 
       DWORD dwLastError = ::GetLastError();
 
-      set_already_exists(dwLastError == ERROR_ALREADY_EXISTS);
+      set_already_exists_flag(dwLastError == ERROR_ALREADY_EXISTS);
 
       if (m_hsynchronization == nullptr)
       {
@@ -178,7 +178,7 @@ namespace acme_windows_common
 
       }
 
-      set_own_synchronization();
+      set_own_synchronization_flag();
 
 
 //#else
@@ -496,7 +496,7 @@ namespace acme_windows_common
       m_itask = -1;
 #endif
 
-      set_own_synchronization(bOwner);
+      set_own_synchronization_flag(bOwner);
 
       m_hsynchronization = handleSyncObject;
 

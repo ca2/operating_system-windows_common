@@ -80,7 +80,7 @@ inline bool EqualElements<itask_t>(itask_t r1, itask_t r2)
 
 
 template <  >
-inline uptr uptr_hash(itask_t key)
+inline uptr u32_hash(itask_t key)
 {
 
    return 0;

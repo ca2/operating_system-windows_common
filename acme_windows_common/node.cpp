@@ -2,6 +2,7 @@
 #include "node.h"
 #include "mutex.h"
 #include "acme/filesystem/filesystem/acme_directory.h"
+#include "acme/_operating_system.h"
 
 
 namespace acme_windows_common
@@ -816,7 +817,60 @@ namespace acme_windows_common
    }
 
 
-   
+   bool node::succeeded(const ::error_code& errorcode)
+   {
+
+      if (errorcode.m_etype == e_error_code_type_hresult)
+      {
+
+         return SUCCEEDED((HRESULT) errorcode.m_iOsError);
+
+      }
+
+      return ::acme::node::succeeded(errorcode);
+
+   }
+
+
+   thread_local HRESULT t_hresultCoInitialize;
+
+   thread_local bool t_bCoInitialize = false;
+
+   error_code node::defer_co_initialize_ex(bool bMultiThread, bool bDisableOleDDE)
+   {
+
+      if (!t_bCoInitialize)
+      {
+
+         t_bCoInitialize = true;
+
+         if (bMultiThread)
+         {
+
+            t_hresultCoInitialize = ::CoInitializeEx(nullptr, COINIT_MULTITHREADED);
+
+         }
+         else
+         {
+
+            t_hresultCoInitialize = ::CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED | (bDisableOleDDE ? COINIT_DISABLE_OLE1DDE : 0));
+
+         }
+
+      }
+
+      if (FAILED(t_hresultCoInitialize))
+      {
+
+         ::output_debug_string("Failed to ::CoInitializeEx(nullptr, COINIT_MULTITHREADED) at __node_pre_init");
+
+         return { e_error_code_type_hresult, (::i64) t_hresultCoInitialize };
+
+      }
+
+      return { e_error_code_type_hresult, (::i64)t_hresultCoInitialize };
+
+   }
 
 
 } // namespace acme_windows_common

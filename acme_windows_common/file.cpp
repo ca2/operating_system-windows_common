@@ -9,7 +9,7 @@
 #include "acme/operating_system/time.h"
 #include "acme/filesystem/file/exception.h"
 #include "acme/platform/system.h"
-
+#include "acme/operating_system/windows_common/__string.h"
 
 #include <intsafe.h>
 
@@ -209,7 +209,7 @@ namespace acme_windows_common
          if (!pextendedparameters)
          {
 
-            __zero(extendedparameters);
+            memset(&extendedparameters, 0, sizeof(extendedparameters));
 
             pextendedparameters = &extendedparameters;
 
@@ -218,7 +218,7 @@ namespace acme_windows_common
          if (!extendedparameters.lpSecurityAttributes)
          {
 
-            __zero(securityattributes);
+            memset(&securityattributes, 0, sizeof(securityattributes));
 
             extendedparameters.lpSecurityAttributes = &securityattributes;
 
@@ -381,7 +381,7 @@ namespace acme_windows_common
 
       m_estatus = ::success;
 
-      set_ok();
+      set_ok_flag();
 
       //return ::success;
 

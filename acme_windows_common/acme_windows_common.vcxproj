@@ -811,6 +811,7 @@
     <ClCompile Include="hresult_exception.cpp" />
     <ClCompile Include="mutex.cpp" />
     <ClCompile Include="node.cpp" />
+    <ClCompile Include="security_attributes.cpp" />
     <ClCompile Include="standard_exception.cpp" />
     <ClCompile Include="synchronization_object.cpp" />
     <ClCompile Include="_.cpp" />

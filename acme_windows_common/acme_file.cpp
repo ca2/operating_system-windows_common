@@ -3,6 +3,7 @@
 #include "framework.h"
 #include "acme_file.h"
 #include "acme_directory.h"
+#include "acme/exception/exception.h"
 #include "acme/filesystem/file/file.h"
 #include "acme/filesystem/filesystem/acme_path.h"
 #include "acme/primitive/primitive/memory.h"
@@ -69,7 +70,7 @@ namespace acme_windows_common
       auto pfileNew = open(pathNew, ::file::e_open_defer_create_directory |
          (bOverwrite ? ::file::e_open_create | ::file::e_open_truncate : 0) | ::file::e_open_write);
 
-      if (::nok(pfileSrc) || ::nok(pfileNew))
+      if (pfileSrc.nok() || pfileNew.nok())
       {
 
          return;

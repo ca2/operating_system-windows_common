@@ -1,5 +1,9 @@
 #include "framework.h"
 #include "node.h"
+#include "acme/platform/system.h"
+
+
+#include "acme/_operating_system.h"
 
 
 namespace aura_windows_common
