@@ -64,7 +64,7 @@ namespace draw2d_direct2d
 
       m_pthis = this;
 
-      defer_create_mutex();
+      defer_create_synchronization();
 
       m_bSaveClip = false;
 

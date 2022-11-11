@@ -15,7 +15,7 @@ namespace draw2d_direct2d
    image::image()
    {
 
-      defer_create_mutex();
+      defer_create_synchronization();
 
       //g_pimagea->add(this);
 
