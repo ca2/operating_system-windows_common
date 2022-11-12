@@ -1,7 +1,14 @@
 #include "framework.h"
 #include "context_image.h"
+#include "acme/exception/exception.h"
+#include "acme/platform/node.h"
 #include "aura/graphics/image/save_image.h"
+#include "acme_windows_common/comptr.h"
+
+
+#include "acme/_operating_system.h"
 #include <wincodec.h>
+
 
 #ifdef _UWP
 #include "acme_universal_windows/_winrt_stream.h"
@@ -13,7 +20,10 @@ namespace imaging_wic
 {
 
 
-   void context_image::save_image(memory & mem, const ::image * pimage, const ::save_image * psaveimage)
+   CLASS_DECL_IMAGING_WIC bool node_save_image(IStream* pstream, ::image* pimage, const ::save_image* psaveimage);
+
+
+   void context_image::save_image(memory & mem, ::image * pimage, const ::save_image * psaveimage)
    {
 
       if (::is_null(pimage))
@@ -23,7 +33,7 @@ namespace imaging_wic
 
       }
 
-      defer_co_initialize_ex(false);
+      acmenode()->defer_co_initialize_ex(false);
 
 #ifdef _UWP
 
@@ -44,7 +54,9 @@ namespace imaging_wic
       node_save_image(pstream, pimage, psaveimage);
 
       STATSTG stg;
-      __zero(stg);
+
+      zero(stg);
+
       pstream->Stat(&stg, STATFLAG_NONAME);
       LARGE_INTEGER l;
       l.QuadPart = 0;
@@ -85,7 +97,7 @@ namespace imaging_wic
 
 
 
-   bool node_save_image(IStream * pstream, const ::image * pimage, const ::save_image * psaveimage)
+   bool node_save_image(IStream * pstream, ::image * pimage, const ::save_image * psaveimage)
    {
 
       comptr < IWICImagingFactory > pimagingfactory;

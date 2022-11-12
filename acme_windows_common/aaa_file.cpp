@@ -330,7 +330,7 @@ acmedirectory()create(path.folder());
          if (!pextendedparameters)
          {
 
-            __zero(extendedparameters);
+            zero(extendedparameters);
 
             pextendedparameters = &extendedparameters;
 
@@ -339,7 +339,7 @@ acmedirectory()create(path.folder());
          if (!extendedparameters.lpSecurityAttributes)
          {
 
-            __zero(securityattributes);
+            zero(securityattributes);
 
             extendedparameters.lpSecurityAttributes = &securityattributes;
 

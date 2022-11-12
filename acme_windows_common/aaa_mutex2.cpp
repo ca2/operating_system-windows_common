@@ -1685,14 +1685,14 @@ CLASS_DECL_ACME ::mutex * get_ui_destroyed_mutex()
 null_dacl_security_attributes::null_dacl_security_attributes()
 {
 
-   __zero(m_securityattributes);
+   zero(m_securityattributes);
 
    m_securityattributes.nLength = sizeof(m_securityattributes);
 
    m_securityattributes.bInheritHandle = false; // matter uninheritable
 
    // declare and initialize a security descriptor
-   __zero(m_securitydescriptor);
+   zero(m_securitydescriptor);
 
    bool bInitOk = InitializeSecurityDescriptor(&m_securitydescriptor,SECURITY_DESCRIPTOR_REVISION) != false;
 

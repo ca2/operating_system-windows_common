@@ -1,6 +1,11 @@
 #include "framework.h"
 #include "context_image.h"
+#include "acme/exception/exception.h"
 #include "aura/graphics/image/frame_array.h"
+#include "acme_windows_common/comptr.h"
+
+
+#include "acme/_operating_system.h"
 #include <Wincodec.h>
 
 
@@ -18,6 +23,8 @@
 
 namespace imaging_wic
 {
+
+   comptr < IWICImagingFactory > get_imaging_factory();
 
    //bool draw2d_gif_load_frame(::image * pimageCanvas, image_frame_array * pframea, image_frame * pframe, int uFrameIndex, u8 * ba, int iScan, colorref_array & colorrefa, int transparentIndex);
    bool windows_image_from_bitmap_source(::image * pimage, IWICBitmapSource * pbitmapsource, IWICImagingFactory * pimagingfactory);
@@ -467,7 +474,9 @@ namespace imaging_wic
          HRESULT hr = pbitmapdecoder->GetFrame(iFrame, &pframe);
 
          WICPixelFormatGUID px;
-         __zero(px);
+         
+         zero(px);
+
          if (!pframe)
          {
             return false;

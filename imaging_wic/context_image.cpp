@@ -1,9 +1,18 @@
 ﻿#include "framework.h"
 #include "context_image.h"
-#include "aura/graphics/image/save_image.h"
+#include "acme/exception/exception.h"
+#include "acme/parallelization/task.h"
+#include "acme/platform/node.h"
 #include "apex/parallelization/handler_manager.h"
 #include "apex_windows_common/single_threaded_handler_manager.h"
+#include "aura/graphics/image/save_image.h"
+#include "acme_windows_common/comptr.h"
+
+
+#include "acme/_operating_system.h"
 #include <wincodec.h>
+
+
 #ifdef _UWP
 #include "acme/operating_system/universal_windows/_winrt_foundation.h"
 #include "acme_universal_windows/_winrt_stream.h"
@@ -26,7 +35,7 @@ public:
    void on_start_loop()
    {
 
-      defer_co_initialize_ex(true, true);
+      acmenode()->defer_co_initialize_ex(true, true);
 
    }
 
@@ -62,7 +71,7 @@ namespace imaging_wic
 
       //auto estatus = 
       
-      ::context_image::initialize(pobject);
+      ::context_image::initialize(pparticle);
 
       //if (!estatus)
       //{
