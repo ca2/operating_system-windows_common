@@ -1,9 +1,15 @@
 #include "framework.h"
 #include "context_image.h"
 #include "apex/parallelization/handler_manager.h"
-#include <wincodec.h>
 #include "aura/graphics/image/load_image.h"
 #include "aura/graphics/image/save_image.h"
+#include "acme_windows_common/comptr.h"
+#include "acme_windows_common/bstring.h"
+
+
+#include "acme/_operating_system.h"
+#include <wincodec.h>
+
 
 #ifdef _UWP
 #include <shcore.h>
@@ -15,6 +21,7 @@
 namespace imaging_wic
 {
 
+   comptr < IWICImagingFactory > get_imaging_factory();
 
    bool windows_image_from_bitmap_source(::image * pimageFrame, IWICBitmapSource * pbitmapsource, IWICImagingFactory * pimagingfactory);
 
@@ -193,7 +200,7 @@ namespace imaging_wic
 
       pimage->on_load_image();
 
-      pimage->set_ok();
+      pimage->set_ok_flag();
 
       pimage->m_estatus = ::success;
 
@@ -206,7 +213,7 @@ namespace imaging_wic
 #endif
 
 
-   bool node_save_image(IStream * pstream, const ::image * pimage, ::save_image * psaveimage);
+   bool node_save_image(IStream * pstream, ::image * pimage, const ::save_image * psaveimage);
 
 
 //#ifdef _UWP
@@ -381,8 +388,7 @@ namespace imaging_wic
 #endif
 
 
-
-   bool context_image::_save_image(::file::file * pfile, const ::image * pimage, const ::save_image * psaveimage)
+   bool context_image::_save_image(::file::file * pfile, ::image * pimage, const ::save_image * psaveimage)
    {
 
 #ifdef _UWP

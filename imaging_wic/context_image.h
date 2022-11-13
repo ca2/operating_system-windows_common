@@ -31,7 +31,7 @@ namespace imaging_wic
       void _load_image(image* pimage, const ::payload& payloadFile, const ::image::load_options & loadoptions = ::image::load_options()) override;
 
       void _load_image(::image * pimage, ::pointer<image_frame_array>& pframea, ::memory & memory) override;
-      void save_image(memory & memory, const ::image * pimage, const ::save_image * psaveimage) override;
+      void save_image(memory & memory, ::image * pimage, const ::save_image * psaveimage) override;
 
 
       //void _load_icon(::draw2d::icon * picon, const ::payload & payloadFile);
@@ -52,11 +52,11 @@ namespace imaging_wic
 #ifdef _UWP
       virtual bool _desk_to_image(::image* pimage);
       virtual bool _desk_has_image();
-      virtual bool _image_to_desk(const ::image* pimage);
+      virtual bool _image_to_desk(::image* pimage);
 #endif
 
 
-      virtual bool _save_image(::file::file* pfile, const ::image* pimage, const ::save_image* psaveimage);
+      virtual bool _save_image(::file::file* pfile, ::image* pimage, const ::save_image* psaveimage);
 
       void _os_load_image(::image * pimage, memory & memory) override;
 

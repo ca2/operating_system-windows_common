@@ -812,7 +812,7 @@
     <ClInclude Include="_.h" />
     <ClInclude Include="aaa_factory_exchange.h" />
     <ClInclude Include="framework.h" />
-    <ClInclude Include="_library.h" />
+    <ClInclude Include="aaa_operating_system.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="_factory.cpp" />

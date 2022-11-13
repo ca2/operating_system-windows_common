@@ -66,7 +66,7 @@ namespace draw2d_direct2d
 
       }
 
-      __zero(m_map);
+      zero(m_map);
       //    m_pbitmap->Map(D2D1_MAP_OPTIONS_READ | D2D1_MAP_OPTIONS_WRITE, &m_map);
       //
       //if(ppdata != nullptr)
