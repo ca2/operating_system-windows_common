@@ -782,6 +782,7 @@
     <ClInclude Include="acme_path.h" />
     <ClInclude Include="bstring.h" />
     <ClInclude Include="comptr.h" />
+    <ClInclude Include="comptr_array.h" />
     <ClInclude Include="cotaskptr.h" />
     <ClInclude Include="exception_translator.h" />
     <ClInclude Include="exclusive.h" />
