@@ -251,7 +251,7 @@ namespace draw2d_direct2d
 
       }
 
-      synchronous_lock lock(::direct2d::direct2d()->mutex());
+      synchronous_lock lock(::direct2d::direct2d()->synchronization());
 
       auto & renderer = ::direct2d::direct2d()->m_geometrysinktextrenderer;
 
@@ -908,7 +908,7 @@ namespace draw2d_direct2d
 
       ////defer_text_rendering_hint();
 
-      //synchronous_lock lock(::direct2d::direct2d()->mutex());
+      //synchronous_lock lock(::direct2d::direct2d()->synchronization());
 
       //auto & renderer = ::direct2d::direct2d()->m_geometrysinktextrenderer;
 

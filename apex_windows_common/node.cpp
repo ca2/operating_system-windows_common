@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "node.h"
 #include "acme/filesystem/filesystem/acme_directory.h"
 #include "acme/filesystem/filesystem/acme_path.h"
@@ -16,9 +16,6 @@ namespace apex_windows_common
    node::node()
    {
 
-      m_papexnode = this;
-
-      //defer_initialize_winsock();
 
    }
 
