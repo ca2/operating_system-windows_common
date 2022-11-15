@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 #include "aura/graphics/draw2d/brush.h"
@@ -27,7 +27,7 @@ namespace draw2d_direct2d
       ~brush() override;
 
 
-      void dump(dump_context& dumpcontext) const override;
+      // void dump(dump_context& dumpcontext) const override;
 
 
       void destroy() override;

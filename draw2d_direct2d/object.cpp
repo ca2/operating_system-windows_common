@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "object.h"
 
 
@@ -76,20 +76,20 @@ namespace draw2d_direct2d
    // object
 
 
-   void object::dump(dump_context & dumpcontext) const
-   {
+   //void object::dump(dump_context & dumpcontext) const
+   //{
 
-      ::draw2d::object::dump(dumpcontext);
+   //   ::draw2d::object::dump(dumpcontext);
 
-   }
+   //}
 
 
-   void object::assert_ok() const
-   {
+   //void object::assert_ok() const
+   //{
 
-      ::draw2d::object::assert_ok();
+   //   ::draw2d::object::assert_ok();
 
-   }
+   //}
 
 
    //void * object::get_os_data() const

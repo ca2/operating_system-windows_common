@@ -250,6 +250,13 @@
     <Xdcmake>
       <DocumentLibraryDependencies>false</DocumentLibraryDependencies>
     </Xdcmake>
+    <CustomBuildStep>
+      <Command>
+      </Command>
+    </CustomBuildStep>
+    <CustomBuildStep />
+    <CustomBuildStep />
+    <CustomBuildStep />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='static_debug|Win32'">
     <PreBuildEvent />
@@ -563,6 +570,12 @@
     <Bscmake>
       <PreserveSBR>false</PreserveSBR>
     </Bscmake>
+    <CustomBuildStep>
+      <Command>
+      </Command>
+    </CustomBuildStep>
+    <CustomBuildStep />
+    <CustomBuildStep />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='static_debug|x64'">
     <PreBuildEvent />
@@ -782,6 +795,7 @@
     <ClInclude Include="acme_path.h" />
     <ClInclude Include="bstring.h" />
     <ClInclude Include="comptr.h" />
+    <ClInclude Include="comptr_array.h" />
     <ClInclude Include="cotaskptr.h" />
     <ClInclude Include="exception_translator.h" />
     <ClInclude Include="exclusive.h" />

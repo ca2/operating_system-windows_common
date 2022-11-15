@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 #include "acme/primitive/string/string.h"
@@ -181,141 +181,29 @@ public:
 };
 
 
-template < typename TYPE >
-class comptr_array
-{
-public:
 
 
-   TYPE **           m_pp;
-   UINT32            m_cCount;
 
-   comptr_array(TYPE * * pp = nullptr, UINT32 cCount = 0) :
-      m_pp(pp),
-      m_cCount(cCount)
-   {
-
-   }
-
-
-   ~comptr_array()
-   {
-
-      free();
-
-   }
-
-   bool is_null() const
-   {
-
-      return m_pp == nullptr;
-
-   }
-
-   bool is_set() const
-   {
-
-      return m_pp != nullptr;
-
-   }
-
-   virtual void free()
-   {
-
-      if (m_pp != nullptr)
-      {
-
-         for (UINT32 u = 0; u < m_cCount; u++)
-         {
-
-            if (m_pp[u])
-            {
-
-               m_pp[u]->Release();
-
-            }
-
-         }
-
-         ::CoTaskMemFree(m_pp);
-
-         m_pp = nullptr;
-
-      }
-
-   }
-
-
-   operator TYPE * *()
-   {
-
-      return m_pp;
-
-   }
-
-   operator const TYPE * *() const
-   {
-
-      return m_pp;
-
-   }
-
-
-   TYPE * * operator ->()
-   {
-
-      return m_pp;
-
-   }
-
-
-   const TYPE * * operator ->() const
-   {
-
-      return m_pp;
-
-   }
-
-   TYPE * * * operator &()
-   {
-
-      free();
-
-      return &m_pp;
-
-   }
-
-   const TYPE * * * operator &() const
-   {
-
-      return &m_pp;
-
-   }
-
-
-};
-
-#define __comptr_array(a) &a.m_pp, &a.m_cCount
 
 #define cotaskp(POINTER_TYPE) cotaskptr < POINTER_TYPE >
 
 
 
-template < typename POINTER_TYPE >
-inline auto __string(const cotaskptr < POINTER_TYPE > & ptr)
-{
+   template < typename POINTER_TYPE >
+   inline auto __string(const cotaskptr < POINTER_TYPE >& ptr)
+   {
 
-   return __string((const POINTER_TYPE)ptr);
+      return __string((const POINTER_TYPE)ptr);
 
-}
+   }
 
 
 
-//namespace str
-//{
-//
+   //namespace str
+   //{
+   //
 
-   inline ansistring & assign(ansistring & ansistrDst, const cotaskptr < PWSTR > & pwidesz)
+   inline ansistring& assign(ansistring& ansistrDst, const cotaskptr < PWSTR >& pwidesz)
    {
 
       ansistrDst.assign(pwidesz.operator const PWSTR());
@@ -325,7 +213,7 @@ inline auto __string(const cotaskptr < POINTER_TYPE > & ptr)
    }
 
 
-   inline widestring & assign(widestring & widestrDst, const cotaskptr < PSTR > & pansisz)
+   inline widestring& assign(widestring& widestrDst, const cotaskptr < PSTR >& pansisz)
    {
 
       widestrDst.assign(pansisz.operator const PSTR());
@@ -335,7 +223,7 @@ inline auto __string(const cotaskptr < POINTER_TYPE > & ptr)
    }
 
 
-   inline ansistring & assign(ansistring & ansistrDst, const cotaskptr < PSTR > & pansisz)
+   inline ansistring& assign(ansistring& ansistrDst, const cotaskptr < PSTR >& pansisz)
    {
 
       ansistrDst.assign(pansisz.operator const PSTR());
@@ -345,7 +233,7 @@ inline auto __string(const cotaskptr < POINTER_TYPE > & ptr)
    }
 
 
-   inline widestring & assign(widestring & widestrDst, const cotaskptr < PWSTR > & pwidesz)
+   inline widestring& assign(widestring& widestrDst, const cotaskptr < PWSTR >& pwidesz)
    {
 
       widestrDst.assign(pwidesz.operator const PWSTR());
@@ -353,9 +241,9 @@ inline auto __string(const cotaskptr < POINTER_TYPE > & ptr)
       return widestrDst;
 
    }
-//
-//
-//} // namespace str
+   //
+   //
+   //} // namespace str
 
 
 

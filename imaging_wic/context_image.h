@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 #include "aura/graphics/image/context_image.h"
@@ -19,12 +19,11 @@ namespace imaging_wic
 
       ::pointer<handler_manager>       m_pmanagerImageLoad;
 
-
       context_image();
       ~context_image() override;
 
 
-      virtual void initialize(::particle * pparticle) override;
+      void initialize(::particle * pparticle) override;
 
 
       //virtual void _load_image(::context_image * pcontextimage, ::image * pimageParam, const ::payload & payloadFile, bool bSync, bool bCreateHelperMaps) override;

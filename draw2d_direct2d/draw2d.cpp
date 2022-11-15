@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "draw2d.h"
 #include "direct2d/direct2d.h"
 
@@ -29,7 +29,7 @@ namespace draw2d_direct2d
 
       //auto estatus = 
       
-      ::draw2d::draw2d::initialize(pobject);
+      ::draw2d::draw2d::initialize(pparticle);
 
       //if (!estatus)
       //{

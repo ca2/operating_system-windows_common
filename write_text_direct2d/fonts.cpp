@@ -1,4 +1,4 @@
-// Created by camilo 2021-02-10 <3TBS_!!
+﻿// Created by camilo 2021-02-10 <3TBS_!!
 #include "framework.h"
 #include "fonts.h"
 
@@ -26,7 +26,7 @@ namespace write_text_direct2d
 
       //auto estatus = 
       
-      ::write_text::fonts::initialize(pobject);
+      ::write_text::fonts::initialize(pparticle);
 
       //if (!estatus)
       //{
