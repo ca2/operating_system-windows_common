@@ -87,26 +87,26 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::assert_ok() const
-   {
+   //void graphics::assert_ok() const
+   //{
 
-      object::assert_ok();
+   //   object::assert_ok();
 
-   }
+   //}
 
 
-   void graphics::dump(dump_context & dumpcontext) const
-   {
+   //void graphics::dump(dump_context & dumpcontext) const
+   //{
 
-      object::dump(dumpcontext);
+   //   object::dump(dumpcontext);
 
-      ////dumpcontext << "get_handle1() = " << (::iptr) get_handle1();
-      ////dumpcontext << "\nm_hAttribDC = " << (::iptr) get_handle2();
-      //dumpcontext << "\nm_bPrinting = " << m_bPrinting;
+   //   ////dumpcontext << "get_handle1() = " << (::iptr) get_handle1();
+   //   ////dumpcontext << "\nm_hAttribDC = " << (::iptr) get_handle2();
+   //   //dumpcontext << "\nm_bPrinting = " << m_bPrinting;
 
-      //dumpcontext << "\n";
+   //   //dumpcontext << "\n";
 
-   }
+   //}
 
 
    //void graphics::IsPrinting()
@@ -160,7 +160,7 @@ namespace draw2d_direct2d
                       &pdevicecontextTemplate)))
       {
 
-         trace_hr("graphics::CreateCompatibleDC, CreateDeviceContext (1) ", hr);
+         trace_hresult("graphics::CreateCompatibleDC, CreateDeviceContext (1) ", hr);
 
          //return false;
 
@@ -196,7 +196,7 @@ namespace draw2d_direct2d
       if (FAILED(hr = pdevicecontextTemplate->QueryInterface(IID_ID2D1RenderTarget,(void **)&prendertargetTemplate)))
       {
 
-         trace_hr("graphics::CreateCompatibleDC, QueryInterface (2) ",hr);
+         trace_hresult("graphics::CreateCompatibleDC, QueryInterface (2) ",hr);
 
          throw ::exception(error_failed);
 
@@ -218,7 +218,7 @@ namespace draw2d_direct2d
                       &m_pbitmaprendertarget)))
       {
 
-         trace_hr("graphics::CreateCompatibleDC, CreateCompatibleRenderTarget (3) ", hr);
+         trace_hresult("graphics::CreateCompatibleDC, CreateCompatibleRenderTarget (3) ", hr);
 
          throw ::exception(error_failed);
 
@@ -604,7 +604,7 @@ namespace draw2d_direct2d
 
          pimage2->get_graphics()->fill_rectangle(rectangleDib1, argb(255, 0, 0, 0));
 
-         pimage2->_draw_raw(rectangleIntersect.size(), m_pimageAlphaBlend, __pointd(point - m_pointAlphaBlend));
+         pimage2->_draw_raw(rectangleIntersect.size(), m_pimageAlphaBlend, ::point_f64(point - m_pointAlphaBlend));
 
          ::pointer<::draw2d_direct2d::graphics>pgraphicsDib1 = pimage1->get_graphics();
 
@@ -2162,7 +2162,7 @@ namespace draw2d_direct2d
          double nSrcWidth = rectangleSource.width();
          double nSrcHeight = rectangleSource.height();
 
-         if (::nok(pimage))
+         if (::is_null(pimage) || pimage->nok())
          {
 
             //return false;
@@ -2203,7 +2203,7 @@ namespace draw2d_direct2d
 
                      auto & pimageSource = pframeSource->m_pimage;
 
-                     pimageSource->set_ok();
+                     pimageSource->set_ok_flag();
 
                      auto & pimageTarget = pframeTarget->m_pimage;
 
@@ -5550,7 +5550,7 @@ namespace draw2d_direct2d
       if(FAILED(hr))
       {
 
-         trace_hr("text_out, SetTextAlignment",hr);
+         trace_hresult("text_out, SetTextAlignment",hr);
 
       }
 
@@ -5559,7 +5559,7 @@ namespace draw2d_direct2d
       if(FAILED(hr))
       {
 
-         trace_hr("text_out, SetTextAlignment",hr);
+         trace_hresult("text_out, SetTextAlignment",hr);
 
       }
 
@@ -5574,7 +5574,7 @@ namespace draw2d_direct2d
       if (FAILED(hr))
       {
 
-         trace_hr("text_out, SetTextAlignment", hr);
+         trace_hresult("text_out, SetTextAlignment", hr);
 
       }
 
@@ -6274,7 +6274,9 @@ namespace draw2d_direct2d
    void graphics::draw(::draw2d::path * ppathParam, ::draw2d::pen * ppen)
    {
 
-      __stack(m_bOutline, true);
+      ___scoped_restore(m_bOutline);
+
+      m_bOutline = true;
 
       ::pointer<class path> ppath = ppathParam;
 
@@ -6423,7 +6425,9 @@ namespace draw2d_direct2d
 
       //}
 
-      __stack(m_bOutline, false);
+      ___scoped_restore(m_bOutline);
+
+      m_bOutline = false;
 
       ID2D1PathGeometry * pgeometry = ppath->get_os_data < ID2D1PathGeometry * >(this, path_filled);
 

@@ -1,6 +1,7 @@
-#pragma once
+﻿#pragma once
 
 
+#include "acme/primitive/primitive/memory.h"
 #include "aura/graphics/draw2d/bitmap.h"
 #include "object.h"
 
@@ -37,7 +38,7 @@ namespace draw2d_direct2d
       ~bitmap() override;
 
 
-      void dump(dump_context& dumpcontext) const override;
+      //void dump(dump_context& dumpcontext) const override;
 
 
       void map();

@@ -1,6 +1,7 @@
-// Created by camilo on 2021-06-05 23:48 BRT <3ThomasBS_!!
+﻿// Created by camilo on 2021-06-05 23:48 BRT <3ThomasBS_!!
 #include "framework.h"
 #include "directx.h"
+#include "acme_windows_common/hresult_exception.h"
 
 
 namespace directx
@@ -77,19 +78,19 @@ namespace directx
          &context                    // Returns the device immediate context.
       );
 
-      ::throw_if_failed(hr);
+      ::throw_hresult_if_failed(hr);
 
       // Get the Direct3D 11.1 API device and context interfaces.
-      ::throw_if_failed(device.as(m_pdevice));
+      ::throw_hresult_if_failed(device.as(m_pdevice));
 
-      ::throw_if_failed(device.as(m_pdevice1));
+      ::throw_hresult_if_failed(device.as(m_pdevice1));
 
-      ::throw_if_failed(context.as(m_pdevicecontext));
+      ::throw_hresult_if_failed(context.as(m_pdevicecontext));
 
-      ::throw_if_failed(context.as(m_pdevicecontext1));
+      ::throw_hresult_if_failed(context.as(m_pdevicecontext1));
 
       // Get the underlying DXGI device of the Direct3D device.
-      ::throw_if_failed(device.as(m_pdxgidevice));
+      ::throw_hresult_if_failed(device.as(m_pdxgidevice));
 
 #if defined(_DEBUG)
 
@@ -160,7 +161,7 @@ namespace directx
 
       directx::s_pdirectx = new class directx;
 
-      directx::s_pdirectx->initialize(pobject);
+      directx::s_pdirectx->initialize(pparticle);
 
    }
 

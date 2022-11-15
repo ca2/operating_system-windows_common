@@ -1,7 +1,8 @@
 ﻿#include "framework.h"
 #include "region.h"
-#include "direct2d/direct2d.h"
 #include "path.h"
+#include "acme/exception/interface_only.h"
+#include "direct2d/direct2d.h"
 
 
 namespace draw2d_direct2d

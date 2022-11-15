@@ -366,14 +366,14 @@ namespace draw2d_direct2d
    }
 
 
-   void bitmap::dump(dump_context & dumpcontext) const
-   {
+   //void bitmap::dump(dump_context & dumpcontext) const
+   //{
 
-      ::draw2d::object::dump(dumpcontext);
+   //   ::draw2d::object::dump(dumpcontext);
 
-      //dumpcontext << "\n";
+   //   //dumpcontext << "\n";
 
-   }
+   //}
 
 
 

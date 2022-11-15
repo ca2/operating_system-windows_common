@@ -26,12 +26,12 @@ namespace draw2d_direct2d
    }
 
 
-   void pen::dump(dump_context & dumpcontext) const
-   {
+   //void pen::dump(dump_context & dumpcontext) const
+   //{
 
-      ::draw2d::object::dump(dumpcontext);
+   //   ::draw2d::object::dump(dumpcontext);
 
-   }
+   //}
 
 
    comptr < ID2D1StrokeStyle1 > pen::_create_stroke_style(::draw2d::graphics * pgraphicsParam)

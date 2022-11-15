@@ -1,7 +1,12 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "font.h"
 #include "direct2d/direct2d.h"
 #include "aura/graphics/draw2d/host.h"
+
+
+#include "acme_windows_common/_.h"
+#include "acme/_operating_system.h"
+#include "acme_windows_common/hresult_exception.h"
 
 
 namespace draw2d_direct2d
@@ -24,12 +29,12 @@ namespace draw2d_direct2d
    }
 
 
-   void font::dump(dump_context & dumpcontext) const
-   {
+   //void font::dump(dump_context & dumpcontext) const
+   //{
 
-      ::draw2d::object::dump(dumpcontext);
+   //   ::draw2d::object::dump(dumpcontext);
 
-   }
+   //}
 
 
    void font::create(::draw2d::graphics * pgraphics, i8 iCreate)
@@ -119,7 +124,7 @@ namespace draw2d_direct2d
          if(FAILED(hr) || m_pformat == nullptr)
          {
 
-            trace_hr("font::get_os_font", hr);
+            trace_hresult("font::get_os_font", hr);
 
             //return false;
 

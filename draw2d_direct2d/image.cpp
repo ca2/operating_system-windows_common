@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "image.h"
 #include "graphics.h"
 #include "aura/graphics/draw2d/lock.h"
@@ -148,7 +148,7 @@ namespace draw2d_direct2d
 
       m_pgraphics->m_pimage = this;
 
-      set(eflagCreate);
+      set_flag(eflagCreate);
 
       //return true;
 
@@ -1638,7 +1638,7 @@ namespace draw2d_direct2d
       
       ::image::tint(pimage, color);
 
-      //if (!::is_ok(pimage)) // || pimage->get_bitmap() || !pimage->get_bitmap()->m_osdata[0])
+      //if (pimage.nok()) // || pimage->get_bitmap() || !pimage->get_bitmap()->m_osdata[0])
       //{
 
       //   return false;

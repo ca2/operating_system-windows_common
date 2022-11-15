@@ -6,6 +6,12 @@
 #include "aura_windows_common/_.h"
 
 
+#include "acme_windows_common/comptr.h"
+
+
+#include "acme/_operating_system.h"
+
+
 //#include <winapifamily.h>
 //#include <windows.h>
 //#include <shlwapi.h>

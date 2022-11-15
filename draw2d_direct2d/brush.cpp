@@ -24,12 +24,12 @@ namespace draw2d_direct2d
    }
 
 
-   void brush::dump(dump_context & dumpcontext) const
-   {
+   //void brush::dump(dump_context & dumpcontext) const
+   //{
 
-      ::draw2d::object::dump(dumpcontext);
+   //   ::draw2d::object::dump(dumpcontext);
 
-   }
+   //}
 
 
    void brush::create(::draw2d::graphics* pgraphicsParam, ::i8 iCreate)
@@ -193,7 +193,7 @@ namespace draw2d_direct2d
       else if (m_ebrush == ::draw2d::e_brush_pattern)
       {
 
-         if (!::is_ok(m_pimage))
+         if (m_pimage.ok())
          {
 
             // succeeded and resume if and/or when there is a valid image.

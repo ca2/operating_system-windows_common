@@ -99,12 +99,12 @@ namespace direct2d
    void direct2d::initialize(::particle * pparticle)
    {
 
-      ::directx::defer_initialize(pobject);
+      ::directx::defer_initialize(pparticle);
 
       auto& pdxgidevice = ::directx::directx()->m_pdxgidevice;
 
       // Create the Direct2D device object and a corresponding context.
-      ::throw_if_failed(d2d1_factory1()->CreateDevice(pdxgidevice, &m_pd2device));
+      ::throw_hresult_if_failed(d2d1_factory1()->CreateDevice(pdxgidevice, &m_pd2device));
 
       d2d1_factory1()->QueryInterface(IID_PPV_ARGS(&m_d2dMultithread));
 
@@ -240,9 +240,7 @@ namespace direct2d
 
       direct2d::s_pdirect2d = new class direct2d;
 
-      direct2d::s_pdirect2d->initialize(pobject);
-
-
+      direct2d::s_pdirect2d->initialize(pparticle);
 
    }
 

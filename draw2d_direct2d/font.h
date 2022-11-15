@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 #include "aura/graphics/write_text/font.h"
@@ -23,7 +23,7 @@ namespace draw2d_direct2d
       ~font() override;
 
 
-      void dump(dump_context& dumpcontext) const override;
+      //void dump(dump_context& dumpcontext) const override;
 
       // virtual IDWriteTextFormat* get_os_data(::draw2d::graphics * pgraphics, index i) const;
       //virtual void * _get_os_data(::draw2d::graphics * pgraphics, index i) const override;

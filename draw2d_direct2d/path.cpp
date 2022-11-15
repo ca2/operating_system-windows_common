@@ -1,11 +1,14 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "path.h"
 #include "graphics.h"
-#include <math.h>
 #include "CustomRenderer.h"
-#include "direct2d/direct2d.h"
+#include "acme/parallelization/synchronous_lock.h"
 #include "aura/graphics/write_text/font.h"
 #include "aura/graphics/write_text/text_out.h"
+#include "direct2d/direct2d.h"
+
+
+#include <math.h>
 
 
 namespace draw2d_direct2d
@@ -851,7 +854,7 @@ namespace draw2d_direct2d
    bool path::_set(::draw2d::graphics * pgraphics, const ::write_text::text_out & textout)
    {
 
-      auto pgraphicsDraw2dDirect2d = pgraphics->cast < ::draw2d_direct2d::graphics >();
+      ::pointer < ::draw2d_direct2d::graphics > pgraphicsDraw2dDirect2d = pgraphics;
 
       auto bOk = internal_add_string(
          pgraphicsDraw2dDirect2d,
