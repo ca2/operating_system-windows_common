@@ -8,6 +8,7 @@
 #include "acme/filesystem/file/status.h"
 #include "acme/operating_system/time.h"
 #include "acme/filesystem/file/exception.h"
+#include "acme/user/nano/nano.h"
 #include "acme/platform/system.h"
 #include "acme/operating_system/windows_common/__string.h"
 
@@ -359,7 +360,7 @@ namespace acme_windows_common
                if (dwAccess & GENERIC_WRITE)
                {
 
-                  auto psequencer = acmesystem()->create_message_box_sequencer("Couldn't write to file \"" + m_path + "\".\nAccess Denied!!\n(Is any anti-virus program blocking this program: \"" + acmefile()->module() + "\"?", acmefile()->module().title() + " - Access Denied!", e_message_box_ok);
+                  auto psequencer = nano()->message_box_sequencer("Couldn't write to file \"" + m_path + "\".\nAccess Denied!!\n(Is any anti-virus program blocking this program: \"" + acmefile()->module() + "\"?", acmefile()->module().title() + " - Access Denied!", e_message_box_ok);
 
                   psequencer->do_asynchronously();
 
