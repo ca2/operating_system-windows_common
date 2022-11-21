@@ -10,7 +10,7 @@
 #include "acme/filesystem/file/exception.h"
 #include "acme/user/nano/nano.h"
 #include "acme/platform/system.h"
-#include "acme/operating_system/windows_common/__string.h"
+#include "acme/operating_system/windows_common/_string.h"
 
 #include <intsafe.h>
 
