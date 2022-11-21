@@ -1,6 +1,6 @@
 ﻿#include "framework.h"
 #include "hresult_exception.h"
-#include "acme/operating_system/windows_common/__string.h"
+#include "acme/operating_system/windows_common/_string.h"
 
 
 hresult_exception::hresult_exception(HRESULT hresult, const char * pszMessage) :
