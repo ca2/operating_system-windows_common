@@ -1,6 +1,7 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "in.h"
 #include "multimedia_xaudio/translation.h"
+#include "acme/parallelization/synchronous_lock.h"
 
 
 namespace multimedia
@@ -231,7 +232,7 @@ namespace multimedia
       void     in::in_close()
       {
 
-         single_lock sLock(mutex(), true);
+         single_lock sLock(synchronization(), true);
 
          //void     estatus;
 
@@ -271,7 +272,7 @@ namespace multimedia
       void in::in_start()
       {
 
-         single_lock sLock(mutex(), true);
+         single_lock sLock(synchronization(), true);
 
          if (m_einstate == ::wave::e_in_state_recording)
          {
@@ -311,7 +312,7 @@ namespace multimedia
       void in::in_stop()
       {
 
-         single_lock sLock(mutex(), true);
+         single_lock sLock(synchronization(), true);
 
          if (m_einstate != ::wave::e_in_state_recording)
          {
@@ -385,7 +386,7 @@ namespace multimedia
       void     in::in_reset()
       {
 
-         single_lock sLock(mutex(), true);
+         single_lock sLock(synchronization(), true);
 
          m_bResetting = true;
 

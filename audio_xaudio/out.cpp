@@ -1,6 +1,7 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "out.h"
-//#include "aura/message.h"
+#include "acme/parallelization/synchronous_lock.h"
+#include "aqua/platform/system.h"
 #include "app-core/audio/audio.h"
 #include "app-core/audio/wave/player.h"
 #include "app-core/audio/wave/wave.h"
@@ -61,7 +62,7 @@ namespace multimedia
       void out::out_open_ex(thread * pthreadCallback, u32 uiSamplesPerSec, u32 uiChannelCount, u32 uiBitsPerSample, ::wave::enum_purpose epurpose)
       {
 
-         single_lock sLock(mutex(), true);
+         single_lock sLock(synchronization(), true);
 
          if (m_pxaudio.is_set() && m_pvoice != nullptr && m_psourcevoice != nullptr && m_eoutstate != ::wave::e_out_state_initial)
          {
@@ -193,7 +194,7 @@ namespace multimedia
       void     out::out_close()
       {
 
-         single_lock sLock(mutex(), true);
+         single_lock sLock(synchronization(), true);
 
          if(m_eoutstate == ::wave::e_out_state_playing)
          {
@@ -375,7 +376,7 @@ namespace multimedia
       void out::out_stop()
       {
 
-         single_lock sLock(mutex(), true);
+         single_lock sLock(synchronization(), true);
 
          if (m_eoutstate != ::wave::e_out_state_playing && m_eoutstate != ::wave::e_out_state_paused)
          {
@@ -412,7 +413,7 @@ namespace multimedia
       void out::out_pause()
       {
 
-         single_lock sLock(mutex(), true);
+         single_lock sLock(synchronization(), true);
 
          ASSERT(m_eoutstate == ::wave::e_out_state_playing);
 
@@ -493,7 +494,7 @@ namespace multimedia
       void     out::out_restart()
       {
 
-         single_lock sLock(mutex(), true);
+         single_lock sLock(synchronization(), true);
 
          ASSERT(m_eoutstate == ::wave::e_out_state_paused);
 
@@ -530,7 +531,7 @@ namespace multimedia
       ::duration out::out_get_position()
       {
 
-         single_lock sLock(mutex(), true);
+         single_lock sLock(synchronization(), true);
 
 //         void                    estatus;
 
