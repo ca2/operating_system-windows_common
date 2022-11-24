@@ -2089,7 +2089,7 @@ namespace draw2d_direct2d
                comptr<ID2D1Effect> colorMatrixEffect;
                HRESULT hr = m_pdevicecontext->CreateEffect(CLSID_D2D1ColorMatrix, &colorMatrixEffect);
 
-               throw_if_failed(hr);
+               throw_hresult_if_failed(hr);
 
                colorMatrixEffect->SetInput(0, pd2d1bitmap);
                D2D1_MATRIX_5X4_F matrix =

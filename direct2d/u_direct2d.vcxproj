@@ -117,10 +117,10 @@
     <ProjectReference Include="..\..\..\source\app\aura\u_aura.vcxproj">
       <Project>{b3b6a9d8-7776-434e-8e3b-d2696632df39}</Project>
     </ProjectReference>
-    <ProjectReference Include="C:\debug\operating-system\operating-system-windows_common\acme_windows_common\u_acme_windows_common.vcxproj">
+    <ProjectReference Include="..\acme_windows_common\u_acme_windows_common.vcxproj">
       <Project>{4a44d9ca-a46e-4bb3-8ad5-8bcace5228ce}</Project>
     </ProjectReference>
-    <ProjectReference Include="C:\debug\operating-system\operating-system-windows_common\directx\u_directx.vcxproj">
+    <ProjectReference Include="..\directx\u_directx.vcxproj">
       <Project>{41f27c23-968d-49a8-b050-e1643437b612}</Project>
     </ProjectReference>
   </ItemGroup>

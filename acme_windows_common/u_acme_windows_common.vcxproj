@@ -80,6 +80,7 @@
     <ClInclude Include="factory_exchange.h" />
     <ClInclude Include="file.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="hresult_exception.h" />
     <ClInclude Include="node.h" />
     <ClInclude Include="parallelization.h" />
     <ClInclude Include="prop_variant.h" />
