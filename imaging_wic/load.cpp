@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "context_image.h"
 #include "apex/parallelization/handler_manager.h"
 #include "aura/graphics/image/load_image.h"
@@ -52,7 +52,9 @@ namespace imaging_wic
 
       pimageParam->m_bCreateHelperMaps = loadoptions.helper_maps;
 
-      m_pmanagerImageLoad->handle(ploadimage, loadoptions.sync);
+      m_pmanagerImageLoad->handle(
+         { e_timeout, 1_minute, ploadimage }, 
+         loadoptions.sync);
 
       //return ploadimage->m_estatus;
 
@@ -366,7 +368,7 @@ namespace imaging_wic
 #ifdef _UWP
 
 
-   bool node_save_image(::winrt::Windows::Storage::Streams::InMemoryRandomAccessStream const & randomAccessStream, const ::image * pimage, const ::save_image * psaveimage)
+   bool node_save_image(::winrt::Windows::Storage::Streams::InMemoryRandomAccessStream const & randomAccessStream, ::image * pimage, const ::save_image * psaveimage)
    {
 
       comptr < IStream > pstream;

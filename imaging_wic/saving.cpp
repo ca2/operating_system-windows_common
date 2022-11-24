@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "context_image.h"
 #include "acme/exception/exception.h"
 #include "acme/platform/node.h"
@@ -370,7 +370,7 @@ namespace imaging_wic
 #ifdef _UWP
 
 
-   bool node_save_image(::winrt::Windows::Storage::Streams::IRandomAccessStream const & stream, const ::image * pimage, const ::save_image * psaveimage)
+   bool node_save_image(::winrt::Windows::Storage::Streams::IRandomAccessStream const & stream, ::image * pimage, const ::save_image * psaveimage)
    {
 
       ::winrt::Windows::Storage::Streams::InMemoryRandomAccessStream randomAccessStream;

@@ -193,7 +193,7 @@ namespace draw2d_direct2d
       else if (m_ebrush == ::draw2d::e_brush_pattern)
       {
 
-         if (m_pimage.ok())
+         if (m_pimage.nok())
          {
 
             // succeeded and resume if and/or when there is a valid image.

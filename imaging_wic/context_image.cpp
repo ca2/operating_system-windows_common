@@ -3,6 +3,7 @@
 #include "acme/exception/exception.h"
 #include "acme/parallelization/task.h"
 #include "acme/platform/node.h"
+#include "acme/platform/system.h"
 #include "apex/parallelization/handler_manager.h"
 #include "apex_windows_common/single_threaded_handler_manager.h"
 #include "aura/graphics/image/save_image.h"
@@ -286,7 +287,7 @@ namespace imaging_wic
 
 
    // platform implementation may use this context_image-"routing" to manipulate the image/clipboard
-   bool context_image::_image_to_desk(const ::image* pimage)
+   bool context_image::_image_to_desk(::image* pimage)
    {
 
       bool bOk = true;
