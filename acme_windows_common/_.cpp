@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "acme/primitive/string/string.h"
 #include "acme/primitive/string/adaptor.h"
 #include "acme/_library.h"
@@ -32,7 +32,7 @@ namespace windows_common
 
 #else
 
-      return ::LoadPackagedLibrary(utf8_to_unicode(psz), 0);
+      return ::LoadPackagedLibrary(wstring(str), 0);
 
 #endif
 

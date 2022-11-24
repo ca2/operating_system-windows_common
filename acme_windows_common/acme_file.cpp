@@ -1,4 +1,4 @@
-// From acme/filesystem/file/_.cpp by camilo on 2021-08-09 
+﻿// From acme/filesystem/file/_.cpp by camilo on 2021-08-09 
 // 14:17 BRT <3ThomasBorregaardSørensen
 #include "framework.h"
 #include "acme_file.h"
@@ -17,6 +17,9 @@
 #include <stdlib.h>
 #include <time.h>
 
+//#ifdef _UWP
+//#include "acme/operating_system/universal_windows/_.h"
+//#endif
 
 CLASS_DECL_ACME void TRACELASTERROR();
 
@@ -347,7 +350,7 @@ namespace acme_windows_common
 
 #else
 
-      hfile hfile = hfile_create(path, GENERIC_READ, FILE_SHARE_WRITE | FILE_SHARE_READ | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+      HANDLE hfile = hfile_create(path, GENERIC_READ, FILE_SHARE_WRITE | FILE_SHARE_READ | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 
 #endif
 

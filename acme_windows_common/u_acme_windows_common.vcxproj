@@ -108,6 +108,9 @@
     <ClCompile Include="com.cpp" />
     <ClCompile Include="exception_translator.cpp" />
     <ClCompile Include="hresult_exception.cpp" />
+    <ClCompile Include="mutex.cpp" />
+    <ClCompile Include="standard_exception.cpp" />
+    <ClCompile Include="synchronization_object.cpp" />
     <ClCompile Include="_factory.cpp" />
     <ClCompile Include="file.cpp" />
     <ClCompile Include="framework.cpp">
@@ -128,7 +131,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='stage|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='static_release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="networking.cpp" />
     <ClCompile Include="node.cpp" />
     <ClCompile Include="_.cpp" />
   </ItemGroup>

@@ -134,9 +134,6 @@
     <ClCompile Include="file.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="networking.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="node.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -147,6 +144,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="hresult_exception.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="standard_exception.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="synchronization_object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mutex.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
