@@ -448,7 +448,7 @@ namespace multimedia
       }
 
 
-      void out::out_start(const ::time & position)
+      void out::out_start(const class ::time & position)
       {
 
          synchronous_lock synchronouslock(synchronization());
@@ -528,7 +528,7 @@ namespace multimedia
       }
 
 
-      ::time out::out_get_position()
+      class ::time out::out_get_position()
       {
 
          single_lock sLock(synchronization(), true);
