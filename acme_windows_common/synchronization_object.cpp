@@ -1,4 +1,4 @@
-// Created by camilo on 2022-10-28 14:35 <3ThomasBorregaardSorensen!!
+﻿// Created by camilo on 2022-10-28 14:35 <3ThomasBorregaardSorensen!!
 #include "framework.h"
 #include "synchronization_object.h"
 #include "acme/exception/exception.h"
@@ -26,11 +26,10 @@ namespace acme_windows_common
 
       }
 
-
    }
 
 
-   bool synchronization_object::_wait(const class ::wait & wait)
+   bool synchronization_object::_wait(const class time & timeWait)
    {
    
       if (!m_hsynchronization)
@@ -40,7 +39,7 @@ namespace acme_windows_common
 
       }
 
-      DWORD dwResult = ::WaitForSingleObjectEx(m_hsynchronization, wait, false);
+      DWORD dwResult = ::WaitForSingleObjectEx(m_hsynchronization, ::windows::wait(timeWait), false);
 
       auto estatus = ::windows::wait_result_status(dwResult);
 

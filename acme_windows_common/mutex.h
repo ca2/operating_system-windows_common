@@ -80,11 +80,11 @@ namespace acme_windows_common
       //
       //   //virtual ::e_status lock() override;
       //
-      //   //virtual ::e_status lock(const class ::wait & wait) override;
+      //   //virtual ::e_status lock(const class time & timeWait) override;
       //
       //   virtual void _wait() override;
       //
-      //   virtual bool _wait(const class ::wait & wait) override;
+      //   virtual bool _wait(const class time & timeWait) override;
       //
       //#endif
 

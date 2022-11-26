@@ -346,14 +346,14 @@ namespace multimedia
 
 #endif
 
-         if(m_durationLastBuffer.elapsed() > 50_ms)
+         if(m_timeLastBuffer.elapsed() > 50_ms)
          {
 
             output_debug_string("too much delay for submitting audio buffer\n");
 
          }
 
-         m_durationLastBuffer.Now();
+         m_timeLastBuffer.Now();
 
          m_iBufferedCount++;
 
@@ -448,7 +448,7 @@ namespace multimedia
       }
 
 
-      void out::out_start(const ::duration & position)
+      void out::out_start(const ::time & position)
       {
 
          synchronous_lock synchronouslock(synchronization());
@@ -528,7 +528,7 @@ namespace multimedia
       }
 
 
-      ::duration out::out_get_position()
+      ::time out::out_get_position()
       {
 
          single_lock sLock(synchronization(), true);
@@ -556,16 +556,16 @@ namespace multimedia
 
       }
 
-      /*::duration out::get_position_for_synch()
+      /*::time out::get_position_for_synch()
       {
-         ::duration position = get_position();
+         ::time position = get_position();
          if(m_pprebuffer != nullptr && m_pprebuffer->m_pdecoder != nullptr)
             return m_pprebuffer->m_position + position - m_pprebuffer->m_pdecoder->audio_plugin_get_lost_position_offset(position) - m_dwLostSampleCount * m_pwaveformat->wBitsPerSample * m_pwaveformat->nChannels / 8;
          else
             return m_pprebuffer->m_position + position - m_dwLostSampleCount * m_pwaveformat->wBitsPerSample * m_pwaveformat->nChannels / 8;
       }*/
 
-//      ::duration out::out_get_time()
+//      ::time out::out_get_time()
 //      {
 //
 //         single_lock sLock(mutex(), true);

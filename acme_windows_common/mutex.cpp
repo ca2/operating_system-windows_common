@@ -694,7 +694,7 @@ namespace acme_windows_common
 //      }
 //
 //      ANDROID
-//         int irc = pthread_mutex_lock_timeout_np(m_pmutex, duration.get_total_milliseconds());
+//         int irc = pthread_mutex_lock_timeout_np(m_pmutex, time.get_total_milliseconds());
 //
 //      if (!irc)
 //      {
@@ -714,7 +714,7 @@ namespace acme_windows_common
 //#if !defined(WINDOWS)
 //
 //
-//      bool mutex::_wait(const class ::wait & wait)
+//      bool mutex::_wait(const class time & timeWait)
 //      {
 //
 //         if (wait.is_infinite())
@@ -733,9 +733,9 @@ namespace acme_windows_common
 //
 //            timespec delay;
 //
-//            delay.tv_sec = duration.m_i;
+//            delay.tv_sec = time.m_i;
 //
-//            delay.tv_nsec = duration.m_i;
+//            delay.tv_nsec = time.m_i;
 //
 //            i32 ret = sem_timedwait(m_psem, &delay);
 //
@@ -777,7 +777,7 @@ namespace acme_windows_common
 //
 //            }
 //
-//            auto tickStart = ::duration::now();
+//            auto tickStart = ::time::now();
 //
 //            while (true)
 //            {
@@ -889,9 +889,9 @@ namespace acme_windows_common
 //
 //            timespec timeout;
 //
-//            timeout.tv_sec = duration.m_i;
+//            timeout.tv_sec = time.m_i;
 //
-//            timeout.tv_nsec = duration.m_i;
+//            timeout.tv_nsec = time.m_i;
 //
 //            struct sembuf operation[1];
 //
@@ -991,7 +991,7 @@ namespace acme_windows_common
 //
 //#endif
 //
-//                  ::duration d;
+//                  ::time d;
 //
 //                  d.m_iSecond = abs_time.tv_sec + wait.m_d;
 //
@@ -1075,7 +1075,7 @@ namespace acme_windows_common
 //
 //            clock_gettime(CLOCK_REALTIME, &abs_time);
 //
-//            ::duration d;
+//            ::time d;
 //
 //            d.m_iSecond = abs_time.tv_sec + (::i64)(wait.m_d);
 //
@@ -1385,7 +1385,7 @@ namespace acme_windows_common
 //
 ////#ifdef WINDOWS
 //
-//   return synchronization_result((u32) ::WaitForSingleObjectEx(m_hsync, durationTimeout.u32_millis(), false));
+//   return synchronization_result((u32) ::WaitForSingleObjectEx(m_hsync, timeTimeout.u32_millis(), false));
 //
 ////#endif
 //

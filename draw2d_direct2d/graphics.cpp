@@ -2197,7 +2197,7 @@ namespace draw2d_direct2d
 
                      __defer_construct_new(pframeTarget);
 
-                     pframeTarget->m_duration = pframeSource->m_duration;
+                     pframeTarget->m_time = pframeSource->m_time;
 
                      pframeTarget->m_iFrame = pframeSource->m_iFrame;
 
@@ -2215,7 +2215,7 @@ namespace draw2d_direct2d
 
                   }
 
-                  pframeaTarget->m_durationTotal = pframeaSource->m_durationTotal;
+                  pframeaTarget->m_timeTotal = pframeaSource->m_timeTotal;
 
                }
 

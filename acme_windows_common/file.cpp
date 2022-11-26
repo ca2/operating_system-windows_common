@@ -6,7 +6,7 @@
 #include "acme/platform/sequencer.h"
 #include "acme/filesystem/file/exception.h"
 #include "acme/filesystem/file/status.h"
-#include "acme/operating_system/time.h"
+//#include "acme/operating_system/time.h"
 #include "acme/filesystem/file/exception.h"
 #include "acme/user/nano/nano.h"
 #include "acme/platform/system.h"
@@ -264,7 +264,7 @@ namespace acme_windows_common
 
       ::u32 dwWaitSharingViolation = 84;
 
-      auto durationStart = ::duration::now();
+      auto timeStart = ::time::now();
 
       //::u32 dwFileSharingViolationRetryTimeout = ::get_task() != nullptr ? ::get_task()->get_file_sharing_violation_timeout_total_milliseconds() : 0;
 
@@ -305,10 +305,10 @@ namespace acme_windows_common
          if (!(eopen & ::file::e_open_no_share_violation_wait))
          {
 
-            if (dwLastError == ERROR_SHARING_VIOLATION && ::task_get_run() && durationStart.elapsed() < m_durationErrorBlockTimeout)
+            if (dwLastError == ERROR_SHARING_VIOLATION && ::task_get_run() && timeStart.elapsed() < m_timeErrorBlockTimeout)
             {
 
-               preempt(maximum(m_durationErrorBlockTimeout.integral_millisecond() / 10, 50_ms));
+               preempt(maximum(m_timeErrorBlockTimeout.integral_millisecond() / 10, 50_ms));
 
                goto retry;
 

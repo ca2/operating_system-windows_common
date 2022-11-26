@@ -288,7 +288,7 @@ namespace multimedia
             break;
 
          case MIXERCONTROL_CONTROLTYPE_MILLITIME:
-            strTypeName = "::duration time";
+            strTypeName = "::time time";
             break;
 
          default:

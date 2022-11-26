@@ -18,7 +18,7 @@ namespace acme_windows_common
       ~synchronization_object();
 
 
-      bool _wait(const class ::wait & wait) override;
+      bool _wait(const class time & timeWait) override;
 
 
    };
