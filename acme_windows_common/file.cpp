@@ -360,7 +360,7 @@ namespace acme_windows_common
                if (dwAccess & GENERIC_WRITE)
                {
 
-                  auto psequencer = nano()->message_box_sequencer("Couldn't write to file \"" + m_path + "\".\nAccess Denied!!\n(Is any anti-virus program blocking this program: \"" + acmefile()->module() + "\"?", acmefile()->module().title() + " - Access Denied!", e_message_box_ok);
+                  auto psequencer = nano()->message_box("Couldn't write to file \"" + m_path + "\".\nAccess Denied!!\n(Is any anti-virus program blocking this program: \"" + acmefile()->module() + "\"?", acmefile()->module().title() + " - Access Denied!", e_message_box_ok);
 
                   psequencer->do_asynchronously();
 

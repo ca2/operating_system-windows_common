@@ -371,7 +371,7 @@ namespace apex_windows_common
    {
 
       //auto estatus = 
-      acmesystem()->m_papexsystem->m_papexnode->thread_initialize(acmesystem()->m_papexsystem);
+      acmesystem()->m_pacmenode->m_papexnode->thread_initialize(acmesystem()->m_papexsystem);
 
       //if (!estatus)
       //{

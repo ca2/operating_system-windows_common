@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "node.h"
 #include "acme/platform/system.h"
 
@@ -13,7 +13,7 @@ namespace aura_windows_common
    node::node()
    {
 
-      m_pauranode = this;
+      //m_pauranode = this;
 
    }
 

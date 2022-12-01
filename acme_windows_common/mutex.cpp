@@ -1,4 +1,4 @@
-// From acme/parallelization/mutex.cpp by camilo on 2022-10-28 14:04 <3ThomasBorregaardSorensen!!
+﻿// From acme/parallelization/mutex.cpp by camilo on 2022-10-28 14:04 <3ThomasBorregaardSorensen!!
 #include "framework.h"
 #include "mutex.h"
 #include "acme/exception/exception.h"
@@ -205,7 +205,7 @@ namespace acme_windows_common
 //
 //#ifdef ANDROID
 //
-//            strName = ::file::path(get_system()->m_pandroidinitdata->m_pszCacheDir) / "var/tmp" / strName;
+//            strName = ::file::path(acmesystem()->m_pandroidinitdata->m_pszCacheDir) / "var/tmp" / strName;
 //
 //#else
 //
@@ -288,7 +288,7 @@ namespace acme_windows_common
 //
 //#ifdef ANDROID
 //
-//            path = ::get_system()->m_pacmedirectory->system() / "tmp/ca2/lock/mutex" / string(pstrName);
+//            path = acmesystem()->m_pacmedirectory->system() / "tmp/ca2/lock/mutex" / string(pstrName);
 //
 //#else
 //
@@ -302,7 +302,7 @@ namespace acme_windows_common
 //
 //#ifdef ANDROID
 //
-//            path = ::get_system()->m_pacmedirectory->system() / "home/user/ca2/lock/mutex" / string(pstrName);
+//            path = acmesystem()->m_pacmedirectory->system() / "home/user/ca2/lock/mutex" / string(pstrName);
 //
 //#elif defined __APPLE__
 //
@@ -323,7 +323,7 @@ namespace acme_windows_common
 //
 //         path /= pstrName;
 //
-//         ::get_system()->m_pacmedirectory->create(path.folder());
+//         acmesystem()->m_pacmedirectory->create(path.folder());
 //
 //         m_iFd = open(path, O_RDWR | O_CREAT, S_IRWXU);
 //
@@ -1416,7 +1416,7 @@ namespace acme_windows_common
 
             auto last_error = GetLastError();
 
-            auto estatus = failed_errno_to_status(last_error);
+            auto estatus = failed_errno_status(last_error);
 
             throw ::exception(estatus);
 

@@ -37,7 +37,7 @@ class single_lock;
 #undef MUTEX_NAMED_POSIX
 #undef MUTEX_NAMED_FD
 #define MUTEX_NAMED_FD // File Descriptor "Semaphore"
-//#define MUTEX_NAMED_VSEM // ::acme::get_system() V Semaphore
+//#define MUTEX_NAMED_VSEM // ::acmeacmesystem() V Semaphore
 #undef MUTEX_NAMED_VSEM
 
 #endif

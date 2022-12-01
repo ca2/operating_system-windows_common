@@ -27,7 +27,7 @@
 //   factory_exchange::factory_exchange()
 //   {
 //
-//      ::factory::add_factory_item < ::imaging_wic::context_image, ::context_image >();
+//      factory()->add_factory_item < ::imaging_wic::context_image, ::context_image >();
 //
 //   }
 //
