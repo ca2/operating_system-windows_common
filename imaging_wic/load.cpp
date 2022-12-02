@@ -1,5 +1,6 @@
 ﻿#include "framework.h"
 #include "context_image.h"
+#include "acme/filesystem/file/file.h"
 #include "apex/parallelization/handler_manager.h"
 #include "aura/graphics/image/load_image.h"
 #include "aura/graphics/image/save_image.h"
