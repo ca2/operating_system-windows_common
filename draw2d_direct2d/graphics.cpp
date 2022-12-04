@@ -7,6 +7,7 @@
 #include "region.h"
 #include "direct2d/direct2d.h"
 #include "CustomRenderer.h"
+#include "acme/platform/scoped_restore.h"
 #include "aura/windowing/windowing.h"
 #include "aura/windowing/display.h"
 #include "aura/user/user/user.h"
@@ -170,7 +171,7 @@ namespace draw2d_direct2d
 
       comptr<ID2D1RenderTarget> prendertargetTemplate;
 
-      auto psession = get_session();
+      auto psession = acmesession();
 
       auto paurasession = psession->m_paurasession;
 
