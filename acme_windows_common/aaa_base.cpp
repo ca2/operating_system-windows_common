@@ -22,7 +22,7 @@
 //VOID
 //WINAPI
 //output_debug_string_w(
-//_In_opt_ const widechar * pOutputString
+//_In_opt_ const ::wide_character * pOutputString
 //
 //)
 //{

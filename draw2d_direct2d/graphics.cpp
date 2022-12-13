@@ -5610,7 +5610,7 @@ namespace draw2d_direct2d
 
       }
 
-      const widechar * lpcwsz = text.m_wstr;
+      const ::wide_character * lpcwsz = text.m_wstr;
 
       strsize uiLen = text.m_wstr.get_length();
 

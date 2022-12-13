@@ -20,7 +20,7 @@ CLASS_DECL_ACME_WINDOWS_COMMON bool _os_may_have_alias(const char * psz)
 
    string str(psz);
 
-   return str.ends_ci(".lnk") || str.contains_ci(".lnk/") || str.contains_ci(".lnk\\");
+   return str.case_insensitive_ends(".lnk") || str.contains_ci(".lnk/") || str.contains_ci(".lnk\\");
 
 }
 
@@ -785,7 +785,7 @@ namespace acme_windows_common
    }
 
 
-   filesize file::get_size() const
+   filesize file::size() const
    {
 
       ASSERT_VALID(this);

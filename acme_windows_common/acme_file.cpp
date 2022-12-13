@@ -84,7 +84,7 @@ namespace acme_windows_common
 
       m.set_size(1_mb);
 
-      while (auto read = pfileSrc->read(m.get_data(), m.get_size()))
+      while (auto read = pfileSrc->read(m.data(), m.size()))
       {
 
          if (read <= 0)
@@ -94,7 +94,7 @@ namespace acme_windows_common
 
          }
 
-         pfileNew->write(m.get_data(), read);
+         pfileNew->write(m.data(), read);
 
       }
 
@@ -339,7 +339,7 @@ namespace acme_windows_common
    }
 
 
-   filesize acme_file::get_size(const char * pathParam)
+   filesize acme_file::size(const char * pathParam)
    {
 
       auto path = acmepath()->defer_process_relative_path(pathParam);
@@ -463,7 +463,7 @@ namespace acme_windows_common
 
    //   DWORD dwSize;
 
-   //   dwSize = (DWORD)get_size(pfile);
+   //   dwSize = (DWORD)size(pfile);
 
    //   iReadAtMostByteCount = iReadAtMostByteCount < 0 ? dwSize : minimum(iReadAtMostByteCount, (::strsize)dwSize);
 
@@ -498,58 +498,111 @@ namespace acme_windows_common
    //}
 
 
-   memory acme_file::as_memory(const char* pathParam, strsize iReadAtMostByteCount)
+   memory acme_file::as_memory(const char* pathParam, strsize iReadAtMostByteCount, bool bNoExceptionIfNotFound)
    {
 
-      auto path = acmepath()->defer_process_relative_path(pathParam);
+      return ::acme_file::as_memory(pathParam, iReadAtMostByteCount, bNoExceptionIfNotFound);
 
-      FILE* pfile = _wfsopen(wstring(path), L"r", _SH_DENYNO);
-      
-      if (pfile == nullptr)
-      {
+      //auto path = acmepath()->defer_process_relative_path(pathParam);
 
-         int iErrNo = errno;
+      //FILE* pfile = _wfsopen(wstring(path), L"r", _SH_DENYNO);
+      //
+      //if (pfile == nullptr)
+      //{
 
-         auto estatus = errno_status(iErrNo);
+      //   if (bNoExceptionIfNotFound)
+      //   {
 
-         throw ::exception(estatus);
+      //      return {};
 
-      }
+      //   }
 
-      ::memory memory;
+      //   int iErrNo = errno;
 
-      try
-      {
+      //   auto estatus = errno_status(iErrNo);
 
-         ::memory memoryBuffer;
+      //   throw ::exception(estatus);
 
-         memoryBuffer.set_size(1_mb);
+      //}
 
-         while (true)
-         {
+      //::memory memory;
 
-            auto iRead = fread(memoryBuffer.get_data(), 1, memoryBuffer.get_size(), pfile);
+      //if(fseek(pfile, (long)0, SEEK_END))
 
-            if (iRead <= 0)
-            {
+      //auto uSize = pfile->size();
 
-               break;
+      //if (iReadAtMostByteCount < 0)
+      //{
 
-            }
+      //   iReadAtMostByteCount = (strsize)uSize;
 
-            memory.append(memoryBuffer.get_data(), iRead);
+      //}
+      //else
+      //{
 
-         };
+      //   iReadAtMostByteCount = minimum(iReadAtMostByteCount, (strsize)uSize);
 
-      }
-      catch (...)
-      {
+      //}
 
-      }
+      //memory.set_size(iReadAtMostByteCount);
 
-      fclose(pfile);
+      //auto p = memory.data();
 
-      return ::move(memory);
+      //::size_t iPos = 0;
+
+      //while (iReadAtMostByteCount - iPos > 0)
+      //{
+
+      //   auto dwRead = pfile->read(p + iPos, (size_t)iReadAtMostByteCount - iPos);
+
+      //   if (dwRead <= 0)
+      //   {
+
+      //      break;
+
+      //   }
+
+      //   iPos += dwRead;
+
+      //}
+
+      //return memory;
+
+
+      //::memory memory;
+
+      //try
+      //{
+
+      //   ::memory memoryBuffer;
+
+      //   memoryBuffer.set_size(1_mb);
+
+      //   while (true)
+      //   {
+
+      //      auto iRead = fread(memoryBuffer.data(), 1, memoryBuffer.size(), pfile);
+
+      //      if (iRead <= 0)
+      //      {
+
+      //         break;
+
+      //      }
+
+      //      memory.append(memoryBuffer.data(), iRead);
+
+      //   };
+
+      //}
+      //catch (...)
+      //{
+
+      //}
+
+      //fclose(pfile);
+
+      //return ::move(memory);
 
    }
 
@@ -585,7 +638,7 @@ namespace acme_windows_common
 
    //   memory.set_size(iReadAtMostByteCount);
 
-   //   auto dwRead = ::fread(memory.get_data(), 1, (u32)iReadAtMostByteCount, file);
+   //   auto dwRead = ::fread(memory.data(), 1, (u32)iReadAtMostByteCount, file);
 
    //   memory.set_size(dwRead);
 
@@ -652,7 +705,7 @@ namespace acme_windows_common
 
       DWORD dwWritten = 0;
 
-      if (!WriteFile(h, block.get_data(), (DWORD) block.get_size(), &dwWritten,nullptr))
+      if (!WriteFile(h, block.data(), (DWORD) block.size(), &dwWritten,nullptr))
       {
 
          DWORD dwLastError = ::GetLastError();
@@ -661,7 +714,7 @@ namespace acme_windows_common
 
       }
 
-      if (dwWritten != block.get_size())
+      if (dwWritten != block.size())
       {
 
          estatus = error_failed;

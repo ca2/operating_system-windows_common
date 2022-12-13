@@ -3,7 +3,7 @@
 #include "framework.h"
 
 
-HRESULT win_create_link(const widechar* pszPathObj, const widechar* pszPathLink, const widechar* pszDesc, const widechar* pszIconPath, ::i32 iIcon)
+HRESULT win_create_link(const ::wide_character* pszPathObj, const ::wide_character* pszPathLink, const ::wide_character* pszDesc, const ::wide_character* pszIconPath, ::i32 iIcon)
 {
 
    HRESULT hres;

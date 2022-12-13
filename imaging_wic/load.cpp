@@ -337,7 +337,7 @@ namespace imaging_wic
    //
    //}
    //
-   //HRESULT get_query_reader(const widechar * wszPath, IWICMetadataQueryReader * pqueryreaderParent, comptr<IWICMetadataQueryReader> & pqueryreader)
+   //HRESULT get_query_reader(const ::wide_character * wszPath, IWICMetadataQueryReader * pqueryreaderParent, comptr<IWICMetadataQueryReader> & pqueryreader)
    //{
    //
    //   PROPVARIANT value;

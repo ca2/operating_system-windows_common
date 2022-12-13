@@ -481,7 +481,7 @@ namespace windows
       unicode_to_utf8(rStatus.m_strFullName, wstrFullName);
 
       WIN32_FIND_DATAW findFileData;
-      HANDLE hFind = FindFirstFileW((LPWSTR)(const widechar *)wstrFullName, &findFileData);
+      HANDLE hFind = FindFirstFileW((LPWSTR)(const ::wide_character *)wstrFullName, &findFileData);
       if (hFind == INVALID_HANDLE_VALUE)
          return false;
       VERIFY(FindClose(hFind));
@@ -528,7 +528,7 @@ namespace windows
    //   LPFILETIME pLastWriteTime = nullptr;
 
 
-   //   if((wAttr = windows_get_file_attributes((LPWSTR)(const widechar *)pszFileName)) == (::u32)-1L)
+   //   if((wAttr = windows_get_file_attributes((LPWSTR)(const ::wide_character *)pszFileName)) == (::u32)-1L)
 
    //      file_exception::throw_os_error((::i32)GetLastError());
 
@@ -538,7 +538,7 @@ namespace windows
    //      // This way we will be able to modify the time assuming the
    //      // caller changed the file from readonly.
 
-   //      if(!SetFileAttributesW((LPWSTR)(const widechar *)pszFileName,(::u32)status.m_attribute))
+   //      if(!SetFileAttributesW((LPWSTR)(const ::wide_character *)pszFileName,(::u32)status.m_attribute))
 
    //         file_exception::throw_os_error((::i32)GetLastError());
    //   }
@@ -566,7 +566,7 @@ namespace windows
 
    //      }
 
-   //      HANDLE hFile = ::CreateFileW((LPWSTR)(const widechar *)pszFileName,GENERIC_READ | GENERIC_WRITE,
+   //      HANDLE hFile = ::CreateFileW((LPWSTR)(const ::wide_character *)pszFileName,GENERIC_READ | GENERIC_WRITE,
 
    //         FILE_SHARE_READ,nullptr,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,
    //         nullptr);
@@ -697,7 +697,7 @@ namespace windows
          // This way we will be able to modify the time assuming the
          // caller changed the file from readonly.
 
-         if (!SetFileAttributesW((LPWSTR)(const widechar *)pszFileName, (::u32)status.m_attribute))
+         if (!SetFileAttributesW((LPWSTR)(const ::wide_character *)pszFileName, (::u32)status.m_attribute))
          {
 
             ::file::throw_os_error(::GetLastError());
@@ -734,7 +734,7 @@ namespace windows
 
          }
 
-         HANDLE hFile = ::CreateFileW((LPWSTR)(const widechar *)pszFileName, GENERIC_READ | GENERIC_WRITE,
+         HANDLE hFile = ::CreateFileW((LPWSTR)(const ::wide_character *)pszFileName, GENERIC_READ | GENERIC_WRITE,
 
             FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL,
             nullptr);
@@ -765,7 +765,7 @@ namespace windows
       if ((::u32)status.m_attribute != wAttr && !(wAttr & FILE_ATTRIBUTE_READONLY))
       {
 
-         if (!SetFileAttributesW((LPWSTR)(const widechar *)pszFileName, (::u32)status.m_attribute))
+         if (!SetFileAttributesW((LPWSTR)(const ::wide_character *)pszFileName, (::u32)status.m_attribute))
          {
 
             return ::os_error_to_status(::GetLastError());

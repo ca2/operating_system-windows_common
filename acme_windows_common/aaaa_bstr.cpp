@@ -1,7 +1,7 @@
 #include "framework.h"
 
 //
-//BSTR AllocSysString(const ansichar * pchData, strsize nDataLength) noexcept
+//BSTR AllocSysString(const ::ansi_character * pchData, strsize nDataLength) noexcept
 //{
 //
 //   BSTR bstr = nullptr;
@@ -23,7 +23,7 @@
 //
 //
 //// pbstr is [in,out] BSTR string
-//bool SetSysString(BSTR * pbstr, const ansichar * pchData, strsize nDataLength) noexcept
+//bool SetSysString(BSTR * pbstr, const ::ansi_character * pchData, strsize nDataLength) noexcept
 //{
 //
 //   strsize nLen = utf_to_utf_length(pbstr, pchData, nDataLength);

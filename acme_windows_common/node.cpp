@@ -648,7 +648,7 @@ namespace acme_windows_common
    //
 
 
-   //::e_status node::::last_error_status(DWORD dwLastError)
+   //::e_status node::last_error_status(DWORD dwLastError)
    //{
 
    //   if (dwLastError == 0)

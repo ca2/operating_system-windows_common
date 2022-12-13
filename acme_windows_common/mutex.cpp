@@ -200,7 +200,7 @@ namespace acme_windows_common
 //         strName.replace(":", "_");
 //         strName.replace("/", "_");
 //
-//         if (pstrName.begins_ci("Global"))
+//         if (pstrName.case_insensitive_begins("Global"))
 //         {
 //
 //#ifdef ANDROID
@@ -283,7 +283,7 @@ namespace acme_windows_common
 //
 //         ::file::path path;
 //
-//         if (pstrName.begins_ci("Global"))
+//         if (pstrName.case_insensitive_begins("Global"))
 //         {
 //
 //#ifdef ANDROID
@@ -364,7 +364,7 @@ namespace acme_windows_common
 //
 //         ::file::path path;
 //
-//         if (pstrName.begins_ci("Global"))
+//         if (pstrName.case_insensitive_begins("Global"))
 //         {
 //
 //            path = "/::payload/lock/ca2/mutex/named";
@@ -1665,7 +1665,7 @@ namespace acme_windows_common
 
          ::file::path path;
 
-         if (lpszName.begins_ci("Global"))
+         if (lpszName.case_insensitive_begins("Global"))
          {
 
             path = "/payload/tmp/ca2/lock/mutex/named";

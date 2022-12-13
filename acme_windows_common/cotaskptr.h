@@ -203,7 +203,7 @@ public:
    //{
    //
 
-   inline ansistring& assign(ansistring& ansistrDst, const cotaskptr < PWSTR >& pwidesz)
+   inline ansi_string& assign(ansi_string& ansistrDst, const cotaskptr < PWSTR >& pwidesz)
    {
 
       ansistrDst.assign(pwidesz.operator const PWSTR());
@@ -213,7 +213,7 @@ public:
    }
 
 
-   inline widestring& assign(widestring& widestrDst, const cotaskptr < PSTR >& pansisz)
+   inline wide_string& assign(wide_string& widestrDst, const cotaskptr < PSTR >& pansisz)
    {
 
       widestrDst.assign(pansisz.operator const PSTR());
@@ -223,7 +223,7 @@ public:
    }
 
 
-   inline ansistring& assign(ansistring& ansistrDst, const cotaskptr < PSTR >& pansisz)
+   inline ansi_string& assign(ansi_string& ansistrDst, const cotaskptr < PSTR >& pansisz)
    {
 
       ansistrDst.assign(pansisz.operator const PSTR());
@@ -233,7 +233,7 @@ public:
    }
 
 
-   inline widestring& assign(widestring& widestrDst, const cotaskptr < PWSTR >& pwidesz)
+   inline wide_string& assign(wide_string& widestrDst, const cotaskptr < PWSTR >& pwidesz)
    {
 
       widestrDst.assign(pwidesz.operator const PWSTR());

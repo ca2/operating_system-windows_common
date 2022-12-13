@@ -1800,7 +1800,7 @@ retry:
 
                wstr.release_string_buffer();
 
-               string strLink = unicode_to_utf8((const widechar *)wstr);
+               string strLink = unicode_to_utf8((const ::wide_character *)wstr);
 
                if (strLink.is_empty() && pitemidlist)
                {
@@ -1827,7 +1827,7 @@ retry:
 
                   wstr.release_string_buffer();
 
-                  *pstrDirectory = unicode_to_utf8((const widechar *)wstr);
+                  *pstrDirectory = unicode_to_utf8((const ::wide_character *)wstr);
 
                }
 
@@ -1843,7 +1843,7 @@ retry:
 
                   wstr.release_string_buffer();
 
-                  *pstrParams = unicode_to_utf8((const widechar *)wstr);
+                  *pstrParams = unicode_to_utf8((const ::wide_character *)wstr);
 
                }
 
@@ -1940,7 +1940,7 @@ retry:
 
          bool bQuote = strDefault.begins_eat_ci("\"");
 
-         strsize iFind = strDefault.find_ci(".exe");
+         strsize iFind = strDefault.case_insensitive_find(".exe");
 
          if (iFind <= 0)
          {

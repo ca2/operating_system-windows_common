@@ -1,4 +1,4 @@
-// From operating-system-window by camilo on 2022-02-25 18>39 <3ThomasBorregaardS�rensen!!
+﻿// From operating-system-window by camilo on 2022-02-25 18>39 <3ThomasBorregaardS�rensen!!
 #pragma once
 
 
@@ -84,7 +84,7 @@ namespace acme_windows_common
 
       virtual filesize translate(filesize filesize, ::enum_seek nFrom) override;
       virtual void set_size(filesize dwNewLen) override;
-      virtual filesize get_size() const override;
+      virtual filesize size() const override;
 
       virtual memsize read(void * pdata, memsize nCount) override;
 
