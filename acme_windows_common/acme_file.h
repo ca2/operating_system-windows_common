@@ -38,9 +38,9 @@ namespace acme_windows_common
       void put_contents(const char * path, const char * contents, memsize len) override;
 
 
-      using ::acme_file::size;
+      using ::acme_file::get_size;
       
-      filesize size(const char * path) override;
+      filesize get_size(const char * path) override;
       
       //int_bool file_is_equal_path_dup(const char * psz1, const char * psz2)
 

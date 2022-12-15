@@ -339,7 +339,7 @@ namespace acme_windows_common
    }
 
 
-   filesize acme_file::size(const char * pathParam)
+   filesize acme_file::get_size(const char * pathParam)
    {
 
       auto path = acmepath()->defer_process_relative_path(pathParam);
