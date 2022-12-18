@@ -1,4 +1,4 @@
-#include "framework.h"
+﻿#include "framework.h"
 #include "context_image.h"
 #include "acme/exception/exception.h"
 #include "aura/graphics/image/frame_array.h"
@@ -51,7 +51,7 @@ namespace imaging_wic
 
          }
 
-         hr = pwicstream->InitializeFromMemory(memory.get_data(), (DWORD) memory.get_size());
+         hr = pwicstream->InitializeFromMemory(memory.data(), (DWORD) memory.size());
 
          if (FAILED(hr))
          {
@@ -504,7 +504,7 @@ namespace imaging_wic
 
             pimage->map();
 
-            hr = pframe->CopyPixels(nullptr, pimage->scan_size(), pimage->scan_size() * height, (byte *)pimage->get_data());
+            hr = pframe->CopyPixels(nullptr, pimage->scan_size(), pimage->scan_size() * height, (byte *)pimage->data());
 
    #ifdef _UWP
             //pimage->mult_alpha();
@@ -524,7 +524,7 @@ namespace imaging_wic
 
             pimage->map();
 
-            hr = pframe->CopyPixels(nullptr, pimage->scan_size(), pimage->scan_size() * height, (byte *)pimage->get_data());
+            hr = pframe->CopyPixels(nullptr, pimage->scan_size(), pimage->scan_size() * height, (byte *)pimage->data());
    #ifdef _UWP
             //pimage->mult_alpha();
    #endif
@@ -562,7 +562,7 @@ namespace imaging_wic
 
             pimage->map();
 
-            hr = pbitmap->CopyPixels(nullptr, pimage->scan_size(), pimage->scan_size() * height, (byte *)pimage->get_data());
+            hr = pbitmap->CopyPixels(nullptr, pimage->scan_size(), pimage->scan_size() * height, (byte *)pimage->data());
 
 
          }
@@ -640,7 +640,7 @@ namespace imaging_wic
 
       ba.allocate((memsize)pframe->m_pimage->area());
 
-      hr = pbitmap->CopyPixels(nullptr, pframe->m_pimage->width(), (::u32)ba.get_size(), (byte *)ba.get_data());
+      hr = pbitmap->CopyPixels(nullptr, pframe->m_pimage->width(), (::u32)ba.size(), (byte *)ba.data());
 
       if (FAILED(hr))
       {
@@ -954,7 +954,7 @@ namespace imaging_wic
 
       }
 
-      //if (!draw2d_gif_load_frame(pimageCompose, pframea, pframe, uFrameIndex, (u8 *)ba.get_data(), width, colorrefa, transparentIndex))
+      //if (!draw2d_gif_load_frame(pimageCompose, pframea, pframe, uFrameIndex, (u8 *)ba.data(), width, colorrefa, transparentIndex))
       //{
 
       //   return false;

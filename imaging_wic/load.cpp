@@ -84,7 +84,7 @@ namespace imaging_wic
 
       }
 
-      hr = piStream->InitializeFromMemory(memory.get_data(), (::u32)memory.get_size());
+      hr = piStream->InitializeFromMemory(memory.data(), (::u32)memory.size());
 
       if (FAILED(hr))
       {
@@ -307,7 +307,7 @@ namespace imaging_wic
 
       pimageFrame->map();
 
-      auto pdataTarget = pimageFrame->get_data();
+      auto pdataTarget = pimageFrame->data();
 
       auto scanSizeTarget = pimageFrame->scan_size();
 
@@ -439,12 +439,12 @@ namespace imaging_wic
 
          ul = (ULONG)stg.cbSize.QuadPart - ulPos;
 
-         pstream->Read(mem.get_data(), (ULONG)minimum(ul, mem.get_size()), &ulRead);
+         pstream->Read(mem.data(), (ULONG)minimum(ul, mem.size()), &ulRead);
 
          if (ulRead > 0)
          {
 
-            pfile->write(mem.get_data(), ulRead);
+            pfile->write(mem.data(), ulRead);
 
             ulPos += ulRead;
 
@@ -632,7 +632,7 @@ namespace imaging_wic
 
       pimage->map();
 
-      auto * pcr = pimage->get_data();
+      auto * pcr = pimage->data();
 
       //   memory m;
       //
@@ -640,10 +640,10 @@ namespace imaging_wic
       //
       //   m.set_size(uiHeight*pimage->scan_size());
       //
-      //   pcr = (::color::color *)m.get_data();
+      //   pcr = (::color::color *)m.data();
       //
       //   ::draw2d::vertical_swap_copy_colorref(pimage->width(), pimage->height(), pcr,
-      //                                         pimage->scan_size(), pimage->get_data(), pimage->scan_size());
+      //                                         pimage->scan_size(), pimage->data(), pimage->scan_size());
       //
       //#endif
 

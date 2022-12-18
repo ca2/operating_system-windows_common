@@ -74,12 +74,12 @@ namespace imaging_wic
 
          ul = (ULONG)stg.cbSize.QuadPart - ulPos;
 
-         pstream->Read(memBuffer.get_data(), (ULONG)minimum(ul, memBuffer.get_size()), &ulRead);
+         pstream->Read(memBuffer.data(), (ULONG)minimum(ul, memBuffer.size()), &ulRead);
 
          if (ulRead > 0)
          {
 
-            mem.append(memBuffer.get_data(), ulRead);
+            mem.append(memBuffer.data(), ulRead);
 
             ulPos += ulRead;
 
@@ -269,7 +269,7 @@ namespace imaging_wic
 
       pimage->map();
 
-      auto pcolorref = pimage->get_data();
+      auto pcolorref = pimage->data();
 
       auto iScan = pimage->scan_size();
 
@@ -301,7 +301,7 @@ namespace imaging_wic
                   GUID_WICPixelFormat32bppBGRA,
                   pimage->scan_size(),
                   pimage->scan_size() * pimage->height(),
-                  (byte *)pimage->get_data(),
+                  (byte *)pimage->data(),
                   &pbitmap
                );
 
@@ -341,7 +341,7 @@ namespace imaging_wic
 
             //for(int k = 0; k < height; k++)
             //{
-            //   ::memcpy_dup(&pb[k * iStride],&mem.get_data()[(height - 1 - k) * iStride],iStride);
+            //   ::memcpy_dup(&pb[k * iStride],&mem.data()[(height - 1 - k) * iStride],iStride);
             //}
 
          }
