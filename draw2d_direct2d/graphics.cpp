@@ -3863,7 +3863,7 @@ namespace draw2d_direct2d
    //   throw ::exception(todo);
 
    //   //DOCINFO di;
-   //   //__memset(&di, 0, sizeof(DOCINFO));
+   //   //memory_set(&di, 0, sizeof(DOCINFO));
    //   //di.cbSize = sizeof(DOCINFO);
    //   //di.lpszDocName = lpszDocName;
    //   //return StartDoc(&di);

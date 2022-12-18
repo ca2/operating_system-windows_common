@@ -152,7 +152,7 @@ namespace direct2d
 
       d2d1_fax_options options;
 
-      __memset(&options, 0, sizeof(options));
+      memory_set(&options, 0, sizeof(options));
 
       HRESULT hr = ::D2D1CreateFactory(d2d1_thread_model, __uuidof(ID2D1Factory1), &options, (void **) &m_pd2factory);
 

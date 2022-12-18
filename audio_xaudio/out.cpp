@@ -337,7 +337,7 @@ namespace multimedia
 
          zero(sz);
 
-         if(memmem(b.pAudioData,pwbuffer->m_uiBufferSize,sz,sizeof(sz)))
+         if(memory_find(b.pAudioData,pwbuffer->m_uiBufferSize,sz,sizeof(sz)))
          {
 
             output_debug_string("too much zeros in audio buffer\n");
