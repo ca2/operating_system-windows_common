@@ -1,4 +1,4 @@
-// Created by camilo on 2021-08-09 14:21 <3ThomasBS_
+﻿// Created by camilo on 2021-08-09 14:21 <3ThomasBS_
 #pragma once
 
 
@@ -19,9 +19,9 @@ namespace acme_windows_common
       ~acme_path() override;
 
 
-      ::file::path _final(const char * path) override;
+      ::file::path _final(const ::file::path & path) override;
 
-      ::file::enum_type get_type(const char * path) override;
+      ::file::enum_type get_type(const ::file::path & path) override;
 
 
    };

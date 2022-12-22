@@ -78,7 +78,7 @@ CLASS_DECL_ACME_WINDOWS_COMMON bool _os_may_have_alias(const char * psz)
 
    string str(psz);
 
-   return str.ends_ci(".lnk") || str.contains_ci(".lnk/") || str.contains_ci(".lnk\\");
+   return str.ends_ci(".lnk") || str.case_insensitive_contains(".lnk/") || str.case_insensitive_contains(".lnk\\");
 
 }
 
@@ -265,7 +265,7 @@ acmedirectory()create(path.folder());
 
       m_handleFile = INVALID_HANDLE_VALUE;
 
-      m_path.Empty();
+      m_path.empty();
 
       m_path = path;
 

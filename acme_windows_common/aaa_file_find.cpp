@@ -106,7 +106,7 @@ namespace windows
       if (pstr == nullptr)
       {
 
-         m_strRoot.Empty();
+         m_strRoot.empty();
 
          close();
 

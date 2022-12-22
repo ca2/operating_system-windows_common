@@ -1949,13 +1949,13 @@ retry:
 
          }
 
-         path = strDefault.Left(iFind);
+         path = strDefault.left(iFind);
 
          path += ".exe";
 
          //MessageBox(nullptr, path, "pathProgram", e_message_box_ok);
 
-         strParam = strDefault.Mid(iFind + 5);
+         strParam = strDefault.substr(iFind + 5);
 
          if (bQuote)
          {

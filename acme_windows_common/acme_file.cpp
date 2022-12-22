@@ -28,21 +28,21 @@ namespace acme_windows_common
 {
 
 
-   void acme_file::copy(const char * pszNew, const char * pszSrc, bool bOverwrite)
+   void acme_file::copy(const ::file::path & pathNewParam, const ::file::path & pathSrcParam, bool bOverwrite)
    {
 
-      string strNew(pszNew);
+      string strNew(pathNewParam);
 
-      if (strNew.get_length() >= MAX_PATH)
+      if (strNew.length() >= MAX_PATH)
       {
 
          strNew = "\\\\.\\" + strNew;
 
       }
 
-      string strSrc(pszSrc);
+      string strSrc(pathSrcParam);
 
-      if (strSrc.get_length() >= MAX_PATH)
+      if (strSrc.length() >= MAX_PATH)
       {
 
          strSrc = "\\\\.\\" + strSrc;
@@ -57,7 +57,7 @@ namespace acme_windows_common
 
       wstring wstrSrc(pathSrc);
 
-      auto pathFolder = file_path_folder(strNew);
+      auto pathFolder = pathNew.folder();
 
       auto bDir = m_pacmedirectory->is(pathFolder);
 
@@ -127,7 +127,7 @@ namespace acme_windows_common
 
    }
 
-   void acme_file::ensure_exists(const char* pathParam)
+   void acme_file::ensure_exists(const ::file::path & pathParam)
    {
 
       if (exists(pathParam))
@@ -159,7 +159,7 @@ namespace acme_windows_common
    }
 
 
-   void acme_file::clear_read_only(const char* pathParam)
+   void acme_file::clear_read_only(const ::file::path & pathParam)
    {
 
       auto path = acmepath()->defer_process_relative_path(pathParam);
@@ -200,7 +200,7 @@ namespace acme_windows_common
    }
 
 
-   void acme_file::set_file_normal(const char* pathParam)
+   void acme_file::set_file_normal(const ::file::path & pathParam)
    {
 
       auto path = acmepath()->defer_process_relative_path(pathParam);
@@ -239,7 +239,7 @@ namespace acme_windows_common
    }
 
 
-   void acme_file::touch(const char* pathParam)
+   void acme_file::touch(const ::file::path & pathParam)
    {
 
       auto path = acmepath()->defer_process_relative_path(pathParam);
@@ -300,7 +300,7 @@ namespace acme_windows_common
    }
 
 
-   void acme_file::put_contents(const char * pathParam, const char * contents, memsize len)
+   void acme_file::put_contents(const ::file::path & pathParam, const ::scoped_string & scopedstrContents)
    {
 
       auto path = acmepath()->defer_process_relative_path(pathParam);
@@ -327,19 +327,12 @@ namespace acme_windows_common
 
       }
 
-      if (len < 0)
-      {
-
-         len = ansi_length(contents);
-
-      }
-
-      pfile->write(contents, len);
+      pfile->write(scopedstrContents);
 
    }
 
 
-   filesize acme_file::get_size(const char * pathParam)
+   filesize acme_file::get_size(const ::file::path & pathParam)
    {
 
       auto path = acmepath()->defer_process_relative_path(pathParam);
@@ -393,7 +386,7 @@ namespace acme_windows_common
    }
 
 
-   //int_bool file_is_equal_path_dup(const char * psz1, const char * psz2)
+   //int_bool file_is_equal_path_dup(const ::file::path & path1, const ::file::path & path2)
    //{
 
    //   auto path1 = ::g_psystem->m_pacmepath->defer_process_relative_path(psz1);
@@ -441,7 +434,7 @@ namespace acme_windows_common
    //}
 
 
-   //string acme_file::as_string(const char * path, strsize iReadAtMostByteCount)
+   //string acme_file::as_string(const ::file::path & path, strsize iReadAtMostByteCount)
    //{
 
    //   string str;
@@ -498,7 +491,7 @@ namespace acme_windows_common
    //}
 
 
-   memory acme_file::as_memory(const char* pathParam, strsize iReadAtMostByteCount, bool bNoExceptionIfNotFound)
+   memory acme_file::as_memory(const ::file::path & pathParam, strsize iReadAtMostByteCount, bool bNoExceptionIfNotFound)
    {
 
       return ::acme_file::as_memory(pathParam, iReadAtMostByteCount, bNoExceptionIfNotFound);
@@ -609,7 +602,7 @@ namespace acme_windows_common
 
 
 
-   //bool acme_file::as_memory(memory_base & memory, const char * path, memsize iReadAtMostByteCount)
+   //bool acme_file::as_memory(memory_base & memory, const ::file::path & path, memsize iReadAtMostByteCount)
    //{
 
    //   memory.set_size(0);
@@ -649,7 +642,7 @@ namespace acme_windows_common
    //}
 
 
-   /*void acme_file::delete_file(const char * pszFileName)
+   /*void acme_file::delete_file(const ::file::path & pathFileName)
    {
 
       wstring wstrFilePath(pszFileName);
@@ -671,7 +664,7 @@ namespace acme_windows_common
 
 
 
-   void acme_file::put_block(const char* pathParam, const block& block)
+   void acme_file::put_block(const ::file::path & pathParam, const block& block)
    {
 
       auto path = acmepath()->defer_process_relative_path(pathParam);

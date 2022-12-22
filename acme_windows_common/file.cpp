@@ -20,7 +20,7 @@ CLASS_DECL_ACME_WINDOWS_COMMON bool _os_may_have_alias(const char * psz)
 
    string str(psz);
 
-   return str.case_insensitive_ends(".lnk") || str.contains_ci(".lnk/") || str.contains_ci(".lnk\\");
+   return str.case_insensitive_ends(".lnk") || str.case_insensitive_contains(".lnk/") || str.case_insensitive_contains(".lnk\\");
 
 }
 
@@ -145,7 +145,7 @@ namespace acme_windows_common
 
       m_handleFile = INVALID_HANDLE_VALUE;
 
-      m_path.Empty();
+      m_path.empty();
 
       m_path = path;
 
@@ -1009,7 +1009,7 @@ bool CLASS_DECL_ACME_WINDOWS_COMMON window_get_full_path(wstring & wstrFullPath,
 // (both in ANSI character set)
 {
 
-   strsize dwAllocLen = wstrPath.get_length() + _MAX_PATH;
+   strsize dwAllocLen = wstrPath.length() + _MAX_PATH;
 
    auto pwszFullPath = wstrFullPath.get_string_buffer(dwAllocLen);
 

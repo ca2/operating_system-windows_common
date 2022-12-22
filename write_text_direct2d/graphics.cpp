@@ -5516,9 +5516,9 @@ namespace draw2d_gdiplus
 
       daRight.erase_all();
 
-      wstring wstrBefore(str.Left(iStartParam));
+      wstring wstrBefore(str.left(iStartParam));
 
-      wstring wstrMiddle(str.Mid(iStartParam, iCountParam));
+      wstring wstrMiddle(str.substr(iStartParam, iCountParam));
 
       m_pfont->defer_update(this, 0);
 

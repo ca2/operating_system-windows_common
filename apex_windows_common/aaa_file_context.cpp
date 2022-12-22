@@ -475,7 +475,7 @@ namespace windows
       wstrFileName = utf8_to_unicode(path);
       if (!windows_full_path(wstrFullName, wstrFileName))
       {
-         rStatus.m_strFullName.Empty();
+         rStatus.m_strFullName.empty();
          return false;
       }
       unicode_to_utf8(rStatus.m_strFullName, wstrFullName);
