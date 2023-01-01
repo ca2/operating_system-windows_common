@@ -3619,8 +3619,7 @@ namespace draw2d_direct2d
 //         }
 //         else
 //         {
-//            //            cxPerInch = afxData.cxPixelsPerInch;
-//            //          cyPerInch = afxData.cyPixelsPerInch;
+
 //         }
 //         ASSERT(cxPerInch != 0 && cyPerInch != 0);
 //         psize->cx = psize->cx * HIMETRIC_INCH / cxPerInch;
@@ -3656,8 +3655,7 @@ namespace draw2d_direct2d
 //         }
 //         else
 //         {
-//            //            cxPerInch = afxData.cxPixelsPerInch;
-//            //          cyPerInch = afxData.cyPixelsPerInch;
+
 //         }
 //         ASSERT(cxPerInch != 0 && cyPerInch != 0);
 //         psize->cx = psize->cx * cxPerInch / HIMETRIC_INCH;

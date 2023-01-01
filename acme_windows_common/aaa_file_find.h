@@ -33,7 +33,7 @@ namespace windows
       void dump(dump_context & dumpcontext) const override;
 
 
-      // Attributes
+      
       i64 get_length() const;
       virtual ::file::path GetFileName() const;
       virtual ::file::path GetFilePath() const;
@@ -61,7 +61,7 @@ namespace windows
       bool IsNormal() const;
       bool IsArchived() const;
 
-      // Operations
+      
       void close();
       virtual bool find_file(const ::string & pstrName = nullptr, ::u32 dwUnused = 0);
       virtual bool find_next_file();

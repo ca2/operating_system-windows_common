@@ -10,7 +10,7 @@
 
 //
 // MessageIO.xaml.cpp
-// Implementation of the MessageIO class
+ of the MessageIO class
 //
 
 #include "framework.h"
