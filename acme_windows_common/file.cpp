@@ -509,7 +509,7 @@ namespace acme_windows_common
    }
 
 
-   filesize file::translate(filesize offset, ::enum_seek nFrom)
+   void file::translate(filesize offset, ::enum_seek nFrom)
    {
 
       if (m_handleFile == INVALID_HANDLE_VALUE)
@@ -548,7 +548,7 @@ namespace acme_windows_common
 
       }
 
-      return posNew;
+      //return posNew;
    }
 
 

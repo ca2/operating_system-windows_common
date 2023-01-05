@@ -82,7 +82,7 @@ namespace acme_windows_common
       virtual void open(const ::file::path & pszFileName, const ::file::e_open & eopen) override;
 
 
-      virtual filesize translate(filesize filesize, ::enum_seek nFrom) override;
+      virtual void translate(filesize filesize, ::enum_seek nFrom) override;
       virtual void set_size(filesize dwNewLen) override;
       virtual filesize size() const override;
 
