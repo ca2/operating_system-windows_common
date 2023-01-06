@@ -552,10 +552,10 @@ namespace draw2d_direct2d
    }
 
 
-   bool graphics::TextOutAlphaBlend(double x, double y, const block & block)
+   bool graphics::TextOutAlphaBlend(double x, double y, const ::scoped_string & scopedstr)
    {
 
-      if (block.is_empty())
+      if (scopedstr.is_empty())
       {
 
          throw ::exception(error_invalid_empty_argument);
@@ -566,7 +566,7 @@ namespace draw2d_direct2d
       
       // "Reference" implementation for TextOutAlphaBlend
 
-      auto size = get_text_extent(block);
+      auto size = get_text_extent(scopedstr);
 
       ::rectangle_f64 rectangleAlphaBlend(m_pointAlphaBlend, m_pimageAlphaBlend->size());
 
@@ -595,7 +595,7 @@ namespace draw2d_direct2d
 
          pimage1->get_graphics()->fill_rectangle(rectangleDib1, argb(0, 0, 0, 0));
 
-         pimage1->get_graphics()->text_out(0, 0, block);
+         pimage1->get_graphics()->text_out(0, 0, scopedstr);
 
          ::image_pointer pimage2;
 
@@ -4506,7 +4506,7 @@ namespace draw2d_direct2d
 
             pregion->m_pointOffset = m_pointAddShapeTranslate;
 
-            pregion->create_polygon(polygon_i32.get_data(), (::i32)polygon_i32.get_count(), ::draw2d::e_fill_mode_winding);
+            pregion->create_polygon(polygon_i32.data(), (::i32)polygon_i32.get_count(), ::draw2d::e_fill_mode_winding);
 
             shaperegion.holdee(pregion);
 
@@ -5175,7 +5175,7 @@ namespace draw2d_direct2d
 
          D2D1_RECT_F rectangle_f32 = D2D1::RectF((FLOAT)rectangle.left, (FLOAT)rectangle.top, (FLOAT)rectangle.right, (FLOAT)rectangle.bottom);
 
-         m_prendertarget->DrawText(text.m_wstr, (::u32)text.m_wstr.get_length(), pfont, &rectangle_f32, pbrush);
+         m_prendertarget->DrawText(text.m_wstr, (::u32)text.m_wstr.length(), pfont, &rectangle_f32, pbrush);
 
       }
       else
@@ -5194,7 +5194,7 @@ namespace draw2d_direct2d
 
          m_prendertarget->SetTransform(&m);
 
-         m_prendertarget->DrawText(text.m_wstr, (::u32)text.m_wstr.get_length(), pfont, &rectangle_f32, pbrush);
+         m_prendertarget->DrawText(text.m_wstr, (::u32)text.m_wstr.length(), pfont, &rectangle_f32, pbrush);
 
          m_prendertarget->SetTransform(&mOriginal);
 
@@ -5205,44 +5205,44 @@ namespace draw2d_direct2d
    }
 
 
-   size_f64 graphics::get_text_extent(const char * lpszString, strsize nCount, strsize iIndex)
+   //size_f64 graphics::get_text_extent(const ::scoped_string & scopedstr, strsize iIndex)
+   //{
+
+   //   //if (nCount < 0)
+   //   //{
+
+   //   //   nCount = strlen(lpszString) + nCount + 1;
+
+   //   //}
+
+   //   size_f64 sz;
+
+   //   //bool bOk = 
+   //   
+   //   return get_text_extent(sz, lpszString, nCount, iIndex);
+
+   //   //if (!bOk)
+   //   //{
+
+   //   //   return ::size_f64(0, 0);
+
+   //   //}
+   //   //else
+   //   {
+
+   //      return ::size_f64(sz.cx, sz.cy);
+
+   //   }
+
+   //}
+
+
+   size_f64 graphics::get_text_extent(const ::scoped_string & scopedstr)
    {
 
-      if (nCount < 0)
-      {
+      //size_f64 s;
 
-         nCount = strlen(lpszString) + nCount + 1;
-
-      }
-
-      size_f64 sz;
-
-      //bool bOk = 
-      
-      get_text_extent(sz, lpszString, nCount, iIndex);
-
-      //if (!bOk)
-      //{
-
-      //   return ::size_f64(0, 0);
-
-      //}
-      //else
-      {
-
-         return ::size_f64(sz.cx, sz.cy);
-
-      }
-
-   }
-
-
-   size_f64 graphics::get_text_extent(const block & block)
-   {
-
-      size_f64 s;
-
-      get_text_extent(s, (const char*)block.get_data(), block.get_size());
+      return get_text_extent(scopedstr, scopedstr.size());
 
       //if (!get_text_extent(s, (const char *) block.get_data(), block.get_size()))
       //{
@@ -5251,7 +5251,7 @@ namespace draw2d_direct2d
 
       //}
 
-      return s;
+      //return s;
 
    }
 
@@ -5276,46 +5276,49 @@ namespace draw2d_direct2d
    //}
 
 
-   void graphics::get_text_extent(size_f64 & size, const char * lpszString, strsize nCount, strsize iIndex)
+   //void graphics::get_text_extent(size_f64 & size, const char * lpszString, strsize nCount, strsize iIndex)
+   ::size_f64 graphics::get_text_extent(const ::scoped_string & scopedstr, strsize iIndex)
    {
-
-      if (iIndex <= 0)
-      {
-
-         size.cx = 0;
-
-         size.cy = 0;
-
-         //return true;
-
-         return;
-
-      }
-
-      string str;
-
-      if (nCount < 0)
-      {
-
-         nCount = strlen(lpszString) + nCount + 1;
-
-      }
 
       if (iIndex < 0)
       {
 
-         iIndex = nCount;
+         iIndex = scopedstr.size() + iIndex + 1;
 
       }
 
-      if (iIndex > nCount && nCount >= 0)
+      if (iIndex > scopedstr.size())
       {
 
-         iIndex = nCount;
+         iIndex = scopedstr.size();
 
       }
 
-      str = string(lpszString, iIndex);
+      if (iIndex <= 0)
+      {
+
+         //size.cx = 0;
+
+         //size.cy = 0;
+
+         //return true;
+
+         return {};
+
+      }
+
+      //string str;
+
+      //if (nCount < 0)
+      //{
+
+      //   nCount = strlen(lpszString) + nCount + 1;
+
+      //}
+
+
+      auto range = scopedstr(0, iIndex);
+      //str = string(lpszString, iIndex);
 
       if (m_pfont.is_null())
       {
@@ -5336,25 +5339,27 @@ namespace draw2d_direct2d
 
       }
 
-      auto& text = m_pfont->m_mapText[str];
+      auto& text = m_pfont->m_mapText[range];
 
       if (text.m_bSize)
       {
 
-         size = text.m_size;
+         return text.m_size;
 
          //return true;
 
-         return;
+         //return;
 
       }
 
       if (text.m_wstr.is_empty())
       {
 
-         text.m_wstr = str;
+         text.m_wstr = range;
 
       }
+
+      ::size_f64 size;
 
       comptr<IDWriteTextLayout> playout1;
 
@@ -5362,7 +5367,7 @@ namespace draw2d_direct2d
 
       comptr<IDWriteTextLayout> playout;
 
-      ::u32 uLength = (::u32)text.m_wstr.get_length();
+      ::u32 uLength = (::u32)text.m_wstr.length();
 
       hr = ::direct2d::direct2d()->dwrite_factory()->CreateTextLayout(
            text.m_wstr,                // The string to be laid out and formatted.
@@ -5398,32 +5403,32 @@ namespace draw2d_direct2d
 
       text.m_bSize = true;
 
-      //return true;
+      return size;
 
    }
 
 
-   void graphics::get_text_extent(size_f64 & size, const char * lpszString, strsize nCount)
-   {
+   //void graphics::get_text_extent(size_f64 & size, const char * lpszString, strsize nCount)
+   //{
 
-      if (nCount < 0)
-      {
+   //   if (nCount < 0)
+   //   {
 
-         nCount = strlen(lpszString) + nCount + 1;
+   //      nCount = strlen(lpszString) + nCount + 1;
 
-      }
+   //   }
 
-      return get_text_extent(size, lpszString, nCount, nCount);
+   //   return get_text_extent(size, lpszString, nCount, nCount);
 
-   }
+   //}
 
 
-   void graphics::get_text_extent(size_f64 & size, const ::string & str)
-   {
+   //void graphics::get_text_extent(size_f64 & size, const ::string & str)
+   //{
 
-      return get_text_extent(size, str, str.get_length());
+   //   return get_text_extent(size, str, str.length());
 
-   }
+   //}
 
 
    void graphics::fill_rectangle(const ::rectangle_f64 & rectangleParam, const ::color::color & color)
@@ -5472,10 +5477,10 @@ namespace draw2d_direct2d
    //}
 
 
-   void graphics::TextOutRaw(double x, double y, const block & block)
+   void graphics::TextOutRaw(double x, double y, const ::scoped_string & scopedstr)
    {
 
-      if (block.is_empty())
+      if (scopedstr.is_empty())
       {
 
          return;
@@ -5525,7 +5530,7 @@ namespace draw2d_direct2d
 
       D2D1::Matrix3x2F mOriginal;
 
-      auto & text = m_pfont->m_mapText[block];
+      auto & text = m_pfont->m_mapText[scopedstr];
 
       ::size_f64 sizeText;
          
@@ -5538,7 +5543,7 @@ namespace draw2d_direct2d
       else
       {
 
-         sizeText = get_text_extent(block);
+         sizeText = get_text_extent(scopedstr);
 
       }
 
@@ -5610,7 +5615,7 @@ namespace draw2d_direct2d
 
       const ::wide_character * lpcwsz = text.m_wstr;
 
-      strsize uiLen = text.m_wstr.get_length();
+      strsize uiLen = text.m_wstr.length();
 
       defer_text_primitive_blend();
 

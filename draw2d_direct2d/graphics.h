@@ -63,7 +63,7 @@ namespace draw2d_direct2d
       ~graphics() override;
 
 
-      bool TextOutAlphaBlend(double x, double y, const block & block) override;
+      bool TextOutAlphaBlend(double x, double y, const ::scoped_string & scopedstr) override;
       bool _draw_blend(const ::image_drawing & imagedrawing) override;
 
 
@@ -414,7 +414,7 @@ namespace draw2d_direct2d
       // Text Functions
       //virtual bool text_out(double x, double y, const ::string & lpszString, strsize nCount) override;
       //virtual bool text_out(double x, double y, const block & block) override;
-      void TextOutRaw(double x, double y, const block & block) override;
+      void TextOutRaw(double x, double y, const ::scoped_string & scopedstr) override;
       //virtual bool text_out(double x, double y, const ::string & str) override;
       //virtual bool ExtTextOut(double x, double y, ::u32 nOptions, const ::rectangle_f64 & rectangle, const ::string & lpszString, strsize nCount, LPINT lpDxWidths) override;
       //virtual bool ExtTextOut(double x, double y, ::u32 nOptions, const ::rectangle_f64 & rectangle, const ::string & str, LPINT lpDxWidths) override;
@@ -427,12 +427,12 @@ namespace draw2d_direct2d
 //      virtual int draw_text_ex(char * lpszString, int nCount, ::rectangle_f64 * prectangle, const ::e_align & ealign = e_align_top_left, const ::e_draw_text & edrawtext = e_draw_text_none, LPDRAWTEXTPARAMS lpDTParams) override;
       //    virtual int draw_text_ex(const ::string & str, ::rectangle_f64 * prectangle, const ::e_align & ealign = e_align_top_left, const ::e_draw_text & edrawtext = e_draw_text_none, LPDRAWTEXTPARAMS lpDTParams) override;
 
-      size_f64 get_text_extent(const char * pszString, strsize nCount, strsize iIndex) override;
+      size_f64 get_text_extent(const ::scoped_string & scopedstr, strsize iIndex) override;
       //virtual size_f64 get_text_extent(const ::string & lpszString, strsize nCount) override;
-      size_f64 get_text_extent(const block & block) override;
-      void get_text_extent(size_f64 & size, const char * pszString, strsize nCount, strsize iIndex) override;
-      void get_text_extent(size_f64 & size, const char * pszString, strsize nCount) override;
-      void get_text_extent(size_f64 & size, const ::string & str) override;
+      size_f64 get_text_extent(const ::scoped_string & scopedstr) override;
+      //void get_text_extent(size_f64 & size, const char * pszString, strsize nCount, strsize iIndex) override;
+      //void get_text_extent(size_f64 & size, const char * pszString, strsize nCount) override;
+      //void get_text_extent(size_f64 & size, const ::string & str) override;
       //virtual ::size_f64 GetOutputTextExtent(const char * pszString, strsize nCount) override;
       //virtual ::size_f64 GetOutputTextExtent(const ::string & str) override;
       //virtual ::size_f64 GetTabbedTextExtent(const ::string & lpszString, strsize nCount, count nTabPositions, LPINT lpnTabStopPositions) override;

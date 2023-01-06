@@ -1,4 +1,4 @@
-// From direct2d_draw2d by camilo on ThomasBirthday2021 15:58 BRT
+﻿// From direct2d_draw2d by camilo on ThomasBirthday2021 15:58 BRT
 // Renamed from CustomTextRenderer to geometry_sink_text_renderer by camilo just after ThomasBirthday2021 03:07 BRT
 #include "framework.h"
 #include "geometry_sink_text_renderer.h"
@@ -192,8 +192,8 @@ void geometry_sink_text_renderer::AddLines(
 {
    auto & m = m_memory;
    m.set_size(sizeof(D2D1_POINT_2F) * pointsCount);
-   auto points2 = (D2D1_POINT_2F *)m.get_data();
-   memcpy(points2, points, m.get_size());
+   auto points2 = (D2D1_POINT_2F *)m.data();
+   memcpy(points2, points, m.size());
    for (UINT32 u = 0; u < pointsCount; u++)
    {
       points2[u].x += m_xOffset;
@@ -206,8 +206,8 @@ void geometry_sink_text_renderer::AddBeziers(const D2D1_BEZIER_SEGMENT * beziers
 {
    auto & m = m_memory;
    m.set_size(sizeof(D2D1_BEZIER_SEGMENT) * beziersCount);
-   auto beziers2 = (D2D1_BEZIER_SEGMENT *)m.get_data();
-   memcpy(beziers2, beziers, m.get_size());
+   auto beziers2 = (D2D1_BEZIER_SEGMENT *)m.data();
+   memcpy(beziers2, beziers, m.size());
    for (UINT32 u = 0; u < beziersCount; u++)
    {
       beziers2[u].point1.x += m_xOffset;
