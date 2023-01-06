@@ -286,12 +286,12 @@ namespace draw2d_direct2d
       ::pointer<polygon_item>pitem = m_pitem;
 
       ppath->begin_figure();
-      ppath->add_polygon(pitem->m_polygon.get_data(), pitem->m_polygon.get_size());
+      ppath->add_polygon(pitem->m_polygon.data(), pitem->m_polygon.size());
       ppath->close_figure();
 
       ppath->get_os_data(pgraphics, path_filled);
 
-      m_pgeometry = ::move((ID2D1PathGeometry *) ppath->detach());
+      m_pgeometry = ::transfer((ID2D1PathGeometry *) ppath->detach());
 
       return m_pgeometry;
 
@@ -330,7 +330,7 @@ namespace draw2d_direct2d
          //}
          //ppath->begin_figure(true, m_efillmode);
          ppath->begin_figure();
-         ppath->add_lines(ppolygon->get_data(), (int) ppolygon->get_size());
+         ppath->add_lines(ppolygon->data(), (int) ppolygon->size());
          //ppath->end_figure(true);
          ppath->close_figure();
       }
