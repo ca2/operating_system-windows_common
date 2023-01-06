@@ -545,7 +545,7 @@ namespace multimedia
             //i64 i = s.SamplesPlayed;
             //i *= 1000;
             //i /= m_pwaveformat->m_waveformat.nSamplesPerSec;
-            return FLOATING_SECOND((double)s.SamplesPlayed/(double)m_pwaveformat->m_waveformat.nSamplesPerSec);
+            return floating_second((double)s.SamplesPlayed/(double)m_pwaveformat->m_waveformat.nSamplesPerSec);
 
          }
          else

@@ -363,7 +363,7 @@ namespace imaging_wic
 
                         hr = UIntMult(propValue.uiVal, 10, &uDelay);
 
-                        pframe->m_time = INTEGRAL_MILLISECOND(uDelay);
+                        pframe->m_time = integral_millisecond(uDelay);
 
                      }
 
@@ -774,7 +774,7 @@ namespace imaging_wic
                // Convert the delay retrieved in 10 ms units to a delay in 1 ms units
                hr = UIntMult(propValue.uiVal, 10, &u);
 
-               pframe->m_time = INTEGRAL_MILLISECOND(u);
+               pframe->m_time = integral_millisecond(u);
 
             }
 
