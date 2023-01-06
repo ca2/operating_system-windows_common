@@ -5316,8 +5316,6 @@ namespace draw2d_direct2d
 
       }
 
-      ::size_f64 size;
-
       auto range = scopedstr(0, iIndex);
 
       if (m_pfont.is_null())
@@ -5344,11 +5342,7 @@ namespace draw2d_direct2d
       if (text.m_bSize)
       {
 
-         size = text.m_size;
-
-         //return true;
-
-         return size;
+         return text.m_size;
 
       }
 
