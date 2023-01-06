@@ -5208,18 +5208,11 @@ namespace draw2d_direct2d
    //size_f64 graphics::get_text_extent(const ::scoped_string & scopedstr, strsize iIndex)
    //{
 
-   //   //if (nCount < 0)
-   //   //{
-
-   //   //   nCount = strlen(lpszString) + nCount + 1;
-
-   //   //}
-
    //   size_f64 sz;
 
    //   //bool bOk = 
    //   
-   //   return get_text_extent(sz, lpszString, nCount, iIndex);
+   //   get_text_extent(sz, lpszString, nCount, iIndex);
 
    //   //if (!bOk)
    //   //{
@@ -5237,23 +5230,23 @@ namespace draw2d_direct2d
    //}
 
 
-   size_f64 graphics::get_text_extent(const ::scoped_string & scopedstr)
-   {
+   //size_f64 graphics::get_text_extent(const block & block)
+   //{
 
-      //size_f64 s;
+   //   size_f64 s;
 
-      return get_text_extent(scopedstr, scopedstr.size());
+   //   get_text_extent(s, (const char*)block.get_data(), block.get_size());
 
-      //if (!get_text_extent(s, (const char *) block.get_data(), block.get_size()))
-      //{
+   //   //if (!get_text_extent(s, (const char *) block.get_data(), block.get_size()))
+   //   //{
 
-      //   return ::size_f64(0, 0);
+   //   //   return ::size_f64(0, 0);
 
-      //}
+   //   //}
 
-      //return s;
+   //   return s;
 
-   }
+   //}
 
 
    //::size_f64 graphics::GetOutputTextExtent(const char * lpszString, strsize nCount)
@@ -5277,8 +5270,30 @@ namespace draw2d_direct2d
 
 
    //void graphics::get_text_extent(size_f64 & size, const char * lpszString, strsize nCount, strsize iIndex)
-   ::size_f64 graphics::get_text_extent(const ::scoped_string & scopedstr, strsize iIndex)
+   size_f64 graphics::get_text_extent(const ::scoped_string & scopedstr, strsize iIndex)
    {
+
+      //if (iIndex <= 0)
+      //{
+
+      //   size.cx = 0;
+
+      //   size.cy = 0;
+
+      //   //return true;
+
+      //   return;
+
+      //}
+
+      //string str;
+
+      //if (nCount < 0)
+      //{
+
+      //   nCount = strlen(lpszString) + nCount + 1;
+
+      //}
 
       if (iIndex < 0)
       {
@@ -5297,28 +5312,13 @@ namespace draw2d_direct2d
       if (iIndex <= 0)
       {
 
-         //size.cx = 0;
-
-         //size.cy = 0;
-
-         //return true;
-
          return {};
 
       }
 
-      //string str;
-
-      //if (nCount < 0)
-      //{
-
-      //   nCount = strlen(lpszString) + nCount + 1;
-
-      //}
-
+      ::size_f64 size;
 
       auto range = scopedstr(0, iIndex);
-      //str = string(lpszString, iIndex);
 
       if (m_pfont.is_null())
       {
@@ -5344,11 +5344,11 @@ namespace draw2d_direct2d
       if (text.m_bSize)
       {
 
-         return text.m_size;
+         size = text.m_size;
 
          //return true;
 
-         //return;
+         return size;
 
       }
 
@@ -5409,24 +5409,27 @@ namespace draw2d_direct2d
 
 
    //void graphics::get_text_extent(size_f64 & size, const char * lpszString, strsize nCount)
-   //{
+   size_f64 graphics::get_text_extent(const ::scoped_string & scopedstr)
+   {
 
-   //   if (nCount < 0)
-   //   {
+      //if (nCount < 0)
+      //{
 
-   //      nCount = strlen(lpszString) + nCount + 1;
+      //   nCount = strlen(lpszString) + nCount + 1;
 
-   //   }
+      //}
 
-   //   return get_text_extent(size, lpszString, nCount, nCount);
+      //return get_text_extent(size, lpszString, nCount, nCount);
 
-   //}
+      return get_text_extent(scopedstr, scopedstr.size());
+
+   }
 
 
    //void graphics::get_text_extent(size_f64 & size, const ::string & str)
    //{
 
-   //   return get_text_extent(size, str, str.length());
+   //   return get_text_extent(size, str, str.get_length());
 
    //}
 
