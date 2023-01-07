@@ -11,6 +11,7 @@
 #include "acme/user/nano/nano.h"
 #include "acme/platform/system.h"
 #include "acme/operating_system/windows_common/_string.h"
+#include "acme/primitive/time/integral/operators.h"
 
 #include <intsafe.h>
 
