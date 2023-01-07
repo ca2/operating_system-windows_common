@@ -390,7 +390,7 @@ namespace imaging_wic
                      if (pframe->m_time < 20_ms)
                      {
 
-                        pframe->m_time = 20_ms;
+                        pframe->m_time = 90_ms;
 
                      }
 
