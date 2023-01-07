@@ -309,7 +309,7 @@ namespace acme_windows_common
             if (dwLastError == ERROR_SHARING_VIOLATION && ::task_get_run() && timeStart.elapsed() < m_timeErrorBlockTimeout)
             {
 
-               preempt(maximum(m_timeErrorBlockTimeout.integral_millisecond() / 10, 50_ms));
+               preempt(maximum(m_timeErrorBlockTimeout / 10, 50_ms));
 
                goto retry;
 
@@ -940,9 +940,9 @@ namespace acme_windows_common
          }
 
          // convert times as appropriate
-         file_time_to_time(&rStatus.m_ctime.m_i, (file_time_t *)&information.ftCreationTime);
-         file_time_to_time(&rStatus.m_atime.m_i, (file_time_t *)&information.ftLastAccessTime);
-         file_time_to_time(&rStatus.m_mtime.m_i, (file_time_t *)&information.ftLastWriteTime);
+         file_time_to_time(&rStatus.m_ctime.m_time, (file_time_t *)&information.ftCreationTime);
+         file_time_to_time(&rStatus.m_atime.m_time, (file_time_t *)&information.ftLastAccessTime);
+         file_time_to_time(&rStatus.m_mtime.m_time, (file_time_t *)&information.ftLastWriteTime);
 
          if (rStatus.m_ctime.get_time() == 0)
          {
