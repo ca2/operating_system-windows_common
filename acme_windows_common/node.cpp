@@ -884,6 +884,14 @@ namespace acme_windows_common
    //}
 
 
+   ::file::path node::library_file_name(const ::scoped_string & scopedstr)
+   {
+   
+      return scopedstr + ".dll";
+
+   }
+
+
 } // namespace acme_windows_common
 
 

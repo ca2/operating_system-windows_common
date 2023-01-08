@@ -6275,7 +6275,7 @@ namespace draw2d_direct2d
    void graphics::draw(::draw2d::path * ppathParam, ::draw2d::pen * ppen)
    {
 
-      ___scoped_restore(m_bOutline);
+      scoped_restore(m_bOutline);
 
       m_bOutline = true;
 
@@ -6426,7 +6426,7 @@ namespace draw2d_direct2d
 
       //}
 
-      ___scoped_restore(m_bOutline);
+      scoped_restore(m_bOutline);
 
       m_bOutline = false;
 

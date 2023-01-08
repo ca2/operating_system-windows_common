@@ -85,6 +85,9 @@ namespace acme_windows_common
 
       error_code defer_co_initialize_ex(bool bMultiThread, bool bDisableOleDDE = false) override;
 
+
+      ::file::path library_file_name(const ::scoped_string & scopedstr) override;
+
    
    };
 
