@@ -4,6 +4,7 @@
 #include "acme_file.h"
 #include "acme_directory.h"
 #include "acme/exception/exception.h"
+#include "acme/filesystem/file/exception.h"
 #include "acme/filesystem/file/file.h"
 #include "acme/filesystem/filesystem/acme_path.h"
 #include "acme/primitive/primitive/memory.h"
@@ -354,7 +355,9 @@ namespace acme_windows_common
 
          auto estatus = ::windows::last_error_status(dwLastError);
 
-         return estatus;
+         auto errorcode = ::windows::last_error_error_code(dwLastError);
+
+         throw ::file::exception(estatus, errorcode, path, "CreateFileW returned INVALID_HANDLE_VALUE");
 
       }
 
@@ -365,13 +368,15 @@ namespace acme_windows_common
       if (!GetFileSizeEx(hfile, &largeintegerFileSize))
       {
 
+         ::CloseHandle(hfile);
+
          DWORD dwLastError = ::GetLastError();
 
          auto estatus = ::windows::last_error_status(dwLastError);
 
-         ::CloseHandle(hfile);
+         auto errorcode = ::windows::last_error_error_code(dwLastError);
 
-         return estatus;
+         throw ::file::exception(estatus, errorcode, path, "!GetFileSizeEx");
 
       }
 

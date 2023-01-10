@@ -70,27 +70,3 @@
 
 
 
-template <  >
-inline bool EqualElements<itask_t>(itask_t r1, itask_t r2)
-{
-
-   return ithread_equals(r1, r2) != 0;
-
-}
-
-
-template <  >
-inline uptr u32_hash(itask_t key)
-{
-
-   return 0;
-
-}
-
-
-#endif
-
-//CLASS_DECL_ACME ::pointer<message_queue>__get_mq(itask_t atom, bool bCreate);
-
-
-
