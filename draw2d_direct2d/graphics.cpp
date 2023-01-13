@@ -2383,7 +2383,7 @@ namespace draw2d_direct2d
    //void graphics::text_out(double x, double y, const ::string & str)
    //{
 
-   //   return text_out((int) x, (int) y, str, (int) str.get_length());
+   //   return text_out((int) x, (int) y, str, (int) str.length());
 
    //}
 
@@ -2598,7 +2598,7 @@ namespace draw2d_direct2d
 //
 //         //ASSERT(get_handle1() != nullptr);
 //
-//         //return ::GetCharacterPlacement(get_handle1(), (const ::string &)str, (int) str.get_length(), nMaxExtent, lpResults, dwFlags);
+//         //return ::GetCharacterPlacement(get_handle1(), (const ::string &)str, (int) str.length(), nMaxExtent, lpResults, dwFlags);
 //
 //      }
 //      */
@@ -5423,7 +5423,7 @@ namespace draw2d_direct2d
    //void graphics::get_text_extent(size_f64 & size, const ::string & str)
    //{
 
-   //   return get_text_extent(size, str, str.get_length());
+   //   return get_text_extent(size, str, str.length());
 
    //}
 
