@@ -1099,7 +1099,7 @@ namespace draw2d_direct2d
 
       HRESULT hrFlush = pgraphics2d->m_pdevicecontext->Flush();
 
-      if (::failed(hrFlush))
+      if (FAILED(hrFlush))
       {
 
          throw ::exception(error_failed);
@@ -1108,7 +1108,7 @@ namespace draw2d_direct2d
 
       m_hrEndDraw = pgraphics2d->m_pdevicecontext->EndDraw();
 
-      if (::failed(m_hrEndDraw))
+      if (FAILED(m_hrEndDraw))
       {
 
          throw ::exception(error_failed);
