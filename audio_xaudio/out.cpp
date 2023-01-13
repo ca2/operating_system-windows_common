@@ -1,5 +1,6 @@
 ﻿#include "framework.h"
 #include "out.h"
+#include "acme/exception/extended_status.h"
 #include "acme/parallelization/synchronous_lock.h"
 #include "aqua/platform/system.h"
 #include "app-core/audio/audio.h"
@@ -361,7 +362,7 @@ namespace multimedia
 
          estatus = ::windows::hresult_status(hresult);
 
-         VERIFY(::success == estatus);
+         //VERIFY(::success == estatus);
 
          if(estatus != ::success)
          {
