@@ -1,4 +1,4 @@
-// From acme/parallelization/mutex.h by camilo on 2022-10-28 14:08 <3ThomasBorregaardSorensen!!
+// From acme/parallelization/mutex.h by camilo on 2022-10-28 14:08 <3ThomasBorregaardSørensen!!
 #pragma once
 
 

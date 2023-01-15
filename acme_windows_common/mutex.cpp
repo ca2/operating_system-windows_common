@@ -1,4 +1,4 @@
-﻿// From acme/parallelization/mutex.cpp by camilo on 2022-10-28 14:04 <3ThomasBorregaardSorensen!!
+﻿// From acme/parallelization/mutex.cpp by camilo on 2022-10-28 14:04 <3ThomasBorregaardSørensen!!
 #include "framework.h"
 #include "mutex.h"
 #include "acme/exception/exception.h"
