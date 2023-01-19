@@ -72,7 +72,7 @@ namespace acme_windows_common
       auto pfileSrc = open(pathSrc, ::file::e_open_read | ::file::e_open_share_deny_none);
 
       auto pfileNew = open(pathNew, ::file::e_open_defer_create_directory |
-         (bOverwrite ? ::file::e_open_create | ::file::e_open_truncate : 0) | ::file::e_open_write);
+         (bOverwrite ? ::file::e_open_create | ::file::e_open_truncate : ::file::e_open_create) | ::file::e_open_write);
 
       if (pfileSrc.nok() || pfileNew.nok())
       {
