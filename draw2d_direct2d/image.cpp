@@ -1447,7 +1447,7 @@ namespace draw2d_direct2d
 
    //   rectangle_i64 rectangleWindow;
 
-   //   puserinteraction->get_window_rect(rectangleWindow);
+   //   puserinteraction->window_rectangle(rectangleWindow);
 
    //   m_pgraphics->SetViewportOrg(0, 0);
 
