@@ -36,7 +36,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{EB9DC9C0-0573-4DA0-8700-4DBB371773F1}</ProjectGuid>
-    <RootNamespace>platform</RootNamespace>
+    <RootNamespace>operating-system-windows_common</RootNamespace>
     <Keyword>Win32Proj</Keyword>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
