@@ -177,7 +177,7 @@ namespace draw2d_direct2d
 
       auto puser = paurasession->user();
 
-      auto pwindowing = puser->windowing1();
+      auto pwindowing = puser->windowing();
 
       auto pdisplay = pwindowing->display();
 
