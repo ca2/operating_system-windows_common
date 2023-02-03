@@ -43,42 +43,6 @@ hresult_exception::~hresult_exception()
 #define ERRMSGBUFFERSIZE 256
 
 
-CLASS_DECL_ACME_WINDOWS_COMMON int trace_hresult(const char * psz, HRESULT hresult)
-{
-
-   string strError = ::windows::last_error_message((DWORD)hresult);
-
-   strError.trim();
-
-   ////TRACE("%s hr=%d:\"%s\"",psz,hr,strError.c_str());
-
-   return 0;
-
-}
-
-
-CLASS_DECL_ACME_WINDOWS_COMMON int trace_hresult(const char * psz, HRESULT hresult);
-
-
-CLASS_DECL_ACME_WINDOWS_COMMON void throw_hresult_if_failed(HRESULT hresult)
-{
-
-   if (FAILED(hresult))
-   {
-
-      throw hresult_exception(hresult);
-
-   }
-
-}
-
-
-CLASS_DECL_ACME_WINDOWS_COMMON error_code hresult_error_code(HRESULT hresult)
-{
-
-   return { e_error_code_type_hresult, (::i64)hresult };
-
-}
 
 
 

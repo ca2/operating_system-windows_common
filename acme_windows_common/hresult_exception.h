@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 #include "acme/exception/exception.h"
@@ -18,13 +18,33 @@ public:
 };
 
 
-CLASS_DECL_ACME_WINDOWS_COMMON int trace_hresult(const char * psz, HRESULT hresult);
+inline ::string hresult_text(HRESULT hresult)
+{
+
+   return ::windows::last_error_message((DWORD)hresult);
+
+}
 
 
-CLASS_DECL_ACME_WINDOWS_COMMON void throw_hresult_if_failed(HRESULT hresult);
+inline void defer_throw_hresult(HRESULT hresult)
+{
+
+   if (FAILED(hresult))
+   {
+
+      throw hresult_exception(hresult);
+
+   }
+
+}
 
 
-CLASS_DECL_ACME_WINDOWS_COMMON error_code hresult_error_code(HRESULT hresult);
+inline error_code hresult_error_code(HRESULT hresult)
+{
+
+   return { e_error_code_type_hresult, (::i64)hresult };
+
+}
 
 
 
