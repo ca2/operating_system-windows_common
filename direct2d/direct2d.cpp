@@ -104,7 +104,7 @@ namespace direct2d
       auto& pdxgidevice = ::directx::directx()->m_pdxgidevice;
 
       // Create the Direct2D device object and a corresponding context.
-      ::throw_hresult_if_failed(d2d1_factory1()->CreateDevice(pdxgidevice, &m_pd2device));
+      ::defer_throw_hresult(d2d1_factory1()->CreateDevice(pdxgidevice, &m_pd2device));
 
       d2d1_factory1()->QueryInterface(IID_PPV_ARGS(&m_d2dMultithread));
 

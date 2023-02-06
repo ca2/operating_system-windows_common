@@ -78,19 +78,19 @@ namespace directx
          &context                    // Returns the device immediate context.
       );
 
-      ::throw_hresult_if_failed(hr);
+      ::defer_throw_hresult(hr);
 
       // Get the Direct3D 11.1 API device and context interfaces.
-      ::throw_hresult_if_failed(device.as(m_pdevice));
+      ::defer_throw_hresult(device.as(m_pdevice));
 
-      ::throw_hresult_if_failed(device.as(m_pdevice1));
+      ::defer_throw_hresult(device.as(m_pdevice1));
 
-      ::throw_hresult_if_failed(context.as(m_pdevicecontext));
+      ::defer_throw_hresult(context.as(m_pdevicecontext));
 
-      ::throw_hresult_if_failed(context.as(m_pdevicecontext1));
+      ::defer_throw_hresult(context.as(m_pdevicecontext1));
 
       // Get the underlying DXGI device of the Direct3D device.
-      ::throw_hresult_if_failed(device.as(m_pdxgidevice));
+      ::defer_throw_hresult(device.as(m_pdxgidevice));
 
 #if defined(_DEBUG)
 

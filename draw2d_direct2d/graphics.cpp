@@ -161,7 +161,7 @@ namespace draw2d_direct2d
                       &pdevicecontextTemplate)))
       {
 
-         trace_hresult("graphics::CreateCompatibleDC, CreateDeviceContext (1) ", hr);
+         WARNING("graphics::CreateCompatibleDC, CreateDeviceContext (1) " << hresult_text(hr));
 
          //return false;
 
@@ -197,7 +197,7 @@ namespace draw2d_direct2d
       if (FAILED(hr = pdevicecontextTemplate->QueryInterface(IID_ID2D1RenderTarget,(void **)&prendertargetTemplate)))
       {
 
-         trace_hresult("graphics::CreateCompatibleDC, QueryInterface (2) ",hr);
+         WARNING("graphics::CreateCompatibleDC, QueryInterface (2) " << hresult_text(hr));
 
          throw ::exception(error_failed);
 
@@ -219,7 +219,7 @@ namespace draw2d_direct2d
                       &m_pbitmaprendertarget)))
       {
 
-         trace_hresult("graphics::CreateCompatibleDC, CreateCompatibleRenderTarget (3) ", hr);
+         WARNING("graphics::CreateCompatibleDC, CreateCompatibleRenderTarget (3) " << hresult_text(hr));
 
          throw ::exception(error_failed);
 
@@ -2090,7 +2090,7 @@ namespace draw2d_direct2d
                comptr<ID2D1Effect> colorMatrixEffect;
                HRESULT hr = m_pdevicecontext->CreateEffect(CLSID_D2D1ColorMatrix, &colorMatrixEffect);
 
-               throw_hresult_if_failed(hr);
+               defer_throw_hresult(hr);
 
                colorMatrixEffect->SetInput(0, pd2d1bitmap);
                D2D1_MATRIX_5X4_F matrix =
@@ -5551,7 +5551,7 @@ namespace draw2d_direct2d
       if(FAILED(hr))
       {
 
-         trace_hresult("text_out, SetTextAlignment",hr);
+         WARNING("text_out, SetTextAlignment" << hresult_text(hr));
 
       }
 
@@ -5560,7 +5560,7 @@ namespace draw2d_direct2d
       if(FAILED(hr))
       {
 
-         trace_hresult("text_out, SetTextAlignment",hr);
+         WARNING("text_out, SetTextAlignment" << hresult_text(hr));
 
       }
 
@@ -5575,7 +5575,7 @@ namespace draw2d_direct2d
       if (FAILED(hr))
       {
 
-         trace_hresult("text_out, SetTextAlignment", hr);
+         WARNING("text_out, SetTextAlignment" << hresult_text(hr));
 
       }
 

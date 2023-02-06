@@ -124,7 +124,7 @@ namespace draw2d_direct2d
          if(FAILED(hr) || m_pformat == nullptr)
          {
 
-            trace_hresult("font::get_os_font", hr);
+            WARNING("font::get_os_font: " << hresult_text(hr));
 
             //return false;
 
