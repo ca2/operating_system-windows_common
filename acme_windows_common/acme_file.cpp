@@ -29,7 +29,7 @@ namespace acme_windows_common
 {
 
 
-   void acme_file::copy(const ::file::path & pathNewParam, const ::file::path & pathSrcParam, bool bOverwrite)
+   void acme_file::_copy(const ::file::path & pathNewParam, const ::file::path & pathSrcParam, bool bOverwrite)
    {
 
       string strNew(pathNewParam);
