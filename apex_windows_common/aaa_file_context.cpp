@@ -68,7 +68,7 @@ namespace windows
 
       // return true;
 
-      if (pszFileIn.begins_ci("http://"))
+      if (pszFileIn.case_insensitive_begins("http://"))
 
       {
 
@@ -78,7 +78,7 @@ namespace windows
          return true;
 
       }
-      else if (pszFileIn.begins_ci("https://"))
+      else if (pszFileIn.case_insensitive_begins("https://"))
 
       {
 
@@ -106,12 +106,12 @@ namespace windows
       /*      if(::apex::file_context::FullPath(wstrFullPath, wstrPath))
       return true;*/
 
-      if (wstrPath.begins_ci(L"http://"))
+      if (wstrPath.case_insensitive_begins(L"http://"))
       {
          wstrFullPath = wstrPath;
          return true;
       }
-      else if (wstrPath.begins_ci(L"https://"))
+      else if (wstrPath.case_insensitive_begins(L"https://"))
       {
          wstrFullPath = wstrPath;
          return true;

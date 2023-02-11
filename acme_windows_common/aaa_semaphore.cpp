@@ -79,7 +79,7 @@ semaphore::semaphore(::i32 lInitialCount, ::i32 lMaxCount, const ::string & pstr
 
       string strPath;
 
-      if(pstrName.begins_ci("Local\\") || pstrName.begins_ci("Local\\"))
+      if(pstrName.case_insensitive_begins("Local\\") || pstrName.case_insensitive_begins("Local\\"))
       {
          strPath =          auto psystem = acmesystem();
 

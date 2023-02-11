@@ -335,7 +335,7 @@ namespace windows
 
       string strMessage(pszMessage);
 
-      if (strMessage.begins_ci("synch_"))
+      if (strMessage.case_insensitive_begins("synch_"))
       {
 
          if (m_preceiver != nullptr)
