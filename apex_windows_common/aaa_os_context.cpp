@@ -294,28 +294,6 @@ namespace windows
    }
 
 
-   //::file::path os_context::get_module_path(HMODULE hmodule)
-   //{
-   //   
-   //   wstring wstrPath;
-   //   
-   //   u32 dwSize = 1;
-
-   //   while(natural(wstrPath.get_length() + 1) == dwSize)
-   //   {
-
-   //      dwSize = ::GetModuleFileNameW(
-   //               hmodule,
-   //               wstrPath.get_string_buffer(dwSize + 1024),
-   //               (dwSize + 1024));
-
-   //      wstrPath.release_string_buffer();
-
-   //   }
-
-   //   return unicode_to_utf8(wstrPath);
-
-   //}
 
 
    ::payload os_context::connection_settings_get_auto_detect()
@@ -1882,31 +1860,31 @@ retry:
             strId = "edge";
 
          }
-         if (strProgId.begins_ci("IE."))
+         if (strProgId.case_insensitive_begins("IE."))
          {
 
             strId = "ie";
 
          }
-         else if (strProgId.begins_ci("ChromeHTML"))
+         else if (strProgId.case_insensitive_begins("ChromeHTML"))
          {
 
             strId = "chrome";
 
          }
-         else if (strProgId.begins_ci("FirefoxHTML"))
+         else if (strProgId.case_insensitive_begins("FirefoxHTML"))
          {
 
             strId = "firefox";
 
          }
-         else if (strProgId.begins_ci("Opera"))
+         else if (strProgId.case_insensitive_begins("Opera"))
          {
 
             strId = "opera";
 
          }
-         else if (strProgId.begins_ci("VivaldiHTM."))
+         else if (strProgId.case_insensitive_begins("VivaldiHTM."))
          {
 
             strId = "vivaldi";
@@ -1938,7 +1916,7 @@ retry:
 
          }
 
-         bool bQuote = strDefault.begins_eat_ci("\"");
+         bool bQuote = strDefault.case_insensitive_begins_eat("\"");
 
          strsize iFind = strDefault.case_insensitive_find(".exe");
 
@@ -1960,7 +1938,7 @@ retry:
          if (bQuote)
          {
 
-            strParam.begins_eat_ci("\"");
+            strParam.case_insensitive_begins_eat("\"");
 
          }
 

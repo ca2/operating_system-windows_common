@@ -528,7 +528,7 @@ namespace windows
 
                   string strFile = file_find.GetFileName();
 
-                  if (strFile.begins_ci("resident_"))
+                  if (strFile.case_insensitive_begins("resident_"))
                   {
 
                      TRACE("resident_*");
@@ -705,7 +705,7 @@ namespace windows
 
                   ::file::path pathName = file_find.GetFileName();
 
-                  //if (strFile.begins_ci("resident_"))
+                  //if (strFile.case_insensitive_begins("resident_"))
                   //{
 
                   //   TRACE("resident_*");
@@ -1192,7 +1192,7 @@ namespace windows
    bool dir_context::is_inside(const ::file::path & pszDir, const ::file::path & pszPath)
    {
 
-      return pszDir.begins_ci(pszPath);
+      return pszDir.case_insensitive_begins(pszPath);
 
    }
 

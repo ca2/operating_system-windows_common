@@ -481,7 +481,7 @@ namespace draw2d_direct2d
 
       }
 
-      ::throw_hresult_if_failed(hr);
+      ::defer_throw_hresult(hr);
 
       m_psink  = nullptr;
 
@@ -560,7 +560,7 @@ namespace draw2d_direct2d
             nullptr,
             &prealization);
 
-         throw_hresult_if_failed(hr);
+         defer_throw_hresult(hr);
 
       }
 
@@ -584,7 +584,7 @@ namespace draw2d_direct2d
             1.0f,
             &prealization);
 
-         throw_hresult_if_failed(hr);
+         defer_throw_hresult(hr);
 
       }
 

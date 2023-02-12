@@ -1217,7 +1217,7 @@ namespace draw2d_direct2d
 
             m_bMapped = false;
 
-            throw_hresult_if_failed(hr);
+            defer_throw_hresult(hr);
 
          }
 
