@@ -233,9 +233,9 @@ namespace imaging_wic
 
             m.set_size(s);
 
-            windows_runtime_read_buffer(m.get_data(), s, buffer);
+            windows_runtime_read_buffer(m.data(), s, buffer);
 
-            BITMAPINFO* _ = (BITMAPINFO*)m.get_data();
+            BITMAPINFO* _ = (BITMAPINFO*)m.data();
 
             pimage->create({ _->bmiHeader.biWidth,  _->bmiHeader.biHeight });
 
