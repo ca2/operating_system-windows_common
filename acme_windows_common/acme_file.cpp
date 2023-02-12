@@ -83,7 +83,7 @@ namespace acme_windows_common
 
       memory m;
 
-      m.set_size(1_mb);
+      m.set_size(1_MiB);
 
       while (auto read = pfileSrc->read(m.data(), m.size()))
       {
