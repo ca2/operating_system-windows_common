@@ -107,7 +107,7 @@ namespace windows
 
       wstring wstrCommandLine;
 
-      if(szCmdline.ends_ci(".bat"))
+      if(szCmdline.case_insensitive_ends(".bat"))
       {
 
          string strCmd;

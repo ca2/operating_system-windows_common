@@ -1668,7 +1668,7 @@ retry:
 
       }
 
-      if (strSource.ends_ci(".lnk"))
+      if (strSource.case_insensitive_ends(".lnk"))
       {
 
          if (resolve_lnk_link(path, strSource, pstrDirectory, pstrParams))
@@ -1688,7 +1688,7 @@ retry:
    bool os_context::resolve_lnk_link(::file::path & path, const ::string & strSource, string * pstrDirectory, string * pstrParams)
    {
 
-      ASSERT(strSource.ends_ci(".lnk"));
+      ASSERT(strSource.case_insensitive_ends(".lnk"));
 
       if (strSource.contains("0318") && strSource.contains("removal"))
       {
@@ -1890,7 +1890,7 @@ retry:
             strId = "vivaldi";
 
          }
-         else if (strProgId.ends_ci("app_core_commander"))
+         else if (strProgId.case_insensitive_ends("app_core_commander"))
          {
 
             strId = "commander";
@@ -2187,7 +2187,7 @@ repeat:
 
       }
 
-      if (!str.ends_ci(".exe"))
+      if (!str.case_insensitive_ends(".exe"))
       {
 
          str += ".exe";

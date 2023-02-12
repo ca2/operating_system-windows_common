@@ -247,7 +247,7 @@ void task::init_task()
       output_debug_string("synth_thread thread::thread_proc");
 
    }
-   else if (string(type_name()).ends_ci("out"))
+   else if (string(type_name()).case_insensitive_ends("out"))
    {
 
       output_debug_string("synth_thread thread::out");
