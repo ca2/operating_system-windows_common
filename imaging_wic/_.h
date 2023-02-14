@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 #include "aura/_.h"
@@ -24,9 +24,7 @@
 
 
 
-#ifdef _IMAGING_WIC_STATIC
-#define CLASS_DECL_IMAGING_WIC
-#elif defined(_IMAGING_WIC_LIBRARY)
+#if defined(_imaging_wic_project)
 #define CLASS_DECL_IMAGING_WIC  CLASS_DECL_EXPORT
 #else
 #define CLASS_DECL_IMAGING_WIC  CLASS_DECL_IMPORT
