@@ -373,7 +373,7 @@ namespace imaging_wic
 
                      // Failed to get delay from graphic control extension. Possibly a
                      // single frame image (non-animated gif)
-                     pframe->m_time.Null();
+                     pframe->m_time = 0_s;
 
                   }
 
@@ -784,13 +784,13 @@ namespace imaging_wic
 
             // Failed to get delay from graphic control extension. Possibly a
             // single frame image (non-animated gif)
-            pframe->m_time.Null();
+            pframe->m_time = 0_s;
 
          }
 
          PropVariantClear(&propValue);
 
-         if (pframe->m_time.is_null())
+         if (pframe->m_time <= 0_s)
          {
 
             output_debug_string("0 delay");
