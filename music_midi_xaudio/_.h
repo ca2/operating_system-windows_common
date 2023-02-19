@@ -5,7 +5,7 @@
 #include "multimedia_xaudio/_.h"
 
 
-#if defined(_MUSIC_MIDI_XAUDIO_LIBRARY)
+#if defined(_music_midi_xaudio_project)
    #define CLASS_DECL_MUSIC_MIDI_XAUDIO  CLASS_DECL_EXPORT
 #else
    #define CLASS_DECL_MUSIC_MIDI_XAUDIO  CLASS_DECL_IMPORT

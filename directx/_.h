@@ -33,7 +33,7 @@ interface ID3D11Device1;
 interface IDXGIDevice;
 
 
-#ifdef _DIRECTX_LIBRARY
+#if defined(_directx_project)
 #define CLASS_DECL_DIRECTX  CLASS_DECL_EXPORT
 #else
 #define CLASS_DECL_DIRECTX  CLASS_DECL_IMPORT

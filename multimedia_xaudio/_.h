@@ -11,7 +11,7 @@
 #include <xaudio2.h>
 
 
-#if defined(_MULTIMEDIA_XAUDIO_LIBRARY)
+#if defined(_multimedia_xaudio_project)
    #define CLASS_DECL_MULTIMEDIA_XAUDIO  CLASS_DECL_EXPORT
 #else
    #define  CLASS_DECL_MULTIMEDIA_XAUDIO  CLASS_DECL_IMPORT
