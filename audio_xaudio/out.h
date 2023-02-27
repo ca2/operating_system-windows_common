@@ -2,7 +2,7 @@
 
 
 #include "acme_windows_common/comptr.h"
-#include "app-core/audio/wave/out.h"
+#include "audio/audio/wave/out.h"
 
 
 namespace multimedia

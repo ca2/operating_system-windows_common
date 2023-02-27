@@ -3,10 +3,10 @@
 #include "acme/exception/extended_status.h"
 #include "acme/parallelization/synchronous_lock.h"
 #include "aqua/platform/system.h"
-#include "app-core/audio/audio.h"
-#include "app-core/audio/wave/player.h"
-#include "app-core/audio/wave/wave.h"
-#include "app-core/audio/iaudio/wave_stream_effect.h"
+#include "audio/audio/audio.h"
+#include "audio/audio/wave/player.h"
+#include "audio/audio/wave/wave.h"
+#include "audio/audio/iaudio/wave_stream_effect.h"
 #include "multimedia_xaudio/translation.h"
 
 
