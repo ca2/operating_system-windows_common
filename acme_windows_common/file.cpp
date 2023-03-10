@@ -271,7 +271,7 @@ namespace acme_windows_common
 
    retry:
 
-      wstring wstrFileName(m_path);
+      wstring wstrFileName(m_path.get_os_path());
 
       // attempt file creation
       //HANDLE handleFile = shell::CreateFile(utf8_to_unicode(m_path), dwAccess, dwShareMode, &sa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, nullptr);

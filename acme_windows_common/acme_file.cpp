@@ -317,7 +317,7 @@ namespace acme_windows_common
 
       //}
 
-      wstring wstrPath(path);
+      wstring wstrPath(path.get_os_path());
 
       auto pfile = stdio_open(path, "w", _SH_DENYWR);
 
@@ -340,11 +340,11 @@ namespace acme_windows_common
 
 #ifdef WINDOWS_DESKTOP
 
-      HANDLE hfile = CreateFileW(wstring(path), GENERIC_READ, FILE_SHARE_WRITE | FILE_SHARE_READ | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+      HANDLE hfile = CreateFileW(path.get_os_path(), GENERIC_READ, FILE_SHARE_WRITE | FILE_SHARE_READ | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 
 #else
 
-      HANDLE hfile = hfile_create(path, GENERIC_READ, FILE_SHARE_WRITE | FILE_SHARE_READ | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+      HANDLE hfile = hfile_create(path.get_os_path(), GENERIC_READ, FILE_SHARE_WRITE | FILE_SHARE_READ | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 
 #endif
 
@@ -647,10 +647,10 @@ namespace acme_windows_common
    //}
 
 
-   /*void acme_file::delete_file(const ::file::path & pathFileName)
+   /*void acme_file::delete_file(const ::file::path & path)
    {
 
-      wstring wstrFilePath(pszFileName);
+      wstring wstrFilePath(path.get_os_path());
 
       if (!::DeleteFileW(wstrFilePath))
       {
@@ -680,11 +680,11 @@ namespace acme_windows_common
 
 #ifdef _UWP
 
-      HANDLE h = ::CreateFile2(wstr, GENERIC_WRITE, FILE_SHARE_READ, CREATE_ALWAYS, nullptr);
+      HANDLE h = ::CreateFile2(path.get_os_path(), GENERIC_WRITE, FILE_SHARE_READ, CREATE_ALWAYS, nullptr);
 
 #else
 
-      HANDLE h = ::CreateFileW(wstr, GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
+      HANDLE h = ::CreateFileW(path.get_os_path(), GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
 
 #endif
 

@@ -55,10 +55,10 @@ namespace windows_common
    }
 
 
-   bool delete_file(const ::string & strFileName)
+   bool delete_file(const ::file::path & path)
    {
 
-      return ::DeleteFileW(wstring(strFileName)) != false;
+      return ::DeleteFileW(path.get_os_path()) != false;
 
    }
 
