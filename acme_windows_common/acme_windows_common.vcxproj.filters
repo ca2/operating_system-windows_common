@@ -135,7 +135,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\..\operating_system-windows\acme_windows\deployment.rc">
+    <ResourceCompile Include="deployment.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
