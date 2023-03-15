@@ -55,12 +55,12 @@ namespace windows_common
    }
 
 
-   bool delete_file(const ::file::path & path)
-   {
+   //bool delete_file(const ::file::path & path)
+   //{
 
-      return ::DeleteFileW(path.get_os_path()) != false;
+   //   return ::DeleteFileW(path.get_os_path()) != false;
 
-   }
+   //}
 
 
 } // namespace windows

@@ -3595,7 +3595,7 @@ namespace draw2d_direct2d
    void graphics::DPtoHIMETRIC(::size_f64 * psize)
    {
 //#ifdef WINDOWS_DESKTOP
-//      ASSERT(__is_valid_address(psize, sizeof(::size_f64)));
+//      ASSERT(is_memory_segment_ok(psize, sizeof(::size_f64)));
 //
 //      double dMapMode;
 //      if (this != nullptr && (nMapMode = GetMapMode()) < MM_ISOTROPIC &&
@@ -3631,7 +3631,7 @@ namespace draw2d_direct2d
    void graphics::HIMETRICtoDP(::size_f64 * psize)
    {
 //#ifdef WINDOWS_DESKTOP
-//      ASSERT(__is_valid_address(psize, sizeof(::size_f64)));
+//      ASSERT(is_memory_segment_ok(psize, sizeof(::size_f64)));
 //
 //      double dMapMode;
 //      if (this != nullptr && (nMapMode = GetMapMode()) < MM_ISOTROPIC &&
@@ -3666,7 +3666,7 @@ namespace draw2d_direct2d
 
    /*void graphics::LPtoHIMETRIC(LPSIZE32 LPSIZE32)
    {
-      ASSERT(__is_valid_address(LPSIZE32, sizeof(SIZE_I32)));
+      ASSERT(is_memory_segment_ok(LPSIZE32, sizeof(SIZE_I32)));
 
       LPtoDP(LPSIZE32);
       DPtoHIMETRIC(LPSIZE32);
@@ -3674,7 +3674,7 @@ namespace draw2d_direct2d
 
    void graphics::HIMETRICtoLP(LPSIZE32 LPSIZE32)
    {
-      ASSERT(__is_valid_address(LPSIZE32, sizeof(SIZE_I32)));
+      ASSERT(is_memory_segment_ok(LPSIZE32, sizeof(SIZE_I32)));
 
       HIMETRICtoDP(LPSIZE32);
       DPtoLP(LPSIZE32);
@@ -3714,9 +3714,9 @@ namespace draw2d_direct2d
    //   throw ::interface_only();
 
    //   /*
-   //   ASSERT(__is_valid_address(rectangle, sizeof(::rectangle_f64), false));
+   //   ASSERT(is_memory_segment_ok(rectangle, sizeof(::rectangle_f64), false));
    //   ASSERT(lpRectLast == nullptr ||
-   //   __is_valid_address(lpRectLast, sizeof(::rectangle_f64), false));
+   //   is_memory_segment_ok(lpRectLast, sizeof(::rectangle_f64), false));
 
    //   // first, determine the update region and select it
    //   ::draw2d::region rgnNew;
@@ -5020,7 +5020,7 @@ namespace draw2d_direct2d
    void graphics::LPtoDP(::size_f64 * psize)
    {
 
-      ASSERT(__is_valid_address(psize, sizeof(::size_f64)));
+      ASSERT(is_memory_segment_ok(psize, sizeof(::size_f64)));
 
       ::size_f64 sizeWinExt = GetWindowExt();
       ::size_f64 sizeVpExt = get_extents();
@@ -5033,7 +5033,7 @@ namespace draw2d_direct2d
    void graphics::DPtoLP(::size_f64 * psize)
    {
    
-      ASSERT(__is_valid_address(psize, sizeof(::size_f64)));
+      ASSERT(is_memory_segment_ok(psize, sizeof(::size_f64)));
 
       ::size_f64 sizeWinExt = GetWindowExt();
       ::size_f64 sizeVpExt = get_extents();

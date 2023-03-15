@@ -93,6 +93,19 @@ public:
 
    }
 
+   template < class IFACE >
+   comptr < IFACE > as()
+   {
+
+      comptr < IFACE > pointer;
+
+      this->as(pointer);
+
+      return pointer;
+
+   }
+
+
 
    TYPE * operator ->()
    {
