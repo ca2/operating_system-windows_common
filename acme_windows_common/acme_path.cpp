@@ -27,14 +27,23 @@ namespace acme_windows_common
    ::file::enum_type acme_path::get_type(const ::file::path & path)
    {
 
-      auto dwFileAttributes = ::windows::get_file_attributes(path);
+      auto dwFileAttributes = ::windows::_get_file_attributes(path);
 
       if (dwFileAttributes == INVALID_FILE_ATTRIBUTES)
       {
 
-         DWORD dwLastError = ::GetLastError();
+         DWORD lasterror = ::GetLastError();
 
-         return ::file::e_type_doesnt_exist;
+         if (lasterror == ERROR_FILE_NOT_FOUND || lasterror == ERROR_PATH_NOT_FOUND)
+         {
+
+            return ::file::e_type_doesnt_exist;
+
+         }
+
+         throw_last_error_exception(nullptr, lasterror);
+
+         return ::file::e_type_unknown;
 
       }
 

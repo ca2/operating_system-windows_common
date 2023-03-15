@@ -444,7 +444,7 @@ namespace imaging_wic
          if (ulRead > 0)
          {
 
-            pfile->write(mem.data(), ulRead);
+            pfile->write(mem(0, ulRead));
 
             ulPos += ulRead;
 
