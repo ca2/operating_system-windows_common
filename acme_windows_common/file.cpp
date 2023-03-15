@@ -7,12 +7,12 @@
 #include "acme/platform/sequencer.h"
 #include "acme/filesystem/file/exception.h"
 #include "acme/filesystem/file/status.h"
-//#include "acme/operating_system/time.h"
 #include "acme/filesystem/file/exception.h"
 #include "acme/user/nano/nano.h"
-#include "acme/platform/system.h"
 #include "acme/operating_system/windows_common/_string.h"
-//#include "acme/primitive/time/integral/operator.h"
+#include "acme/platform/system.h"
+#include "acme/primitive/datetime/system_time.h"
+
 
 #include <intsafe.h>
 
@@ -336,7 +336,7 @@ namespace acme_windows_common
 
          auto errorcode = ::windows::last_error_error_code(dwLastError);
 
-         throw ::file::exception(estatus, errorcode, m_path, "m_file.nok()", m_eopen);
+         throw ::file::exception(estatus, errorcode, m_path, m_eopen, "m_file.nok()");
 
       }
 
@@ -428,7 +428,7 @@ namespace acme_windows_common
 
       ASSERT_VALID(this);
 
-      if (m_file.nok() || !(m_dwAccessMode & GENERIC_WRITE))
+      if (m_file.nok() || !(m_eopen & ::file::e_open_write))
       {
 
          return;
@@ -438,6 +438,7 @@ namespace acme_windows_common
       m_file.flush_file_buffers();
 
    }
+
 
    void file::close()
    {
@@ -454,8 +455,13 @@ namespace acme_windows_common
 
       //bool bError = false;
       //::u32 dwLastError = 0;
-      m_dwAccessMode = 0;
+      //m_dwAccessMode = 0;
 
+      m_eopen = ::file::e_open_none;
+
+      m_windowspath.clear();
+
+      m_path.clear();
 
       if (m_file.is_ok())
       {
@@ -632,62 +638,63 @@ namespace acme_windows_common
 
 
 
-   bool file::get_status(::file::file_status & rStatus) const
+   ::file::file_status file::get_status() const
    {
 
       ASSERT_VALID(this);
+      ASSERT(m_file.is_ok());
 
-      rStatus.m_strFullName = m_path;
+      ::file::file_status filestatus;
 
-      if (m_file.is_ok())
+      filestatus.m_pathFullName = m_path;
+
+      BY_HANDLE_FILE_INFORMATION information;
+
+      m_file.get_file_information(information);
+
+      ULARGE_INTEGER integer;
+
+      integer.HighPart = information.nFileSizeHigh;
+
+      integer.LowPart = information.nFileSizeLow;
+
+      filestatus.m_filesize = integer.QuadPart;
+
+      // don't return an error for this because previous versions of acme API didn't
+      if (information.dwFileAttributes == 0xFFFFFFFF)
       {
 
-         BY_HANDLE_FILE_INFORMATION information;
+         filestatus.m_attribute = 0;
 
-         m_file.get_file_information(&information);
+      }
+      else
+      {
 
-         ULARGE_INTEGER integer;
-
-         integer.HighPart = information.nFileSizeHigh;
-         integer.LowPart = information.nFileSizeLow;
-
-         rStatus.m_filesize = integer.QuadPart;
-
-         // don't return an error for this because previous versions of acme API didn't
-         if (information.dwFileAttributes == 0xFFFFFFFF)
-         {
-
-            rStatus.m_attribute = 0;
-
-         }
-         else
-         {
-            rStatus.m_attribute = (byte)information.dwFileAttributes & 0xff;
-
-         }
-
-         // convert times as appropriate
-         file_time_to_time(&rStatus.m_ctime.m_time, (file_time_t *)&information.ftCreationTime);
-         file_time_to_time(&rStatus.m_atime.m_time, (file_time_t *)&information.ftLastAccessTime);
-         file_time_to_time(&rStatus.m_mtime.m_time, (file_time_t *)&information.ftLastWriteTime);
-
-         if (rStatus.m_ctime.get_time() == 0)
-         {
-
-            rStatus.m_ctime = rStatus.m_mtime;
-
-         }
-
-         if (rStatus.m_atime.get_time() == 0)
-         {
-
-            rStatus.m_atime = rStatus.m_mtime;
-
-         }
+         filestatus.m_attribute = (byte)information.dwFileAttributes & 0xff;
 
       }
 
-      return true;
+      file_time_to_time(&filestatus.m_timeCreation, (file_time_t *)&information.ftCreationTime);
+
+      file_time_to_time(&filestatus.m_timeAccess, (file_time_t *)&information.ftLastAccessTime);
+
+      file_time_to_time(&filestatus.m_timeModification, (file_time_t *)&information.ftLastWriteTime);
+
+      if (filestatus.m_timeCreation <= 0_s)
+      {
+
+         filestatus.m_timeCreation = filestatus.m_timeModification;
+
+      }
+
+      if (filestatus.m_timeAccess <= 0_s)
+      {
+
+         filestatus.m_timeAccess = filestatus.m_timeModification;
+
+      }
+
+      return filestatus;
 
    }
 
@@ -713,7 +720,7 @@ namespace acme_windows_common
    file::operator HANDLE() const
    {
 
-      return m_handleFile;
+      return m_file;
 
    }
 
@@ -724,7 +731,15 @@ namespace acme_windows_common
       ASSERT_VALID(this);
       ASSERT(m_file.is_ok());
 
-      return m_file.get_modification_time();
+      file_time_t filetimeLastWrite;
+
+      m_file.get_file_time(nullptr, nullptr, (LPFILETIME)&filetimeLastWrite);
+
+      class ::time time;
+
+      ::file_time_to_time(&time, &filetimeLastWrite);
+
+      return time;
 
    }
 
@@ -735,7 +750,11 @@ namespace acme_windows_common
       ASSERT_VALID(this);
       ASSERT(m_file.is_ok());
 
-      m_file.set_modification_time(time);
+      file_time_t filetimeLastWrite;
+
+      ::time_to_file_time(&filetimeLastWrite, &time);
+
+      m_file.set_file_time(nullptr, nullptr, (const FILETIME *) & filetimeLastWrite);
 
    }
 
