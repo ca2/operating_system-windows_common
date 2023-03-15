@@ -55,8 +55,9 @@ namespace acme_windows_common
 
       };*/
 
-      HANDLE            m_handleFile;
-      ::u32             m_dwAccessMode;
+      ::windows::file            m_file;
+      //::u32                      m_dwAccessMode;
+      ::windows_path             m_windowspath;
       //int               m_iCharacterPutBack;
 
 
@@ -79,16 +80,16 @@ namespace acme_windows_common
       void set_file_path(const ::file::path & path) override;
 
 
-      void open(const ::file::path & pszFileName, const ::file::e_open & eopen) override;
+      void open(const ::file::path & pszFileName, ::file::e_open eopen, ::pointer < ::file::exception > * pfileexception = nullptr) override;
 
 
       void translate(filesize filesize, ::enum_seek nFrom) override;
       void set_size(filesize dwNewLen) override;
       filesize size() const override;
 
-      memsize read(void * pdata, memsize nCount) override;
+      memsize read(const ::block & block) override;
 
-      void write(const void * pdata, memsize nCount) override;
+      void write(const ::block & block) override;
 
 
       //virtual int peek_character();

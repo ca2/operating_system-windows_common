@@ -48,33 +48,31 @@ namespace acme_windows_common
 {
 
 
-   file::file()
+   file::file() :
+      m_file(m_path, m_windowspath, m_eopen)
    {
 
-      //m_iCharacterPutBack = 0x80000000;
-
-      m_handleFile = INVALID_HANDLE_VALUE;
-      m_dwAccessMode = 0;
+      //m_dwAccessMode = 0;
 
    }
 
 
-   file::file(HANDLE handleFile)
+   file::file(HANDLE handleFile) :
+      m_file(m_path, m_windowspath, m_eopen, handleFile)
    {
 
-      //m_iCharacterPutBack = 0x80000000;
-      m_handleFile = handleFile;
-      m_dwAccessMode = 0;
+      //m_dwAccessMode = 0;
 
    }
 
 
-   file::file(const ::string & pszFileName, const ::file::e_open & eopen)
+   file::file(const ::string & pszFileName, const ::file::e_open & eopen) :
+      m_file(m_path, m_windowspath, m_eopen)
    {
 
       //m_iCharacterPutBack = 0x80000000;
 
-      ASSERT(__is_valid_string(pszFileName));
+      ASSERT(is_string_ok(pszFileName));
 
 
       open(pszFileName, eopen);
@@ -88,45 +86,37 @@ namespace acme_windows_common
 
    }
 
+
    file::~file()
    {
 
-      if (m_handleFile != INVALID_HANDLE_VALUE)
+      if (m_file.is_ok())
       {
+
          close();
+
       }
 
    }
 
 
-   void file::open(const ::file::path & path, const ::file::e_open & eopenParam)
+   void file::open(const ::file::path & path, ::file::e_open eopen, ::pointer < ::file::exception > * ppfileexception)
    {
-
-      auto eopen = eopenParam;
 
       if (path.is_empty())
       {
 
          m_estatus = error_invalid_empty_argument;
 
-         if (eopenParam & ::file::e_open_no_exception_on_open)
-         {
-
-            return;
-
-         }
-         else
-         {
-
-            error_code errorcode = { e_error_code_type_unknown, -1 };
-
-            throw ::file::exception(m_estatus, errorcode, "", "file with empty name!!", m_eopen);
-
-         }
+         RETURN_OR_THROW(
+            eopen & ::file::e_open_no_exception_on_open,
+            ppfileexception,
+            ::file::exception,
+            m_estatus, { e_error_code_type_unknown, -1 }, "", eopen, "file with empty name!!");
 
       }
 
-      if (m_handleFile != INVALID_HANDLE_VALUE)
+      if (m_file.is_ok())
       {
 
          close();
@@ -134,7 +124,7 @@ namespace acme_windows_common
       }
 
       ASSERT_VALID(this);
-      ASSERT(__is_valid_string(path));
+      ASSERT(is_string_ok(path));
 
       eopen -= ::file::e_open_binary;
 
@@ -145,126 +135,11 @@ namespace acme_windows_common
 
       }
 
-      m_handleFile = INVALID_HANDLE_VALUE;
-
       m_path.empty();
 
       m_path = path;
 
-      ASSERT(sizeof(HANDLE) == sizeof(uptr));
-      ASSERT(::file::e_open_share_compat == 0);
-
-      // map read/write mode
-      ASSERT((::file::e_open_read | ::file::e_open_write | ::file::e_open_read_write) == 3);
-      ::u32 dwAccess = 0;
-      switch (eopen & 3)
-      {
-      case ::file::e_open_read:
-         dwAccess = GENERIC_READ;
-         break;
-      case ::file::e_open_write:
-         dwAccess = GENERIC_WRITE;
-         break;
-      case ::file::e_open_read_write:
-         dwAccess = GENERIC_READ | GENERIC_WRITE;
-         break;
-      default:
-         dwAccess = GENERIC_READ;
-         break;
-      }
-
-      auto eopenShare = eopen & ::file::e_open_share_mask;
-
-      // map share mode
-      ::u32 dwShareMode = 0;
-      switch (eopenShare)    // map compatibility mode to exclusive
-      {
-      default:
-         ASSERT(false);  // invalid share mode?
-      case ::file::e_open_share_compat:
-      case ::file::e_open_share_exclusive:
-         dwShareMode = 0;
-         break;
-      case ::file::e_open_share_deny_write:
-         dwShareMode = FILE_SHARE_READ;
-         break;
-      case ::file::e_open_share_deny_read:
-         dwShareMode = FILE_SHARE_WRITE;
-         break;
-      case ::file::e_open_share_deny_none:
-         dwShareMode = FILE_SHARE_WRITE | FILE_SHARE_READ;
-         break;
-      }
-
-
-      LPCREATEFILE2_EXTENDED_PARAMETERS pextendedparameters = nullptr;
-
-      CREATEFILE2_EXTENDED_PARAMETERS extendedparameters;
-
-      // Note: type_text and type_binary are used in derived classes only.
-
-      // map modeNoInherit flag
-      SECURITY_ATTRIBUTES securityattributes;
-
-      if (eopen & ::file::e_open_no_inherit)
-      {
-
-         if (!pextendedparameters)
-         {
-
-            memset(&extendedparameters, 0, sizeof(extendedparameters));
-
-            pextendedparameters = &extendedparameters;
-
-         }
-
-         if (!extendedparameters.lpSecurityAttributes)
-         {
-
-            memset(&securityattributes, 0, sizeof(securityattributes));
-
-            extendedparameters.lpSecurityAttributes = &securityattributes;
-
-         }
-
-         securityattributes.nLength = sizeof(securityattributes);
-         
-         securityattributes.lpSecurityDescriptor = nullptr;
-
-         securityattributes.bInheritHandle = false;
-
-      }
-
-      // map creation flags
-      ::u32 dwCreateFlag;
-
-      if (eopen & ::file::e_open_create)
-      {
-
-         if (eopen & ::file::e_open_no_truncate)
-         {
-
-            dwCreateFlag = OPEN_ALWAYS;
-
-         }
-         else
-         {
-
-            dwCreateFlag = CREATE_ALWAYS;
-
-         }
-
-      }
-      else
-      {
-
-         dwCreateFlag = OPEN_EXISTING;
-
-      }
-
       HANDLE handleFile = INVALID_HANDLE_VALUE;
-
-      ::u32 dwWaitSharingViolation = 84;
 
       auto timeStart = ::time::now();
 
@@ -272,42 +147,23 @@ namespace acme_windows_common
 
    retry:
 
-      wstring wstrFileName(m_path.get_os_path());
+      //wstring wstrFileName(m_path.get_os_path());
 
       // attempt file creation
       //HANDLE handleFile = shell::CreateFile(utf8_to_unicode(m_path), dwAccess, dwShareMode, &sa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, nullptr);
       //HANDLE h = INVALID_HANDLE_VALUE;
       //handleFile = ::CreateFile2(wstrFileName, dwAccess, dwShareMode, dwCreateFlag, pextendedparameters);
-#ifdef _UWP
+      m_file._create_file(path, eopen);
 
-      handleFile = ::CreateFile2(wstrFileName, dwAccess, dwShareMode, dwCreateFlag, pextendedparameters);
-
-#else
-
-      if (eopen & ::file::e_open_no_inherit)
-      {
-         
-         handleFile = ::CreateFileW(wstrFileName, dwAccess, dwShareMode, &securityattributes, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, nullptr);
-
-      }
-      else
+      if (m_file.nok())
       {
 
-         handleFile = ::CreateFileW(wstrFileName, dwAccess, dwShareMode, NULL, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, nullptr);
-
-      }
-
-#endif
-
-      if (handleFile == INVALID_HANDLE_VALUE)
-      {
-
-         DWORD dwLastError = ::GetLastError();
+         DWORD lasterror = ::GetLastError();
 
          if (!(eopen & ::file::e_open_no_share_violation_wait))
          {
 
-            if (dwLastError == ERROR_SHARING_VIOLATION && ::task_get_run() && timeStart.elapsed() < m_timeErrorBlockTimeout)
+            if (lasterror == ERROR_SHARING_VIOLATION && ::task_get_run() && timeStart.elapsed() < m_timeErrorBlockTimeout)
             {
 
                preempt(maximum(m_timeErrorBlockTimeout / 10, 50_ms));
@@ -318,13 +174,13 @@ namespace acme_windows_common
 
          }
 
-         if (dwLastError == ERROR_ACCESS_DENIED)
+         if (lasterror == ERROR_ACCESS_DENIED)
          {
 
-            if (dwAccess == GENERIC_WRITE)
+            if (eopen & ::file::e_open_write && !(eopen & ::file::e_open_read))
             {
 
-               dwAccess = GENERIC_WRITE | GENERIC_READ;
+               eopen += ::file::e_open_read;
 
                goto retry;
 
@@ -332,53 +188,35 @@ namespace acme_windows_common
 
          }
 
-         ::e_status estatus = ::windows::last_error_status(dwLastError);
+         ::e_status estatus = ::windows::last_error_status(lasterror);
 
-         auto errorcode = ::windows::last_error_error_code(dwLastError);
-
-         //if (::file::should_ignore_file_exception_callstack(estatus))
-         //{
-
-         //   throw ::exception(error_failed);
-
-         //}
+         auto errorcode = ::windows::last_error_error_code(lasterror);
 
          m_estatus = estatus;
 
          set_nok();
 
-         if (eopenParam & ::file::e_open_no_exception_on_open)
+         if (eopen & ::file::e_open_no_exception_on_open && m_estatus == error_file_access_denied)
          {
 
-            return;
-
-         }
-         else
-         {
-
-            if (m_estatus == error_file_access_denied)
+            if (eopen & ::file::e_open_write)
             {
 
-               if (dwAccess & GENERIC_WRITE)
-               {
+               auto psequencer = nano()->message_box("Couldn't write to file \"" + m_path + "\".\nAccess Denied!!\n(Is any anti-virus program blocking this program: \"" + acmefile()->module() + "\"?", acmefile()->module().title() + " - Access Denied!", e_message_box_ok);
 
-                  auto psequencer = nano()->message_box("Couldn't write to file \"" + m_path + "\".\nAccess Denied!!\n(Is any anti-virus program blocking this program: \"" + acmefile()->module() + "\"?", acmefile()->module().title() + " - Access Denied!", e_message_box_ok);
-
-                  psequencer->do_asynchronously();
-
-               }
+               psequencer->do_asynchronously();
 
             }
 
-            throw ::file::exception(m_estatus, errorcode, m_path, "Create File has failed.", m_eopen);
-
          }
 
+         RETURN_OR_THROW(
+            eopen & ::file::e_open_no_exception_on_open,
+            ppfileexception, 
+            ::file::exception,
+            m_estatus, errorcode, m_path, m_eopen, "Create File has failed.");
+
       }
-
-      m_handleFile = handleFile;
-
-      m_dwAccessMode = dwAccess;
 
       m_eopen = eopen;
 
@@ -386,24 +224,24 @@ namespace acme_windows_common
 
       set_ok_flag();
 
-      //return ::success;
-
    }
 
 
-   memsize file::read(void * pdata, memsize nCount)
+   memsize file::read(const ::block & block)
    {
 
       ASSERT_VALID(this);
 
-      if (m_handleFile == INVALID_HANDLE_VALUE)
+      if (m_file.is_ok())
       {
 
          throw ::exception(error_wrong_state);
 
       }
 
-      if (nCount == 0)
+      auto nCount = block.size();
+
+      if (nCount <= 0)
       {
 
          return 0;   // avoid Win32 "null-read"
@@ -431,82 +269,57 @@ namespace acme_windows_common
 
       //}
 
-      ASSERT(pdata != nullptr);
+      auto pdata = block.data();
 
-      ASSERT(__is_valid_address(pdata, nCount));
+      ASSERT(::is_set(pdata));
 
-      DWORD dwRead;
+      ASSERT(is_memory_segment_ok(pdata, nCount));
 
-      if (!::ReadFile((HANDLE)m_handleFile, pdata, (::u32)nCount, &dwRead, nullptr))
-      {
+      auto amountRead = m_file.read_file(block);
 
-         auto dwLastError = ::GetLastError();
-
-         auto estatus = ::windows::last_error_status(dwLastError);
-
-         auto errorcode = ::windows::last_error_error_code(dwLastError);
-
-         throw ::file::exception(estatus, errorcode, m_path, "!ReadFile", m_eopen);
-
-      }
-
-      return (::u32)dwRead;
+      return amountRead;
 
    }
 
 
-   void file::write(const void * pdata, memsize nCount)
+   void file::write(const ::block & block)
    {
 
       ASSERT_VALID(this);
-      ASSERT(m_handleFile != INVALID_HANDLE_VALUE);
+      ASSERT(m_file.is_ok());
 
-      if (nCount == 0)
+      if (block.is_empty())
       {
 
          return;     // avoid Win32 "null-write" option
 
       }
 
-      ASSERT(pdata != nullptr);
+      ASSERT(block.is_set());
 
-      ASSERT(__is_valid_address(pdata, nCount, false));
+      ASSERT(is_memory_segment_ok(block.data(), block.size()));
 
-      DWORD nWritten;
+      //DWORD nWritten;
 
-      if (!::WriteFile((HANDLE)m_handleFile, pdata, (::u32)nCount, &nWritten, nullptr))
-      {
+      m_file.write(block);
+      //{
 
-         auto dwLastError = ::GetLastError();
+      //   auto dwLastError = ::GetLastError();
 
-         auto estatus = ::windows::last_error_status(dwLastError);
+      //   auto estatus = ::windows::last_error_status(dwLastError);
 
-         auto errorcode = ::windows::last_error_error_code(dwLastError);
+      //   auto errorcode = ::windows::last_error_error_code(dwLastError);
 
-         throw ::file::exception(estatus, errorcode, m_path, "!WriteFile", m_eopen);
+      //   throw ::file::exception(estatus, errorcode, m_path, "!WriteFile", m_eopen);
 
-      }
+      //}
 
-      // Win32s will not return an error all the time (usually DISK_FULL)
-      if (nWritten != nCount)
-      {
+      //// Win32s will not return an error all the time (usually DISK_FULL)
+      //if (nWritten != block.size())
+      //{
 
-         if (nWritten < nCount)
-         {
 
-            FORMATTED_ERROR("file::status nWritten < nCount is disk full?");
-
-         }
-
-         auto dwLastError = ::GetLastError();
-
-         auto estatus = ::windows::last_error_status(dwLastError);
-
-         auto errorcode = ::windows::last_error_error_code(dwLastError);
-
-         throw ::file::exception(estatus, errorcode, m_path, "nWritten != nCount", m_eopen);
-
-      }
+      //}
 
    }
 
@@ -514,7 +327,7 @@ namespace acme_windows_common
    void file::translate(filesize offset, ::enum_seek nFrom)
    {
 
-      if (m_handleFile == INVALID_HANDLE_VALUE)
+      if (m_file.nok())
       {
 
          auto dwLastError = ::GetLastError();
@@ -523,32 +336,29 @@ namespace acme_windows_common
 
          auto errorcode = ::windows::last_error_error_code(dwLastError);
 
-         throw ::file::exception(estatus, errorcode, m_path, "m_handleFile == INVALID_HANDLE_VALUE", m_eopen);
+         throw ::file::exception(estatus, errorcode, m_path, "m_file.nok()", m_eopen);
 
       }
 
       ASSERT_VALID(this);
-      ASSERT(m_handleFile != INVALID_HANDLE_VALUE);
+      ASSERT(m_file.is_ok());
       ASSERT(nFrom == ::e_seek_set || nFrom == ::e_seek_from_end || nFrom == ::e_seek_current);
       ASSERT(::e_seek_set == FILE_BEGIN && ::e_seek_from_end == FILE_END && ::e_seek_current == FILE_CURRENT);
 
-      LONG lLoOffset = offset & 0xffffffff;
-      LONG lHiOffset = (offset >> 32) & 0xffffffff;
+      m_file.set_file_pointer(offset, nFrom);
 
-      filesize posNew = ::SetFilePointer((HANDLE)m_handleFile, lLoOffset, &lHiOffset, (::u32)nFrom);
-      posNew |= ((filesize)lHiOffset) << 32;
-      if (posNew == (filesize)-1)
-      {
+      //if (posNew == (filesize)-1)
+      //{
 
-         auto dwLastError = ::GetLastError();
+      //   auto dwLastError = ::GetLastError();
 
-         auto estatus = ::windows::last_error_status(dwLastError);
+      //   auto estatus = ::windows::last_error_status(dwLastError);
 
-         auto errorcode = ::windows::last_error_error_code(dwLastError);
+      //   auto errorcode = ::windows::last_error_error_code(dwLastError);
 
-         throw ::file::exception(estatus, errorcode, m_path, "SetFilePointer == -1", m_eopen);
+      //   throw ::file::exception(estatus, errorcode, m_path, "SetFilePointer == -1", m_eopen);
 
-      }
+      //}
 
       //return posNew;
    }
@@ -604,27 +414,12 @@ namespace acme_windows_common
    {
 
       ASSERT_VALID(this);
-      ASSERT(m_handleFile != INVALID_HANDLE_VALUE);
+      ASSERT(m_file.is_ok());
 
-      LONG lLoOffset = 0;
-      LONG lHiOffset = 0;
+      auto position = m_file.get_file_pointer();
 
-      filesize pos = ::SetFilePointer((HANDLE)m_handleFile, lLoOffset, &lHiOffset, FILE_CURRENT);
-      pos |= ((filesize)lHiOffset) << 32;
-      if (pos == (filesize)-1)
-      {
+      return position;
 
-         auto dwLastError = ::GetLastError();
-
-         auto estatus = ::windows::last_error_status(dwLastError);
-
-         auto errorcode = ::windows::last_error_error_code(dwLastError);
-
-         throw ::file::exception(estatus, errorcode, m_path, "SetFilePointer == -1", m_eopen);
-
-      }
-
-      return pos;
    }
 
 
@@ -633,43 +428,14 @@ namespace acme_windows_common
 
       ASSERT_VALID(this);
 
-      if (m_handleFile == INVALID_HANDLE_VALUE || !(m_dwAccessMode & GENERIC_WRITE))
+      if (m_file.nok() || !(m_dwAccessMode & GENERIC_WRITE))
       {
 
          return;
 
       }
 
-      if (!::FlushFileBuffers((HANDLE)m_handleFile))
-      {
-
-         DWORD dwLastError = ::GetLastError();
-
-         if (dwLastError == ERROR_INVALID_HANDLE
-            || dwLastError == ERROR_ACCESS_DENIED)
-         {
-
-         }
-         else if (dwLastError == ERROR_NO_SYSTEM_RESOURCES)
-         {
-
-            output_debug_string("Insufficient system resources exist to complete the requested service.");
-
-         }
-         else
-         {
-
-            auto dwLastError = ::GetLastError();
-
-            auto estatus = ::windows::last_error_status(dwLastError);
-
-            auto errorcode = ::windows::last_error_error_code(dwLastError);
-
-            throw ::file::exception(estatus, errorcode, m_path, "!FlushFileBuffers");
-
-         }
-
-      }
+      m_file.flush_file_buffers();
 
    }
 
@@ -684,105 +450,78 @@ namespace acme_windows_common
       }
 
       ASSERT_VALID(this);
-      ASSERT(m_handleFile != INVALID_HANDLE_VALUE);
+      ASSERT(m_file.is_ok());
 
-      bool bError = false;
-      ::u32 dwLastError = 0;
-      if (m_handleFile != INVALID_HANDLE_VALUE)
+      //bool bError = false;
+      //::u32 dwLastError = 0;
+      m_dwAccessMode = 0;
+
+
+      if (m_file.is_ok())
       {
 
-         bError = !::CloseHandle((HANDLE)m_handleFile);
+         m_file.close_handle();
 
-         if (bError)
+         //bError = !::CloseHandle((HANDLE)m_handleFile);
+
+         /*f (bError)
          {
 
             dwLastError = ::GetLastError();
 
-         }
+         }*/
 
       }
 
-      m_handleFile = INVALID_HANDLE_VALUE;
+      //m_handleFile = INVALID_HANDLE_VALUE;
 
-      m_dwAccessMode = 0;
+      //if (bError)
+      //{
 
-      if (bError)
-      {
+      //   auto dwLastError = ::GetLastError();
 
-         auto dwLastError = ::GetLastError();
+      //   auto estatus = ::windows::last_error_status(dwLastError);
 
-         auto estatus = ::windows::last_error_status(dwLastError);
+      //   auto errorcode = ::windows::last_error_error_code(dwLastError);
 
-         auto errorcode = ::windows::last_error_error_code(dwLastError);
+      //   throw ::file::exception(estatus, errorcode, m_path, "file::close", m_eopen);
 
-         throw ::file::exception(estatus, errorcode, m_path, "file::close", m_eopen);
-
-      }
+      //}
 
    }
 
 
    void file::lock(filesize dwPos, filesize dwCount)
    {
+      
       ASSERT_VALID(this);
-      ASSERT(m_handleFile != INVALID_HANDLE_VALUE);
+      ASSERT(m_file.is_ok());
 
-      if (!::LockFile((HANDLE)m_handleFile, LODWORD(dwPos), HIDWORD(dwPos), LODWORD(dwCount), HIDWORD(dwCount)))
-      {
+      m_file.lock_file(dwPos, dwCount);
 
-         auto dwLastError = ::GetLastError();
-
-         auto estatus = ::windows::last_error_status(dwLastError);
-
-         auto errorcode = ::windows::last_error_error_code(dwLastError);
-
-         throw ::file::exception(estatus, errorcode,m_path, "!LockFile");
-
-      }
    }
 
 
    void file::unlock(filesize dwPos, filesize dwCount)
    {
+
       ASSERT_VALID(this);
-      ASSERT(m_handleFile != INVALID_HANDLE_VALUE);
+      ASSERT(m_file.is_ok());
 
-      if (!::UnlockFile((HANDLE)m_handleFile, LODWORD(dwPos), HIDWORD(dwPos), LODWORD(dwCount), HIDWORD(dwCount)))
-      {
-
-         auto dwLastError = ::GetLastError();
-
-         auto estatus = ::windows::last_error_status(dwLastError);
-
-         auto errorcode = ::windows::last_error_error_code(dwLastError);
-
-         throw ::file::exception(estatus, errorcode, m_path, "!UnlockFile");
-
-      }
+      m_file.unlock_file(dwPos, dwCount);
 
    }
+
 
 
    void file::set_size(filesize dwNewLen)
    {
 
       ASSERT_VALID(this);
-      ASSERT(m_handleFile != INVALID_HANDLE_VALUE);
+      ASSERT(m_file.is_ok());
 
-      set_position(dwNewLen);
+      m_file.set_file_size(dwNewLen);
 
-      if (!::SetEndOfFile((HANDLE)m_handleFile))
-      {
-
-         auto dwLastError = ::GetLastError();
-
-         auto estatus = ::windows::last_error_status(dwLastError);
-
-         auto errorcode = ::windows::last_error_error_code(dwLastError);
-
-         throw ::file::exception(estatus, errorcode, m_path, "!SetEndOfFile", m_eopen);
-
-      }
 
    }
 
@@ -791,17 +530,9 @@ namespace acme_windows_common
    {
 
       ASSERT_VALID(this);
+      ASSERT(m_file.is_ok());
 
-      LARGE_INTEGER largeinteger{};
-
-      if (!::GetFileSizeEx(m_handleFile, &largeinteger))
-      {
-
-         throw ::io_exception(error_io);
-
-      }
-
-      return largeinteger.QuadPart;
+      return m_file.get_file_size();
 
    }
 
@@ -908,17 +639,12 @@ namespace acme_windows_common
 
       rStatus.m_strFullName = m_path;
 
-      if (m_handleFile != INVALID_HANDLE_VALUE)
+      if (m_file.is_ok())
       {
 
          BY_HANDLE_FILE_INFORMATION information;
 
-         if (!::GetFileInformationByHandle((HANDLE)m_handleFile, &information))
-         {
-
-            return false;
-
-         }
+         m_file.get_file_information(&information);
 
          ULARGE_INTEGER integer;
 
@@ -969,7 +695,7 @@ namespace acme_windows_common
    bool file::is_opened() const
    {
 
-      return m_handleFile != INVALID_HANDLE_VALUE;
+      return m_file.is_ok();
 
    }
 

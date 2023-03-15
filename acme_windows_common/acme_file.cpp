@@ -81,11 +81,11 @@ namespace acme_windows_common
          
       }
 
-      memory m;
+      memory memory;
 
-      m.set_size(1_MiB);
+      memory.set_size(1_MiB);
 
-      while (auto read = pfileSrc->read(m.data(), m.size()))
+      while (auto read = pfileSrc->read(memory))
       {
 
          if (read <= 0)
@@ -95,7 +95,7 @@ namespace acme_windows_common
 
          }
 
-         pfileNew->write(m.data(), read);
+         pfileNew->write(memory);
 
       }
 
@@ -107,9 +107,9 @@ namespace acme_windows_common
       //if (!bCopy)
       //{
 
-      //   auto lastError = ::GetLastError();
+      //   auto lasterror = ::GetLastError();
 
-      //   if (lastError == ERROR_INVALID_PARAMETER)
+      //   if (lasterror == ERROR_INVALID_PARAMETER)
       //   {
 
       //      ::acme_file::copy(pszNew, pszSrc, bOverwrite);
@@ -118,7 +118,7 @@ namespace acme_windows_common
 
       //   }
 
-      //   auto estatus = ::windows::last_error_status(lastError);
+      //   auto estatus = ::windows::last_error_status(lasterror);
 
       //   throw io_exception(estatus);
 
@@ -317,7 +317,7 @@ namespace acme_windows_common
 
       //}
 
-      wstring wstrPath(path.get_os_path());
+      auto windowsPath = path.windows_path();
 
       auto pfile = stdio_open(path, "w", _SH_DENYWR);
 
@@ -338,9 +338,11 @@ namespace acme_windows_common
 
       auto path = acmepath()->defer_process_relative_path(pathParam);
 
+      ::windows::file_instance file;
+
 #ifdef WINDOWS_DESKTOP
 
-      HANDLE hfile = CreateFileW(path.get_os_path(), GENERIC_READ, FILE_SHARE_WRITE | FILE_SHARE_READ | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+      file.create_file(path, GENERIC_READ, FILE_SHARE_WRITE | FILE_SHARE_READ | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 
 #else
 
@@ -348,45 +350,9 @@ namespace acme_windows_common
 
 #endif
 
-      if (hfile == INVALID_HANDLE_VALUE)
-      {
+      auto uFileSize = file.get_file_size();
 
-         DWORD dwLastError = ::GetLastError();
-
-         auto estatus = ::windows::last_error_status(dwLastError);
-
-         auto errorcode = ::windows::last_error_error_code(dwLastError);
-
-         throw ::file::exception(estatus, errorcode, path, "CreateFileW returned INVALID_HANDLE_VALUE");
-
-      }
-
-      DWORD dwHi = 0;
-
-      LARGE_INTEGER largeintegerFileSize;
-
-      if (!GetFileSizeEx(hfile, &largeintegerFileSize))
-      {
-
-         ::CloseHandle(hfile);
-
-         DWORD dwLastError = ::GetLastError();
-
-         auto estatus = ::windows::last_error_status(dwLastError);
-
-         auto errorcode = ::windows::last_error_error_code(dwLastError);
-
-         throw ::file::exception(estatus, errorcode, path, "!GetFileSizeEx");
-
-      }
-
-      u64 u = largeintegerFileSize.LowPart;
-
-      u |= ((u64)largeintegerFileSize.HighPart) << 32ULL;
-
-      CloseHandle(hfile);
-
-      return u;
+      return uFileSize;
 
    }
 
@@ -674,9 +640,9 @@ namespace acme_windows_common
 
       auto path = acmepath()->defer_process_relative_path(pathParam);
 
-      wstring wstr(path);
-
       m_pacmedirectory->create(file_path_folder(path));
+
+      ::windows::file_instance file;
 
 #ifdef _UWP
 
@@ -684,44 +650,15 @@ namespace acme_windows_common
 
 #else
 
-      HANDLE h = ::CreateFileW(path.get_os_path(), GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
+      file.create_file(path, GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
 
 #endif
 
-      if (h == INVALID_HANDLE_VALUE)
-      {
+      auto size = block.size();
 
-         DWORD dwLastError = ::GetLastError();
+      ::memsize position = 0;
 
-         auto estatus = ::windows::last_error_status(dwLastError);
-
-         throw ::exception(::error_io);
-
-      }
-
-      ::e_status estatus = success;
-
-      DWORD dwWritten = 0;
-
-      if (!WriteFile(h, block.data(), (DWORD) block.size(), &dwWritten,nullptr))
-      {
-
-         DWORD dwLastError = ::GetLastError();
-
-         estatus = ::windows::last_error_status(dwLastError);
-
-      }
-
-      if (dwWritten != block.size())
-      {
-
-         estatus = error_failed;
-
-      }
-
-      ::CloseHandle(h);
-
-      //return estatus;
+      while ((size -= file.defer_write(block(position))) > 0);
 
    }
 

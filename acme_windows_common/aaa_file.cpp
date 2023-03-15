@@ -126,9 +126,9 @@ CLASS_DECL_ACME_WINDOWS_COMMON memsize hfile_read(hfile hfile, void* p, memsize 
 //      if (!WriteFile(hfile, p, iWrite, &dwWritten, nullptr))
 //      {
 //
-//         auto lastError = ::GetLastError();
+//         auto lasterror = ::GetLastError();
 //         //return ::error_failed;
-//         throw ::file_exception(::error_failed, lastError);
+//         throw ::file_exception(::error_failed, lasterror);
 //
 //      }
 //
@@ -194,7 +194,7 @@ namespace windows_common
 
       //m_iCharacterPutBack = 0x80000000;
 
-      ASSERT(__is_valid_string(pszFileName));
+      ASSERT(is_string_ok(pszFileName));
 
 
       open(pszFileName, eopen);
@@ -252,7 +252,7 @@ namespace windows_common
       }
 
       ASSERT_VALID(this);
-      ASSERT(__is_valid_string(path));
+      ASSERT(is_string_ok(path));
 
       eopen -= ::file::e_open_binary;
 
@@ -512,16 +512,16 @@ acmedirectory()create(path.folder());
 
       ASSERT(pdata != nullptr);
 
-      ASSERT(__is_valid_address(pdata, nCount));
+      ASSERT(is_memory_segment_ok(pdata, nCount));
 
       DWORD dwRead;
 
       if (!::ReadFile((HANDLE)m_handleFile, pdata, (::u32)nCount, &dwRead, nullptr))
       {
 
-         auto lastError = ::GetLastError();
+         auto lasterror = ::GetLastError();
 
-         throw ::file_exception(::error_io, lastError, m_path);
+         throw ::file_exception(::error_io, lasterror, m_path);
 
       }
 
@@ -545,7 +545,7 @@ acmedirectory()create(path.folder());
 
       ASSERT(pdata != nullptr);
 
-      ASSERT(__is_valid_address(pdata, nCount, false));
+      ASSERT(is_memory_segment_ok(pdata, nCount, false));
 
       DWORD nWritten;
 
@@ -1260,9 +1260,9 @@ string CLASS_DECL_ACME_WINDOWS_COMMON windows_string_from_clsid(REFCLSID rclsid)
 //{
 //   ASSERT(pszTitle == nullptr ||
 //
-//      __is_valid_address(pszTitle, _MAX_FNAME));
+//      is_memory_segment_ok(pszTitle, _MAX_FNAME));
 //
-//   ASSERT(__is_valid_string(pszPathName));
+//   ASSERT(is_string_ok(pszPathName));
 //
 //
 //   // always capture the complete file name including extension (if present)
