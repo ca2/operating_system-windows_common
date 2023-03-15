@@ -73,22 +73,22 @@ namespace acme_windows_common
 
       operator HANDLE() const;
 
-      virtual filesize get_position() const override;
-      virtual bool get_status(::file::file_status & rStatus) const override;
-      virtual ::file::path get_file_path() const override;
-      virtual void set_file_path(const ::file::path & path) override;
+      filesize get_position() const override;
+      bool get_status(::file::file_status & rStatus) const override;
+      ::file::path get_file_path() const override;
+      void set_file_path(const ::file::path & path) override;
 
 
-      virtual void open(const ::file::path & pszFileName, const ::file::e_open & eopen) override;
+      void open(const ::file::path & pszFileName, const ::file::e_open & eopen) override;
 
 
-      virtual void translate(filesize filesize, ::enum_seek nFrom) override;
-      virtual void set_size(filesize dwNewLen) override;
-      virtual filesize size() const override;
+      void translate(filesize filesize, ::enum_seek nFrom) override;
+      void set_size(filesize dwNewLen) override;
+      filesize size() const override;
 
-      virtual memsize read(void * pdata, memsize nCount) override;
+      memsize read(void * pdata, memsize nCount) override;
 
-      virtual void write(const void * pdata, memsize nCount) override;
+      void write(const void * pdata, memsize nCount) override;
 
 
       //virtual int peek_character();
@@ -96,13 +96,20 @@ namespace acme_windows_common
       //virtual int put_character_back(int iCharacter);
 
 
-      virtual void lock(filesize dwPos, filesize dwCount) override;
-      virtual void unlock(filesize dwPos, filesize dwCount) override;
+      void lock(filesize dwPos, filesize dwCount) override;
+      void unlock(filesize dwPos, filesize dwCount) override;
 
-      virtual void flush() override;
-      virtual void close() override;
+      void flush() override;
+      void close() override;
 
-      virtual bool is_opened() const override;
+      bool is_opened() const override;
+
+
+
+      class ::time modification_time() override;
+      void set_modification_time(const class ::time& time) override;
+
+
 
    };
 

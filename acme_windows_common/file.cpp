@@ -2,6 +2,7 @@
 #include "file.h"
 #include "acme_directory.h"
 #include "acme_file.h"
+#include "acme/exception/interface_only.h"
 #include "acme/exception/io.h"
 #include "acme/platform/sequencer.h"
 #include "acme/filesystem/file/exception.h"
@@ -987,6 +988,28 @@ namespace acme_windows_common
    {
 
       return m_handleFile;
+
+   }
+
+
+   class ::time file::modification_time()
+   {
+
+      ASSERT_VALID(this);
+      ASSERT(m_file.is_ok());
+
+      return m_file.get_modification_time();
+
+   }
+
+
+   void file::set_modification_time(const class ::time& time)
+   {
+
+      ASSERT_VALID(this);
+      ASSERT(m_file.is_ok());
+
+      m_file.set_modification_time(time);
 
    }
 
