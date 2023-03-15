@@ -231,13 +231,7 @@ namespace acme_windows_common
    {
 
       ASSERT_VALID(this);
-
-      if (m_file.is_ok())
-      {
-
-         throw ::exception(error_wrong_state);
-
-      }
+      ASSERT(m_file.is_ok());
 
       auto nCount = block.size();
 
@@ -275,7 +269,7 @@ namespace acme_windows_common
 
       ASSERT(is_memory_segment_ok(pdata, nCount));
 
-      auto amountRead = m_file.read_file(block);
+      auto amountRead = m_file.read(block);
 
       return amountRead;
 
