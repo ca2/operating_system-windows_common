@@ -2,6 +2,7 @@
 
 
 #include "aura/_.h"
+#undef USUAL_OPERATING_SYSTEM_SUPPRESSIONS
 #include "acme/_operating_system.h"
 #include "direct2d/_.h"
 #include "acme/primitive/geometry2d/_geometry2d.h"
