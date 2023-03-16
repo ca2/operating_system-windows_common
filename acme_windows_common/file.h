@@ -87,9 +87,13 @@ namespace acme_windows_common
       void set_size(filesize dwNewLen) override;
       filesize size() const override;
 
-      memsize read(const ::block & block) override;
+      
+      using ::file::file::read;
+      memsize read(void * p, ::memsize s) override;
 
-      void write(const ::block & block) override;
+
+      using ::file::file::write;
+      void write(const void * p, ::memsize s) override;
 
 
       //virtual int peek_character();

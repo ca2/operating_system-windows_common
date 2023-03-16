@@ -227,15 +227,13 @@ namespace acme_windows_common
    }
 
 
-   memsize file::read(const ::block & block)
+   memsize file::read(void * p, ::memsize s)
    {
 
       ASSERT_VALID(this);
       ASSERT(m_file.is_ok());
 
-      auto nCount = block.size();
-
-      if (nCount <= 0)
+      if (s <= 0)
       {
 
          return 0;   // avoid Win32 "null-read"
@@ -263,39 +261,39 @@ namespace acme_windows_common
 
       //}
 
-      auto pdata = block.data();
+      auto data = (::byte *) p;
 
-      ASSERT(::is_set(pdata));
+      ASSERT(::is_set(data));
 
-      ASSERT(is_memory_segment_ok(pdata, nCount));
+      ASSERT(is_memory_segment_ok(data, s));
 
-      auto amountRead = m_file.read(block);
+      auto amountRead = m_file.read(data, s);
 
       return amountRead;
 
    }
 
 
-   void file::write(const ::block & block)
+   void file::write(const void * p, ::memsize s)
    {
 
       ASSERT_VALID(this);
       ASSERT(m_file.is_ok());
 
-      if (block.is_empty())
+      if (::is_null(p) || s <= 0)
       {
 
          return;     // avoid Win32 "null-write" option
 
       }
 
-      ASSERT(block.is_set());
+      ASSERT(::is_set(p));
 
-      ASSERT(is_memory_segment_ok(block.data(), block.size()));
+      ASSERT(is_memory_segment_ok(p, s));
 
       //DWORD nWritten;
 
-      m_file.write(block);
+      m_file.write(p, s);
       //{
 
       //   auto dwLastError = ::GetLastError();

@@ -658,7 +658,7 @@ namespace acme_windows_common
 
       ::memsize position = 0;
 
-      while ((size -= file.defer_write(block(position))) > 0);
+      while ((size -= file.defer_write(block.begin() + position, block.size() - position)) > 0);
 
    }
 
