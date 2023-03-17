@@ -189,7 +189,7 @@ namespace windows_common
    }
 
 
-   file::file(const ::string & pszFileName, const ::file::e_open & eopen)
+   file::file(const ::string & pszFileName, ::file::e_open eopen)
    {
 
       //m_iCharacterPutBack = 0x80000000;
@@ -219,7 +219,7 @@ namespace windows_common
    }
 
 
-   void file::open(const ::file::path & path, const ::file::e_open & eopenParam)
+   void file::open(const ::file::path & path, ::file::e_open eopen)
    {
 
       auto eopen = eopenParam;

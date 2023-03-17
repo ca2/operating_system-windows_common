@@ -66,7 +66,7 @@ namespace acme_windows_common
    }
 
 
-   file::file(const ::string & pszFileName, const ::file::e_open & eopen) :
+   file::file(const ::string & pszFileName, ::file::e_open eopen) :
       m_file(m_path, m_windowspath, m_eopen)
    {
 

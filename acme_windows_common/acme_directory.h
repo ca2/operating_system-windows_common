@@ -19,6 +19,10 @@ namespace acme_windows_common
       ~acme_directory() override;
 
 
+      ::file::path get_current() override;
+
+
+
    };
 
 

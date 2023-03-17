@@ -340,15 +340,15 @@ namespace acme_windows_common
 
       ::windows::file_instance file;
 
-#ifdef WINDOWS_DESKTOP
+//#ifdef WINDOWS_DESKTOP
 
       file.create_file(path, GENERIC_READ, FILE_SHARE_WRITE | FILE_SHARE_READ | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 
-#else
+//#else
 
-      HANDLE hfile = hfile_create(path.get_os_path(), GENERIC_READ, FILE_SHARE_WRITE | FILE_SHARE_READ | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+  //    HANDLE hfile = hfile_create(path.get_os_path(), GENERIC_READ, FILE_SHARE_WRITE | FILE_SHARE_READ | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 
-#endif
+//#endif
 
       auto uFileSize = file.get_file_size();
 
@@ -644,15 +644,15 @@ namespace acme_windows_common
 
       ::windows::file_instance file;
 
-#ifdef _UWP
-
-      HANDLE h = ::CreateFile2(path.get_os_path(), GENERIC_WRITE, FILE_SHARE_READ, CREATE_ALWAYS, nullptr);
-
-#else
+//#ifdef _UWP
+//
+//      HANDLE h = ::CreateFile2(path.get_os_path(), GENERIC_WRITE, FILE_SHARE_READ, CREATE_ALWAYS, nullptr);
+//
+//#else
 
       file.create_file(path, GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
 
-#endif
+//#endif
 
       auto size = block.size();
 

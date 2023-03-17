@@ -796,7 +796,7 @@ namespace windows
    }
 
 
-   file_pointer file_context::get_file(const ::payload & payloadFile, const ::file::e_open & eopenFlags)
+   file_pointer file_context::get_file(const ::payload & payloadFile, ::file::e_open eopen)
    {
 
       return ::file_context::get_file(payloadFile, eopenFlags);
