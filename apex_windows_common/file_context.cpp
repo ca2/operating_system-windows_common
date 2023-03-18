@@ -252,6 +252,16 @@ namespace apex_windows_common
    }
 
 
+   //bool file_context::win32_file_system_item_exists(const ::file::path & path)
+   //{
+
+   //   auto dwFileAttributes = ::windows::_get_file_attributes(path);
+
+   //   return dwFileAttributes != INVALID_FILE_ATTRIBUTES;
+
+   //}
+
+
 } // namespace apex_windows_common
 
 

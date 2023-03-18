@@ -33,6 +33,10 @@ namespace apex_windows_common
       virtual void set_status(const ::file::path & path, const ::file::file_status & status);
 
 
+      //virtual bool win32_file_system_item_exists(const ::file::path & path);
+
+
+
    };
 
 
