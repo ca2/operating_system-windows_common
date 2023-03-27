@@ -341,7 +341,7 @@ namespace imaging_wic
 
             //for(int k = 0; k < height; k++)
             //{
-            //   ::memcpy_dup(&pb[k * iStride],&mem.data()[(height - 1 - k) * iStride],iStride);
+            //   ::memory_copy(&pb[k * iStride],&mem.data()[(height - 1 - k) * iStride],iStride);
             //}
 
          }

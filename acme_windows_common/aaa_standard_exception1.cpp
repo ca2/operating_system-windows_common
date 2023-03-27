@@ -71,7 +71,7 @@ bool PreventSetUnhandledExceptionFilter()
    u32 dwNewEntryAddr = (u32) pNewFunc;
    u32 dwRelativeAddr = dwNewEntryAddr - dwOrgEntryAddr;
    newJump[ 0 ] = 0xE9;  // JMP absolute
-   ::memcpy_dup(&newJump[ 1 ], &dwRelativeAddr, sizeof(pNewFunc));
+   ::memory_copy(&newJump[ 1 ], &dwRelativeAddr, sizeof(pNewFunc));
    SIZE_T bytesWritten;
    bool bRet = WriteProcessMemory(GetCurrentProcess(),
    pOrgEntry, newJump, sizeof(pNewFunc) + 1, &bytesWritten);

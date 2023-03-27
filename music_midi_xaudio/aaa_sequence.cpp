@@ -576,7 +576,7 @@ Seq_Open_File_Cleanup:
                   };
                   char * lpch = lpmh->lpData + lpmh->dwBytesRecorded;
                   lpmh->dwBytesRecorded += sizeof(gmModeOn);
-                  ::memcpy_dup(lpch, gmModeOn, sizeof(gmModeOn));
+                  ::memory_copy(lpch, gmModeOn, sizeof(gmModeOn));
                   SetSpecialModeV001Flag(false);
                }
             }
@@ -1170,7 +1170,7 @@ seq_Preroll_Cleanup:
                         0x01, 0xf7, 0x00, 0x00
                      };
                      lpmidihdr->dwBytesRecorded = sizeof(gmModeOn);
-                     ::memcpy_dup(lpmidihdr->lpData, gmModeOn, sizeof(gmModeOn));
+                     ::memory_copy(lpmidihdr->lpData, gmModeOn, sizeof(gmModeOn));
                   }
                   else if(m_eoperation == operation_tempo_change)
                   {
@@ -1178,7 +1178,7 @@ seq_Preroll_Cleanup:
                      file()->GetTempoEvent(event);
                      file()->StreamEvent(event.GetDelta(), &event, lpmidihdr, 0x7fffffff, 256);
                      // lpmidihdr->dwBytesRecorded = sizeof(gmModeOn);
-                     // ::memcpy_dup(lpmidihdr->lpData, gmModeOn, sizeof(gmModeOn));
+                     // ::memory_copy(lpmidihdr->lpData, gmModeOn, sizeof(gmModeOn));
                   }
                   else
                   {
