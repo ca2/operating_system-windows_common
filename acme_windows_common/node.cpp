@@ -5,7 +5,7 @@
 #include "acme/platform/scoped_restore.h"
 
 
-
+#include "acme/_operating_system.h"
 
 
 namespace acme_windows_common
