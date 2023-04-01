@@ -5,6 +5,11 @@
 #include "acme/platform/scoped_restore.h"
 
 
+#include "acme/_operating_system.h"
+
+
+#include "acme_windows_common/_.h"
+//#include "acme_windows_common/hresult.h"
 
 
 
