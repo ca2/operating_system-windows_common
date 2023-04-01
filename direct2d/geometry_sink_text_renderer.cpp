@@ -4,12 +4,12 @@
 #include "geometry_sink_text_renderer.h"
 
 //#undef new
-//#ifdef _UWP
+//#ifdef UNIVERSAL_WINDOWS
 //#include <wrl/module.h>
 //#endif
 
 
-#ifdef _UWP
+#ifdef UNIVERSAL_WINDOWS
 
 
 //

@@ -6,7 +6,7 @@
 //#include "file.h"
 
 
-//#ifdef _UWP
+//#ifdef UNIVERSAL_WINDOWS
 //CLASS_DECL_ACME::winrt::Windows::Storage::StorageFolder^ winrt_folder(string& strPath, string& strPrefix);
 //#endif
 

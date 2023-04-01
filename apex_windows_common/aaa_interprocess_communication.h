@@ -38,7 +38,7 @@ namespace windows
 
 
 
-#if defined(_UWP)
+#if defined(UNIVERSAL_WINDOWS)
       bool open(const ::string & pszChannel);
 #else
       bool open(const ::string & pszChannel, launcher * plauncher = nullptr);
@@ -101,7 +101,7 @@ namespace windows
 //      virtual ~inteprocess_channel();
 //
 //
-//#if defined(_UWP)
+//#if defined(UNIVERSAL_WINDOWS)
 //      bool open_ab(const ::string & pszChannel, const ::string & pszModule);
 //      bool open_ba(const ::string & pszChannel, const ::string & pszModule);
 //#elif defined(WINDOWS)

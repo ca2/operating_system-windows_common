@@ -57,7 +57,7 @@ event::event(char * sz, bool bInitiallyOwn, bool bManualReset, const ::string & 
 
    }
 
-#elif defined(_UWP)
+#elif defined(UNIVERSAL_WINDOWS)
 
    u32 dwFlags = 0;
 

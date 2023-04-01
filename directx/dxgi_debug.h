@@ -34,7 +34,7 @@ namespace directx
 } // namespace directx
 
 
-#endif // !defined(_UWP)
+#endif // !defined(UNIVERSAL_WINDOWS)
 
 
 

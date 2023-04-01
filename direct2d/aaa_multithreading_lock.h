@@ -3,7 +3,7 @@
 
 //#error
 //
-//#ifdef _UWP
+//#ifdef UNIVERSAL_WINDOWS
 //
 //#include "acme/operating_system/windows_common/comptr.h"
 //#include <d2d1_1.h>
@@ -30,7 +30,7 @@ namespace direct2d
          m_D2DMultithread(pmultithreading)
    {
 
-//#ifdef _UWP
+//#ifdef UNIVERSAL_WINDOWS
 //
 //      acmesystem() = pinteraction->acmesystem();
 //
@@ -54,7 +54,7 @@ namespace direct2d
    ~multithreading_lock()
    {
 
-//#ifdef _UWP
+//#ifdef UNIVERSAL_WINDOWS
 //
 //      //m_D2DMultithread->Leave();
 //

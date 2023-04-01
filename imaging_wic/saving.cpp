@@ -10,7 +10,7 @@
 #include <wincodec.h>
 
 
-#ifdef _UWP
+#ifdef UNIVERSAL_WINDOWS
 #include "acme_universal_windows/_winrt_stream.h"
 #include <ShCore.h>
 #endif
@@ -35,7 +35,7 @@ namespace imaging_wic
 
       acmenode()->defer_co_initialize_ex(false);
 
-#ifdef _UWP
+#ifdef UNIVERSAL_WINDOWS
 
       ::winrt::Windows::Storage::Streams::InMemoryRandomAccessStream randomAccessStream;
 
@@ -367,7 +367,7 @@ namespace imaging_wic
    }
 
 
-#ifdef _UWP
+#ifdef UNIVERSAL_WINDOWS
 
 
    bool node_save_image(::winrt::Windows::Storage::Streams::IRandomAccessStream const & stream, ::image * pimage, const ::save_image * psaveimage)

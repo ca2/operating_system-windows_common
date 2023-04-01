@@ -2,12 +2,12 @@
 //#include "direct2d/CustomTextRenderer.h"
 
 #undef new
-#ifdef _UWP
+#ifdef UNIVERSAL_WINDOWS
 #include <wrl/module.h>
 #endif
 
 
-#ifdef _UWP
+#ifdef UNIVERSAL_WINDOWS
 
 
 //

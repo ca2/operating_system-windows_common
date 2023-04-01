@@ -21,7 +21,7 @@ typedef FN_DXGIGetDebugInterface * PFN_DXGIGetDebugInterface;
 //   void init()
 //   {
 //
-//#ifdef _UWP
+//#ifdef UNIVERSAL_WINDOWS
 //      HRESULT hr = DXGIGetDebugInterface1(0, IID_IDXGIDebug1, &d);
 //#else
 //
