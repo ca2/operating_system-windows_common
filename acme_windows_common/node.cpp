@@ -907,105 +907,105 @@ namespace acme_windows_common
    //}
 
 
-   //https ://social.msdn.microsoft.com/Forums/vstudio/en-US/45668d18-2840-4887-87e1-4085201f4103/visual-c-to-unzip-a-zip-file-to-a-specific-directory
-   // removed return type and changed error returns to exceptions
-   // replace __try __finally with at_end_of_scope
-   // changed arguments to ansi_character * and used bstring class for string conversion
-   // use of comptr to guard COM objets and variant to guard VARIANTs
-   void node::_unzip_to_folder(const char * pszZip, const char * pszFolder)
-   {
+   ////https ://social.msdn.microsoft.com/Forums/vstudio/en-US/45668d18-2840-4887-87e1-4085201f4103/visual-c-to-unzip-a-zip-file-to-a-specific-directory
+   //// removed return type and changed error returns to exceptions
+   //// replace __try __finally with at_end_of_scope
+   //// changed arguments to ansi_character * and used bstring class for string conversion
+   //// use of comptr to guard COM objets and variant to guard VARIANTs
+   //void node::_com_unzip_to_folder(const char * pszZip, const char * pszFolder)
+   //{
 
-      comptr < IShellDispatch> pISD;
+   //   comptr < IShellDispatch> pISD;
 
-      comptr < Folder> pZippedFile;
-      comptr < Folder > pDestination;
+   //   comptr < Folder> pZippedFile;
+   //   comptr < Folder > pDestination;
 
-      long FilesCount = 0;
-      comptr< IDispatch > pItem;
-      comptr < FolderItems > pFilesInside;
+   //   long FilesCount = 0;
+   //   comptr< IDispatch > pItem;
+   //   comptr < FolderItems > pFilesInside;
 
-      variant Options, OutFolder, InZipFile, Item;
-   
-      CoInitialize(NULL);
+   //   variant Options, OutFolder, InZipFile, Item;
+   //
+   //   CoInitialize(NULL);
 
-      acmedirectory()->create(pszFolder);
-
-
-      {
-         // speccylad@twitch contribution recalled
-         at_end_of_scope
-         {
-
-            CoUninitialize();
-
-         };
-
-         HRESULT hr = pISD.CoCreateInstance(CLSID_Shell, NULL, CLSCTX_INPROC_SERVER);
-
-         defer_throw_hresult(hr);
-
-         bstring bstrZip(pszZip);
-
-         InZipFile.vt = VT_BSTR;
-         InZipFile.bstrVal = bstrZip;
-         pISD->NameSpace(InZipFile, &pZippedFile);
-         if (!pZippedFile)
-         {
-            //pISD->Release();
-            throw ::exception(error_failed, "pISD->NameSpace(InZipFile, &pZippedFile)");
-         }
-
-         bstring bstrFolder(pszFolder);
-
-         OutFolder.vt = VT_BSTR;
-         OutFolder.bstrVal = bstrFolder;
-         pISD->NameSpace(OutFolder, &pDestination);
-         if (!pDestination)
-         {
-            //pZippedFile->Release();
-            //pISD->Release();
-            throw ::exception(error_failed, "::acme_windows::common::node::_unzip_to_folder (1)");
-         }
-
-         pZippedFile->Items(&pFilesInside);
-         if (!pFilesInside)
-         {
-            //pDestination->Release();
-            //pZippedFile->Release();
-            //pISD->Release();
-            throw ::exception(error_failed, "::acme_windows::common::node::_unzip_to_folder (2)");
-         }
-
-         pFilesInside->get_Count(&FilesCount);
-         if (FilesCount < 1)
-         {
-            //pFilesInside->Release();
-            //pDestination->Release();
-            //pZippedFile->Release();
-            //pISD->Release();
-            throw ::exception(error_failed, "::acme_windows::common::node::_unzip_to_folder (3)");
-         }
-
-         pFilesInside->QueryInterface(IID_IDispatch, (void**)&pItem);
-
-         Item.vt = VT_DISPATCH;
-         Item.pdispVal = pItem;
-
-         Options.vt = VT_I4;
-         Options.lVal = 1024 | 512 | 16 | 4;//http://msdn.microsoft.com/en-us/library/bb787866(VS.85).aspx
-
-         bool retval = pDestination->CopyHere(Item, Options) == S_OK;
-
-         //pItem->Release(); pItem = 0L;
-         //pFilesInside->Release(); pFilesInside = 0L;
-         //pDestination->Release(); pDestination = 0L;
-         //pZippedFile->Release(); pZippedFile = 0L;
-         //pISD->Release(); pISD = 0L;
+   //   acmedirectory()->create(pszFolder);
 
 
-      }
+   //   {
+   //      // speccylad@twitch contribution recalled
+   //      at_end_of_scope
+   //      {
 
-   }
+   //         CoUninitialize();
+
+   //      };
+
+   //      HRESULT hr = pISD.CoCreateInstance(CLSID_Shell, NULL, CLSCTX_INPROC_SERVER);
+
+   //      defer_throw_hresult(hr);
+
+   //      bstring bstrZip(pszZip);
+
+   //      InZipFile.vt = VT_BSTR;
+   //      InZipFile.bstrVal = bstrZip;
+   //      pISD->NameSpace(InZipFile, &pZippedFile);
+   //      if (!pZippedFile)
+   //      {
+   //         //pISD->Release();
+   //         throw ::exception(error_failed, "pISD->NameSpace(InZipFile, &pZippedFile)");
+   //      }
+
+   //      bstring bstrFolder(pszFolder);
+
+   //      OutFolder.vt = VT_BSTR;
+   //      OutFolder.bstrVal = bstrFolder;
+   //      pISD->NameSpace(OutFolder, &pDestination);
+   //      if (!pDestination)
+   //      {
+   //         //pZippedFile->Release();
+   //         //pISD->Release();
+   //         throw ::exception(error_failed, "::acme_windows::common::node::_unzip_to_folder (1)");
+   //      }
+
+   //      pZippedFile->Items(&pFilesInside);
+   //      if (!pFilesInside)
+   //      {
+   //         //pDestination->Release();
+   //         //pZippedFile->Release();
+   //         //pISD->Release();
+   //         throw ::exception(error_failed, "::acme_windows::common::node::_unzip_to_folder (2)");
+   //      }
+
+   //      pFilesInside->get_Count(&FilesCount);
+   //      if (FilesCount < 1)
+   //      {
+   //         //pFilesInside->Release();
+   //         //pDestination->Release();
+   //         //pZippedFile->Release();
+   //         //pISD->Release();
+   //         throw ::exception(error_failed, "::acme_windows::common::node::_unzip_to_folder (3)");
+   //      }
+
+   //      pFilesInside->QueryInterface(IID_IDispatch, (void**)&pItem);
+
+   //      Item.vt = VT_DISPATCH;
+   //      Item.pdispVal = pItem;
+
+   //      Options.vt = VT_I4;
+   //      Options.lVal = 1024 | 512 | 16 | 4;//http://msdn.microsoft.com/en-us/library/bb787866(VS.85).aspx
+
+   //      bool retval = pDestination->CopyHere(Item, Options) == S_OK;
+
+   //      //pItem->Release(); pItem = 0L;
+   //      //pFilesInside->Release(); pFilesInside = 0L;
+   //      //pDestination->Release(); pDestination = 0L;
+   //      //pZippedFile->Release(); pZippedFile = 0L;
+   //      //pISD->Release(); pISD = 0L;
+
+
+   //   }
+
+   //}
 
 
    
