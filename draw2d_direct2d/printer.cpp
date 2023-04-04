@@ -20,7 +20,7 @@ namespace draw2d_direct2d
    {
       if(is_opened())
          close();
-#ifndef _UWP
+#ifndef UNIVERSAL_WINDOWS
       return OpenPrinterW((LPWSTR) (const ::wide_character *) wstring(pszDeviceName), &m_hPrinter, nullptr) != false && m_hPrinter != nullptr;
 #else
       throw ::exception(todo);
@@ -46,7 +46,7 @@ namespace draw2d_direct2d
       bool bOk = true;
       if(m_hPrinter != nullptr)
       {
-#ifndef _UWP
+#ifndef UNIVERSAL_WINDOWS
          bOk = ::ClosePrinter(m_hPrinter) != false;
 #else
          throw ::exception(todo);
@@ -77,7 +77,7 @@ namespace draw2d_direct2d
          return false;
       if(m_hdc != nullptr)
          return false;
-#ifndef _UWP
+#ifndef UNIVERSAL_WINDOWS
       int iSize = DocumentPropertiesW(nullptr, pprinter->m_hPrinter, (LPWSTR)(LPWSTR)wstring(pprinter->m_strName), nullptr, nullptr, 0);
       m_pdevmode = (DEVMODE *) malloc(iSize);
       if(!DocumentPropertiesW(nullptr, pprinter->m_hPrinter, (LPWSTR) (const ::wide_character *) wstring(pprinter->m_strName), m_pdevmode, nullptr, DM_OUT_BUFFER))
@@ -96,7 +96,7 @@ namespace draw2d_direct2d
    {
       //throw ::exception(todo);
       return false;
-#ifndef _UWP
+#ifndef UNIVERSAL_WINDOWS
       if(m_hdc != nullptr)
       {
          ::DeleteDC(m_hdc);
@@ -122,7 +122,7 @@ namespace draw2d_direct2d
          return nullptr;
       if(m_hdc != nullptr)
          return nullptr;
-#ifndef _UWP
+#ifndef UNIVERSAL_WINDOWS
       m_hdc = ::CreateDCW(L"WINSPOOL", (const ::wide_character *) wstring(m_pdevmode->dmDeviceName), nullptr, m_pdevmode);
       ::draw2d::graphics_pointer g(e_create);
       g->attach_hdc(m_hdc);

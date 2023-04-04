@@ -12,7 +12,7 @@
 #include <wincodec.h>
 
 
-#ifdef _UWP
+#ifdef UNIVERSAL_WINDOWS
 #include <shcore.h>
 #include "acme_universal_windows/_winrt_stream.h"
 #include "_winrt_applicationmodel_datatransfer.h"
@@ -211,7 +211,7 @@ namespace imaging_wic
 
 #include "framework.h"
 #include <wincodec.h>
-#ifdef _UWP
+#ifdef UNIVERSAL_WINDOWS
 #include <ShCore.h>
 #endif
 
@@ -219,7 +219,7 @@ namespace imaging_wic
    bool node_save_image(IStream * pstream, ::image * pimage, const ::save_image * psaveimage);
 
 
-//#ifdef _UWP
+//#ifdef UNIVERSAL_WINDOWS
 //
 //
 //   CLASS_DECL_IMAGING_WIC bool node_save_image(::winrt::Windows::Storage::Streams::InMemoryRandomAccessStream const & randomAccessStream, const ::image * pimage, ::save_image * psaveimage);
@@ -366,7 +366,7 @@ namespace imaging_wic
 
 
 
-#ifdef _UWP
+#ifdef UNIVERSAL_WINDOWS
 
 
    bool node_save_image(::winrt::Windows::Storage::Streams::InMemoryRandomAccessStream const & randomAccessStream, ::image * pimage, const ::save_image * psaveimage)
@@ -394,7 +394,7 @@ namespace imaging_wic
    bool context_image::_save_image(::file::file * pfile, ::image * pimage, const ::save_image * psaveimage)
    {
 
-#ifdef _UWP
+#ifdef UNIVERSAL_WINDOWS
 
       ::winrt::Windows::Storage::Streams::InMemoryRandomAccessStream randomAccessStream;
 
@@ -636,7 +636,7 @@ namespace imaging_wic
 
       //   memory m;
       //
-      //#ifdef _UWP
+      //#ifdef UNIVERSAL_WINDOWS
       //
       //   m.set_size(uiHeight*pimage->scan_size());
       //

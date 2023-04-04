@@ -1271,7 +1271,7 @@ namespace draw2d_direct2d
 //   void graphics::draw(const ::rectangle_f64 & rectangleTarget, ::draw2d::icon * picon)
 //   {
 //
-//#ifdef _UWP
+//#ifdef UNIVERSAL_WINDOWS
 //
 //      //throw ::interface_only();
 //      return false;

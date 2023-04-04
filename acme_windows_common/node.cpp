@@ -8,13 +8,6 @@
 #include "acme/_operating_system.h"
 
 
-#include "hresult_exception.h"
-#include "comptr.h"
-#include "bstring.h"
-#include "variant.h"
-#include <Shldisp.h>
-
-
 namespace acme_windows_common
 {
 
@@ -635,7 +628,7 @@ namespace acme_windows_common
    //
    //         g_pMemoryCounters = new ::file::path();
    //
-   //#if defined(_UWP)
+   //#if defined(UNIVERSAL_WINDOWS)
    //
    //         string strBasePath = acmedirectory()->system() / "memory_counters";
    //

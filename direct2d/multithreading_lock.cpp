@@ -10,7 +10,7 @@ namespace draw2d
    //multithreading_lock::multithreading_lock(::user::interaction * pinteraction)
 //   {
 //
-////#ifdef _UWP
+////#ifdef UNIVERSAL_WINDOWS
 ////
 ////      acmesystem() = pinteraction->acmesystem();
 ////
@@ -30,7 +30,7 @@ namespace draw2d
 //   device_lock::~device_lock()
 //   {
 //
-////#ifdef _UWP
+////#ifdef UNIVERSAL_WINDOWS
 ////
 ////      //m_D2DMultithread->Leave();
 ////

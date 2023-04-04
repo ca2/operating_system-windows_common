@@ -4,7 +4,7 @@
 
 #include "acme/operating_system.h"
 #include "aura_windows_common/_library.h"
-#ifdef _UWP
+#ifdef UNIVERSAL_WINDOWS
 #include "aura_universal_windows/_library.h"
 #include <winrt/Windows.ApplicationModel.DataTransfer.h>
 #endif

@@ -597,7 +597,7 @@ namespace draw2d_direct2d
 
       //virtual void enum_fonts(::write_text::font_enumeration_item_array & itema) override;
 
-//#ifdef _UWP
+//#ifdef UNIVERSAL_WINDOWS
 //      virtual void set_direct2d_plugin(::draw2d_direct2d::plugin * pplugin);
 //#endif
 
