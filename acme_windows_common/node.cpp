@@ -902,16 +902,16 @@ namespace acme_windows_common
    }
 
 
-   void node::unzip_to_folder(const ::file::path& pathFolder, const ::file::path& pathZip)
-   {
+   //void node::unzip_to_folder(const ::file::path& pathFolder, const ::file::path& pathZip)
+   //{
 
-      auto strFolderWindowsPath = pathFolder.windows_path();
+   //   auto strFolderWindowsPath = pathFolder.windows_path();
 
-      auto strZipWindowsPath = pathZip.windows_path();
+   //   auto strZipWindowsPath = pathZip.windows_path();
 
-      _unzip_to_folder(strZipWindowsPath, strFolderWindowsPath);
+   //   _unzip_to_folder(strZipWindowsPath, strFolderWindowsPath);
 
-   }
+   //}
 
 
    //https ://social.msdn.microsoft.com/Forums/vstudio/en-US/45668d18-2840-4887-87e1-4085201f4103/visual-c-to-unzip-a-zip-file-to-a-specific-directory
