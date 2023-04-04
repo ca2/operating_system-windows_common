@@ -14,7 +14,7 @@
 #include <wincodec.h>
 
 
-#ifdef _UWP
+#ifdef UNIVERSAL_WINDOWS
 #include "acme/operating_system/universal_windows/_winrt_foundation.h"
 #include "acme_universal_windows/_winrt_stream.h"
 #include "_winrt_applicationmodel_datatransfer.h"
@@ -85,7 +85,7 @@ namespace imaging_wic
       //}
 
 
-#ifdef _UWP
+#ifdef UNIVERSAL_WINDOWS
 
       m_pmanagerImageLoad = __new(multi_threaded_handler_manager);
 
@@ -145,7 +145,7 @@ namespace imaging_wic
    }
 
 
-#ifdef _UWP
+#ifdef UNIVERSAL_WINDOWS
 
    // platform implementation may use this context_image-"routing" to manipulate the image/clipboard
    bool context_image::_desk_to_image(::image* pimage)

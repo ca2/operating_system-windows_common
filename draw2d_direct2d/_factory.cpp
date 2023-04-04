@@ -57,7 +57,7 @@ __FACTORY_EXPORT void draw2d_direct2d_factory(::factory::factory * pfactory)
    //}
 
 
-//#if defined(_UWP)
+//#if defined(UNIVERSAL_WINDOWS)
 //
 //   void factory_exchange::draw2d_direct2d_initialize()
 //   {

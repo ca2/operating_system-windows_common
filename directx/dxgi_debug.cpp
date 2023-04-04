@@ -16,7 +16,7 @@ namespace directx
    dxgi_debug::dxgi_debug()
    {
 
-// #ifdef _UWP
+// #ifdef UNIVERSAL_WINDOWS
 
       HRESULT hr = DXGIGetDebugInterface1(0, __interface_of(m_pdxgidebug1));
 

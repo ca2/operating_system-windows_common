@@ -585,7 +585,7 @@ namespace directx
 //
 //      //virtual void enum_fonts(::write_text::font_enumeration_item_array & itema) override;
 //
-////#ifdef _UWP
+////#ifdef UNIVERSAL_WINDOWS
 ////      virtual void set_directx_plugin(::draw2d_directx::plugin * pplugin);
 ////#endif
 //

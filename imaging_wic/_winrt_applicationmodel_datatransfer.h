@@ -10,7 +10,7 @@ namespace imaging_wic
 {
 
 
-#ifdef _UWP
+#ifdef UNIVERSAL_WINDOWS
 
 
    CLASS_DECL_IMAGING_WIC bool node_save_image(::winrt::Windows::Storage::Streams::IRandomAccessStream const & stream, ::image * pimage, const ::save_image * psaveimage);

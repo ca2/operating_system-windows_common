@@ -12,7 +12,7 @@
 #include <math.h>
 
 
-#ifdef _UWP
+#ifdef UNIVERSAL_WINDOWS
 #include <ShCore.h>
 #endif
 
@@ -506,7 +506,7 @@ namespace imaging_wic
 
             hr = pframe->CopyPixels(nullptr, pimage->scan_size(), pimage->scan_size() * height, (byte *)pimage->data());
 
-   #ifdef _UWP
+   #ifdef UNIVERSAL_WINDOWS
             //pimage->mult_alpha();
    #endif
 
@@ -525,7 +525,7 @@ namespace imaging_wic
             pimage->map();
 
             hr = pframe->CopyPixels(nullptr, pimage->scan_size(), pimage->scan_size() * height, (byte *)pimage->data());
-   #ifdef _UWP
+   #ifdef UNIVERSAL_WINDOWS
             //pimage->mult_alpha();
    #endif
 

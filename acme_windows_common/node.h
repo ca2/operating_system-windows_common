@@ -89,12 +89,6 @@ namespace acme_windows_common
       ::file::path library_file_name(const ::scoped_string & scopedstr) override;
 
 
-      //void unzip_to_folder(const ::file::path& pathFolder, const ::file::path& pathZip) override;
-
-
-      virtual void _unzip_to_folder(const char * pszZip, const char * pszFolder);
-
-
    };
 
 

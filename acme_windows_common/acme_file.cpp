@@ -18,7 +18,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-//#ifdef _UWP
+//#ifdef UNIVERSAL_WINDOWS
 //#include "acme/operating_system/universal_windows/_.h"
 //#endif
 
@@ -644,7 +644,7 @@ namespace acme_windows_common
 
       ::windows::file_instance file;
 
-//#ifdef _UWP
+//#ifdef UNIVERSAL_WINDOWS
 //
 //      HANDLE h = ::CreateFile2(path.get_os_path(), GENERIC_WRITE, FILE_SHARE_READ, CREATE_ALWAYS, nullptr);
 //

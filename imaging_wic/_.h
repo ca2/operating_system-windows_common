@@ -4,7 +4,7 @@
 #include "aura/_.h"
 
 
-#ifdef _UWP
+#ifdef UNIVERSAL_WINDOWS
 #include "aura_universal_windows/_.h"
 #elif defined(WINDOWS_DESKTOP)
 #include "aura_windows/_.h"
