@@ -95,7 +95,7 @@ namespace acme_windows_common
 
          }
 
-         pfileNew->write(memory);
+         pfileNew->write(memory(0, read));
 
       }
 
