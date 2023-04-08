@@ -148,9 +148,17 @@ namespace apex_windows_common
 
          ::windows::file_instance fileinstance;
 
-         fileinstance.create_file(path, GENERIC_READ | GENERIC_WRITE,
-               FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL,
-               nullptr);
+         if (!fileinstance.safe_create_file(path, GENERIC_READ | GENERIC_WRITE,
+            FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL,
+            nullptr))
+         {
+
+            DWORD dwLastError = ::GetLastError();
+
+            throw_last_error_exception(path, ::file::e_open_read | ::file::e_open_write, dwLastError, "apex_windows::file_context::set_status safe_create_file failed");
+
+         }
+
 
          //::pointer < ::file::exception > * ppfileexception
 

@@ -342,7 +342,14 @@ namespace acme_windows_common
 
 //#ifdef WINDOWS_DESKTOP
 
-      file.create_file(path, GENERIC_READ, FILE_SHARE_WRITE | FILE_SHARE_READ | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+      if (!file.safe_create_file(path, GENERIC_READ, FILE_SHARE_WRITE | FILE_SHARE_READ | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr))
+      {
+
+         DWORD dwLastError = ::GetLastError();
+
+         throw_last_error_exception(path, ::file::e_open_read, dwLastError, "acme_windows_common::acme_file::get_size safe_create_file failed");
+
+      }
 
 //#else
 
@@ -650,8 +657,14 @@ namespace acme_windows_common
 //
 //#else
 
-      file.create_file(path, GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
+      if (!file.safe_create_file(path, GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr))
+      {
 
+         DWORD dwLastError = ::GetLastError();
+
+         throw_last_error_exception(path, ::file::e_open_write, dwLastError, "acme_windows_common::acme_file::put_block safe_create_file failed");
+
+      }
 //#endif
 
       auto size = block.size();
