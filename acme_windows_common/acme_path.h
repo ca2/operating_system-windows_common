@@ -19,7 +19,7 @@ namespace acme_windows_common
       ~acme_path() override;
 
 
-      ::file::path real_path(const ::file::path & path) override;
+      ::file::path _real_path(const ::file::path & path) override;
 
       ::file::enum_type get_type(const ::file::path & path) override;
 
