@@ -18,7 +18,7 @@ namespace multimedia
       public:
 
 
-         ::multimedia::audio_mixer::audio_mixer                    * m_pmixer;
+         ::audio_mixer::audio_mixer                    * m_pmixer;
 
 
          window(::pointer<base_application>papp);

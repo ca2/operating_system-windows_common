@@ -12,12 +12,12 @@ namespace multimedia
       audio_mixer::audio_mixer(::pointer<base_application>papp) :
          ::object(pobject),
          m_window(pobject),
-         ::multimedia::audio_mixer::audio_mixer(pobject)
+         ::audio_mixer::audio_mixer(pobject)
       {
 
          m_window.m_pmixer = this;
 
-//         m_pdevice = new ::multimedia::audio_mixer::device(this);
+//         m_pdevice = new ::audio_mixer::device(this);
 
       }
 
@@ -305,7 +305,7 @@ namespace multimedia
       void audio_mixer::OnMixerLineChange(HMIXER hMixer, u32 dwLineID)
       {
 
-         ::pointer<::multimedia::audio_mixer_mmsystem::device>device = m_pdevice;
+         ::pointer<::audio_mixer_mmsystem::device>device = m_pdevice;
 
          if(hMixer == device->m_hMixer)
          {
@@ -326,7 +326,7 @@ namespace multimedia
       void audio_mixer::OnMixerControlChange(HMIXER hMixer, u32 dwControlID)
       {
 
-         ::pointer<::multimedia::audio_mixer_mmsystem::device>device = m_pdevice;
+         ::pointer<::audio_mixer_mmsystem::device>device = m_pdevice;
 
          if(hMixer == device->m_hMixer)
          {
@@ -346,7 +346,7 @@ namespace multimedia
       bool audio_mixer::OnCommand(wparam wparam, lparam lparam)
       {
 
-         ::pointer<::multimedia::audio_mixer_mmsystem::device>device = m_pdevice;
+         ::pointer<::audio_mixer_mmsystem::device>device = m_pdevice;
 
          if(device != nullptr && device->OnCommand(wparam, lparam))
             return true;
@@ -356,7 +356,7 @@ namespace multimedia
       }
 
 
-      ::multimedia::audio_mixer::callback * audio_mixer::get_callback()
+      ::audio_mixer::callback * audio_mixer::get_callback()
       {
 
          return m_pcallback;
@@ -364,7 +364,7 @@ namespace multimedia
       }
 
 
-      void audio_mixer::set_callback(::multimedia::audio_mixer::callback * pcallback)
+      void audio_mixer::set_callback(::audio_mixer::callback * pcallback)
       {
 
          m_pcallback = pcallback;

@@ -11,7 +11,7 @@ namespace multimedia
 
       device::device(::pointer<base_application>papp) :
          ::object(pobject),
-         ::multimedia::audio_mixer::device(pobject)
+         ::audio_mixer::device(pobject)
          //m_mixerdestinationa(pobject)
       {
 
@@ -31,7 +31,7 @@ namespace multimedia
 
       }
 
-      bool device::initialize(::multimedia::audio_mixer::audio_mixer * pmixer)
+      bool device::initialize(::audio_mixer::audio_mixer * pmixer)
       {
 
          m_pmixer = pmixer;
@@ -90,7 +90,7 @@ namespace multimedia
 
          m_uiMixerID = uiMixerId;
 
-         //    Appset_window_text(oswindow, "::multimedia::audio_mixer::audio_mixer Device: %s", (char *)mxcaps.szPname);
+         //    Appset_window_text(oswindow, "::audio_mixer::audio_mixer Device: %s", (char *)mxcaps.szPname);
 
          return mmrc;
 
@@ -121,7 +121,7 @@ namespace multimedia
       void     device::initialize_destinations()
       {
 
-         ::pointer<::multimedia::audio_mixer_mmsystem::destination>   lpDestination;
+         ::pointer<::audio_mixer_mmsystem::destination>   lpDestination;
 
          m_mixerdestinationa.set_size_create(m_mixercaps.cDestinations);
 
@@ -130,7 +130,7 @@ namespace multimedia
             lpDestination = m_mixerdestinationa(i);
             lpDestination->set_device(this);
             lpDestination->mixerGetLineInfo(0, i, MIXER_GETLINEINFOF_DESTINATION);
-            //        ::multimedia::audio_mixer::audio_mixer::get_component_name(lpmxl, lpDestination->m_strComponent);
+            //        ::audio_mixer::audio_mixer::get_component_name(lpmxl, lpDestination->m_strComponent);
 
             //        //
             //      //
@@ -165,14 +165,14 @@ namespace multimedia
 
       }
 
-      void     device::get_destination(::multimedia::audio_mixer::e_destination edestination, ::multimedia::audio_mixer::destination **ppDestination)
+      void     device::get_destination(::audio_mixer::e_destination edestination, ::audio_mixer::destination **ppDestination)
       {
 
          u32 dwComponentType;
 
          switch(edestination)
          {
-         case ::multimedia::audio_mixer::destination_speakers:
+         case ::audio_mixer::destination_speakers:
             dwComponentType = MIXERLINE_COMPONENTTYPE_DST_SPEAKERS;
             break;
 
@@ -190,7 +190,7 @@ namespace multimedia
          for(i32 i = 0; i < m_mixerdestinationa.get_size(); i++)
          {
 
-            ::pointer<::multimedia::audio_mixer_mmsystem::destination>destination = m_mixerdestinationa(i);
+            ::pointer<::audio_mixer_mmsystem::destination>destination = m_mixerdestinationa(i);
 
             u32 dw = destination->m_mixerline.dwComponentType;
 
@@ -217,16 +217,16 @@ namespace multimedia
          for(i32 i = 0; i < m_mixerdestinationa.get_size(); i++)
          {
 
-            ::pointer<::multimedia::audio_mixer_mmsystem::destination>destination = m_mixerdestinationa(i);
+            ::pointer<::audio_mixer_mmsystem::destination>destination = m_mixerdestinationa(i);
 
             MapLineControls(destination);
 
-            ::multimedia::audio_mixer::source_array & sourcea = destination->get_source_info();
+            ::audio_mixer::source_array & sourcea = destination->get_source_info();
 
             for(i32 j = 0; j < sourcea.get_size(); j++)
             {
 
-               ::pointer<::multimedia::audio_mixer::source>source = sourcea(j);
+               ::pointer<::audio_mixer::source>source = sourcea(j);
 
                MapLineControls(source);
 
@@ -245,16 +245,16 @@ namespace multimedia
          for(i32 i = 0; i < m_mixerdestinationa.get_size(); i++)
          {
 
-            ::pointer<::multimedia::audio_mixer_mmsystem::destination>destination = m_mixerdestinationa(i);
+            ::pointer<::audio_mixer_mmsystem::destination>destination = m_mixerdestinationa(i);
 
             m_mapIDToLine.set_at(destination->get_mixer_line().dwLineID, destination);
 
-            ::multimedia::audio_mixer::source_array & sourcea = destination->get_source_info();
+            ::audio_mixer::source_array & sourcea = destination->get_source_info();
 
             for(i32 j = 0; j < sourcea.get_size(); j++)
             {
 
-               ::pointer<::multimedia::audio_mixer_mmsystem::source>source = sourcea(j);
+               ::pointer<::audio_mixer_mmsystem::source>source = sourcea(j);
 
                m_mapIDToLine.set_at(source->m_mixerline.dwLineID, source);
 
@@ -266,7 +266,7 @@ namespace multimedia
 
       void device::OnMixerLineChange(u32 dwLineID)
       {
-         ::multimedia::audio_mixer::source * pSource;
+         ::audio_mixer::source * pSource;
          if(m_mapIDToLine.lookup(dwLineID, pSource))
          {
             pSource->OnMixerLineChange();
@@ -275,23 +275,23 @@ namespace multimedia
 
       void device::OnMixerControlChange(u32 dwControlID)
       {
-         ::multimedia::audio_mixer::control * pControl;
+         ::audio_mixer::control * pControl;
          if(m_mapIDToControl.lookup(dwControlID, pControl))
          {
             pControl->OnMixerControlChange();
          }
       }
 
-      void device::MapLineControls(::multimedia::audio_mixer::source * psource)
+      void device::MapLineControls(::audio_mixer::source * psource)
       {
-         ::multimedia::audio_mixer::control_array & controla = psource->get_control_array();
+         ::audio_mixer::control_array & controla = psource->get_control_array();
          for(i32 k = 0; k < controla.get_size(); k++)
          {
-            ::pointer<::multimedia::audio_mixer_mmsystem::control>control = controla(k);
+            ::pointer<::audio_mixer_mmsystem::control>control = controla(k);
             m_mapIDToControl.set_at(control->GetMixerControl().dwControlID, control);
             for(i32 l = 0; l < control->get_size(); l++)
             {
-               ::pointer<::multimedia::audio_mixer::user::control>pinteraction = control->operator ()(l);
+               ::pointer<::audio_mixer::user_control>pinteraction = control->operator ()(l);
                m_mapDlgItemIDToControl.set_at(pinteraction->_GetDlgCtrlID(), control);
             }
          }
@@ -301,30 +301,30 @@ namespace multimedia
       {
          m_mapDlgItemIDToControl.erase_all();
 
-         ::multimedia::audio_mixer::destination_array & destinationa = m_mixerdestinationa;
+         ::audio_mixer::destination_array & destinationa = m_mixerdestinationa;
          for(i32 i = 0; i < destinationa.get_size(); i++)
          {
-            ::pointer<::multimedia::audio_mixer_mmsystem::destination>destination = destinationa(i);
+            ::pointer<::audio_mixer_mmsystem::destination>destination = destinationa(i);
             MapDlgCtrlIDToLineControls(destination);
-            ::multimedia::audio_mixer::source_array & sourcea = destination->get_source_info();
+            ::audio_mixer::source_array & sourcea = destination->get_source_info();
             for(i32 j = 0; j < sourcea.get_size(); j++)
             {
-               ::multimedia::audio_mixer::source & source = sourcea[j];
+               ::audio_mixer::source & source = sourcea[j];
                MapDlgCtrlIDToLineControls(&source);
             }
          }
 
       }
 
-      void device::MapDlgCtrlIDToLineControls(::multimedia::audio_mixer::source * psource)
+      void device::MapDlgCtrlIDToLineControls(::audio_mixer::source * psource)
       {
-         ::multimedia::audio_mixer::control_array & controla = psource->get_control_array();
+         ::audio_mixer::control_array & controla = psource->get_control_array();
          for(i32 k = 0; k < controla.get_size(); k++)
          {
-            ::pointer<::multimedia::audio_mixer::control>control = controla(k);
+            ::pointer<::audio_mixer::control>control = controla(k);
             for(i32 l = 0; l < control->get_size(); l++)
             {
-               ::pointer<::multimedia::audio_mixer::user::control>pinteraction = control->operator()(l);
+               ::pointer<::audio_mixer::user_control>pinteraction = control->operator()(l);
                m_mapDlgItemIDToControl.set_at(pinteraction->_GetDlgCtrlID(), control);
             }
          }
@@ -362,7 +362,7 @@ namespace multimedia
 
          u32 uiID = LOWORD(wparam);
 
-         ::multimedia::audio_mixer::control * pinteraction;
+         ::audio_mixer::control * pinteraction;
 
          if(m_mapDlgItemIDToControl.lookup(uiID, pinteraction)
                && pinteraction->OnCommand(wparam, lparam))
@@ -381,7 +381,7 @@ namespace multimedia
       }
 
 
-      ::multimedia::audio_mixer::audio_mixer * device::get_mixer()
+      ::audio_mixer::audio_mixer * device::get_mixer()
       {
          return m_pmixer;
       }
