@@ -29,7 +29,7 @@ namespace multimedia
          control(control & control);
          virtual ~control();
 
-         using ::audio_mixer::user::control_ptr_array::add;
+         using ::audio_mixer_user::control_ptr_array::add;
          virtual iptr add(::audio_mixer::user_control * pinteraction);
 
          bool control_type(::audio_mixer::e_control econtrol) const;

@@ -59,7 +59,7 @@ namespace acme_windows_common
    }
 
 
-   ::file::path acme_path::_final(const ::file::path & path)
+   ::file::path acme_path::_real_path(const ::file::path & path)
    {
 
       WCHAR wszPath[8192];

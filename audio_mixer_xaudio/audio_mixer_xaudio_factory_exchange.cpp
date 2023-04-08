@@ -22,10 +22,10 @@ namespace multimedia
          //create_factory < department                   >  (__type(::audio_mixer::font));
          create_factory <source                      >  (__type(::audio_mixer::source));
          create_factory <thread                      >  (__type(::audio_mixer::thread));
-         /*create_factory <user::label                 >  (__type(::audio_mixer::user::label));
+         /*create_factory <user::label                 >  (__type(::audio_mixer_user::label));
          create_factory <user::interaction               >  (__type(::audio_mixer::user_control));
-         create_factory <user::level_control         >  (__type(::audio_mixer::user::level_control));
-         create_factory <user::toggle_control        >  (__type(::audio_mixer::user::toggle_control));*/
+         create_factory <user::level_control         >  (__type(::audio_mixer_user::level_control));
+         create_factory <user::toggle_control        >  (__type(::audio_mixer_user::toggle_control));*/
 
       }
 
