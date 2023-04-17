@@ -8,6 +8,7 @@
 
 
 #include "acme/platform/node.h"
+#include "acme/primitive/collection/numeric_array.h"
 
 
 namespace acme_windows_common
