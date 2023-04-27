@@ -54,10 +54,10 @@ namespace draw2d_direct2d
    }
 
 
-   string draw2d::write_text_get_default_library_name()
+   string draw2d::write_text_get_default_implementation_name()
    {
 
-      return "direct2d";
+      return acmesystem()->implementation_name("write_text", "direct2d");
 
    }
 

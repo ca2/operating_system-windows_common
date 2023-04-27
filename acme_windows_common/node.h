@@ -77,7 +77,7 @@ namespace acme_windows_common
       //virtual ::e_status ::windows::last_error_status(DWORD dwLastError);
 
 
-      string audio_get_default_library_name() override;
+      string audio_get_default_implementation_name() override;
 
 
       string font_name(enum_font efont) override;
