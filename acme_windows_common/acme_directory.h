@@ -21,7 +21,7 @@ namespace acme_windows_common
 
       ::file::path get_current() override;
 
-
+      ::file::path tool() override;
 
    };
 
