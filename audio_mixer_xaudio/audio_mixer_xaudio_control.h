@@ -10,7 +10,7 @@ namespace multimedia
 
 
       class CLASS_DECL_AUDIO_MIXER_MMSYSTEM control :
-         virtual public ::multimedia::audio_mixer::control
+         virtual public ::audio_mixer::control
       {
       public:
 
@@ -29,19 +29,19 @@ namespace multimedia
          control(control & control);
          virtual ~control();
 
-         using ::multimedia::audio_mixer::user::control_ptr_array::add;
-         virtual iptr add(::multimedia::audio_mixer::user::control * pinteraction);
+         using ::audio_mixer_user::control_ptr_array::add;
+         virtual iptr add(::audio_mixer::user_control * pinteraction);
 
-         bool control_type(::multimedia::audio_mixer::e_control econtrol) const;
+         bool control_type(::audio_mixer::e_control econtrol) const;
          bool OnCommand(WPARAM wParam, LPARAM lParam);
-         ::multimedia::audio_mixer::control_data * GetWindowDataByDlgCtrlID(u32 nID);
-         ::multimedia::audio_mixer::user::control * GetControlByDlgCtrlID(u32 nID);
+         ::audio_mixer::control_data * GetWindowDataByDlgCtrlID(u32 nID);
+         ::audio_mixer::user_control * GetControlByDlgCtrlID(u32 nID);
          //   bool OnNotify(u32 nID, LPNMHDR lpnmhdr);
          void OnVHScroll(u32 nSBCode, u32 nPos, ::pointer<::user::interaction>pScrollBar);
-         ::multimedia::audio_mixer::control_data * GetWindowData(i32 iType);
+         ::audio_mixer::control_data * GetWindowData(i32 iType);
          void OnMixerControlChange();
-         ::multimedia::audio_mixer::user::control * GetControl(i32 iType);
-         ::multimedia::audio_mixer::user::control * GetControlByIndex(::index iIndex);
+         ::audio_mixer::user_control * GetControl(i32 iType);
+         ::audio_mixer::user_control * GetControlByIndex(::index iIndex);
          void Prepare();
          bool CreateWindowsVolumeV001(::pointer<::user::interaction>pParent, u32 nStartID, u32 * nNextID);
 

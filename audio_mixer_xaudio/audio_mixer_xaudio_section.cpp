@@ -63,7 +63,7 @@ namespace multimedia
       void     department::CreateNewDestination(u32 dwComponentType)
       {
       void     mmrc;
-      ::multimedia::audio_mixer::destination * pdestination = nullptr;
+      ::audio_mixer::destination * pdestination = nullptr;
 
       if(MMSYSERR_NOERROR != (mmrc =  m_pmixer->m_pdevice->get_destination(
       dwComponentType,
@@ -91,7 +91,7 @@ namespace multimedia
 
       bool department::initialize()
       {
-         //   m_pmixerthread = (::multimedia::audio_mixer::thread *) __begin_thread(__type(::multimedia::audio_mixer::thread));
+         //   m_pmixerthread = (::audio_mixer::thread *) __begin_thread(__type(::audio_mixer::thread));
          //   if(m_pmixerthread == nullptr)
          //      return false;
          //   return true

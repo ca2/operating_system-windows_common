@@ -10,7 +10,7 @@ namespace multimedia
 
 
       class CLASS_DECL_AUDIO_MIXER_MMSYSTEM line_info :
-         virtual public ::multimedia::audio_mixer::line_info
+         virtual public ::audio_mixer::line_info
       {
       public:
 

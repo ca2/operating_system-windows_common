@@ -10,9 +10,9 @@ namespace multimedia
 
       destination::destination(::pointer<base_application>papp) :
          ::object(pobject),
-         ::multimedia::audio_mixer::source(pobject),
-         ::multimedia::audio_mixer_mmsystem::source(pobject),
-         ::multimedia::audio_mixer::destination(pobject)
+         ::audio_mixer::source(pobject),
+         ::audio_mixer_mmsystem::source(pobject),
+         ::audio_mixer::destination(pobject)
       {
 
          m_mixersourcea.set_app(pobject);
@@ -23,9 +23,9 @@ namespace multimedia
 
       destination::destination(const destination & destination) :
          ::matter(((class destination &) destination).get_application()),
-         ::multimedia::audio_mixer::source(((class destination &)destination).get_application()),
-         ::multimedia::audio_mixer_mmsystem::source(((class destination &)destination).get_application()),
-         ::multimedia::audio_mixer::destination(((class destination &)destination).get_application())
+         ::audio_mixer::source(((class destination &)destination).get_application()),
+         ::audio_mixer_mmsystem::source(((class destination &)destination).get_application()),
+         ::audio_mixer::destination(((class destination &)destination).get_application())
       {
 
          m_mixersourcea.set_app(((class destination &)destination).get_application());
@@ -36,7 +36,7 @@ namespace multimedia
 
       destination::~destination()
       {
-         //    Carray<::multimedia::audio_mixer::source, ::multimedia::audio_mixer::source &>::~Carray<::multimedia::audio_mixer::source, ::multimedia::audio_mixer::source &>();
+         //    Carray<::audio_mixer::source, ::audio_mixer::source &>::~Carray<::audio_mixer::source, ::audio_mixer::source &>();
          //CMixerLine::~CMixerLine();
       }
 
@@ -51,7 +51,7 @@ namespace multimedia
       void     destination::initialize_source_info()
       {
 
-         ::pointer<::multimedia::audio_mixer_mmsystem::source>    lpSource;
+         ::pointer<::audio_mixer_mmsystem::source>    lpSource;
 
          i32 iConnections = (i32) m_mixerline.cConnections;
 
@@ -78,7 +78,7 @@ namespace multimedia
 
          GetLineControls();
 
-         ::multimedia::audio_mixer::source_array & sourcea = m_mixersourcea;
+         ::audio_mixer::source_array & sourcea = m_mixersourcea;
 
          for(i32 i = 0; i < sourcea.get_size(); i++)
          {
@@ -94,9 +94,9 @@ namespace multimedia
       void destination::update_all_controls()
       {
 
-         ::multimedia::audio_mixer::source::update_all_controls();
+         ::audio_mixer::source::update_all_controls();
 
-         ::multimedia::audio_mixer::source_array & sourcea = m_mixersourcea;
+         ::audio_mixer::source_array & sourcea = m_mixersourcea;
 
          for(i32 i = 0; i < sourcea.get_size(); i++)
          {
@@ -126,7 +126,7 @@ namespace multimedia
       }
 
 
-      ::multimedia::audio_mixer::device * destination::get_device()
+      ::audio_mixer::device * destination::get_device()
       {
 
          return m_pdevice;
@@ -134,7 +134,7 @@ namespace multimedia
       }
 
 
-      void destination::set_device(::multimedia::audio_mixer::device * pdevice)
+      void destination::set_device(::audio_mixer::device * pdevice)
       {
 
          m_pdevice = pdevice;
@@ -142,7 +142,7 @@ namespace multimedia
       }
 
 
-      ::multimedia::audio_mixer::source_array & destination::get_source_info()
+      ::audio_mixer::source_array & destination::get_source_info()
       {
 
          return m_mixersourcea;

@@ -17,7 +17,7 @@ namespace draw2d_gdiplus
 
       virtual void initialize(::particle * pparticle) override;
 
-      virtual string write_text_get_default_library_name() override;
+      virtual string write_text_get_default_implementation_name() override;
 
    };
 
