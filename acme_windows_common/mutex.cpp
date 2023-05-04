@@ -15,11 +15,13 @@ namespace acme_windows_common
    mutex::mutex(enum_create_new, bool bInitiallyOwn)
    {
 
-#ifdef _DEBUG
+#ifdef MUTEX_DEBUG
       m_itask = -1;
 #endif
 
       m_hsynchronization = ::CreateMutexExW(nullptr, nullptr, bInitiallyOwn ? CREATE_MUTEX_INITIAL_OWNER : 0, MUTEX_ALL_ACCESS);
+
+      set_own_synchronization_flag();
 
    }
 
@@ -27,7 +29,7 @@ namespace acme_windows_common
    mutex::mutex(::particle * pparticle, bool bInitiallyOwn, const char * pszName, security_attributes * psecurityattributes)
    {
 
-#ifdef _DEBUG
+#ifdef MUTEX_DEBUG
 
       m_itask = -1;
 
@@ -81,7 +83,7 @@ namespace acme_windows_common
    mutex::mutex(enum_create_new, const char * pstrName, HANDLE handleSyncObject, bool bOwner)
    {
 
-#ifdef _DEBUG
+#ifdef MUTEX_DEBUG
       m_itask = -1;
 #endif
 
@@ -95,14 +97,13 @@ namespace acme_windows_common
    mutex::~mutex()
    {
 
-
    }
 
 
    void mutex::unlock()
    {
 
-#ifdef _DEBUG
+#ifdef MUTEX_DEBUG
 
       m_strThread.empty();
       m_itask = -1;
@@ -110,6 +111,12 @@ namespace acme_windows_common
 
 #endif
 
+      if (!m_hsynchronization)
+      {
+
+         throw ::exception(error_wrong_state);
+
+      }
 
       if (!::ReleaseMutex(m_hsynchronization))
       {
