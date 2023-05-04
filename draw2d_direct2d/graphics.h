@@ -353,14 +353,14 @@ namespace draw2d_direct2d
       void Pie(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4) override;
       void Pie(const ::rectangle_f64 & rectangle, const ::point_f64 & pointStart, const ::point_f64 & pointEnd) override;
       //bool polygon_i32(LPCPOINT lppoints, count nCount);
-      void polygon(const POINT_F64 * lppoints, count nCount) override;
+      void polygon(const ::point_f64 * lppoints, count nCount) override;
       //bool draw_polygon(LPCPOINT ppoints, count nCount) override;
-      void draw_polygon(const POINT_F64 * lppoints, count nCount) override;
+      void draw_polygon(const ::point_f64 * lppoints, count nCount) override;
       //bool fill_polygon(LPCPOINT ppoints, count nCount) override;
-      void fill_polygon(const POINT_F64 * lppoints, count nCount) override;
+      void fill_polygon(const ::point_f64 * lppoints, count nCount) override;
       //      bool poly_polygon(LPCPOINT  lppoint, LPCINT lpPolyCounts, count nCount) override;
 
-      //virtual bool fill_polygon(const POINT_F64 * ppoints,count nCount) override;
+      //virtual bool fill_polygon(const ::point_f64 * ppoints,count nCount) override;
 
       using ::draw2d::graphics::rectangle;
       using ::draw2d::graphics::draw_rectangle;

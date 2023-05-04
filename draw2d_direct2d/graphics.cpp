@@ -1638,7 +1638,7 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::polygon(const POINT_F64 * ppoints, count count)
+   void graphics::polygon(const ::point_f64 * ppoints, count count)
    {
 
       if (count < 3)
@@ -1690,7 +1690,7 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::draw_polygon(const POINT_F64 * ppoints, count count)
+   void graphics::draw_polygon(const ::point_f64 * ppoints, count count)
    {
 
       if (count < 3)
@@ -1738,7 +1738,7 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::fill_polygon(const POINT_F64 * ppoints, count count)
+   void graphics::fill_polygon(const ::point_f64 * ppoints, count count)
    {
 
       if (count < 3)
