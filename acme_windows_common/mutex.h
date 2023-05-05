@@ -7,8 +7,6 @@
 #include "acme/operating_system/security_attributes.h"
 
 
-#undef MUTEX_DEBUG
-
 
 namespace acme_windows_common
 {
@@ -20,11 +18,6 @@ namespace acme_windows_common
    {
    public:
 
-
-#ifdef MUTEX_DEBUG
-      string                  m_strThread;
-      itask_t                 m_itask;
-#endif
 
       //#if !defined(WINDOWS)
       //

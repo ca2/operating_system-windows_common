@@ -19,7 +19,7 @@ namespace acme_windows_common
       m_itask = -1;
 #endif
 
-      m_hsynchronization = ::CreateMutexExW(nullptr, nullptr, bInitiallyOwn ? CREATE_MUTEX_INITIAL_OWNER : 0, MUTEX_ALL_ACCESS);
+      m_handle = ::CreateMutexExW(nullptr, nullptr, bInitiallyOwn ? CREATE_MUTEX_INITIAL_OWNER : 0, MUTEX_ALL_ACCESS);
 
       set_own_synchronization_flag();
 
@@ -41,7 +41,7 @@ namespace acme_windows_common
 
       const unichar * pwszName = pszName == nullptr ? nullptr : (const unichar *)wstrName;
 
-      m_hsynchronization = ::CreateMutexExW(
+      m_handle = ::CreateMutexExW(
          (LPSECURITY_ATTRIBUTES)psecurityattributes->get_os_security_attributes(),
          pwszName,
          bInitiallyOwn ? CREATE_MUTEX_INITIAL_OWNER : 0, MUTEX_ALL_ACCESS);
@@ -50,7 +50,7 @@ namespace acme_windows_common
 
       set_already_exists_flag(dwLastError == ERROR_ALREADY_EXISTS);
 
-      if (m_hsynchronization == nullptr)
+      if (m_handle == nullptr)
       {
 
          DWORD dwError1 = ::GetLastError();
@@ -60,11 +60,11 @@ namespace acme_windows_common
 
             wstring wstrName(pszName);
 
-            m_hsynchronization = ::OpenMutexW(SYNCHRONIZE, false, wstrName);
+            m_handle = ::OpenMutexW(SYNCHRONIZE, false, wstrName);
 
          }
 
-         if (m_hsynchronization == nullptr)
+         if (m_handle == nullptr)
          {
 
             DWORD dwError2 = ::GetLastError();
@@ -89,7 +89,7 @@ namespace acme_windows_common
 
       set_own_synchronization_flag(bOwner);
 
-      m_hsynchronization = handleSyncObject;
+      m_handle = handleSyncObject;
 
    }
 
@@ -111,14 +111,14 @@ namespace acme_windows_common
 
 #endif
 
-      if (!m_hsynchronization)
+      if (!m_handle)
       {
 
          throw ::exception(error_wrong_state);
 
       }
 
-      if (!::ReleaseMutex(m_hsynchronization))
+      if (!::ReleaseMutex(m_handle))
       {
 
          auto last_error = GetLastError();

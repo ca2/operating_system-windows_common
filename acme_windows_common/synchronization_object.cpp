@@ -2,6 +2,7 @@
 #include "framework.h"
 #include "synchronization_object.h"
 #include "acme/exception/exception.h"
+#include "acme/parallelization/task.h"
 #include "acme/_operating_system.h"
 
 
@@ -9,22 +10,38 @@ namespace acme_windows_common
 {
 
 
+   synchronization_object::synchronization_object() :
+      m_handle(nullptr)
+   {
+
+
+   }
+
+
    synchronization_object::~synchronization_object()
    {
 
-      if (m_hsynchronization != nullptr)
+      if (m_handle != nullptr)
       {
 
          if (has_own_synchronization_flag())
          {
 
-            ::CloseHandle(m_hsynchronization);
+            ::CloseHandle(m_handle);
 
          }
 
-         m_hsynchronization = nullptr;
+         m_handle = nullptr;
 
       }
+
+   }
+
+
+   hsynchronization synchronization_object::get_synchronization_handle()
+   {
+
+      return m_handle;
 
    }
 
@@ -32,14 +49,22 @@ namespace acme_windows_common
    bool synchronization_object::_wait(const class time & timeWait)
    {
    
-      if (!m_hsynchronization)
+      if (!m_handle)
       {
 
          throw ::exception(error_wrong_state);
 
       }
 
-      DWORD dwResult = ::WaitForSingleObjectEx(m_hsynchronization, ::windows::wait(timeWait), false);
+#ifdef MUTEX_DEBUG
+      
+      m_strThread = ::get_task_name(::get_task());
+
+      m_itask = ::get_current_itask();
+
+#endif
+
+      DWORD dwResult = ::WaitForSingleObjectEx(m_handle, ::windows::wait(timeWait), false);
 
       auto estatus = ::windows::wait_result_status(dwResult);
 
@@ -58,7 +83,13 @@ namespace acme_windows_common
       else
       {
 
-         throw ::exception(estatus);
+         auto dwLastError = ::GetLastError();
+
+         auto estatus = ::windows::last_error_status(dwLastError);
+
+         auto errorcode = ::windows::last_error_error_code(dwLastError);
+
+         throw ::exception(estatus, { errorcode }, "WaitForSingleObjectEx WAIT_FAILED");
 
          return false;
 

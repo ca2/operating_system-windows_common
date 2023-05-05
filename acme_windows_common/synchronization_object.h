@@ -5,6 +5,9 @@
 #include "acme/primitive/primitive/particle.h"
 
 
+#define MUTEX_DEBUG
+
+
 namespace acme_windows_common
 {
 
@@ -15,7 +18,21 @@ namespace acme_windows_common
    public:
 
 
+#ifdef MUTEX_DEBUG
+      string                  m_strThread;
+      itask_t                 m_itask;
+#endif
+
+
+
+      hsynchronization        m_handle;
+
+
+      synchronization_object();
       ~synchronization_object();
+
+
+      hsynchronization get_synchronization_handle() override;
 
 
       bool _wait(const class time & timeWait) override;
