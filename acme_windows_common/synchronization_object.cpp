@@ -58,9 +58,9 @@ namespace acme_windows_common
 
 #ifdef MUTEX_DEBUG
       
-      m_strThread = ::get_task_name(::get_task());
+      //m_strThread = ::get_task_name(::get_task());
 
-      m_itask = ::get_current_itask();
+      //m_itask = ::get_current_itask();
 
 #endif
 
