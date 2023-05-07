@@ -5,7 +5,8 @@
 #include "acme/primitive/primitive/particle.h"
 
 
-#define MUTEX_DEBUG
+//#define MUTEX_DEBUG
+#undef MUTEX_DEBUG
 
 
 namespace acme_windows_common
