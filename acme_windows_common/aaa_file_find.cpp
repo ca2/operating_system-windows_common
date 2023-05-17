@@ -95,7 +95,7 @@ namespace windows
 
       wstring wstrRoot;
 
-      unichar * pstrRoot = wstrRoot.get_string_buffer(_MAX_PATH);
+      unichar * pstrRoot = wstrRoot.get_buffer(_MAX_PATH);
 
       const unichar * pstr = ::_wfullpath(pstrRoot, wstrName, _MAX_PATH);
 
@@ -141,7 +141,7 @@ namespace windows
 
          }
 
-         wstrRoot.release_string_buffer();
+         wstrRoot.release_buffer();
 
       }
 
@@ -386,9 +386,9 @@ namespace windows
 
       string strResult;
 
-      _splitpath(strFullName, nullptr, nullptr, strResult.get_string_buffer(_MAX_PATH), nullptr);
+      _splitpath(strFullName, nullptr, nullptr, strResult.get_buffer(_MAX_PATH), nullptr);
 
-      strResult.release_string_buffer();
+      strResult.release_buffer();
 
       return strResult;
 

@@ -103,7 +103,7 @@ namespace file
 
          wstring wstr;
 
-         auto pwsz = wstr.get_string_buffer(dwLen + 1);
+         auto pwsz = wstr.get_buffer(dwLen + 1);
 
          if (GetFinalPathNameByHandleW(m_hDirectory, pwsz, dwLen + 1, 0) > 0)
          {

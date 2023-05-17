@@ -1062,19 +1062,19 @@ bool CLASS_DECL_ACME_WINDOWS_COMMON window_get_full_path(wstring & wstrFullPath,
 
    strsize dwAllocLen = wstrPath.get_length() + _MAX_PATH;
 
-   auto pwszFullPath = wstrFullPath.get_string_buffer(dwAllocLen);
+   auto pwszFullPath = wstrFullPath.get_buffer(dwAllocLen);
 
    // first, fully qualify the path name
    unichar * pszFilePart;
 
    strsize dwLen = GetFullPathNameW(wstrPath, (::u32)dwAllocLen, pwszFullPath, &pszFilePart);
 
-   wstrFullPath.release_string_buffer();
+   wstrFullPath.release_buffer();
 
    if (dwLen == 0)
    {
 
-      wstrFullPath.release_string_buffer();
+      wstrFullPath.release_buffer();
 
       wstrFullPath = wstrPath; // take it literally
 
@@ -1089,7 +1089,7 @@ bool CLASS_DECL_ACME_WINDOWS_COMMON window_get_full_path(wstring & wstrFullPath,
 
       dwLen = GetFullPathNameW(wstrPath, (::u32)dwAllocLen, pwszFullPath, &pszFilePart);
 
-      wstrFullPath.release_string_buffer();
+      wstrFullPath.release_buffer();
 
 
       if (dwLen == 0 || dwLen > dwAllocLen)
@@ -1150,11 +1150,11 @@ bool CLASS_DECL_ACME_WINDOWS_COMMON window_get_full_path(wstring & wstrFullPath,
 
             strsize iFilePart = pszFilePart - wstrFullPath;
 
-            auto pwsz = wstrFullPath.get_string_buffer(iFilePart + iLenFileName + 32); // arrange more space with more 32 extra wchars
+            auto pwsz = wstrFullPath.get_buffer(iFilePart + iLenFileName + 32); // arrange more space with more 32 extra wchars
 
             wcsncpy(pwsz, wstrBackup, (i32)iFilePart);
 
-            wstrFullPath.release_string_buffer();
+            wstrFullPath.release_buffer();
 
             pszFilePart = pwsz + iFilePart;
 
@@ -1162,7 +1162,7 @@ bool CLASS_DECL_ACME_WINDOWS_COMMON window_get_full_path(wstring & wstrFullPath,
 
          wcscpy(pszFilePart, data.cFileName);
 
-         wstrFullPath.release_string_buffer();
+         wstrFullPath.release_buffer();
 
       }
 

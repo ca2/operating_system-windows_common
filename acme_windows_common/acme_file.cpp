@@ -438,7 +438,7 @@ namespace acme_windows_common
 
    //   iReadAtMostByteCount = iReadAtMostByteCount < 0 ? dwSize : minimum(iReadAtMostByteCount, (::strsize)dwSize);
 
-   //   char * psz = str.get_string_buffer(iReadAtMostByteCount);
+   //   char * psz = str.get_buffer(iReadAtMostByteCount);
 
    //   ::size_t iPos = 0;
 
@@ -460,7 +460,7 @@ namespace acme_windows_common
 
    //   psz[iPos] = '\0';
 
-   //   str.release_string_buffer(iReadAtMostByteCount);
+   //   str.release_buffer(iReadAtMostByteCount);
 
    //   fclose(file);
 
