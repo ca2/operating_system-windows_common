@@ -676,6 +676,35 @@ namespace acme_windows_common
    }
 
 
+   ::file::path acme_file::module()
+   {
+
+      ::file::path path;
+
+      {
+
+         wstring wstrPath;
+
+         auto p = wstrPath.get_buffer(MAX_PATH * 16);
+
+         if (!GetModuleFileNameW(nullptr, p, (DWORD)wstrPath.length()))
+         {
+
+            return "";
+
+         }
+
+         wstrPath.release_buffer();
+
+         path = ::string(wstrPath);
+
+      }
+
+      return path;
+
+   }
+
+
 } // namespace acme_windows_common
 
 
