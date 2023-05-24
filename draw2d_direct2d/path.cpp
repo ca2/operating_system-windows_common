@@ -74,7 +74,7 @@ namespace draw2d_direct2d
       if (!m_bHasPoint)
       {
 
-         if (!internal_start_figure(pgraphics, point.x, point.y))
+         if (!internal_start_figure(pgraphics, point.x(), point.y()))
          {
 
             return false;
@@ -90,7 +90,7 @@ namespace draw2d_direct2d
          if (dDistance > 0.001)
          {
 
-            m_psink->AddLine({(FLOAT) point.x, (FLOAT) point.y});
+            m_psink->AddLine({(FLOAT) point.x(), (FLOAT) point.y()});
 
          }
 
@@ -99,9 +99,9 @@ namespace draw2d_direct2d
 
       m_psink->AddArc(arcseg);
 
-      m_pointEnd.x = arcseg.point.x;
+      m_pointEnd.x() = arcseg.point.x();
 
-      m_pointEnd.y = arcseg.point.y;
+      m_pointEnd.y() = arcseg.point.y();
 
       m_estatus = ::success;
 
@@ -133,28 +133,28 @@ namespace draw2d_direct2d
 
       ::arc arc{};
 
-      arc.m_pointCenter.x = x + cx / 2.0;
-      arc.m_pointCenter.y = y + cy / 2.0;
+      arc.m_pointCenter.x() = x + cx / 2.0;
+      arc.m_pointCenter.y() = y + cy / 2.0;
       arc.m_sizeRadius.cx = cx / 2.0;
       arc.m_sizeRadius.cy = cy / 2.0;
-      arc.m_pointBegin.x = x + cx;
-      arc.m_pointBegin.y = y + cy / 2.0;
-      arc.m_pointEnd.x = x;
-      arc.m_pointEnd.y = y + cy / 2.0;
+      arc.m_pointBegin.x() = x + cx;
+      arc.m_pointBegin.y() = y + cy / 2.0;
+      arc.m_pointEnd.x() = x;
+      arc.m_pointEnd.y() = y + cy / 2.0;
       arc.m_angleBeg = 0.0;
       arc.m_angleEnd2 = MATH_PI;
       arc.m_angleExt = MATH_PI;
 
       internal_add_arc(pgraphics, arc);
 
-      arc.m_pointCenter.x = x + cx / 2.0;
-      arc.m_pointCenter.y = y + cy / 2.0;
+      arc.m_pointCenter.x() = x + cx / 2.0;
+      arc.m_pointCenter.y() = y + cy / 2.0;
       arc.m_sizeRadius.cx = cx / 2.0;
       arc.m_sizeRadius.cy = cy / 2.0;
-      arc.m_pointBegin.x = x;
-      arc.m_pointBegin.y = y + cy / 2.0;
-      arc.m_pointEnd.x = x + cx;
-      arc.m_pointEnd.y = y + cy / 2.0;
+      arc.m_pointBegin.x() = x;
+      arc.m_pointBegin.y() = y + cy / 2.0;
+      arc.m_pointEnd.x() = x + cx;
+      arc.m_pointEnd.y() = y + cy / 2.0;
       arc.m_angleBeg = MATH_PI;
       arc.m_angleEnd2 = MATH_PI * 2.0;
       arc.m_angleExt = MATH_PI;
@@ -178,12 +178,12 @@ namespace draw2d_direct2d
 
       }
 
-      internal_start_figure(pgraphics, pointa[0].x, pointa[0].y);
+      internal_start_figure(pgraphics, pointa[0].x(), pointa[0].y());
 
       for (index i = 1; i < pointa.get_count(); i++)
       {
 
-         internal_add_line(pgraphics, pointa[i].x, pointa[i].y);
+         internal_add_line(pgraphics, pointa[i].x(), pointa[i].y());
 
       }
 
@@ -204,12 +204,12 @@ namespace draw2d_direct2d
 
       }
 
-      internal_start_figure(pgraphics, pointa[0].x, pointa[0].y);
+      internal_start_figure(pgraphics, pointa[0].x(), pointa[0].y());
 
       for (index i = 1; i < pointa.get_count(); i++)
       {
 
-         internal_add_line(pgraphics, pointa[i].x, pointa[i].y);
+         internal_add_line(pgraphics, pointa[i].x(), pointa[i].y());
 
       }
 
@@ -301,9 +301,9 @@ namespace draw2d_direct2d
 
       m_psink->AddLine({ (FLOAT) x, (FLOAT)y });
 
-      m_pointEnd.x = x;
+      m_pointEnd.x() = x;
 
-      m_pointEnd.y = y;
+      m_pointEnd.y() = y;
 
       m_estatus = ::success;
 
@@ -359,10 +359,10 @@ namespace draw2d_direct2d
 
       m_psink->BeginFigure({ (FLOAT)x, (FLOAT)y }, pgraphics->m_bOutline ? D2D1_FIGURE_BEGIN_HOLLOW : D2D1_FIGURE_BEGIN_FILLED);
 
-      m_pointBegin.x = x;
-      m_pointBegin.y = y;
-      m_pointEnd.x = x;
-      m_pointEnd.y = y;
+      m_pointBegin.x() = x;
+      m_pointBegin.y() = y;
+      m_pointEnd.x() = x;
+      m_pointEnd.y() = y;
 
       m_bHasPoint = true;
 
@@ -385,17 +385,17 @@ namespace draw2d_direct2d
 
       D2D1_POINT_2F pointCenter;
 
-      pointCenter.x = (FLOAT)arc.m_pointCenter.x;
-      pointCenter.y = (FLOAT)arc.m_pointCenter.y;
+      pointCenter.x() = (FLOAT)arc.m_pointCenter.x();
+      pointCenter.y() = (FLOAT)arc.m_pointCenter.y();
 
       double rx = arc.m_sizeRadius.cx;
       double ry = arc.m_sizeRadius.cy;
 
-      pointStart.x = arc.m_pointBegin.x;
-      pointStart.y = arc.m_pointBegin.y;
+      pointStart.x() = arc.m_pointBegin.x();
+      pointStart.y() = arc.m_pointBegin.y();
 
-      arcseg.point.x = (FLOAT)arc.m_pointEnd.x;
-      arcseg.point.y = (FLOAT)arc.m_pointEnd.y;
+      arcseg.point.x() = (FLOAT)arc.m_pointEnd.x();
+      arcseg.point.y() = (FLOAT)arc.m_pointEnd.y();
 
       if(arc.m_angleEnd2 > arc.m_angleBeg)
       {
@@ -676,10 +676,10 @@ namespace draw2d_direct2d
 
       //::rectangle_f64 rectangle;
 
-      //rectangle.left      = (::i32) (arc.m_pointCenter.x - arc.m_sizeRadius.cx);
-      //rectangle.right     = (::i32) (arc.m_pointCenter.x + arc.m_sizeRadius.cx);
-      //rectangle.top       = (::i32) (arc.m_pointCenter.y - arc.m_sizeRadius.cy);
-      //rectangle.bottom    = (::i32) (arc.m_pointCenter.y + arc.m_sizeRadius.cy);
+      //rectangle.left      = (::i32) (arc.m_pointCenter.x() - arc.m_sizeRadius.cx);
+      //rectangle.right     = (::i32) (arc.m_pointCenter.x() + arc.m_sizeRadius.cx);
+      //rectangle.top       = (::i32) (arc.m_pointCenter.y() - arc.m_sizeRadius.cy);
+      //rectangle.bottom    = (::i32) (arc.m_pointCenter.y() + arc.m_sizeRadius.cy);
 
       //bool bOk = internal_add_arc(pgraphics, parc);
 
@@ -759,7 +759,7 @@ namespace draw2d_direct2d
       if (line.m_p1 != m_pointEnd || ::is_null(m_psink))
       {
 
-         if (!internal_start_figure(pgraphics, line.m_p1.x, line.m_p1.y))
+         if (!internal_start_figure(pgraphics, line.m_p1.x(), line.m_p1.y()))
          {
 
             return false;
@@ -768,7 +768,7 @@ namespace draw2d_direct2d
 
       }
 
-      return internal_add_line(pgraphics, line.m_p2.x, line.m_p2.y);
+      return internal_add_line(pgraphics, line.m_p2.x(), line.m_p2.y());
 
    }
 
@@ -779,7 +779,7 @@ namespace draw2d_direct2d
    //   if (line.m_p1 != m_pointEnd || !m_bFigureOpened)
    //   {
 
-   //      if (!internal_start_figure(pgraphics, line.m_p1.x, line.m_p1.y))
+   //      if (!internal_start_figure(pgraphics, line.m_p1.x(), line.m_p1.y()))
    //      {
 
    //         return false;
@@ -790,7 +790,7 @@ namespace draw2d_direct2d
 
    //   }
 
-   //   return internal_add_line(pgraphics, line.m_p2.x, line.m_p2.y);
+   //   return internal_add_line(pgraphics, line.m_p2.x(), line.m_p2.y());
 
    //}
 
@@ -858,8 +858,8 @@ namespace draw2d_direct2d
 
       auto bOk = internal_add_string(
          pgraphicsDraw2dDirect2d,
-         textout.m_point.x,
-         textout.m_point.y,
+         textout.m_point.x(),
+         textout.m_point.y(),
          textout.m_strText,
          textout.m_pfont);
 
@@ -934,7 +934,7 @@ namespace draw2d_direct2d
 
       //renderer.m_figurebeginOverride = pgraphics->m_bOutline ? D2D1_FIGURE_BEGIN_HOLLOW : D2D1_FIGURE_BEGIN_FILLED;
 
-      //playout->Draw(nullptr, &renderer, (FLOAT)textout.m_point.x, (FLOAT)textout.m_point.y);
+      //playout->Draw(nullptr, &renderer, (FLOAT)textout.m_point.x(), (FLOAT)textout.m_point.y());
 
       //return true;
 
@@ -954,10 +954,10 @@ namespace draw2d_direct2d
 
    //   //::rectangle_f64 rectangle;
 
-   //   //rectangle.left      = (::i32) (arc.m_pointCenter.x - arc.m_sizeRadius.cx);
-   //   //rectangle.right     = (::i32) (arc.m_pointCenter.x + arc.m_sizeRadius.cx);
-   //   //rectangle.top       = (::i32) (arc.m_pointCenter.y - arc.m_sizeRadius.cy);
-   //   //rectangle.bottom    = (::i32) (arc.m_pointCenter.y + arc.m_sizeRadius.cy);
+   //   //rectangle.left      = (::i32) (arc.m_pointCenter.x() - arc.m_sizeRadius.cx);
+   //   //rectangle.right     = (::i32) (arc.m_pointCenter.x() + arc.m_sizeRadius.cx);
+   //   //rectangle.top       = (::i32) (arc.m_pointCenter.y() - arc.m_sizeRadius.cy);
+   //   //rectangle.bottom    = (::i32) (arc.m_pointCenter.y() + arc.m_sizeRadius.cy);
 
    //   //bool bOk = internal_add_arc(pgraphics, parc);
 

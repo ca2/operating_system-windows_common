@@ -47,8 +47,8 @@
 //   message.m_message.hwnd = oswindow;
 //   message.m_message.wParam = wParam;
 //   message.m_message.lParam = lParam;
-//   message.m_message.pt.x = 0x80000000;
-//   message.m_message.pt.y = 0x80000000;
+//   message.m_message.pt.x() = 0x80000000;
+//   message.m_message.pt.y() = 0x80000000;
 //
 //   return post_message(message);
 //
@@ -139,8 +139,8 @@
 //         pMsg->message = WM_KICKIDLE;
 //         pMsg->wParam = 0;
 //         pMsg->lParam = 0;
-//         pMsg->pt.x = INT_MIN;
-//         pMsg->pt.y = INT_MIN;
+//         pMsg->pt.x() = INT_MIN;
+//         pMsg->pt.y() = INT_MIN;
 //         pMsg->time = 0;
 //
 //         return true;

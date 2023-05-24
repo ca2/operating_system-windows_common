@@ -81,10 +81,10 @@ namespace draw2d_direct2d
             //auto pointViewport = pgraphics->GetViewportOrg();
             ::point_i32 pointViewport(0, 0);
 
-            prop.startPoint.x    = (FLOAT) m_point1.x + pointViewport.x;
-            prop.startPoint.y    = (FLOAT) m_point1.y + pointViewport.y;
-            prop.endPoint.x      = (FLOAT) m_point2.x + pointViewport.x;
-            prop.endPoint.y      = (FLOAT) m_point2.y + pointViewport.y;
+            prop.startPoint.x()    = (FLOAT) m_point1.x() + pointViewport.x();
+            prop.startPoint.y()    = (FLOAT) m_point1.y() + pointViewport.y();
+            prop.endPoint.x()      = (FLOAT) m_point2.x() + pointViewport.x();
+            prop.endPoint.y()      = (FLOAT) m_point2.y() + pointViewport.y();
 
             // Create an array of gradient stops to put in the gradient stop
             // collection that will be used in the gradient brush.
@@ -156,8 +156,8 @@ namespace draw2d_direct2d
             if(SUCCEEDED(hr))
             {
 
-               double centerx = m_point.x;
-               double centery = m_point.y;
+               double centerx = m_point.x();
+               double centery = m_point.y();
                double offsetx = 0.0;
                double offsety = 0.0;
                double radiusx = m_size.cx;
