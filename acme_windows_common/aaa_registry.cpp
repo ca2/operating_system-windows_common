@@ -57,7 +57,7 @@ namespace windows
 
          wstring wstrValue;
        
-         auto pwszValue = wstrValue.get_string_buffer(cbValue);
+         auto pwszValue = wstrValue.get_buffer(cbValue);
 
          auto estatus = _value(pwszValue, pcszValueName, dwType, cbValue);
 
@@ -68,7 +68,7 @@ namespace windows
 
          }
          
-         wstrValue.release_string_buffer();
+         wstrValue.release_buffer();
 
          return string(wstrValue);
 
@@ -280,11 +280,11 @@ namespace windows
 
       wstring wstr;
 
-      auto pwsz = wstr.get_string_buffer(cbValue);
+      auto pwsz = wstr.get_buffer(cbValue);
 
       estatus = _value(pwsz, pcszValueName, dwType, cbValue);
 
-      wstr.release_string_buffer();
+      wstr.release_buffer();
 
       str = wstr;
 
@@ -592,7 +592,7 @@ namespace windows
 
       wstring hwstr;
       
-      auto pwsz=hwstr.get_string_buffer(dwMaxValueNameLen * 2);
+      auto pwsz=hwstr.get_buffer(dwMaxValueNameLen * 2);
 
       ::i32 l;
 

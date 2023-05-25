@@ -20,6 +20,8 @@ namespace acme_windows_common
 
       //::file::path _final(const ::file::path & path) override;
 
+      ::file::path module() override;
+
 
       void _copy(const ::file::path & pathNew, const ::file::path & pathSrc, bool bOverwrite) override;
       //bool exists(const ::file::path & path) override;

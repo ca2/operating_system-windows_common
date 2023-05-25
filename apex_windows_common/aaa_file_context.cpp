@@ -92,7 +92,7 @@ namespace windows
       wstrFileIn = utf8_to_unicode(pszFileIn);
 
       wstring wstrFileOut;
-      bool b = windows_full_path(wstrFileOut.get_string_buffer(MAX_PATH * 8), wstrFileIn) != false;
+      bool b = windows_full_path(wstrFileOut.get_buffer(MAX_PATH * 8), wstrFileIn) != false;
       if (b)
       {
          unicode_to_utf8(str, wstrFileOut);
@@ -130,7 +130,7 @@ namespace windows
       wstrPathName = utf8_to_unicode(pszPathName);
 
       wstring wstrTitle;
-      ::u32 user = vfxGetFileName(wstrPathName, wstrTitle.get_string_buffer(nMax), nMax);
+      ::u32 user = vfxGetFileName(wstrPathName, wstrTitle.get_buffer(nMax), nMax);
       str = unicode_to_utf8(wstrTitle);
       return user;
    }

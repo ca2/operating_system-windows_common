@@ -118,8 +118,8 @@ CLASS_DECL_AURA float x_dpi(oswindow hwnd, float y);
 inline void copy(D2D1_POINT_2F & pointDst, const ::point_f64 & pointSrc)
 {
    
-   pointDst.x = (FLOAT)pointSrc.x;
-   pointDst.y = (FLOAT)pointSrc.y;
+   pointDst.x() = (FLOAT)pointSrc.x();
+   pointDst.y() = (FLOAT)pointSrc.y();
 
 }
 

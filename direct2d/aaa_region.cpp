@@ -87,7 +87,7 @@ namespace draw2d_direct2d
       throw ::exception(todo);
 
 
-      //ASSERT(get_os_data() != nullptr); return ::OffsetRgn((HRGN)get_os_data(), point.x, point.y);
+      //ASSERT(get_os_data() != nullptr); return ::OffsetRgn((HRGN)get_os_data(), point.x(), point.y());
    }
    int region::GetRgnBox(::rectangle_i32 * prectangle) const
    {
@@ -125,13 +125,13 @@ namespace draw2d_direct2d
    bool region::contains(::draw2d::graphics* pgraphics, const ::point_i32 & point) const
    {
 
-      return contains(pgraphics, point.x, point.y);
+      return contains(pgraphics, point.x(), point.y());
 
       //throw ::exception(todo);
 
 
-      //return ::PtInRegion((HRGN)get_os_data(), point.x, point.y);
-      //Gdiplus::PointF point_f32((Gdiplus::REAL) point.x, (Gdiplus::REAL) point.y);
+      //return ::PtInRegion((HRGN)get_os_data(), point.x(), point.y());
+      //Gdiplus::PointF point_f32((Gdiplus::REAL) point.x(), (Gdiplus::REAL) point.y());
       //
       //ASSERT(get_os_data() != nullptr); //return ::PtInRegion((HRGN)get_os_data(), x, y);
 
@@ -232,8 +232,8 @@ namespace draw2d_direct2d
 
       D2D1_ELLIPSE ellipse;
 
-      ellipse.point.x = (float)(m_x2 + m_x1) / 2.f;
-      ellipse.point.y = (float)(m_y2 + m_y1) / 2.f;
+      ellipse.point.x() = (float)(m_x2 + m_x1) / 2.f;
+      ellipse.point.y() = (float)(m_y2 + m_y1) / 2.f;
       ellipse.radiusX = (float)(m_x2 - m_x1) / 2.f;
       ellipse.radiusY = (float)(m_y2 - m_y1) / 2.f;
 
@@ -255,7 +255,7 @@ namespace draw2d_direct2d
 
       for(int i = 0; i < m_nCount; i++)
       {
-         pa.add(Gdiplus::PointF((Gdiplus::REAL) m_lppoints[i].x, (Gdiplus::REAL) m_lppoints[i].y));
+         pa.add(Gdiplus::PointF((Gdiplus::REAL) m_lppoints[i].x(), (Gdiplus::REAL) m_lppoints[i].y()));
       }*/
 
       /*
@@ -302,7 +302,7 @@ namespace draw2d_direct2d
          pa.erase_all();
          for(int j = 0; j < jCount; j++)
          {
-            pa.add(point_f64(m_lppoints[n].x, m_lppoints[n].y));
+            pa.add(point_f64(m_lppoints[n].x(), m_lppoints[n].y()));
             n++;
          }
          //ppath->begin_figure(true, m_efillmode);

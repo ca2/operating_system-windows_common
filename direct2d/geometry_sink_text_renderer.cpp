@@ -179,8 +179,8 @@ void geometry_sink_text_renderer::BeginFigure(
    D2D1_FIGURE_BEGIN figureBegin
 )
 {
-   startPoint.x += m_xOffset;
-   startPoint.y += m_yOffset;
+   startPoint.x() += m_xOffset;
+   startPoint.y() += m_yOffset;
    auto begin = m_figurebeginOverride == D2D1_FIGURE_BEGIN_HOLLOW ? D2D1_FIGURE_BEGIN_HOLLOW : figureBegin;
    m_pgeometrysink->BeginFigure(startPoint, begin);
 
@@ -196,8 +196,8 @@ void geometry_sink_text_renderer::AddLines(
    memcpy(points2, points, m.size());
    for (UINT32 u = 0; u < pointsCount; u++)
    {
-      points2[u].x += m_xOffset;
-      points2[u].y += m_yOffset;
+      points2[u].x() += m_xOffset;
+      points2[u].y() += m_yOffset;
    }
    m_pgeometrysink->AddLines(points2, pointsCount);
 }
@@ -210,12 +210,12 @@ void geometry_sink_text_renderer::AddBeziers(const D2D1_BEZIER_SEGMENT * beziers
    memcpy(beziers2, beziers, m.size());
    for (UINT32 u = 0; u < beziersCount; u++)
    {
-      beziers2[u].point1.x += m_xOffset;
-      beziers2[u].point1.y += m_yOffset;
-      beziers2[u].point2.x += m_xOffset;
-      beziers2[u].point2.y += m_yOffset;
-      beziers2[u].point3.x += m_xOffset;
-      beziers2[u].point3.y += m_yOffset;
+      beziers2[u].point1.x() += m_xOffset;
+      beziers2[u].point1.y() += m_yOffset;
+      beziers2[u].point2.x() += m_xOffset;
+      beziers2[u].point2.y() += m_yOffset;
+      beziers2[u].point3.x() += m_xOffset;
+      beziers2[u].point3.y() += m_yOffset;
    }
 
    m_pgeometrysink->AddBeziers(beziers2, beziersCount);

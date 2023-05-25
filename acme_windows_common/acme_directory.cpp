@@ -31,11 +31,11 @@ namespace acme_windows_common
 
       wstring wstr;
 
-      auto buffer = wstr.get_string_buffer(size);
+      auto buffer = wstr.get_buffer(size);
 
       GetCurrentDirectoryW(size + 1, buffer);
 
-      wstr.release_string_buffer(size);
+      wstr.release_buffer(size);
 
       return wstr;
 

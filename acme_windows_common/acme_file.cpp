@@ -438,7 +438,7 @@ namespace acme_windows_common
 
    //   iReadAtMostByteCount = iReadAtMostByteCount < 0 ? dwSize : minimum(iReadAtMostByteCount, (::strsize)dwSize);
 
-   //   char * psz = str.get_string_buffer(iReadAtMostByteCount);
+   //   char * psz = str.get_buffer(iReadAtMostByteCount);
 
    //   ::size_t iPos = 0;
 
@@ -460,7 +460,7 @@ namespace acme_windows_common
 
    //   psz[iPos] = '\0';
 
-   //   str.release_string_buffer(iReadAtMostByteCount);
+   //   str.release_buffer(iReadAtMostByteCount);
 
    //   fclose(file);
 
@@ -672,6 +672,35 @@ namespace acme_windows_common
       ::memsize position = 0;
 
       while ((size -= file.defer_write(block.begin() + position, block.size() - position)) > 0);
+
+   }
+
+
+   ::file::path acme_file::module()
+   {
+
+      ::file::path path;
+
+      {
+
+         wstring wstrPath;
+
+         auto p = wstrPath.get_buffer(MAX_PATH * 16);
+
+         if (!GetModuleFileNameW(nullptr, p, (DWORD)wstrPath.length()))
+         {
+
+            return "";
+
+         }
+
+         wstrPath.release_buffer();
+
+         path = ::string(wstrPath);
+
+      }
+
+      return path;
 
    }
 

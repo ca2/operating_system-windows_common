@@ -110,7 +110,7 @@ namespace write_text_direct2d
          // Allocate a string big enough to hold the name.
          wstring wstr;
 
-         auto name = wstr.get_string_buffer(length + 1);
+         auto name = wstr.get_buffer(length + 1);
 
          if (name == nullptr)
          {
@@ -127,7 +127,7 @@ namespace write_text_direct2d
 
          }
 
-         wstr.release_string_buffer();
+         wstr.release_buffer();
 
          // Add the family name to the String Array.
          if (SUCCEEDED(hr))
