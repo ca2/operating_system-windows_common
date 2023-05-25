@@ -89,7 +89,7 @@ namespace draw2d_directx
 
       //ASSERT(get_os_data() != nullptr); return ::OffsetRgn((HRGN)get_os_data(), point.x, point.y);
    }
-   int region::GetRgnBox(RECTANGLE_I32 * prectangle) const
+   int region::GetRgnBox(::rectangle_i32 * prectangle) const
    {
 
       throw ::exception(todo);

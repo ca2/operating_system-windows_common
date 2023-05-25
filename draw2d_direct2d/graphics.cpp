@@ -2616,7 +2616,7 @@ namespace draw2d_direct2d
 //
 //   }
 //
-//   void graphics::ScrollDC(int dx, int dy, const ::rectangle_i32 & rectangleScroll, const ::rectangle_i32 & rectangleClip, ::draw2d::region* pRgnUpdate, RECTANGLE_I32 * lpRectUpdate)
+//   void graphics::ScrollDC(int dx, int dy, const ::rectangle_i32 & rectangleScroll, const ::rectangle_i32 & rectangleClip, ::draw2d::region* pRgnUpdate, ::rectangle_i32 * lpRectUpdate)
 //   {
 //
 //      throw ::exception(todo);
@@ -3666,7 +3666,7 @@ namespace draw2d_direct2d
 
    /*void graphics::LPtoHIMETRIC(LPSIZE32 LPSIZE32)
    {
-      ASSERT(is_memory_segment_ok(LPSIZE32, sizeof(SIZE_I32)));
+      ASSERT(is_memory_segment_ok(LPSIZE32, sizeof(::size_i32)));
 
       LPtoDP(LPSIZE32);
       DPtoHIMETRIC(LPSIZE32);
@@ -3674,7 +3674,7 @@ namespace draw2d_direct2d
 
    void graphics::HIMETRICtoLP(LPSIZE32 LPSIZE32)
    {
-      ASSERT(is_memory_segment_ok(LPSIZE32, sizeof(SIZE_I32)));
+      ASSERT(is_memory_segment_ok(LPSIZE32, sizeof(::size_i32)));
 
       HIMETRICtoDP(LPSIZE32);
       DPtoLP(LPSIZE32);

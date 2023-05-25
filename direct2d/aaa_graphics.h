@@ -345,14 +345,14 @@ namespace draw2d_direct2d
       bool Pie(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4) override;
       bool Pie(const ::rectangle_f64 & rectangle, const ::point_f64 & pointStart, const ::point_f64 & pointEnd) override;
       //bool polygon_i32(LPCPOINT lppoints, count nCount);
-      bool polygon_i32(const POINT_F64 * lppoints, count nCount);
+      bool polygon_i32(const ::point_f64 * lppoints, count nCount);
       //bool draw_polygon(LPCPOINT ppoints, count nCount) override;
-      bool draw_polygon(const POINT_F64 * lppoints, count nCount) override;
+      bool draw_polygon(const ::point_f64 * lppoints, count nCount) override;
       //bool fill_polygon(LPCPOINT ppoints, count nCount) override;
-      bool fill_polygon(const POINT_F64 * lppoints, count nCount) override;
+      bool fill_polygon(const ::point_f64 * lppoints, count nCount) override;
       //      bool poly_polygon(LPCPOINT  lppoint, LPCINT lpPolyCounts, count nCount) override;
 
-      //virtual bool fill_polygon(const POINT_F64 * ppoints,count nCount) override;
+      //virtual bool fill_polygon(const ::point_f64 * ppoints,count nCount) override;
 
       using ::draw2d::graphics::rectangle;
       using ::draw2d::graphics::draw_rectangle;
@@ -457,7 +457,7 @@ namespace draw2d_direct2d
 
 //      // Scrolling Functions
 //      bool ScrollDC(int dx, int dy, const ::rectangle_f64 & rectangleScroll, const ::rectangle_f64 & rectangleClip,
-//                    ::draw2d::region* pRgnUpdate, RECTANGLE_I32 * lpRectUpdate) override;
+//                    ::draw2d::region* pRgnUpdate, ::rectangle_i32 * lpRectUpdate) override;
 //
 //      // font Functions
 //      bool GetCharWidth(::u32 nFirstChar, ::u32 nLastChar, LPINT lpBuffer) override;
