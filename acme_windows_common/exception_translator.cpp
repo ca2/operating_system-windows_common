@@ -125,7 +125,7 @@ namespace acme_windows_common
 //
 //#endif
 
-         output_debug_string("exception standard translator");
+         ///output_debug_string("exception standard translator");
 
 //#if defined(__SANITIZE_ADDRESS__) || defined(__FOR_PERF__)
 //
