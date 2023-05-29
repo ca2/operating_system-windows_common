@@ -160,8 +160,8 @@ namespace draw2d_direct2d
                double centery = m_point.y();
                double offsetx = 0.0;
                double offsety = 0.0;
-               double radiusx = m_size.cx;
-               double radiusy = m_size.cy;
+               double radiusx = m_size.cx();
+               double radiusy = m_size.cy();
 
                hr = pgraphics->m_prendertarget->CreateRadialGradientBrush(
                     D2D1::RadialGradientBrushProperties(

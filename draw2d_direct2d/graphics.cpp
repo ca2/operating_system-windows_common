@@ -715,7 +715,7 @@ namespace draw2d_direct2d
 
       //   ::size_i32 size = pbitmap->GetBitmapDimension();
 
-      //   D2D1_SIZE_U sizeu = D2D1::SizeU(size.cx, size.cy);
+      //   D2D1_SIZE_U sizeu = D2D1::SizeU(size.cx(), size.cy());
 
       //   D2D1_PIXEL_FORMAT pixelformat;
 
@@ -966,7 +966,7 @@ namespace draw2d_direct2d
    ::size_f64 graphics::set_extents(const ::size_f64 & size)
    {
 
-      return ::draw2d::graphics::set_extents(size.cx, size.cy);
+      return ::draw2d::graphics::set_extents(size.cx(), size.cy());
 
    }
 
@@ -982,7 +982,7 @@ namespace draw2d_direct2d
    ::size_f64 graphics::set_window_ext(const ::size_f64 & size)
    {
       
-      return set_window_ext(size.cx, size.cy);
+      return set_window_ext(size.cx(), size.cy());
 
    }
 
@@ -1362,7 +1362,7 @@ namespace draw2d_direct2d
 //
 //      throw ::exception(todo);
 //      //ASSERT(get_handle1() != nullptr);
-//      //return ::DrawState(get_handle1(), hBrush, nullptr, (LPARAM)hBitmap, 0, point.x(), point.y(), size.cx, size.cy, nFlags|DST_BITMAP) != false;
+//      //return ::DrawState(get_handle1(), hBrush, nullptr, (LPARAM)hBitmap, 0, point.x(), point.y(), size.cx(), size.cy(), nFlags|DST_BITMAP) != false;
 //
 //   }
 //
@@ -1372,7 +1372,7 @@ namespace draw2d_direct2d
 //      throw ::exception(todo);
 //
 //      //ASSERT(get_handle1() != nullptr);
-//      //return ::DrawState(get_handle1(), (HBRUSH)pBrush->get_os_data(), nullptr, (LPARAM)pBitmap->get_os_data(), 0, point.x(), point.y(), size.cx, size.cy, nFlags|DST_BITMAP) != false;
+//      //return ::DrawState(get_handle1(), (HBRUSH)pBrush->get_os_data(), nullptr, (LPARAM)pBitmap->get_os_data(), 0, point.x(), point.y(), size.cx(), size.cy(), nFlags|DST_BITMAP) != false;
 //
 //   }
 //
@@ -1383,7 +1383,7 @@ namespace draw2d_direct2d
 //      throw ::exception(todo);
 //
 //      //ASSERT(get_handle1() != nullptr);
-//      //return ::DrawState(get_handle1(), hBrush, nullptr, (LPARAM)hIcon, 0, point.x(), point.y(), size.cx, size.cy, nFlags|DST_ICON) != false;
+//      //return ::DrawState(get_handle1(), hBrush, nullptr, (LPARAM)hIcon, 0, point.x(), point.y(), size.cx(), size.cy(), nFlags|DST_ICON) != false;
 //
 //   }
 //
@@ -1395,7 +1395,7 @@ namespace draw2d_direct2d
 //      throw ::exception(todo);
 //
 //      //ASSERT(get_handle1() != nullptr);
-//      //return ::DrawState(get_handle1(), (HBRUSH)pBrush->get_os_data(), nullptr, (LPARAM)hIcon, 0, point.x(), point.y(), size.cx, size.cy, nFlags|DST_ICON) != false;
+//      //return ::DrawState(get_handle1(), (HBRUSH)pBrush->get_os_data(), nullptr, (LPARAM)hIcon, 0, point.x(), point.y(), size.cx(), size.cy(), nFlags|DST_ICON) != false;
 //
 //   }
 //
@@ -1405,7 +1405,7 @@ namespace draw2d_direct2d
 //      throw ::exception(todo);
 //
 //      //ASSERT(get_handle1() != nullptr);
-//      //return ::DrawState(get_handle1(), hBrush,  nullptr, (LPARAM)lpszText, (WPARAM)nTextLen, point.x(), point.y(), size.cx, size.cy, nFlags|(bPrefixText ? DST_PREFIXTEXT : DST_TEXT)) != false;
+//      //return ::DrawState(get_handle1(), hBrush,  nullptr, (LPARAM)lpszText, (WPARAM)nTextLen, point.x(), point.y(), size.cx(), size.cy(), nFlags|(bPrefixText ? DST_PREFIXTEXT : DST_TEXT)) != false;
 //
 //   }
 //
@@ -1415,7 +1415,7 @@ namespace draw2d_direct2d
 //      throw ::exception(todo);
 //
 //      //ASSERT(get_handle1() != nullptr);
-//      //return ::DrawState(get_handle1(), (HBRUSH)pBrush->get_os_data(), nullptr, (LPARAM)lpszText, (WPARAM)nTextLen, point.x(), point.y(), size.cx, size.cy, nFlags|(bPrefixText ? DST_PREFIXTEXT : DST_TEXT)) != false;
+//      //return ::DrawState(get_handle1(), (HBRUSH)pBrush->get_os_data(), nullptr, (LPARAM)lpszText, (WPARAM)nTextLen, point.x(), point.y(), size.cx(), size.cy(), nFlags|(bPrefixText ? DST_PREFIXTEXT : DST_TEXT)) != false;
 //
 //   }
 //
@@ -1427,7 +1427,7 @@ namespace draw2d_direct2d
 //
 //      throw ::exception(todo);
 //
-//      //ASSERT(get_handle1() != nullptr); return ::DrawState(get_handle1(), hBrush, lpDrawProc, lData, 0, point.x(), point.y(), size.cx, size.cy, nFlags|DST_COMPLEX) != false;
+//      //ASSERT(get_handle1() != nullptr); return ::DrawState(get_handle1(), hBrush, lpDrawProc, lData, 0, point.x(), point.y(), size.cx(), size.cy(), nFlags|DST_COMPLEX) != false;
 //
 //   }
 //
@@ -1436,7 +1436,7 @@ namespace draw2d_direct2d
 //
 //      throw ::exception(todo);
 //
-//      //ASSERT(get_handle1() != nullptr); return ::DrawState(get_handle1(), (HBRUSH)pBrush->get_os_data(), lpDrawProc, lData, 0, point.x(), point.y(), size.cx, size.cy, nFlags|DST_COMPLEX) != false;
+//      //ASSERT(get_handle1() != nullptr); return ::DrawState(get_handle1(), (HBRUSH)pBrush->get_os_data(), lpDrawProc, lData, 0, point.x(), point.y(), size.cx(), size.cy(), nFlags|DST_COMPLEX) != false;
 //
 //   }
 //   */
@@ -3723,7 +3723,7 @@ namespace draw2d_direct2d
    //   ::draw2d::region rgnOutside, rgnInside;
    //   rgnOutside.CreateRectRgnIndirect(rectangle);
    //   const ::rectangle_i32 & rectangle = *rectangle;
-   //   rectangle.inflate(-size.cx, -size.cy);
+   //   rectangle.inflate(-size.cx(), -size.cy());
    //   rectangle.intersect(rectangle, rectangle);
    //   rgnInside.CreateRectRgnIndirect(rectangle);
    //   rgnNew.CreateRectRgn(0, 0, 0, 0);
@@ -3749,7 +3749,7 @@ namespace draw2d_direct2d
    //   rgnLast.CreateRectRgn(0, 0, 0, 0);
    //   rgnOutside.SetRectRgn(lpRectLast);
    //   rectangle = *lpRectLast;
-   //   rectangle.inflate(-sizeLast.cx, -sizeLast.cy);
+   //   rectangle.inflate(-sizeLast.cx(), -sizeLast.cy());
    //   rectangle.intersect(rectangle, lpRectLast);
    //   rgnInside.SetRectRgn(rectangle);
    //   rgnLast.CombineRgn(&rgnOutside, &rgnInside, RGN_XOR);
@@ -5024,8 +5024,8 @@ namespace draw2d_direct2d
 
       ::size_f64 sizeWinExt = GetWindowExt();
       ::size_f64 sizeVpExt = get_extents();
-      psize->cx = psize->cx * abs(sizeVpExt.cx) / abs(sizeWinExt.cx);
-      psize->cy = psize->cy * abs(sizeVpExt.cy) / abs(sizeWinExt.cy);
+      psize->cx = psize->cx * abs(sizeVpExt.cx()) / abs(sizeWinExt.cx());
+      psize->cy = psize->cy * abs(sizeVpExt.cy()) / abs(sizeWinExt.cy());
 
    }
 
@@ -5037,8 +5037,8 @@ namespace draw2d_direct2d
 
       ::size_f64 sizeWinExt = GetWindowExt();
       ::size_f64 sizeVpExt = get_extents();
-      psize->cx = psize->cx * abs(sizeWinExt.cx) / abs(sizeVpExt.cx);
-      psize->cy = psize->cy * abs(sizeWinExt.cy) / abs(sizeVpExt.cy);
+      psize->cx = psize->cx * abs(sizeWinExt.cx()) / abs(sizeVpExt.cx());
+      psize->cy = psize->cy * abs(sizeWinExt.cy()) / abs(sizeVpExt.cy());
 
    }
 
@@ -5223,7 +5223,7 @@ namespace draw2d_direct2d
    //   //else
    //   {
 
-   //      return ::size_f64(sz.cx, sz.cy);
+   //      return ::size_f64(sz.cx(), sz.cy());
 
    //   }
 
@@ -5276,9 +5276,9 @@ namespace draw2d_direct2d
       //if (iIndex <= 0)
       //{
 
-      //   size.cx = 0;
+      //   size.cx() = 0;
 
-      //   size.cy = 0;
+      //   size.cy() = 0;
 
       //   //return true;
 
@@ -5375,9 +5375,9 @@ namespace draw2d_direct2d
       if(playout == nullptr || FAILED(hr))
       {
 
-         size.cx = 0;
+         size.cx() = 0;
 
-         size.cy = 0;
+         size.cy() = 0;
 
          //return false;
 
@@ -5389,9 +5389,9 @@ namespace draw2d_direct2d
 
       playout->GetMetrics(&m);
 
-      size.cx = (::i32) (m.widthIncludingTrailingWhitespace  * m_pfont->m_dFontWidth);
+      size.cx() = (::i32) (m.widthIncludingTrailingWhitespace  * m_pfont->m_dFontWidth);
 
-      size.cy = (::i32) m.height;
+      size.cy() = (::i32) m.height;
 
       text.m_size = size;
 
@@ -5544,7 +5544,7 @@ namespace draw2d_direct2d
 
       }
 
-      D2D1_RECT_F rectangle_f32 = D2D1::RectF((FLOAT) 0, (FLOAT)0, (FLOAT)(0 + sizeText.cx * 2), (FLOAT)(0 + sizeText.cy * 2));
+      D2D1_RECT_F rectangle_f32 = D2D1::RectF((FLOAT) 0, (FLOAT)0, (FLOAT)(0 + sizeText.cx() * 2), (FLOAT)(0 + sizeText.cy() * 2));
 
       HRESULT  hr = pfont->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
 
@@ -6045,9 +6045,9 @@ namespace draw2d_direct2d
 
          double radius2 = radius * 2.0;
 
-         auto w = pbrush->m_size.cx;
+         auto w = pbrush->m_size.cx();
 
-         auto h = pbrush->m_size.cy;
+         auto h = pbrush->m_size.cy();
 
          if (radius2 > w || radius2 > h)
          {

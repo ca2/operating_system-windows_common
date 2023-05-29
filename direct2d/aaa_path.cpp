@@ -243,8 +243,8 @@ namespace draw2d_direct2d
       pointCenter.x() = (FLOAT)arc.m_pointCenter.x();
       pointCenter.y() = (FLOAT)arc.m_pointCenter.y();
 
-      double rx = arc.m_sizeRadius.cx;
-      double ry = arc.m_sizeRadius.cy;
+      double rx = arc.m_sizeRadius.cx();
+      double ry = arc.m_sizeRadius.cy();
 
       pointStart.x() = arc.m_pointBeg.x();
       pointStart.y() = arc.m_pointBeg.y();
@@ -452,10 +452,10 @@ namespace draw2d_direct2d
 
       //::rectangle_f64 rectangle;
 
-      //rectangle.left      = (::i32) (arc.m_pointCenter.x() - arc.m_sizeRadius.cx);
-      //rectangle.right     = (::i32) (arc.m_pointCenter.x() + arc.m_sizeRadius.cx);
-      //rectangle.top       = (::i32) (arc.m_pointCenter.y() - arc.m_sizeRadius.cy);
-      //rectangle.bottom    = (::i32) (arc.m_pointCenter.y() + arc.m_sizeRadius.cy);
+      //rectangle.left      = (::i32) (arc.m_pointCenter.x() - arc.m_sizeRadius.cx());
+      //rectangle.right     = (::i32) (arc.m_pointCenter.x() + arc.m_sizeRadius.cx());
+      //rectangle.top       = (::i32) (arc.m_pointCenter.y() - arc.m_sizeRadius.cy());
+      //rectangle.bottom    = (::i32) (arc.m_pointCenter.y() + arc.m_sizeRadius.cy());
 
       //bool bOk = internal_add_arc(pgraphics, parc);
 
@@ -639,10 +639,10 @@ namespace draw2d_direct2d
 
    //   //::rectangle_f64 rectangle;
 
-   //   //rectangle.left      = (::i32) (arc.m_pointCenter.x() - arc.m_sizeRadius.cx);
-   //   //rectangle.right     = (::i32) (arc.m_pointCenter.x() + arc.m_sizeRadius.cx);
-   //   //rectangle.top       = (::i32) (arc.m_pointCenter.y() - arc.m_sizeRadius.cy);
-   //   //rectangle.bottom    = (::i32) (arc.m_pointCenter.y() + arc.m_sizeRadius.cy);
+   //   //rectangle.left      = (::i32) (arc.m_pointCenter.x() - arc.m_sizeRadius.cx());
+   //   //rectangle.right     = (::i32) (arc.m_pointCenter.x() + arc.m_sizeRadius.cx());
+   //   //rectangle.top       = (::i32) (arc.m_pointCenter.y() - arc.m_sizeRadius.cy());
+   //   //rectangle.bottom    = (::i32) (arc.m_pointCenter.y() + arc.m_sizeRadius.cy());
 
    //   //bool bOk = internal_add_arc(pgraphics, parc);
 

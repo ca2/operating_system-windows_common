@@ -135,8 +135,8 @@ namespace draw2d_direct2d
 
       arc.m_pointCenter.x() = x + cx / 2.0;
       arc.m_pointCenter.y() = y + cy / 2.0;
-      arc.m_sizeRadius.cx = cx / 2.0;
-      arc.m_sizeRadius.cy = cy / 2.0;
+      arc.m_sizeRadius.cx() = cx / 2.0;
+      arc.m_sizeRadius.cy() = cy / 2.0;
       arc.m_pointBegin.x() = x + cx;
       arc.m_pointBegin.y() = y + cy / 2.0;
       arc.m_pointEnd.x() = x;
@@ -149,8 +149,8 @@ namespace draw2d_direct2d
 
       arc.m_pointCenter.x() = x + cx / 2.0;
       arc.m_pointCenter.y() = y + cy / 2.0;
-      arc.m_sizeRadius.cx = cx / 2.0;
-      arc.m_sizeRadius.cy = cy / 2.0;
+      arc.m_sizeRadius.cx() = cx / 2.0;
+      arc.m_sizeRadius.cy() = cy / 2.0;
       arc.m_pointBegin.x() = x;
       arc.m_pointBegin.y() = y + cy / 2.0;
       arc.m_pointEnd.x() = x + cx;
@@ -388,8 +388,8 @@ namespace draw2d_direct2d
       pointCenter.x() = (FLOAT)arc.m_pointCenter.x();
       pointCenter.y() = (FLOAT)arc.m_pointCenter.y();
 
-      double rx = arc.m_sizeRadius.cx;
-      double ry = arc.m_sizeRadius.cy;
+      double rx = arc.m_sizeRadius.cx();
+      double ry = arc.m_sizeRadius.cy();
 
       pointStart.x() = arc.m_pointBegin.x();
       pointStart.y() = arc.m_pointBegin.y();
@@ -676,10 +676,10 @@ namespace draw2d_direct2d
 
       //::rectangle_f64 rectangle;
 
-      //rectangle.left      = (::i32) (arc.m_pointCenter.x() - arc.m_sizeRadius.cx);
-      //rectangle.right     = (::i32) (arc.m_pointCenter.x() + arc.m_sizeRadius.cx);
-      //rectangle.top       = (::i32) (arc.m_pointCenter.y() - arc.m_sizeRadius.cy);
-      //rectangle.bottom    = (::i32) (arc.m_pointCenter.y() + arc.m_sizeRadius.cy);
+      //rectangle.left      = (::i32) (arc.m_pointCenter.x() - arc.m_sizeRadius.cx());
+      //rectangle.right     = (::i32) (arc.m_pointCenter.x() + arc.m_sizeRadius.cx());
+      //rectangle.top       = (::i32) (arc.m_pointCenter.y() - arc.m_sizeRadius.cy());
+      //rectangle.bottom    = (::i32) (arc.m_pointCenter.y() + arc.m_sizeRadius.cy());
 
       //bool bOk = internal_add_arc(pgraphics, parc);
 
@@ -954,10 +954,10 @@ namespace draw2d_direct2d
 
    //   //::rectangle_f64 rectangle;
 
-   //   //rectangle.left      = (::i32) (arc.m_pointCenter.x() - arc.m_sizeRadius.cx);
-   //   //rectangle.right     = (::i32) (arc.m_pointCenter.x() + arc.m_sizeRadius.cx);
-   //   //rectangle.top       = (::i32) (arc.m_pointCenter.y() - arc.m_sizeRadius.cy);
-   //   //rectangle.bottom    = (::i32) (arc.m_pointCenter.y() + arc.m_sizeRadius.cy);
+   //   //rectangle.left      = (::i32) (arc.m_pointCenter.x() - arc.m_sizeRadius.cx());
+   //   //rectangle.right     = (::i32) (arc.m_pointCenter.x() + arc.m_sizeRadius.cx());
+   //   //rectangle.top       = (::i32) (arc.m_pointCenter.y() - arc.m_sizeRadius.cy());
+   //   //rectangle.bottom    = (::i32) (arc.m_pointCenter.y() + arc.m_sizeRadius.cy());
 
    //   //bool bOk = internal_add_arc(pgraphics, parc);
 
