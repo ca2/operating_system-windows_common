@@ -129,8 +129,8 @@ namespace draw2d_direct2d
       void DeleteDC() override;
 
       // Device-Context Functions
-      int SaveDC() override;
-      void RestoreDC(int nSavedDC) override;
+      int save_graphics_context() override;
+      void restore_graphics_context(int iSavedGraphicsContext) override;
       //int GetDeviceCaps(int nIndex) override;
       ::u32 SetBoundsRect(const ::rectangle_f64 & rectangleBounds, ::u32 flags) override;
       ::u32 GetBoundsRect(::rectangle_f64 * rectangleBounds, ::u32 flags) override;
@@ -264,9 +264,9 @@ namespace draw2d_direct2d
       //virtual void add_shapes(const shape_array& shapea);
       virtual void reset_clip();
       void _intersect_clip() override;
-      void _add_clipping_shape(const ::rectangle & rectangle, ___shape<::draw2d::region > & shaperegion) override;
-      void _add_clipping_shape(const ::ellipse & ellipse, ___shape<::draw2d::region > & shaperegion) override;
-      void _add_clipping_shape(const ::polygon & polygon, ___shape<::draw2d::region > & shaperegion) override;
+      void _add_clipping_shape(const ::rectangle_f64 & rectangle, ::draw2d::region * pregion) override;
+      void _add_clipping_shape(const ::ellipse_f64 & ellipse, ::draw2d::region * pregion) override;
+      void _add_clipping_shape(const ::polygon_f64 & polygon, ::draw2d::region * pregion) override;
       void intersect_clip(const ::rectangle_f64& rectangle) override;
       //virtual void intersect_clip(const ::oval& oval);
       //virtual void intersect_clip(const ::polygon_i32& polygon_i32);
@@ -292,13 +292,13 @@ namespace draw2d_direct2d
       void line_to(double x, double y) override;
       void draw_line(double x1, double y1, double x2, double y2, ::draw2d::pen * ppen) override;
       //  bool line_to(const ::point_f64 & point) override;
-      void arc(double x1, double y1, double w, double h, angle start, angle extends) override;
+      void arc(double x1, double y1, double w, double h, ::angle_f64 start, ::angle_f64 extends) override;
       void arc(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4) override;
       //bool Arc(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4) override;
       void arc(const ::rectangle_f64 & rectangle, const ::point_f64 & pointStart, const ::point_f64 & pointEnd) override;
       void polyline(const ::point_f64* ppoints,count nCount) override;
 
-      void angle_arc(double x, double y, double nRadius, angle fStartAngle, angle fSweepAngle) override;
+      void angle_arc(double x, double y, double nRadius, ::angle_f64 fStartAngle, ::angle_f64 fSweepAngle) override;
       //void arc(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4) override;
       //void arc(const ::rectangle_f64 & rectangle, const ::point_f64 & pointStart, const ::point_f64 & pointEnd) override;
       //int GetArcDirection() override;
@@ -607,6 +607,9 @@ namespace draw2d_direct2d
       comptr < ID2D1RadialGradientBrush > _create_simple_radial_gradient(const ::rectangle_f64 & r, ID2D1GradientStopCollection * pcollection);
       comptr < ID2D1LinearGradientBrush > _create_simple_linear_gradient(const ::point_f64 & p1, const ::point_f64 & p2, ID2D1GradientStopCollection * pcollection);
       comptr < ID2D1GradientStopCollection > _create_simple_full_range_flat_gradient_stop_collection(const ::color::color & color1, const ::color::color & color2);
+
+
+      ID2D1Geometry * defer_update_os_data(::pointer < ::geometry2d::region > & pregion);
 
 
    };

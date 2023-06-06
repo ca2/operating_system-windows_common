@@ -17,9 +17,9 @@
 #include "aura/graphics/image/context_image.h"
 #include "aura/graphics/image/drawing.h"
 #include "aura/graphics/image/frame_array.h"
-#include "acme/primitive/geometry2d/_enhanced.h"
-#include "acme/primitive/geometry2d/_collection_enhanced.h"
-#include "acme/primitive/geometry2d/_defer_shape.h"
+//#include "acme/primitive/geometry2d/_enhanced.h"
+//#include "acme/primitive/geometry2d/_collection_enhanced.h"
+//#include "acme/primitive/geometry2d/_defer_shape.h"
 #include "aura/platform/session.h"
 #include <math.h>
 
@@ -930,7 +930,7 @@ namespace draw2d_direct2d
 
       throw ::exception(todo);
 
-      return nullptr;
+      return {};
 
    }
 
@@ -940,18 +940,20 @@ namespace draw2d_direct2d
 
       throw ::exception(todo);
 
-      return nullptr;
+      return {};
 
    }
 
 
    size_f64 graphics::GetWindowExt()
    {
+
       throw ::exception(todo);
       //::size_f64::size_f64;
       //::GetWindowExtEx(get_handle2(), &::size_f64);
       //return ::size_f64;
-      return nullptr;
+      return {};
+
    }
 
 
@@ -1141,7 +1143,8 @@ namespace draw2d_direct2d
 
    //}
 
-   void graphics::arc(double x1, double y1, double w, double h, angle start, angle extends)
+
+   void graphics::arc(double x1, double y1, double w, double h, ::angle_f64 start, ::angle_f64 extends)
    {
 
       auto ppath = __create < ::draw2d::path > ();
@@ -6847,7 +6850,27 @@ namespace draw2d_direct2d
    }
 
 
+   ID2D1Geometry * graphics::defer_update_os_data(::pointer < ::geometry2d::region > & pregion)
+   {
 
+      ::pointer < region > pdirect2dregion = pregion;
+
+      if (!pdirect2dregion)
+      {
+
+         pdirect2dregion = __create_new < region >();
+
+         //pdirect2dregion->m_eregion = pregion->m_eregion;
+
+         pdirect2dregion->m_pitem = pregion->m_pitem;
+
+         pregion = pdirect2dregion;
+
+      }
+
+      return (ID2D1Geometry *)pdirect2dregion->get_os_data(this);
+
+   }
 
 
 } // namespace draw2d_direct2d

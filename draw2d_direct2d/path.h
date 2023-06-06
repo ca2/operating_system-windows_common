@@ -57,7 +57,7 @@ namespace draw2d_direct2d
       ID2D1GeometryRealization * _get_stroked_geometry_realization(::draw2d::graphics * pgraphics, int iWidth);
       ID2D1GeometryRealization * _get_filled_geometry_realization(::draw2d::graphics * pgraphics);
 
-      virtual bool internal_add_arc(::draw2d::graphics * pgraphics, const ::arc & arc);
+      virtual bool internal_add_arc(::draw2d::graphics * pgraphics, const ::arc_f64 & arc);
 
       virtual bool internal_add_line(::draw2d::graphics* pgraphics, double x, double y);
 
@@ -75,7 +75,7 @@ namespace draw2d_direct2d
 
       virtual bool internal_start_figure(::draw2d::graphics* pgraphics, double x, double y);
 
-      virtual bool internal_get_arc(::point_f64 & pointStart, D2D1_ARC_SEGMENT & arcseg, const ::arc & arc);
+      virtual bool internal_get_arc(::point_f64 & pointStart, D2D1_ARC_SEGMENT & arcseg, const ::arc_f64 & arc);
 
       virtual void * detach(::draw2d::graphics * pgraphics);
 
@@ -93,19 +93,19 @@ namespace draw2d_direct2d
       //virtual bool _set(::draw2d::graphics* pgraphics, ::draw2d::path::close* pclose) override;
 
 
-      virtual bool _set(::draw2d::graphics* pgraphics, const enum_shape& eshape);
+      virtual bool _set(::draw2d::graphics* pgraphics, const ::draw2d::enum_item& eitem);
 
-      virtual bool _set(::draw2d::graphics* pgraphics, const ::arc& parc);
+      virtual bool _set(::draw2d::graphics* pgraphics, const ::arc_f64& parc);
 
-      virtual bool _set(::draw2d::graphics* pgraphics, const ::line& pline);
+      virtual bool _set(::draw2d::graphics* pgraphics, const ::line_f64& pline);
 
-      virtual bool _set(::draw2d::graphics* pgraphics, const ::lines& pline);
+      virtual bool _set(::draw2d::graphics* pgraphics, const ::lines_f64& pline);
 
-      virtual bool _set(::draw2d::graphics* pgraphics, const ::rectangle & rectangle);
+      virtual bool _set(::draw2d::graphics* pgraphics, const ::rectangle_f64 & rectangle);
 
-      virtual bool _set(::draw2d::graphics* pgraphics, const ::ellipse & ellipse);
+      virtual bool _set(::draw2d::graphics* pgraphics, const ::ellipse_f64 & ellipse);
 
-      virtual bool _set(::draw2d::graphics* pgraphics, const ::polygon & polygon);
+      virtual bool _set(::draw2d::graphics* pgraphics, const ::polygon_f64 & polygon);
 
       virtual bool _set(::draw2d::graphics* pgraphics, const ::write_text::text_out& ptextout);
 

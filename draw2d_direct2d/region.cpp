@@ -1,7 +1,10 @@
 ﻿#include "framework.h"
 #include "region.h"
 #include "path.h"
+#include "graphics.h"
 #include "acme/exception/interface_only.h"
+#include "acme/primitive/geometry2d/item.h"
+#include "acme/primitive/geometry2d/_defer_item.h"
 #include "direct2d/direct2d.h"
 
 
@@ -175,9 +178,11 @@ namespace draw2d_direct2d
    ID2D1Geometry * region::get(::draw2d::graphics* pgraphics)
    {
 
-      switch(m_eregion)
+      auto eitem = m_pitem->type();
+
+      switch(eitem)
       {
-      case ::draw2d::e_region_none:
+      case ::draw2d::e_item_none:
       {
 
          ID2D1PathGeometry * ppathgeometry = nullptr;
@@ -190,15 +195,15 @@ namespace draw2d_direct2d
          return ppathgeometry;
 
       }
-      case ::draw2d::e_region_rect:
+      case ::draw2d::e_item_rectangle:
          return get_rectangle(pgraphics);
-      case ::draw2d::e_region_ellipse:
+      case ::draw2d::e_item_ellipse:
          return get_ellipse(pgraphics);
-      case ::draw2d::e_region_polygon:
+      case ::draw2d::e_item_polygon:
          return get_polygon(pgraphics);
-      case ::draw2d::e_region_poly_polygon:
+      case ::draw2d::e_item_poly_polygon:
          return get_polygon(pgraphics);
-      case ::draw2d::e_region_combine:
+      case ::draw2d::e_item_combine:
          return get_combine(pgraphics);
       default:
          throw ::interface_only();
@@ -223,11 +228,11 @@ namespace draw2d_direct2d
 
       }
 
-      ::pointer<rectangle_item>pitem = m_pitem;
+      ::pointer<::geometry2d::rectangle_item>pitem = m_pitem;
 
       D2D1_RECT_F r;
       
-      copy(r, pitem->m_rectangle);
+      copy(r, pitem->m_item);
 
       ::direct2d::direct2d()->d2d1_factory1()->CreateRectangleGeometry(r, &pgeometry);
 
@@ -241,13 +246,13 @@ namespace draw2d_direct2d
 
       D2D1_ELLIPSE ellipse;
 
-      ::pointer<ellipse_item>pitem = m_pitem;
+      ::pointer<::geometry2d::ellipse_item>pitem = m_pitem;
 
-      auto pointCenter = pitem->m_rectangle.center();
-      auto sizeRadius = pitem->m_rectangle.size() / 2.0;
+      auto pointCenter = pitem->m_item.center();
+      auto sizeRadius = pitem->m_item.size() / 2.0;
 
-      ellipse.point.x() = (float)pointCenter.x();
-      ellipse.point.y() = (float)pointCenter.y();
+      ellipse.point.x = (float)pointCenter.x();
+      ellipse.point.y = (float)pointCenter.y();
       ellipse.radiusX = (float)sizeRadius.cx();
       ellipse.radiusY = (float)sizeRadius.cy();
 
@@ -283,7 +288,7 @@ namespace draw2d_direct2d
       }
       */
 
-      ::pointer<polygon_item>pitem = m_pitem;
+      ::pointer<::geometry2d::polygon_item>pitem = m_pitem;
 
       ppath->begin_figure();
       ppath->add_polygon(pitem->m_polygon.data(), pitem->m_polygon.size());
@@ -316,11 +321,11 @@ namespace draw2d_direct2d
 
       int n = 0;
 
-      ::pointer<poly_polygon_item>pitem = m_pitem;
+      ::pointer<::geometry2d::poly_polygon_item>pitem = m_pitem;
 
-      for(int i = 0; i < pitem->m_polygona.get_size(); i++)
+      for(int i = 0; i < pitem->m_polypolygon.get_size(); i++)
       {
-         auto ppolygon = pitem->m_polygona[i];
+         auto ppolygon = pitem->m_polypolygon[i];
          auto jCount = ppolygon->get_size();
          //pa.erase_all();
          //for(int j = 0; j < jCount; j++)
@@ -330,7 +335,7 @@ namespace draw2d_direct2d
          //}
          //ppath->begin_figure(true, m_efillmode);
          ppath->begin_figure();
-         ppath->add_lines(ppolygon->data(), (int) ppolygon->size());
+         ppath->add_polygon(ppolygon->data(), (int) ppolygon->size());
          //ppath->end_figure(true);
          ppath->close_figure();
       }
@@ -343,7 +348,7 @@ namespace draw2d_direct2d
    ID2D1Geometry * region::get_combine(::draw2d::graphics* pgraphics)
    {
 
-      comptr <ID2D1PathGeometry> ppathgeometry ;
+      comptr < ID2D1PathGeometry > ppathgeometry ;
 
       HRESULT hr = ::direct2d::direct2d()->d2d1_factory1()->CreatePathGeometry(&ppathgeometry);
 
@@ -365,11 +370,17 @@ namespace draw2d_direct2d
 
       }
 
-      ::pointer<combine_item>pitem = m_pitem;
+      ::pointer < ::geometry2d::combine_item > pitem = m_pitem;
 
-      auto pgeometry1 = pitem->m_pregion1->get_os_data < ID2D1Geometry * >(pgraphics);
+      ::pointer < graphics > pdirect2dgraphics = pgraphics;
 
-      auto pgeometry2 = pitem->m_pregion2->get_os_data < ID2D1Geometry * >(pgraphics);
+      auto pgeometry1 = pdirect2dgraphics->defer_update_os_data(pitem->m_pregion1);
+
+      auto pgeometry2 = pdirect2dgraphics->defer_update_os_data(pitem->m_pregion2);
+
+      //auto pgeometry1 = pitem->m_pregion1->get_os_data < ID2D1Geometry * >(pgraphics);
+
+      //auto pgeometry2 = pitem->m_pregion2->get_os_data < ID2D1Geometry * >(pgraphics);
 
       if(pitem->m_ecombine == ::draw2d::e_combine_add)
       {
@@ -402,7 +413,6 @@ namespace draw2d_direct2d
          return nullptr;
 
       }
-
 
       hr = psink->Close();
 

@@ -62,7 +62,7 @@ namespace draw2d_direct2d
    }
 
 
-   bool path::internal_add_arc(::draw2d::graphics* pgraphics, const ::arc & arc)
+   bool path::internal_add_arc(::draw2d::graphics* pgraphics, const ::arc_f64 & arc)
    {
 
       ::point_f64 point;
@@ -99,9 +99,9 @@ namespace draw2d_direct2d
 
       m_psink->AddArc(arcseg);
 
-      m_pointEnd.x() = arcseg.point.x();
+      m_pointEnd.x() = arcseg.point.x;
 
-      m_pointEnd.y() = arcseg.point.y();
+      m_pointEnd.y() = arcseg.point.y;
 
       m_estatus = ::success;
 
@@ -131,35 +131,35 @@ namespace draw2d_direct2d
 
       internal_start_figure(pgraphics, x + cx, y + cy / 2.0);
 
-      ::arc arc{};
+      ::arc_f64 arc{};
 
-      arc.m_pointCenter.x() = x + cx / 2.0;
-      arc.m_pointCenter.y() = y + cy / 2.0;
-      arc.m_sizeRadius.cx() = cx / 2.0;
-      arc.m_sizeRadius.cy() = cy / 2.0;
+      arc.left = x;
+      arc.top = y;
+      arc.right =x + cx;
+      arc.bottom = y + cy;
       arc.m_pointBegin.x() = x + cx;
-      arc.m_pointBegin.y() = y + cy / 2.0;
-      arc.m_pointEnd.x() = x;
-      arc.m_pointEnd.y() = y + cy / 2.0;
-      arc.m_angleBeg = 0.0;
-      arc.m_angleEnd2 = MATH_PI;
-      arc.m_angleExt = MATH_PI;
-
-      internal_add_arc(pgraphics, arc);
-
-      arc.m_pointCenter.x() = x + cx / 2.0;
-      arc.m_pointCenter.y() = y + cy / 2.0;
-      arc.m_sizeRadius.cx() = cx / 2.0;
-      arc.m_sizeRadius.cy() = cy / 2.0;
-      arc.m_pointBegin.x() = x;
       arc.m_pointBegin.y() = y + cy / 2.0;
       arc.m_pointEnd.x() = x + cx;
       arc.m_pointEnd.y() = y + cy / 2.0;
-      arc.m_angleBeg = MATH_PI;
-      arc.m_angleEnd2 = MATH_PI * 2.0;
-      arc.m_angleExt = MATH_PI;
+      arc.m_angleBeg = 0_degree;
+      arc.m_angleEnd2 = 360_degree;
+      arc.m_angleExt = 360_degree;
 
       internal_add_arc(pgraphics, arc);
+
+      //arc.m_pointCenter.x() = x + cx / 2.0;
+      //arc.m_pointCenter.y() = y + cy / 2.0;
+      //arc.m_sizeRadius.cx() = cx / 2.0;
+      //arc.m_sizeRadius.cy() = cy / 2.0;
+      //arc.m_pointBegin.x() = x;
+      //arc.m_pointBegin.y() = y + cy / 2.0;
+      //arc.m_pointEnd.x() = x + cx;
+      //arc.m_pointEnd.y() = y + cy / 2.0;
+      //arc.m_angleBeg = MATH_PI;
+      //arc.m_angleEnd2 = MATH_PI * 2.0;
+      //arc.m_angleExt = MATH_PI;
+
+      //internal_add_arc(pgraphics, arc);
 
       internal_end_figure(true);
 
@@ -380,22 +380,22 @@ namespace draw2d_direct2d
 
 
 
-   bool path::internal_get_arc(::point_f64 & pointStart,D2D1_ARC_SEGMENT & arcseg, const ::arc & arc)
+   bool path::internal_get_arc(::point_f64 & pointStart,D2D1_ARC_SEGMENT & arcseg, const ::arc_f64 & arc)
    {
 
       D2D1_POINT_2F pointCenter;
 
-      pointCenter.x() = (FLOAT)arc.m_pointCenter.x();
-      pointCenter.y() = (FLOAT)arc.m_pointCenter.y();
+      pointCenter.x = (FLOAT)arc.center().x();
+      pointCenter.y = (FLOAT)arc.center().y();
 
-      double rx = arc.m_sizeRadius.cx();
-      double ry = arc.m_sizeRadius.cy();
+      double rx = arc.radius().cx();
+      double ry = arc.radius().cy();
 
       pointStart.x() = arc.m_pointBegin.x();
       pointStart.y() = arc.m_pointBegin.y();
 
-      arcseg.point.x() = (FLOAT)arc.m_pointEnd.x();
-      arcseg.point.y() = (FLOAT)arc.m_pointEnd.y();
+      arcseg.point.x = (FLOAT)arc.m_pointEnd.x();
+      arcseg.point.y = (FLOAT)arc.m_pointEnd.y();
 
       if(arc.m_angleEnd2 > arc.m_angleBeg)
       {
@@ -671,7 +671,7 @@ namespace draw2d_direct2d
    //}
 
 
-   bool path::_set(::draw2d::graphics * pgraphics, const ::arc & arc)
+   bool path::_set(::draw2d::graphics * pgraphics, const ::arc_f64 & arc)
    {
 
       //::rectangle_f64 rectangle;
@@ -690,10 +690,10 @@ namespace draw2d_direct2d
    }
 
 
-   bool path::_set(::draw2d::graphics* pgraphics, const enum_shape& eshape)
+   bool path::_set(::draw2d::graphics* pgraphics, const ::draw2d::enum_item & eitem)
    {
 
-      if (eshape == e_shape_begin_figure)
+      if (eitem == ::draw2d::e_item_begin_figure)
       {
 
          if (m_bHasPoint)
@@ -706,7 +706,7 @@ namespace draw2d_direct2d
          return true;
 
       }
-      else if (eshape == e_shape_close_figure)
+      else if (eitem == ::draw2d::e_item_close_figure)
       {
 
          if (m_bHasPoint)
@@ -719,7 +719,7 @@ namespace draw2d_direct2d
          return true;
 
       }
-      else if (eshape == e_shape_end_figure)
+      else if (eitem == ::draw2d::e_item_end_figure)
       {
 
          if (m_bHasPoint)
@@ -735,10 +735,9 @@ namespace draw2d_direct2d
       else
       {
 
-         return ::draw2d::path::_set(pgraphics, eshape);
+         return ::draw2d::path::_set(pgraphics, eitem);
 
       }
-
 
       return true;
 
@@ -753,7 +752,7 @@ namespace draw2d_direct2d
    //}
 
 
-   bool path::_set(::draw2d::graphics* pgraphics, const ::line & line)
+   bool path::_set(::draw2d::graphics* pgraphics, const ::line_f64 & line)
    {
 
       if (line.m_p1 != m_pointEnd || ::is_null(m_psink))
@@ -795,7 +794,7 @@ namespace draw2d_direct2d
    //}
 
 
-   bool path::_set(::draw2d::graphics* pgraphics, const ::rectangle & rectangle)
+   bool path::_set(::draw2d::graphics* pgraphics, const ::rectangle_f64 & rectangle)
    {
 
       return internal_add_rectangle(pgraphics, rectangle.left, rectangle.top, rectangle.width(), rectangle.height());
@@ -811,7 +810,7 @@ namespace draw2d_direct2d
    //}
 
 
-   bool path::_set(::draw2d::graphics * pgraphics, const ::ellipse & ellipse)
+   bool path::_set(::draw2d::graphics * pgraphics, const ::ellipse_f64 & ellipse)
    {
 
       return internal_add_ellipse(pgraphics, ellipse.left, ellipse.top, ellipse.width(), ellipse.height());
@@ -820,7 +819,7 @@ namespace draw2d_direct2d
 
 
 
-   bool path::_set(::draw2d::graphics* pgraphics, const ::lines & lines)
+   bool path::_set(::draw2d::graphics* pgraphics, const ::lines_f64 & lines)
    {
 
       return internal_add_lines(pgraphics, (const ::point_i32_array &) lines, false);
@@ -836,7 +835,7 @@ namespace draw2d_direct2d
    //}
 
 
-   bool path::_set(::draw2d::graphics* pgraphics, const ::polygon & polygon)
+   bool path::_set(::draw2d::graphics* pgraphics, const ::polygon_f64 & polygon)
    {
 
       return internal_add_lines(pgraphics, (const ::point_f64_array&)polygon, true);
