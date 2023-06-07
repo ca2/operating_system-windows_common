@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include "context_image.h"
 #include "acme/exception/exception.h"
 #include "aura/graphics/image/frame_array.h"
@@ -62,7 +62,9 @@ namespace imaging_wic
 
          comptr < IWICBitmapDecoder > pbitmapdecoder;
 
-         hr = pimagingfactory->CreateDecoderFromStream(pwicstream, 0, WICDecodeMetadataCacheOnLoad, &pbitmapdecoder); // jpeg,png:OK, bmp:88982f50のエラーになる, iconもエラー
+         // jpeg,png:OK, bmp:88982f50
+         // "bmp:88982f50 results in error, icon also errors"(TranslatedFromJapanese)
+         hr = pimagingfactory->CreateDecoderFromStream(pwicstream, 0, WICDecodeMetadataCacheOnLoad, &pbitmapdecoder); 
 
          if (FAILED(hr))
          {

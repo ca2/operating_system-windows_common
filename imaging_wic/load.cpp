@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include "context_image.h"
 #include "acme/filesystem/file/file.h"
 #include "apex/parallelization/handler_manager.h"
@@ -10,6 +10,12 @@
 
 #include "acme/_operating_system.h"
 #include <wincodec.h>
+
+#include <wincodec.h>
+#ifdef UNIVERSAL_WINDOWS
+#include <ShCore.h>
+#endif
+
 
 
 #ifdef UNIVERSAL_WINDOWS
@@ -95,7 +101,9 @@ namespace imaging_wic
 
       comptr < IWICBitmapDecoder > piDecoder;
 
-      hr = pimagingfactory->CreateDecoderFromStream(piStream, 0, WICDecodeMetadataCacheOnLoad, &piDecoder); // jpeg,png:OK, bmp:88982f50のエラーになる, iconもエラー
+      // jpeg,png:OK, bmp:88982f50
+      // "bmp:88982f50 results in error, icon also errors"(TranslatedFromJapanese)
+      hr = pimagingfactory->CreateDecoderFromStream(piStream, 0, WICDecodeMetadataCacheOnLoad, &piDecoder); 
 
       if (FAILED(hr))
       {
@@ -208,13 +216,6 @@ namespace imaging_wic
       pimage->m_estatus = ::success;
 
    }
-
-#include "framework.h"
-#include <wincodec.h>
-#ifdef UNIVERSAL_WINDOWS
-#include <ShCore.h>
-#endif
-
 
    bool node_save_image(IStream * pstream, ::image * pimage, const ::save_image * psaveimage);
 

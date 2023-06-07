@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include "in.h"
 #include "multimedia_xaudio/translation.h"
 #include "acme/parallelization/synchronous_lock.h"

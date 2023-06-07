@@ -1,4 +1,4 @@
-﻿#include "framework.h"
+#include "framework.h"
 #include "hresult_exception.h"
 #include "acme/operating_system/windows_common/_string.h"
 

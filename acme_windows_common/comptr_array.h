@@ -1,4 +1,4 @@
-﻿// From cotaskptr.h by camilo on 2022-11-14 06:53 <3ThomasBorregaardSørensen!!
+// From cotaskptr.h by camilo on 2022-11-14 06:53 <3ThomasBorregaardSorensen!!
 #pragma once
 
 
