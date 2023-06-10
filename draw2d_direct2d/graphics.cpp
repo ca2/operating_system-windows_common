@@ -1293,7 +1293,7 @@ namespace draw2d_direct2d
 //         bool bOk = false;
 //
 //         BITMAPINFO info;
-//         ::color::color * pcolorref;
+//         ::color::color * pimage32;
 //
 //         ZeroMemory(&info, sizeof (BITMAPINFO));
 //
@@ -1305,7 +1305,7 @@ namespace draw2d_direct2d
 //         info.bmiHeader.biCompression   = BI_RGB;
 //         info.bmiHeader.biSizeImage     = rectangleTarget.area() * 4;
 //
-//         HBITMAP hbitmap = ::CreateDIBSection(nullptr, &info, DIB_RGB_COLORS, (void **) &pcolorref, nullptr, 0);
+//         HBITMAP hbitmap = ::CreateDIBSection(nullptr, &info, DIB_RGB_COLORS, (void **) &pimage32, nullptr, 0);
 //
 //         HDC hdc = ::CreateCompatibleDC(nullptr);
 //
@@ -1320,11 +1320,11 @@ namespace draw2d_direct2d
 //            try
 //            {
 //
-//               //Gdiplus::Bitmap b(cx, cy, cx * 4 , PixelFormat32bppARGB, (byte *) pcolorref);
+//               //Gdiplus::Bitmap b(cx, cy, cx * 4 , PixelFormat32bppARGB, (::u8 *) pimage32);
 //
 //               ::draw2d::bitmap_pointer b(e_create);
 //
-//               b->CreateBitmap(this, rectangleTarget.size(), 1, 32, pcolorref, rectangleTarget.width() * sizeof(::color32_t));
+//               b->CreateBitmap(this, rectangleTarget.size(), 1, 32, pimage32, rectangleTarget.width() * sizeof(::color32_t));
 //
 //               D2D1_RECT_F rectangle_i32;
 //
@@ -3104,7 +3104,7 @@ namespace draw2d_direct2d
    }
 
 
-   //i32 graphics::GetPath(::point_f64 * ppoints, byte * lpTypes, ::count nCount)
+   //i32 graphics::GetPath(::point_f64 * ppoints, ::u8 * lpTypes, ::count nCount)
    //{
 
    //   throw ::exception(todo);
@@ -3169,7 +3169,7 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::AddMetaFileComment(::u32 nDataSize, const byte* pCommentData)
+   void graphics::AddMetaFileComment(::u32 nDataSize, const ::u8* pCommentData)
    {
 
       throw ::exception(todo);
@@ -3444,7 +3444,7 @@ namespace draw2d_direct2d
    imageWork4.from(point_i32(maximum(0, m_pointAlphaBlend.x() - xDest), maximum(0, m_pointAlphaBlend.y() - yDest)),
    m_pimageAlphaBlend->get_graphics(), point_i32(maximum(0, xDest - m_pointAlphaBlend.x()), maximum(0, yDest - m_pointAlphaBlend.y())), ::size_f64);
 
-   imageWork.channel_multiply(::color::e_channel_alpha, imageWork4);
+   imageWork.channel_multiply(::color::e_channel_opacity, imageWork4);
 
 
    keep < image > keep(&m_pimageAlphaBlend, nullptr, m_pimageAlphaBlend, true);
@@ -4847,7 +4847,7 @@ namespace draw2d_direct2d
    //}
 
 
-   void graphics::polydraw(const ::point_f64* ppoints, const byte* lpTypes, count nCount)
+   void graphics::polydraw(const ::point_f64* ppoints, const ::u8* lpTypes, count nCount)
    {
 
       throw ::exception(todo);

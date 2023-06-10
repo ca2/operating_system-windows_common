@@ -327,7 +327,7 @@ namespace multimedia
 
          b.pContext = pbuffer;
          b.AudioBytes = (::u32) (pwbuffer->m_uiBufferSize);
-         b.pAudioData = (const byte *)pbuffer->m_pData;
+         b.pAudioData = (const ::u8 *)pbuffer->m_pData;
          b.Flags = m_bEOS ? XAUDIO2_END_OF_STREAM : 0;
 
          //single_lock sLock(mutex(),true);

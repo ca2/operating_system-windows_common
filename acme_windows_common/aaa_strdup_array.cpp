@@ -15,7 +15,7 @@ platform_char** wcsdup_array::windows_get_envp()
 
    }
 
-   // Variable strings are separated by NULL byte, and the block is terminated by a NULL byte.
+   // Variable strings are separated by NULL ::u8, and the block is terminated by a NULL ::u8.
 
    for (auto lpszVariable = (LPWSTR)lpvEnv; *lpszVariable; lpszVariable++)
    {

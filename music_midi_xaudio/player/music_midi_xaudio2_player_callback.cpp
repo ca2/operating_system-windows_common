@@ -45,8 +45,8 @@ namespace music
 
             void callback::OnMmsgDone(::music::midi::sequence *pSeq, ::music::midi::LPMIDIDONEDATA lpmdd)
             {
-               __UNREFERENCED_PARAMETER(pSeq);
-               __UNREFERENCED_PARAMETER(lpmdd);
+               UNREFERENCED_PARAMETER(pSeq);
+               UNREFERENCED_PARAMETER(lpmdd);
             }
 
             void callback::OnMidiPlayerNotifyEvent(::music::midi::player::notify_event * pdata)
@@ -61,7 +61,7 @@ namespace music
 
             void callback::OnMidiLyricEvent(array<::ikaraoke::lyric_event_v1, ::ikaraoke::lyric_event_v1&> * pevents)
             {
-               __UNREFERENCED_PARAMETER(pevents);
+               UNREFERENCED_PARAMETER(pevents);
             }
 
 

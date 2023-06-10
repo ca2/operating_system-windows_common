@@ -243,7 +243,7 @@ namespace acme_windows_common
       //if (m_iCharacterPutBack != 0x80000000)
       //{
 
-      //   ((byte *)pdata)[0] = (byte)m_iCharacterPutBack;
+      //   ((::u8 *)pdata)[0] = (::u8)m_iCharacterPutBack;
 
       //   m_iCharacterPutBack = 0x80000000;
 
@@ -261,7 +261,7 @@ namespace acme_windows_common
 
       //}
 
-      auto data = (::byte *) p;
+      auto data = (::u8 *) p;
 
       ASSERT(::is_set(data));
 
@@ -662,7 +662,7 @@ namespace acme_windows_common
       else
       {
 
-         filestatus.m_attribute = (byte)information.dwFileAttributes & 0xff;
+         filestatus.m_attribute = (::u8)information.dwFileAttributes & 0xff;
 
       }
 

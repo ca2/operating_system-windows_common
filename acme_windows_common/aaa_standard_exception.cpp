@@ -54,7 +54,7 @@ LPTOP_LEVEL_EXCEPTION_FILTER WINAPI MyDummySetUnhandledExceptionFilter(
    LPTOP_LEVEL_EXCEPTION_FILTER pTopLevelExceptionFilter)
 
 {
-   __UNREFERENCED_PARAMETER(pTopLevelExceptionFilter);
+   UNREFERENCED_PARAMETER(pTopLevelExceptionFilter);
 
    return nullptr;
 }
@@ -150,7 +150,7 @@ namespace exception
 
       }
 
-      __UNREFERENCED_PARAMETER(uiCode);
+      UNREFERENCED_PARAMETER(uiCode);
 
       //::acme::application * papp = ::get_application();
 
@@ -329,7 +329,7 @@ namespace exception
    void translator::filter(u32 uiCode, EXCEPTION_POINTERS * ppointers)
    {
 
-      __UNREFERENCED_PARAMETER(uiCode);
+      UNREFERENCED_PARAMETER(uiCode);
 
       switch (ppointers->ExceptionRecord->ExceptionCode)
       {
@@ -421,7 +421,7 @@ namespace exception
          str = "The thread attempted to read from or write to a virtual address for which it does not have the appropriate access";
          break;
       case EXCEPTION_DATATYPE_MISALIGNMENT:
-         str = "The thread attempted to read or write data that is misaligned on hardware that does not provide alignment. For example, 16-bit values must be aligned on 2-byte boundaries, 32-bit values on 4-byte boundaries, and so on";
+         str = "The thread attempted to read or write data that is misaligned on hardware that does not provide alignment. For example, 16-bit values must be aligned on 2-::u8 boundaries, 32-bit values on 4-::u8 boundaries, and so on";
          break;
       case EXCEPTION_BREAKPOINT:
          str = "A breakpoint was encountered";

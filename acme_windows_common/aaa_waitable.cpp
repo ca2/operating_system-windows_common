@@ -16,7 +16,7 @@
 //matter::matter(const matter & objectSrc)
 //{
 //
-//   __UNREFERENCED_PARAMETER(objectSrc);
+//   UNREFERENCED_PARAMETER(objectSrc);
 //
 //   mutex() = nullptr;
 //
@@ -194,8 +194,8 @@
 //bool matter::unlock(::i32 lCount, LPLONG pPrevCount)
 
 //{
-//   __UNREFERENCED_PARAMETER(lCount);
-//   __UNREFERENCED_PARAMETER(pPrevCount);
+//   UNREFERENCED_PARAMETER(lCount);
+//   UNREFERENCED_PARAMETER(pPrevCount);
 
 //   return true;
 //}

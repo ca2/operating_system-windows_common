@@ -204,7 +204,7 @@ namespace windows
    void registry::key::_value(void* pvalue, const ::string & pcszValueName, ::u32& dwType, ::u32& cbValue)
    {
 
-      if (ERROR_SUCCESS != ::RegQueryValueExW(m_hkey, wstring(pcszValueName), nullptr, (LPDWORD) &dwType, (byte*)pvalue, (LPDWORD) &cbValue))
+      if (ERROR_SUCCESS != ::RegQueryValueExW(m_hkey, wstring(pcszValueName), nullptr, (LPDWORD) &dwType, (::u8*)pvalue, (LPDWORD) &cbValue))
       {
 
          return error_failed;
@@ -344,7 +344,7 @@ namespace windows
    void registry::key::_set_value(const void* pvalue, const ::string & pcszValueName, ::u32 dwType, ::u32 cbValue)
    {
 
-      auto lstatus = RegSetValueExW(m_hkey, wstring(pcszValueName), 0, dwType, (const byte *) pvalue, cbValue);
+      auto lstatus = RegSetValueExW(m_hkey, wstring(pcszValueName), 0, dwType, (const ::u8 *) pvalue, cbValue);
 
       if (lstatus != ERROR_SUCCESS)
       {

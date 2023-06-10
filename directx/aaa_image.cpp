@@ -21,7 +21,7 @@ namespace draw2d_directx
 
    //   map();
 
-   //   return m_pcolorref1;
+   //   return m_pimage32;
 
    //}
 
@@ -108,11 +108,11 @@ namespace draw2d_directx
 
       m_pgraphicsMap->create_memory_graphics();
 
-      color32_t * pcolorref = nullptr;
+      color32_t * pimage32 = nullptr;
 
       int iScan = iStride;
 
-      if (!m_pbitmapMap->create_bitmap(m_pgraphicsMap, size, (void **)&pcolorref, &iScan))
+      if (!m_pbitmapMap->create_bitmap(m_pgraphicsMap, size, (void **)&pimage32, &iScan))
       {
 
          m_sizeRaw.cx() = 0;
@@ -330,14 +330,14 @@ namespace draw2d_directx
 
       pimageM->g()->stretch(::size_f64(cx, cy), picon);
 
-      byte * r1 = (byte*) pimage1->colorref();
-      byte * r2 = (byte*) pimage2->colorref();
-      byte * srcM = (byte*) pimageM->colorref();
-      byte * dest = (byte*) colorref();
+      ::u8 * r1 = (::u8*) pimage1->colorref();
+      ::u8 * r2 = (::u8*) pimage2->colorref();
+      ::u8 * srcM = (::u8*) pimageM->colorref();
+      ::u8 * dest = (::u8*) colorref();
       int iSize = cx * cy;
 
-      byte b;
-      byte bMax;
+      ::u8 b;
+      ::u8 bMax;
       while (iSize-- > 0)
       {
          if (srcM[0] == 255)
@@ -347,11 +347,11 @@ namespace draw2d_directx
          else
          {
             bMax = 0;
-            b = (byte)(r1[0] - r2[0]);
+            b = (::u8)(r1[0] - r2[0]);
             bMax = maximum(b, bMax);
-            b = (byte)(r1[1] - r2[1]);
+            b = (::u8)(r1[1] - r2[1]);
             bMax = maximum(b, bMax);
-            b = (byte)(r1[2] - r2[2]);
+            b = (::u8)(r1[2] - r2[2]);
             bMax = maximum(b, bMax);
             bMax = 255 - bMax;
          }
@@ -694,7 +694,7 @@ namespace draw2d_directx
    //   double dDiv = cx * cy;
    //   if(dDiv > 0)
    //   {
-   //      byte * lpb = (byte *) m_pcolorref;
+   //      ::u8 * lpb = (::u8 *) m_pcolorref;
    //      for (int y = 0; y < cy; y++)
    //      {
    //         iRLine = 0;
@@ -868,50 +868,50 @@ namespace draw2d_directx
    //      return;
    //   }
    //   int iCount = cx * cy;
-   //   byte * lp = ((byte *) m_pcolorref);
+   //   ::u8 * lp = ((::u8 *) m_pcolorref);
    //   int i = 0;
    //   int iCount1 = iCount - iCount % 8;
    //   for(; i < iCount1; i++)
    //   {
-   //      lp[0] /= (byte) iDivide;
-   //      lp[1] /= (byte) iDivide;
-   //      lp[2] /= (byte) iDivide;
+   //      lp[0] /= (::u8) iDivide;
+   //      lp[1] /= (::u8) iDivide;
+   //      lp[2] /= (::u8) iDivide;
 
-   //      lp[4] /= (byte) iDivide;
-   //      lp[5] /= (byte) iDivide;
-   //      lp[6] /= (byte) iDivide;
+   //      lp[4] /= (::u8) iDivide;
+   //      lp[5] /= (::u8) iDivide;
+   //      lp[6] /= (::u8) iDivide;
 
-   //      lp[8] /= (byte) iDivide;
-   //      lp[9] /= (byte) iDivide;
-   //      lp[10] /= (byte) iDivide;
+   //      lp[8] /= (::u8) iDivide;
+   //      lp[9] /= (::u8) iDivide;
+   //      lp[10] /= (::u8) iDivide;
 
-   //      lp[12] /= (byte) iDivide;
-   //      lp[13] /= (byte) iDivide;
-   //      lp[14] /= (byte) iDivide;
+   //      lp[12] /= (::u8) iDivide;
+   //      lp[13] /= (::u8) iDivide;
+   //      lp[14] /= (::u8) iDivide;
 
-   //      lp[16] /= (byte) iDivide;
-   //      lp[17] /= (byte) iDivide;
-   //      lp[28] /= (byte) iDivide;
+   //      lp[16] /= (::u8) iDivide;
+   //      lp[17] /= (::u8) iDivide;
+   //      lp[28] /= (::u8) iDivide;
 
-   //      lp[20] /= (byte) iDivide;
-   //      lp[21] /= (byte) iDivide;
-   //      lp[22] /= (byte) iDivide;
+   //      lp[20] /= (::u8) iDivide;
+   //      lp[21] /= (::u8) iDivide;
+   //      lp[22] /= (::u8) iDivide;
 
-   //      lp[24] /= (byte) iDivide;
-   //      lp[25] /= (byte) iDivide;
-   //      lp[26] /= (byte) iDivide;
+   //      lp[24] /= (::u8) iDivide;
+   //      lp[25] /= (::u8) iDivide;
+   //      lp[26] /= (::u8) iDivide;
 
-   //      lp[28] /= (byte) iDivide;
-   //      lp[29] /= (byte) iDivide;
-   //      lp[30] /= (byte) iDivide;
+   //      lp[28] /= (::u8) iDivide;
+   //      lp[29] /= (::u8) iDivide;
+   //      lp[30] /= (::u8) iDivide;
 
    //      lp += 4 * 8;
    //   }
    //   for(; i < iCount; i++)
    //   {
-   //      lp[0] /= (byte) iDivide;
-   //      lp[1] /= (byte) iDivide;
-   //      lp[2] /= (byte) iDivide;
+   //      lp[0] /= (::u8) iDivide;
+   //      lp[1] /= (::u8) iDivide;
+   //      lp[2] /= (::u8) iDivide;
    //      lp +=4;
    //   }
    //}
@@ -923,13 +923,13 @@ namespace draw2d_directx
    //      return;
    //   }
    //   int iCount = cx * cy;
-   //   byte * lp = ((byte *) m_pcolorref);
+   //   ::u8 * lp = ((::u8 *) m_pcolorref);
    //   for(int i = 0; i < iCount; i++)
    //   {
-   //      lp[0] /= (byte) iDivide;
-   //      lp[1] /= (byte) iDivide;
-   //      lp[2] /= (byte) iDivide;
-   //      lp[3] /= (byte) iDivide;
+   //      lp[0] /= (::u8) iDivide;
+   //      lp[1] /= (::u8) iDivide;
+   //      lp[2] /= (::u8) iDivide;
+   //      lp[3] /= (::u8) iDivide;
    //      lp +=4;
    //   }
    //}
@@ -941,10 +941,10 @@ namespace draw2d_directx
    //      return;
    //   }
    //   int iCount = cx * cy;
-   //   byte * lp = ((byte *) m_pcolorref);
+   //   ::u8 * lp = ((::u8 *) m_pcolorref);
    //   for(int i = 0; i < iCount; i++)
    //   {
-   //      lp[3] /= (byte) iDivide;
+   //      lp[3] /= (::u8) iDivide;
    //      lp +=4;
    //   }
    //}
@@ -1018,50 +1018,50 @@ namespace draw2d_directx
    //   int offset = ((int)echannel) % 4;
    //   int size_i32=cx*cy;
 
-   //   byte * pb;
+   //   ::u8 * pb;
 
    //   int iSize32 = size / 32;
    //   int i;
    //   for (i=0; i < iSize32; i+=32 )
    //   {
-   //      pb = ((byte * ) &m_pcolorref[i]) + offset;
-   //      pb[0 * 4] = (byte) intensity;
-   //      pb[1 * 4] = (byte) intensity;
-   //      pb[2 * 4] = (byte) intensity;
-   //      pb[3 * 4] = (byte) intensity;
-   //      pb[4 * 4] = (byte) intensity;
-   //      pb[5 * 4] = (byte) intensity;
-   //      pb[6 * 4] = (byte) intensity;
-   //      pb[7 * 4] = (byte) intensity;
-   //      pb[8 * 4] = (byte) intensity;
-   //      pb[9 * 4] = (byte) intensity;
-   //      pb[10 * 4] = (byte) intensity;
-   //      pb[11 * 4] = (byte) intensity;
-   //      pb[12 * 4] = (byte) intensity;
-   //      pb[13 * 4] = (byte) intensity;
-   //      pb[14 * 4] = (byte) intensity;
-   //      pb[15 * 4] = (byte) intensity;
-   //      pb[16 * 4] = (byte) intensity;
-   //      pb[17 * 4] = (byte) intensity;
-   //      pb[18 * 4] = (byte) intensity;
-   //      pb[19 * 4] = (byte) intensity;
-   //      pb[20 * 4] = (byte) intensity;
-   //      pb[21 * 4] = (byte) intensity;
-   //      pb[22 * 4] = (byte) intensity;
-   //      pb[23 * 4] = (byte) intensity;
-   //      pb[24 * 4] = (byte) intensity;
-   //      pb[25 * 4] = (byte) intensity;
-   //      pb[26 * 4] = (byte) intensity;
-   //      pb[27 * 4] = (byte) intensity;
-   //      pb[28 * 4] = (byte) intensity;
-   //      pb[29 * 4] = (byte) intensity;
-   //      pb[30 * 4] = (byte) intensity;
-   //      pb[31 * 4] = (byte) intensity;
+   //      pb = ((::u8 * ) &m_pcolorref[i]) + offset;
+   //      pb[0 * 4] = (::u8) intensity;
+   //      pb[1 * 4] = (::u8) intensity;
+   //      pb[2 * 4] = (::u8) intensity;
+   //      pb[3 * 4] = (::u8) intensity;
+   //      pb[4 * 4] = (::u8) intensity;
+   //      pb[5 * 4] = (::u8) intensity;
+   //      pb[6 * 4] = (::u8) intensity;
+   //      pb[7 * 4] = (::u8) intensity;
+   //      pb[8 * 4] = (::u8) intensity;
+   //      pb[9 * 4] = (::u8) intensity;
+   //      pb[10 * 4] = (::u8) intensity;
+   //      pb[11 * 4] = (::u8) intensity;
+   //      pb[12 * 4] = (::u8) intensity;
+   //      pb[13 * 4] = (::u8) intensity;
+   //      pb[14 * 4] = (::u8) intensity;
+   //      pb[15 * 4] = (::u8) intensity;
+   //      pb[16 * 4] = (::u8) intensity;
+   //      pb[17 * 4] = (::u8) intensity;
+   //      pb[18 * 4] = (::u8) intensity;
+   //      pb[19 * 4] = (::u8) intensity;
+   //      pb[20 * 4] = (::u8) intensity;
+   //      pb[21 * 4] = (::u8) intensity;
+   //      pb[22 * 4] = (::u8) intensity;
+   //      pb[23 * 4] = (::u8) intensity;
+   //      pb[24 * 4] = (::u8) intensity;
+   //      pb[25 * 4] = (::u8) intensity;
+   //      pb[26 * 4] = (::u8) intensity;
+   //      pb[27 * 4] = (::u8) intensity;
+   //      pb[28 * 4] = (::u8) intensity;
+   //      pb[29 * 4] = (::u8) intensity;
+   //      pb[30 * 4] = (::u8) intensity;
+   //      pb[31 * 4] = (::u8) intensity;
    //   }
 
    //   for (i=0; i<size_i32; i++ )
    //   {
-   //      *(((byte * ) &m_pcolorref[i]) + offset) = (byte) intensity;
+   //      *(((::u8 * ) &m_pcolorref[i]) + offset) = (::u8) intensity;
    //   }
    //}
 
@@ -1129,7 +1129,7 @@ namespace draw2d_directx
 
       }
 
-      m_pcolorrefRaw = (color32_t *)pbitmap->m_map.bits;
+      m_pimage32Raw = (color32_t *)pbitmap->m_map.bits;
 
       m_iScan = pbitmap->m_map.pitch;
 
@@ -1140,7 +1140,7 @@ namespace draw2d_directx
       if (bApplyAlphaTransform)
       {
 
-         //byte * p = ((byte *)m_pcolorref);
+         //::u8 * p = ((::u8 *)m_pcolorref);
          //while (i > 0)
          //{
          //   if (p[3] == 0)
@@ -1199,7 +1199,7 @@ namespace draw2d_directx
 
             HRESULT hr = ((ID2D1Bitmap1 *) m_pbitmapMap->m_osdata[1])->Unmap();
 
-            m_pcolorrefRaw = nullptr;
+            m_pimage32Raw = nullptr;
 
             m_bMapped = false;
 
@@ -1209,7 +1209,7 @@ namespace draw2d_directx
 
          i64 iArea = area();
 
-         byte * p = (byte *)m_pcolorrefRaw;
+         ::u8 * p = (::u8 *)m_pimage32Raw;
 
          i64 i = m_iScan * this->height() / sizeof(color32_t);
 
@@ -1236,7 +1236,7 @@ namespace draw2d_directx
          srcRect.top = 0;
          srcRect.bottom = this->height();
 
-         //HRESULT hr = pbitmap1Map->CopyFromMemory(&srcRect, m_pcolorrefRaw, m_iScan);
+         //HRESULT hr = pbitmap1Map->CopyFromMemory(&srcRect, m_pimage32Raw, m_iScan);
 
          HRESULT hr = pbitmap1Map->Unmap();
 
@@ -1244,7 +1244,7 @@ namespace draw2d_directx
 
          hr = pbitmap1->CopyFromBitmap(nullptr, pbitmap1Map, nullptr);
 
-         ((image *) this)->m_pcolorrefRaw = nullptr;
+         ((image *) this)->m_pimage32Raw = nullptr;
 
          if (FAILED(hr))
          {
@@ -1497,7 +1497,7 @@ namespace draw2d_directx
    //}
 
 
-   bool image::blend(const ::point_i32 & pointDst, ::image * pimageSrc, const ::point_i32 & pointSrc, const ::size_i32 & sizeParam, byte bA)
+   bool image::blend(const ::point_i32 & pointDst, ::image * pimageSrc, const ::point_i32 & pointSrc, const ::size_i32 & sizeParam, ::u8 bA)
    {
 
       return ::image::blend(pointDst, pimageSrc, pointSrc, sizeParam, bA);

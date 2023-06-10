@@ -286,7 +286,7 @@ namespace imaging_wic
 
       ::u32 uArea;
 
-      byte * pData;
+      ::u8 * pData;
 
       hr = piLock->GetDataPointer(&uArea, &pData);
 
@@ -312,7 +312,7 @@ namespace imaging_wic
 
       auto scanSizeTarget = pimageFrame->scan_size();
 
-      ::copy_colorref(pdataTarget, uWidth, uHeight, scanSizeTarget, (::color32_t *)pData, cbStride);
+      ::copy_image32(pdataTarget, uWidth, uHeight, scanSizeTarget, (::image32_t *)pData, cbStride);
 
       return true;
 
@@ -643,7 +643,7 @@ namespace imaging_wic
       //
       //   pcr = (::color::color *)m.data();
       //
-      //   ::draw2d::vertical_swap_copy_colorref(pimage->width(), pimage->height(), pcr,
+      //   ::draw2d::vertical_swap_copy_image32(pimage->width(), pimage->height(), pcr,
       //                                         pimage->scan_size(), pimage->data(), pimage->scan_size());
       //
       //#endif
@@ -657,7 +657,7 @@ namespace imaging_wic
             if (SUCCEEDED(hr))
             {
 
-               hr = piBitmapFrame->WritePixels(uHeight, pimage->scan_size(), uHeight * pimage->scan_size(), (byte *)pcr);
+               hr = piBitmapFrame->WritePixels(uHeight, pimage->scan_size(), uHeight * pimage->scan_size(), (::u8 *)pcr);
 
             }
 
@@ -676,7 +676,7 @@ namespace imaging_wic
                   GUID_WICPixelFormat32bppBGRA,
                   pimage->scan_size(),
                   pimage->scan_size() * pimage->height(),
-                  (byte *)pcr,
+                  (::u8 *)pcr,
                   &pbitmap
                );
 

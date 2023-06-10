@@ -83,7 +83,7 @@ bool synchronization_array::add_item(synchronization_object * psync)
    if (hsync != nullptr && hsync != INVALID_HSYNC_VALUE)
    {
 
-      m_byteaSyncIndex[m_hsyncaCache.get_size()] = (byte) m_synchronizationa.get_size();
+      m_byteaSyncIndex[m_hsyncaCache.get_size()] = (::u8) m_synchronizationa.get_size();
 
       m_hsyncaCache.add(hsync);
 

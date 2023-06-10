@@ -140,10 +140,10 @@ inline D2D1_COLOR_F & copy(D2D1_COLOR_F & colorTarget, const ::color::color & co
 inline D2D1_COLOR_F & copy(D2D1_COLOR_F & colorTarget, const ::color32_t & color)
 {
 
-   colorTarget.a = colorref_get_a_value(color) / 255.0f;
-   colorTarget.r = colorref_get_r_value(color) / 255.0f;
-   colorTarget.g = colorref_get_g_value(color) / 255.0f;
-   colorTarget.b = colorref_get_b_value(color) / 255.0f;
+   colorTarget.a = color32_u8_opacity(color) / 255.0f;
+   colorTarget.r = color32_u8_red(color) / 255.0f;
+   colorTarget.g = color32_u8_green(color) / 255.0f;
+   colorTarget.b = color32_u8_blue(color) / 255.0f;
 
    return colorTarget;
 

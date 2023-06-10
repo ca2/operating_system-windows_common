@@ -53,7 +53,7 @@ LPTOP_LEVEL_EXCEPTION_FILTER WINAPI MyDummySetUnhandledExceptionFilter(
    LPTOP_LEVEL_EXCEPTION_FILTER pTopLevelExceptionFilter)
 
 {
-   __UNREFERENCED_PARAMETER(pTopLevelExceptionFilter);
+   UNREFERENCED_PARAMETER(pTopLevelExceptionFilter);
 
    return nullptr;
 }

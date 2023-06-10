@@ -37,9 +37,9 @@ namespace draw2d_direct2d
 
             virtual bool CreateFontIndirect(const LOGFONTW* lpLogFont);
             virtual bool CreateFont(int nHeight, int nWidth, int nEscapement,
-                  int nOrientation, int nWeight, byte bItalic, byte bUnderline,
-                  byte cStrikeOut, byte nCharSet, byte nOutPrecision,
-                  byte nClipPrecision, byte nQuality, byte nPitchAndFamily,
+                  int nOrientation, int nWeight, ::u8 bItalic, ::u8 bUnderline,
+                  ::u8 cStrikeOut, ::u8 nCharSet, ::u8 nOutPrecision,
+                  ::u8 nClipPrecision, ::u8 nQuality, ::u8 nPitchAndFamily,
                   const char * lpszFacename);
             virtual bool CreatePointFont(int nPointSize, const ::string & lpszFaceName, const ::draw2d::graphics * pgraphics = nullptr);
             virtual bool CreatePointFontIndirect(const LOGFONTW* lpLogFont, const ::draw2d::graphics * pgraphics = nullptr);

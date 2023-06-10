@@ -13,14 +13,14 @@ namespace music
 
       const u32 grbChanMsgLen[] =
       {
-         0,                      /* 0x   not a status byte   */
-         0,                      /* 1x   not a status byte   */
-         0,                      /* 2x   not a status byte   */
-         0,                      /* 3x   not a status byte   */
-         0,                      /* 4x   not a status byte   */
-         0,                      /* 5x   not a status byte   */
-         0,                      /* 6x   not a status byte   */
-         0,                      /* 7x   not a status byte   */
+         0,                      /* 0x   not a status ::u8   */
+         0,                      /* 1x   not a status ::u8   */
+         0,                      /* 2x   not a status ::u8   */
+         0,                      /* 3x   not a status ::u8   */
+         0,                      /* 4x   not a status ::u8   */
+         0,                      /* 5x   not a status ::u8   */
+         0,                      /* 6x   not a status ::u8   */
+         0,                      /* 7x   not a status ::u8   */
          3,                      /* 8x   Note off            */
          3,                      /* 9x   Note on             */
          3,                      /* Ax   Poly pressure       */
@@ -311,7 +311,7 @@ namespace music
       };
       */
 
-      double GetNoteFrequency(double dA3Frequency, byte bNote)
+      double GetNoteFrequency(double dA3Frequency, ::u8 bNote)
       {
 
          return dA3Frequency * pow(2.0, (double) (bNote - 69) / 12);
@@ -320,7 +320,7 @@ namespace music
 
       //void     FillTypeCombo(::pointer<simple_combo_box>pcombo)
       //{
-      //   __UNREFERENCED_PARAMETER(lpcombo);
+      //   UNREFERENCED_PARAMETER(lpcombo);
       //   /*   lpcombo->reset_content();
 
       //   string str;
@@ -349,7 +349,7 @@ namespace music
 
       //void     FillPitchCombo(::pointer<simple_combo_box>pcombo)
       //{
-      //   __UNREFERENCED_PARAMETER(lpcombo);
+      //   UNREFERENCED_PARAMETER(lpcombo);
       //   /*    lpcombo->reset_content();
 
       //   for(i32 i = 0; i < 128; i++)
@@ -362,18 +362,18 @@ namespace music
       //}
 
 
-      i32 GetMessageLen(byte bEvent)
+      i32 GetMessageLen(::u8 bEvent)
       {
          return grbChanMsgLen[(bEvent >> 4) & 0x0F];
       }
 
       // returns the midi stream ::payload dword
-      u32 GetVDWord(byte * &hpbMidiStream, u32 dwLeft, u32 &dwValueParam)
+      u32 GetVDWord(::u8 * &hpbMidiStream, u32 dwLeft, u32 &dwValueParam)
       {
 
-         byte                    b;
+         ::u8                    b;
          u32                   dwUsed  = 0;
-         byte * &            hpbImage = hpbMidiStream;
+         ::u8 * &            hpbImage = hpbMidiStream;
          u32               dwValue;
 
          ASSERT(hpbImage != nullptr);

@@ -269,7 +269,7 @@ namespace imaging_wic
 
       pimage->map();
 
-      auto pcolorref = pimage->data();
+      auto pimage32 = pimage->data();
 
       auto iScan = pimage->scan_size();
 
@@ -282,7 +282,7 @@ namespace imaging_wic
             if (SUCCEEDED(hr))
             {
 
-               hr = pbitmapframeencode->WritePixels(uHeight, iScan, uHeight * iScan, (byte *)pcolorref);
+               hr = pbitmapframeencode->WritePixels(uHeight, iScan, uHeight * iScan, (::u8 *)pimage32);
 
             }
 
@@ -301,7 +301,7 @@ namespace imaging_wic
                   GUID_WICPixelFormat32bppBGRA,
                   pimage->scan_size(),
                   pimage->scan_size() * pimage->height(),
-                  (byte *)pimage->data(),
+                  (::u8 *)pimage->data(),
                   &pbitmap
                );
 

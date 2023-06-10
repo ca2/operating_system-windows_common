@@ -241,7 +241,7 @@ namespace imaging_wic
 
             pimage->map();
 
-            vertical_swap_copy_colorref(
+            vertical_swap_copy_image32(
                pimage->get_data(),
                pimage->width(),
                pimage->height(),

@@ -512,7 +512,7 @@ void MessageIO::SendButtonClick(Platform::Object^ sender, ::winrt::Windows::UI::
    {
       DataWriter^ dataWriter = ref new DataWriter();
 
-      // expecting a string of format "NN NN NN NN...." where NN is a byte in hex
+      // expecting a string of format "NN NN NN NN...." where NN is a ::u8 in hex
       int len = _sendMessageTextBox->Text->Length();
       if (0 == len)
       {
@@ -524,7 +524,7 @@ void MessageIO::SendButtonClick(Platform::Object^ sender, ::winrt::Windows::UI::
 
       do
       {
-         byte midiByte = (byte)wcstoul(startPointer, &endPointer, 16);
+         ::u8 midiByte = (::u8)wcstoul(startPointer, &endPointer, 16);
          if (endPointer == startPointer)
          {
             // conversion failed, bail out
@@ -986,7 +986,7 @@ void MessageIO::OnMessageReceived(MidiInPort ^sender, MidiMessageReceivedEventAr
             // prepare SysEx message for printing to the screen.
             // convert bytes to hex strings.
             Array<wchar_t>^ byteInHex = ref new Array<wchar_t>(3);
-            byte byteRead = sysExReader->ReadByte();
+            ::u8 byteRead = sysExReader->ReadByte();
 
             swprintf_s(byteInHex->Data, sizeof(byteInHex->Length), L"%02X", byteRead);
             String^ hexString = ref new String(byteInHex->Data);

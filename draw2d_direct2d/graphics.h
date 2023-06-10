@@ -304,7 +304,7 @@ namespace draw2d_direct2d
       //int GetArcDirection() override;
       //int SetArcDirection(int nArcDirection) override;
 
-      void polydraw(const ::point_f64* ppoints, const byte* lpTypes,count nCount) override;
+      void polydraw(const ::point_f64* ppoints, const ::u8* lpTypes,count nCount) override;
       void polyline_to(const ::point_f64* ppoints,count nCount) override;
       void poly_polyline(const ::point_f64* ppoints, const ::i32 * lpPolyPoints,count nCount) override;
 
@@ -514,7 +514,7 @@ namespace draw2d_direct2d
       // MetaFile Functions
       //bool PlayMetaFile(HMETAFILE hMF) override;
       //bool PlayMetaFile(HENHMETAFILE hEnhMetaFile, const ::rectangle_f64 & rectangleBounds) override;
-      void AddMetaFileComment(::u32 nDataSize, const byte* pCommentData) override;
+      void AddMetaFileComment(::u32 nDataSize, const ::u8* pCommentData) override;
       // can be used for enhanced metafiles only
 
       // Path Functions

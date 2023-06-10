@@ -158,13 +158,13 @@ namespace draw2d_direct2d
 
       }
 
-      auto pcolorref = (color32_t *)*ppdata;
+      auto pimage32 = (color32_t *)*ppdata;
 
       auto iScan = *pstride;
 
       HRESULT hrResultCopyBitmap = S_OK;
 
-      if (pcolorref && iScan > 0)
+      if (pimage32 && iScan > 0)
       {
 
          D2D1_RECT_U rectangleDst = {};
@@ -173,7 +173,7 @@ namespace draw2d_direct2d
 
          rectangleDst.bottom = size.cy();
 
-         hrResultCopyBitmap = m_pbitmap->CopyFromMemory(&rectangleDst, pcolorref, iScan);
+         hrResultCopyBitmap = m_pbitmap->CopyFromMemory(&rectangleDst, pimage32, iScan);
 
       }
 

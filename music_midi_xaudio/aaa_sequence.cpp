@@ -443,7 +443,7 @@ Seq_Open_File_Cleanup:
          void     sequence::Preroll(::thread * pthread, ::music::midi::LPPREROLL lpPreroll, bool bThrow)
          {
 
-            __UNREFERENCED_PARAMETER(pthread);
+            UNREFERENCED_PARAMETER(pthread);
 
             single_lock synchronouslock(&m_mutex, true);
 
@@ -1075,7 +1075,7 @@ seq_Preroll_Cleanup:
 
          void sequence::OnDone(HMIDISTRM hmidistream, LPMIDIHDR lpmidihdr)
          {
-            __UNREFERENCED_PARAMETER(hmidistream);
+            UNREFERENCED_PARAMETER(hmidistream);
             void                   smfrc;
             midi_callback_data *      lpData;
             ASSERT(lpmidihdr != nullptr);
@@ -1248,7 +1248,7 @@ seq_Preroll_Cleanup:
                      ::file::byte_stream_memory_file memFile(get_application(), (LPBYTE) &lpdwParam[1], pheader->m_dwLength - sizeof(u32));
                      for(i32 i = 0; i < m_iaLevel.get_size(); i++)
                      {
-                        byte b;
+                        ::u8 b;
                         memFile >> b;
                         m_iaLevel.element_at(i) = b;
                      }
@@ -1275,9 +1275,9 @@ seq_Preroll_Cleanup:
          void CALLBACK sequence::MidiOutProc(HMIDIOUT hmo, ::u32 wMsg, DWORD_PTR dwInstance, DWORD_PTR dwParam1, DWORD_PTR dwParam2)
          {
 
-            __UNREFERENCED_PARAMETER(hmo);
-            __UNREFERENCED_PARAMETER(dwInstance);
-            __UNREFERENCED_PARAMETER(dwParam2);
+            UNREFERENCED_PARAMETER(hmo);
+            UNREFERENCED_PARAMETER(dwInstance);
+            UNREFERENCED_PARAMETER(dwParam2);
 
             LPMIDIHDR               lpmh         = (LPMIDIHDR) dwParam1;
 
@@ -1532,7 +1532,7 @@ seq_Preroll_Cleanup:
 
          void sequence::on_midi_playback_end(::music::midi::sequence::event * pevent)
          {
-            __UNREFERENCED_PARAMETER(pevent);
+            UNREFERENCED_PARAMETER(pevent);
             single_lock synchronouslock(&m_mutex, true);
             //   LPMIDIHDR lpmh = ptopic->m_lpmh;
             //   midi_callback_data * lpData = &m_midicallbackdata;
@@ -1755,7 +1755,7 @@ seq_Preroll_Cleanup:
          ::ikaraoke::data & data)
          {
 
-            __UNREFERENCED_PARAMETER(str2a);
+            UNREFERENCED_PARAMETER(str2a);
 
             ::music::midi::file::buffer & file = *this->file();
 

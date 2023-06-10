@@ -3,7 +3,7 @@
 
 #define  VERSION_MINOR              0x00
 #define  VERSION_MAJOR              0x04
-#define  SEQ_VERSION                ((u32)(::u16)((byte)VERSION_MINOR | (((::u16)(byte)VERSION_MAJOR) << 8)))
+#define  SEQ_VERSION                ((u32)(::u16)((::u8)VERSION_MINOR | (((::u16)(::u8)VERSION_MAJOR) << 8)))
 
 #define MMSG_DONE                   (WM_USER+20)
 
