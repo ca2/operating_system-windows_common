@@ -565,7 +565,7 @@ acmedirectory()create(path.folder());
          if (nWritten < nCount)
          {
 
-            ERROR("file::status nWritten < nCount is disk full?");
+            error() <<"file::status nWritten < nCount is disk full?";
 
          }
 

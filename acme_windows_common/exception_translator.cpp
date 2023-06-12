@@ -129,7 +129,7 @@ namespace acme_windows_common
 
 //#if defined(__SANITIZE_ADDRESS__) || defined(__FOR_PERF__)
 //
-//            INFORMATION("sanitize address compilation, not going to install standard exception translator");
+//            information() << "sanitize address compilation, not going to install standard exception translator";
 //
 //#else
 //

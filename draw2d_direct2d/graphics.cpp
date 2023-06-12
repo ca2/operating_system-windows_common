@@ -161,7 +161,7 @@ namespace draw2d_direct2d
                       &pdevicecontextTemplate)))
       {
 
-         WARNING("graphics::CreateCompatibleDC, CreateDeviceContext (1) " << hresult_text(hr));
+         warning() <<"graphics::CreateCompatibleDC, CreateDeviceContext (1) " << hresult_text(hr);
 
          //return false;
 
@@ -197,7 +197,7 @@ namespace draw2d_direct2d
       if (FAILED(hr = pdevicecontextTemplate->QueryInterface(IID_ID2D1RenderTarget,(void **)&prendertargetTemplate)))
       {
 
-         WARNING("graphics::CreateCompatibleDC, QueryInterface (2) " << hresult_text(hr));
+         warning() <<"graphics::CreateCompatibleDC, QueryInterface (2) " << hresult_text(hr);
 
          throw ::exception(error_failed);
 
@@ -219,7 +219,7 @@ namespace draw2d_direct2d
                       &m_pbitmaprendertarget)))
       {
 
-         WARNING("graphics::CreateCompatibleDC, CreateCompatibleRenderTarget (3) " << hresult_text(hr));
+         warning() <<"graphics::CreateCompatibleDC, CreateCompatibleRenderTarget (3) " << hresult_text(hr);
 
          throw ::exception(error_failed);
 
@@ -5554,7 +5554,7 @@ namespace draw2d_direct2d
       if(FAILED(hr))
       {
 
-         WARNING("text_out, SetTextAlignment" << hresult_text(hr));
+         warning() <<"text_out, SetTextAlignment" << hresult_text(hr);
 
       }
 
@@ -5563,7 +5563,7 @@ namespace draw2d_direct2d
       if(FAILED(hr))
       {
 
-         WARNING("text_out, SetTextAlignment" << hresult_text(hr));
+         warning() <<"text_out, SetTextAlignment" << hresult_text(hr);
 
       }
 
@@ -5578,7 +5578,7 @@ namespace draw2d_direct2d
       if (FAILED(hr))
       {
 
-         WARNING("text_out, SetTextAlignment" << hresult_text(hr));
+         warning() <<"text_out, SetTextAlignment" << hresult_text(hr);
 
       }
 
@@ -5742,7 +5742,7 @@ namespace draw2d_direct2d
       if (m_iLayerCount > 0)
       {
 
-         WARNING("Layers left to pop on end draw!");
+         warning() <<"Layers left to pop on end draw!";
 
          _pop_all_layers();
 

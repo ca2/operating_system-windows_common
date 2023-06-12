@@ -136,7 +136,7 @@ namespace imaging_wic
       if (FAILED(hrCreate))
       {
 
-         _INFORMATION(::get_task(), "Failed creating WICImagingFactory1 %x" << hrCreate);
+         ::get_task()->information() << "Failed creating WICImagingFactory1 %x" << hrCreate;
 
       }
 
