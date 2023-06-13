@@ -1,6 +1,7 @@
 #include "framework.h"
 #include "direct2d.h"
 #include "directx/directx.h"
+#include "acme/primitive/geometry2d/rectangle.h"
 #include "acme_windows_common/hresult_exception.h"
 
 
