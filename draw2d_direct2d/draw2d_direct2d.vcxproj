@@ -702,6 +702,7 @@
     <ClInclude Include="factory_exchange.h" />
     <ClInclude Include="font.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="geometry.h" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="image.h" />
     <ClInclude Include="object.h" />
@@ -718,6 +719,7 @@
     <ClCompile Include="bitmap.cpp" />
     <ClCompile Include="brush.cpp" />
     <ClCompile Include="draw2d.cpp" />
+    <ClCompile Include="geometry.cpp" />
     <ClCompile Include="_factory.cpp" />
     <ClCompile Include="font.cpp" />
     <ClCompile Include="framework.cpp">

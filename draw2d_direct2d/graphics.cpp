@@ -5,9 +5,13 @@
 #include "pen.h"
 #include "brush.h"
 #include "region.h"
+#include "geometry.h"
 #include "direct2d/direct2d.h"
 #include "CustomRenderer.h"
+#include "acme/exception/not_implemented.h"
+#include "acme/parallelization/synchronous_lock.h"
 #include "acme/platform/scoped_restore.h"
+#include "acme/primitive/geometry2d/ellipse.h"
 #include "aura/windowing/windowing.h"
 #include "aura/windowing/display.h"
 #include "aura/user/user/user.h"
@@ -617,7 +621,7 @@ namespace draw2d_direct2d
 
          HRESULT hrEndDraw = ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->EndDraw();
 
-         D2D1::RectF rectfDib1;
+         D2D1_RECT_F rectfDib1;
 
          copy(rectfDib1, rectangleDib1);
 
@@ -1117,7 +1121,7 @@ namespace draw2d_direct2d
       //VERIFY(::GetCurrentPositionEx(get_handle2(), &point));
       //return point;
 
-      return nullptr;
+      return {};
 
    }
 
@@ -1178,8 +1182,14 @@ namespace draw2d_direct2d
       double centerx = (x2 + x1) / 2.0;
       double centery = (y2 + y1) / 2.0;
 
-      double start = atan2(y3 - centery, x3 - centerx) * 180.0 / pi;
-      double end = atan2(y4 - centery, x4 - centerx) * 180.0 / pi;
+      //angle_f64 start{ with_t{}, atan2(y3 - centery, x3 - centerx) * 180.0 / pi };
+      //angle_f64 end{ with_t{}, atan2(y4 - centery, x4 - centerx) * 180.0 / pi };
+
+      angle_f64 start;
+      angle_f64 end;
+
+      start.atan(y3 - centery, x3 - centerx);
+      end.atan(y4 - centery, x4 - centerx);
 
       //ppath->begin_figure(false, ::draw2d::e_fill_mode_winding);
       ppath->begin_figure();
@@ -1572,8 +1582,8 @@ namespace draw2d_direct2d
 
       D2D1_ELLIPSE ellipse;
 
-      ellipse.point.x() = (float)(rectangle.right + rectangle.left) / 2.f;
-      ellipse.point.y() = (float)(rectangle.bottom + rectangle.top) / 2.f;
+      ellipse.point.x = (float)(rectangle.right + rectangle.left) / 2.f;
+      ellipse.point.y = (float)(rectangle.bottom + rectangle.top) / 2.f;
       ellipse.radiusX = (float)(rectangle.right - rectangle.left) / 2.f;
       ellipse.radiusY = (float)(rectangle.bottom - rectangle.top) / 2.f;
 
@@ -1611,8 +1621,8 @@ namespace draw2d_direct2d
 
       D2D1_ELLIPSE ellipse;
 
-      ellipse.point.x() = (float)(rectangle.right + rectangle.left) / 2.f;
-      ellipse.point.y() = (float)(rectangle.bottom + rectangle.top) / 2.f;
+      ellipse.point.x = (float)(rectangle.right + rectangle.left) / 2.f;
+      ellipse.point.y = (float)(rectangle.bottom + rectangle.top) / 2.f;
       ellipse.radiusX = (float)(rectangle.right - rectangle.left) / 2.f;
       ellipse.radiusY = (float)(rectangle.bottom - rectangle.top) / 2.f;
 
@@ -1669,7 +1679,7 @@ namespace draw2d_direct2d
 
          psink->SetFillMode(D2D1_FILL_MODE_WINDING);
 
-         psink->BeginFigure(D2D1::Point2F((FLOAT) ppoints->x, (FLOAT)ppoints->y), D2D1_FIGURE_BEGIN_FILLED);
+         psink->BeginFigure(D2D1::Point2F((FLOAT) ppoints->x(), (FLOAT)ppoints->y()), D2D1_FIGURE_BEGIN_FILLED);
 
          for (index i = 1; i < count; i++)
          {
@@ -1721,7 +1731,7 @@ namespace draw2d_direct2d
 
          psink->SetFillMode(D2D1_FILL_MODE_WINDING);
 
-         psink->BeginFigure(D2D1::Point2F((FLOAT)ppoints->x, (FLOAT)ppoints->y), D2D1_FIGURE_BEGIN_FILLED);
+         psink->BeginFigure(D2D1::Point2F((FLOAT)ppoints->x(), (FLOAT)ppoints->y()), D2D1_FIGURE_BEGIN_FILLED);
 
          for (index i = 1; i < count; i++)
          {
@@ -1769,7 +1779,7 @@ namespace draw2d_direct2d
 
          psink->SetFillMode(D2D1_FILL_MODE_WINDING);
 
-         psink->BeginFigure(D2D1::Point2F((FLOAT)ppoints->x, (FLOAT)ppoints->y), D2D1_FIGURE_BEGIN_FILLED);
+         psink->BeginFigure(D2D1::Point2F((FLOAT)ppoints->x(), (FLOAT)ppoints->y()), D2D1_FIGURE_BEGIN_FILLED);
 
          for (index i = 1; i < count; i++)
          {
@@ -2088,7 +2098,7 @@ namespace draw2d_direct2d
             if (imagedrawingoptions.is_identity())
             {
 
-               m_pdevicecontext->DrawBitmap(pd2d1bitmap, rectangleTarget, (FLOAT) imagedrawingoptions.opacity().get_opacity_rate(), D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR, rectangleSource);
+               m_pdevicecontext->DrawBitmap(pd2d1bitmap, rectangleTarget, (FLOAT) imagedrawingoptions.opacity().f32_opacity(), D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR, rectangleSource);
 
             }
             else
@@ -2124,8 +2134,8 @@ namespace draw2d_direct2d
                      (FLOAT) imagedrawingoptions.matrix().e4);
                colorMatrixEffect->SetValue(D2D1_COLORMATRIX_PROP_COLOR_MATRIX, matrix);
                D2D1_POINT_2F pointTarget;
-               pointTarget.x() = rectangleTarget.left;
-               pointTarget.y() = rectangleTarget.top;
+               pointTarget.x = rectangleTarget.left;
+               pointTarget.y = rectangleTarget.top;
                //m_pdevicecontext->BeginDraw();
                m_pdevicecontext->DrawImage(colorMatrixEffect, &pointTarget, &rectangleSource, D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR);
                //m_pdevicecontext->EndDraw();
@@ -2328,7 +2338,7 @@ namespace draw2d_direct2d
       throw ::exception(todo);
 
 
-      return false;
+      return {};
 
    }
 
@@ -2338,7 +2348,7 @@ namespace draw2d_direct2d
 
       throw ::exception(todo);
 
-      return false;
+      return {};
 
    }
 
@@ -2348,7 +2358,7 @@ namespace draw2d_direct2d
 
       throw ::exception(todo);
 
-      return false;
+      return {};
 
    }
 
@@ -2358,7 +2368,7 @@ namespace draw2d_direct2d
 
       throw ::exception(todo);
 
-      return false;
+      return {};
 
    }
 
@@ -2878,7 +2888,7 @@ namespace draw2d_direct2d
 
    //}
 
-   void graphics::angle_arc(double x, double y, double nRadius, angle fStartAngle, angle fSweepAngle)
+   void graphics::angle_arc(double x, double y, double nRadius, angle_f64 fStartAngle, angle_f64 fSweepAngle)
    {
 
       throw ::exception(todo);
@@ -3875,7 +3885,7 @@ namespace draw2d_direct2d
    //}
 
 
-   int graphics::SaveDC()
+   int graphics::save_graphics_context()
    {
 
       m_prendertarget->GetTransform(&m_state.m_m);
@@ -3895,10 +3905,10 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::RestoreDC(int nSavedDC)
+   void graphics::restore_graphics_context(int iSavedContext)
    {
 
-      if (nSavedDC < 0)
+      if (iSavedContext < 0)
       {
 
          //return false;
@@ -3907,7 +3917,7 @@ namespace draw2d_direct2d
 
       }
 
-      if (nSavedDC >= m_statea.get_count())
+      if (iSavedContext >= m_statea.get_count())
       {
 
          //return false;
@@ -3936,7 +3946,7 @@ namespace draw2d_direct2d
 
       //}
 
-      m_state = m_statea[nSavedDC];
+      m_state = m_statea[iSavedContext];
 
 
       while (m_iLayerCount > m_state.m_iLayerIndex)
@@ -3948,7 +3958,7 @@ namespace draw2d_direct2d
 
       m_prendertarget->SetTransform(&m_state.m_m);
 
-      m_statea.set_size(nSavedDC);
+      m_statea.set_size(iSavedContext);
 
       //return true;
 
@@ -4097,8 +4107,7 @@ namespace draw2d_direct2d
 
       throw ::exception(todo);
 
-
-      return nullptr;
+      return {};
 
    }
 
@@ -4116,7 +4125,7 @@ namespace draw2d_direct2d
 
       throw ::exception(todo);
 
-      return nullptr;
+      return {};
 
    }
 
@@ -4126,7 +4135,7 @@ namespace draw2d_direct2d
 
       throw ::exception(todo);
 
-      return nullptr;
+      return {};
 
    }
 
@@ -4136,7 +4145,7 @@ namespace draw2d_direct2d
 
       throw ::exception(todo);
 
-      return nullptr;
+      return {};
 
    }
 
@@ -4146,8 +4155,7 @@ namespace draw2d_direct2d
 
       throw ::exception(todo);
 
-
-      return nullptr;
+      return {};
 
    }
 
@@ -4351,25 +4359,26 @@ namespace draw2d_direct2d
    }
    
 
-   void graphics::_add_clipping_shape(const ::rectangle_f64 & rectangle, ___shape<::draw2d::region > & shaperegion)
+   //void graphics::_add_clipping_shape(const ::rectangle_f64 & rectangle, ___shape<::draw2d::region > & shaperegion)
+   void graphics::_add_clipping_shape(const ::rectangle_f64 & rectangle, ::draw2d::region * pregion)
    {
 
       //::draw2d::lock draw2dlock;
 
       // ::draw2d::device_lock devicelock(this);
 
-      if (!shaperegion.holdee())
-      {
+      //if (!shaperegion.holdee())
+      //{
 
-         auto pregion = __create < ::draw2d::region >();
+      //   auto pregion = __create < ::draw2d::region >();
 
-         auto rectangleClip = rectangle + m_pointAddShapeTranslate;
+      //   auto rectangleClip = rectangle + m_pointAddShapeTranslate;
 
-         pregion->create_rectangle(rectangleClip);
+      //   pregion->create_rectangle(rectangleClip);
 
-         shaperegion.holdee(pregion);
+      //   shaperegion.holdee(pregion);
 
-      }
+      //}
 
       //D2D1::Matrix3x2F m = {};
 
@@ -4379,7 +4388,18 @@ namespace draw2d_direct2d
 
       //m_pstate->m_maRegion.add(m);
 
-      ID2D1Geometry* pgeometry = (ID2D1Geometry*)shaperegion.holdee()->get_os_data(this);
+      comptr<ID2D1RectangleGeometry> pgeometry;
+
+      D2D1_RECT_F r;
+
+      copy(r, rectangle);
+
+      ::direct2d::direct2d()->d2d1_factory1()->CreateRectangleGeometry(r, &pgeometry);
+
+      //return pgeometry;
+
+
+      //      ID2D1Geometry * pgeometry = (ID2D1Geometry *)shaperegion.holdee()->get_os_data(this);
 
       _push_layer(pgeometry);
 
@@ -4422,7 +4442,7 @@ namespace draw2d_direct2d
    //}
 
 
-   void graphics::_add_clipping_shape(const ::ellipse & ellipse, ___shape<::draw2d::region > & shaperegion)
+   void graphics::_add_clipping_shape(const ::ellipse_f64 & ellipse, ::draw2d::region * pdraw2dregion)
    {
 
       //::draw2d::lock draw2dlock;
@@ -4431,28 +4451,30 @@ namespace draw2d_direct2d
 
       {
 
-         if (!shaperegion.holdee())
-         {
+         //if (!shaperegion.holdee())
+         //{
 
-            auto pregion = __create < ::draw2d::region >();
+         //   auto pregion = __create < ::draw2d::region >();
 
-            auto rectangleClip = ellipse + m_pointAddShapeTranslate;
+         //   auto rectangleClip = ellipse + m_pointAddShapeTranslate;
 
-            pregion->create_ellipse(ellipse);
+         //   pregion->create_ellipse(ellipse);
 
-            shaperegion.holdee(pregion);
+         //   shaperegion.holdee(pregion);
 
-         }
+         //}
 
-         D2D1::Matrix3x2F m = {};
+         //D2D1::Matrix3x2F m = {};
 
-         m_prendertarget->GetTransform(&m);
+         //m_prendertarget->GetTransform(&m);
 
          //m_pstate->m_sparegionClip.add(pregion);
 
          //m_pstate->m_maRegion.add(m);
 
-         ID2D1Geometry* pgeometry = (ID2D1Geometry*)shaperegion.holdee()->get_os_data(this);
+         //ID2D1Geometry* pgeometry = (ID2D1Geometry*)shaperegion.holdee()->get_os_data(this);
+
+         auto pgeometry = ::direct2d::geometry::create_ellipse(ellipse);
 
          //m_prendertarget->PushLayer(D2D1::LayerParameters(D2D1::InfiniteRect(), pgeometry), nullptr);
 
@@ -4497,7 +4519,7 @@ namespace draw2d_direct2d
    //}
 
 
-   void graphics::_add_clipping_shape(const ::polygon_f64& polygon_i32, ___shape<::draw2d::region > & shaperegion)
+   void graphics::_add_clipping_shape(const ::polygon_f64& polygon, ::draw2d::region * pdraw2dregion)
    {
 
       //::draw2d::lock draw2dlock;
@@ -4506,28 +4528,30 @@ namespace draw2d_direct2d
 
       {
 
-         if (!shaperegion.holdee())
-         {
+         //if (!shaperegion.holdee())
+         //{
 
-            auto pregion = __create < ::draw2d::region >();
+         //   auto pregion = __create < ::draw2d::region >();
 
-            pregion->m_pointOffset = m_pointAddShapeTranslate;
+         //   pregion->m_pointOffset = m_pointAddShapeTranslate;
 
-            pregion->create_polygon(polygon_i32.data(), (::i32)polygon_i32.get_count(), ::draw2d::e_fill_mode_winding);
+         //   pregion->create_polygon(polygon_i32.data(), (::i32)polygon_i32.get_count(), ::draw2d::e_fill_mode_winding);
 
-            shaperegion.holdee(pregion);
+         //   shaperegion.holdee(pregion);
 
-         }
+         //}
 
-         D2D1::Matrix3x2F m = {};
+         //D2D1::Matrix3x2F m = {};
 
-         m_prendertarget->GetTransform(&m);
+         //m_prendertarget->GetTransform(&m);
 
          //m_pstate->m_sparegionClip.add(pregion);
 
          //m_pstate->m_maRegion.add(m);
 
-         ID2D1Geometry* pgeometry = (ID2D1Geometry*)shaperegion.holdee()->get_os_data(this);
+         //auto pellipsegeometry = ::direct2d::geometry::;
+
+         auto pgeometry = ::direct2d::geometry::create_polygon(polygon);
 
          _push_layer(pgeometry);
 
@@ -4544,7 +4568,9 @@ namespace draw2d_direct2d
    void graphics::intersect_clip(const ::rectangle_f64 & rectangle)
    {
 
-      auto r = rectangle + m_pointAddShapeTranslate;
+      //auto r = rectangle + m_pointAddShapeTranslate;
+
+      auto r = rectangle;
 
       D2D1_RECT_F rf;
 
@@ -4946,10 +4972,10 @@ namespace draw2d_direct2d
          (int)(short)pMetaRec->rdParm[1], (int)(short)pMetaRec->rdParm[0]);
          break;
       case META_SAVEDC:
-         (dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->SaveDC();
+         (dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->save_graphics_context();
          break;
       case META_RESTOREDC:
-         (dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->RestoreDC((int)(short)pMetaRec->rdParm[0]);
+         (dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->restore_graphics_context((int)(short)pMetaRec->rdParm[0]);
          break;
       case META_SETBKCOLOR:
       {
@@ -5031,8 +5057,8 @@ namespace draw2d_direct2d
 
       ::size_f64 sizeWinExt = GetWindowExt();
       ::size_f64 sizeVpExt = get_extents();
-      psize->cx = psize->cx * abs(sizeVpExt.cx()) / abs(sizeWinExt.cx());
-      psize->cy = psize->cy * abs(sizeVpExt.cy()) / abs(sizeWinExt.cy());
+      psize->cx() = psize->cx() * abs(sizeVpExt.cx()) / abs(sizeWinExt.cx());
+      psize->cy() = psize->cy() * abs(sizeVpExt.cy()) / abs(sizeWinExt.cy());
 
    }
 
@@ -5044,8 +5070,8 @@ namespace draw2d_direct2d
 
       ::size_f64 sizeWinExt = GetWindowExt();
       ::size_f64 sizeVpExt = get_extents();
-      psize->cx = psize->cx * abs(sizeWinExt.cx()) / abs(sizeVpExt.cx());
-      psize->cy = psize->cy * abs(sizeWinExt.cy()) / abs(sizeVpExt.cy());
+      psize->cx() = psize->cx() * abs(sizeWinExt.cx()) / abs(sizeVpExt.cx());
+      psize->cy() = psize->cy() * abs(sizeWinExt.cy()) / abs(sizeVpExt.cy());
 
    }
 
@@ -5164,7 +5190,9 @@ namespace draw2d_direct2d
 
       }
 
-      auto& text = m_pfont->m_mapText[str];
+      synchronous_lock synchronouslock(this->synchronization());
+
+      auto& text = m_pfont->m_mapFontText[str];
 
       if (text.m_wstr.is_empty())
       {
@@ -5344,7 +5372,9 @@ namespace draw2d_direct2d
 
       }
 
-      auto& text = m_pfont->m_mapText[range];
+      synchronous_lock synchronouslock(this->synchronization());
+
+      auto& text = m_pfont->m_mapFontText[range];
 
       if (text.m_bSize)
       {
@@ -5530,11 +5560,13 @@ namespace draw2d_direct2d
 
       }
 
+      synchronous_lock synchronouslock(this->synchronization());
+
       D2D1::Matrix3x2F m;
 
       D2D1::Matrix3x2F mOriginal;
 
-      auto & text = m_pfont->m_mapText[scopedstr];
+      auto & text = m_pfont->m_mapFontText[scopedstr];
 
       ::size_f64 sizeText;
          
@@ -5649,15 +5681,15 @@ namespace draw2d_direct2d
 
       D2D1_POINT_2F p1;
 
-      p1.x() = (FLOAT) x1;
+      p1.x = (FLOAT) x1;
 
-      p1.y() = (FLOAT) y1;
+      p1.y = (FLOAT) y1;
 
       D2D1_POINT_2F p2;
 
-      p2.x() = (FLOAT) x2;
+      p2.x = (FLOAT) x2;
 
-      p2.y() = (FLOAT) y2;
+      p2.y = (FLOAT) y2;
 
       ID2D1Brush * pbrush = m_ppen->get_os_data < ID2D1Brush * >(this);
 
@@ -5692,9 +5724,9 @@ namespace draw2d_direct2d
 
       D2D1_POINT_2F p2;
 
-      p2.x() = (FLOAT) x;
+      p2.x = (FLOAT) x;
 
-      p2.y() = (FLOAT) y;
+      p2.y = (FLOAT) y;
 
       ID2D1Brush * pbrush =  m_ppen->get_os_data < ID2D1Brush * >(this);
 
@@ -6792,10 +6824,10 @@ namespace draw2d_direct2d
 
       ::point_i32 pointViewport(0, 0);
 
-      prop.startPoint.x() = (FLOAT)p1.x() + pointViewport.x();
-      prop.startPoint.y() = (FLOAT)p1.y() + pointViewport.y();
-      prop.endPoint.x() = (FLOAT)p2.x() + pointViewport.x();
-      prop.endPoint.y() = (FLOAT)p2.y() + pointViewport.y();
+      prop.startPoint.x = (FLOAT)p1.x() + pointViewport.x();
+      prop.startPoint.y = (FLOAT)p1.y() + pointViewport.y();
+      prop.endPoint.x = (FLOAT)p2.x() + pointViewport.x();
+      prop.endPoint.y = (FLOAT)p2.y() + pointViewport.y();
 
       D2D1_BRUSH_PROPERTIES brushproperties = {};
 
