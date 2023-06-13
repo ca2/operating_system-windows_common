@@ -11,7 +11,7 @@ namespace draw2d_direct2d
 
       //set_handle(nullptr);
       //m_pgraphics    = nullptr;
-      m_powner = nullptr;
+      //m_powner = nullptr;
 
    }
 

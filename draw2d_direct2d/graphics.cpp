@@ -617,10 +617,14 @@ namespace draw2d_direct2d
 
          HRESULT hrEndDraw = ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->EndDraw();
 
+         D2D1::RectF rectfDib1;
+
+         copy(rectfDib1, rectangleDib1);
+
          pgraphicsDib1->m_pdevicecontext->DrawImage(
          (ID2D1Bitmap *)pgraphicsDib2->get_current_bitmap()->m_osdata[0],
          D2D1::Point2F(0.f, 0.f),
-         d2d1::rectangle_f32(rectangleDib1),
+         rectfDib1,
          D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR,
          D2D1_COMPOSITE_MODE_DESTINATION_IN);
 

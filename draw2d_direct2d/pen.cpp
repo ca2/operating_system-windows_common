@@ -13,7 +13,7 @@ namespace draw2d_direct2d
 
       m_pthis = this;
       m_bMetroColor     = false;
-      m_colorMetro         = 0;
+      //m_colorMetro = {};
 
    }
 

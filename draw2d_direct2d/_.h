@@ -2,10 +2,9 @@
 
 
 #include "aura/_.h"
-#undef USUAL_OPERATING_SYSTEM_SUPPRESSIONS
-#include "acme/_operating_system.h"
+#include "acme/_win32_gdi.h"
 #include "direct2d/_.h"
-#include "acme/primitive/geometry2d/_geometry2d.h"
+//#include "acme/primitive/geometry2d/_geometry2d.h"
 #include "acme_windows_common/_.h"
 #include "acme_windows_common/hresult_exception.h"
 
@@ -19,37 +18,37 @@
 
 #include "_constant.h"
 
-
-namespace d2d1
-{
-
-
-   inline D2D1_RECT_F rectangle_f32(const ::rectangle_i32 & rectangle)
-   {
-
-      return D2D1::Rect<FLOAT>(
-         (FLOAT)(rectangle.left),
-         (FLOAT)(rectangle.top),
-         (FLOAT)(rectangle.right),
-         (FLOAT)(rectangle.bottom)
-         );
-
-   }
-
-
-   inline D2D1_POINT_2F Point2F(double x = 0.0, double y = 0.0)
-   {
-
-      return Point2F(
-         (FLOAT)(x),
-         (FLOAT)(y)
-      );
-
-   }
-
-
-} // namespace d2d1
-
+//
+//namespace d2d1
+//{
+//
+//
+//   //inline D2D1_RECT_F rectangle_f32(const ::rectangle_i32 & rectangle)
+//   //{
+//
+//   //   return D2D1::Rect<FLOAT>(
+//   //      (FLOAT)(rectangle.left),
+//   //      (FLOAT)(rectangle.top),
+//   //      (FLOAT)(rectangle.right),
+//   //      (FLOAT)(rectangle.bottom)
+//   //      );
+//
+//   //}
+//
+//
+//   //inline D2D1_POINT_2F Point2F(double x = 0.0, double y = 0.0)
+//   //{
+//
+//   //   return Point2F(
+//   //      (FLOAT)(x),
+//   //      (FLOAT)(y)
+//   //   );
+//
+//   //}
+//
+//
+//} // namespace d2d1
+//
 
 namespace draw2d_direct2d
 {

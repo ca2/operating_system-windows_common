@@ -46,7 +46,7 @@ namespace draw2d_direct2d
    }
 
 
-   void image::create_ex(const ::size_i32 & size, ::color32_t * pimage32, int iScan, ::enum_flag eflagCreate, int iGoodStride, bool bPreserve)
+   void image::create_ex(const ::size_i32 & size, ::image32_t * pimage32, int iScan, ::enum_flag eflagCreate, int iGoodStride, bool bPreserve)
    {
 
       //::draw2d::lock draw2dlock;
@@ -174,7 +174,7 @@ namespace draw2d_direct2d
    }
 
 
-   void image::initialize(const ::size_i32 & size, ::color32_t * pimage32, int iScan, ::enum_flag eflagCreate)
+   void image::initialize(const ::size_i32 & size, ::image32_t * pimage32, int iScan, ::enum_flag eflagCreate)
    {
 
       //auto estatus =
@@ -335,7 +335,7 @@ namespace draw2d_direct2d
       // White blend image
       auto pimage1 = m_pcontext->m_pauracontext->create_image({cx,  cy});
 
-      pimage1->fill(0, 255, 255, 255);
+      pimage1->clear(rgba(0, 255, 255, 255));
 
       {
 
@@ -352,7 +352,7 @@ namespace draw2d_direct2d
       // Black blend image
       auto pimage2 = m_pcontext->m_pauracontext->create_image({cx,  cy});
 
-      pimage2->fill(0, 0, 0, 0);
+      pimage2->clear(::color::transparent);
 
       {
 
@@ -391,10 +391,10 @@ namespace draw2d_direct2d
 
       }
 
-      ::u8 * r1 = (::u8*) pimage1->colorref();
-      ::u8 * r2 = (::u8*) pimage2->colorref();
-      ::u8 * srcM = (::u8*) pimageM->colorref();
-      ::u8 * dest = (::u8*) colorref();
+      ::u8 * r1 = (::u8*) pimage1->image32();
+      ::u8 * r2 = (::u8*) pimage2->image32();
+      ::u8 * srcM = (::u8*) pimageM->image32();
+      ::u8 * dest = (::u8*) image32();
       int iSize = cx * cy;
 
       ::u8 b;
@@ -1153,7 +1153,7 @@ namespace draw2d_direct2d
 
       }
 
-      auto pimage32 = (::color32_t *)map.bits;
+      auto pimage32 = (::image32_t *)map.bits;
 
       auto p = pimage32;
 
@@ -1631,7 +1631,7 @@ namespace draw2d_direct2d
    }
 
 
-   void image::tint(::image * pimage, const ::color::color & color)
+   void image::tint(::image * pimage, ::color::color color)
    {
 
       //return 

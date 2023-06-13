@@ -3,6 +3,8 @@
 #include "graphics.h"
 #include "CustomRenderer.h"
 #include "acme/parallelization/synchronous_lock.h"
+#include "acme/primitive/geometry2d/arc.h"
+#include "acme/primitive/geometry2d/line.h"
 #include "aura/graphics/write_text/font.h"
 #include "aura/graphics/write_text/text_out.h"
 #include "direct2d/direct2d.h"
