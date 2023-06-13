@@ -2,6 +2,7 @@
 #include "region.h"
 #include "path.h"
 #include "graphics.h"
+#include "geometry.h"
 #include "acme/exception/interface_only.h"
 #include "acme/primitive/geometry2d/item.h"
 #include "acme/primitive/geometry2d/_defer_item.h"
@@ -217,7 +218,7 @@ namespace draw2d_direct2d
    ID2D1Geometry * region::get_rectangle(::draw2d::graphics* pgraphicsParam)
    {
 
-      ID2D1RectangleGeometry * pgeometry = nullptr;
+      //ID2D1RectangleGeometry * pgeometry = nullptr;
 
       auto pgraphics = __graphics(pgraphicsParam);
 
@@ -230,13 +231,15 @@ namespace draw2d_direct2d
 
       ::pointer<::geometry2d::rectangle_item>pitem = m_pitem;
 
-      D2D1_RECT_F r;
-      
-      copy(r, pitem->m_item);
+      //D2D1_RECT_F r;
+      //
+      //copy(r, pitem->m_item);
 
-      ::direct2d::direct2d()->d2d1_factory1()->CreateRectangleGeometry(r, &pgeometry);
+      auto prectanglegeometry = ::direct2d::geometry::create_rectangle(pitem->m_item);
 
-      return pgeometry;
+      //::direct2d::direct2d()->d2d1_factory1()->CreateRectangleGeometry(r, &pgeometry);
+
+      return prectanglegeometry;
 
    }
 
@@ -244,23 +247,25 @@ namespace draw2d_direct2d
    ID2D1Geometry * region::get_ellipse(::draw2d::graphics* pgraphics)
    {
 
-      D2D1_ELLIPSE ellipse;
+      //D2D1_ELLIPSE ellipse;
 
       ::pointer<::geometry2d::ellipse_item>pitem = m_pitem;
 
-      auto pointCenter = pitem->m_item.center();
-      auto sizeRadius = pitem->m_item.size() / 2.0;
+      //auto pointCenter = pitem->m_item.center();
+      //auto sizeRadius = pitem->m_item.size() / 2.0;
 
-      ellipse.point.x = (float)pointCenter.x();
-      ellipse.point.y = (float)pointCenter.y();
-      ellipse.radiusX = (float)sizeRadius.cx();
-      ellipse.radiusY = (float)sizeRadius.cy();
+      //ellipse.point.x = (float)pointCenter.x();
+      //ellipse.point.y = (float)pointCenter.y();
+      //ellipse.radiusX = (float)sizeRadius.cx();
+      //ellipse.radiusY = (float)sizeRadius.cy();
 
-      ID2D1EllipseGeometry * pgeometry = nullptr;
+      //ID2D1EllipseGeometry * pgeometry = nullptr;
 
-      ::direct2d::direct2d()->d2d1_factory1()->CreateEllipseGeometry(ellipse, &pgeometry);
+      //::direct2d::direct2d()->d2d1_factory1()->CreateEllipseGeometry(ellipse, &pgeometry);
 
-      return pgeometry;
+      auto pellipsegeometry = ::direct2d::geometry::create_ellipse(pitem->m_item);
+
+      return pellipsegeometry;
 
    }
 
@@ -268,7 +273,7 @@ namespace draw2d_direct2d
    ID2D1Geometry * region::get_polygon(::draw2d::graphics* pgraphics)
    {
 
-      auto ppath = pgraphics->__create < ::draw2d::path > ();
+      //auto ppath = pgraphics->__create < ::draw2d::path > ();
 
       /*point_i32_array pa;
 
@@ -290,15 +295,17 @@ namespace draw2d_direct2d
 
       ::pointer<::geometry2d::polygon_item>pitem = m_pitem;
 
-      ppath->begin_figure();
-      ppath->add_polygon(pitem->m_polygon.data(), pitem->m_polygon.size());
-      ppath->close_figure();
+      //ppath->begin_figure();
+      //ppath->add_polygon(pitem->m_polygon.data(), pitem->m_polygon.size());
+      //ppath->close_figure();
 
-      ppath->get_os_data(pgraphics, path_filled);
+      //ppath->get_os_data(pgraphics, path_filled);
 
-      m_pgeometry = ::transfer((ID2D1PathGeometry *) ppath->detach());
+      //m_pgeometry = ::transfer((ID2D1PathGeometry *) ppath->detach());
 
-      return m_pgeometry;
+      auto ppathgeometry = ::direct2d::geometry::create_polygon(pitem->m_polygon);
+
+      return ppathgeometry;
 
    }
 

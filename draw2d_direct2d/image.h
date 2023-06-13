@@ -40,13 +40,13 @@ namespace draw2d_direct2d
       using ::image::create;
       void create(const ::size_i32 & size, ::enum_flag eflagCreate = DEFAULT_CREATE_IMAGE_FLAG, int iStride = -1, bool bPreserve = false) override;
       using ::image::initialize;
-      void initialize(const ::size_i32 & size, ::color32_t * pimage32, int iScan, ::enum_flag eflagCreate = DEFAULT_CREATE_IMAGE_FLAG) override;
+      void initialize(const ::size_i32 & size, ::image32_t * pimage32, int iScan, ::enum_flag eflagCreate = DEFAULT_CREATE_IMAGE_FLAG) override;
       bool _create(::draw2d::graphics * pgraphics);
       void destroy() override;
       void destroy_os_data() override;
 
 
-      virtual void create_ex(const ::size_i32 & size, ::color32_t * pimage32, int iScan, ::enum_flag eflagCreate = DEFAULT_CREATE_IMAGE_FLAG, int iStride = -1, bool bPreserve = false);
+      virtual void create_ex(const ::size_i32 & size, ::image32_t * pimage32, int iScan, ::enum_flag eflagCreate = DEFAULT_CREATE_IMAGE_FLAG, int iStride = -1, bool bPreserve = false);
 
       //virtual bool _draw_raw(const ::rectangle_i32 & rectangleTarget, ::image * pimage, const ::point_i32 & pointSrc) override;
 
@@ -63,7 +63,7 @@ namespace draw2d_direct2d
       virtual void blend(const ::point_i32 & pointDst, ::image * pimageSrc, const ::point_i32 & pointSrc, const ::size_i32 & size, ::u8 bA) override;
 
       using ::image::tint;
-      virtual void tint(::image * pimage, const ::color::color & color32) override;
+      virtual void tint(::image * pimage, ::color::color color32) override;
 
       
 

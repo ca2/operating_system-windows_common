@@ -127,10 +127,10 @@ inline void copy(D2D1_POINT_2F & pointDst, const ::point_f64 & pointSrc)
 inline D2D1_COLOR_F & copy(D2D1_COLOR_F & colorTarget, const ::color::color & color)
 {
 
-   colorTarget.a = color.alpha / 255.0f;
-   colorTarget.r = color.red / 255.0f;
-   colorTarget.g = color.green / 255.0f;
-   colorTarget.b = color.blue / 255.0f;
+   colorTarget.a = color.f32_opacity();
+   colorTarget.r = color.f32_red();
+   colorTarget.g = color.f32_green();
+   colorTarget.b = color.f32_blue();
 
    return colorTarget;
 
@@ -140,10 +140,10 @@ inline D2D1_COLOR_F & copy(D2D1_COLOR_F & colorTarget, const ::color::color & co
 inline D2D1_COLOR_F & copy(D2D1_COLOR_F & colorTarget, const ::color32_t & color)
 {
 
-   colorTarget.a = color32_u8_opacity(color) / 255.0f;
-   colorTarget.r = color32_u8_red(color) / 255.0f;
-   colorTarget.g = color32_u8_green(color) / 255.0f;
-   colorTarget.b = color32_u8_blue(color) / 255.0f;
+   colorTarget.a = color.f32_opacity();
+   colorTarget.r = color.f32_red();
+   colorTarget.g = color.f32_green();
+   colorTarget.b = color.f32_blue();
 
    return colorTarget;
 

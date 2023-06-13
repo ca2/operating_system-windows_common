@@ -3,6 +3,8 @@
 #include "graphics.h"
 #include "CustomRenderer.h"
 #include "acme/parallelization/synchronous_lock.h"
+#include "acme/primitive/geometry2d/arc.h"
+#include "acme/primitive/geometry2d/line.h"
 #include "aura/graphics/write_text/font.h"
 #include "aura/graphics/write_text/text_out.h"
 #include "direct2d/direct2d.h"
@@ -1058,7 +1060,7 @@ namespace draw2d_direct2d
 //
 //
 
-//// THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF
+//// THIS CODE AND log_information( IS PROVIDED "AS IS" WITHOUT WARRANTY OF
 //// ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO
 //// THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
 //// PARTICULAR PURPOSE.
