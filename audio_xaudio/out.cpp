@@ -134,7 +134,7 @@ namespace multimedia
          if(estatus != ::success)
          {
 
-            TRACE(status_short_description(estatus));
+            information(status_short_description(estatus));
 
             throw ::exception(estatus);
 
@@ -309,7 +309,7 @@ namespace multimedia
          if(out_get_state() != ::wave::e_out_state_playing)
          {
 
-            TRACE("ERROR out::BufferReady while out_get_state() != e_out_state_playing");
+            information("ERROR out::BufferReady while out_get_state() != e_out_state_playing");
 
             return;
 

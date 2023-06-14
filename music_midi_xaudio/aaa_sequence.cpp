@@ -509,7 +509,7 @@ Seq_Open_File_Cleanup:
                      SetState(e_state_opened);
                      throw ::exception(multimedia::exception(multimedia::exception_music, EMidiPlayerPrerollStreamOpen));
                   }
-                  TRACE("midiStreamOpenError %d\n", estatus);
+                  information("midiStreamOpenError %d\n", estatus);
                   //goto seq_Preroll_Cleanup;
                   if(estatus == MMSYSERR_BADDEVICEID)
                      goto seq_Preroll_Cleanup;
@@ -530,7 +530,7 @@ Seq_Open_File_Cleanup:
                if (estatus != ::success)
                {
 
-                  TRACE( "midiStreamProperty() -> %04X", (::u16)estatus);
+                  information( "midiStreamProperty() -> %04X", (::u16)estatus);
 
                   midiStreamClose(m_hstream);
 
@@ -599,7 +599,7 @@ Seq_Open_File_Cleanup:
                if(::success != smfrc && success_end_of_file != smfrc)
                {
 
-                  TRACE( "SFP: smfReadEvents() -> %u", (u32)smfrc);
+                  information( "SFP: smfReadEvents() -> %u", (u32)smfrc);
 
                   estatus, smfrc;
 
@@ -619,7 +619,7 @@ Seq_Open_File_Cleanup:
             if (estatus != ::success)
             {
 
-               TRACE( "midiOutPrepare(preroll) -> %lu!", (u32)estatus);
+               information( "midiOutPrepare(preroll) -> %lu!", (u32)estatus);
 
                estatus = error_not_ready;
 
@@ -641,7 +641,7 @@ Seq_Open_File_Cleanup:
             estatus = m_buffera.midiStreamOut(m_hstream);
             if (estatus != ::success)
             {
-               TRACE( "midiOutPrepare(preroll) -> %lu!", (u32)estatus);
+               information( "midiOutPrepare(preroll) -> %lu!", (u32)estatus);
                estatus = error_not_ready;
                if(bThrow)
                {
@@ -700,7 +700,7 @@ seq_Preroll_Cleanup:
             if (::music::midi::sequence::e_state_pre_rolled != GetState())
             {
 
-               TRACE( "seqStart(): State is wrong! [%u]", GetState());
+               information( "seqStart(): State is wrong! [%u]", GetState());
 
                return error_unsupported_function;
 
@@ -857,7 +857,7 @@ seq_Preroll_Cleanup:
                if(::success != m_estatusLastError)
                {
 
-                  TRACE( "::music::midi::sequence::Stop() -> midiOutStop() returned %lu in seqStop()!\n", (u32)m_estatusLastError);
+                  information( "::music::midi::sequence::Stop() -> midiOutStop() returned %lu in seqStop()!\n", (u32)m_estatusLastError);
 
                   m_flags.erase(e_flag_waiting);
 
@@ -915,7 +915,7 @@ seq_Preroll_Cleanup:
                   ::music::midi::sequence::e_state_opened != GetState() &&
                   ::music::midi::sequence::e_state_stopping != GetState())
             {
-               TRACE( "seqTime(): State wrong! [is %u]", GetState());
+               information( "seqTime(): State wrong! [is %u]", GetState());
                return error_unsupported_function;
             }
 
@@ -930,7 +930,7 @@ seq_Preroll_Cleanup:
                   //          slStream.lock();
                   if(m_hstream == nullptr)
                   {
-                     TRACE("m_hmidi == nullptr!!!!");
+                     information("m_hmidi == nullptr!!!!");
                      return error_not_ready;
                   }
                   else
@@ -943,7 +943,7 @@ seq_Preroll_Cleanup:
                         if (::success != mmr)
                         {
 
-                           TRACE( "midiStreamPosition() returned %lu", (u32)mmr);
+                           information( "midiStreamPosition() returned %lu", (u32)mmr);
 
                            return error_not_ready;
 
@@ -992,7 +992,7 @@ seq_Preroll_Cleanup:
                   e_state_opened != GetState() &&
                   e_state_stopping != GetState())
             {
-               TRACE( "seqTime(): State wrong! [is %u]", GetState());
+               information( "seqTime(): State wrong! [is %u]", GetState());
                return error_unsupported_function;
             }
 
@@ -1007,7 +1007,7 @@ seq_Preroll_Cleanup:
                   //          slStream.lock();
                   if(m_hstream == nullptr)
                   {
-                     TRACE("m_hmidi == nullptr!!!!");
+                     information("m_hmidi == nullptr!!!!");
                      return error_not_ready;
                   }
                   else
@@ -1018,7 +1018,7 @@ seq_Preroll_Cleanup:
                         mmr = midiStreamPosition(m_hstream, &mmt, sizeof(mmt));
                         if (::success != mmr)
                         {
-                           TRACE( "midiStreamPosition() returned %lu", (u32)mmr);
+                           information( "midiStreamPosition() returned %lu", (u32)mmr);
                            return error_not_ready;
                         }
                      }
@@ -1120,7 +1120,7 @@ seq_Preroll_Cleanup:
                if(bSpecialModeV001End)
                {
                   m_flags.erase(e_flag_operation_end);
-                  TRACE("void CALLBACK ::music::midi::sequence::MidiOutProc m_flags.has(e_flag_operation_end\n");
+                  information("void CALLBACK ::music::midi::sequence::MidiOutProc m_flags.has(e_flag_operation_end\n");
                   pthread->PostMidiSequenceEvent(
                   this,
                   ::music::midi::sequence::EventSpecialModeV001End,
@@ -1130,7 +1130,7 @@ seq_Preroll_Cleanup:
                {
                   if(m_uBuffersInMMSYSTEM == 0)
                   {
-                     TRACE("void CALLBACK ::music::midi::sequence::MidiOutProc e_state_stopping == pSeq->GetState()\n");
+                     information("void CALLBACK ::music::midi::sequence::MidiOutProc e_state_stopping == pSeq->GetState()\n");
                      pthread->PostMidiSequenceEvent(
                      this,
                      ::music::midi::sequence::EventStopped,
@@ -1141,7 +1141,7 @@ seq_Preroll_Cleanup:
                {
                   if(m_flags.has(e_flag_end_of_file))
                   {
-                     TRACE("void CALLBACK ::music::midi::sequence::MidiOutProc m_flags.has(e_flag_end_of_file\n");
+                     information("void CALLBACK ::music::midi::sequence::MidiOutProc m_flags.has(e_flag_end_of_file\n");
                   }
                   if(m_uBuffersInMMSYSTEM <= 0)
                   {
@@ -1541,7 +1541,7 @@ seq_Preroll_Cleanup:
 
             if(0 == m_uBuffersInMMSYSTEM)
             {
-               TRACE( "seqBufferDone: normal sequencer shutdown.");
+               information( "seqBufferDone: normal sequencer shutdown.");
 
                /* Totally done! Free device and notify.
                */
@@ -1550,7 +1550,7 @@ seq_Preroll_Cleanup:
                   if((estatus = m_buffera.midiOutUnprepareHeader((HMIDIOUT) m_hstream))
                         != ::success)
                   {
-                     TRACE( "midiOutUnprepareHeader failed in seqBufferDone! (%lu)", (u32)estatus);
+                     information( "midiOutUnprepareHeader failed in seqBufferDone! (%lu)", (u32)estatus);
                   }
                   midiStreamClose(m_hstream);
                   m_hstream = nullptr;
@@ -1608,7 +1608,7 @@ seq_Preroll_Cleanup:
 
                if(IsInSpecialModeV001())
                {
-                  TRACE("::music::midi::sequence::OnEvent e_event_midi_playback_out IsInSpecialModeV001");
+                  information("::music::midi::sequence::OnEvent e_event_midi_playback_out IsInSpecialModeV001");
                }
                else
                {
@@ -1632,7 +1632,7 @@ seq_Preroll_Cleanup:
                default:
 
 
-                  TRACE( "smfReadEvents returned %lu in callback!", (u32) smfrc);
+                  information( "smfReadEvents returned %lu in callback!", (u32) smfrc);
 
                   SetState(e_state_stopping);
 
@@ -1665,7 +1665,7 @@ seq_Preroll_Cleanup:
                   else
                   {
 
-                     TRACE("seqBufferDone(): midiStreamOut() returned %lu!", (u32)estatus);
+                     information("seqBufferDone(): midiStreamOut() returned %lu!", (u32)estatus);
 
                      SetState(::music::midi::sequence::e_state_stopping);
 
