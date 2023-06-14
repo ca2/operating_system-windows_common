@@ -26,7 +26,7 @@
 
 //namespac
 //
-//CLASS_DECL_ACME void cra_from_quada(colorref_array& colorrefa, WINRGBQUAD* prgbquad, int iCount);
+//CLASS_DECL_ACME void cra_from_quada(color_array& colora, WINRGBQUAD* prgbquad, int iCount);
 
 
 namespace imaging_wic
@@ -34,7 +34,7 @@ namespace imaging_wic
 
    comptr < IWICImagingFactory > get_imaging_factory();
 
-   //bool draw2d_gif_load_frame(::image * pimageCanvas, image_frame_array * pframea, image_frame * pframe, int uFrameIndex, u8 * ba, int iScan, colorref_array & colorrefa, int transparentIndex);
+   //bool draw2d_gif_load_frame(::image * pimageCanvas, image_frame_array * pframea, image_frame * pframe, int uFrameIndex, u8 * ba, int iScan, color_array & colora, int transparentIndex);
    bool windows_image_from_bitmap_source(::image * pimage, IWICBitmapSource * pbitmapsource, IWICImagingFactory * pimagingfactory);
    ::color::color windows_image_metadata_get_background_color(IWICMetadataQueryReader * pqueryreader, IWICBitmapDecoder * pbitmapdecoder, IWICImagingFactory * pimagingfactory);
 
@@ -924,14 +924,14 @@ namespace imaging_wic
       if (SUCCEEDED(hr) && pframe->m_bTransparent)
       {
 
-         hr = (transparentIndex >= pframea->m_colorrefa.get_count()) ? E_FAIL : S_OK;
+         hr = (transparentIndex >= pframea->m_colora.get_count()) ? E_FAIL : S_OK;
 
       }
 
       if (SUCCEEDED(hr))
       {
 
-         pframe->m_colorTransparent = pframea->m_colorrefa[transparentIndex];
+         pframe->m_colorTransparent = pframea->m_colora[transparentIndex];
 
       }
       else
@@ -941,9 +941,9 @@ namespace imaging_wic
 
       }
 
-      colorref_array colorrefa;
+      color_array colora;
 
-      ::draw2d::cra_from_quada(colorrefa, (WINRGBQUAD *)rgColors, iUsed);
+      ::draw2d::colora_from_quada(colora, (WINRGBQUAD *)rgColors, iUsed);
 
       if (uFrameIndex == 0)
       {
@@ -964,7 +964,7 @@ namespace imaging_wic
 
       }
 
-      //if (!draw2d_gif_load_frame(pimageCompose, pframea, pframe, uFrameIndex, (u8 *)ba.data(), width, colorrefa, transparentIndex))
+      //if (!draw2d_gif_load_frame(pimageCompose, pframea, pframe, uFrameIndex, (u8 *)ba.data(), width, colora, transparentIndex))
       //{
 
       //   return false;
