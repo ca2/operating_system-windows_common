@@ -369,11 +369,11 @@ namespace imaging_wic
                      {
 
                         // Convert the delay retrieved in 10 ms units to a delay in 1 ms units
-                        ::u32 uDelay;
+                        ::u32 uDelayMilliseconds;
 
-                        hr = UIntMult(propValue.uiVal, 10, &uDelay);
+                        hr = UIntMult(propValue.uiVal, 10, &uDelayMilliseconds);
 
-                        pframe->m_time = integral_millisecond(uDelay);
+                        pframe->m_time = millisecond_time(uDelayMilliseconds);
 
                      }
 
@@ -779,12 +779,12 @@ namespace imaging_wic
             if (SUCCEEDED(hr))
             {
 
-               ::u32 u;
+               ::u32 uMilliseconds;
 
                // Convert the delay retrieved in 10 ms units to a delay in 1 ms units
-               hr = UIntMult(propValue.uiVal, 10, &u);
+               hr = UIntMult(propValue.uiVal, 10, &uMilliseconds);
 
-               pframe->m_time = integral_millisecond(u);
+               pframe->m_time = millisecond_time(uMilliseconds);
 
             }
 
