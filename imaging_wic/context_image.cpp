@@ -246,7 +246,7 @@ namespace imaging_wic
                pimage->width(),
                pimage->height(),
                pimage->scan_size(),
-               (::color32_t*)&m.data()[_->bmiHeader.biSize],
+               (::image32_t*)&m.data()[_->bmiHeader.biSize],
                _->bmiHeader.biSizeImage / _->bmiHeader.biHeight);
 
 

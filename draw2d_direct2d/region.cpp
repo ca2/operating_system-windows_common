@@ -2,7 +2,7 @@
 #include "region.h"
 #include "path.h"
 #include "graphics.h"
-#include "geometry.h"
+#include "direct2d/geometry.h"
 #include "acme/exception/interface_only.h"
 #include "acme/primitive/geometry2d/item.h"
 #include "acme/primitive/geometry2d/_defer_item.h"

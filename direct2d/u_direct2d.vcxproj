@@ -68,6 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="aaa__library.h" />
+    <ClInclude Include="geometry.h" />
     <ClInclude Include="geometry_sink_text_renderer.h" />
     <ClInclude Include="multithreading_lock.h" />
     <ClInclude Include="direct2d.h" />
@@ -76,6 +77,7 @@
     <ClInclude Include="aaa_direct2d.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="geometry.cpp" />
     <ClCompile Include="geometry_sink_text_renderer.cpp" />
     <ClCompile Include="multithreading_lock.cpp" />
     <ClCompile Include="direct2d.cpp" />
