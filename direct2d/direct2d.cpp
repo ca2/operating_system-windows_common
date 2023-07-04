@@ -260,3 +260,11 @@ namespace direct2d
 
 
 
+CLASS_DECL_DIRECT2D DWRITE_FONT_WEIGHT dwrite_font_weight(const write_text::font_weight & fontweight)
+{
+
+   return (DWRITE_FONT_WEIGHT)fontweight.i32();
+
+}
+
+

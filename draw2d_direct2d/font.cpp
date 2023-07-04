@@ -82,16 +82,16 @@ namespace draw2d_direct2d
 
          //}
 
-         if(m_eunitFontSize == ::draw2d::e_unit_point)
+         if(m_fontsize.eunit() == ::e_unit_point)
          {
 
-            fFontSize = (float) pgraphics->m_pdraw2dhost->point_dpi(m_dFontSize);
+            fFontSize = (float) pgraphics->m_pdraw2dhost->point_dpi(m_fontsize.f64());
 
          }
          else
          {
 
-            fFontSize = (float) pgraphics->m_pdraw2dhost->dpiy(m_dFontSize);
+            fFontSize = (float) pgraphics->m_pdraw2dhost->dpiy(m_fontsize.f64());
 
          }
 
@@ -112,9 +112,9 @@ namespace draw2d_direct2d
          }
 
          HRESULT hr = pfactory->CreateTextFormat(
-            wstring(m_strFontFamilyName),
+            wstring(m_pfontfamily->family_name(this)),
             nullptr,
-            (DWRITE_FONT_WEIGHT) m_iFontWeight,
+            dwrite_font_weight(m_fontweight),
             style,
             stretch,
             fFontSize,

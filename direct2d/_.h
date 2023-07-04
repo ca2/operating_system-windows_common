@@ -56,6 +56,9 @@ CLASS_DECL_AURA float y_dpi(oswindow hwnd, float y);
 CLASS_DECL_AURA float x_dpi(oswindow hwnd, float y);
 
 
+CLASS_DECL_DIRECT2D DWRITE_FONT_WEIGHT dwrite_font_weight(const write_text::font_weight & fontweight);
+
+
 //
 //namespace direct2d
 //{
