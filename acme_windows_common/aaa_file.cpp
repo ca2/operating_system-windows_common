@@ -171,7 +171,7 @@ namespace windows_common
    file::file()
    {
 
-      //m_iCharacterPutBack = 0x80000000;
+      //m_iCharacterPutBack = I32_MINIMUM;
 
       m_handleFile = INVALID_HANDLE_VALUE;
       m_dwAccessMode = 0;
@@ -182,7 +182,7 @@ namespace windows_common
    file::file(HANDLE handleFile)
    {
 
-      //m_iCharacterPutBack = 0x80000000;
+      //m_iCharacterPutBack = I32_MINIMUM;
       m_handleFile = handleFile;
       m_dwAccessMode = 0;
 
@@ -192,7 +192,7 @@ namespace windows_common
    file::file(const ::string & pszFileName, ::file::e_open eopen)
    {
 
-      //m_iCharacterPutBack = 0x80000000;
+      //m_iCharacterPutBack = I32_MINIMUM;
 
       ASSERT(is_string_ok(pszFileName));
 
@@ -489,12 +489,12 @@ acmedirectory()create(path.folder());
 
       }
 
-      //if (m_iCharacterPutBack != 0x80000000)
+      //if (m_iCharacterPutBack != I32_MINIMUM)
       //{
 
       //   ((::u8 *)pdata)[0] = (::u8)m_iCharacterPutBack;
 
-      //   m_iCharacterPutBack = 0x80000000;
+      //   m_iCharacterPutBack = I32_MINIMUM;
 
       //   pdata = ((char *)pdata) + 1;
 
@@ -612,7 +612,7 @@ acmedirectory()create(path.folder());
    //int file::peek_character()
    //{
 
-   //   if (m_iCharacterPutBack != 0x80000000)
+   //   if (m_iCharacterPutBack != I32_MINIMUM)
    //   {
 
    //      return m_iCharacterPutBack;
@@ -629,10 +629,10 @@ acmedirectory()create(path.folder());
 
    //   auto iCharacterPutBack = m_iCharacterPutBack;
 
-   //   if (iCharacterPutBack != 0x80000000)
+   //   if (iCharacterPutBack != I32_MINIMUM)
    //   {
 
-   //      m_iCharacterPutBack = 0x80000000;
+   //      m_iCharacterPutBack = I32_MINIMUM;
 
    //      return iCharacterPutBack;
 

@@ -70,7 +70,7 @@ namespace acme_windows_common
       m_file(m_path, m_windowspath, m_eopen)
    {
 
-      //m_iCharacterPutBack = 0x80000000;
+      //m_iCharacterPutBack = I32_MINIMUM;
 
       ASSERT(is_string_ok(pszFileName));
 
@@ -240,12 +240,12 @@ namespace acme_windows_common
 
       }
 
-      //if (m_iCharacterPutBack != 0x80000000)
+      //if (m_iCharacterPutBack != I32_MINIMUM)
       //{
 
       //   ((::u8 *)pdata)[0] = (::u8)m_iCharacterPutBack;
 
-      //   m_iCharacterPutBack = 0x80000000;
+      //   m_iCharacterPutBack = I32_MINIMUM;
 
       //   pdata = ((char *)pdata) + 1;
 
@@ -359,7 +359,7 @@ namespace acme_windows_common
    //int file::peek_character()
    //{
 
-   //   if (m_iCharacterPutBack != 0x80000000)
+   //   if (m_iCharacterPutBack != I32_MINIMUM)
    //   {
 
    //      return m_iCharacterPutBack;
@@ -376,10 +376,10 @@ namespace acme_windows_common
 
    //   auto iCharacterPutBack = m_iCharacterPutBack;
 
-   //   if (iCharacterPutBack != 0x80000000)
+   //   if (iCharacterPutBack != I32_MINIMUM)
    //   {
 
-   //      m_iCharacterPutBack = 0x80000000;
+   //      m_iCharacterPutBack = I32_MINIMUM;
 
    //      return iCharacterPutBack;
 

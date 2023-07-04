@@ -47,8 +47,8 @@
 //   message.m_message.hwnd = oswindow;
 //   message.m_message.wParam = wParam;
 //   message.m_message.lParam = lParam;
-//   message.m_message.pt.x() = 0x80000000;
-//   message.m_message.pt.y() = 0x80000000;
+//   message.m_message.pt.x() = I32_MINIMUM;
+//   message.m_message.pt.y() = I32_MINIMUM;
 //
 //   return post_message(message);
 //

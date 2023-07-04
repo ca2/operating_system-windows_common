@@ -1176,7 +1176,7 @@ seq_Preroll_Cleanup:
                   {
                      ::music::midi::event event;
                      file()->GetTempoEvent(event);
-                     file()->StreamEvent(event.GetDelta(), &event, lpmidihdr, 0x7fffffff, 256);
+                     file()->StreamEvent(event.GetDelta(), &event, lpmidihdr, I32_MAXIMUM, 256);
                      // lpmidihdr->dwBytesRecorded = sizeof(gmModeOn);
                      // ::memory_copy(lpmidihdr->lpData, gmModeOn, sizeof(gmModeOn));
                   }
@@ -1999,7 +1999,7 @@ seq_Preroll_Cleanup:
                time3,
                time4);
 
-               ::duration time5(0x7fffffff);
+               ::duration time5(I32_MAXIMUM);
 
                pLyricEventsV2->m_msaTokensDuration.ElementDiff(
                ms2DTokensMillis[i],
@@ -2056,7 +2056,7 @@ seq_Preroll_Cleanup:
                time3,
                time4);
 
-               ::duration time5(0x7fffffff);
+               ::duration time5(I32_MAXIMUM);
 
                pLyricEventsV2->m_msaTokensDuration.ElementDiff(
                ms2DTokensMillis[i],
@@ -2115,7 +2115,7 @@ seq_Preroll_Cleanup:
                time3,
                time4);
 
-               ::duration time5(0x7fffffff);
+               ::duration time5(I32_MAXIMUM);
 
                pLyricEventsV2->m_msaTokensDuration.ElementDiff(
                ms2DTokensMillis[i],
@@ -2176,7 +2176,7 @@ seq_Preroll_Cleanup:
                time3,
                time4);
 
-               ::duration time5(0x7fffffff);
+               ::duration time5(I32_MAXIMUM);
 
                pLyricEventsV2->m_msaTokensDuration.ElementDiff(
                ms2DTokensMillis[i],
