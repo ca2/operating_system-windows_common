@@ -82,7 +82,7 @@ WCHAR* module_debug_wcsdup(hinstance hinstance, const WCHAR* pwszPrefix = nullpt
       if (name)
       {
 
-         memmove(pwsz + 1, name + 1, module_len * sizeof(WCHAR));
+         memory_transfer(pwsz + 1, name + 1, module_len * sizeof(WCHAR));
 
       }
 
