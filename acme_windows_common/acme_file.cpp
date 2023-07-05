@@ -319,7 +319,7 @@ namespace acme_windows_common
 
       auto windowsPath = path.windows_path();
 
-      auto pfile = stdio_open(path, "w", _SH_DENYWR);
+      auto pfile = stdio_open(this, path, "w", _SH_DENYWR);
 
       if (!pfile)
       {
