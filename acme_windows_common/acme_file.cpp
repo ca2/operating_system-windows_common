@@ -272,7 +272,7 @@ namespace acme_windows_common
 
             int iErrNo = errno;
 
-            auto estatus = failed_errno_status(iErrNo);
+            auto estatus = cerrornumber.failed_estatus();
 
             throw ::exception(estatus);
 
@@ -289,7 +289,7 @@ namespace acme_windows_common
 
             int iErrNo = errno;
 
-            auto estatus = failed_errno_status(iErrNo);
+            auto estatus = cerrornumber.failed_estatus();
 
             throw ::exception(estatus);
 
