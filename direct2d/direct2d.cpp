@@ -1,8 +1,10 @@
 #include "framework.h"
 #include "direct2d.h"
 #include "directx/directx.h"
+#include "acme/graphics/write_text/font_weight.h"
 #include "acme/primitive/geometry2d/rectangle.h"
 #include "acme_windows_common/hresult_exception.h"
+
 
 
 #define d2d1_fax_options D2D1_FACTORY_OPTIONS // fax of merde

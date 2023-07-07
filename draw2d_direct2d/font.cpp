@@ -159,7 +159,7 @@ namespace draw2d_direct2d
 
          m_textmetric2.m_dAscent = 0;
          m_textmetric2.m_dDescent = 0;
-         m_textmetric2.m_dHeight = m_dFontSize;
+         m_textmetric2.m_dHeight = m_fontsize.f64();
          m_textmetric2.m_dInternalLeading = 0;
          m_textmetric2.m_dExternalLeading = 0;
 
@@ -178,7 +178,7 @@ namespace draw2d_direct2d
 
          m_textmetric2.m_dAscent = 0;
          m_textmetric2.m_dDescent = 0;
-         m_textmetric2.m_dHeight = m_dFontSize;
+         m_textmetric2.m_dHeight = m_fontsize.f64();
          m_textmetric2.m_dInternalLeading = 0;
          m_textmetric2.m_dExternalLeading = 0;
 
@@ -200,7 +200,7 @@ namespace draw2d_direct2d
 
             m_textmetric2.m_dAscent = 0;
             m_textmetric2.m_dDescent = 0;
-            m_textmetric2.m_dHeight = m_dFontSize;
+            m_textmetric2.m_dHeight = m_fontsize.f64();
             m_textmetric2.m_dInternalLeading = 0;
             m_textmetric2.m_dExternalLeading = 0;
 
@@ -221,7 +221,7 @@ namespace draw2d_direct2d
 
          m_textmetric2.m_dAscent = 0;
          m_textmetric2.m_dDescent = 0;
-         m_textmetric2.m_dHeight = m_dFontSize;
+         m_textmetric2.m_dHeight = m_fontsize.f64();
          m_textmetric2.m_dInternalLeading = 0;
          m_textmetric2.m_dExternalLeading = 0;
 
@@ -240,7 +240,7 @@ namespace draw2d_direct2d
 
          m_textmetric2.m_dAscent = 0;
          m_textmetric2.m_dDescent = 0;
-         m_textmetric2.m_dHeight = m_dFontSize;
+         m_textmetric2.m_dHeight = m_fontsize.f64();
          m_textmetric2.m_dInternalLeading = 0;
          m_textmetric2.m_dExternalLeading = 0;
 
