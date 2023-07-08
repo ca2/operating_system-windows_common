@@ -270,7 +270,7 @@ namespace acme_windows_common
          if (rc)
          {
 
-            int iErrNo = errno;
+            auto cerrornumber = c_error_number();
 
             auto estatus = cerrornumber.failed_estatus();
 
@@ -287,7 +287,7 @@ namespace acme_windows_common
          if (fd < 0)
          {
 
-            int iErrNo = errno;
+            auto cerrornumber = c_error_number();
 
             auto estatus = cerrornumber.failed_estatus();
 
