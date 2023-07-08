@@ -123,7 +123,7 @@ namespace acme_windows_common
 
          auto last_error = GetLastError();
 
-         auto estatus = failed_last_error_status(last_error);
+         auto estatus = ::windows::failed_last_error_status(last_error);
 
          throw ::exception(estatus);
 
