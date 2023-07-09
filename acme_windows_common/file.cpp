@@ -666,11 +666,11 @@ namespace acme_windows_common
 
       }
 
-      file_time_to_time(&filestatus.m_timeCreation, (file_time_t *)&information.ftCreationTime);
+      file_time_to_time(&filestatus.m_timeCreation, as_file_time(information.ftCreationTime));
 
-      file_time_to_time(&filestatus.m_timeAccess, (file_time_t *)&information.ftLastAccessTime);
+      file_time_to_time(&filestatus.m_timeAccess, as_file_time(information.ftLastAccessTime));
 
-      file_time_to_time(&filestatus.m_timeModification, (file_time_t *)&information.ftLastWriteTime);
+      file_time_to_time(&filestatus.m_timeModification, as_file_time(information.ftLastWriteTime));
 
       if (filestatus.m_timeCreation <= 0_s)
       {
@@ -723,13 +723,13 @@ namespace acme_windows_common
       ASSERT_VALID(this);
       ASSERT(m_file.is_ok());
 
-      file_time_t filetimeLastWrite;
+      FILETIME filetimeLastWrite;
 
-      m_file.get_file_time(nullptr, nullptr, (LPFILETIME)&filetimeLastWrite);
+      m_file.get_file_time(nullptr, nullptr, &filetimeLastWrite);
 
       class ::time time;
 
-      ::file_time_to_time(&time, &filetimeLastWrite);
+      ::file_time_to_time(&time, as_file_time(filetimeLastWrite));
 
       return time;
 
@@ -742,11 +742,13 @@ namespace acme_windows_common
       ASSERT_VALID(this);
       ASSERT(m_file.is_ok());
 
-      file_time_t filetimeLastWrite;
+      file_time filetimeLastWrite;
 
       ::time_to_file_time(&filetimeLastWrite, &time);
 
-      m_file.set_file_time(nullptr, nullptr, (const FILETIME *) & filetimeLastWrite);
+      auto FILETIMELastWrite = as_FILETIME(filetimeLastWrite);
+
+      m_file.set_file_time(nullptr, nullptr, & FILETIMELastWrite);
 
    }
 
