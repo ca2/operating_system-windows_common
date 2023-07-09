@@ -1748,14 +1748,14 @@ seq_Preroll_Cleanup:
 
 
          void sequence::Prepare(
-         string2a & str2a,
+         string_array_array & straa,
          imedia_position_2darray & tka2DTokensTicks,
          i32 iMelodyTrack,
          int2a & ia2TokenLine,
          ::ikaraoke::data & data)
          {
 
-            UNREFERENCED_PARAMETER(str2a);
+            UNREFERENCED_PARAMETER(straa);
 
             ::music::midi::file::buffer & file = *this->file();
 
@@ -2194,7 +2194,7 @@ seq_Preroll_Cleanup:
 
             ::music::midi::tracks & tracks = file.GetTracks();
 
-            string2a & str2a = data.GetStaticData().m_str2aRawTokens;
+            string_array_array & straa = data.GetStaticData().m_straaRawTokens;
 
             imedia_position_2darray position2a;
 
@@ -2206,12 +2206,12 @@ seq_Preroll_Cleanup:
             tracks.WorkSeekBegin();
             tracks.WorkGetEmptyXFTokens(
             iTrack,
-            str2a,
+            straa,
             position2a,
             nullptr);
 
             Prepare(
-            str2a,
+            straa,
             position2a,
             iTrack,
             ia2TokenLine,
@@ -2223,9 +2223,9 @@ seq_Preroll_Cleanup:
          {
             ::music::midi::mmsystem::buffer & file = *this->file();
             ::music::midi::tracks & tracks = file.GetTracks();
-            string2a & str2a = data.GetStaticData().m_str2aRawTokens;
+            string_array_array & straa = data.GetStaticData().m_straaRawTokens;
             imedia_position_2darray position2a;
-            int2a i2aTokenLine;
+            int2a iaaTokenLine;
 
             ::music::xf::info_headers xfihs;
             get_file()->GetTracks().GetXFInfoHeaders(&xfihs);
@@ -2235,23 +2235,23 @@ seq_Preroll_Cleanup:
 
             // add Title
             staticdata.m_straTitleFormat.add("%0");
-            staticdata.m_str2aTitle.set_app(this);
-            staticdata.m_str2aTitle.add_new();
-            staticdata.m_str2aTitle[0].add(xfihs.m_strSongName);
+            staticdata.m_straaTitle.set_app(this);
+            staticdata.m_straaTitle.add_new();
+            staticdata.m_straaTitle[0].add(xfihs.m_strSongName);
 
             if(xfihs.m_xfInfoHeader.m_straComposer.get_size() > 0)
             {
                // add Performer
                staticdata.m_straTitleFormat.add("Performer: %0");
                xfihs.m_xfInfoHeader.m_straPerformer.get_format_string(str, ", ");
-               staticdata.m_str2aTitle.add_new();
-               staticdata.m_str2aTitle[1].add(str);
+               staticdata.m_straaTitle.add_new();
+               staticdata.m_straaTitle[1].add(str);
 
                // add Composer
                staticdata.m_straTitleFormat.add("Composer: %0");
                xfihs.m_xfInfoHeader.m_straComposer.get_format_string(str, ", ");
-               staticdata.m_str2aTitle.add_new();
-               staticdata.m_str2aTitle[1].add(str);
+               staticdata.m_straaTitle.add_new();
+               staticdata.m_straaTitle[1].add(str);
 
 
                //      staticdata.m_straPerformer = xfihs.m_xfInfoHeader.m_straPerformer;
@@ -2266,14 +2266,14 @@ seq_Preroll_Cleanup:
             }
 
             tracks.WorkSeekBegin();
-            //tracks.WorkGetXFTokens(staticdata.m_dwDefaultCodePage, str2a, position2a, i2aTokenLine, nullptr);
-            tracks.WorkGetXFTokens((u32) -1, str2a, position2a, i2aTokenLine, nullptr, false);
+            //tracks.WorkGetXFTokens(staticdata.m_dwDefaultCodePage, straa, position2a, iaaTokenLine, nullptr);
+            tracks.WorkGetXFTokens((u32) -1, straa, position2a, iaaTokenLine, nullptr, false);
 
             Prepare(
-            str2a,
+            straa,
             position2a,
             -1,
-            i2aTokenLine,
+            iaaTokenLine,
             data);
 
             tracks.WorkSeekBegin();
