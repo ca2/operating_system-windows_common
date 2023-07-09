@@ -122,7 +122,7 @@ namespace apex_windows_common
       if (status.m_timeModification != 0_s)
       {
 
-         auto filetimeLastWriteTime = as_file_time(&status.m_timeModification);
+         lastWriteTime = as_FILETIME(file_time(status.m_timeModification));
 
          pLastWriteTime = &lastWriteTime;
 
@@ -130,7 +130,7 @@ namespace apex_windows_common
          if (status.m_timeAccess != 0_s)
          {
 
-            time_to_file_time((file_time_t *)&lastAccessTime, &status.m_timeAccess);
+            lastAccessTime = as_FILETIME(file_time(status.m_timeAccess));
 
             pLastAccessTime = &lastAccessTime;
 
@@ -140,7 +140,7 @@ namespace apex_windows_common
          if (status.m_timeCreation != 0_s)
          {
 
-            time_to_file_time((file_time_t *)&creationTime, &status.m_timeCreation);
+            creationTime = as_FILETIME(file_time(status.m_timeCreation));
 
             pCreationTime = &creationTime;
 
@@ -245,9 +245,9 @@ namespace apex_windows_common
       //auto pnode = psystem->node();
 
       // convert times as appropriate
-      file_time_to_time(&rStatus.m_timeCreation, (file_time_t *)&findfile.m_finddata.ftCreationTime);
-      file_time_to_time(&rStatus.m_timeAccess, (file_time_t *)&findfile.m_finddata.ftLastAccessTime);
-      file_time_to_time(&rStatus.m_timeModification, (file_time_t *)&findfile.m_finddata.ftLastWriteTime);
+      rStatus.m_timeCreation = class ::time(as_file_time(findfile.m_finddata.ftCreationTime));
+      rStatus.m_timeAccess = class ::time(as_file_time(findfile.m_finddata.ftLastAccessTime));
+      rStatus.m_timeModification = class ::time(as_file_time(findfile.m_finddata.ftLastWriteTime));
 
       if (rStatus.m_timeCreation <= 0_s)
          rStatus.m_timeCreation = rStatus.m_timeModification;
