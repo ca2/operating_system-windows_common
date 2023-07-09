@@ -191,12 +191,12 @@ namespace music
             }
          }
 
-         void sequence_thread::Play(::duration tkStart)
+         void sequence_thread::Play(::duration tickStart)
          {
             ASSERT(get_sequence() != nullptr);
             ASSERT(get_sequence()->GetState() == ::music::midi::sequence::e_state_opened);
 
-            PrerollAndWait(tkStart);
+            PrerollAndWait(tickStart);
             get_sequence()->Start();
          }
 
@@ -210,13 +210,13 @@ namespace music
          }
 
 
-         void sequence_thread::PrerollAndWait(::duration tkStart)
+         void sequence_thread::PrerollAndWait(::duration tickStart)
          {
 
             ::music::midi::PREROLL                 preroll;
 
-            preroll.tkBase = tkStart;
-            preroll.tkEnd  = get_sequence()->m_tkLength;
+            preroll.tickBase = tickStart;
+            preroll.tickEnd  = get_sequence()->m_tkLength;
 
             get_sequence()->SetMidiOutDevice(m_pplayer->GetMidiOutDevice());
 
@@ -244,8 +244,8 @@ namespace music
             ::math::math::MaxClip(&dRate, 1.0);
             ::math::math::MinClip(&dRate,  0.0);
 
-            preroll.tkBase = (::duration) (i32) ((double) get_sequence()->m_tkLength * dRate);
-            preroll.tkEnd  = get_sequence()->m_tkLength;
+            preroll.tickBase = (::duration) (i32) ((double) get_sequence()->m_tkLength * dRate);
+            preroll.tickEnd  = get_sequence()->m_tkLength;
 
             get_sequence()->SetMidiOutDevice(m_pplayer->GetMidiOutDevice());
 
@@ -264,7 +264,7 @@ namespace music
 
             //    if(!get_sequence()->IsInSpecialModeV001())
             //  {
-            //    SendMessage(m_oswindow_, WM_USER, 33, preroll.tkBase);
+            //    SendMessage(m_oswindow_, WM_USER, 33, preroll.tickBase);
             //}
          }
 

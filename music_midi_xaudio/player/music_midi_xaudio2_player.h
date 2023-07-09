@@ -49,7 +49,7 @@ namespace music
                void SendMmsgDone(::music::midi::sequence *pSeq, ::music::midi::LPMIDIDONEDATA lpmdd);
                void SetCallbackWindow(::pointer<::user::interaction>puie);
                bool Play(double dRate = 0.0, u32 dwEllapse = 584);
-               bool Play(class ::time tkStart, u32 dwEllapse = 584);
+               bool Play(class ::time tickStart, u32 dwEllapse = 584);
 
                virtual bool initialize_thread() override;
                virtual i32 exit_instance();

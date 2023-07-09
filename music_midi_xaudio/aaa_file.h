@@ -78,7 +78,7 @@ namespace music
 
             void     WriteHeader(MIDIFILEHDR * lpmfh);
 
-            void     ChangeEventDelta(::music::midi::event *pEvent, ::duration tkNewDelta);
+            void     ChangeEventDelta(::music::midi::event *pEvent, ::duration tickNewDelta);
 
             void     ReplaceSameDeltaEvent(::music::midi::event & pEventNew);
 
@@ -88,7 +88,7 @@ namespace music
 
             void     WorkWriteXFTracks(string_array & tokena, imedia_position_array & positiona, ::music::xf::info_header & xfinfoheader);
 
-            //i32 CalcMelodyTrack(::music::midi::events ** ppEvents, imedia_position_array * pTicks);
+            //i32 CalcMelodyTrack(::music::midi::events ** ppEvents, imedia_position_array & ticka);
 
             //i32 WorkCalcMelodyTrack(::music::midi::events ** ppEvents, imedia_position_array & positiona, ::i32_array & iaTokenLine);
 
@@ -98,15 +98,15 @@ namespace music
 
             void     WorkMergeTracks();
 
-            void     WorkStreamRender(LPMIDIHDR lpmh, ::duration tkMax, u32 cbPrerollNomimalMax);
+            void     WorkStreamRender(LPMIDIHDR lpmh, ::duration tickMax, u32 cbPrerollNomimalMax);
 
-            void     WorkGetNextEvent(::music::midi::event * & pevent, ::duration tkMax, bool bTkMaxInclusive);
+            void     WorkGetNextEvent(::music::midi::event * & pevent, ::duration tickMax, bool bTkMaxInclusive);
 
-            void     WorkGetNextRawEvent(::music::midi::event * & pevent, ::duration tkMax, bool bTkMaxInclusive);
+            void     WorkGetNextRawEvent(::music::midi::event * & pevent, ::duration tickMax, bool bTkMaxInclusive);
 
-            void     WorkGetNextRawMidiEvent(::music::midi::event * & pevent, ::duration tkMax, bool bTkMaxInclusive);
+            void     WorkGetNextRawMidiEvent(::music::midi::event * & pevent, ::duration tickMax, bool bTkMaxInclusive);
 
-            void     WorkSeek(::duration tkPosition, LPMIDIHDR lpmh);
+            void     WorkSeek(::duration tickPosition, LPMIDIHDR lpmh);
 
             void delete_contents();
 
@@ -134,15 +134,15 @@ namespace music
 
             void     GetFileInfo(PSMFFILEINFO psfi);
 
-            iptr TicksToMillisecs(::duration tkOffset);
+            iptr TicksToMillisecs(::duration tickOffset);
 
-            void TicksToMillisecs(duration_array *pMillisArray, imedia_position_array *pTickArray, iptr tkOffset);
+            void TicksToMillisecs(duration_array *pMillisArray, imedia_position_array *pTickArray, iptr tickOffset);
 
-            void TicksToMillisecs(duration_2darray *p2DMillisArray, imedia_position_2darray * p2DTicksArray, iptr tkOffset);
+            void TicksToMillisecs(duration_2darray *ptimeaaArray, imedia_position_2darray & tickaaArray, iptr tickOffset);
 
-            void PositionToTime(duration_2darray  & timea, imedia_position_2darray  & positiona, iptr tkOffset);
+            void PositionToTime(duration_2darray  & timea, imedia_position_2darray  & positiona, iptr tickOffset);
 
-            void PositionToTime(duration_array  & timea, imedia_position_array  & positiona, iptr tkOffset);
+            void PositionToTime(duration_array  & timea, imedia_position_array  & positiona, iptr tickOffset);
 
             ::duration MillisecsToTicks(::duration msOffset);
 
@@ -154,31 +154,31 @@ namespace music
 
             void TimeToPosition(imedia_position_array & positiona, duration_array & timea, ::duration msOffset);
 
-            void     StreamRender(LPMIDIHDR lpmh, ::duration tkMax, u32 cbPrerollNomimalMax);
+            void     StreamRender(LPMIDIHDR lpmh, ::duration tickMax, u32 cbPrerollNomimalMax);
 
-            void     StreamEvent(::duration tkDelta, ::music::midi::event * Event, LPMIDIHDR lpmh, ::duration tkMax, u32 cbPrerollNomimalMax);
+            void     StreamEvent(::duration tickDelta, ::music::midi::event * Event, LPMIDIHDR lpmh, ::duration tickMax, u32 cbPrerollNomimalMax);
 
-            void     StreamEventF1(::duration tkDelta, array < ::music::midi::event *, ::music::midi::event * > & eventptra, LPMIDIHDR lpmh, ::duration tkMax, u32 cbPrerollNomimalMax);
+            void     StreamEventF1(::duration tickDelta, array < ::music::midi::event *, ::music::midi::event * > & eventptra, LPMIDIHDR lpmh, ::duration tickMax, u32 cbPrerollNomimalMax);
 
-            void     seek(::duration tkPosition, LPMIDIHDR lpmh);
+            void     seek(::duration tickPosition, LPMIDIHDR lpmh);
 
-            void     seek(::duration tkPosition);
+            void     seek(::duration tickPosition);
 
             //void     Build();
 
-            void     GetNextEvent(::music::midi::event *& pevent, ::duration tkMax, bool   bTkMaxInclusive);
+            void     GetNextEvent(::music::midi::event *& pevent, ::duration tickMax, bool   bTkMaxInclusive);
 
-            void     GetNextEventTkPosition(::duration * pTkPosition, ::duration tkMax);
+            void     GetNextEventTkPosition(::duration * pTkPosition, ::duration tickMax);
 
-            void _SyncSeek(::duration tkPosition, ::ikaraoke::events_tracks_v1 * ptracksv1);
+            void _SyncSeek(::duration tickPosition, ::ikaraoke::events_tracks_v1 * ptracksv1);
 
-            void _SyncSeek(::duration tkPosition);
+            void _SyncSeek(::duration tickPosition);
 
-            void     InsertParmData(::duration tkDelta, LPMIDIHDR lpmh);
+            void     InsertParmData(::duration tickDelta, LPMIDIHDR lpmh);
 
             void     InsertLyricEvents(::ikaraoke::lyric_event_v1 * pLyricEvent, LPMIDIHDR lpmh);
 
-            void     InsertPadEvent(::duration tkDelta, LPMIDIHDR lpmh);
+            void     InsertPadEvent(::duration tickDelta, LPMIDIHDR lpmh);
 
             void SetOpened(bool bOpened = true);
 

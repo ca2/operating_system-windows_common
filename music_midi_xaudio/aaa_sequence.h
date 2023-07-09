@@ -127,7 +127,7 @@ namespace music
             void Prepare(i32 iTrack, ::ikaraoke::data & data);
             void Prepare(
             string_array_array & straa,
-            imedia_position_2darray & tka2DTokensTicks,
+            imedia_position_2darray & tickaaTokensTicks,
             i32 iMelodyTrack,
             int2a & ia2TokenLine,
             ::ikaraoke::data & data);
@@ -202,7 +202,7 @@ namespace music
 
             ::duration MillisecsToTicks(::duration msOffset);
 
-            ::duration TicksToMillisecs(::duration tkOffset);
+            ::duration TicksToMillisecs(::duration tickOffset);
 
             bool IsPlaying();
 
