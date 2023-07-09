@@ -122,7 +122,7 @@ namespace apex_windows_common
       if (status.m_timeModification != 0_s)
       {
 
-         time_to_file_time((file_time_t *)&lastWriteTime, &status.m_timeModification);
+         auto filetimeLastWriteTime = as_file_time(&status.m_timeModification);
 
          pLastWriteTime = &lastWriteTime;
 

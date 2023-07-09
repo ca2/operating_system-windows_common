@@ -666,11 +666,11 @@ namespace acme_windows_common
 
       }
 
-      file_time_to_time(&filestatus.m_timeCreation, as_file_time(information.ftCreationTime));
+      filestatus.m_timeCreation = class ::time(as_file_time(information.ftCreationTime));
 
-      file_time_to_time(&filestatus.m_timeAccess, as_file_time(information.ftLastAccessTime));
+      filestatus.m_timeAccess = class ::time(as_file_time(information.ftLastAccessTime));
 
-      file_time_to_time(&filestatus.m_timeModification, as_file_time(information.ftLastWriteTime));
+      filestatus.m_timeModification = class ::time(as_file_time(information.ftLastWriteTime));
 
       if (filestatus.m_timeCreation <= 0_s)
       {
@@ -727,11 +727,7 @@ namespace acme_windows_common
 
       m_file.get_file_time(nullptr, nullptr, &filetimeLastWrite);
 
-      class ::time time;
-
-      ::file_time_to_time(&time, as_file_time(filetimeLastWrite));
-
-      return time;
+      return class ::time(as_file_time(filetimeLastWrite));
 
    }
 
@@ -742,11 +738,7 @@ namespace acme_windows_common
       ASSERT_VALID(this);
       ASSERT(m_file.is_ok());
 
-      file_time filetimeLastWrite;
-
-      ::time_to_file_time(&filetimeLastWrite, &time);
-
-      auto FILETIMELastWrite = as_FILETIME(filetimeLastWrite);
+      auto FILETIMELastWrite = as_FILETIME(file_time(time));
 
       m_file.set_file_time(nullptr, nullptr, & FILETIMELastWrite);
 
