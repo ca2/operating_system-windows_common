@@ -821,19 +821,19 @@ namespace acme_windows_common
    }
 
 
-   bool node::succeeded(const ::error_code& errorcode)
-   {
+   //bool node::succeeded(const ::error_code& errorcode)
+   //{
 
-      if (errorcode.m_etype == e_error_code_type_hresult)
-      {
+   //   if (errorcode.m_etype == e_error_code_type_hresult)
+   //   {
 
-         return SUCCEEDED((HRESULT) errorcode.m_iOsError);
+   //      return SUCCEEDED((HRESULT) errorcode.m_iOsError);
 
-      }
+   //   }
 
-      return ::acme::node::succeeded(errorcode);
+   //   return ::acme::node::succeeded(errorcode);
 
-   }
+   //}
 
 
    thread_local HRESULT t_hresultCoInitialize;

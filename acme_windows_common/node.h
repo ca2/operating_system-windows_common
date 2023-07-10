@@ -82,7 +82,7 @@ namespace acme_windows_common
 
       string font_name(enum_font efont) override;
 
-      bool succeeded(const ::error_code& errorcode) override;
+      //bool succeeded(const ::error_code& errorcode) override;
 
       error_code defer_co_initialize_ex(bool bMultiThread, bool bDisableOleDDE = false) override;
 
