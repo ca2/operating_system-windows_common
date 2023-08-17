@@ -689,6 +689,7 @@
     <ClInclude Include="exception_translator.h" />
     <ClInclude Include="exclusive.h" />
     <ClInclude Include="file.h" />
+    <ClInclude Include="file_context.h" />
     <ClInclude Include="hresult_exception.h" />
     <ClInclude Include="mutex.h" />
     <ClInclude Include="node.h" />
@@ -711,6 +712,7 @@
     <ClCompile Include="com.cpp" />
     <ClCompile Include="exception_translator.cpp" />
     <ClCompile Include="file.cpp" />
+    <ClCompile Include="file_context.cpp" />
     <ClCompile Include="hresult_exception.cpp" />
     <ClCompile Include="mutex.cpp" />
     <ClCompile Include="node.cpp" />

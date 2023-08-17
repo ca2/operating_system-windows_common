@@ -9,11 +9,11 @@
 #include "acme/filesystem/filesystem/file_context.h"
 
 
-namespace apex_windows_common
+namespace acme_windows_common
 {
 
 
-   class CLASS_DECL_APEX_WINDOWS_COMMON file_context :
+   class CLASS_DECL_ACME_WINDOWS_COMMON file_context :
       virtual public ::file_context
    {
    public:
@@ -40,7 +40,7 @@ namespace apex_windows_common
    };
 
 
-} // namespace apex_windows_common
+} // namespace acme_windows_common
 
 
 

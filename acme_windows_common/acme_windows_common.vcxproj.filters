@@ -83,6 +83,9 @@
     <ClInclude Include="comptr_array.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="file_context.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="framework.cpp">
@@ -131,6 +134,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="security_attributes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="file_context.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
