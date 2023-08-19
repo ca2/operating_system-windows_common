@@ -5,7 +5,7 @@
 #include "acme/operating_system/windows_common/find_file.h"
 
 
-namespace apex_windows_common
+namespace acme_windows_common
 {
 
 
@@ -270,7 +270,7 @@ namespace apex_windows_common
    //}
 
 
-} // namespace apex_windows_common
+} // namespace acme_windows_common
 
 
 
