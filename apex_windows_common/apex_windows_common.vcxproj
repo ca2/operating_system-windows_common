@@ -687,7 +687,6 @@
     <ClInclude Include="_library.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="file_context.cpp" />
     <ClCompile Include="node.cpp" />
     <ClCompile Include="single_threaded_handler_manager.cpp" />
     <ClCompile Include="_.cpp" />
