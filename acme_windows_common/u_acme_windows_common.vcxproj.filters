@@ -158,5 +158,8 @@
     <ClCompile Include="mutex.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="file_context.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

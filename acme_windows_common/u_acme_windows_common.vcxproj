@@ -108,6 +108,7 @@
     <ClCompile Include="bstring.cpp" />
     <ClCompile Include="com.cpp" />
     <ClCompile Include="exception_translator.cpp" />
+    <ClCompile Include="file_context.cpp" />
     <ClCompile Include="hresult_exception.cpp" />
     <ClCompile Include="mutex.cpp" />
     <ClCompile Include="standard_exception.cpp" />
