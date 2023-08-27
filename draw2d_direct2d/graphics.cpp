@@ -6016,9 +6016,9 @@ namespace draw2d_direct2d
    //
    //      }
    //
-   //      ::rectangle_i32 rectangleClient;
+   //      ::rectangle_i32 rectangleX;
    //
-   //      ::GetClientRect(hwnd, rectangleClient);
+   //      ::GetClientRect(hwnd, rectangleX);
    //
    //      // Create a DC render target.
    //      D2D1_RENDER_TARGET_PROPERTIES props = D2D1::RenderTargetProperties(
@@ -6041,7 +6041,7 @@ namespace draw2d_direct2d
    //
    //      }
    //
-   //      hr = m_pdcrendertarget->BindDC(hdc, rectangleClient);
+   //      hr = m_pdcrendertarget->BindDC(hdc, rectangleX);
    //
    //      m_pdcrendertarget.As(&m_prendertarget);
    //
