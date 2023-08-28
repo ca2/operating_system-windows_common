@@ -5279,6 +5279,8 @@ namespace draw2d_direct2d
 
       synchronous_lock synchronouslock(this->synchronization());
 
+      synchronous_lock synchronouslock(acmesystem()->m_paurasystem->draw2d()->write_text()->m_pparticleFontTextMapSynchronization);
+
       auto & text = m_pfont->m_mapFontText[str];
 
       if (text.m_wstr.is_empty())
@@ -5460,6 +5462,8 @@ namespace draw2d_direct2d
       }
 
       synchronous_lock synchronouslock(this->synchronization());
+
+      synchronous_lock synchronouslock(acmesystem()->m_paurasystem->draw2d()->write_text()->m_pparticleFontTextMapSynchronization);
 
       auto & text = m_pfont->m_mapFontText[range];
 
@@ -5652,6 +5656,8 @@ namespace draw2d_direct2d
       D2D1::Matrix3x2F m;
 
       D2D1::Matrix3x2F mOriginal;
+
+      synchronous_lock synchronouslock(acmesystem()->m_paurasystem->draw2d()->write_text()->m_pparticleFontTextMapSynchronization);
 
       auto & text = m_pfont->m_mapFontText[scopedstr];
 
