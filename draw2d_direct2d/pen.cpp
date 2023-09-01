@@ -195,10 +195,10 @@ namespace draw2d_direct2d
 
          D2D1_IMAGE_BRUSH_PROPERTIES props;
 
-         props.sourceRectangle.left = 0.f;
-         props.sourceRectangle.top = 0.f;
-         props.sourceRectangle.right = 256.f;
-         props.sourceRectangle.bottom = 256.f;
+         props.sourceRectangle.left() = 0.f;
+         props.sourceRectangle.top() = 0.f;
+         props.sourceRectangle.right() = 256.f;
+         props.sourceRectangle.bottom() = 256.f;
 
          props.extendModeX = D2D1_EXTEND_MODE_WRAP;
          props.extendModeY = D2D1_EXTEND_MODE_WRAP;

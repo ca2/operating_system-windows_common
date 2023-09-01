@@ -135,10 +135,10 @@ namespace draw2d_direct2d
 
       ::arc_f64 arc{};
 
-      arc.left = x;
-      arc.top = y;
-      arc.right =x + cx;
-      arc.bottom = y + cy;
+      arc.left() = x;
+      arc.top() = y;
+      arc.right() =x + cx;
+      arc.bottom() = y + cy;
       arc.m_pointBegin.x() = x + cx;
       arc.m_pointBegin.y() = y + cy / 2.0;
       arc.m_pointEnd.x() = x + cx;
@@ -678,10 +678,10 @@ namespace draw2d_direct2d
 
       //::rectangle_f64 rectangle;
 
-      //rectangle.left      = (::i32) (arc.m_pointCenter.x() - arc.m_sizeRadius.cx());
-      //rectangle.right     = (::i32) (arc.m_pointCenter.x() + arc.m_sizeRadius.cx());
-      //rectangle.top       = (::i32) (arc.m_pointCenter.y() - arc.m_sizeRadius.cy());
-      //rectangle.bottom    = (::i32) (arc.m_pointCenter.y() + arc.m_sizeRadius.cy());
+      //rectangle.left()      = (::i32) (arc.m_pointCenter.x() - arc.m_sizeRadius.cx());
+      //rectangle.right()     = (::i32) (arc.m_pointCenter.x() + arc.m_sizeRadius.cx());
+      //rectangle.top()       = (::i32) (arc.m_pointCenter.y() - arc.m_sizeRadius.cy());
+      //rectangle.bottom()    = (::i32) (arc.m_pointCenter.y() + arc.m_sizeRadius.cy());
 
       //bool bOk = internal_add_arc(pgraphics, parc);
 
@@ -799,7 +799,7 @@ namespace draw2d_direct2d
    bool path::_set(::draw2d::graphics* pgraphics, const ::rectangle_f64 & rectangle)
    {
 
-      return internal_add_rectangle(pgraphics, rectangle.left, rectangle.top, rectangle.width(), rectangle.height());
+      return internal_add_rectangle(pgraphics, rectangle.left(), rectangle.top(), rectangle.width(), rectangle.height());
 
    }
 
@@ -807,7 +807,7 @@ namespace draw2d_direct2d
    //bool path::_set(::draw2d::graphics* pgraphics, const ::rectangle_f64& rectangle)
    //{
 
-   //   return internal_add_rect(pgraphics, rectangle.left, rectangle.top, rectangle.width(), rectangle.height());
+   //   return internal_add_rect(pgraphics, rectangle.left(), rectangle.top(), rectangle.width(), rectangle.height());
 
    //}
 
@@ -815,7 +815,7 @@ namespace draw2d_direct2d
    bool path::_set(::draw2d::graphics * pgraphics, const ::ellipse_f64 & ellipse)
    {
 
-      return internal_add_ellipse(pgraphics, ellipse.left, ellipse.top, ellipse.width(), ellipse.height());
+      return internal_add_ellipse(pgraphics, ellipse.left(), ellipse.top(), ellipse.width(), ellipse.height());
 
    }
 
@@ -955,10 +955,10 @@ namespace draw2d_direct2d
 
    //   //::rectangle_f64 rectangle;
 
-   //   //rectangle.left      = (::i32) (arc.m_pointCenter.x() - arc.m_sizeRadius.cx());
-   //   //rectangle.right     = (::i32) (arc.m_pointCenter.x() + arc.m_sizeRadius.cx());
-   //   //rectangle.top       = (::i32) (arc.m_pointCenter.y() - arc.m_sizeRadius.cy());
-   //   //rectangle.bottom    = (::i32) (arc.m_pointCenter.y() + arc.m_sizeRadius.cy());
+   //   //rectangle.left()      = (::i32) (arc.m_pointCenter.x() - arc.m_sizeRadius.cx());
+   //   //rectangle.right()     = (::i32) (arc.m_pointCenter.x() + arc.m_sizeRadius.cx());
+   //   //rectangle.top()       = (::i32) (arc.m_pointCenter.y() - arc.m_sizeRadius.cy());
+   //   //rectangle.bottom()    = (::i32) (arc.m_pointCenter.y() + arc.m_sizeRadius.cy());
 
    //   //bool bOk = internal_add_arc(pgraphics, parc);
 

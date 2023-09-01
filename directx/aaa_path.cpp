@@ -452,10 +452,10 @@ namespace draw2d_directx
 
       //::rectangle_f64 rectangle;
 
-      //rectangle.left      = (::i32) (arc.m_pointCenter.x() - arc.m_sizeRadius.cx());
-      //rectangle.right     = (::i32) (arc.m_pointCenter.x() + arc.m_sizeRadius.cx());
-      //rectangle.top       = (::i32) (arc.m_pointCenter.y() - arc.m_sizeRadius.cy());
-      //rectangle.bottom    = (::i32) (arc.m_pointCenter.y() + arc.m_sizeRadius.cy());
+      //rectangle.left()      = (::i32) (arc.m_pointCenter.x() - arc.m_sizeRadius.cx());
+      //rectangle.right()     = (::i32) (arc.m_pointCenter.x() + arc.m_sizeRadius.cx());
+      //rectangle.top()       = (::i32) (arc.m_pointCenter.y() - arc.m_sizeRadius.cy());
+      //rectangle.bottom()    = (::i32) (arc.m_pointCenter.y() + arc.m_sizeRadius.cy());
 
       //bool bOk = internal_add_arc(pgraphics, parc);
 
@@ -575,7 +575,7 @@ namespace draw2d_directx
    bool path::_set(::draw2d::graphics* pgraphics, const ::rectangle_i32 & rectangle)
    {
 
-      return internal_add_rect(pgraphics, rectangle.left, rectangle.top, rectangle.width(), rectangle.height());
+      return internal_add_rect(pgraphics, rectangle.left(), rectangle.top(), rectangle.width(), rectangle.height());
 
    }
 
@@ -583,7 +583,7 @@ namespace draw2d_directx
    bool path::_set(::draw2d::graphics* pgraphics, const ::rectangle_f64& rectangle)
    {
 
-      return internal_add_rect(pgraphics, rectangle.left, rectangle.top, rectangle.width(), rectangle.height());
+      return internal_add_rect(pgraphics, rectangle.left(), rectangle.top(), rectangle.width(), rectangle.height());
 
    }
 
@@ -639,10 +639,10 @@ namespace draw2d_directx
 
    //   //::rectangle_f64 rectangle;
 
-   //   //rectangle.left      = (::i32) (arc.m_pointCenter.x() - arc.m_sizeRadius.cx());
-   //   //rectangle.right     = (::i32) (arc.m_pointCenter.x() + arc.m_sizeRadius.cx());
-   //   //rectangle.top       = (::i32) (arc.m_pointCenter.y() - arc.m_sizeRadius.cy());
-   //   //rectangle.bottom    = (::i32) (arc.m_pointCenter.y() + arc.m_sizeRadius.cy());
+   //   //rectangle.left()      = (::i32) (arc.m_pointCenter.x() - arc.m_sizeRadius.cx());
+   //   //rectangle.right()     = (::i32) (arc.m_pointCenter.x() + arc.m_sizeRadius.cx());
+   //   //rectangle.top()       = (::i32) (arc.m_pointCenter.y() - arc.m_sizeRadius.cy());
+   //   //rectangle.bottom()    = (::i32) (arc.m_pointCenter.y() + arc.m_sizeRadius.cy());
 
    //   //bool bOk = internal_add_arc(pgraphics, parc);
 
