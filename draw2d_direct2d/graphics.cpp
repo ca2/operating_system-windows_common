@@ -624,7 +624,7 @@ namespace draw2d_direct2d
 
          D2D1_RECT_F rectfDib1;
 
-         copy(rectfDib1, rectangleDib1);
+         copy(&rectfDib1, &rectangleDib1);
 
          pgraphicsDib1->m_pdevicecontext->DrawImage(
          (ID2D1Bitmap *)pgraphicsDib2->get_current_bitmap()->m_osdata[0],
@@ -1245,7 +1245,7 @@ namespace draw2d_direct2d
 
       D2D1_RECT_F rectangle;
 
-      copy(rectangle, rectangleParam);
+      copy(&rectangle, &rectangleParam);
 
       m_prendertarget->DrawRectangle(rectangle, pbrush->get_os_data < ID2D1Brush * >(this));
 
@@ -1837,7 +1837,7 @@ namespace draw2d_direct2d
 
       D2D1_RECT_F rectangle;
 
-      copy(rectangle, rectangleParam);
+      copy(&rectangle, &rectangleParam);
 
       ::draw2d_direct2d::pen * ppen2 = dynamic_cast <::draw2d_direct2d::pen *> (ppen);
 
@@ -1878,7 +1878,7 @@ namespace draw2d_direct2d
 
       D2D1_RECT_F rectangle;
 
-      copy(rectangle, rectangleParam);
+      copy(&rectangle, &rectangleParam);
 
       ::draw2d_direct2d::brush * pbrush2 = dynamic_cast <::draw2d_direct2d::brush *> (pbrush);
 
@@ -1908,7 +1908,7 @@ namespace draw2d_direct2d
 
          D2D1_ROUNDED_RECT rectangle;
 
-         copy(rectangle.rect, rectangleParam);
+         copy(&rectangle.rect, &rectangleParam);
 
          rectangle.radiusX = (FLOAT)dRadius;
 
@@ -1935,7 +1935,7 @@ namespace draw2d_direct2d
 
          D2D1_ROUNDED_RECT rectangle;
 
-         copy(rectangle.rect, rectangleParam);
+         copy(&rectangle.rect, &rectangleParam);
 
          rectangle.radiusX = (FLOAT)dRadius;
 
@@ -2135,8 +2135,8 @@ namespace draw2d_direct2d
                   (FLOAT)imagedrawingoptions.matrix().e4);
             colorMatrixEffect->SetValue(D2D1_COLORMATRIX_PROP_COLOR_MATRIX, matrix);
             D2D1_POINT_2F pointTarget;
-            pointTarget.x = rectangleTarget.left();
-            pointTarget.y = rectangleTarget.top();
+            pointTarget.x = rectangleTarget.left;
+            pointTarget.y = rectangleTarget.top;
             //m_pdevicecontext->BeginDraw();
             m_pdevicecontext->DrawImage(colorMatrixEffect, &pointTarget, &rectangleSource, D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR);
             //m_pdevicecontext->EndDraw();
@@ -4661,7 +4661,7 @@ namespace draw2d_direct2d
 
       D2D1_RECT_F rf;
 
-      copy(rf, r);
+      copy(&rf, &r);
 
       auto layerparameters = D2D1::LayerParameters(rf);
 
@@ -5578,7 +5578,7 @@ namespace draw2d_direct2d
 
       D2D1_RECT_F rectangle;
 
-      copy(rectangle, rectangleParam);
+      copy(&rectangle, &rectangleParam);
 
       defer_primitive_blend();
 
@@ -5728,10 +5728,10 @@ namespace draw2d_direct2d
       else
       {
 
-         rectangle_f32.left() += (FLOAT)x;
-         rectangle_f32.top() += (FLOAT)y;
-         rectangle_f32.right() += (FLOAT)x;
-         rectangle_f32.bottom() += (FLOAT)y;
+         rectangle_f32.left += (FLOAT)x;
+         rectangle_f32.top += (FLOAT)y;
+         rectangle_f32.right += (FLOAT)x;
+         rectangle_f32.bottom += (FLOAT)y;
 
       }
 

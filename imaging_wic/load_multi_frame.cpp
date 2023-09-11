@@ -440,7 +440,12 @@ namespace imaging_wic
 
                }
 
+               if (SUCCEEDED(hr))
+               {
 
+                  pimageFrame->set_ok_flag();
+
+               }
 
             }
 
@@ -448,7 +453,12 @@ namespace imaging_wic
 
             //pframe->m_edisposal = edisposal;
 
-            pframe->_001Process(pimageCompose, pimageFrame, pframea);
+            if (pimageFrame.ok())
+            {
+
+               pframe->_001Process(pimageCompose, pimageFrame, pframea);
+
+            }
 
          }
 

@@ -1136,9 +1136,9 @@ namespace draw2d_direct2d
 
       D2D1_RECT_U srcRect = {};
 
-      srcRect.right() = width();
+      srcRect.right = width();
 
-      srcRect.bottom() = height();
+      srcRect.bottom = height();
 
       hr = m_pbitmap1Map->CopyFromBitmap(&pointDst, pbitmap, &srcRect);
 
@@ -1196,9 +1196,9 @@ namespace draw2d_direct2d
 
          D2D1_RECT_U srcRect={};
 
-         srcRect.right() = this->width();
+         srcRect.right = this->width();
 
-         srcRect.bottom() = this->height();
+         srcRect.bottom = this->height();
 
          auto pbitmap = m_pbitmap->get_os_data < ID2D1Bitmap * >(data_bitmap);
 

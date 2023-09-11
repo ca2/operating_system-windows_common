@@ -21,7 +21,7 @@ namespace direct2d
 
          D2D1_RECT_F r;
 
-         copy(r, rectangle);
+         copy(&r, &rectangle);
 
          ::direct2d::direct2d()->d2d1_factory1()->CreateRectangleGeometry(r, &pgeometry);
 

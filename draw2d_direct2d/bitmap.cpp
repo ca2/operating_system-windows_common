@@ -169,9 +169,9 @@ namespace draw2d_direct2d
 
          D2D1_RECT_U rectangleDst = {};
 
-         rectangleDst.right() = size.cx();
+         rectangleDst.right = size.cx();
 
-         rectangleDst.bottom() = size.cy();
+         rectangleDst.bottom = size.cy();
 
          hrResultCopyBitmap = m_pbitmap->CopyFromMemory(&rectangleDst, pimage32, iScan);
 
