@@ -183,8 +183,8 @@ namespace draw2d_direct2d
       //int GetGraphicsMode() override;
 
 
-      void _get(::draw2d::matrix & matrix) override;
-      void _set(const ::draw2d::matrix & matrix) override;
+      void _get(::geometry2d::matrix & matrix) override;
+      void _set(const ::geometry2d::matrix & matrix) override;
 
       void clear_current_point() override;
 

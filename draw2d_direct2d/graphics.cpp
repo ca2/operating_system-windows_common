@@ -879,14 +879,14 @@ namespace draw2d_direct2d
    //}
 
 
-   void graphics::_get(::draw2d::matrix & matrix)
+   void graphics::_get(::geometry2d::matrix & matrix)
    {
 
       D2D1::Matrix3x2F m;
 
       m_prendertarget->GetTransform(&m);
 
-      matrix = ::draw2d::matrix();
+      matrix = ::geometry2d::matrix();
 
       matrix.a1 = m._11;
       matrix.a2 = m._12;
@@ -900,7 +900,7 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::_set(const ::draw2d::matrix & matrix)
+   void graphics::_set(const ::geometry2d::matrix & matrix)
    {
 
       if (!m_prendertarget)

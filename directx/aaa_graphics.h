@@ -184,8 +184,8 @@ namespace directx
       //int GetGraphicsMode() override;
 
 
-//      virtual bool _get(::draw2d::matrix & matrix) override;
-//      virtual bool _set(const ::draw2d::matrix & matrix) override;
+//      virtual bool _get(::geometry2d::matrix & matrix) override;
+//      virtual bool _set(const ::geometry2d::matrix & matrix) override;
 //
 //      virtual void clear_current_point() override;
 //
