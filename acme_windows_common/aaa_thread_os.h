@@ -22,9 +22,9 @@ typedef THREAD_PROC * thread_proc;
 
 
 
-CLASS_DECL_ACME itask_t get_current_itask();
+CLASS_DECL_ACME itask_t current_itask();
 
-CLASS_DECL_ACME htask_t get_current_htask();
+CLASS_DECL_ACME htask_t current_htask();
 
 
 
