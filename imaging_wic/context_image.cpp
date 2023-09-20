@@ -154,7 +154,7 @@ namespace imaging_wic
 
       bool bOk = true;
 
-      acmesystem()->windowing_send({ e_timeout, 15_s, [&]()
+      user_send({ e_timeout, 15_s, [&]()
          {
 
             auto dataPackage = ::winrt::Windows::ApplicationModel::DataTransfer::Clipboard::GetContent();
@@ -275,7 +275,7 @@ namespace imaging_wic
 
       bool bOk = false;
 
-      acmesystem()->windowing_send({ e_timeout, 15_s, [&bOk]()
+      user_send({ e_timeout, 15_s, [&bOk]()
          {
 
 
@@ -322,7 +322,7 @@ namespace imaging_wic
 
       package.SetBitmap(object);
 
-      acmesystem()->windowing_send({ e_timeout, 15_s, [&package, this]()
+      user_send({ e_timeout, 15_s, [&package, this]()
          {
 
             ::winrt::Windows::ApplicationModel::DataTransfer::Clipboard::SetContent(package);
