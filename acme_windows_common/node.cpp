@@ -758,6 +758,12 @@ namespace acme_windows_common
          return "Courier New";
 
       }
+      else if (efont == e_font_monospace_fx)
+      {
+
+         return "Lucida Console";
+
+      }
 
       return "Helvetica";
 
