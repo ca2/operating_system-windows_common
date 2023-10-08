@@ -2551,6 +2551,37 @@ namespace draw2d_direct2d
    }
 
 
+
+   void graphics::set_smooth_mode(::draw2d::enum_smooth_mode esmoothmode)
+   {
+
+      //if (esmoothmode != m_esmoothmode)
+      //{
+
+         m_esmoothmode = esmoothmode;
+
+      //   if (esmoothmode != ::draw2d::e_smooth_mode_none)
+      //   {
+
+      //      m_prendertarget->SetAntialiasMode(D2D1_ANTIALIAS_MODE_ALIASED);
+
+      //   }
+      //   else
+      //   {
+
+      //      m_prendertarget->SetAntialiasMode(D2D1_ANTIALIAS_MODE_NONE);
+
+      //   }
+
+      //}
+
+      //return true;
+
+   }
+
+
+
+
    //   int graphics::GetTextCharacterExtra()
    //   {
    //
@@ -5857,6 +5888,8 @@ namespace draw2d_direct2d
       m_ealphamodeDevice = ::draw2d::e_alpha_mode_none;
 
       set_alpha_mode(::draw2d::e_alpha_mode_blend);
+
+      set_smooth_mode(::draw2d::e_smooth_mode_high);
 
       //return true;
 

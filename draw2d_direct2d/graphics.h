@@ -478,6 +478,7 @@ namespace draw2d_direct2d
 //
 //#endif
 
+      void set_smooth_mode(::draw2d::enum_smooth_mode esmoothmode) override;
 
 
       // Advanced Drawing
