@@ -297,7 +297,7 @@ namespace windows
       if (!ChangeWindowMessageFilterEx((HWND)get_hwnd(), WM_COPYDATA, MSGFLT_ADD, NULL))
       {
 
-         information("Failed to change WM_COPYDATA message filter");
+         informationf("Failed to change WM_COPYDATA message filter");
 
       }
 

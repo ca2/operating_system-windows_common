@@ -226,7 +226,7 @@ namespace windows
 
                   strError.Format("Failed to delete the file to move \"%s\" error=%d", psz, dwError);
 
-                  information("%s", strError);
+                  informationf("%s", strError);
 
                }
 

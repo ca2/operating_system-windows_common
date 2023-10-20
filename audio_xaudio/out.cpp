@@ -309,7 +309,7 @@ namespace multimedia
          if(out_get_state() != ::wave::e_out_state_playing)
          {
 
-            information("ERROR out::BufferReady while out_get_state() != e_out_state_playing");
+            informationf("ERROR out::BufferReady while out_get_state() != e_out_state_playing");
 
             return;
 
