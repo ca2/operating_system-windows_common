@@ -85,7 +85,7 @@ namespace windows
             0,
             &DataOut))
       {
-         information("crypto::decrypt The encryption phase worked. \n");
+         informationf("crypto::decrypt The encryption phase worked. \n");
          storageDecrypt.allocate(DataOut.cbData);
          ::memory_copy(storageDecrypt.get_data(), DataOut.pbData, DataOut.cbData);
          LocalFree(pwsz);
@@ -96,7 +96,7 @@ namespace windows
       else
       {
          //         TRACELASTERROR();
-         information("crypto::decrypt Decryption error! (1)");
+         informationf("crypto::decrypt Decryption error! (1)");
          return false;
       }
 
@@ -171,7 +171,7 @@ namespace windows
             0,
             &DataOut))
       {
-         information("crypto::encrypt The encryption phase worked. \n");
+         informationf("crypto::encrypt The encryption phase worked. \n");
          storageEncrypt.allocate(DataOut.cbData);
          ::memory_copy(storageEncrypt.get_data(), DataOut.pbData, DataOut.cbData);
          LocalFree(DataOut.pbData);
@@ -179,7 +179,7 @@ namespace windows
       }
       else
       {
-         information("crypto::encrypt Encryption error! (1)");
+         informationf("crypto::encrypt Encryption error! (1)");
          return false;
       }
 #else
