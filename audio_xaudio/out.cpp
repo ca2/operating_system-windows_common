@@ -134,7 +134,7 @@ namespace multimedia
          if(estatus != ::success)
          {
 
-            information(status_short_description(estatus));
+            informationf(status_short_description(estatus));
 
             throw ::exception(estatus);
 
