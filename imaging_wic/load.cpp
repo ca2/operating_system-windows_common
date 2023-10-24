@@ -57,6 +57,8 @@ namespace imaging_wic
 
       ploadimage->m_payload = payloadFile;
 
+      ploadimage->m_functionLoaded = loadoptions.functionLoaded;
+
       pimageParam->m_bCreateHelperMaps = loadoptions.helper_maps;
 
       m_pmanagerImageLoad->handle(
