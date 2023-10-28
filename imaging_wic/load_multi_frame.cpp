@@ -658,7 +658,7 @@ namespace imaging_wic
 
       byte_array ba;
 
-      ba.allocate((memsize)pframe->m_pimage->area());
+      ba.set_size((memsize)pframe->m_pimage->area());
 
       hr = pbitmap->CopyPixels(nullptr, pframe->m_pimage->width(), (::u32)ba.size(), (::u8 *)ba.data());
 
