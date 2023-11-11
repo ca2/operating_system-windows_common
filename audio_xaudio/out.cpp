@@ -304,7 +304,7 @@ namespace multimedia
       void out::out_filled(index iBuffer)
       {
 
-         synchronous_lock synchronouslock(synchronization());
+         _synchronous_lock synchronouslock(synchronization());
 
          if(out_get_state() != ::wave::e_out_state_playing)
          {
@@ -452,7 +452,7 @@ namespace multimedia
       void out::out_start(const class ::time & position)
       {
 
-         synchronous_lock synchronouslock(synchronization());
+         _synchronous_lock synchronouslock(synchronization());
 
          //if(m_eoutstate == e_out_state_playing)
          //   return ::success;
@@ -532,7 +532,7 @@ namespace multimedia
       class ::time out::out_get_position()
       {
 
-         single_lock sLock(synchronization(), true);
+         _synchronous_lock sLock(synchronization());
 
 //         void                    estatus;
 
