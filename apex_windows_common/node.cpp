@@ -371,7 +371,7 @@ namespace apex_windows_common
    {
 
       //auto estatus = 
-      acmesystem()->m_pacmenode->m_papexnode->thread_initialize(acmesystem()->m_papexsystem);
+      system()->m_pacmenode->m_papexnode->thread_initialize(system()->m_papexsystem);
 
       //if (!estatus)
       //{
@@ -381,7 +381,7 @@ namespace apex_windows_common
       //}
 
       //estatus = 
-      acmesystem()->on_start_system();
+      system()->on_start_system();
 
       //if (!estatus)
       //{
@@ -391,7 +391,7 @@ namespace apex_windows_common
       //}
 
       //estatus = 
-      acmesystem()->main();
+      system()->main();
 
       //if (!estatus)
       //{
@@ -402,7 +402,7 @@ namespace apex_windows_common
 
       //estatus = 
          
-      acmesystem()->inline_term();
+      system()->inline_term();
 
       //if (!estatus)
       //{

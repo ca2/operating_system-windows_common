@@ -32,9 +32,9 @@ namespace direct2d
 
 //#ifdef UNIVERSAL_WINDOWS
 //
-//      acmesystem() = pinteraction->acmesystem();
+//      system() = pinteraction->system();
 //
-//      ::pointer<::aura::system>psystem = acmesystem();
+//      ::pointer<::aura::system>psystem = system();
 //
 //      auto pdraw2d = psystem->draw2d();
 //
@@ -58,7 +58,7 @@ namespace direct2d
 //
 //      //m_D2DMultithread->Leave();
 //
-//      ::pointer<::aura::system>psystem = acmesystem();
+//      ::pointer<::aura::system>psystem = system();
 //
 //      auto pdraw2d = psystem->draw2d();
 //

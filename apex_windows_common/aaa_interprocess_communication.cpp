@@ -278,7 +278,7 @@ namespace windows
 
           //auto pmaindata = pappcore->m_pmaindata;
 
-      ::pointer<::apex::system>psystem = acmesystem();
+      ::pointer<::apex::system>psystem = system();
 
       HINSTANCE hinstance = (HINSTANCE)psystem->m_hinstance;
 

@@ -176,7 +176,7 @@ namespace draw2d_direct2d
 
       comptr<ID2D1RenderTarget> prendertargetTemplate;
 
-      auto psession = acmesession();
+      auto psession = session();
 
       auto paurasession = psession->m_paurasession;
 
@@ -5310,7 +5310,7 @@ namespace draw2d_direct2d
 
       synchronous_lock synchronouslock(this->synchronization());
 
-      synchronous_lock synchronouslockFontTextMap(acmesystem()->m_paurasystem->draw2d()->write_text()->m_pparticleFontTextMapSynchronization);
+      synchronous_lock synchronouslockFontTextMap(system()->m_paurasystem->draw2d()->write_text()->m_pparticleFontTextMapSynchronization);
 
       auto & text = m_pfont->m_mapFontText[str];
 
@@ -5494,7 +5494,7 @@ namespace draw2d_direct2d
 
       synchronous_lock synchronouslock(this->synchronization());
 
-      synchronous_lock synchronouslockFontTextMap(acmesystem()->m_paurasystem->draw2d()->write_text()->m_pparticleFontTextMapSynchronization);
+      synchronous_lock synchronouslockFontTextMap(system()->m_paurasystem->draw2d()->write_text()->m_pparticleFontTextMapSynchronization);
 
       auto & text = m_pfont->m_mapFontText[range];
 
@@ -5688,7 +5688,7 @@ namespace draw2d_direct2d
 
       D2D1::Matrix3x2F mOriginal;
 
-      synchronous_lock synchronouslockFontTextMap(acmesystem()->m_paurasystem->draw2d()->write_text()->m_pparticleFontTextMapSynchronization);
+      synchronous_lock synchronouslockFontTextMap(system()->m_paurasystem->draw2d()->write_text()->m_pparticleFontTextMapSynchronization);
 
       auto & text = m_pfont->m_mapFontText[scopedstr];
 

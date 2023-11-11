@@ -81,7 +81,7 @@ semaphore::semaphore(::i32 lInitialCount, ::i32 lMaxCount, const ::string & pstr
 
       if(pstrName.case_insensitive_begins("Local\\") || pstrName.case_insensitive_begins("Local\\"))
       {
-         strPath =          auto psystem = acmesystem();
+         strPath =          auto psystem = system();
 
          auto pacmedir = psystem->m_pacmedirectory;
 
@@ -92,7 +92,7 @@ pacmedir->home() / ".ca2/ftok/semaphore/" + string(pstrName);
          strPath = "/::payload/tmp/ca2/ftok/semaphore/" + string(pstrName);
       }
 
-               auto psystem = acmesystem();
+               auto psystem = system();
 
          auto pacmedir = psystem->m_pacmedirectory;
 

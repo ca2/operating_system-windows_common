@@ -38,7 +38,7 @@ namespace windows
 
       }
 
-      ::pointer<::apex::system>psystem = acmesystem();
+      ::pointer<::apex::system>psystem = system();
 
       __refer(m_pfilesystem, psystem->m_pfilesystem);
 
@@ -855,7 +855,7 @@ namespace windows
    ::file::path dir_context::module()
    {
 
-      ::pointer<::apex::system>psystem = acmesystem();
+      ::pointer<::apex::system>psystem = system();
 
       return psystem->m_pdirsystem->m_pathModule;
 
@@ -865,7 +865,7 @@ namespace windows
    ::file::path dir_context::ca2module()
    {
 
-      ::pointer<::apex::system>psystem = acmesystem();
+      ::pointer<::apex::system>psystem = system();
 
       return psystem->m_pdirsystem->m_pathCa2Module;
 

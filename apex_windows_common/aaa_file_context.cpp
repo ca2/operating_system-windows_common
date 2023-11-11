@@ -32,7 +32,7 @@ namespace windows
 
       }
 
-      ::pointer<::apex::system>psystem = acmesystem();
+      ::pointer<::apex::system>psystem = system();
 
       __refer(m_pfilesystem, psystem->m_pfilesystem);
 
@@ -423,7 +423,7 @@ namespace windows
 
       }
 
-      ::pointer<::apex::system>psystem = acmesystem();
+      ::pointer<::apex::system>psystem = system();
 
       if (read_resource_as_memory(*pfile->get_primitive_memory(), (HINSTANCE) psystem->m_hinstance, iId, psz))
       {

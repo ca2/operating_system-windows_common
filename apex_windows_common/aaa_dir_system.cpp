@@ -105,21 +105,21 @@ namespace windows
 
       }
 
-               auto psystem = acmesystem();
+               auto psystem = system();
 
          auto pacmedir = psystem->m_pacmedirectory;
 
 pacmedir->create(m_strTimeFolder);
       //xxdebug_box("win_dir::initialize (m_strTimeFolder)", "win_dir::initialize", 0);
 
-      if (!         auto psystem = acmesystem();
+      if (!         auto psystem = system();
 
          auto pacmedir = psystem->m_pacmedirectory;
 
 pacmedir->is(m_strTimeFolder))
          return false;
 
-               auto psystem = acmesystem();
+               auto psystem = system();
 
          auto pacmedir = psystem->m_pacmedirectory;
 

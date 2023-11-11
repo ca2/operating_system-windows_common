@@ -38,7 +38,7 @@ namespace acme_windows_common
 
       //}
 
-      //::pointer<::apex::system>psystem = acmesystem();
+      //::pointer<::apex::system>psystem = system();
 
       //m_pfilesystem = psystem->m_pfilesystem;
 

@@ -443,7 +443,7 @@ acmedirectory()create(path.folder());
                if (dwAccess & GENERIC_WRITE)
                {
 
-                  acmesystem()->message_box("Couldn't write to file \"" + m_path + "\".\nAccess Denied!!\n(Is any anti-virus program blocking this program: \"" + acmefile()->module() + "\"?", acmefile()->module().title() + " - Access Denied!", e_message_box_ok);
+                  system()->message_box("Couldn't write to file \"" + m_path + "\".\nAccess Denied!!\n(Is any anti-virus program blocking this program: \"" + acmefile()->module() + "\"?", acmefile()->module().title() + " - Access Denied!", e_message_box_ok);
 
                }
 

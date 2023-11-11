@@ -171,7 +171,7 @@ static int g_iMutex = 0;
 
       }
 
-               auto psystem = acmesystem();
+               auto psystem = system();
 
          auto pacmedir = psystem->m_pacmedirectory;
 
@@ -238,7 +238,7 @@ pacmedir->create(::file::path(strName).folder());
 
 #ifdef ANDROID
 
-         path =          auto psystem = acmesystem();
+         path =          auto psystem = system();
 
          auto pacmedir = psystem->m_pacmedirectory;
 
@@ -256,7 +256,7 @@ pacmedir->system() / "::payload/tmp/ca2/lock/::mutex" / string(pstrName);
 
 #ifdef ANDROID
 
-         path =          auto psystem = acmesystem();
+         path =          auto psystem = system();
 
          auto pacmedir = psystem->m_pacmedirectory;
 
@@ -281,7 +281,7 @@ pacmedir->system() / "home/user/ca2/lock/::mutex" / string(pstrName);
 
       path /= pstrName;
 
-               auto psystem = acmesystem();
+               auto psystem = system();
 
          auto pacmedir = psystem->m_pacmedirectory;
 
@@ -343,7 +343,7 @@ pacmedir->create(path.folder());
 
       path /= pstrName;
 
-               auto psystem = acmesystem();
+               auto psystem = system();
 
          auto pacmedir = psystem->m_pacmedirectory;
 
@@ -1587,7 +1587,7 @@ bool ::mutex::unlock()
 
    path /= lpszName;
 
-            auto psystem = acmesystem();
+            auto psystem = system();
 
          auto pacmedir = psystem->m_pacmedirectory;
 
