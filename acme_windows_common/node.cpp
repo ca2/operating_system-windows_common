@@ -1,9 +1,12 @@
 #include "framework.h"
 #include "node.h"
 #include "mutex.h"
+#include "acme/constant/id.h"
+#include "acme/constant/user_key.h"
 #include "acme/filesystem/filesystem/acme_directory.h"
 #include "acme/platform/scoped_restore.h"
 #include "acme/platform/system.h"
+#include "acme/user/user/key_state.h"
 
 
 #include "acme/_operating_system.h"
@@ -766,6 +769,39 @@ namespace acme_windows_common
       }
 
       return "Helvetica";
+
+   }
+
+
+   ::enum_id node::key_command(::user::enum_key ekey, ::user::key_state* pkeystate)
+   {
+
+      if (ekey == ::user::e_key_a && pkeystate->is_key_pressed(::user::e_key_control))
+      {
+
+         return ::id_edit_select_all;
+
+      }
+      else if (ekey == ::user::e_key_c && pkeystate->is_key_pressed(::user::e_key_control))
+      {
+
+         return ::id_edit_copy;
+
+      }
+      else if (ekey == ::user::e_key_v && pkeystate->is_key_pressed(::user::e_key_control))
+      {
+
+         return ::id_edit_paste;
+
+      }
+      else if (ekey == ::user::e_key_x && pkeystate->is_key_pressed(::user::e_key_control))
+      {
+
+         return ::id_edit_cut;
+
+      }
+
+      return ::id_none;
 
    }
 

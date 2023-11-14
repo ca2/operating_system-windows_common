@@ -51,6 +51,9 @@ namespace acme_windows_common
 
       void install_crash_dump_reporting(const string& strModuleNameWithTheExeExtension) override;
 
+      ::enum_id key_command(::user::enum_key ekey, ::user::key_state* pkeystate) override;
+
+
 
       virtual ::pointer < ::mutex > create_named_mutex(::particle * pparticleContext, bool bInitiallyOwn, const char * pszName, security_attributes * psecurityattributes = nullptr);
 
