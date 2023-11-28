@@ -185,7 +185,7 @@ namespace music
          {
             if(m_pplayer != nullptr)
             {
-               ::pointer<::music::midi::player::notify_event>pdata(__new(::music::midi::player::notify_event));
+               ::pointer<::music::midi::player::notify_event>pdata(__allocate< ::music::midi::player::notify_event >());
                pdata->m_enotifyevent = eevent;
                m_pplayer->post_object(::music::midi::player::message_notify_event, 0,pdata);
             }
@@ -297,7 +297,7 @@ namespace music
 
          void sequence_thread::ExecuteCommand(::pointer<::music::midi::player::command>spcommand)
          {
-            spcommand->increment_reference_count(OBJECT_REFERENCE_COUNT_DEBUG_ARGS);
+            spcommand->increment_reference_count(REFERENCING_DEBUGGING_ARGS);
             post_thread_message(
             ::music::midi::player::message_command,
             0,

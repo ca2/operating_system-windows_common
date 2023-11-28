@@ -87,11 +87,11 @@ namespace imaging_wic
 
 #ifdef UNIVERSAL_WINDOWS
 
-      m_pmanagerImageLoad = __new(multi_threaded_handler_manager);
+      m_pmanagerImageLoad = __allocate< multi_threaded_handler_manager >();
 
 #else
 
-      m_pmanagerImageLoad = __new(single_threaded_handler_manager);
+      m_pmanagerImageLoad = __allocate< single_threaded_handler_manager >();
 
 #endif
 

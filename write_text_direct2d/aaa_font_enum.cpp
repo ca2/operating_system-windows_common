@@ -94,7 +94,7 @@ wingdi_font_enum::~wingdi_font_enum()
          if (penum->m_bRaster)
          {
 
-            penum->m_itema.add(__new(::write_text::font_enumeration_item(plf->lfFaceName)));
+            penum->m_itema.add(__allocate< ::write_text::font_enumeration_item >(plf->lfFaceName));
 
          }
 
@@ -105,7 +105,7 @@ wingdi_font_enum::~wingdi_font_enum()
          if (penum->m_bTrueType)
          {
 
-            penum->m_itema.add(__new(::write_text::font_enumeration_item(plf->lfFaceName)));
+            penum->m_itema.add(__allocate< ::write_text::font_enumeration_item >(plf->lfFaceName));
 
          }
 
@@ -116,7 +116,7 @@ wingdi_font_enum::~wingdi_font_enum()
          if (penum->m_bOther)
          {
 
-            penum->m_itema.add(__new(::write_text::font_enumeration_item(plf->lfFaceName)));
+            penum->m_itema.add(__allocate< ::write_text::font_enumeration_item >(plf->lfFaceName));
 
          }
 

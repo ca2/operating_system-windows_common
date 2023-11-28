@@ -112,7 +112,7 @@ namespace acme_windows_common
             eopen & ::file::e_open_no_exception_on_open,
             ppfileexception,
             ::file::exception,
-            m_estatus, { e_error_code_type_unknown, -1 }, "", eopen, "file with empty name!!");
+            m_estatus, ::error_code(e_error_code_type_unknown, -1), "", eopen, "file with empty name!!");
 
       }
 

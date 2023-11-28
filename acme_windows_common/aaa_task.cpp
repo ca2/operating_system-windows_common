@@ -141,13 +141,13 @@ void* task::s_os_task(void* p)
 
       ::task* pthread = (::task*) p;
 
-      ::set_task(pthread OBJECT_REFERENCE_COUNT_DEBUG_COMMA_P_FUNCTION_LINE(pthread));
+      ::set_task(pthread REFERENCING_DEBUGGING_COMMA_P_FUNCTION_LINE(pthread));
 
-      pthread->release(OBJECT_REFERENCE_COUNT_DEBUG_P_FUNCTION_LINE(pthread));
+      pthread->release(REFERENCING_DEBUGGING_P_FUNCTION_LINE(pthread));
 
       pthread->do_task();
 
-#if OBJECT_REFERENCE_COUNT_DEBUG
+#if REFERENCING_DEBUGGING
 
       if (pthread->m_countReference > 1)
       {
@@ -158,7 +158,7 @@ void* task::s_os_task(void* p)
 
 #endif
 
-      ::thread_release(OBJECT_REFERENCE_COUNT_DEBUG_P_NOTE(pthread, ""));
+      ::thread_release(REFERENCING_DEBUGGING_P_NOTE(pthread, ""));
 
    }
    catch (...)
@@ -176,7 +176,7 @@ void task::add_notify(::matter* pmatter)
 
    synchronous_lock synchronouslock(mutex());
 
-   notify_array().add_item(pmatter OBJECT_REFERENCE_COUNT_DEBUG_COMMA_THIS_FUNCTION_LINE);
+   notify_array().add_item(pmatter REFERENCING_DEBUGGING_COMMA_THIS_FUNCTION_FILE_LINE);
 
 }
 
@@ -189,7 +189,7 @@ void task::erase_notify(::matter* pmatter)
    if (m_pnotifya)
    {
 
-      m_pnotifya->erase_item(pmatter OBJECT_REFERENCE_COUNT_DEBUG_COMMA_THIS);
+      m_pnotifya->erase_item(pmatter REFERENCING_DEBUGGING_COMMA_THIS);
 
    }
 
@@ -439,7 +439,7 @@ void task::begin_task(
    //}
 
    // __task_procedure() should release this (pmatter)
-   increment_reference_count(OBJECT_REFERENCE_COUNT_DEBUG_THIS_FUNCTION_LINE);
+   increment_reference_count(REFERENCING_DEBUGGING_THIS_FUNCTION_FILE_LINE);
 
 #ifdef WINDOWS
 
@@ -487,7 +487,7 @@ void task::begin_task(
 ::task_pointer task::launch(::matter * pmatter, ::enum_priority epriority, ::u32 nStackSize, u32 uCreateFlags)
 {
 
-   auto ptask = __new(task);
+   auto ptask = __allocate< task >();
 
    ptask->start(pmatter, epriority, nStackSize, uCreateFlags);
 
@@ -578,7 +578,7 @@ CLASS_DECL_ACME bool __task_sleep(task* pthread, const class ::wait & wait)
          if (pthread->m_pevSleep.is_null())
          {
 
-            pthread->m_pevSleep = __new(manual_reset_event());
+            pthread->m_pevSleep = __allocate< manual_reset_event >();
 
             pthread->m_pevSleep->ResetEvent();
 

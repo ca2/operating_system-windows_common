@@ -225,7 +225,7 @@
 //map < itask_t, ::pointer<message_queue >>* g_pmapMq;
 //
 //
-//message_queue * get_message_queue(itask_t itask, bool bCreate)
+//message_queue * aaa_get_message_queue(itask_t itask, bool bCreate)
 //{
 //
 //   synchronous_lock synchronouslock(g_pmutexMq);
@@ -246,7 +246,7 @@
 //
 //   }
 //
-//   auto pmq = __new(message_queue);
+//   auto pmq = __allocate< message_queue >();
 //
 //   pmq->m_itask = itask;
 //
@@ -257,7 +257,7 @@
 //}
 //
 //
-//void clear_message_queue(itask_t idthread)
+//void aaa_clear_message_queue(itask_t idthread)
 //{
 //
 //   synchronous_lock synchronouslock(g_pmutexMq);
@@ -291,7 +291,7 @@
 //////
 //////   itask_t idthread = pinteraction->m_pthreadUserInteraction->get_os_int();
 //////
-//////   auto pmq = ::get_message_queue(idthread, message.message != e_message_quit);
+//////   auto pmq = ::aaa_get_message_queue(idthread, message.message != e_message_quit);
 //////
 //////   if(pmq == nullptr)
 //////   {
@@ -352,7 +352,7 @@
 //CLASS_DECL_ACME void mq_clear(itask_t idthread)
 //{
 //
-//   auto pmq = ::get_message_queue(idthread, false);
+//   auto pmq = ::aaa_get_message_queue(idthread, false);
 //
 //   if (pmq == nullptr)
 //   {
@@ -378,7 +378,7 @@
 //
 //   }
 //
-//   auto pmq = get_message_queue(idthread, true);
+//   auto pmq = aaa_get_message_queue(idthread, true);
 //
 //   if (::is_null(pmq))
 //   {
@@ -397,7 +397,7 @@
 //CLASS_DECL_ACME int_bool mq_peek_message(MESSAGE * pMsg, oswindow oswindow, ::u32 wMsgFilterMin, ::u32 wMsgFilterMax, ::u32 wRemoveMsg)
 //{
 //
-//   auto pmq = ::get_message_queue(::current_itask(), false);
+//   auto pmq = ::aaa_get_message_queue(::current_itask(), false);
 //
 //   if (pmq == nullptr)
 //   {
@@ -421,7 +421,7 @@
 //CLASS_DECL_ACME int_bool mq_get_message(MESSAGE * pMsg, oswindow oswindow, ::u32 wMsgFilterMin, ::u32 wMsgFilterMax)
 //{
 //
-//   auto pmq = ::get_message_queue(::current_itask(), true);
+//   auto pmq = ::aaa_get_message_queue(::current_itask(), true);
 //
 //   if (pmq == nullptr)
 //   {
