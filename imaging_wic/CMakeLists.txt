@@ -21,7 +21,7 @@ list(APPEND imaging_wic_source
         context_image.cpp
         context_image.h
         _factory.cpp
-        factory_exchange.h
+        #factory_exchange.h
         framework.cpp
         framework.h
         load.cpp

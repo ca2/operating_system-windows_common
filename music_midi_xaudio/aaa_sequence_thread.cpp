@@ -297,7 +297,7 @@ namespace music
 
          void sequence_thread::ExecuteCommand(::pointer<::music::midi::player::command>spcommand)
          {
-            spcommand->increment_reference_count(REFERENCING_DEBUGGING_ARGS);
+            spcommand->increment_reference_count();
             post_thread_message(
             ::music::midi::player::message_command,
             0,
