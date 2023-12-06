@@ -124,6 +124,32 @@ namespace imaging_wic
    }
 
 
+   void context_image::finalize()
+   {
+
+      if (m_pmanagerImageLoad)
+      {
+
+         try
+         {
+
+            m_pmanagerImageLoad->set_finish();
+
+         }
+         catch (...)
+         {
+
+         }
+
+      }
+
+      m_pmanagerImageLoad.release();
+
+      ::context_image::finalize();
+
+   }
+
+
    comptr < IWICImagingFactory > get_imaging_factory()
    {
 

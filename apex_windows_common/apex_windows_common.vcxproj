@@ -683,7 +683,6 @@
     <Lib />
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="file_context.h" />
     <ClInclude Include="node.h" />
     <ClInclude Include="single_threaded_handler_manager.h" />
     <ClInclude Include="_.h" />
