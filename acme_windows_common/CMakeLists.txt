@@ -7,8 +7,40 @@ list(APPEND library_source
         _.cpp
         _.h
         _factory.cpp
-        framework.cpp
-        framework.h
+   acme_directory.cpp
+   acme_directory.h
+   acme_file.cpp
+   acme_file.h
+   acme_path.cpp
+   acme_path.h
+   bstring.cpp
+   bstring.h
+   com.cpp
+   comptr.h
+   comptr_array.h
+   cotaskptr.h
+   exception_translator.cpp
+   exception_translator.h
+   file.cpp
+   file.h
+   file_context.cpp
+   file_context.h
+   framework.cpp
+   framework.h
+   hresult_exception.cpp
+   hresult_exception.h
+   mutex.cpp
+   mutex.h
+   node.cpp
+   node.h
+   prop_variant.h
+   security_attributes.cpp
+   security_attributes.h
+   standard_exception.cpp
+   standard_exception.h
+   synchronization_object.cpp
+   synchronization_object.h
+   variant.h
         )
 
 
@@ -60,6 +92,7 @@ target_include_directories(acme_windows_common PRIVATE ${CMAKE_CURRENT_SOURCE_DI
 target_include_directories(acme_windows_common PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 
 
-target_compile_definitions(acme_windows_common PRIVATE _ACME_WINDOWS_COMMON_LIBRARY)
-target_compile_definitions(acme_windows_common PRIVATE UNICODE)
-target_compile_definitions(acme_windows_common PRIVATE _UNICODE)
+target_compile_definitions(${PROJECT_NAME} PRIVATE _${PROJECT_NAME}_project)
+
+
+

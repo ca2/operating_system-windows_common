@@ -7,7 +7,10 @@ list(APPEND library_source
    _.h
    _factory.cpp
    framework.cpp
-   framework.h)
+   framework.h
+node.h
+   node.cpp
+)
 
 
 add_library(aura_windows_common SHARED ${library_source})
@@ -21,7 +24,10 @@ if (MSVC)
     target_link_options(aura_windows_common PRIVATE "/DEFAULTLIB:msvcrt$<$<CONFIG:Debug>:d>")
     target_link_options(aura_windows_common PRIVATE "/IMPLIB:${LIBRARY_OUTPUT_PATH}/aura_windows_common.lib")
     target_link_options(aura_windows_common PRIVATE "/DEF:${CMAKE_CURRENT_SOURCE_DIR}/aura_windows_common.def")
-    target_link_libraries(aura_windows_common PRIVATE acme apex aqua aura Gdiplus)
+    target_link_libraries(aura_windows_common PRIVATE
+       apex_windows_common
+       acme_windows_common
+       acme apex aqua aura Gdiplus)
 elseif(LINUX)
 
     if(NOT DONT_USE_PKG_CONFIG)
@@ -57,6 +63,7 @@ target_include_directories(aura_windows_common PRIVATE ${CMAKE_CURRENT_SOURCE_DI
 target_include_directories(aura_windows_common PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 
 
-target_compile_definitions(aura_windows_common PRIVATE _AURA_WINDOWS_COMMON_LIBRARY)
-target_compile_definitions(aura_windows_common PRIVATE UNICODE)
-target_compile_definitions(aura_windows_common PRIVATE _UNICODE)
+target_compile_definitions(${PROJECT_NAME} PRIVATE _${PROJECT_NAME}_project)
+
+
+

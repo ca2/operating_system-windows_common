@@ -75,9 +75,6 @@ target_include_directories(imaging_wic PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../..
 target_include_directories(imaging_wic PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../operating_system/third-${OPERATING_SYSTEM_NAME}/third/include/include)
 
 
-target_compile_definitions(imaging_wic PRIVATE _IMAGING_WIC_LIBRARY)
-target_compile_definitions(imaging_wic PRIVATE UNICODE)
-target_compile_definitions(imaging_wic PRIVATE _UNICODE)
-
+target_compile_definitions(${PROJECT_NAME} PRIVATE _${PROJECT_NAME}_project)
 
 
