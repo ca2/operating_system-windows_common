@@ -93,8 +93,8 @@ namespace draw2d_direct2d
       ::draw2d::bitmap_pointer         pbitmap;
       ::draw2d::graphics_pointer       pgraphics;
 
-      pbitmap.create(this);
-      pgraphics.create(this);
+      __construct(pbitmap);
+      __construct(pgraphics);
 
       if (::is_null(pbitmap) || ::is_null(pgraphics))
       {
