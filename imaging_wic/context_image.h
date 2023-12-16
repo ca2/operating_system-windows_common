@@ -17,7 +17,8 @@ namespace imaging_wic
       //__creatable_from_base(context_image, ::context_image);
 
 
-      ::pointer<handler_manager>       m_pmanagerImageLoad;
+      ::pointer<handler_manager>       m_pmanagerImageLoadFastQueue; // probably low latency / fast
+      ::pointer<handler_manager>       m_pmanagerImageLoadSlowQueue; // possibly high latency / slow
 
       context_image();
       ~context_image() override;

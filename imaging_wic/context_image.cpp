@@ -91,11 +91,13 @@ namespace imaging_wic
 
 #else
 
-      m_pmanagerImageLoad = __allocate< single_threaded_handler_manager >();
+      m_pmanagerImageLoadSlowQueue = __allocate< single_threaded_handler_manager >();
+
+      m_pmanagerImageLoadFastQueue = __allocate< single_threaded_handler_manager >();
 
 #endif
 
-      if (!m_pmanagerImageLoad)
+      if (!m_pmanagerImageLoadSlowQueue || !m_pmanagerImageLoadFastQueue)
       {
 
          throw ::exception(error_null_pointer);
@@ -104,7 +106,8 @@ namespace imaging_wic
 
       //estatus = 
       
-      m_pmanagerImageLoad->initialize_handler_manager(this, "imaging_load_image", true);
+      m_pmanagerImageLoadSlowQueue->initialize_handler_manager(this, "imaging_load_image", true);
+      m_pmanagerImageLoadFastQueue->initialize_handler_manager(this, "imaging_load_image", true);
 
       //if (!estatus)
       //{
@@ -115,7 +118,8 @@ namespace imaging_wic
 
 #ifdef WINDOWS
 
-      m_pmanagerImageLoad->m_bUseDedicatedThread = true;
+      m_pmanagerImageLoadSlowQueue->m_bUseDedicatedThread = true;
+      m_pmanagerImageLoadFastQueue->m_bUseDedicatedThread = true;
 
 #endif
 
@@ -127,13 +131,13 @@ namespace imaging_wic
    void context_image::finalize()
    {
 
-      if (m_pmanagerImageLoad)
+      if (m_pmanagerImageLoadSlowQueue)
       {
 
          try
          {
 
-            m_pmanagerImageLoad->set_finish();
+            m_pmanagerImageLoadSlowQueue->set_finish();
 
          }
          catch (...)
@@ -143,7 +147,25 @@ namespace imaging_wic
 
       }
 
-      m_pmanagerImageLoad.release();
+      m_pmanagerImageLoadSlowQueue.release();
+
+      if (m_pmanagerImageLoadFastQueue)
+      {
+
+         try
+         {
+
+            m_pmanagerImageLoadFastQueue->set_finish();
+
+         }
+         catch (...)
+         {
+
+         }
+
+      }
+
+      m_pmanagerImageLoadFastQueue.release();
 
       ::context_image::finalize();
 

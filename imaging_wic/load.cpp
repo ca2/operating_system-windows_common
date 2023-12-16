@@ -61,9 +61,25 @@ namespace imaging_wic
 
       pimageParam->m_bCreateHelperMaps = loadoptions.helper_maps;
 
-      m_pmanagerImageLoad->handle(
-         { e_timeout, 1_minute, ploadimage }, 
-         loadoptions.sync);
+      auto filepath = payloadFile.as_file_path();
+
+      if (filepath.case_insensitive_begins("http:/")
+         || filepath.case_insensitive_begins("https:/"))
+      {
+
+         m_pmanagerImageLoadSlowQueue->handle(
+   { e_timeout, 1_minute, ploadimage },
+   loadoptions.sync);
+
+      }
+      else
+      {
+
+         m_pmanagerImageLoadFastQueue->handle(
+            { e_timeout, 15_s, ploadimage },
+               loadoptions.sync);
+
+      }
 
       //return ploadimage->m_estatus;
 
