@@ -33,7 +33,7 @@ namespace imaging_wic
 
       }
 
-      acmenode()->defer_co_initialize_ex(false);
+      node()->defer_co_initialize_ex(false);
 
 #ifdef UNIVERSAL_WINDOWS
 

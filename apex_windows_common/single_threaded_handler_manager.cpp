@@ -28,7 +28,7 @@ single_threaded_handler_manager::~single_threaded_handler_manager()
 void single_threaded_handler_manager::on_start_loop()
 {
 
-   acmenode()->defer_co_initialize_ex(false, true);
+   node()->defer_co_initialize_ex(false, true);
 
 }
 

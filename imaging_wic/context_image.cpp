@@ -36,7 +36,7 @@ public:
    void on_start_loop()
    {
 
-      acmenode()->defer_co_initialize_ex(true, true);
+      node()->defer_co_initialize_ex(true, true);
 
    }
 
