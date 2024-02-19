@@ -85,17 +85,17 @@ namespace imaging_wic
       //}
 
 
-#ifdef UNIVERSAL_WINDOWS
-
-      m_pmanagerImageLoad = __allocate< multi_threaded_handler_manager >();
-
-#else
-
+//#ifdef UNIVERSAL_WINDOWS
+//
+//      m_pmanagerImageLoad = __allocate< multi_threaded_handler_manager >();
+//
+//#else
+//
       m_pmanagerImageLoadSlowQueue = __allocate< single_threaded_handler_manager >();
 
       m_pmanagerImageLoadFastQueue = __allocate< single_threaded_handler_manager >();
 
-#endif
+//#endif
 
       if (!m_pmanagerImageLoadSlowQueue || !m_pmanagerImageLoadFastQueue)
       {
