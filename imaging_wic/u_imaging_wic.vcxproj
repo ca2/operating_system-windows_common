@@ -119,6 +119,9 @@
     <ProjectReference Include="..\acme_windows_common\u_acme_windows_common.vcxproj">
       <Project>{4a44d9ca-a46e-4bb3-8ad5-8bcace5228ce}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\apex_windows_common\u_apex_windows_common.vcxproj">
+      <Project>{bc71de03-0bcb-46ed-a9c5-d1dd8242c511}</Project>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B3A245F9-C92F-4487-AEF7-CB0531F665BD}</ProjectGuid>
