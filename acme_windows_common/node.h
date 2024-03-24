@@ -93,6 +93,9 @@ namespace acme_windows_common
       ::file::path library_file_name(const ::scoped_string & scopedstr) override;
 
 
+      ::string eol() override;
+
+
    };
 
 

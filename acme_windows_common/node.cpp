@@ -1050,6 +1050,12 @@ namespace acme_windows_common
 
    //}
 
+   ::string node::eol()
+   {
+
+      return "\n";
+
+   }
 
    
 } // namespace acme_windows_common
