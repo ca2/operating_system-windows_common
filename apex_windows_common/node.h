@@ -55,6 +55,9 @@ namespace apex_windows_common
 
       void get_firefox_installation_info(string& strPathToExe, string& strInstallDirectory);
 
+      bool has_ip4_internet() override;
+
+      bool has_ip6_internet() override;
 
    };
 
