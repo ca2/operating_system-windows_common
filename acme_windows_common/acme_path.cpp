@@ -50,11 +50,11 @@ namespace acme_windows_common
       if (dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
       {
 
-         return ::file::e_type_folder;
+         return ::file::e_type_existent_folder;
 
       }
 
-      return ::file::e_type_file;
+      return ::file::e_type_existent_file;
 
    }
 
