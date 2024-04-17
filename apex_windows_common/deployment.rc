@@ -42,7 +42,7 @@ BEGIN
         BLOCK "040904b0"
         BEGIN
 			VALUE "CompanyName", "operating_system-windows_common"
-			VALUE "FileDescription", "operating_system_windows_common_acme_windows_common"
+			VALUE "FileDescription", "operating_system_windows_common_apex_windows_common"
             VALUE "FileVersion", "1900.1832758.-450206518610.-1242681784"
             VALUE "LegalCopyright", "Copyright (C) 1900-20-32758--450206518-610--1242681784"
             VALUE "ProductVersion", "1900.1832758.-450206518610.-1242681784"
