@@ -9,6 +9,7 @@
 #include "acme/filesystem/filesystem/acme_path.h"
 #include "acme/primitive/primitive/memory.h"
 #include "acme/_operating_system.h"
+#include "acme/operating_system/shared_posix/c_error_number.h"
 #include "acme/operating_system/shared_posix/stdio_file.h"
 #include <stdio.h>
 #include <fcntl.h>
