@@ -1,6 +1,9 @@
 // Created by Camilo on 2024-04-09 10:15 <3ThomasBorregaardSorensen!!
 #include "framework.h"
 #include "node.h"
+
+
+#include "acme/_operating_system.h"
 #define boolean windows_boolean
 #include <ObjBase.h>      // include the base COM header
 #include <Netlistmgr.h>
