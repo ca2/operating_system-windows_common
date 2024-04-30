@@ -81,7 +81,7 @@ namespace imaging_wic
 
          }
 
-         ::count cFrame;
+         ::raw::count cFrame;
 
          {
 
@@ -174,7 +174,7 @@ namespace imaging_wic
 
          image_pointer pimageFrame;
 
-         for (index iFrame = 0; iFrame < cFrame; iFrame++)
+         for (::raw::index iFrame = 0; iFrame < cFrame; iFrame++)
          {
 
             auto & pframe = pframea->element_at(iFrame);

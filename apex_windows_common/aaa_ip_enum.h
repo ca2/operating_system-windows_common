@@ -29,8 +29,8 @@ namespace windows
       virtual ~ip_enum();
 
 
-      //      virtual ::count enumerate(ip_array & ipa);
-      virtual ::count enumerate(array < ::networking::address > & ipa) override;
+      //      virtual ::raw::count enumerate(ip_array & ipa);
+      virtual ::raw::count enumerate(array < ::networking::address > & ipa) override;
 
    };
 

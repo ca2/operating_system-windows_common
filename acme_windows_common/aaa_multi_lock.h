@@ -11,7 +11,7 @@ public:
 
 
    multi_lock(const synchronization_array & synca,bool bInitialLock = false);
-   multi_lock(::count c, const synchronization_array & synca, bool bInitialLock = false);
+   multi_lock(::raw::count c, const synchronization_array & synca, bool bInitialLock = false);
    ~multi_lock();
 
 
@@ -21,6 +21,6 @@ public:
    synchronization_result lock(const duration & tickTimeout = duration::infinite(), bool bWaitForAll = true, u32 dwWakeMask = 0);
    bool unlock();
    bool unlock(::i32 lCount, ::i32 * lPrevCount = nullptr);
-   bool IsLocked(index dwItem);
+   bool IsLocked(::raw::index iItem);
 
 };

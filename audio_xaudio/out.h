@@ -64,10 +64,10 @@ namespace multimedia
          void install_message_routing(::channel * pchannel);
 
          class ::time out_get_position() override;
-         void out_filled(index iBuffer) override;
+         void out_filled(::raw::index iBuffer) override;
          //virtual void out_buffer_ready(LPWAVEHDR lpwavehdr);
 
-//         virtual void     out_open(::thread * pthreadCallback, ::count iBufferCount, ::count iBufferSampleCount) override;
+//         virtual void     out_open(::thread * pthreadCallback, ::raw::count iBufferCount, ::raw::count iBufferSampleCount) override;
          void     out_open_ex(::thread * pthreadCallback, u32 uiSamplesPerSec, u32 uiChannelCount, u32 uiBitsPerSample,::wave::enum_purpose epurpose) override;
          void     out_stop() override;
          void     out_close() override;
@@ -77,13 +77,13 @@ namespace multimedia
          //HWAVEOUT out_get_safe_HWAVEOUT();
 
          void out_on_playback_end() override;
-         void out_free(index iBuffer) override;
+         void out_free(::raw::index iBuffer) override;
          //virtual void out_free(LPWAVEHDR lpwavehdr);
 
          void init_task() override;
          //virtual i32 exit_instance();
 
-         ::count out_get_buffered_buffer_count() override;
+         ::raw::count out_get_buffered_buffer_count() override;
 
          //virtual i32 run();
 

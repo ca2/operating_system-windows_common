@@ -998,7 +998,7 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::DPtoLP(::point_f64 * ppoints, count nCount)
+   void graphics::DPtoLP(::point_f64 * ppoints, ::raw::count nCount)
    {
 
       throw ::exception(todo);
@@ -1016,7 +1016,7 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::LPtoDP(::point_f64 * ppoints, count nCount)
+   void graphics::LPtoDP(::point_f64 * ppoints, ::raw::count nCount)
    {
 
       throw ::exception(todo);
@@ -1213,7 +1213,7 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::polyline(const ::point_f64 * ppoints, count nCount)
+   void graphics::polyline(const ::point_f64 * ppoints, ::raw::count nCount)
    {
 
       auto ppath = __create < ::draw2d::path >();
@@ -1656,7 +1656,7 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::polygon(const ::point_f64 * ppoints, count count)
+   void graphics::polygon(const ::point_f64 * ppoints, ::raw::count count)
    {
 
       if (count < 3)
@@ -1682,7 +1682,7 @@ namespace draw2d_direct2d
 
          psink->BeginFigure(D2D1::Point2F((FLOAT)ppoints->x(), (FLOAT)ppoints->y()), D2D1_FIGURE_BEGIN_FILLED);
 
-         for (index i = 1; i < count; i++)
+         for (::raw::index i = 1; i < count; i++)
          {
 
             psink->AddLine({ (FLOAT)ppoints[i].x(), (FLOAT)ppoints[i].y() });
@@ -1708,7 +1708,7 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::draw_polygon(const ::point_f64 * ppoints, count count)
+   void graphics::draw_polygon(const ::point_f64 * ppoints, ::raw::count count)
    {
 
       if (count < 3)
@@ -1734,7 +1734,7 @@ namespace draw2d_direct2d
 
          psink->BeginFigure(D2D1::Point2F((FLOAT)ppoints->x(), (FLOAT)ppoints->y()), D2D1_FIGURE_BEGIN_FILLED);
 
-         for (index i = 1; i < count; i++)
+         for (::raw::index i = 1; i < count; i++)
          {
 
             psink->AddLine({ (FLOAT)ppoints[i].x(), (FLOAT)ppoints[i].y() });
@@ -1756,7 +1756,7 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::fill_polygon(const ::point_f64 * ppoints, count count)
+   void graphics::fill_polygon(const ::point_f64 * ppoints, ::raw::count count)
    {
 
       if (count < 3)
@@ -1782,7 +1782,7 @@ namespace draw2d_direct2d
 
          psink->BeginFigure(D2D1::Point2F((FLOAT)ppoints->x(), (FLOAT)ppoints->y()), D2D1_FIGURE_BEGIN_FILLED);
 
-         for (index i = 1; i < count; i++)
+         for (::raw::index i = 1; i < count; i++)
          {
 
             psink->AddLine({ (FLOAT)ppoints[i].x(), (FLOAT)ppoints[i].y() });
@@ -2207,7 +2207,7 @@ namespace draw2d_direct2d
 
                pframeaTarget->set_size(pframeaSource->get_size());
 
-               for (::index i = 0; i < pframeaTarget->get_size(); i++)
+               for (::raw::index i = 0; i < pframeaTarget->get_size(); i++)
                {
 
                   auto & pframeSource = pframeaSource->element_at(i);
@@ -2422,7 +2422,7 @@ namespace draw2d_direct2d
       //}
 
 
-      //::size_f64 graphics::TabbedTextOut(double x, double y, const ::string & lpszString, strsize nCount, count nTabPositions, LPINT lpnTabStopPositions, i32 nTabOrigin)
+      //::size_f64 graphics::TabbedTextOut(double x, double y, const ::string & lpszString, strsize nCount, ::raw::count nTabPositions, LPINT lpnTabStopPositions, i32 nTabOrigin)
       //{
 
       //   throw ::exception(todo);
@@ -2430,7 +2430,7 @@ namespace draw2d_direct2d
       //}
 
 
-      //::size_f64 graphics::TabbedTextOut(double x, double y, const ::string & str, count nTabPositions, LPINT lpnTabStopPositions, i32 nTabOrigin)
+      //::size_f64 graphics::TabbedTextOut(double x, double y, const ::string & str, ::raw::count nTabPositions, LPINT lpnTabStopPositions, i32 nTabOrigin)
       //{
 
       //   throw ::exception(todo);
@@ -2438,7 +2438,7 @@ namespace draw2d_direct2d
       //}
 
 
-      //::size_f64 graphics::GetTabbedTextExtent(const ::string & lpszString, strsize nCount, count nTabPositions, LPINT lpnTabStopPositions)
+      //::size_f64 graphics::GetTabbedTextExtent(const ::string & lpszString, strsize nCount, ::raw::count nTabPositions, LPINT lpnTabStopPositions)
       //{
 
       //   throw ::exception(todo);
@@ -2446,7 +2446,7 @@ namespace draw2d_direct2d
       //}
 
 
-      //::size_f64 graphics::GetTabbedTextExtent(const ::string & str, count nTabPositions, LPINT lpnTabStopPositions)
+      //::size_f64 graphics::GetTabbedTextExtent(const ::string & str, ::raw::count nTabPositions, LPINT lpnTabStopPositions)
       //{
 
       //   throw ::exception(todo);
@@ -2454,7 +2454,7 @@ namespace draw2d_direct2d
       //}
 
 
-      //::size_f64 graphics::GetOutputTabbedTextExtent(const ::string & lpszString, strsize nCount, count nTabPositions, LPINT lpnTabStopPositions)
+      //::size_f64 graphics::GetOutputTabbedTextExtent(const ::string & lpszString, strsize nCount, ::raw::count nTabPositions, LPINT lpnTabStopPositions)
       //{
 
       //   throw ::exception(todo);
@@ -2464,7 +2464,7 @@ namespace draw2d_direct2d
       //}
 
 
-      //::size_f64 graphics::GetOutputTabbedTextExtent(const ::string & str, count nTabPositions, LPINT lpnTabStopPositions)
+      //::size_f64 graphics::GetOutputTabbedTextExtent(const ::string & str, ::raw::count nTabPositions, LPINT lpnTabStopPositions)
       //{
 
       //   throw ::exception(todo);
@@ -2492,7 +2492,7 @@ namespace draw2d_direct2d
    }
 
 
-   //int graphics::GetTextFace(count nCount, char * lpszFacename)
+   //int graphics::GetTextFace(::raw::count nCount, char * lpszFacename)
    //{
 
    //   throw ::exception(todo);
@@ -2958,7 +2958,7 @@ namespace draw2d_direct2d
 
    //}
 
-   void graphics::poly_polyline(const ::point_f64 * ppoints, const ::i32 * lpPolyPoints, count nCount)
+   void graphics::poly_polyline(const ::point_f64 * ppoints, const ::i32 * lpPolyPoints, ::raw::count nCount)
    {
 
       throw ::exception(todo);
@@ -2987,7 +2987,7 @@ namespace draw2d_direct2d
 #endif
 
 
-   void graphics::poly_bezier(const ::point_f64 * ppoints, count nCount)
+   void graphics::poly_bezier(const ::point_f64 * ppoints, ::raw::count nCount)
    {
 
       throw ::exception(todo);
@@ -3150,7 +3150,7 @@ namespace draw2d_direct2d
    }
 
 
-   //i32 graphics::GetPath(::point_f64 * ppoints, ::u8 * lpTypes, ::count nCount)
+   //i32 graphics::GetPath(::point_f64 * ppoints, ::u8 * lpTypes, ::raw::count nCount)
    //{
 
    //   throw ::exception(todo);
@@ -3922,7 +3922,7 @@ namespace draw2d_direct2d
 
       m_prendertarget->GetTransform(&m_state.m_m);
 
-      ::count iSaveDC = m_statea.get_size();
+      ::raw::count iSaveDC = m_statea.get_size();
 
       m_statea.add(m_state);
 
@@ -3958,12 +3958,12 @@ namespace draw2d_direct2d
 
       }
 
-      //for (index iState = m_statea.get_upper_bound(); iState > nSavedDC; iState--)
+      //for (::raw::index iState = m_statea.get_upper_bound(); iState > nSavedDC; iState--)
       //{
 
       //   auto state = m_statea[iState];
 
-      //   for (index iItem = state->m_maRegion.get_upper_bound(); iItem >= 0; iItem--)
+      //   for (::raw::index iItem = state->m_maRegion.get_upper_bound(); iItem >= 0; iItem--)
       //   {
 
       //      m_prendertarget->PopLayer();
@@ -4215,12 +4215,12 @@ namespace draw2d_direct2d
 
       }
 
-      //for (index iState = m_statea.get_upper_bound(); iState >= 0; iState--)
+      //for (::raw::index iState = m_statea.get_upper_bound(); iState >= 0; iState--)
       //{
 
       //   auto state = m_statea[iState];
 
-      //   for (index iItem = state->m_maRegion.get_upper_bound(); iItem >= 0; iItem--)
+      //   for (::raw::index iItem = state->m_maRegion.get_upper_bound(); iItem >= 0; iItem--)
       //   {
 
       //      m_prendertarget->PopLayer();
@@ -4238,7 +4238,7 @@ namespace draw2d_direct2d
       //if (pstate)
       //{
 
-      //   for (index iItem = pstate->m_maRegion.get_upper_bound(); iItem >= 0; iItem--)
+      //   for (::raw::index iItem = pstate->m_maRegion.get_upper_bound(); iItem >= 0; iItem--)
       //   {
 
       //      m_prendertarget->PopLayer();
@@ -4995,7 +4995,7 @@ namespace draw2d_direct2d
    //}
 
 
-   void graphics::polydraw(const ::point_f64 * ppoints, const ::u8 * lpTypes, count nCount)
+   void graphics::polydraw(const ::point_f64 * ppoints, const ::u8 * lpTypes, ::raw::count nCount)
    {
 
       throw ::exception(todo);
@@ -5005,7 +5005,7 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::polyline_to(const ::point_f64 * ppoints, count nCount)
+   void graphics::polyline_to(const ::point_f64 * ppoints, ::raw::count nCount)
    {
 
       throw ::exception(todo);
@@ -5015,7 +5015,7 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::poly_bezier_to(const ::point_f64 * ppoints, count nCount)
+   void graphics::poly_bezier_to(const ::point_f64 * ppoints, ::raw::count nCount)
    {
 
       throw ::exception(todo);
@@ -6468,7 +6468,7 @@ namespace draw2d_direct2d
 
       }
 
-      //for(index i = 0; i < ppath->m_shapea.get_size(); i++)
+      //for(::raw::index i = 0; i < ppath->m_shapea.get_size(); i++)
       //{
 
       //   if(ppath->m_shapea[i]->eshape() == e_shape_text_out)
@@ -6536,7 +6536,7 @@ namespace draw2d_direct2d
 
       //}
 
-      ////for (index i = 0; i < ppath->m_shapea.get_size(); i++)
+      ////for (::raw::index i = 0; i < ppath->m_shapea.get_size(); i++)
       ////{
 
       ////   if (ppath->m_shapea[i]->eshape() == ::e_shape_text_out)
@@ -6621,7 +6621,7 @@ namespace draw2d_direct2d
 
       }
 
-      //for (index i = 0; i < ppath->m_shapea.get_size(); i++)
+      //for (::raw::index i = 0; i < ppath->m_shapea.get_size(); i++)
       //{
 
       //   if (ppath->m_shapea[i]->eshape() == ::e_shape_text_out)

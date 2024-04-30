@@ -17,7 +17,7 @@ public:
 
    void	clear();
 
-   ::count size() const;
+   ::raw::count size() const;
 
    bool is_empty() const;
 
@@ -29,7 +29,7 @@ public:
 
    void erase(class synchronization_object * psync);
 
-   void erase(index index);
+   void erase(::raw::index index);
 
    virtual void wait();
 

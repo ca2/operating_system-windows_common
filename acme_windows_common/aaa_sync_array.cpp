@@ -52,7 +52,7 @@ void	synchronization_array::clear()
 }
 
 
-::count synchronization_array::size() const
+::raw::count synchronization_array::size() const
 {
 
    return m_synchronizationa.get_size();
@@ -138,7 +138,7 @@ void synchronization_array::erase(class synchronization_object * psync)
 }
 
 
-void synchronization_array::erase(index index)
+void synchronization_array::erase(::raw::index index)
 {
 
    if (index >= m_synchronizationa.size())
