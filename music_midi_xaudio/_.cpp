@@ -320,7 +320,7 @@ namespace music
 
       //void     FillTypeCombo(::pointer<simple_combo_box>pcombo)
       //{
-      //   UNREFERENCED_PARAMETER(lpcombo);
+      //   __UNREFERENCED_PARAMETER(lpcombo);
       //   /*   lpcombo->reset_content();
 
       //   string str;
@@ -349,7 +349,7 @@ namespace music
 
       //void     FillPitchCombo(::pointer<simple_combo_box>pcombo)
       //{
-      //   UNREFERENCED_PARAMETER(lpcombo);
+      //   __UNREFERENCED_PARAMETER(lpcombo);
       //   /*    lpcombo->reset_content();
 
       //   for(i32 i = 0; i < 128; i++)

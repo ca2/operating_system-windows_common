@@ -310,7 +310,7 @@ namespace music
 
             void     player::Initialize(thread * pthread)
             {
-               UNREFERENCED_PARAMETER(pthread);
+               __UNREFERENCED_PARAMETER(pthread);
                return ::success;
             }
 
@@ -332,7 +332,7 @@ namespace music
 
             bool player::SetMidiOutDevice(u32 uiDevice)
             {
-               UNREFERENCED_PARAMETER(uiDevice);
+               __UNREFERENCED_PARAMETER(uiDevice);
                OnMidiOutDeviceChange();
                return true;
             }

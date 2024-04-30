@@ -54,7 +54,7 @@ LPTOP_LEVEL_EXCEPTION_FILTER WINAPI MyDummySetUnhandledExceptionFilter(
    LPTOP_LEVEL_EXCEPTION_FILTER pTopLevelExceptionFilter)
 
 {
-   UNREFERENCED_PARAMETER(pTopLevelExceptionFilter);
+   __UNREFERENCED_PARAMETER(pTopLevelExceptionFilter);
 
    return nullptr;
 }
@@ -150,7 +150,7 @@ namespace exception
 
       }
 
-      UNREFERENCED_PARAMETER(uiCode);
+      __UNREFERENCED_PARAMETER(uiCode);
 
       //::acme::application * papp = ::get_application();
 
@@ -329,7 +329,7 @@ namespace exception
    void translator::filter(u32 uiCode, EXCEPTION_POINTERS * ppointers)
    {
 
-      UNREFERENCED_PARAMETER(uiCode);
+      __UNREFERENCED_PARAMETER(uiCode);
 
       switch (ppointers->ExceptionRecord->ExceptionCode)
       {

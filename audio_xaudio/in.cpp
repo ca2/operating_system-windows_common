@@ -355,10 +355,10 @@ namespace multimedia
       //void CALLBACK in::in_proc(HWAVEIN hwi, ::u32 uMsg, ::u32 dwInstance, ::u32 dwParam1, ::u32 dwParam2)
       //{
 
-      //   UNREFERENCED_PARAMETER(hwi);
-      //   UNREFERENCED_PARAMETER(dwInstance);
-      //   UNREFERENCED_PARAMETER(dwParam1);
-      //   UNREFERENCED_PARAMETER(dwParam2);
+      //   __UNREFERENCED_PARAMETER(hwi);
+      //   __UNREFERENCED_PARAMETER(dwInstance);
+      //   __UNREFERENCED_PARAMETER(dwParam1);
+      //   __UNREFERENCED_PARAMETER(dwParam2);
       //   if(uMsg == WIM_DATA)
       //   {
       //      ASSERT(false);
