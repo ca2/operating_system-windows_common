@@ -19,8 +19,8 @@ namespace draw2d_directx
       virtual ~font();
 
 
-      // virtual IDWriteTextFormat* get_os_data(::draw2d::graphics * pgraphics, ::raw::index i) const;
-      //virtual void * _get_os_data(::draw2d::graphics * pgraphics, ::raw::index i) const override;
+      // virtual IDWriteTextFormat* get_os_data(::draw2d::graphics * pgraphics, ::collection::index i) const;
+      //virtual void * _get_os_data(::draw2d::graphics * pgraphics, ::collection::index i) const override;
 
       virtual void destroy() override;
       virtual bool create(::draw2d::graphics * pgraphics, i8 iCreate) override;

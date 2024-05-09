@@ -176,7 +176,7 @@
 //
 //   synchronous_lock synchronouslock(mutex());
 //
-//   ::raw::count count = m_messagea.get_count();
+//   ::collection::count count = m_messagea.get_count();
 //
 //   for(i32 i = 0; i < count; i++)
 //   {

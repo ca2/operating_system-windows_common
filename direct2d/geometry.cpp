@@ -154,7 +154,7 @@ namespace direct2d
 
          pgeometrysink->BeginFigure({ (FLOAT)polygon.first().x(), (FLOAT)polygon.first().y() }, bFilled ? D2D1_FIGURE_BEGIN_FILLED : D2D1_FIGURE_BEGIN_HOLLOW);
 
-         for (::raw::index i = 1; i < polygon.size(); i++)
+         for (::collection::index i = 1; i < polygon.size(); i++)
          {
 
             pgeometrysink->AddLine({ (FLOAT)polygon[i].x(), (FLOAT)polygon[i].y() });

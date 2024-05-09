@@ -25,8 +25,8 @@ namespace draw2d_direct2d
 
       //void dump(dump_context& dumpcontext) const override;
 
-      // virtual IDWriteTextFormat* get_os_data(::draw2d::graphics * pgraphics, ::raw::index i) const;
-      //virtual void * _get_os_data(::draw2d::graphics * pgraphics, ::raw::index i) const override;
+      // virtual IDWriteTextFormat* get_os_data(::draw2d::graphics * pgraphics, ::collection::index i) const;
+      //virtual void * _get_os_data(::draw2d::graphics * pgraphics, ::collection::index i) const override;
 
       void destroy() override;
       void destroy_os_data() override;

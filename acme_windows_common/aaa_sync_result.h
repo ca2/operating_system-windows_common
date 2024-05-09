@@ -23,7 +23,7 @@ class CLASS_DECL_ACME synchronization_result
 public:
 
 
-   enum e_result : ::raw::index
+   enum e_result : ::collection::index
    {
       result_abandon0 = -10,		/// waiting abandoned because thread stopped
       // place additional failure codes here
@@ -38,19 +38,19 @@ public:
    {
 
       e_result                 m_eresult;
-      ::raw::index                  m_iEvent;
+      ::collection::index                  m_iEvent;
 
    };
 
 
 public:
 //#if defined(WIN32) || defined(WIN64)
-   ///  \brief		constructor with result value and matter ::raw::count passed (Windows only)
+   ///  \brief		constructor with result value and matter ::collection::count passed (Windows only)
    ///  \lparam		value waiting result value as passed by Windows API function
    ///  \lparam		objectCount number of items in event_collection
 
 
-   explicit synchronization_result(::u32 uStatus, ::raw::count objectCount = 1);
+   explicit synchronization_result(::u32 uStatus, ::collection::count objectCount = 1);
 
 
 //#endif
@@ -75,7 +75,7 @@ public:
 
    ///  \brief		returns index of abandoned thread
    ///  \return	abandoned thread index
-   inline ::raw::index abandoned_index() const;
+   inline ::collection::index abandoned_index() const;
 
    ///  \brief		checks if last result == Failure
    ///  \return	true if last result == Failure
@@ -104,7 +104,7 @@ public:
 
    ///  \brief		returns index of signaled thread
    ///  \return	signaled thread index
-   inline ::raw::index signaled_index() const;
+   inline ::collection::index signaled_index() const;
 
 };
 

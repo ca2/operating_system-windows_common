@@ -213,7 +213,7 @@ synchronization_result semaphore::wait(const duration & durationTimeout)
 //   if(g_pthreadaSemaphore != nullptr)
 //   {
 //
-//      for(::raw::index i = 0; i < g_pthreadaSemaphore->get_count() ; i++)
+//      for(::collection::index i = 0; i < g_pthreadaSemaphore->get_count() ; i++)
 //      {
 //
 //         signal(SIGALRM, SIG_DFL);

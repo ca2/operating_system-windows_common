@@ -8,7 +8,7 @@
 #endif
 
 
-synchronization_result::synchronization_result(u32 value, ::raw::count objectCount)
+synchronization_result::synchronization_result(u32 value, ::collection::count objectCount)
 {
 
    switch ( value )
@@ -27,9 +27,9 @@ synchronization_result::synchronization_result(u32 value, ::raw::count objectCou
    default:
 
       if (value>=WAIT_ABANDONED_0 && value<=(WAIT_ABANDONED_0 + objectCount - 1))
-         m_iEvent = (::raw::index)result_abandon0-((::raw::index)value-WAIT_ABANDONED_0);
+         m_iEvent = (::collection::index)result_abandon0-((::collection::index)value-WAIT_ABANDONED_0);
       else if (/*value>=WAIT_OBJECT_0 &&*/ value<=(WAIT_OBJECT_0 + objectCount - 1))
-         m_iEvent = (::raw::index)result_event0+((::raw::index)value-WAIT_OBJECT_0);
+         m_iEvent = (::collection::index)result_event0+((::collection::index)value-WAIT_OBJECT_0);
       break;
 
    }

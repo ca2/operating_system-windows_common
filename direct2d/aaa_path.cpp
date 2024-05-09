@@ -104,7 +104,7 @@ namespace draw2d_direct2d
 
       internal_start_figure(pgraphics, pointa[0].x(), pointa[0].y());
 
-      for (::raw::index i = 1; i < pointa.get_count(); i++)
+      for (::collection::index i = 1; i < pointa.get_count(); i++)
       {
 
          internal_add_line(pgraphics, pointa[i].x(), pointa[i].y());
@@ -130,7 +130,7 @@ namespace draw2d_direct2d
 
       internal_start_figure(pgraphics, pointa[0].x(), pointa[0].y());
 
-      for (::raw::index i = 1; i < pointa.get_count(); i++)
+      for (::collection::index i = 1; i < pointa.get_count(); i++)
       {
 
          internal_add_line(pgraphics, pointa[i].x(), pointa[i].y());

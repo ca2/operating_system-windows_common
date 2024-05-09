@@ -18,7 +18,7 @@ multi_lock::multi_lock(const synchronization_array & synca,bool bInitialLock)
 
    }
 
-   for (::raw::index i = 0; i < synca.sync_count(); i++)
+   for (::collection::index i = 0; i < synca.sync_count(); i++)
    {
 
       m_synchronizationa.add_item(synca.m_synchronizationa[i]);
@@ -37,7 +37,7 @@ multi_lock::multi_lock(const synchronization_array & synca,bool bInitialLock)
 }
 
 
-multi_lock::multi_lock(::raw::count c, const synchronization_array & synca, bool bInitialLock)
+multi_lock::multi_lock(::collection::count c, const synchronization_array & synca, bool bInitialLock)
 {
 
    ASSERT(synca.m_hsyncaCache.has_element() && c > 0 && c <= synca.m_hsyncaCache.get_size() && c <= MAXIMUM_WAIT_OBJECTS);
@@ -112,7 +112,7 @@ synchronization_result multi_lock::lock(const duration & duration, bool bWaitFor
       if (bWaitForAll)
       {
 
-         for (::raw::index j = 0, i = 0; j < m_synchronizationa.m_hsyncaCache.size(); j++)
+         for (::collection::index j = 0, i = 0; j < m_synchronizationa.m_hsyncaCache.size(); j++)
          {
 
             m_byteaLocked[i] = true;
@@ -137,7 +137,7 @@ synchronization_result multi_lock::lock(const duration & duration, bool bWaitFor
 bool multi_lock::unlock()
 {
 
-   for (::raw::index i=0; i < m_synchronizationa.m_hsyncaCache.get_count(); i++)
+   for (::collection::index i=0; i < m_synchronizationa.m_hsyncaCache.get_count(); i++)
    {
 
       if (m_byteaLocked[i] && m_synchronizationa.m_synchronizationa[i]->m_hsync)
@@ -159,7 +159,7 @@ bool multi_lock::unlock(::i32 lCount, ::i32 * pPrevCount /* =nullptr */)
 
    bool bGotOne = false;
 
-   for (::raw::index i=0; i < m_synchronizationa.m_hsyncaCache.get_count(); i++)
+   for (::collection::index i=0; i < m_synchronizationa.m_hsyncaCache.get_count(); i++)
    {
 
       if (m_byteaLocked[i] && m_synchronizationa.m_synchronizationa[i]->m_hsync)
@@ -185,7 +185,7 @@ bool multi_lock::unlock(::i32 lCount, ::i32 * pPrevCount /* =nullptr */)
 }
 
 
-bool multi_lock::IsLocked(::raw::index iObject)
+bool multi_lock::IsLocked(::collection::index iObject)
 {
 
    ASSERT(dwObject < m_synchronizationa.size());

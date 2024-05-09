@@ -232,10 +232,10 @@ namespace directx
 //      virtual ::size_f64 scale_window_ext(double xNum, double xDenom, double yNum, double yDenom) override;
 //
 //      // Coordinate Functions
-//      void DPtoLP(::point_f64 * ppoints, ::raw::count nCount = 1) override;
+//      void DPtoLP(::point_f64 * ppoints, ::collection::count nCount = 1) override;
 //      void DPtoLP(::rectangle_f64 * prectangle) override;
 //      void DPtoLP(::size_f64 * psize) override;
-//      void LPtoDP(::point_f64 * ppoints, ::raw::count nCount = 1) override;
+//      void LPtoDP(::point_f64 * ppoints, ::collection::count nCount = 1) override;
 //      void LPtoDP(::rectangle_f64 * prectangle) override;
 //      void LPtoDP(::size_f64 * psize) override;
 //
@@ -345,13 +345,13 @@ namespace directx
 //      bool fill_ellipse(const ::rectangle_f64 & rectangle) override;
 //      bool Pie(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4) override;
 //      bool Pie(const ::rectangle_f64 & rectangle, const ::point_f64 & pointStart, const ::point_f64 & pointEnd) override;
-//      //bool polygon_i32(LPCPOINT lppoints, ::raw::count nCount);
-//      bool polygon_i32(const ::point_f64 * lppoints, ::raw::count nCount);
-//      //bool draw_polygon(LPCPOINT ppoints, ::raw::count nCount) override;
-//      bool draw_polygon(const ::point_f64 * lppoints, ::raw::count nCount) override;
-//      //bool fill_polygon(LPCPOINT ppoints, ::raw::count nCount) override;
-//      bool fill_polygon(const ::point_f64 * lppoints, ::raw::count nCount) override;
-//      //      bool poly_polygon(LPCPOINT  lppoint, LPCINT lpPolyCounts, ::raw::count nCount) override;
+//      //bool polygon_i32(LPCPOINT lppoints, ::collection::count nCount);
+//      bool polygon_i32(const ::point_f64 * lppoints, ::collection::count nCount);
+//      //bool draw_polygon(LPCPOINT ppoints, ::collection::count nCount) override;
+//      bool draw_polygon(const ::point_f64 * lppoints, ::collection::count nCount) override;
+//      //bool fill_polygon(LPCPOINT ppoints, ::collection::count nCount) override;
+//      bool fill_polygon(const ::point_f64 * lppoints, ::collection::count nCount) override;
+//      //      bool poly_polygon(LPCPOINT  lppoint, LPCINT lpPolyCounts, ::collection::count nCount) override;
 //
 //      //virtual bool fill_polygon(const ::point_f64 * ppoints,count nCount) override;
 //
@@ -408,8 +408,8 @@ namespace directx
 //      //virtual bool text_out(double x, double y, const ::string & str) override;
 //      //virtual bool ExtTextOut(double x, double y, ::u32 nOptions, const ::rectangle_f64 & rectangle, const ::string & lpszString, strsize nCount, LPINT lpDxWidths) override;
 //      //virtual bool ExtTextOut(double x, double y, ::u32 nOptions, const ::rectangle_f64 & rectangle, const ::string & str, LPINT lpDxWidths) override;
-//      //virtual ::size_f64 TabbedTextOut(double x, double y, const ::string & lpszString, strsize nCount, ::raw::count nTabPositions, LPINT lpnTabStopPositions, i32 nTabOrigin) override;
-//      //virtual ::size_f64 TabbedTextOut(double x, double y, const ::string & str, ::raw::count nTabPositions, LPINT lpnTabStopPositions, i32 nTabOrigin) override;
+//      //virtual ::size_f64 TabbedTextOut(double x, double y, const ::string & lpszString, strsize nCount, ::collection::count nTabPositions, LPINT lpnTabStopPositions, i32 nTabOrigin) override;
+//      //virtual ::size_f64 TabbedTextOut(double x, double y, const ::string & str, ::collection::count nTabPositions, LPINT lpnTabStopPositions, i32 nTabOrigin) override;
 //
 //      //virtual bool draw_text(const ::string & lpszString, strsize nCount, const ::rectangle_f64 & rectangle, const ::e_align & ealign = e_align_top_left, const ::e_draw_text & edrawtext = e_draw_text_none) override;
 //      virtual bool draw_text(const ::string & str,const ::rectangle_f64 & rectangle, const ::e_align & ealign = e_align_top_left, const ::e_draw_text & edrawtext = e_draw_text_none) override;
@@ -425,9 +425,9 @@ namespace directx
 //      virtual bool get_text_extent(size_f64 & size, const ::string & str) override;
 //      virtual ::size_f64 GetOutputTextExtent(const ::string & lpszString, strsize nCount) override;
 //      virtual ::size_f64 GetOutputTextExtent(const ::string & str) override;
-//      //virtual ::size_f64 GetTabbedTextExtent(const ::string & lpszString, strsize nCount, ::raw::count nTabPositions, LPINT lpnTabStopPositions) override;
-//      //virtual ::size_f64 GetTabbedTextExtent(const ::string & str, ::raw::count nTabPositions, LPINT lpnTabStopPositions) override;
-//      virtual ::size_f64 GetOutputTabbedTextExtent(const ::string & lpszString, strsize nCount, ::raw::count nTabPositions, LPINT lpnTabStopPositions) override;
+//      //virtual ::size_f64 GetTabbedTextExtent(const ::string & lpszString, strsize nCount, ::collection::count nTabPositions, LPINT lpnTabStopPositions) override;
+//      //virtual ::size_f64 GetTabbedTextExtent(const ::string & str, ::collection::count nTabPositions, LPINT lpnTabStopPositions) override;
+//      virtual ::size_f64 GetOutputTabbedTextExtent(const ::string & lpszString, strsize nCount, ::collection::count nTabPositions, LPINT lpnTabStopPositions) override;
 //      virtual ::size_f64 GetOutputTabbedTextExtent(const ::string & str, count  nTabPositions, LPINT lpnTabStopPositions) override;
 //      //virtual bool GrayString(::draw2d::brush* pBrush, bool (CALLBACK* lpfnOutput)(HDC, LPARAM, int), LPARAM lpData, int nCount, double x, double y, double nWidth, double nHeight) override;
 //      virtual ::u32 GetTextAlign() override;
@@ -519,7 +519,7 @@ namespace directx
 //      bool widen_path() override;
 //      float GetMiterLimit() override;
 //      bool SetMiterLimit(float fMiterLimit) override;
-//      virtual i32 GetPath(::point_f64 * ppoints, LPBYTE lpTypes, ::raw::count nCount) override;
+//      virtual i32 GetPath(::point_f64 * ppoints, LPBYTE lpTypes, ::collection::count nCount) override;
 //      bool SelectClipPath(int nMode) override;
 //
 //      // Misc Helper Functions

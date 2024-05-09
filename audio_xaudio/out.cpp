@@ -139,10 +139,10 @@ namespace multimedia
             throw ::exception(estatus);
 
          }
-         ::raw::count iBufferCount;
+         ::collection::count iBufferCount;
 //Opened:
 
-         ::raw::count iBufferSampleCount = 4096;
+         ::collection::count iBufferSampleCount = 4096;
 
          if(epurpose == ::wave::e_purpose_playback)
          {
@@ -301,7 +301,7 @@ namespace multimedia
 
 
 
-      void out::out_filled(::raw::index iBuffer)
+      void out::out_filled(::collection::index iBuffer)
       {
 
          _synchronous_lock synchronouslock(synchronization());
@@ -465,7 +465,7 @@ namespace multimedia
 
          //m_pprebuffer->start(position);
 
-         //for(::raw::index i = 0; i < out_get_buffer()->GetBufferCount(); i++)
+         //for(::collection::index i = 0; i < out_get_buffer()->GetBufferCount(); i++)
          //{
 
          //   out_free(i);
@@ -593,7 +593,7 @@ namespace multimedia
 //      }
 
 
-      void out::out_free(::raw::index iBuffer)
+      void out::out_free(::collection::index iBuffer)
       {
 
          ::wave::out::out_free(iBuffer);
@@ -618,7 +618,7 @@ namespace multimedia
       }
 
 
-      ::raw::count out::out_get_buffered_buffer_count()
+      ::collection::count out::out_get_buffered_buffer_count()
       {
 
          return ::wave::out::out_get_buffered_buffer_count();
