@@ -10,6 +10,9 @@
     <Filter Include="Header Files\exception">
       <UniqueIdentifier>{96caaa07-2f98-4759-bae3-4b7a97beb0f5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\NewFilter1">
+      <UniqueIdentifier>{8b786c38-2550-4d7d-8bf8-62ecc480e9e8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
