@@ -8,6 +8,7 @@
 #include "acme/filesystem/file/exception.h"
 #include "acme/filesystem/file/status.h"
 #include "acme/filesystem/file/exception.h"
+#include "acme/nano/nano.h"
 #include "acme/nano/user/user.h"
 #include "acme/operating_system/windows_common/_string.h"
 #include "acme/platform/system.h"
@@ -202,7 +203,7 @@ namespace acme_windows_common
             if (eopen & ::file::e_open_write)
             {
 
-               auto psequencer = nano()->message_box("Couldn't write to file \"" + m_path + "\".\nAccess Denied!!\n(Is any anti-virus program blocking this program: \"" + acmefile()->module() + "\"?", acmefile()->module().title() + " - Access Denied!", e_message_box_ok);
+               auto psequencer = nano()->user()->message_box("Couldn't write to file \"" + m_path + "\".\nAccess Denied!!\n(Is any anti-virus program blocking this program: \"" + acmefile()->module() + "\"?", acmefile()->module().title() + " - Access Denied!", e_message_box_ok);
 
                psequencer->do_asynchronously();
 
