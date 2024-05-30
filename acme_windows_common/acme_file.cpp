@@ -157,6 +157,8 @@ namespace acme_windows_common
 
       ::close(fd);
 
+      clear_read_only(path);
+
       //return ::success;
 
    }
