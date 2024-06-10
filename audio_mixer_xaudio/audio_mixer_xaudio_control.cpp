@@ -458,7 +458,7 @@ namespace multimedia
                PMIXERCONTROLDETAILS_BOOLEAN pmxcd_f = (PMIXERCONTROLDETAILS_BOOLEAN) m_mixercontroldetails.paDetails;
                bool fValue = pmxcd_f[cMultipleItems - i - 1].fValue != false;
 
-               pmutecontrol->_001SetCheck(fValue ? e_check_checked : e_check_unchecked);
+               pmutecontrol->set_check(fValue ? e_check_checked : e_check_unchecked);
             }
          }
       }
