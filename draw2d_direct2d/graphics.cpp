@@ -602,9 +602,7 @@ namespace draw2d_direct2d
 
          pimage1->get_graphics()->text_out(0, 0, scopedstr);
 
-         ::image_pointer pimage2;
-
-         pimage2->create(size);
+         auto pimage2 = m_pcontext->m_pauracontext->create_image(size);
 
          pimage2->get_graphics()->set_alpha_mode(::draw2d::e_alpha_mode_set);
 
