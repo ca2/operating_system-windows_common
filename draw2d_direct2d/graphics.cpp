@@ -523,7 +523,7 @@ namespace draw2d_direct2d
             //else
             //{
 
-            auto pimage1 = m_pcontext->m_pauracontext->create_image(rectangleBlt.size());
+            auto pimage1 = context_image()->create_image(rectangleBlt.size());
 
             pimage1->get_graphics()->set_alpha_mode(::draw2d::e_alpha_mode_set);
 
@@ -588,7 +588,7 @@ namespace draw2d_direct2d
 
          // ::draw2d::device_lock devicelock(this);
 
-         auto pimage1 = m_pcontext->m_pauracontext->create_image(size);
+         auto pimage1 = context_image()->create_image(size);
 
          ::rectangle_f64 rectangleDib1(::point_f64(), size);
 
@@ -602,7 +602,7 @@ namespace draw2d_direct2d
 
          pimage1->get_graphics()->text_out(0, 0, scopedstr);
 
-         auto pimage2 = m_pcontext->m_pauracontext->create_image(size);
+         auto pimage2 = context_image()->create_image(size);
 
          pimage2->get_graphics()->set_alpha_mode(::draw2d::e_alpha_mode_set);
 

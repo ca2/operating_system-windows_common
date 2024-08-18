@@ -333,7 +333,7 @@ namespace draw2d_direct2d
       //}
 
       // White blend image
-      auto pimage1 = m_pcontext->m_pauracontext->create_image({cx,  cy});
+      auto pimage1 = context_image()->create_image({cx,  cy});
 
       pimage1->clear(rgba(0, 255, 255, 255));
 
@@ -350,7 +350,7 @@ namespace draw2d_direct2d
       }
 
       // Black blend image
-      auto pimage2 = m_pcontext->m_pauracontext->create_image({cx,  cy});
+      auto pimage2 = context_image()->create_image({cx,  cy});
 
       pimage2->clear(::color::transparent);
 
@@ -377,7 +377,7 @@ namespace draw2d_direct2d
 //#endif
 
       // Mask image
-      auto pimageM = m_pcontext->m_pauracontext->create_image({cx,  cy});
+      auto pimageM = context_image()->create_image({cx,  cy});
 
       {
 
