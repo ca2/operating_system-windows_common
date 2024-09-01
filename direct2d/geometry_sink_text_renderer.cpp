@@ -193,7 +193,7 @@ void geometry_sink_text_renderer::AddLines(
    auto & m = m_memory;
    m.set_size(sizeof(D2D1_POINT_2F) * pointsCount);
    auto points2 = (D2D1_POINT_2F *)m.data();
-   memcpy(points2, points, m.size());
+   memory_copy(points2, points, m.size());
    for (UINT32 u = 0; u < pointsCount; u++)
    {
       points2[u].x += m_xOffset;
@@ -207,7 +207,7 @@ void geometry_sink_text_renderer::AddBeziers(const D2D1_BEZIER_SEGMENT * beziers
    auto & m = m_memory;
    m.set_size(sizeof(D2D1_BEZIER_SEGMENT) * beziersCount);
    auto beziers2 = (D2D1_BEZIER_SEGMENT *)m.data();
-   memcpy(beziers2, beziers, m.size());
+   memory_copy(beziers2, beziers, m.size());
    for (UINT32 u = 0; u < beziersCount; u++)
    {
       beziers2[u].point1.x += m_xOffset;

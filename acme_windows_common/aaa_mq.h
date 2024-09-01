@@ -16,7 +16,7 @@ struct mq_message
    mq_message(const mq_message& message)
    {
 
-      memcpy(this, &message, sizeof(mq_message));
+      memory_copy(this, &message, sizeof(mq_message));
 
    }
 
@@ -24,14 +24,14 @@ struct mq_message
       m_atom((enum_message) message.message)
    {
 
-      memcpy(&m_message, &message, sizeof(MESSAGE));
+      memory_copy(&m_message, &message, sizeof(MESSAGE));
 
    }
 
    mq_message& operator = (const mq_message& message)
    {
 
-      if(this != &message) memcpy(this, &message, sizeof(mq_message));
+      if(this != &message) memory_copy(this, &message, sizeof(mq_message));
 
       return *this;
 
@@ -43,7 +43,7 @@ struct mq_message
 
       m_atom = (enum_message)message.message;
 
-      memcpy(&m_message, &message, sizeof(MESSAGE));
+      memory_copy(&m_message, &message, sizeof(MESSAGE));
 
       return *this;
 

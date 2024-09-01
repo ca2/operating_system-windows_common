@@ -14,7 +14,7 @@ synchronization_array::synchronization_array(const ::synchronization_array & arr
    m_synchronizationa(array.m_synchronizationa)
 {
 
-   memcpy(m_byteaSyncIndex, array.m_byteaSyncIndex, sizeof(m_byteaSyncIndex));
+   memory_copy(m_byteaSyncIndex, array.m_byteaSyncIndex, sizeof(m_byteaSyncIndex));
 
 }
 
@@ -32,7 +32,7 @@ synchronization_array & synchronization_array::operator = (const synchronization
    {
 
       m_hsyncaCache = synca.m_hsyncaCache;
-      memcpy(&m_byteaSyncIndex, synca.m_byteaSyncIndex, sizeof(m_byteaSyncIndex));
+      memory_copy(&m_byteaSyncIndex, synca.m_byteaSyncIndex, sizeof(m_byteaSyncIndex));
       m_synchronizationa = synca.m_synchronizationa;
 
    }
