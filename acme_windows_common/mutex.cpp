@@ -136,7 +136,7 @@ namespace acme_windows_common
    void wait_until_mutex_does_not_exist(::particle * pparticle, const char * lpszName)
    {
 
-      ::pointer<mutex>pmutex = __allocate< mutex >(pparticle, false, "Global\\::ca::account::ca2_spa::7807e510-5579-11dd-ae16-0800200c7784");
+      ::pointer<mutex>pmutex = ::place(new mutex(pparticle, false, "Global\\::ca::account::ca2_spa::7807e510-5579-11dd-ae16-0800200c7784"));
 
       if (::get_last_status() == ::error_already_exists)
       {
@@ -148,7 +148,7 @@ namespace acme_windows_common
 
             preempt(200_ms);
 
-            pmutex = __allocate< mutex >(pparticle, false, "Global\\::ca::account::ca2_spa::7807e510-5579-11dd-ae16-0800200c7784");
+            pmutex = ::place(new mutex(pparticle, false, "Global\\::ca::account::ca2_spa::7807e510-5579-11dd-ae16-0800200c7784"));
 
          }
 

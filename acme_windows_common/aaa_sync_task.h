@@ -25,7 +25,7 @@
 //inline auto __sync_method(PRED pred)
 //{
 //
-//   return __allocate< sync_method >(method(pred));
+//   return ::place(new sync_method(method(pred)));
 //
 //}
 

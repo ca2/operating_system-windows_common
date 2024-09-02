@@ -185,7 +185,7 @@ namespace music
          {
             if(m_pplayer != nullptr)
             {
-               ::pointer<::music::midi::player::notify_event>pdata(__allocate< ::music::midi::player::notify_event >());
+               ::pointer<::music::midi::player::notify_event>pdata(::place(new ::music::midi::player::notify_event()));
                pdata->m_enotifyevent = eevent;
                m_pplayer->post_object(::music::midi::player::message_notify_event, 0,pdata);
             }
