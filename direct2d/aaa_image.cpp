@@ -273,7 +273,7 @@ namespace draw2d_direct2d
    //}
 
 
-   void image::SetIconMask(::draw2d::icon * picon, int cx, int cy)
+   void image::SetIconMask(::image::icon * picon, int cx, int cy)
    {
 
       if (cx <= 0 || cy <= 0)
@@ -949,14 +949,14 @@ namespace draw2d_direct2d
    //   }
    //}
 
-  bool image::_draw_raw(const ::rectangle_i32 & rectangleTarget, ::image * pimage, const ::point_i32 & pointSrc)
+  bool image::_draw_raw(const ::rectangle_i32 & rectangleTarget, ::image::image * pimage, const ::point_i32 & pointSrc)
    {
 
       return ::image::draw(rectangleTarget, pimage, pointSrc);
 
    }
 
-   //bool image::stretch(const ::image * pimage)
+   //bool image::stretch(const ::image::image * pimage)
    //{
 
    //   pimage->unmap();
@@ -1497,7 +1497,7 @@ namespace draw2d_direct2d
    //}
 
 
-   bool image::blend(const ::point_i32 & pointDst, ::image * pimageSrc, const ::point_i32 & pointSrc, const ::size_i32 & sizeParam, ::u8 bA)
+   bool image::blend(const ::point_i32 & pointDst, ::image::image * pimageSrc, const ::point_i32 & pointSrc, const ::size_i32 & sizeParam, ::u8 bA)
    {
 
       return ::image::blend(pointDst, pimageSrc, pointSrc, sizeParam, bA);
@@ -1664,7 +1664,7 @@ namespace draw2d_direct2d
    }
 
 
-   bool image::tint(::image * pimage, const ::color::color & color)
+   bool image::tint(::image::image * pimage, const ::color::color & color)
    {
 
       return ::image::tint(pimage, color);

@@ -500,7 +500,7 @@ namespace windows
          if (listing.m_pathFinal.is_empty())
          {
 
-            listing.m_pathFinal = m_pcontext->m_papexcontext->defer_process_path(listing.m_pathUser);
+            listing.m_pathFinal = m_pcontext->defer_process_matter_path(listing.m_pathUser);
 
          }
 

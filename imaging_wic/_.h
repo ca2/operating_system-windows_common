@@ -11,7 +11,7 @@
 #endif
 
 
-//#include "aura/graphics/image/save_image.h"
+//#include "aura/graphics/image/save_options.h"
 //
 //
 //
@@ -20,7 +20,7 @@
 
 
 //
-//#include "context_image.h"
+//#include "image_context.h"
 
 
 

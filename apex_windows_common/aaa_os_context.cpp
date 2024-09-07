@@ -1998,7 +1998,7 @@ retry:
    bool os_context::file_open(::file::path path, string strParams, string strFolder)
    {
 
-      path = m_pcontext->m_papexcontext->defer_process_path(path);
+      path = m_pcontext->defer_process_matter_path(path);
 
       fork([=]()
       {

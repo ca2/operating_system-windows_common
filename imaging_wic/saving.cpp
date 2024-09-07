@@ -1,8 +1,8 @@
 #include "framework.h"
-#include "context_image.h"
+#include "context.h"
 #include "acme/exception/exception.h"
 #include "acme/platform/node.h"
-#include "aura/graphics/image/save_image.h"
+#include "aura/graphics/image/save_options.h"
 #include "acme_windows_common/comptr.h"
 
 
@@ -20,10 +20,10 @@ namespace imaging_wic
 {
 
 
-   CLASS_DECL_IMAGING_WIC bool node_save_image(IStream* pstream, ::image* pimage, const ::save_image* psaveimage);
+   CLASS_DECL_IMAGING_WIC bool node_save_image(IStream* pstream, ::image::image * pimage, const ::image::save_options & saveoptions);
 
 
-   void context_image::save_image(memory & mem, ::image * pimage, const ::save_image * psaveimage)
+   void image_context::save_image(memory & mem, ::image::image * pimage, const ::image::save_options & saveoptions)
    {
 
       if (::is_null(pimage))
@@ -51,7 +51,7 @@ namespace imaging_wic
 
 #endif
 
-      node_save_image(pstream, pimage, psaveimage);
+      node_save_image(pstream, pimage, saveoptions);
 
       STATSTG stg;
       zero(stg);
@@ -95,7 +95,7 @@ namespace imaging_wic
 
 
 
-   bool node_save_image(IStream * pstream, ::image * pimage, const ::save_image * psaveimage)
+   bool node_save_image(IStream * pstream, ::image::image * pimage, const ::image::save_options & saveoptions)
    {
 
       comptr < IWICImagingFactory > pimagingfactory;
@@ -136,15 +136,15 @@ namespace imaging_wic
       if (SUCCEEDED(hr))
       {
 
-         switch (psaveimage == nullptr ? ::draw2d::e_format_png : psaveimage->m_eformat)
+         switch (saveoptions.m_eformat)
          {
-         case ::draw2d::e_format_bmp:
+         case ::image::e_format_bmp:
             hr = pimagingfactory->CreateEncoder(GUID_ContainerFormatBmp, nullptr, &pbitmapencoder);
             break;
-         case ::draw2d::e_format_gif:
+         case ::image::e_format_gif:
             hr = pimagingfactory->CreateEncoder(GUID_ContainerFormatGif, nullptr, &pbitmapencoder);
             break;
-         case ::draw2d::e_format_jpeg:
+         case ::image::e_format_jpeg:
             hr = pimagingfactory->CreateEncoder(GUID_ContainerFormatJpeg, nullptr, &pbitmapencoder);
             break;
          default:
@@ -221,7 +221,7 @@ namespace imaging_wic
          //   }
          //}
 
-         if (psaveimage != nullptr && psaveimage->m_eformat == ::draw2d::e_format_jpeg)
+         if (saveoptions.m_eformat == ::image::e_format_jpeg)
          {
 
             PROPBAG2 option = { 0 };
@@ -229,7 +229,7 @@ namespace imaging_wic
             VARIANT varValue;
             VariantInit(&varValue);
             varValue.vt = VT_R4;
-            varValue.fltVal = maximum(0.f, minimum(1.f, psaveimage->m_iQuality / 100.0f));
+            varValue.fltVal = maximum(0.f, minimum(1.f, saveoptions.m_iQuality / 100.0f));
             if (SUCCEEDED(hr))
             {
                hr = ppropertybag->Write(1, &option, &varValue);
@@ -246,10 +246,10 @@ namespace imaging_wic
 
       }
 
-      if (psaveimage != nullptr && psaveimage->m_iDpi > 0)
+      if (saveoptions.m_iDpi > 0)
       {
 
-         pbitmapframeencode->SetResolution(psaveimage->m_iDpi, psaveimage->m_iDpi);
+         pbitmapframeencode->SetResolution(saveoptions.m_iDpi, saveoptions.m_iDpi);
 
       }
 
@@ -370,7 +370,7 @@ namespace imaging_wic
 #ifdef UNIVERSAL_WINDOWS
 
 
-   bool node_save_image(::winrt::Windows::Storage::Streams::IRandomAccessStream const & stream, ::image * pimage, const ::save_image * psaveimage)
+   bool node_save_image(::winrt::Windows::Storage::Streams::IRandomAccessStream const & stream, ::image::image * pimage, const ::image::save_image * psaveimage)
    {
 
       ::winrt::Windows::Storage::Streams::InMemoryRandomAccessStream randomAccessStream;

@@ -1,9 +1,9 @@
 #include "framework.h"
-#include "context_image.h"
+#include "context.h"
 #include "acme/filesystem/file/file.h"
 #include "apex/parallelization/handler_manager.h"
 #include "aura/graphics/image/load_image.h"
-#include "aura/graphics/image/save_image.h"
+#include "aura/graphics/image/save_options.h"
 #include "acme_windows_common/comptr.h"
 #include "acme_windows_common/bstring.h"
 
@@ -30,13 +30,13 @@ namespace imaging_wic
 
    comptr < IWICImagingFactory > get_imaging_factory();
 
-   bool windows_image_from_bitmap_source(::image * pimageFrame, IWICBitmapSource * pbitmapsource, IWICImagingFactory * pimagingfactory);
+   bool windows_image_from_bitmap_source(::image::image * pimageFrame, IWICBitmapSource * pbitmapsource, IWICImagingFactory * pimagingfactory);
 
 
-   void context_image::_load_image(::image * pimageParam, const ::payload & payloadFile, const ::image::load_options & loadoptions)
+   void image_context::_load_image(::image::image * pimageParam, const ::payload & payloadFile, const ::image::load_options & loadoptions)
    {
 
-      auto ploadimage = ::place(new ::load_image(this));
+      auto ploadimage = ::place(new ::image::load_image(this));
 
       //auto estatus = 
       
@@ -86,7 +86,7 @@ namespace imaging_wic
    }
 
 
-   void context_image::_os_load_image(::image * pimage, memory & memory)
+   void image_context::_os_load_image(::image::image * pimage, memory & memory)
    {
 
       pimage->m_estatus = ::error_failed;
@@ -235,18 +235,18 @@ namespace imaging_wic
 
    }
 
-   bool node_save_image(IStream * pstream, ::image * pimage, const ::save_image * psaveimage);
+   bool node_save_image(IStream * pstream, ::image::image * pimage, const ::image::save_options & saveoptions);
 
 
 //#ifdef UNIVERSAL_WINDOWS
 //
 //
-//   CLASS_DECL_IMAGING_WIC bool node_save_image(::winrt::Windows::Storage::Streams::InMemoryRandomAccessStream const & randomAccessStream, const ::image * pimage, ::save_image * psaveimage);
+//   CLASS_DECL_IMAGING_WIC bool node_save_image(::winrt::Windows::Storage::Streams::InMemoryRandomAccessStream const & randomAccessStream, const ::image::image * pimage, ::save_image * psaveimage);
 //
 //
 //#endif
 //
-   bool windows_image_from_bitmap_source(::image * pimageFrame, IWICBitmapSource * pbitmapsource, IWICImagingFactory * pimagingfactory)
+   bool windows_image_from_bitmap_source(::image::image * pimageFrame, IWICBitmapSource * pbitmapsource, IWICImagingFactory * pimagingfactory)
    {
 
       comptr < IWICBitmap > piBmp;
@@ -388,7 +388,7 @@ namespace imaging_wic
 #ifdef UNIVERSAL_WINDOWS
 
 
-   bool node_save_image(::winrt::Windows::Storage::Streams::InMemoryRandomAccessStream const & randomAccessStream, ::image * pimage, const ::save_image * psaveimage)
+   bool node_save_image(::winrt::Windows::Storage::Streams::InMemoryRandomAccessStream const & randomAccessStream, ::image::image * pimage, const ::image::save_image * psaveimage)
    {
 
       comptr < IStream > pstream;
@@ -410,7 +410,7 @@ namespace imaging_wic
 #endif
 
 
-   bool context_image::_save_image(::file::file * pfile, ::image * pimage, const ::save_image * psaveimage)
+   bool image_context::_save_image(::file::file * pfile, ::image::image * pimage, const ::image::save_options & saveoptions)
    {
 
 #ifdef UNIVERSAL_WINDOWS
@@ -429,7 +429,7 @@ namespace imaging_wic
 
 #endif
 
-      if (!node_save_image(pstream, pimage, psaveimage))
+      if (!node_save_image(pstream, pimage, saveoptions))
       {
 
          return false;
@@ -476,7 +476,7 @@ namespace imaging_wic
    }
 
 
-   bool node_save_image(IStream * pstream, const ::image * pimage, ::save_image * psaveimage)
+   bool node_save_image(IStream * pstream, const ::image::image * pimage, const ::image::save_options & saveoptions)
    {
 
       comptr < IWICImagingFactory > pimagingfactory = nullptr;
@@ -517,18 +517,18 @@ namespace imaging_wic
       if (SUCCEEDED(hr))
       {
 
-         switch (psaveimage->m_eformat)
+         switch (saveoptions.m_eformat)
          {
-         case draw2d::e_format_bmp:
+         case ::image::e_format_bmp:
             hr = pimagingfactory->CreateEncoder(GUID_ContainerFormatBmp, nullptr, &piEncoder);
             break;
-         case draw2d::e_format_gif:
+         case ::image::e_format_gif:
             hr = pimagingfactory->CreateEncoder(GUID_ContainerFormatGif, nullptr, &piEncoder);
             break;
-         case draw2d::e_format_jpeg:
+         case ::image::e_format_jpeg:
             hr = pimagingfactory->CreateEncoder(GUID_ContainerFormatJpeg, nullptr, &piEncoder);
             break;
-         case draw2d::e_format_png:
+         case ::image::e_format_png:
             hr = pimagingfactory->CreateEncoder(GUID_ContainerFormatPng, nullptr, &piEncoder);
             break;
          default:
@@ -605,7 +605,7 @@ namespace imaging_wic
          //      hr = pPropertybag->Write(1,&option,&varValue);
          //   }
          //}
-         if (psaveimage->m_eformat == draw2d::e_format_jpeg)
+         if (saveoptions.m_eformat == ::image::e_format_jpeg)
          {
 
             PROPBAG2 option = { 0 };
@@ -613,7 +613,7 @@ namespace imaging_wic
             VARIANT varValue;
             VariantInit(&varValue);
             varValue.vt = VT_R4;
-            varValue.fltVal = maximum(0.f, minimum(1.f, psaveimage->m_iQuality / 100.0f));
+            varValue.fltVal = maximum(0.f, minimum(1.f, saveoptions.m_iQuality / 100.0f));
 
             if (SUCCEEDED(hr))
             {

@@ -9,7 +9,7 @@ namespace draw2d_direct2d
 
 
    class CLASS_DECL_DRAW2D_DIRECT2D image :
-      virtual public ::image
+      virtual public ::image::image
    {
    public:
 
@@ -26,7 +26,7 @@ namespace draw2d_direct2d
       virtual void _unmap() override;
 
 
-      void copy_from(::image * pimage, enum_flag eflagCreate = e_flag_success) override;
+      void copy_from(::image::image * pimage, enum_flag eflagCreate = e_flag_success) override;
 
 
       virtual ::draw2d::graphics * _get_graphics() const override;
@@ -37,9 +37,9 @@ namespace draw2d_direct2d
       void dc_select(bool bSelect = true);
 
 
-      using ::image::create;
+      using ::image::image::create;
       void create(const ::size_i32 & size, ::enum_flag eflagCreate = DEFAULT_CREATE_IMAGE_FLAG, int iStride = -1, bool bPreserve = false) override;
-      using ::image::initialize;
+      using ::image::image::initialize;
       void initialize(const ::size_i32 & size, ::image32_t * pimage32, int iScan, ::enum_flag eflagCreate = DEFAULT_CREATE_IMAGE_FLAG) override;
       bool _create(::draw2d::graphics * pgraphics);
       void destroy() override;
@@ -48,10 +48,10 @@ namespace draw2d_direct2d
 
       virtual void create_ex(const ::size_i32 & size, ::image32_t * pimage32, int iScan, ::enum_flag eflagCreate = DEFAULT_CREATE_IMAGE_FLAG, int iStride = -1, bool bPreserve = false);
 
-      //virtual bool _draw_raw(const ::rectangle_i32 & rectangleTarget, ::image * pimage, const ::point_i32 & pointSrc) override;
+      //virtual bool _draw_raw(const ::rectangle_i32 & rectangleTarget, ::image::image * pimage, const ::point_i32 & pointSrc) override;
 
 
-      virtual void SetIconMask(::draw2d::icon * picon, i32 cx, i32 cy) override;
+      virtual void SetIconMask(::image::icon * picon, i32 cx, i32 cy) override;
 
 
       virtual void defer_realize(::draw2d::graphics * pgraphics) const;
@@ -59,11 +59,11 @@ namespace draw2d_direct2d
       virtual void unrealize() const;
       virtual bool is_realized() const;
 
-      using ::image::blend;
-      virtual void blend(const ::point_i32 & pointDst, ::image * pimageSrc, const ::point_i32 & pointSrc, const ::size_i32 & size, ::u8 bA) override;
+      using ::image::image::blend;
+      virtual void blend(const ::point_i32 & pointDst, ::image::image * pimageSrc, const ::point_i32 & pointSrc, const ::size_i32 & size, ::u8 bA) override;
 
-      using ::image::tint;
-      virtual void tint(::image * pimage, ::color::color color32) override;
+      using ::image::image::tint;
+      virtual void tint(::image::image * pimage, ::color::color color32) override;
 
       
 

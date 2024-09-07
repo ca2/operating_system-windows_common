@@ -61,7 +61,7 @@ namespace windows
 
       //auto pdocument = create_xml_document();
 
-      //if (pdocument->load(pcontext->m_papexcontext->file().as_string(::dir::appdata() / "configuration/directory.xml")))
+      //if (pdocument->load(file().as_string(::dir::appdata() / "configuration/directory.xml")))
       //{
 
       //   //xxdebug_box("win_dir::initialize (configuration)", "win_dir::initialize", 0);
@@ -950,7 +950,7 @@ namespace windows
                try
                {
 
-                  pcontext->m_papexcontext->file().del(str);
+                  file().del(str);
 
                }
                catch (...)
@@ -965,7 +965,7 @@ namespace windows
                try
                {
 
-                  pcontext->m_papexcontext->file().del(str);
+                  file().del(str);
 
                }
                catch (...)

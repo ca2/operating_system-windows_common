@@ -19,7 +19,7 @@
 #include "aura/graphics/draw2d/lock.h"
 #include "aura/graphics/draw2d/region.h"
 #include "aura/graphics/draw2d/device_lock.h"
-#include "aura/graphics/image/context_image.h"
+#include "aura/graphics/image/context.h"
 #include "aura/graphics/image/drawing.h"
 #include "aura/graphics/image/frame_array.h"
 //#include "acme/primitive/geometry2d/_enhanced.h"
@@ -339,7 +339,7 @@ namespace draw2d_direct2d
    //}
 
 
-   bool graphics::_draw_blend(const ::image_drawing & imagedrawing)
+   bool graphics::_draw_blend(const ::image::image_drawing & imagedrawing)
    {
 
       //return ::draw2d::graphics::BitBltAlphaBlend(x, y, nWidth, nHeight, pgraphicsSrc, xSrc, ySrc);
@@ -385,7 +385,7 @@ namespace draw2d_direct2d
       //   if (rectangleIntersect.intersect(rectangleAlphaBlend, rectangleBlend))
       //   {
 
-      //      ::image_pointer pimage1;
+      //      ::image::image_pointer pimage1;
 
       //      pimage1 = create_image(::size_f64);
 
@@ -402,7 +402,7 @@ namespace draw2d_direct2d
 
       //      }
 
-      //      ::image_pointer pimage2;
+      //      ::image::image_pointer pimage2;
 
       //      pimage2 = create_image(::size_f64);
 
@@ -523,7 +523,7 @@ namespace draw2d_direct2d
             //else
             //{
 
-            auto pimage1 = context_image()->create_image(rectangleBlt.size());
+            auto pimage1 = image()->create_image(rectangleBlt.size());
 
             pimage1->get_graphics()->set_alpha_mode(::draw2d::e_alpha_mode_set);
 
@@ -540,7 +540,7 @@ namespace draw2d_direct2d
 
             pimage1->blend2(::point_f64(), m_pimageAlphaBlend, point_f64(x - m_pointAlphaBlend.x(), y - m_pointAlphaBlend.y()), rectangleBlt.size(), 255);
 
-            image_drawing_options imagedrawingoptions;
+            ::image::image_drawing_options imagedrawingoptions;
 
             _draw_raw(rectangleTarget, pimage1, imagedrawingoptions, ::point_f64());
 
@@ -588,7 +588,7 @@ namespace draw2d_direct2d
 
          // ::draw2d::device_lock devicelock(this);
 
-         auto pimage1 = context_image()->create_image(size);
+         auto pimage1 = image()->create_image(size);
 
          ::rectangle_f64 rectangleDib1(::point_f64(), size);
 
@@ -602,7 +602,7 @@ namespace draw2d_direct2d
 
          pimage1->get_graphics()->text_out(0, 0, scopedstr);
 
-         auto pimage2 = context_image()->create_image(size);
+         auto pimage2 = image()->create_image(size);
 
          pimage2->get_graphics()->set_alpha_mode(::draw2d::e_alpha_mode_set);
 
@@ -640,13 +640,13 @@ namespace draw2d_direct2d
 
          set_alpha_mode(::draw2d::e_alpha_mode_blend);
 
-         image_source imagesource(pimage1);
+         ::image::image_source imagesource(pimage1);
 
          ::rectangle_f64 rectangleTarget(::point_f64(x, y), pimage1->size());
 
-         image_drawing_options imagedrawingoptions(rectangleTarget);
+         ::image::image_drawing_options imagedrawingoptions(rectangleTarget);
 
-         image_drawing imagedrawing(imagedrawingoptions, imagesource);
+         ::image::image_drawing imagedrawing(imagedrawingoptions, imagesource);
 
          draw(imagedrawing);
 
@@ -1260,7 +1260,7 @@ namespace draw2d_direct2d
    }
 
 
-   //void graphics::DrawIcon(double x, double y, ::draw2d::icon * picon)
+   //void graphics::DrawIcon(double x, double y, ::image::icon * picon)
    //{
    //   throw ::exception(todo);
    //   //ASSERT(get_handle1() != nullptr);
@@ -1272,7 +1272,7 @@ namespace draw2d_direct2d
 
    //}
 
-   //void graphics::DrawIcon(const ::point_f64 & point, ::draw2d::icon * picon)
+   //void graphics::DrawIcon(const ::point_f64 & point, ::image::icon * picon)
    //{
    //   throw ::exception(todo);
    //   //ASSERT(get_handle1() != nullptr);
@@ -1284,7 +1284,7 @@ namespace draw2d_direct2d
 
    //}
 
-//   void graphics::draw(const ::rectangle_f64 & rectangleTarget, ::draw2d::icon * picon)
+//   void graphics::draw(const ::rectangle_f64 & rectangleTarget, ::image::icon * picon)
 //   {
 //
 //#ifdef UNIVERSAL_WINDOWS
@@ -1962,7 +1962,7 @@ namespace draw2d_direct2d
    //}
 
 
-   void graphics::_draw_raw(const ::rectangle_f64 & rectangleTarget, ::image * pimage, const image_drawing_options & imagedrawingoptions, const ::point_f64 & pointSrc)
+   void graphics::_draw_raw(const ::rectangle_f64 & rectangleTarget, ::image::image * pimage, const ::image::image_drawing_options & imagedrawingoptions, const ::point_f64 & pointSrc)
    {
 
       //::draw2d::lock draw2dlock;
@@ -2164,7 +2164,7 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::_stretch_raw(const ::rectangle_f64 & rectangleTarget, ::image * pimage, const image_drawing_options & imagedrawingoptions, const ::rectangle_f64 & rectangleSource)
+   void graphics::_stretch_raw(const ::rectangle_f64 & rectangleTarget, ::image::image * pimage, const ::image::image_drawing_options & imagedrawingoptions, const ::rectangle_f64 & rectangleSource)
    {
 
       //try
@@ -3435,10 +3435,10 @@ namespace draw2d_direct2d
    ::rectangle_i32 rectangleIntersect(m_pointAlphaBlend, m_pimageAlphaBlend->size());
 
 
-   ::image_pointer pimageWork = nullptr;
-   ::image_pointer pimageWork2 = nullptr;
-   //         ::image_pointer pimageWork3 = nullptr;
-   ::image_pointer pimageWork4 = nullptr;
+   ::image::image_pointer pimageWork = nullptr;
+   ::image::image_pointer pimageWork2 = nullptr;
+   //         ::image::image_pointer pimageWork3 = nullptr;
+   ::image::image_pointer pimageWork4 = nullptr;
 
 
    ::point_f64 pointSrc(xSrc, ySrc);
@@ -3447,7 +3447,7 @@ namespace draw2d_direct2d
 
 
 
-   ::image_pointer pimage;
+   ::image::image_pointer pimage;
    if(imageWork == nullptr)
    {
    pimage = create_image(this);
@@ -3463,7 +3463,7 @@ namespace draw2d_direct2d
 
 
 
-   ::image_pointer pimage2;
+   ::image::image_pointer pimage2;
    if(imageWork2 == nullptr)
    {
    pimage2 = create_image(this);
@@ -3471,7 +3471,7 @@ namespace draw2d_direct2d
    }
 
 
-   ::image_pointer pimage4;
+   ::image::image_pointer pimage4;
    if(imageWork4 == nullptr)
    {
    image4 = create_image(this);

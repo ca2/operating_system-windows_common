@@ -1,12 +1,12 @@
 #include "framework.h"
-#include "context_image.h"
+#include "context.h"
 #include "acme/exception/exception.h"
 #include "acme/parallelization/task.h"
 #include "acme/platform/node.h"
 #include "acme/platform/system.h"
 #include "apex/parallelization/handler_manager.h"
 #include "apex_windows_common/single_threaded_handler_manager.h"
-#include "aura/graphics/image/save_image.h"
+#include "aura/graphics/image/save_options.h"
 #include "acme_windows_common/comptr.h"
 
 
@@ -52,27 +52,27 @@ namespace imaging_wic
 {
 
 
-   bool windows_image_from_bitmap_source(::image * pimageFrame, IWICBitmapSource * pbitmapsource, IWICImagingFactory * pimagingfactory);
+   bool windows_image_from_bitmap_source(::image::image * pimageFrame, IWICBitmapSource * pbitmapsource, IWICImagingFactory * pimagingfactory);
 
 
-   context_image::context_image()
+   image_context::image_context()
    {
 
    }
 
 
-   context_image::~context_image()
+   image_context::~image_context()
    {
 
    }
 
 
-   void context_image::initialize(::particle * pparticle)
+   void image_context::initialize(::particle * pparticle)
    {
 
       //auto estatus = 
       
-      ::context_image::initialize(pparticle);
+      ::image::image_context::initialize(pparticle);
 
 
       //__construct(m_pparticleImageSynchronization);
@@ -128,7 +128,7 @@ namespace imaging_wic
    }
 
 
-   void context_image::finalize()
+   void image_context::finalize()
    {
 
       if (m_pmanagerImageLoadSlowQueue)
@@ -167,7 +167,7 @@ namespace imaging_wic
 
       m_pmanagerImageLoadFastQueue.release();
 
-      ::context_image::finalize();
+      ::image::image_context::finalize();
 
    }
 
@@ -195,8 +195,8 @@ namespace imaging_wic
 
 #ifdef UNIVERSAL_WINDOWS
 
-   // platform implementation may use this context_image-"routing" to manipulate the image/clipboard
-   bool context_image::_desk_to_image(::image* pimage)
+   // platform implementation may use this image_context-"routing" to manipulate the image/clipboard
+   bool image_context::_desk_to_image(::image::image *  pimage)
    {
 
 
@@ -317,8 +317,8 @@ namespace imaging_wic
       return bOk;
 
    }
-   // platform implementation may use this context_image-"routing" to manipulate the image/clipboard
-   bool context_image::_desk_has_image()
+   // platform implementation may use this image_context-"routing" to manipulate the image/clipboard
+   bool image_context::_desk_has_image()
    {
 
       bool bOk = false;
@@ -334,8 +334,8 @@ namespace imaging_wic
    }
 
 
-   // platform implementation may use this context_image-"routing" to manipulate the image/clipboard
-   bool context_image::_image_to_desk(::image* pimage)
+   // platform implementation may use this image_context-"routing" to manipulate the image/clipboard
+   bool image_context::_image_to_desk(::image::image *  pimage)
    {
 
       bool bOk = true;
@@ -351,13 +351,13 @@ namespace imaging_wic
 
       ::winrt::Windows::Storage::Streams::InMemoryRandomAccessStream randomAccessStream;
 
-      ::save_image saveimage;
+      ::image::save_options saveoptions;
 
-      saveimage.m_eformat = ::draw2d::e_format_png;
+      saveoptions.m_eformat = ::image::e_format_png;
 
-      saveimage.m_iQuality = 100;
+      saveoptions.m_iQuality = 100;
 
-      if (!node_save_image(randomAccessStream, pimage, &saveimage))
+      if (!node_save_image(randomAccessStream, pimage, saveoptions))
       {
 
          return false;
@@ -385,7 +385,7 @@ namespace imaging_wic
 #endif
 
 
-   //void context_image::_load_icon(::draw2d::icon * picon, const ::payload & payloadFile)
+   //void image_context::_load_icon(::image::icon * picon, const ::payload & payloadFile)
 
 
 

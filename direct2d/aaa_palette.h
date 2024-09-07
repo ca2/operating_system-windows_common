@@ -17,7 +17,7 @@ namespace draw2d_direct2d
 
 
       bool CreatePalette(LPLOGPALETTE lpLogPalette);
-      bool CreateHalftonePalette(::image * pimage);
+      bool CreateHalftonePalette(::image::image * pimage);
 
       operator HPALETTE() const;
       int GetEntryCount();

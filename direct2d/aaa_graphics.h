@@ -65,7 +65,7 @@ namespace draw2d_direct2d
 
 
       virtual bool TextOutAlphaBlend(double x, double y, const block & block) override;
-      virtual bool _draw_blend(const ::image_drawing & imagedrawing) override;
+      virtual bool _draw_blend(const ::image::image_drawing & imagedrawing) override;
 
 
       bool IsPrinting() override;            // true if being used for printing
@@ -309,11 +309,11 @@ namespace draw2d_direct2d
 
       virtual bool invert_rectangle(const ::rectangle_f64 & rectangle) override;
 
-      //virtual bool draw(const ::rectangle_f64 & rectangleTarget, ::draw2d::icon * picon) override;
+      //virtual bool draw(const ::rectangle_f64 & rectangleTarget, ::image::icon * picon) override;
 
-      //bool DrawIcon(double x, double y, ::draw2d::icon * picon) override;
-      //bool DrawIcon(const ::point_f64 & point, ::draw2d::icon * picon) override;
-      //bool DrawIcon(double x, double y, ::draw2d::icon * picon, double cx, double cy, ::u32 istepIfAniCur, HBRUSH hbrFlickerFreeDraw, ::u32 diFlags) override;
+      //bool DrawIcon(double x, double y, ::image::icon * picon) override;
+      //bool DrawIcon(const ::point_f64 & point, ::image::icon * picon) override;
+      //bool DrawIcon(double x, double y, ::image::icon * picon, double cx, double cy, ::u32 istepIfAniCur, HBRUSH hbrFlickerFreeDraw, ::u32 diFlags) override;
 //      bool DrawState(const ::point_f64 & point, const ::size_f64 & size, HBITMAP hBitmap, ::u32 nFlags,
 //                     HBRUSH hBrush = nullptr) override;
 //      bool DrawState(const ::point_f64 & point, const ::size_f64 & size, ::draw2d::bitmap* pBitmap, ::u32 nFlags,
@@ -364,15 +364,15 @@ namespace draw2d_direct2d
       virtual bool round_rectangle(const ::rectangle_f64 & rectangle, double dRadius) override;
 
 
-      //virtual bool _draw_raw(const ::rectangle_f64 & rectangleTarget, ::image * pimage, const ::image_drawing_options & imagedrawingoptions, const ::point_f64 & rectangleSource = ::point_f64()) override;
+      //virtual bool _draw_raw(const ::rectangle_f64 & rectangleTarget, ::image::image * pimage, const ::image::image_drawing_options & imagedrawingoptions, const ::point_f64 & rectangleSource = ::point_f64()) override;
 
       using ::draw2d::graphics::_draw_raw;
 
 
       // Bitmap Functions
       //bool PatBlt(double x, double y, double nWidth, double nHeight) override;
-      virtual bool _draw_raw(const ::rectangle_f64 & rectangleTarget, ::image * pimage, const image_drawing_options & imagedrawingoptions, const ::point_f64 & pointSrc) override;
-      virtual bool _stretch_raw(const ::rectangle_f64 & rectangleTarget, ::image * pimage, const image_drawing_options & imagedrawingoptions, const ::rectangle_f64 & rectangleSource) override;
+      virtual bool _draw_raw(const ::rectangle_f64 & rectangleTarget, ::image::image * pimage, const ::image::image_drawing_options & imagedrawingoptions, const ::point_f64 & pointSrc) override;
+      virtual bool _stretch_raw(const ::rectangle_f64 & rectangleTarget, ::image::image * pimage, const ::image::image_drawing_options & imagedrawingoptions, const ::rectangle_f64 & rectangleSource) override;
 
 
       ::color::color GetPixel(double x, double y) override;
@@ -588,7 +588,7 @@ namespace draw2d_direct2d
 //      virtual void set_direct2d_plugin(::draw2d_direct2d::plugin * pplugin);
 //#endif
 
-      //virtual bool update_window(::image* pimage) override;
+      //virtual bool update_window(::image::image *  pimage) override;
 
    };
 

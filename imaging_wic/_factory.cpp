@@ -1,8 +1,8 @@
 #include "framework.h"
-#include "context_image.h"
+#include "context.h"
 
 //BEGIN_FACTORY(imaging_wic)
-//FACTORY_ITEM(::imaging_wic::context_image)
+//FACTORY_ITEM(::imaging_wic::image_context)
 //END_FACTORY()
 
 
@@ -27,7 +27,7 @@
 //   factory_exchange::factory_exchange()
 //   {
 //
-//      factory()->add_factory_item < ::imaging_wic::context_image, ::context_image >();
+//      factory()->add_factory_item < ::imaging_wic::image_context, ::image_context >();
 //
 //   }
 //
@@ -44,7 +44,7 @@
 __FACTORY_EXPORT void imaging_wic_factory(::factory::factory * pfactory)
 {
 
-   pfactory->add_factory_item < ::imaging_wic::context_image, ::context_image >();
+   pfactory->add_factory_item < ::imaging_wic::image_context, ::image::image_context >();
 
 }
 

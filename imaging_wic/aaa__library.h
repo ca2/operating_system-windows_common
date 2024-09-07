@@ -14,7 +14,7 @@
 #include <wincodec.h>
 
 
-#include "aura/graphics/image/save_image.h"
+#include "aura/graphics/image/save_options.h"
 
 
 
@@ -24,5 +24,5 @@
 comptr < IWICImagingFactory > wic_get_imaging_factory();
 
 
-#include "context_image.h"
+#include "image_context.h"
 

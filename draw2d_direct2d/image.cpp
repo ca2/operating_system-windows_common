@@ -3,7 +3,7 @@
 #include "graphics.h"
 #include "aura/graphics/draw2d/lock.h"
 #include "aura/graphics/draw2d/device_lock.h"
-#include "aura/graphics/image/context_image.h"
+#include "aura/graphics/image/context.h"
 #include "aura/graphics/image/icon.h"
 #include "aura/graphics/image/drawing.h"
 
@@ -231,7 +231,7 @@ namespace draw2d_direct2d
    }
 
 
-   void image::copy_from(::image * pimage, ::enum_flag eflagCreate)
+   void image::copy_from(::image::image * pimage, ::enum_flag eflagCreate)
    {
 
       ::size_i32 s(pimage->width(), pimage->height());
@@ -258,7 +258,7 @@ namespace draw2d_direct2d
       }
 
       //auto bOk = 
-      ::image::copy_from(pimage, 0, eflagCreate);
+      ::image::image::copy_from(pimage, 0, eflagCreate);
 
       //if (!bOk)
       //{
@@ -310,7 +310,7 @@ namespace draw2d_direct2d
 
 
 
-   void image::SetIconMask(::draw2d::icon * picon, int cx, int cy)
+   void image::SetIconMask(::image::icon * picon, int cx, int cy)
    {
 
       if (cx <= 0 || cy <= 0)
@@ -333,34 +333,34 @@ namespace draw2d_direct2d
       //}
 
       // White blend image
-      auto pimage1 = context_image()->create_image({cx,  cy});
+      auto pimage1 = ::particle::image()->create_image({cx,  cy});
 
       pimage1->clear(rgba(0, 255, 255, 255));
 
       {
 
-         image_source imagesource(picon);
+         ::image::image_source imagesource(picon);
 
-         image_drawing_options imagedrawingoptions(::size_f64(cx, cy));
+         ::image::image_drawing_options imagedrawingoptions(::size_f64(cx, cy));
 
-         image_drawing imagedrawing(imagedrawingoptions, imagesource);
+         ::image::image_drawing imagedrawing(imagedrawingoptions, imagesource);
 
          pimage1->g()->draw(imagedrawing);
 
       }
 
       // Black blend image
-      auto pimage2 = context_image()->create_image({cx,  cy});
+      auto pimage2 = ::particle::image()->create_image({cx,  cy});
 
       pimage2->clear(::color::transparent);
 
       {
 
-         image_source imagesource(picon);
+         ::image::image_source imagesource(picon);
 
-         image_drawing_options imagedrawingoptions(::size_f64(cx, cy));
+         ::image::image_drawing_options imagedrawingoptions(::size_f64(cx, cy));
 
-         image_drawing imagedrawing(imagedrawingoptions, imagesource);
+         ::image::image_drawing imagedrawing(imagedrawingoptions, imagesource);
 
          pimage2->get_graphics()->draw(imagedrawing);
 
@@ -377,15 +377,15 @@ namespace draw2d_direct2d
 //#endif
 
       // Mask image
-      auto pimageM = context_image()->create_image({cx,  cy});
+      auto pimageM = ::particle::image()->create_image({cx,  cy});
 
       {
 
-         image_source imagesource(picon);
+         ::image::image_source imagesource(picon);
 
-         image_drawing_options imagedrawingoptions(::size_f64(cx, cy));
+         ::image::image_drawing_options imagedrawingoptions(::size_f64(cx, cy));
 
-         image_drawing imagedrawing(imagedrawingoptions, imagesource);
+         ::image::image_drawing imagedrawing(imagedrawingoptions, imagesource);
 
          pimageM->g()->draw(imagedrawing);
 
@@ -1010,14 +1010,14 @@ namespace draw2d_direct2d
    //   }
    //}
 
-   //bool image::_draw_raw(const ::rectangle_i32 & rectangleTarget, ::image * pimage, const ::point_i32 & pointSrc)
+   //bool image::_draw_raw(const ::rectangle_i32 & rectangleTarget, ::image::image * pimage, const ::point_i32 & pointSrc)
    //{
 
    //   return ::image::draw(rectangleTarget, pimage, pointSrc);
 
    //}
 
-   //bool image::stretch(const ::image * pimage)
+   //bool image::stretch(const ::image::image * pimage)
    //{
 
    //   pimage->unmap();
@@ -1462,7 +1462,7 @@ namespace draw2d_direct2d
    //}
 
 
-   void image::blend(const ::point_i32 & pointDst, ::image * pimageSrc, const ::point_i32 & pointSrc, const ::size_i32 & sizeParam, ::u8 bA)
+   void image::blend(const ::point_i32 & pointDst, ::image::image * pimageSrc, const ::point_i32 & pointSrc, const ::size_i32 & sizeParam, ::u8 bA)
    {
 
       //return 
@@ -1631,12 +1631,12 @@ namespace draw2d_direct2d
    }
 
 
-   void image::tint(::image * pimage, ::color::color color)
+   void image::tint(::image::image * pimage, ::color::color color)
    {
 
       //return 
       
-      ::image::tint(pimage, color);
+      ::image::image::tint(pimage, color);
 
       //if (pimage.nok()) // || pimage->get_bitmap() || !pimage->get_bitmap()->m_osdata[0])
       //{

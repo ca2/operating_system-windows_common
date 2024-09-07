@@ -1,5 +1,5 @@
 #include "framework.h"
-#include "context_image.h"
+#include "context.h"
 #include "acme/exception/exception.h"
 #include "aura/graphics/image/frame_array.h"
 #include "acme_windows_common/comptr.h"
@@ -34,12 +34,12 @@ namespace imaging_wic
 
    comptr < IWICImagingFactory > get_imaging_factory();
 
-   //bool draw2d_gif_load_frame(::image * pimageCanvas, image_frame_array * pframea, image_frame * pframe, int uFrameIndex, u8 * ba, int iScan, color_array & colora, int transparentIndex);
-   bool windows_image_from_bitmap_source(::image * pimage, IWICBitmapSource * pbitmapsource, IWICImagingFactory * pimagingfactory);
+   //bool draw2d_gif_load_frame(::image::image * pimageCanvas, image_frame_array * pframea, ::image::image_frame * pframe, int uFrameIndex, u8 * ba, int iScan, color_array & colora, int transparentIndex);
+   bool windows_image_from_bitmap_source(::image::image * pimage, IWICBitmapSource * pbitmapsource, IWICImagingFactory * pimagingfactory);
    ::color::color windows_image_metadata_get_background_color(IWICMetadataQueryReader * pqueryreader, IWICBitmapDecoder * pbitmapdecoder, IWICImagingFactory * pimagingfactory);
 
 
-   void context_image::_load_image(::image * pimageCompose, ::pointer<image_frame_array>& pframea, memory & memory)
+   void image_context::_load_image(::image::image * pimageCompose, ::pointer<::image::image_frame_array>& pframea, memory & memory)
    {
 
       HRESULT hr = E_FAIL;
@@ -172,7 +172,7 @@ namespace imaging_wic
 
          pframea->set_size(cFrame);
 
-         image_pointer pimageFrame;
+         ::image::image_pointer pimageFrame;
 
          for (::collection::index iFrame = 0; iFrame < cFrame; iFrame++)
          {
@@ -481,7 +481,7 @@ namespace imaging_wic
 
 
    bool windows_load_image_from_frame(
-      ::image * pimage,
+      ::image::image * pimage,
       comptr< IWICBitmapFrameDecode> & pframe,
       IWICImagingFactory * pimagingfactory,
       IWICBitmapDecoder * pbitmapdecoder,
@@ -601,16 +601,16 @@ namespace imaging_wic
 
 
 
-   HRESULT windows_image_get_frame(::image * pimageCompose,
+   HRESULT windows_image_get_frame(::image::image * pimageCompose,
       WICColor * rgColors,
       int iUsed,
-      image_frame_array * pframea,
+      ::image::image_frame_array * pframea,
       IWICImagingFactory * pimagingfactory,
       IWICBitmapDecoder * pbitmapdecoder,
       ::u32 uFrameIndex)
    {
 
-      ::pointer<image_frame>pframe = pframea->element_at(uFrameIndex);
+      ::pointer<::image::image_frame>pframe = pframea->element_at(uFrameIndex);
 
       comptr < IWICBitmapFrameDecode >    pbitmapframedecode;
 

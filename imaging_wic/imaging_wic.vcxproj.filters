@@ -23,7 +23,7 @@
     <ClInclude Include="_.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="context_image.h">
+    <ClInclude Include="context.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="aaa_operating_system.h">
@@ -49,7 +49,7 @@
     <ClCompile Include="_.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="context_image.cpp">
+    <ClCompile Include="context.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

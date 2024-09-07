@@ -33,7 +33,7 @@ __FACTORY_EXPORT void draw2d_direct2d_factory(::factory::factory * pfactory)
       //}
 
 
-      pfactory->add_factory_item < ::draw2d_direct2d::image, ::image >();
+      pfactory->add_factory_item < ::draw2d_direct2d::image, ::image::image >();
       pfactory->add_factory_item < ::draw2d_direct2d::bitmap, ::draw2d::bitmap >();
       pfactory->add_factory_item < ::draw2d_direct2d::path, ::draw2d::path >();
       pfactory->add_factory_item < ::draw2d_direct2d::pen, ::draw2d::pen >();

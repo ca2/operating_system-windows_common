@@ -220,7 +220,7 @@ Seq_Open_File_Cleanup:
             try
             {
 
-               file = pcontext->m_papexcontext->file().get_file(lpFileName, ::file::e_open_read | ::file::e_open_share_deny_write | ::file::e_open_binary);
+               file = file().get_file(lpFileName, ::file::e_open_read | ::file::e_open_share_deny_write | ::file::e_open_binary);
 
             }
             catch(...)
