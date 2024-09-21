@@ -31,7 +31,7 @@ namespace draw2d_direct2d
       void SetRectRgn(int x1, int y1, int x2, int y2);
       void SetRectRgn(const ::rectangle_i32 & rectangle);
       int CombineRgn(const ::draw2d::region* pRgn1, const ::draw2d::region* pRgn2, int nCombineMode);
-      int CopyRgn(const ::draw2d::region* pRgnSrc);
+      int copy_rgn(const ::draw2d::region* pRgnSrc);
       bool EqualRgn(const ::draw2d::region* pRgn) const;
       int OffsetRgn(int x, int y);
       int OffsetRgn(const ::point_i32 & point);
