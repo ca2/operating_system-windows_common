@@ -330,7 +330,7 @@ namespace imaging_wic
 
       auto scanSizeTarget = pimageFrame->scan_size();
 
-      ::copy_image32(pdataTarget, uWidth, uHeight, scanSizeTarget, (::image32_t *)pData, cbStride);
+      pdataTarget->copy(uWidth, uHeight, scanSizeTarget, (::image32_t *)pData, cbStride);
 
       return true;
 
