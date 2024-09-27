@@ -1,6 +1,6 @@
 #include "framework.h"
-#include "acme/primitive/string/string.h"
-#include "acme/primitive/string/adaptor.h"
+#include "acme/prototype/string/string.h"
+#include "acme/prototype/string/adaptor.h"
 #include "acme/_library.h"
 
 

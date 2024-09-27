@@ -2,7 +2,7 @@
 #include "direct2d.h"
 #include "directx/directx.h"
 #include "acme/graphics/write_text/font_weight.h"
-#include "acme/primitive/geometry2d/rectangle.h"
+#include "acme/prototype/geometry2d/rectangle.h"
 #include "acme_windows_common/hresult_exception.h"
 
 

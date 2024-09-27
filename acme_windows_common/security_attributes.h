@@ -2,7 +2,7 @@
 #pragma once
 
 
-#include "acme/primitive/primitive/memory.h"
+#include "acme/prototype/prototype/memory.h"
 #include "acme/operating_system/security_attributes.h"
 
 

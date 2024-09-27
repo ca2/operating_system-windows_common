@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "acme/primitive/string/string.h"
+#include "acme/prototype/string/string.h"
 
 
 template < typename POINTER_TYPE >

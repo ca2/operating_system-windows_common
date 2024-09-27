@@ -4,7 +4,7 @@
 #include "aura/_.h"
 #include "acme/_win32_gdi.h"
 #include "direct2d/_.h"
-//#include "acme/primitive/geometry2d/_geometry2d.h"
+//#include "acme/prototype/geometry2d/_geometry2d.h"
 #include "acme_windows_common/_.h"
 #include "acme_windows_common/hresult_exception.h"
 

@@ -4,8 +4,8 @@
 #include "graphics.h"
 #include "direct2d/geometry.h"
 #include "acme/exception/interface_only.h"
-#include "acme/primitive/geometry2d/item.h"
-#include "acme/primitive/geometry2d/_defer_item.h"
+#include "acme/prototype/geometry2d/item.h"
+#include "acme/prototype/geometry2d/_defer_item.h"
 #include "direct2d/direct2d.h"
 
 

@@ -11,7 +11,7 @@
 #include "acme/exception/not_implemented.h"
 #include "acme/parallelization/synchronous_lock.h"
 #include "acme/platform/scoped_restore.h"
-#include "acme/primitive/geometry2d/ellipse.h"
+#include "acme/prototype/geometry2d/ellipse.h"
 #include "aura/windowing/windowing.h"
 #include "aura/windowing/display.h"
 #include "aura/user/user/user.h"
@@ -22,9 +22,9 @@
 #include "aura/graphics/image/context.h"
 #include "aura/graphics/image/drawing.h"
 #include "aura/graphics/image/frame_array.h"
-//#include "acme/primitive/geometry2d/_enhanced.h"
-//#include "acme/primitive/geometry2d/_collection_enhanced.h"
-//#include "acme/primitive/geometry2d/_defer_shape.h"
+//#include "acme/prototype/geometry2d/_enhanced.h"
+//#include "acme/prototype/geometry2d/_collection_enhanced.h"
+//#include "acme/prototype/geometry2d/_defer_shape.h"
 #include "aura/platform/session.h"
 #include <math.h>
 

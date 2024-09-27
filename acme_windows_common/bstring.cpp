@@ -1,6 +1,6 @@
 #include "framework.h"
 #include "bstring.h"
-#include "acme/primitive/string/string.h"
+#include "acme/prototype/string/string.h"
 
 
 BSTR bstring::string_byte_len(const char * psz, strsize len)

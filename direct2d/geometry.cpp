@@ -2,8 +2,8 @@
 #include "framework.h"
 #include "direct2d.h"
 #include "geometry.h"
-#include "acme/primitive/geometry2d/ellipse.h"
-#include "acme/primitive/geometry2d/polygon.h"
+#include "acme/prototype/geometry2d/ellipse.h"
+#include "acme/prototype/geometry2d/polygon.h"
 
 
 namespace direct2d
