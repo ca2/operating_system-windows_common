@@ -8,6 +8,8 @@
 #include "acme/platform/system.h"
 #include "acme/user/user/key_state.h"
 
+extern "C" void nano_idn_windows_common_factory(::factory::factory * pfactory);
+
 
 #include "acme/_operating_system.h"
 
@@ -1055,6 +1057,25 @@ namespace acme_windows_common
 
       return "\n";
 
+   }
+
+
+   bool node::defer_component_factory(const ::scoped_string & scopedstrComponent)
+   {
+
+
+            if (scopedstrComponent == "nano_idn")
+            {
+
+               auto pfactory = this->factory();
+
+               nano_idn_windows_common_factory(pfactory);
+
+               return true;
+
+      }
+
+      return false;
    }
 
    

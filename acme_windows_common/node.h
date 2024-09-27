@@ -95,6 +95,8 @@ namespace acme_windows_common
 
       ::string eol() override;
 
+      bool defer_component_factory(const ::scoped_string & scopedstrComponent) override;
+
 
    };
 
