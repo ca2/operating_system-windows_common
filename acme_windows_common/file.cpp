@@ -203,7 +203,7 @@ namespace acme_windows_common
             if (eopen & ::file::e_open_write)
             {
 
-               auto psequencer = nano()->user()->message_box("Couldn't write to file \"" + m_path + "\".\nAccess Denied!!\n(Is any anti-virus program blocking this program: \"" + acmefile()->module() + "\"?", acmefile()->module().title() + " - Access Denied!", e_message_box_ok);
+               auto psequencer = system()->acme_windowing()->message_box("Couldn't write to file \"" + m_path + "\".\nAccess Denied!!\n(Is any anti-virus program blocking this program: \"" + acmefile()->module() + "\"?", acmefile()->module().title() + " - Access Denied!", e_message_box_ok);
 
                psequencer->do_asynchronously();
 
