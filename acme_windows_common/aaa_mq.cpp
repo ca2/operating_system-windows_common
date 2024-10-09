@@ -246,7 +246,7 @@
 //
 //   }
 //
-//   auto pmq = ::place(new message_queue());
+//   auto pmq = __new message_queue();
 //
 //   pmq->m_itask = itask;
 //

@@ -4,15 +4,16 @@
 #include "acme_file.h"
 #include "acme/exception/interface_only.h"
 #include "acme/exception/io.h"
-#include "acme/platform/sequencer.h"
+//#include "acme/platform/sequencer.h"
 #include "acme/filesystem/file/exception.h"
 #include "acme/filesystem/file/status.h"
 #include "acme/filesystem/file/exception.h"
 #include "acme/nano/nano.h"
-#include "acme/nano/user/user.h"
+#include "acme/user/micro/user.h"
 #include "acme/operating_system/windows_common/_string.h"
 #include "acme/platform/system.h"
 #include "acme/prototype/datetime/system_time.h"
+#include "acme/windowing/windowing.h"
 
 
 #include <intsafe.h>
@@ -203,9 +204,9 @@ namespace acme_windows_common
             if (eopen & ::file::e_open_write)
             {
 
-               auto psequencer = system()->acme_windowing()->message_box("Couldn't write to file \"" + m_path + "\".\nAccess Denied!!\n(Is any anti-virus program blocking this program: \"" + acmefile()->module() + "\"?", acmefile()->module().title() + " - Access Denied!", e_message_box_ok);
+               auto pmessagebox = __initialize_new ::message_box("Couldn't write to file \"" + m_path + "\".\nAccess Denied!!\n(Is any anti-virus program blocking this program: \"" + acmefile()->module() + "\"?", acmefile()->module().title() + " - Access Denied!", e_message_box_ok);
 
-               psequencer->do_asynchronously();
+               pmessagebox->post();
 
             }
 

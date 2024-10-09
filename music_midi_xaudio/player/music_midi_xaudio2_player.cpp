@@ -380,7 +380,7 @@ namespace music
             {
                if(m_puserinteraction != nullptr)
                {
-                  ::pointer<::music::midi::player::notify_event>pdata(::place(new ::music::midi::player::notify_event()));
+                  ::pointer<::music::midi::player::notify_event>pdata(__new ::music::midi::player::notify_event());
                   pdata->m_pplayer = this;
                   pdata->m_enotifyevent = eevent;
                   m_puserinteraction->post_object(::music::midi::player::message_notify_event, 0,pdata);
