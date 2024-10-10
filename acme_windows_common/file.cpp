@@ -206,7 +206,7 @@ namespace acme_windows_common
 
                auto pmessagebox = __initialize_new ::message_box("Couldn't write to file \"" + m_path + "\".\nAccess Denied!!\n(Is any anti-virus program blocking this program: \"" + acmefile()->module() + "\"?", acmefile()->module().title() + " - Access Denied!", e_message_box_ok);
 
-               pmessagebox->post();
+               pmessagebox->async();
 
             }
 
