@@ -152,7 +152,7 @@ namespace draw2d_direct2d
 
       }
 
-      /*::direct2d::direct2d() = __new ::draw2d_direct2d::plugin();
+      /*::direct2d::direct2d() = __allocate ::draw2d_direct2d::plugin();
 
       ::direct2d::direct2d()->initialize();*/
 
@@ -3248,7 +3248,7 @@ namespace draw2d_direct2d
    {
    Graphics graphics(hdc);
    // Create a Metafile object from an existing disk metafile.
-   Metafile* pMeta = new Metafile(L"SampleMetafile.emf", hdc);
+   Metafile* pMeta = __new Metafile(L"SampleMetafile.emf", hdc);
    {
    // Fill a rectangle_i32 and an ellipse in pMeta.
    Graphics metaGraphics(pMeta);
@@ -3272,7 +3272,7 @@ namespace draw2d_direct2d
 
    //   //Gdiplus::RectF rectangle_i32((Gdiplus::REAL) lpBounds->left(), (Gdiplus::REAL) lpBounds->top(), (Gdiplus::REAL) width(lpBounds), (Gdiplus::REAL) height(lpBounds));
 
-   //   //Gdiplus::Metafile* pMeta = new Gdiplus::Metafile(hEnhMF, false);
+   //   //Gdiplus::Metafile* pMeta = __new Gdiplus::Metafile(hEnhMF, false);
 
    //   ////m_pgraphcis->EnumerateMetafile(pMeta, rectangle, metaCallback, PMETAHEADER);
 
@@ -3792,7 +3792,7 @@ namespace draw2d_direct2d
    //   ::draw2d::region rgnLast, rgnUpdate;
    //   if (lpRectLast != nullptr)
    //   {
-   //   // find difference between new region and old region
+   //   // find difference between __new region and old region
    //   rgnLast.CreateRectRgn(0, 0, 0, 0);
    //   rgnOutside.SetRectRgn(lpRectLast);
    //   rectangle = *lpRectLast;
@@ -3819,7 +3819,7 @@ namespace draw2d_direct2d
    //   pBrushOld = nullptr;
    //   }
 
-   //   // draw into the update/new region
+   //   // draw into the update/__new region
    //   SelectClipRgn(rgnUpdate.get_os_data() != nullptr ? &rgnUpdate : &rgnNew);
    //   get_clip_box(&rectangle);
    //   pBrushOld = SelectObject(pBrush);

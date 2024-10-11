@@ -75,7 +75,7 @@ namespace music
             bool player::Play(::time tickStart, u32 dwEllapse)
             {
 
-               ::music::midi::player::command * pcommand = new ::music::midi::player::command(this);
+               ::music::midi::player::command * pcommand = __new ::music::midi::player::command(this);
 
                pcommand->m_ecommand = ::music::midi::player::command_play;
                pcommand->m_dwEllapse = dwEllapse;
@@ -94,7 +94,7 @@ namespace music
             bool player::Play(double dRate, u32 dwEllapse)
             {
 
-               ::music::midi::player::command * pcommand = new ::music::midi::player::command(this);
+               ::music::midi::player::command * pcommand = __new ::music::midi::player::command(this);
 
                pcommand->m_ecommand = ::music::midi::player::command_play;
                pcommand->m_dwEllapse = dwEllapse;
@@ -130,7 +130,7 @@ namespace music
             bool player::ExecuteCommand(::music::midi::player::enum_command ecommand, u32 dwEllapse)
             {
 
-               ::music::midi::player::command * pcommand = new ::music::midi::player::command(this);
+               ::music::midi::player::command * pcommand = __new ::music::midi::player::command(this);
 
                pcommand->m_ecommand = ecommand;
                pcommand->m_dwEllapse = dwEllapse;
@@ -380,7 +380,7 @@ namespace music
             {
                if(m_puserinteraction != nullptr)
                {
-                  ::pointer<::music::midi::player::notify_event>pdata(__new ::music::midi::player::notify_event());
+                  ::pointer<::music::midi::player::notify_event>pdata(__allocate ::music::midi::player::notify_event());
                   pdata->m_pplayer = this;
                   pdata->m_enotifyevent = eevent;
                   m_puserinteraction->post_object(::music::midi::player::message_notify_event, 0,pdata);

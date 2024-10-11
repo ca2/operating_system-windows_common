@@ -43,7 +43,7 @@
 //itask_t * puiId)
 //{
 //
-//   thread_proc_runner * pdata = new thread_proc_runner(proc, p);
+//   thread_proc_runner * pdata = __new thread_proc_runner(proc, p);
 //
 //   return pdata->create_thread(epriority, nStackSize, uiCreateFlags, psa, puiId);
 //

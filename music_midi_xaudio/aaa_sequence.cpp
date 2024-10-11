@@ -305,7 +305,7 @@ Seq_Open_File_Cleanup:
 
             //    sofs.pstrName     = m_pstrFile;
 
-            //PSMF pSmf = new SMF();
+            //PSMF pSmf = __new SMF();
 
             //smfrc = file()->OpenFile(&sofs);
             smfrc = file()->OpenFile(ar, openMode);
@@ -1231,7 +1231,7 @@ seq_Preroll_Cleanup:
                   {
                      if(plyriceventa == nullptr)
                      {
-                        plyriceventa = new array <::ikaraoke::lyric_event_v1, ::ikaraoke::lyric_event_v1 &>;
+                        plyriceventa = __new array <::ikaraoke::lyric_event_v1, ::ikaraoke::lyric_event_v1 &>;
                      }
                      ::memory_file memFile(get_application(), (LPBYTE) &lpdwParam[1], pheader->m_dwLength - sizeof(u32));
                      /* x2x                  CArchive ar(&memFile, CArchive::load);
@@ -1832,10 +1832,10 @@ seq_Preroll_Cleanup:
             i32 i;
             for(i = 0; i < tickaaTokensTicks.get_size(); i++)
             {
-               pLyricEventsV2 = new ::ikaraoke::lyric_events_v2();
-               pLyricEventsV2B = new ::ikaraoke::lyric_events_v2();
-               pLyricEventsV2C = new ::ikaraoke::lyric_events_v2();
-               pLyricEventsV2_ = new ::ikaraoke::lyric_events_v2();
+               pLyricEventsV2 = __new ::ikaraoke::lyric_events_v2();
+               pLyricEventsV2B = __new ::ikaraoke::lyric_events_v2();
+               pLyricEventsV2C = __new ::ikaraoke::lyric_events_v2();
+               pLyricEventsV2_ = __new ::ikaraoke::lyric_events_v2();
                staticdata.m_eventsv1.add(pLyricEventsV2);
                staticdata.m_eventsv1.add(pLyricEventsV2B);
                staticdata.m_eventsv1.add(pLyricEventsV2C);
@@ -2010,7 +2010,7 @@ seq_Preroll_Cleanup:
 
             for(i = 0; i < tickaaTokensTicks.get_size(); i++)
             {
-               pLyricEventsV1 = new ::ikaraoke::lyric_events_v1();
+               pLyricEventsV1 = __new ::ikaraoke::lyric_events_v1();
                pLyricEventsV1->m_iType = ikaraoke::EventAdvanceShow;
                pLyricEventsV1->m_iOrder = i;
                //staticdata.m_eventsTracksForPositionCB.add(pLyricEventsV1);
@@ -2539,7 +2539,7 @@ seq_Preroll_Cleanup:
 
             ASSERT(this != nullptr);
 
-            event * pevent          = new event();
+            event * pevent          = __new event();
 
             ptopic->m_atom        = eevent;
             ptopic->m_psequence     = this;

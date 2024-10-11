@@ -21,7 +21,7 @@
 //   };
 //
 //
-////#define new ACME_NEW
+////#define __new ACME_NEW
 ////
 ////
 //   factory_exchange::factory_exchange()

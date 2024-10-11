@@ -24,7 +24,7 @@ namespace acme_windows_common
 
 //#ifdef EXCEPTION_TRANSLATOR_USE_SIGNAL
 //
-//         m_psig = new sig_companion;
+//         m_psig = __new sig_companion;
 //
 //#endif
 

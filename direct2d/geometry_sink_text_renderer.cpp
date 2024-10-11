@@ -3,7 +3,7 @@
 #include "framework.h"
 #include "geometry_sink_text_renderer.h"
 
-//#undef new
+//#undef __new
 //#ifdef UNIVERSAL_WINDOWS
 //#include <wrl/module.h>
 //#endif

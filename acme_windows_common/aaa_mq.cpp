@@ -246,7 +246,7 @@
 //
 //   }
 //
-//   auto pmq = __new message_queue();
+//   auto pmq = __allocate message_queue();
 //
 //   pmq->m_itask = itask;
 //
@@ -448,9 +448,9 @@
 //void initialize_global_message_queue()
 //{
 //
-//   g_pmutexMq = new mutex();
+//   g_pmutexMq = __new mutex();
 //
-//   g_pmapMq = new map < itask_t, ::pointer<message_queue >>);
+//   g_pmapMq = __new map < itask_t, ::pointer<message_queue >>);
 //
 //}
 //

@@ -385,9 +385,9 @@ namespace acme_windows_common
 
    //   unichar * pwszFile2;
 
-   //   unichar * pwszPath1 = new unichar[iBufSize];
+   //   unichar * pwszPath1 = __new unichar[iBufSize];
 
-   //   unichar * pwszPath2 = new unichar[iBufSize];
+   //   unichar * pwszPath2 = __new unichar[iBufSize];
 
    //   i32 iCmp = -1;
 

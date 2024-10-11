@@ -15,7 +15,7 @@ namespace multimedia
       {
          SetMainWnd(nullptr);
          m_bPendingShowCommand = false;
-         //    m_pmfmh = new CMessageFilterMainHook();
+         //    m_pmfmh = __new CMessageFilterMainHook();
       }
 
 
@@ -181,7 +181,7 @@ namespace multimedia
 
             //            if(m_poptionsview == nullptr)
             {
-               //                m_poptionsview = new COptionsDialog();
+               //                m_poptionsview = __new COptionsDialog();
                //              m_poptionsview->create(nullptr);
             }
 

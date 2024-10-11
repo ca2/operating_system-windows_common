@@ -921,7 +921,7 @@ namespace draw2d_directx
    {
       *textRenderer = nullptr;
 
-      PathTextRenderer *newRenderer = new PathTextRenderer(pixelsPerDip);
+      PathTextRenderer *newRenderer = __new PathTextRenderer(pixelsPerDip);
       newRenderer->AddRef();
       *textRenderer = newRenderer;
       newRenderer = nullptr;

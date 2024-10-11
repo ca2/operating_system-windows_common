@@ -75,7 +75,7 @@ namespace draw2d_direct2d
 
 
 
-//#define new ACME_NEW
+//#define __new ACME_NEW
 
 
 

@@ -1,7 +1,7 @@
 #include "framework.h"
 #include "CustomRenderer.h"
 
-#undef new
+#undef __new
 #ifdef UNIVERSAL_WINDOWS
 #include <wrl/module.h>
 #endif

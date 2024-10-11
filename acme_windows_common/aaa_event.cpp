@@ -86,7 +86,7 @@ event::event(char * sz, bool bInitiallyOwn, bool bManualReset, const ::string & 
 
 #elif defined(ANDROID)
 
-   m_pcond = new pthread_cond_t;
+   m_pcond = __new pthread_cond_t;
 
    pthread_cond_init((pthread_cond_t *) m_pcond, nullptr);
 
@@ -100,7 +100,7 @@ event::event(char * sz, bool bInitiallyOwn, bool bManualReset, const ::string & 
       pthread_mutexattr_init(&attr);
       pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
       i32 rc;
-      m_mutex = new pthread_mutex_t;
+      m_mutex = __new pthread_mutex_t;
       if((rc = pthread_mutex_init((pthread_mutex_t *) m_mutex,&attr)))
       {
          throw ::exception(::exception("RC_OBJECT_NOT_CREATED"));
@@ -120,9 +120,9 @@ event::event(char * sz, bool bInitiallyOwn, bool bManualReset, const ::string & 
    if(bManualReset)
    {
 
-      m_mutex = new pthread_mutex_t;
+      m_mutex = __new pthread_mutex_t;
 
-      m_pcond = new pthread_cond_t;
+      m_pcond = __new pthread_cond_t;
 
       pthread_mutex_init((pthread_mutex_t *) m_mutex, 0);
 

@@ -5,7 +5,7 @@
 #define IDR_HTML1                       101
 #define IDR_LEVEL1                      108
 
-// Next default values for new objects
+// Next default values for __new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS

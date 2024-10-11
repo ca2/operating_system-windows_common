@@ -28,7 +28,7 @@ __FACTORY_EXPORT void draw2d_direct2d_factory(::factory::factory * pfactory)
       //if (g_pimagea == nullptr)
       //{
 
-      //   g_pimagea = new image_array;
+      //   g_pimagea = __new image_array;
 
       //}
 
@@ -73,7 +73,7 @@ __FACTORY_EXPORT void draw2d_direct2d_factory(::factory::factory * pfactory)
 //__FACTORY_EXPORT //void draw2d_factory(::factory::factory * pfactory)
 //{
 //
-//   psystem->m_pDraw2dFactoryExchange = new ::draw2d_direct2d::factory_exchange();
+//   psystem->m_pDraw2dFactoryExchange = __new ::draw2d_direct2d::factory_exchange();
 //
 //}
 

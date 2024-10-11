@@ -612,7 +612,7 @@ namespace acme_windows_common
    //         if (g_iMemoryCounters)
    //         {
    //
-   //            g_pmutexMemoryCounters = new ::mutex(e_create_new, false, "Global\\ca2_memory_counters");
+   //            g_pmutexMemoryCounters = __new ::mutex(e_create_new, false, "Global\\ca2_memory_counters");
    //
    //         }
    //
@@ -632,7 +632,7 @@ namespace acme_windows_common
    //      if (g_iMemoryCountersStartable && g_pMemoryCounters == nullptr)
    //      {
    //
-   //         g_pMemoryCounters = new ::file::path();
+   //         g_pMemoryCounters = __new ::file::path();
    //
    //#if defined(UNIVERSAL_WINDOWS)
    //
@@ -811,8 +811,8 @@ namespace acme_windows_common
    ::pointer < ::mutex > node::create_named_mutex(::particle * pparticleContext, bool bInitiallyOwn, const char * pszName, security_attributes * psecurityattributes)
    {
 
-      //return __new mutex(pparticleContext, bInitiallyOwn, pszName ADD_PARAM_SEC_ATTRS);
-      return __new ::acme_windows_common::mutex(pparticleContext, bInitiallyOwn, pszName, psecurityattributes);
+      //return __allocate mutex(pparticleContext, bInitiallyOwn, pszName ADD_PARAM_SEC_ATTRS);
+      return __allocate ::acme_windows_common::mutex(pparticleContext, bInitiallyOwn, pszName, psecurityattributes);
 
    }
 

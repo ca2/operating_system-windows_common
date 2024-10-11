@@ -11,7 +11,7 @@ namespace draw2d_direct2d
 
       defer_create_synchronization();
 
-      //m_pmutexObjectList = __new ::mutex();
+      //m_pmutexObjectList = __allocate ::mutex();
       
    }
 
