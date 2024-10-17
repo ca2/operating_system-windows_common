@@ -36,10 +36,10 @@ namespace imaging_wic
    void image_context::_load_image(::image::image * pimageParam, const ::payload & payloadFile, const ::image::load_options & loadoptions)
    {
 
-      auto ploadimage = __allocate ::image::load_image(this);
+      auto ploadimage = __allocate::image::load_image(this);
 
       //auto estatus = 
-      
+
       ploadimage->initialize(this);
 
       /*if (!estatus)
@@ -121,7 +121,7 @@ namespace imaging_wic
 
       // jpeg,png:OK, bmp:88982f50
       // "bmp:88982f50 results in error, icon also errors"(TranslatedFromJapanese)
-      hr = pimagingfactory->CreateDecoderFromStream(piStream, 0, WICDecodeMetadataCacheOnLoad, &piDecoder); 
+      hr = pimagingfactory->CreateDecoderFromStream(piStream, 0, WICDecodeMetadataCacheOnLoad, &piDecoder);
 
       if (FAILED(hr))
       {
@@ -238,14 +238,14 @@ namespace imaging_wic
    bool node_save_image(IStream * pstream, ::image::image * pimage, const ::image::save_options & saveoptions);
 
 
-//#ifdef UNIVERSAL_WINDOWS
-//
-//
-//   CLASS_DECL_IMAGING_WIC bool node_save_image(::winrt::Windows::Storage::Streams::InMemoryRandomAccessStream const & randomAccessStream, const ::image::image * pimage, ::save_image * psaveimage);
-//
-//
-//#endif
-//
+   //#ifdef UNIVERSAL_WINDOWS
+   //
+   //
+   //   CLASS_DECL_IMAGING_WIC bool node_save_image(::winrt::Windows::Storage::Streams::InMemoryRandomAccessStream const & randomAccessStream, const ::image::image * pimage, ::save_image * psaveimage);
+   //
+   //
+   //#endif
+   //
    bool windows_image_from_bitmap_source(::image::image * pimageFrame, IWICBitmapSource * pbitmapsource, IWICImagingFactory * pimagingfactory)
    {
 
@@ -476,274 +476,274 @@ namespace imaging_wic
    }
 
 
-   bool node_save_image(IStream * pstream, const ::image::image * pimage, const ::image::save_options & saveoptions)
-   {
-
-      comptr < IWICImagingFactory > pimagingfactory = nullptr;
-      
-      comptr < IWICBitmapEncoder > piEncoder = nullptr;
-      
-      comptr < IWICBitmapFrameEncode > piBitmapFrame = nullptr;
-
-      comptr < IPropertyBag2 > pPropertybag = nullptr;
-
-      comptr < IWICStream > piStream = nullptr;
-
-      ::u32 uWidth = pimage->width();
-
-      ::u32 uHeight = pimage->height();
-
-      HRESULT hr = CoCreateInstance(
-         CLSID_WICImagingFactory,
-         nullptr,
-         CLSCTX_INPROC_SERVER,
-         IID_IWICImagingFactory,
-         (LPVOID *)&pimagingfactory);
-
-      if (SUCCEEDED(hr))
-      {
-
-         hr = pimagingfactory->CreateStream(&piStream);
-
-      }
-
-      if (SUCCEEDED(hr))
-      {
-
-         hr = piStream->InitializeFromIStream(pstream);
-
-      }
-
-      if (SUCCEEDED(hr))
-      {
-
-         switch (saveoptions.m_eformat)
-         {
-         case ::image::e_format_bmp:
-            hr = pimagingfactory->CreateEncoder(GUID_ContainerFormatBmp, nullptr, &piEncoder);
-            break;
-         case ::image::e_format_gif:
-            hr = pimagingfactory->CreateEncoder(GUID_ContainerFormatGif, nullptr, &piEncoder);
-            break;
-         case ::image::e_format_jpeg:
-            hr = pimagingfactory->CreateEncoder(GUID_ContainerFormatJpeg, nullptr, &piEncoder);
-            break;
-         case ::image::e_format_png:
-            hr = pimagingfactory->CreateEncoder(GUID_ContainerFormatPng, nullptr, &piEncoder);
-            break;
-         default:
-            break;
-         }
-
-      }
-
-      if (SUCCEEDED(hr))
-      {
-
-         hr = piEncoder->Initialize(piStream, WICBitmapEncoderNoCache);
-
-      }
-
-      if (SUCCEEDED(hr))
-      {
-
-         hr = piEncoder->CreateNewFrame(&piBitmapFrame, &pPropertybag);
-
-      }
-
-      if (SUCCEEDED(hr))
-      {
-
-         //if(m_bJxr)
-         //{
-         //   //PROPBAG2 option ={0};
-         //   //option.pstrName = L"ImageQuality";
-         //   //VARIANT varValue;
-         //   //VariantInit(&varValue);
-         //   //varValue.vt = VT_R4;
-         //   //varValue.fltVal = 0.49f;
-         //   PROPBAG2 option ={0};
-         //   option.pstrName = L"UseCodecOptions";
-         //   VARIANT varValue;
-         //   VariantInit(&varValue);
-         //   varValue.vt = VT_BOOL;
-         //   varValue.boolVal = -1;
-         //   if(SUCCEEDED(hr))
-         //   {
-         //      hr = pPropertybag->Write(1,&option,&varValue);
-         //   }
-         //   option.pstrName = L"Quality";
-         //   VariantInit(&varValue);
-         //   varValue.vt = VT_UI1;
-         //   varValue.bVal = 200;
-         //   if(SUCCEEDED(hr))
-         //   {
-         //      hr = pPropertybag->Write(1,&option,&varValue);
-         //   }
-         //   option.pstrName = L"Subsampling";
-         //   VariantInit(&varValue);
-         //   varValue.vt = VT_UI1;
-         //   varValue.bVal = 1;
-         //   if(SUCCEEDED(hr))
-         //   {
-         //      hr = pPropertybag->Write(1,&option,&varValue);
-         //   }
-         //   option.pstrName = L"Overlap";
-         //   VariantInit(&varValue);
-         //   varValue.vt = VT_UI1;
-         //   varValue.bVal = 2;
-         //   if(SUCCEEDED(hr))
-         //   {
-         //      hr = pPropertybag->Write(1,&option,&varValue);
-         //   }
-         //   option.pstrName = L"StreamOnly";
-         //   VariantInit(&varValue);
-         //   varValue.vt = VT_BOOL;
-         //   varValue.boolVal = -1;
-         //   if(SUCCEEDED(hr))
-         //   {
-         //      hr = pPropertybag->Write(1,&option,&varValue);
-         //   }
-         //}
-         if (saveoptions.m_eformat == ::image::e_format_jpeg)
-         {
+   //bool node_save_image(IStream * pstream, const ::image::image * pimage, const ::image::save_options & saveoptions)
+   //{
+
+   //   comptr < IWICImagingFactory > pimagingfactory = nullptr;
+
+   //   comptr < IWICBitmapEncoder > piEncoder = nullptr;
+
+   //   comptr < IWICBitmapFrameEncode > piBitmapFrame = nullptr;
+
+   //   comptr < IPropertyBag2 > pPropertybag = nullptr;
+
+   //   comptr < IWICStream > piStream = nullptr;
+
+   //   ::u32 uWidth = pimage->width();
+
+   //   ::u32 uHeight = pimage->height();
+
+   //   HRESULT hr = CoCreateInstance(
+   //      CLSID_WICImagingFactory,
+   //      nullptr,
+   //      CLSCTX_INPROC_SERVER,
+   //      IID_IWICImagingFactory,
+   //      (LPVOID *)&pimagingfactory);
+
+   //   if (SUCCEEDED(hr))
+   //   {
+
+   //      hr = pimagingfactory->CreateStream(&piStream);
+
+   //   }
+
+   //   if (SUCCEEDED(hr))
+   //   {
+
+   //      hr = piStream->InitializeFromIStream(pstream);
+
+   //   }
+
+   //   if (SUCCEEDED(hr))
+   //   {
+
+   //      switch (saveoptions.m_eformat)
+   //      {
+   //      case ::image::e_format_bmp:
+   //         hr = pimagingfactory->CreateEncoder(GUID_ContainerFormatBmp, nullptr, &piEncoder);
+   //         break;
+   //      case ::image::e_format_gif:
+   //         hr = pimagingfactory->CreateEncoder(GUID_ContainerFormatGif, nullptr, &piEncoder);
+   //         break;
+   //      case ::image::e_format_jpeg:
+   //         hr = pimagingfactory->CreateEncoder(GUID_ContainerFormatJpeg, nullptr, &piEncoder);
+   //         break;
+   //      case ::image::e_format_png:
+   //         hr = pimagingfactory->CreateEncoder(GUID_ContainerFormatPng, nullptr, &piEncoder);
+   //         break;
+   //      default:
+   //         break;
+   //      }
+
+   //   }
+
+   //   if (SUCCEEDED(hr))
+   //   {
+
+   //      hr = piEncoder->Initialize(piStream, WICBitmapEncoderNoCache);
+
+   //   }
+
+   //   if (SUCCEEDED(hr))
+   //   {
+
+   //      hr = piEncoder->CreateNewFrame(&piBitmapFrame, &pPropertybag);
+
+   //   }
+
+   //   if (SUCCEEDED(hr))
+   //   {
+
+   //      //if(m_bJxr)
+   //      //{
+   //      //   //PROPBAG2 option ={0};
+   //      //   //option.pstrName = L"ImageQuality";
+   //      //   //VARIANT varValue;
+   //      //   //VariantInit(&varValue);
+   //      //   //varValue.vt = VT_R4;
+   //      //   //varValue.fltVal = 0.49f;
+   //      //   PROPBAG2 option ={0};
+   //      //   option.pstrName = L"UseCodecOptions";
+   //      //   VARIANT varValue;
+   //      //   VariantInit(&varValue);
+   //      //   varValue.vt = VT_BOOL;
+   //      //   varValue.boolVal = -1;
+   //      //   if(SUCCEEDED(hr))
+   //      //   {
+   //      //      hr = pPropertybag->Write(1,&option,&varValue);
+   //      //   }
+   //      //   option.pstrName = L"Quality";
+   //      //   VariantInit(&varValue);
+   //      //   varValue.vt = VT_UI1;
+   //      //   varValue.bVal = 200;
+   //      //   if(SUCCEEDED(hr))
+   //      //   {
+   //      //      hr = pPropertybag->Write(1,&option,&varValue);
+   //      //   }
+   //      //   option.pstrName = L"Subsampling";
+   //      //   VariantInit(&varValue);
+   //      //   varValue.vt = VT_UI1;
+   //      //   varValue.bVal = 1;
+   //      //   if(SUCCEEDED(hr))
+   //      //   {
+   //      //      hr = pPropertybag->Write(1,&option,&varValue);
+   //      //   }
+   //      //   option.pstrName = L"Overlap";
+   //      //   VariantInit(&varValue);
+   //      //   varValue.vt = VT_UI1;
+   //      //   varValue.bVal = 2;
+   //      //   if(SUCCEEDED(hr))
+   //      //   {
+   //      //      hr = pPropertybag->Write(1,&option,&varValue);
+   //      //   }
+   //      //   option.pstrName = L"StreamOnly";
+   //      //   VariantInit(&varValue);
+   //      //   varValue.vt = VT_BOOL;
+   //      //   varValue.boolVal = -1;
+   //      //   if(SUCCEEDED(hr))
+   //      //   {
+   //      //      hr = pPropertybag->Write(1,&option,&varValue);
+   //      //   }
+   //      //}
+   //      if (saveoptions.m_eformat == ::image::e_format_jpeg)
+   //      {
 
-            PROPBAG2 option = { 0 };
-            option.pstrName = (LPOLESTR) L"ImageQuality";
-            VARIANT varValue;
-            VariantInit(&varValue);
-            varValue.vt = VT_R4;
-            varValue.fltVal = maximum(0.f, minimum(1.f, saveoptions.m_iQuality / 100.0f));
+   //         PROPBAG2 option = { 0 };
+   //         option.pstrName = (LPOLESTR)L"ImageQuality";
+   //         VARIANT varValue;
+   //         VariantInit(&varValue);
+   //         varValue.vt = VT_R4;
+   //         varValue.fltVal = maximum(0.f, minimum(1.f, saveoptions.m_iQuality / 100.0f));
 
-            if (SUCCEEDED(hr))
-            {
+   //         if (SUCCEEDED(hr))
+   //         {
 
-               hr = pPropertybag->Write(1, &option, &varValue);
+   //            hr = pPropertybag->Write(1, &option, &varValue);
 
-            }
+   //         }
 
-         }
+   //      }
 
-         if (SUCCEEDED(hr))
-         {
+   //      if (SUCCEEDED(hr))
+   //      {
 
-            hr = piBitmapFrame->Initialize(pPropertybag);
+   //         hr = piBitmapFrame->Initialize(pPropertybag);
 
-         }
+   //      }
 
-      }
+   //   }
 
-      if (SUCCEEDED(hr))
-      {
+   //   if (SUCCEEDED(hr))
+   //   {
 
-         hr = piBitmapFrame->SetSize(uWidth, uHeight);
+   //      hr = piBitmapFrame->SetSize(uWidth, uHeight);
 
-      }
+   //   }
 
-      WICPixelFormatGUID formatGUID = GUID_WICPixelFormat32bppBGRA;
+   //   WICPixelFormatGUID formatGUID = GUID_WICPixelFormat32bppBGRA;
 
-      if (SUCCEEDED(hr))
-      {
+   //   if (SUCCEEDED(hr))
+   //   {
 
-         hr = piBitmapFrame->SetPixelFormat(&formatGUID);
+   //      hr = piBitmapFrame->SetPixelFormat(&formatGUID);
 
-      }
+   //   }
 
-      pimage->map();
+   //   pimage->map();
 
-      auto * pcr = pimage->data();
+   //   auto * pcr = pimage->data();
 
-      //   memory m;
-      //
-      //#ifdef UNIVERSAL_WINDOWS
-      //
-      //   m.set_size(uiHeight*pimage->scan_size());
-      //
-      //   pcr = (::color::color *)m.data();
-      //
-      //   ::draw2d::vertical_swap_copy_image32(pimage->width(), pimage->height(), pcr,
-      //                                         pimage->scan_size(), pimage->data(), pimage->scan_size());
-      //
-      //#endif
+   //   //   memory m;
+   //   //
+   //   //#ifdef UNIVERSAL_WINDOWS
+   //   //
+   //   //   m.set_size(uiHeight*pimage->scan_size());
+   //   //
+   //   //   pcr = (::color::color *)m.data();
+   //   //
+   //   //   ::draw2d::vertical_swap_copy_image32(pimage->width(), pimage->height(), pcr,
+   //   //                                         pimage->scan_size(), pimage->data(), pimage->scan_size());
+   //   //
+   //   //#endif
 
-      if (SUCCEEDED(hr))
-      {
+   //   if (SUCCEEDED(hr))
+   //   {
 
-         if (IsEqualGUID(formatGUID, GUID_WICPixelFormat32bppBGRA))
-         {
+   //      if (IsEqualGUID(formatGUID, GUID_WICPixelFormat32bppBGRA))
+   //      {
 
-            if (SUCCEEDED(hr))
-            {
+   //         if (SUCCEEDED(hr))
+   //         {
 
-               hr = piBitmapFrame->WritePixels(uHeight, pimage->scan_size(), uHeight * pimage->scan_size(), (::u8 *)pcr);
+   //            hr = piBitmapFrame->WritePixels(uHeight, pimage->scan_size(), uHeight * pimage->scan_size(), (::u8 *)pcr);
 
-            }
+   //         }
 
-         }
-         else
-         {
+   //      }
+   //      else
+   //      {
 
-            comptr <IWICBitmap> pbitmap;
+   //         comptr <IWICBitmap> pbitmap;
 
-            if (SUCCEEDED(hr))
-            {
+   //         if (SUCCEEDED(hr))
+   //         {
 
-               hr = pimagingfactory->CreateBitmapFromMemory(
-                  pimage->width(),
-                  pimage->height(),
-                  GUID_WICPixelFormat32bppBGRA,
-                  pimage->scan_size(),
-                  pimage->scan_size() * pimage->height(),
-                  (::u8 *)pcr,
-                  &pbitmap
-               );
+   //            hr = pimagingfactory->CreateBitmapFromMemory(
+   //               pimage->width(),
+   //               pimage->height(),
+   //               GUID_WICPixelFormat32bppBGRA,
+   //               pimage->scan_size(),
+   //               pimage->scan_size() * pimage->height(),
+   //               (::u8 *)pcr,
+   //               &pbitmap
+   //            );
 
-            }
+   //         }
 
-            comptr<IWICFormatConverter> pconverter;
+   //         comptr<IWICFormatConverter> pconverter;
 
-            if (SUCCEEDED(hr))
-            {
+   //         if (SUCCEEDED(hr))
+   //         {
 
-               hr = pimagingfactory->CreateFormatConverter(&pconverter);
+   //            hr = pimagingfactory->CreateFormatConverter(&pconverter);
 
-            }
+   //         }
 
-            if (SUCCEEDED(hr))
-            {
+   //         if (SUCCEEDED(hr))
+   //         {
 
-               hr = pconverter->Initialize(pbitmap, formatGUID, WICBitmapDitherTypeNone, nullptr, 0.f, WICBitmapPaletteTypeCustom);
+   //            hr = pconverter->Initialize(pbitmap, formatGUID, WICBitmapDitherTypeNone, nullptr, 0.f, WICBitmapPaletteTypeCustom);
 
-            }
+   //         }
 
-            if (SUCCEEDED(hr))
-            {
+   //         if (SUCCEEDED(hr))
+   //         {
 
-               hr = piBitmapFrame->WriteSource(pconverter, nullptr);
+   //            hr = piBitmapFrame->WriteSource(pconverter, nullptr);
 
-            }
+   //         }
 
-         }
+   //      }
 
-      }
+   //   }
 
-      if (SUCCEEDED(hr))
-      {
+   //   if (SUCCEEDED(hr))
+   //   {
 
-         hr = piBitmapFrame->Commit();
+   //      hr = piBitmapFrame->Commit();
 
-      }
+   //   }
 
-      if (SUCCEEDED(hr))
-      {
+   //   if (SUCCEEDED(hr))
+   //   {
 
-         hr = piEncoder->Commit();
+   //      hr = piEncoder->Commit();
 
-      }
+   //   }
 
-      return true;
+   //   return true;
 
-   }
+   //}
 
 
 } // namespace imaging_wic

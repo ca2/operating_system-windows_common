@@ -94,7 +94,6 @@ namespace imaging_wic
    }
 
 
-
    bool node_save_image(IStream * pstream, ::image::image * pimage, const ::image::save_options & saveoptions)
    {
 
