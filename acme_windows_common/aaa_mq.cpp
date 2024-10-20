@@ -448,9 +448,9 @@
 //void initialize_global_message_queue()
 //{
 //
-//   g_pmutexMq = __new mutex();
+//   g_pmutexMq = ___new mutex();
 //
-//   g_pmapMq = __new map < itask_t, ::pointer<message_queue >>);
+//   g_pmapMq = ___new map < itask_t, ::pointer<message_queue >>);
 //
 //}
 //

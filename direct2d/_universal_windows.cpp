@@ -1,7 +1,7 @@
 #include "framework.h"
 //#include "direct2d/CustomTextRenderer.h"
 
-#undef __new
+#undef ___new
 #ifdef UNIVERSAL_WINDOWS
 #include <wrl/module.h>
 #endif

@@ -232,16 +232,16 @@ namespace direct2d
       //if (g_pdxgidebug == nullptr)
       //{
 
-      //   g_pdxgidebug = __new dxgidebug;
+      //   g_pdxgidebug = ___new dxgidebug;
 
-      //   //g_pdirect2dplugin = __new plugin;
+      //   //g_pdirect2dplugin = ___new plugin;
 
       //   //g_pdirect2dplugin->initialize();
 
       //}
 
 
-      direct2d::s_pdirect2d = __new class direct2d;
+      direct2d::s_pdirect2d = ___new class direct2d;
 
       direct2d::s_pdirect2d->initialize(pparticle);
 

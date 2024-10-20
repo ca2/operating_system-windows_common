@@ -57,7 +57,7 @@ MessageIO::MessageIO()
      _midiInDeviceWatcher(nullptr),
      _midiOutDeviceWatcher(nullptr)
 {
-   _messageTypeMap = ref __new Map<MidiMessageType, String ^>();
+   _messageTypeMap = ref ___new Map<MidiMessageType, String ^>();
    _messageTypeMap->Insert(MidiMessageType::ActiveSensing, L"Active Sensing");
    _messageTypeMap->Insert(MidiMessageType::ChannelPressure, L"Channel Pressure");
    _messageTypeMap->Insert(MidiMessageType::Continue, L"Continue");
@@ -82,8 +82,8 @@ MessageIO::MessageIO()
    ScenarioInit();
 
    // start the MIDI In and Out device watcher
-   _midiInDeviceWatcher = ref __new MidiDeviceWatcher(MidiInPort::GetDeviceSelector(), Dispatcher, _inPortsListBox);
-   _midiOutDeviceWatcher = ref __new MidiDeviceWatcher(MidiOutPort::GetDeviceSelector(), Dispatcher, _outPortsListBox);
+   _midiInDeviceWatcher = ref ___new MidiDeviceWatcher(MidiInPort::GetDeviceSelector(), Dispatcher, _inPortsListBox);
+   _midiOutDeviceWatcher = ref ___new MidiDeviceWatcher(MidiOutPort::GetDeviceSelector(), Dispatcher, _outPortsListBox);
 
    _midiInDeviceWatcher->Start();
    _midiOutDeviceWatcher->Start();
@@ -261,7 +261,7 @@ void MessageIO::InPortsListSelectionChanged(Platform::Object^ sender, ::winrt::W
          {
             if (nullptr != inPort)
             {
-               inPort->MessageReceived += ref __new ::winrt::Windows::Foundation::TypedEventHandler<MidiInPort ^,
+               inPort->MessageReceived += ref ___new ::winrt::Windows::Foundation::TypedEventHandler<MidiInPort ^,
                                           MidiMessageReceivedEventArgs ^>(this, &MessageIO::OnMessageReceived);
 
                _midiInPortArray.Append(inPort);
@@ -475,42 +475,42 @@ void MessageIO::SendButtonClick(Platform::Object^ sender, ::winrt::Windows::UI::
    {
    case MidiMessageType::NoteOff:
 
-      midiMessage = ref __new MidiNoteOffMessage(_field1IntValue, _field2IntValue, _field3IntValue);
+      midiMessage = ref ___new MidiNoteOffMessage(_field1IntValue, _field2IntValue, _field3IntValue);
       break;
 
    case MidiMessageType::NoteOn:
 
-      midiMessage = ref __new MidiNoteOnMessage(_field1IntValue, _field2IntValue, _field3IntValue);
+      midiMessage = ref ___new MidiNoteOnMessage(_field1IntValue, _field2IntValue, _field3IntValue);
       break;
 
    case MidiMessageType::PolyphonicKeyPressure:
 
-      midiMessage = ref __new MidiPolyphonicKeyPressureMessage(_field1IntValue, _field2IntValue, _field3IntValue);
+      midiMessage = ref ___new MidiPolyphonicKeyPressureMessage(_field1IntValue, _field2IntValue, _field3IntValue);
       break;
 
    case MidiMessageType::control_change:
 
-      midiMessage = ref __new MidiControlChangeMessage(_field1IntValue, _field2IntValue, _field3IntValue);
+      midiMessage = ref ___new MidiControlChangeMessage(_field1IntValue, _field2IntValue, _field3IntValue);
       break;
 
    case MidiMessageType::ProgramChange:
 
-      midiMessage = ref __new MidiProgramChangeMessage(_field1IntValue, _field2IntValue);
+      midiMessage = ref ___new MidiProgramChangeMessage(_field1IntValue, _field2IntValue);
       break;
 
    case MidiMessageType::ChannelPressure:
 
-      midiMessage = ref __new MidiChannelPressureMessage(_field1IntValue, _field2IntValue);
+      midiMessage = ref ___new MidiChannelPressureMessage(_field1IntValue, _field2IntValue);
       break;
 
    case MidiMessageType::PitchBendChange:
 
-      midiMessage = ref __new MidiPitchBendChangeMessage(_field1IntValue, _field2IntValue);
+      midiMessage = ref ___new MidiPitchBendChangeMessage(_field1IntValue, _field2IntValue);
       break;
 
    case MidiMessageType::SystemExclusive:
    {
-      DataWriter^ dataWriter = ref __new DataWriter();
+      DataWriter^ dataWriter = ref ___new DataWriter();
 
       // expecting a string of format "NN NN NN NN...." where NN is a ::u8 in hex
       int len = _sendMessageTextBox->Text->Length();
@@ -538,57 +538,57 @@ void MessageIO::SendButtonClick(Platform::Object^ sender, ::winrt::Windows::UI::
       }
       while (nullptr != endPointer);
 
-      midiMessage = ref __new MidiSystemExclusiveMessage(dataWriter->DetachBuffer());
+      midiMessage = ref ___new MidiSystemExclusiveMessage(dataWriter->DetachBuffer());
       break;
    }
    case MidiMessageType::MidiTimeCode:
 
-      midiMessage = ref __new MidiTimeCodeMessage(_field1IntValue, _field2IntValue);
+      midiMessage = ref ___new MidiTimeCodeMessage(_field1IntValue, _field2IntValue);
       break;
 
    case MidiMessageType::SongPositionPointer:
 
-      midiMessage = ref __new MidiSongPositionPointerMessage(_field1IntValue);
+      midiMessage = ref ___new MidiSongPositionPointerMessage(_field1IntValue);
       break;
 
    case MidiMessageType::SongSelect:
 
-      midiMessage = ref __new MidiSongSelectMessage(_field1IntValue);
+      midiMessage = ref ___new MidiSongSelectMessage(_field1IntValue);
       break;
 
    case MidiMessageType::TuneRequest:
 
-      midiMessage = ref __new MidiTuneRequestMessage();
+      midiMessage = ref ___new MidiTuneRequestMessage();
       break;
 
    case MidiMessageType::TimingClock:
 
-      midiMessage = ref __new MidiTimingClockMessage();
+      midiMessage = ref ___new MidiTimingClockMessage();
       break;
 
    case MidiMessageType::Start:
 
-      midiMessage = ref __new MidiStartMessage();
+      midiMessage = ref ___new MidiStartMessage();
       break;
 
    case MidiMessageType::Continue:
 
-      midiMessage = ref __new MidiContinueMessage();
+      midiMessage = ref ___new MidiContinueMessage();
       break;
 
    case MidiMessageType::Stop:
 
-      midiMessage = ref __new MidiStopMessage();
+      midiMessage = ref ___new MidiStopMessage();
       break;
 
    case MidiMessageType::ActiveSensing:
 
-      midiMessage = ref __new MidiActiveSensingMessage();
+      midiMessage = ref ___new MidiActiveSensingMessage();
       break;
 
    case MidiMessageType::SystemReset:
 
-      midiMessage = ref __new MidiSystemResetMessage();
+      midiMessage = ref ___new MidiSystemResetMessage();
       break;
 
    case MidiMessageType::None:
@@ -913,7 +913,7 @@ void MessageIO::OnMessageReceived(MidiInPort ^sender, MidiMessageReceivedEventAr
    IMidiMessage^ midiMessage = args->Message;
 
    create_task(Dispatcher->RunAsync(::winrt::Windows::UI::Core::CoreDispatcherPriority::High,
-                                    ref __new ::winrt::Windows::UI::Core::DispatchedHandler([this, sender, midiMessage]()
+                                    ref ___new ::winrt::Windows::UI::Core::DispatchedHandler([this, sender, midiMessage]()
    {
       String^ outputString = midiMessage->Timestamp.Duration + ", " + _messageTypeMap->lookup(midiMessage->Type);
 
@@ -985,11 +985,11 @@ void MessageIO::OnMessageReceived(MidiInPort ^sender, MidiMessageReceivedEventAr
          {
             // prepare SysEx message for printing to the screen.
             // convert bytes to hex strings.
-            Array<wchar_t>^ byteInHex = ref __new Array<wchar_t>(3);
+            Array<wchar_t>^ byteInHex = ref ___new Array<wchar_t>(3);
             ::u8 byteRead = sysExReader->ReadByte();
 
             swprintf_s(byteInHex->Data, sizeof(byteInHex->Length), L"%02X", byteRead);
-            String^ hexString = ref __new String(byteInHex->Data);
+            String^ hexString = ref ___new String(byteInHex->Data);
 
             outputString += hexString + " ";
          }
@@ -1148,10 +1148,10 @@ MessageIO::MidiDeviceWatcher::MidiDeviceWatcher(String ^ midiSelector, CoreDispa
 {
    _deviceWatcher = DeviceInformation::CreateWatcher(midiSelector);
 
-   _portAddedToken = _deviceWatcher->Added += ref __new TypedEventHandler<DeviceWatcher ^, DeviceInformation ^>(this, &MessageIO::MidiDeviceWatcher::OnPortAdded);
-   _portRemovedToken = _deviceWatcher->Removed += ref __new TypedEventHandler<DeviceWatcher ^, DeviceInformationUpdate ^>(this, &MessageIO::MidiDeviceWatcher::OnPortRemoved);
-   _portUpdatedToken = _deviceWatcher->Updated += ref __new TypedEventHandler<DeviceWatcher ^, DeviceInformationUpdate ^>(this, &MessageIO::MidiDeviceWatcher::OnPortUpdated);
-   _portEnumCompleteToken = _deviceWatcher->EnumerationCompleted += ref __new TypedEventHandler<DeviceWatcher ^, Object ^>(this, &MessageIO::MidiDeviceWatcher::OnPortEnumCompleted);
+   _portAddedToken = _deviceWatcher->Added += ref ___new TypedEventHandler<DeviceWatcher ^, DeviceInformation ^>(this, &MessageIO::MidiDeviceWatcher::OnPortAdded);
+   _portRemovedToken = _deviceWatcher->Removed += ref ___new TypedEventHandler<DeviceWatcher ^, DeviceInformationUpdate ^>(this, &MessageIO::MidiDeviceWatcher::OnPortRemoved);
+   _portUpdatedToken = _deviceWatcher->Updated += ref ___new TypedEventHandler<DeviceWatcher ^, DeviceInformationUpdate ^>(this, &MessageIO::MidiDeviceWatcher::OnPortUpdated);
+   _portEnumCompleteToken = _deviceWatcher->EnumerationCompleted += ref ___new TypedEventHandler<DeviceWatcher ^, Object ^>(this, &MessageIO::MidiDeviceWatcher::OnPortEnumCompleted);
 }
 
 MessageIO::MidiDeviceWatcher::~MidiDeviceWatcher()
@@ -1209,7 +1209,7 @@ void MessageIO::MidiDeviceWatcher::OnPortAdded(DeviceWatcher^ deviceWatcher, Dev
    if (_enumCompleted)
    {
       create_task(_coreDispatcher->RunAsync(::winrt::Windows::UI::Core::CoreDispatcherPriority::High,
-                                            ref __new ::winrt::Windows::UI::Core::DispatchedHandler([this]()
+                                            ref ___new ::winrt::Windows::UI::Core::DispatchedHandler([this]()
       {
          UpdatePorts();
       })));
@@ -1221,7 +1221,7 @@ void MessageIO::MidiDeviceWatcher::OnPortRemoved(DeviceWatcher^ deviceWatcher, D
    if (_enumCompleted)
    {
       create_task(_coreDispatcher->RunAsync(::winrt::Windows::UI::Core::CoreDispatcherPriority::High,
-                                            ref __new ::winrt::Windows::UI::Core::DispatchedHandler([this]()
+                                            ref ___new ::winrt::Windows::UI::Core::DispatchedHandler([this]()
       {
          UpdatePorts();
       })));
@@ -1233,7 +1233,7 @@ void MessageIO::MidiDeviceWatcher::OnPortUpdated(DeviceWatcher^ deviceWatcher, D
    if (_enumCompleted)
    {
       create_task(_coreDispatcher->RunAsync(::winrt::Windows::UI::Core::CoreDispatcherPriority::High,
-                                            ref __new ::winrt::Windows::UI::Core::DispatchedHandler([this]()
+                                            ref ___new ::winrt::Windows::UI::Core::DispatchedHandler([this]()
       {
          UpdatePorts();
       })));
@@ -1245,7 +1245,7 @@ void MessageIO::MidiDeviceWatcher::OnPortEnumCompleted(DeviceWatcher^ deviceWatc
    _enumCompleted = true;
 
    create_task(_coreDispatcher->RunAsync(::winrt::Windows::UI::Core::CoreDispatcherPriority::High,
-                                         ref __new ::winrt::Windows::UI::Core::DispatchedHandler([this]()
+                                         ref ___new ::winrt::Windows::UI::Core::DispatchedHandler([this]()
    {
       UpdatePorts();
    })));

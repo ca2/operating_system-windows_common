@@ -184,7 +184,7 @@ extern bool g_bExiting;
 void * standard_exception::siginfodup(void * psiginfo)
 {
 
-   siginfo_t * psiginfoDup = __new siginfo_t;
+   siginfo_t * psiginfoDup = ___new siginfo_t;
 
    *psiginfoDup = *(siginfo_t *)psiginfo;
 

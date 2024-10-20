@@ -56,7 +56,7 @@
 //   if(mutex() == nullptr)
 //   {
 //
-//      ((matter *)this)->mutex() = __new ::mutex();
+//      ((matter *)this)->mutex() = ___new ::mutex();
 //
 //   }
 //
@@ -113,7 +113,7 @@
 //   if(mutex() == nullptr)
 //   {
 //
-//      ((matter *)this)->mutex() = __new ::mutex();
+//      ((matter *)this)->mutex() = ___new ::mutex();
 //
 //   }
 //
@@ -136,7 +136,7 @@
 //   if(mutex() == nullptr)
 //   {
 //
-//      ((matter *)this)->mutex() = __new ::mutex();
+//      ((matter *)this)->mutex() = ___new ::mutex();
 //
 //   }
 //

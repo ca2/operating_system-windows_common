@@ -114,7 +114,7 @@ namespace exception
 
 #ifdef EXCEPTION_TRANSLATOR_USE_SIGNAL
 
-      m_psig = __new sig_companion;
+      m_psig = ___new sig_companion;
 
 #endif
 
@@ -574,7 +574,7 @@ CLASS_DECL_ACME bool g_bExiting;
 void * standard_exception::siginfodup(void * psiginfo)
 {
 
-   siginfo_t * psiginfoDup = __new siginfo_t;
+   siginfo_t * psiginfoDup = ___new siginfo_t;
 
    *psiginfoDup = *(siginfo_t *)psiginfo;
 

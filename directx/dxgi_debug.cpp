@@ -75,7 +75,7 @@ namespace directx
 
       }
 
-      dxgi_debug::s_pdxgidebug = __new dxgi_debug;
+      dxgi_debug::s_pdxgidebug = ___new dxgi_debug;
 
    }
 

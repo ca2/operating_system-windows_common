@@ -75,7 +75,7 @@ namespace music
             bool player::Play(::time tickStart, u32 dwEllapse)
             {
 
-               ::music::midi::player::command * pcommand = __new ::music::midi::player::command(this);
+               ::music::midi::player::command * pcommand = ___new ::music::midi::player::command(this);
 
                pcommand->m_ecommand = ::music::midi::player::command_play;
                pcommand->m_dwEllapse = dwEllapse;
@@ -94,7 +94,7 @@ namespace music
             bool player::Play(double dRate, u32 dwEllapse)
             {
 
-               ::music::midi::player::command * pcommand = __new ::music::midi::player::command(this);
+               ::music::midi::player::command * pcommand = ___new ::music::midi::player::command(this);
 
                pcommand->m_ecommand = ::music::midi::player::command_play;
                pcommand->m_dwEllapse = dwEllapse;
@@ -130,7 +130,7 @@ namespace music
             bool player::ExecuteCommand(::music::midi::player::enum_command ecommand, u32 dwEllapse)
             {
 
-               ::music::midi::player::command * pcommand = __new ::music::midi::player::command(this);
+               ::music::midi::player::command * pcommand = ___new ::music::midi::player::command(this);
 
                pcommand->m_ecommand = ecommand;
                pcommand->m_dwEllapse = dwEllapse;

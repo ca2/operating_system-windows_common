@@ -159,7 +159,7 @@ namespace directx
 
       }
 
-      directx::s_pdirectx = __new class directx;
+      directx::s_pdirectx = ___new class directx;
 
       directx::s_pdirectx->initialize(pparticle);
 

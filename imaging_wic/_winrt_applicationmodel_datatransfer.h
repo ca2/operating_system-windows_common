@@ -2,7 +2,7 @@
 #pragma once
 
 
-#undef __new
+#undef ___new
 #include <winrt/Windows.ApplicationModel.DataTransfer.h>
 
 

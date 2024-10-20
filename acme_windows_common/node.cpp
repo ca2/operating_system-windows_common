@@ -612,7 +612,7 @@ namespace acme_windows_common
    //         if (g_iMemoryCounters)
    //         {
    //
-   //            g_pmutexMemoryCounters = __new ::mutex(e_create_new, false, "Global\\ca2_memory_counters");
+   //            g_pmutexMemoryCounters = ___new ::mutex(e_create_new, false, "Global\\ca2_memory_counters");
    //
    //         }
    //
@@ -632,7 +632,7 @@ namespace acme_windows_common
    //      if (g_iMemoryCountersStartable && g_pMemoryCounters == nullptr)
    //      {
    //
-   //         g_pMemoryCounters = __new ::file::path();
+   //         g_pMemoryCounters = ___new ::file::path();
    //
    //#if defined(UNIVERSAL_WINDOWS)
    //

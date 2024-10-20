@@ -2,9 +2,9 @@
 #include "acme/os/_os.h"
 
 
-#undef __new
+#undef ___new
 
-#define __new ACME_NEW
+#define ___new ACME_NEW
 
 multi_lock::multi_lock(const synchronization_array & synca,bool bInitialLock)
 {
