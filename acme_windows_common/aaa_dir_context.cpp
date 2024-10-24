@@ -71,7 +71,7 @@ namespace windows
 
       //      ::file::path pathFolderTime = pdocument->root()->get_child_value("time");
 
-      //      if (pcontext->m_papexcontext->dir().is(pathFolderTime))
+      //      if (pcontext->dir().is(pathFolderTime))
       //      {
 
       //         m_pdirsystem->m_strTimeFolder = pathFolderTime;
@@ -80,7 +80,7 @@ namespace windows
 
       //      ::file::path pathFolderNetseed = pdocument->root()->get_child_value("netseed");
 
-      //      if (pcontext->m_papexcontext->dir().is(pathFolderNetseed))
+      //      if (pcontext->dir().is(pathFolderNetseed))
       //      {
 
       //         m_pdirsystem->m_strNetSeedFolder = pathFolderNetseed;
@@ -424,7 +424,7 @@ namespace windows
 
                }
 
-               pcontext->m_papexcontext->dir().ls(listing);
+               pcontext->dir().ls(listing);
 
             }
 
@@ -612,7 +612,7 @@ namespace windows
 
                }
 
-               pcontext->m_papexcontext->dir().ls(listing);
+               pcontext->dir().ls(listing);
 
             }
 

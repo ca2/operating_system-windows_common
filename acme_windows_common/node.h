@@ -16,12 +16,12 @@ namespace acme_windows_common
 
 
    class CLASS_DECL_ACME_WINDOWS_COMMON node :
-      virtual public ::acme::node
+      virtual public ::platform::node
    {
    public:
 
          
-      //__creatable_from_base(node, ::acme::node);
+      //__creatable_from_base(node, ::platform::node);
 
 
       ::file::path            m_strTimeFolder;

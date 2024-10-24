@@ -10,7 +10,7 @@ __FACTORY_EXPORT void apex_windows_common_factory(::factory::factory * pfactory)
 
    acme_windows_common_factory(pfactory);
 
-   pfactory->add_factory_item < ::apex_windows_common::node, ::acme::node >();
+   pfactory->add_factory_item < ::apex_windows_common::node, ::platform::node >();
 
 
 }

@@ -23,7 +23,7 @@ namespace aura_windows_common
       public:
 
 
-         //__creatable_from_base(node, ::acme::node);
+         //__creatable_from_base(node, ::platform::node);
 
 
          node();

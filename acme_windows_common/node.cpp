@@ -35,7 +35,7 @@ namespace acme_windows_common
    {
 
       /*auto estatus =*/
-      ::acme::node::initialize(pparticle);
+      ::platform::node::initialize(pparticle);
 
    //   //if (!estatus)
    //   //{
@@ -875,7 +875,7 @@ namespace acme_windows_common
 
    //   }
 
-   //   return ::acme::node::succeeded(errorcode);
+   //   return ::platform::node::succeeded(errorcode);
 
    //}
 
