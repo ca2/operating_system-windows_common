@@ -506,10 +506,10 @@ namespace windows
          key.open(key, "@ca2.cc/npca2", true);
 
          key.set("Description", "ca2 plugin for NPAPI");
-         key.set("Path", m_pcontext->m_papexcontext->dir().ca2module() /"npca2.dll");
+         key.set("Path", m_papplication->m_papexcontext->dir().ca2module() /"npca2.dll");
          key.set("ProductName", "ca2 plugin for NPAPI");
          key.set("Vendor", "ca2 Desenvolvimento de Software Ltda.");
-         key.set("Version", m_pcontext->m_papexcontext->file().as_string(m_pcontext->m_papexcontext->dir().install()/"appdata/x86/ca2_build.txt"));
+         key.set("Version", m_papplication->m_papexcontext->file().as_string(m_papplication->m_papexcontext->dir().install()/"appdata/x86/ca2_build.txt"));
 
          key.open(key, "application/apex", true);
 
@@ -1251,7 +1251,7 @@ retry:
 
       strExe += ".exe";
 
-      string strCalling = m_pcontext->m_papexcontext->dir().module() / strExe + " : service";
+      string strCalling = m_papplication->m_papexcontext->dir().module() / strExe + " : service";
 
       if(is_true("no_remote_simpledb"))
       {
@@ -1599,7 +1599,7 @@ retry:
       if (status.m_atime.get_time() != 0)
       {
 
-         //auto pnode = system()->m_papexsystem->node();
+         //auto pnode = system()->node();
 
          ::time_to_file_time((file_time_t*)&lastAccessTime, &status.m_atime.m_time);
 
@@ -1976,7 +1976,7 @@ retry:
    }
 //#elif defined(LINUX)
 //   //string strDir;
-//   //strDir = m_pcontext->m_papexcontext->dir().path(getenv("HOME"), "Pictures");
+//   //strDir = m_papplication->m_papexcontext->dir().path(getenv("HOME"), "Pictures");
 //   //imagefileset.add_search(strDir);
 //   string strDir;
 //   strDir = "/usr/share/backgrounds";
@@ -1985,7 +1985,7 @@ retry:
 //
 //#elif defined(MACOS)
 //   //string strDir;
-//   //strDir = m_pcontext->m_papexcontext->dir().path(getenv("HOME"), "Pictures");
+//   //strDir = m_papplication->m_papexcontext->dir().path(getenv("HOME"), "Pictures");
 //   //imagefileset.add_search(strDir);
 //   string strDir;
 //   strDir = "/Library/Desktop Pictures";
@@ -1998,7 +1998,7 @@ retry:
    bool os_context::file_open(::file::path path, string strParams, string strFolder)
    {
 
-      path = m_pcontext->defer_process_matter_path(path);
+      path = m_papplication->defer_process_matter_path(path);
 
       fork([=]()
       {

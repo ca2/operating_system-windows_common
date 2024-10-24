@@ -18,8 +18,8 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../../time-${OPERATING
 list(APPEND imaging_wic_source
         _.cpp
         _.h
-        context_image.cpp
-        context_image.h
+        #context_image.cpp
+        #context_image.h
         _factory.cpp
         #factory_exchange.h
         framework.cpp

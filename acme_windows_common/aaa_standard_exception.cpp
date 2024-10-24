@@ -152,7 +152,7 @@ namespace exception
 
       __UNREFERENCED_PARAMETER(uiCode);
 
-      //::acme::application * papp = ::get_application();
+      //::platform::application * papp = ::get_application();
 
       switch (ppointers->ExceptionRecord->ExceptionCode)
       {

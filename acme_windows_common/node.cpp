@@ -419,7 +419,7 @@ namespace acme_windows_common
    //   void node::start()
    //   {
    //
-   //      auto estatus = system()->m_papexsystem->m_papex->thread_initialize(system()->m_papexsystem);
+   //      auto estatus = system()->m_papex->thread_initialize(system());
    //
    //      if (!estatus)
    //      {

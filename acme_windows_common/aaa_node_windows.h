@@ -33,7 +33,7 @@ string get_error_message(::u32 dwError);
 //void CLASS_DECL_ACME __cdecl _ca2_purecall();
 void CLASS_DECL_ACME __cdecl _null_se_translator(u32 uiCode, EXCEPTION_POINTERS * ppointers);
 bool CLASS_DECL_ACME __windows_init();
-//i32 CLASS_DECL_ACME __windows_main(::acme::system * psystem, ::create * pmaininitdata);
+//i32 CLASS_DECL_ACME __windows_main(::platform::system * psystem, ::create * pmaininitdata);
 
 
 
@@ -111,7 +111,7 @@ inline i32 __invariant_stricmp(const unichar *pwszLeft,const unichar *pwszRight)
 CLASS_DECL_ACME ::i32 delete_registry_tree_helper(HKEY hParentKey,const ::string & strKeyName);
 
 
-//CLASS_DECL_ACME ::pointer<::acme::application>__get_app();
+//CLASS_DECL_ACME ::pointer<::platform::application>__get_app();
 CLASS_DECL_ACME HINSTANCE __get_resource_handle();
 CLASS_DECL_ACME void __set_resource_handle(HINSTANCE hInstResource);
 
@@ -120,7 +120,7 @@ CLASS_DECL_ACME HINSTANCE __find_string_resource_handle(::u32 nID);
 
 
 
-//CLASS_DECL_ACME i32 app_main(::acme::system * psystem, HINSTANCE hInstance, HINSTANCE hPrevInstance, char * pCmdLine, ::e_display edisplay);
+//CLASS_DECL_ACME i32 app_main(::platform::system * psystem, HINSTANCE hInstance, HINSTANCE hPrevInstance, char * pCmdLine, ::e_display edisplay);
 
 
 
