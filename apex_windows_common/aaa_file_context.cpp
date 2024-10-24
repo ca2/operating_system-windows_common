@@ -1,6 +1,6 @@
 #include "framework.h"
 #include "apex/operating_system.h"
-#include "acme/filesystem/filesystem/acme_directory.h"
+#include "acme/filesystem/filesystem/directory_system.h"
 #include "file_context.h"
 
 
@@ -809,7 +809,7 @@ namespace windows
 
       ::file::path pathJson;
 
-      pathJson = acmedirectory()->user_appdata_local() / "Dropbox/info.network_payload";
+      pathJson = directory_system()->user_appdata_local() / "Dropbox/info.network_payload";
 
       return pathJson;
 

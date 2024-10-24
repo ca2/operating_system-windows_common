@@ -3,7 +3,7 @@
 #include "mutex.h"
 #include "acme/constant/id.h"
 #include "acme/constant/user_key.h"
-#include "acme/filesystem/filesystem/acme_directory.h"
+#include "acme/filesystem/filesystem/directory_system.h"
 #include "acme/platform/scoped_restore.h"
 #include "acme/platform/system.h"
 #include "acme/user/user/key_state.h"
@@ -355,7 +355,7 @@ namespace acme_windows_common
    //         
    //      //#else
    //      //
-   //      //   strPathDll = acmedirectory()->matter() / "time" / process_platform_name() /"stage/_desk_tb.dll";
+   //      //   strPathDll = directory_system()->matter() / "time" / process_platform_name() /"stage/_desk_tb.dll";
    //      //
    //      //#endif
    //         
@@ -546,10 +546,10 @@ namespace acme_windows_common
    //
    //      string str;
    //
-   //      if (acmefile()->exists(acmedirectory()->system() / "config\\system\\audio.txt"))
+   //      if (file_system()->exists(directory_system()->system() / "config\\system\\audio.txt"))
    //      {
    //
-   //         str = acmefile()->as_string(acmedirectory()->system() / "config\\system\\audio.txt");
+   //         str = file_system()->as_string(directory_system()->system() / "config\\system\\audio.txt");
    //
    //      }
    //      else
@@ -557,9 +557,9 @@ namespace acme_windows_common
    //
    //         ::file::path strPath;
    //
-   //         strPath = acmedirectory()->appdata() / "audio.txt";
+   //         strPath = directory_system()->appdata() / "audio.txt";
    //
-   //         str = acmefile()->as_string(strPath);
+   //         str = file_system()->as_string(strPath);
    //
    //      }
    //
@@ -584,7 +584,7 @@ namespace acme_windows_common
 
       //if (k._open(HKEY_LOCAL_MACHINE, strKey, true))
       //{
-      //   ::file::path str = acmedirectory()->system() / "CrashDumps" / strModuleNameWithTheExeExtension;
+      //   ::file::path str = directory_system()->system() / "CrashDumps" / strModuleNameWithTheExeExtension;
       //   wstring wstr = str;
       //   RegSetValueExW(k.m_hkey, L"DumpFolder", 0, REG_EXPAND_SZ, (::u8*)wstr.c_str(), ::u32((wcslen(wstr) + 1) * sizeof(wchar_t)));
       //   ::u32 dw = 10;
@@ -607,7 +607,7 @@ namespace acme_windows_common
    //      if (g_iMemoryCountersStartable && g_iMemoryCounters < 0)
    //      {
    //
-   //         g_iMemoryCounters = acmefile()->exists(acmedirectory()->config() / "system/memory_counters.txt") ? 1 : 0;
+   //         g_iMemoryCounters = file_system()->exists(directory_system()->config() / "system/memory_counters.txt") ? 1 : 0;
    //
    //         if (g_iMemoryCounters)
    //         {
@@ -636,13 +636,13 @@ namespace acme_windows_common
    //
    //#if defined(UNIVERSAL_WINDOWS)
    //
-   //         string strBasePath = acmedirectory()->system() / "memory_counters";
+   //         string strBasePath = directory_system()->system() / "memory_counters";
    //
    //#else
    //
    //         ::file::path strModule = module_path_from_pid(getpid());
    //
-   //         string strBasePath = acmedirectory()->system() / "memory_counters" / strModule.title() / ::as_string(getpid());
+   //         string strBasePath = directory_system()->system() / "memory_counters" / strModule.title() / ::as_string(getpid());
    //
    //#endif
    //
@@ -973,7 +973,7 @@ namespace acme_windows_common
    //
    //   CoInitialize(NULL);
 
-   //   acmedirectory()->create(pszFolder);
+   //   directory_system()->create(pszFolder);
 
 
    //   {

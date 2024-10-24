@@ -1,9 +1,9 @@
 #include "framework.h"
 #include "apex/operating_system.h"
 #include <Shlobj.h>
-#include "dir_system.h"
-#include "acme/filesystem/filesystem/acme_directory.h"
-#include "acme_windows/acme_directory.h"
+#include "directory_system.h"
+#include "acme/filesystem/filesystem/directory_system.h"
+#include "acme_windows/directory_system.h"
 //#include "_windows.h"
 //#include "acme/os/windows_common/cotaskptr.h"
 
@@ -16,24 +16,24 @@ namespace windows
 {
 
 
-   dir_system::dir_system()
+   directory_system::directory_system()
    {
 
 
    }
 
 
-   dir_system::~dir_system()
+   directory_system::~directory_system()
    {
 
    }
 
 
 
-   void dir_system::initialize(::particle * pparticle)
+   void directory_system::initialize(::particle * pparticle)
    {
 
-      auto estatus = ::dir_system::initialize(pobject);
+      auto estatus = ::directory_system::initialize(pobject);
 
       if (!estatus)
       {
@@ -42,9 +42,9 @@ namespace windows
 
       }
 
-      m_pathInstall = acmedirectory()->install();
+      m_pathInstall = directory_system()->install();
 
-      acmedirectory()->m_pplatformdir->_shell_get_special_folder_path(
+      directory_system()->m_pplatformdir->_shell_get_special_folder_path(
          nullptr,
          m_strCommonAppData,
          CSIDL_COMMON_APPDATA,
@@ -55,20 +55,20 @@ namespace windows
       //CSIDL_PROFILE,
       //false);
 
-      m_pathHome = acmedirectory()->m_pplatformdir->_get_known_folder(FOLDERID_Profile);
+      m_pathHome = directory_system()->m_pplatformdir->_get_known_folder(FOLDERID_Profile);
 
-      m_pathCa2Config = acmedirectory()->ca2roaming();
+      m_pathCa2Config = directory_system()->ca2roaming();
 
       m_strCommonAppData /= "ca2";
 
-      m_strAppData = acmedirectory()->m_pplatformdir->_get_known_folder(FOLDERID_RoamingAppData);
+      m_strAppData = directory_system()->m_pplatformdir->_get_known_folder(FOLDERID_RoamingAppData);
 
-      acmedirectory()->m_pplatformdir->_shell_get_special_folder_path(
+      directory_system()->m_pplatformdir->_shell_get_special_folder_path(
          nullptr,
          m_strPrograms,
          CSIDL_PROGRAMS,
          false);
-      acmedirectory()->m_pplatformdir->_shell_get_special_folder_path(
+      directory_system()->m_pplatformdir->_shell_get_special_folder_path(
          nullptr,
          m_strCommonPrograms,
          CSIDL_COMMON_PROGRAMS,
@@ -94,14 +94,14 @@ namespace windows
       if (m_strTimeFolder.is_empty())
       {
 
-         m_strTimeFolder = acmedirectory()->appdata() / "time";
+         m_strTimeFolder = directory_system()->appdata() / "time";
 
       }
 
       if (m_strNetSeedFolder.is_empty())
       {
 
-         m_strNetSeedFolder = acmedirectory()->install() / "net";
+         m_strNetSeedFolder = directory_system()->install() / "net";
 
       }
 
@@ -132,10 +132,10 @@ pacmedir->create(m_strTimeFolder / "time");
    }
 
 
-   void dir_system::init_system()
+   void directory_system::init_system()
    {
 
-      auto estatus = ::dir_system::init_system();
+      auto estatus = ::directory_system::init_system();
 
       if (!estatus)
       {
@@ -155,26 +155,26 @@ pacmedir->create(m_strTimeFolder / "time");
 
 
 
-   ::file::path dir_system::application_installer_folder(const ::file::path& pathExe, string strAppId, const ::string & pszPlatform, const ::string & pszConfiguration, const ::string & pszLocale, const ::string & pszSchema)
+   ::file::path directory_system::application_installer_folder(const ::file::path& pathExe, string strAppId, const ::string & pszPlatform, const ::string & pszConfiguration, const ::string & pszLocale, const ::string & pszSchema)
    {
 
       string strFolder = pathExe.folder();
 
       strFolder.replace(":", "");
 
-      return acmedirectory()->ca2roaming() / "appdata" / strFolder / strAppId / pszPlatform / pszConfiguration / pszLocale / pszSchema;
+      return directory_system()->ca2roaming() / "appdata" / strFolder / strAppId / pszPlatform / pszConfiguration / pszLocale / pszSchema;
 
    }
 
 
 
 
-   ::file::path dir_system::get_application_path(string strAppId, const ::string & pszPlatform, const ::string & pszConfiguration)
+   ::file::path directory_system::get_application_path(string strAppId, const ::string & pszPlatform, const ::string & pszConfiguration)
    {
 
       ::file::path pathFolder;
 
-      pathFolder = acmedirectory()->stage(strAppId, pszPlatform, pszConfiguration);
+      pathFolder = directory_system()->stage(strAppId, pszPlatform, pszConfiguration);
 
       string strName;
 

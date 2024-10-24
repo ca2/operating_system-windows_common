@@ -177,9 +177,9 @@ static int g_iMutex = 0;
 
 pacmedir->create(::file::path(strName).folder());
 
-      ::acmefile()->put_contents(strName, strName);
+      ::file_system()->put_contents(strName, strName);
 
-      string strTest = acmefile()->as_string(strName);
+      string strTest = file_system()->as_string(strName);
 
       //int isCreator = 0;
 
@@ -349,7 +349,7 @@ pacmedir->create(path.folder());
 
 pacmedir->create(path.folder());
 
-      ::acmefile()->put_contents(path, m_pszName);
+      ::file_system()->put_contents(path, m_pszName);
 
       m_key = ftok(path, 1); //Generate a unique key or supply a value
 

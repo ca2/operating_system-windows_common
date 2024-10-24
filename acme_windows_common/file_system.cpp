@@ -1,12 +1,12 @@
 // From acme/filesystem/file/_.cpp by camilo on 2021-08-09 
 // 14:17 BRT <3ThomasBorregaardSorensen
 #include "framework.h"
-#include "acme_file.h"
-#include "acme_directory.h"
+#include "file_system.h"
+#include "directory_system.h"
 #include "acme/exception/exception.h"
 #include "acme/filesystem/file/exception.h"
 #include "acme/filesystem/file/file.h"
-#include "acme/filesystem/filesystem/acme_path.h"
+#include "acme/filesystem/filesystem/path_system.h"
 #include "acme/prototype/prototype/memory.h"
 #include "acme/_operating_system.h"
 #include "acme/operating_system/shared_posix/c_error_number.h"
@@ -31,7 +31,7 @@ namespace acme_windows_common
 {
 
 
-   void acme_file::_copy(const ::file::path & pathNewParam, const ::file::path & pathSrcParam, bool bOverwrite)
+   void file_system::_copy(const ::file::path & pathNewParam, const ::file::path & pathSrcParam, bool bOverwrite)
    {
 
       string strNew(pathNewParam);
@@ -52,9 +52,9 @@ namespace acme_windows_common
 
       }
 
-      auto pathNew = acmepath()->defer_process_relative_path(strNew);
+      auto pathNew = path_system()->defer_process_relative_path(strNew);
 
-      auto pathSrc = acmepath()->defer_process_relative_path(strSrc);
+      auto pathSrc = path_system()->defer_process_relative_path(strSrc);
 
       wstring wstrNew(pathNew);
 
@@ -114,7 +114,7 @@ namespace acme_windows_common
       //   if (lasterror == ERROR_INVALID_PARAMETER)
       //   {
 
-      //      ::acme_file::copy(pszNew, pszSrc, bOverwrite);
+      //      ::file_system::copy(pszNew, pszSrc, bOverwrite);
 
       //      return;
 
@@ -130,7 +130,7 @@ namespace acme_windows_common
 
    }
 
-   void acme_file::ensure_exists(const ::file::path & pathParam)
+   void file_system::ensure_exists(const ::file::path & pathParam)
    {
 
       if (exists(pathParam))
@@ -142,7 +142,7 @@ namespace acme_windows_common
 
       }
 
-      auto path = acmepath()->defer_process_relative_path(pathParam);
+      auto path = path_system()->defer_process_relative_path(pathParam);
       
       wstring wstrPath(path);
       
@@ -164,10 +164,10 @@ namespace acme_windows_common
    }
 
 
-   void acme_file::clear_read_only(const ::file::path & pathParam)
+   void file_system::clear_read_only(const ::file::path & pathParam)
    {
 
-      auto path = acmepath()->defer_process_relative_path(pathParam);
+      auto path = path_system()->defer_process_relative_path(pathParam);
 
       wstring wstrPath(path);
 
@@ -205,10 +205,10 @@ namespace acme_windows_common
    }
 
 
-   void acme_file::set_file_normal(const ::file::path & pathParam)
+   void file_system::set_file_normal(const ::file::path & pathParam)
    {
 
-      auto path = acmepath()->defer_process_relative_path(pathParam);
+      auto path = path_system()->defer_process_relative_path(pathParam);
 
       wstring wstrPath(path);
 
@@ -244,10 +244,10 @@ namespace acme_windows_common
    }
 
 
-   void acme_file::touch(const ::file::path & pathParam)
+   void file_system::touch(const ::file::path & pathParam)
    {
 
-      auto path = acmepath()->defer_process_relative_path(pathParam);
+      auto path = path_system()->defer_process_relative_path(pathParam);
 
       m_pacmedirectory->create(file_path_folder(path));
 
@@ -305,10 +305,10 @@ namespace acme_windows_common
    }
 
 
-   void acme_file::put_contents(const ::file::path & pathParam, const ::scoped_string & scopedstrContents)
+   void file_system::put_contents(const ::file::path & pathParam, const ::scoped_string & scopedstrContents)
    {
 
-      auto path = acmepath()->defer_process_relative_path(pathParam);
+      auto path = path_system()->defer_process_relative_path(pathParam);
 
       auto pathFolder = file_path_folder(path);
 
@@ -337,10 +337,10 @@ namespace acme_windows_common
    }
 
 
-   filesize acme_file::get_size(const ::file::path & pathParam)
+   filesize file_system::get_size(const ::file::path & pathParam)
    {
 
-      auto path = acmepath()->defer_process_relative_path(pathParam);
+      auto path = path_system()->defer_process_relative_path(pathParam);
 
       ::windows::file_instance file;
 
@@ -351,7 +351,7 @@ namespace acme_windows_common
 
          DWORD dwLastError = ::GetLastError();
 
-         throw_last_error_exception(path, ::file::e_open_read, dwLastError, "acme_windows_common::acme_file::get_size safe_create_file failed");
+         throw_last_error_exception(path, ::file::e_open_read, dwLastError, "acme_windows_common::file_system::get_size safe_create_file failed");
 
       }
 
@@ -416,7 +416,7 @@ namespace acme_windows_common
    //}
 
 
-   //string acme_file::as_string(const ::file::path & path, strsize iReadAtMostByteCount)
+   //string file_system::as_string(const ::file::path & path, strsize iReadAtMostByteCount)
    //{
 
    //   string str;
@@ -473,12 +473,12 @@ namespace acme_windows_common
    //}
 
 
-   memory acme_file::as_memory(const ::file::path & pathParam, strsize iReadAtMostByteCount, bool bNoExceptionIfNotFound)
+   memory file_system::as_memory(const ::file::path & pathParam, strsize iReadAtMostByteCount, bool bNoExceptionIfNotFound)
    {
 
-      return ::acme_file::as_memory(pathParam, iReadAtMostByteCount, bNoExceptionIfNotFound);
+      return ::file_system::as_memory(pathParam, iReadAtMostByteCount, bNoExceptionIfNotFound);
 
-      //auto path = acmepath()->defer_process_relative_path(pathParam);
+      //auto path = path_system()->defer_process_relative_path(pathParam);
 
       //FILE* pfile = _wfsopen(wstring(path), L"r", _SH_DENYNO);
       //
@@ -584,7 +584,7 @@ namespace acme_windows_common
 
 
 
-   //bool acme_file::as_memory(memory_base & memory, const ::file::path & path, memsize iReadAtMostByteCount)
+   //bool file_system::as_memory(memory_base & memory, const ::file::path & path, memsize iReadAtMostByteCount)
    //{
 
    //   memory.set_size(0);
@@ -624,7 +624,7 @@ namespace acme_windows_common
    //}
 
 
-   /*void acme_file::delete_file(const ::file::path & path)
+   /*void file_system::delete_file(const ::file::path & path)
    {
 
       wstring wstrFilePath(path.get_os_path());
@@ -646,10 +646,10 @@ namespace acme_windows_common
 
 
 
-   void acme_file::put_block(const ::file::path & pathParam, const block& block)
+   void file_system::put_block(const ::file::path & pathParam, const block& block)
    {
 
-      auto path = acmepath()->defer_process_relative_path(pathParam);
+      auto path = path_system()->defer_process_relative_path(pathParam);
 
       m_pacmedirectory->create(file_path_folder(path));
 
@@ -666,7 +666,7 @@ namespace acme_windows_common
 
          DWORD dwLastError = ::GetLastError();
 
-         throw_last_error_exception(path, ::file::e_open_write, dwLastError, "acme_windows_common::acme_file::put_block safe_create_file failed");
+         throw_last_error_exception(path, ::file::e_open_write, dwLastError, "acme_windows_common::file_system::put_block safe_create_file failed");
 
       }
 //#endif
@@ -680,7 +680,7 @@ namespace acme_windows_common
    }
 
 
-   ::file::path acme_file::module()
+   ::file::path file_system::module()
    {
 
       ::file::path path;

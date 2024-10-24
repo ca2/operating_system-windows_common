@@ -3,7 +3,7 @@
 #include <shlobj.h>
 #include <string.h>
 #include "explorer_restart.h"
-#include "acme/filesystem/filesystem/acme_directory.h"
+#include "acme/filesystem/filesystem/directory_system.h"
 
 
 CLSID CLSID_DeskBandSample = { 0x19970ca2, 0x71a, 0x4b7e,{ 0x8a, 0xa2, 0xe5, 0x60, 0x81, 0xd, 0xab, 0x35 } };
@@ -74,11 +74,11 @@ bool register_desk_toolbar(::aura::system* psystem)
 //
 //   //#ifdef _DEBUG
 //
-//   strPathDll = acmedirectory()->module() / "_desk_tb.dll";
+//   strPathDll = directory_system()->module() / "_desk_tb.dll";
 //
 //   //#else
 //   //
-//   //   strPathDll = acmedirectory()->matter() / "time" / process_platform_name() /"stage/_desk_tb.dll";
+//   //   strPathDll = directory_system()->matter() / "time" / process_platform_name() /"stage/_desk_tb.dll";
 //   //
 //   //#endif
 //
@@ -455,7 +455,7 @@ bool position_desk_toolbar2()
 
          }
 
-         //::acmefile()->put_contents("C:\\archive\\hell_cached.txt", ::hex::upper_from(m.get_data(), m.get_size()));
+         //::file_system()->put_contents("C:\\archive\\hell_cached.txt", ::hex::upper_from(m.get_data(), m.get_size()));
 
       }
 
@@ -502,7 +502,7 @@ bool position_desk_toolbar2()
 
          }
 
-         //::acmefile()->put_contents("C:\\archive\\hells.txt", ::hex::upper_from(&m[16], 56));
+         //::file_system()->put_contents("C:\\archive\\hells.txt", ::hex::upper_from(&m[16], 56));
 
       }
 

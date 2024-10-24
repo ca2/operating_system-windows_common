@@ -1,9 +1,9 @@
 #include "framework.h"
 #include "file.h"
 #include "node.h"
-#include "acme_directory.h"
-#include "acme_file.h"
-#include "acme_path.h"
+#include "directory_system.h"
+#include "file_system.h"
+#include "path_system.h"
 #include "exception_translator.h"
 #include "mutex.h"
 //#include "exclusive.h"
@@ -14,10 +14,10 @@ __FACTORY_EXPORT void acme_windows_common_factory(::factory::factory * pfactory)
 
    //_set_purecall_handler(_ca2_purecall);
 
-   //pfactory->add_factory_item < ::windows::dir_system, ::dir_system >();
+   //pfactory->add_factory_item < ::windows::directory_system, ::directory_system >();
    //pfactory->add_factory_item < ::windows::file_system, ::file_system >();
 
-   //pfactory->add_factory_item < ::windows::dir_context, ::dir_context >();
+   //pfactory->add_factory_item < ::windows::directory_context, ::directory_context >();
    //pfactory->add_factory_item < ::windows::file_context, ::file_context >();
 
    //add_factory_item < ::windows::stdio_file, ::file::text_file >();
@@ -31,9 +31,9 @@ __FACTORY_EXPORT void acme_windows_common_factory(::factory::factory * pfactory)
    //pfactory->add_factory_item < ::windows::ip_enum, ::net::ip_enum >();
 
    pfactory->add_factory_item < ::acme_windows_common::node, ::platform::node >();
-   pfactory->add_factory_item < ::acme_windows_common::acme_directory, ::acme_directory >();
-   pfactory->add_factory_item < ::acme_windows_common::acme_file, ::acme_file >();
-   pfactory->add_factory_item < ::acme_windows_common::acme_path, ::acme_path >();
+   pfactory->add_factory_item < ::acme_windows_common::directory_system, ::directory_system >();
+   pfactory->add_factory_item < ::acme_windows_common::file_system, ::file_system >();
+   pfactory->add_factory_item < ::acme_windows_common::path_system, ::path_system >();
 
    //pfactory->add_factory_item < ::windows::interprocess_communication_base, ::inteprocess_channel::base >();
    //pfactory->add_factory_item < ::windows::interprocess_handler, ::interprocess::handler >();
@@ -61,10 +61,10 @@ __FACTORY_EXPORT void acme_windows_common_factory(::factory::factory * pfactory)
    //pfactory->add_factory_item < ::windows::file, ::file::file >();
    //pfactory->add_factory_item < ::windows::console, ::console::console >();
 
-   //pfactory->add_factory_item < ::windows::dir_system, ::dir_system >();
+   //pfactory->add_factory_item < ::windows::directory_system, ::directory_system >();
    //pfactory->add_factory_item < ::windows::file_system, ::file_system >();
 
-   //pfactory->add_factory_item < ::windows::dir_context, ::dir_context >();
+   //pfactory->add_factory_item < ::windows::directory_context, ::directory_context >();
    //pfactory->add_factory_item < ::windows::file_context, ::file_context >();
 
    //pfactory->add_factory_item < ::windows::stdio_file, ::file::text_file >();

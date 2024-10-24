@@ -16,9 +16,9 @@
 #include "apex/platform/node.h"
 #include "acme_windows/node.h"
 #include "node.h"
-#include "acme/filesystem/filesystem/acme_directory.h"
-#include "acme_windows/acme_directory.h"
-#include "acme/filesystem/filesystem/acme_path.h"
+#include "acme/filesystem/filesystem/directory_system.h"
+#include "acme_windows/directory_system.h"
+#include "acme/filesystem/filesystem/path_system.h"
 
 
 void hresult_to_estatus(HRESULT hresult)
@@ -1963,7 +1963,7 @@ retry:
 
          ::file::path pathFolder;
 
-         acmedirectory()->m_pplatformdir->_shell_get_special_folder_path(nullptr, pathFolder, CSIDL_WINDOWS, false);
+         directory_system()->m_pplatformdir->_shell_get_special_folder_path(nullptr, pathFolder, CSIDL_WINDOWS, false);
 
          pathFolder /= "Web/Wallpaper";
 
@@ -2208,7 +2208,7 @@ repeat:
       ::application * papp = get_application();
 
       string strTargetProgId;
-      string strModule = solve_relative(acmepath()->app_module());
+      string strModule = solve_relative(path_system()->app_module());
 
       strTargetProgId = get_application()->m_strAppName;
 
@@ -2471,7 +2471,7 @@ repeat:
 
       string strTargetProgId;
 
-      string strModule = solve_relative(acmepath()->app_module());
+      string strModule = solve_relative(path_system()->app_module());
 
       string strApplicationRegistryPath = find_string("ApplicationRegistryPath");
 

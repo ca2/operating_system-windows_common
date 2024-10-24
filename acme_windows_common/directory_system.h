@@ -2,21 +2,21 @@
 #pragma once
 
 
-#include "acme/filesystem/filesystem/acme_directory.h"
+#include "acme/filesystem/filesystem/directory_system.h"
 
 
 namespace acme_windows_common
 {
 
 
-   class CLASS_DECL_ACME_WINDOWS_COMMON acme_directory :
-      virtual public ::acme_directory
+   class CLASS_DECL_ACME_WINDOWS_COMMON directory_system :
+      virtual public ::directory_system
    {
    public:
 
 
-      acme_directory();
-      ~acme_directory() override;
+      directory_system();
+      ~directory_system() override;
 
 
       ::file::path get_current() override;

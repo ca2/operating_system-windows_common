@@ -2,20 +2,20 @@
 #pragma once
 
 
-#include "acme/filesystem/filesystem/acme_file.h"
+#include "acme/filesystem/filesystem/file_system.h"
 
 
 namespace acme_windows_common
 {
 
 
-   class CLASS_DECL_ACME_WINDOWS_COMMON acme_file :
-      virtual public ::acme_file
+   class CLASS_DECL_ACME_WINDOWS_COMMON file_system :
+      virtual public ::file_system
    {
    public:
 
 
-      //__creatable_from_base(acme_file, ::acme_file);
+      //__creatable_from_base(file_system, ::file_system);
 
 
       //::file::path _final(const ::file::path & path) override;
@@ -35,12 +35,12 @@ namespace acme_windows_common
       void set_file_normal(const ::file::path & path) override;
 
 
-      using ::acme_file::put_contents;
+      using ::file_system::put_contents;
 
       void put_contents(const ::file::path & path, const ::scoped_string & scopedstr) override;
 
 
-      using ::acme_file::get_size;
+      using ::file_system::get_size;
       
       filesize get_size(const ::file::path & path) override;
       

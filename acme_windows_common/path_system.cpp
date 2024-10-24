@@ -1,8 +1,8 @@
 // From acme/filesystem/file/_.cpp by camilo on 2021-08-09 
 // 14:17 BRT <3ThomasBorregaardSorensen
 #include "framework.h"
-#include "acme_path.h"
-#include "acme_file.h"
+#include "path_system.h"
+#include "file_system.h"
 #include "acme/_operating_system.h"
 
 
@@ -10,21 +10,21 @@ namespace acme_windows_common
 {
 
 
-   acme_path::acme_path()
+   path_system::path_system()
    {
 
 
    }
 
 
-   acme_path::~acme_path()
+   path_system::~path_system()
    {
 
 
    }
 
 
-   ::file::enum_type acme_path::get_type(const ::file::path & path)
+   ::file::enum_type path_system::get_type(const ::file::path & path)
    {
 
       auto dwFileAttributes = ::windows::_get_file_attributes(path);
@@ -59,7 +59,7 @@ namespace acme_windows_common
    }
 
 
-   ::file::path acme_path::_real_path(const ::file::path & path)
+   ::file::path path_system::_real_path(const ::file::path & path)
    {
 
       WCHAR wszPath[8192];

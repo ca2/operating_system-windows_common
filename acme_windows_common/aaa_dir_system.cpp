@@ -1,7 +1,7 @@
 #include "framework.h"
 #include "apex/operating_system.h"
 #include <Shlobj.h>
-#include "dir_system.h"
+#include "directory_system.h"
 //#include "_windows.h"
 //#include "acme/os/windows_common/cotaskptr.h"
 
@@ -14,24 +14,24 @@ namespace windows
 {
 
 
-   dir_system::dir_system()
+   directory_system::directory_system()
    {
 
 
    }
 
 
-   dir_system::~dir_system()
+   directory_system::~directory_system()
    {
 
    }
 
 
 
-   void dir_system::initialize(::particle * pparticle)
+   void directory_system::initialize(::particle * pparticle)
    {
 
-      auto estatus = ::dir_system::initialize(pobject);
+      auto estatus = ::directory_system::initialize(pobject);
 
       if (!estatus)
       {
@@ -134,10 +134,10 @@ pacmedir->create(m_strTimeFolder / "time");
    }
 
 
-   void dir_system::init_system()
+   void directory_system::init_system()
    {
 
-      auto estatus = ::dir_system::init_system();
+      auto estatus = ::directory_system::init_system();
 
       if (!estatus)
       {
@@ -153,7 +153,7 @@ pacmedir->create(m_strTimeFolder / "time");
 
 
 
-   string dir_system::dir_root()
+   string directory_system::dir_root()
    {
 
       ::std::string path;
@@ -174,7 +174,7 @@ pacmedir->create(m_strTimeFolder / "time");
    }
 
 
-   ::file::path dir_system::get_memory_map_base_folder_path() const
+   ::file::path directory_system::get_memory_map_base_folder_path() const
    {
 
       auto path = get_known_folder(FOLDERID_RoamingAppData);
@@ -186,7 +186,7 @@ pacmedir->create(m_strTimeFolder / "time");
    }
 
    
-   ::file::path dir_system::home()
+   ::file::path directory_system::home()
    {
 
       return ::get_known_folder(FOLDERID_Profile);

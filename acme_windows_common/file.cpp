@@ -1,7 +1,7 @@
 #include "framework.h"
 #include "file.h"
-#include "acme_directory.h"
-#include "acme_file.h"
+#include "directory_system.h"
+#include "file_system.h"
 #include "acme/exception/interface_only.h"
 #include "acme/exception/io.h"
 //#include "acme/platform/sequencer.h"
@@ -133,7 +133,7 @@ namespace acme_windows_common
       if ((eopen & ::file::e_open_defer_create_directory) && (eopen & ::file::e_open_write))
       {
 
-         acmedirectory()->create(path.folder());
+         directory_system()->create(path.folder());
 
       }
 
@@ -204,7 +204,7 @@ namespace acme_windows_common
             if (eopen & ::file::e_open_write)
             {
 
-               auto pmessagebox = __initialize_new ::message_box("Couldn't write to file \"" + m_path + "\".\nAccess Denied!!\n(Is any anti-virus program blocking this program: \"" + acmefile()->module() + "\"?", acmefile()->module().title() + " - Access Denied!", e_message_box_ok);
+               auto pmessagebox = __initialize_new ::message_box("Couldn't write to file \"" + m_path + "\".\nAccess Denied!!\n(Is any anti-virus program blocking this program: \"" + file_system()->module() + "\"?", file_system()->module().title() + " - Access Denied!", e_message_box_ok);
 
                pmessagebox->async();
 

@@ -5,25 +5,25 @@ namespace windows
 {
 
 
-   class CLASS_DECL_APEX_WINDOWS_COMMON dir_context :
-      virtual public ::dir_context
+   class CLASS_DECL_APEX_WINDOWS_COMMON directory_context :
+      virtual public ::directory_context
    {
    public:
 
 
       ::pointer<file_system>     m_pfilesystem;
-      ::pointer<dir_system>      m_pdirsystem;
+      ::pointer<directory_system>      m_pdirsystem;
 
 
-      dir_context();
-      virtual ~dir_context();
+      directory_context();
+      virtual ~directory_context();
 
 
       virtual void initialize(::particle * pparticle) override;
 
       virtual void init_system() override;
 
-      using ::dir_context::ls;
+      using ::directory_context::ls;
       // rls fetchs should set a meaningful m_iRelative value at each returned path
       virtual ::file::listing & ls(::file::listing & path);
       virtual ::file::listing & ls_relative_name(::file::listing & path);

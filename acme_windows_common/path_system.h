@@ -2,21 +2,21 @@
 #pragma once
 
 
-#include "acme/filesystem/filesystem/acme_path.h"
+#include "acme/filesystem/filesystem/path_system.h"
 
 
 namespace acme_windows_common
 {
 
 
-   class CLASS_DECL_ACME_WINDOWS_COMMON acme_path :
-      virtual public ::acme_path
+   class CLASS_DECL_ACME_WINDOWS_COMMON path_system :
+      virtual public ::path_system
    {
    public:
 
 
-      acme_path();
-      ~acme_path() override;
+      path_system();
+      ~path_system() override;
 
 
       ::file::path _real_path(const ::file::path & path) override;
