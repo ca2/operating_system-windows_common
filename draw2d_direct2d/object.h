@@ -33,7 +33,7 @@ namespace draw2d_direct2d
       ::draw2d_direct2d::draw2d * draw2d()
       {
 
-         return (::draw2d_direct2d::draw2d * ) system()->m_paurasystem->draw2d()->m_pimpl;
+         return (::draw2d_direct2d::draw2d * ) system()->draw2d()->m_pimpl;
 
       }
 

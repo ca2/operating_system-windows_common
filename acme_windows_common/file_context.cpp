@@ -42,7 +42,7 @@ namespace acme_windows_common
 
       //m_pfilesystem = psystem->m_pfilesystem;
 
-      //m_pdirsystem = psystem->m_pdirsystem;
+      //m_pdirectorysystem = psystem->m_pdirectorysystem;
 
       //return ::success;
 

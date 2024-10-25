@@ -36,7 +36,7 @@ namespace windows
 
       __refer(m_pfilesystem, psystem->m_pfilesystem);
 
-      __refer(m_pdirsystem, psystem->m_pdirsystem);
+      __refer(m_pdirectorysystem, psystem->m_pdirectorysystem);
 
       return ::success;
 

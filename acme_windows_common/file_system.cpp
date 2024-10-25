@@ -62,12 +62,12 @@ namespace acme_windows_common
 
       auto pathFolder = pathNew.folder();
 
-      auto bDir = m_pacmedirectory->is(pathFolder);
+      auto bDir = m_pdirectorysystem->is(pathFolder);
 
       if (!bDir)
       {
        
-         m_pacmedirectory->create(pathFolder);
+         m_pdirectorysystem->create(pathFolder);
 
       }
 
@@ -249,7 +249,7 @@ namespace acme_windows_common
 
       auto path = path_system()->defer_process_relative_path(pathParam);
 
-      m_pacmedirectory->create(file_path_folder(path));
+      m_pdirectorysystem->create(file_path_folder(path));
 
       wstring wstrPath(path);
 
@@ -312,7 +312,7 @@ namespace acme_windows_common
 
       auto pathFolder = file_path_folder(path);
 
-      m_pacmedirectory->create(pathFolder);
+      m_pdirectorysystem->create(pathFolder);
 
       //if (!estatus)
       //{
@@ -371,9 +371,9 @@ namespace acme_windows_common
    //int_bool file_is_equal_path_dup(const ::file::path & path1, const ::file::path & path2)
    //{
 
-   //   auto path1 = ::g_psystem->m_pacmepath->defer_process_relative_path(psz1);
+   //   auto path1 = ::g_psystem->m_ppathsystem->defer_process_relative_path(psz1);
 
-   //   auto path2 = ::g_psystem->m_pacmepath->defer_process_relative_path(psz2);
+   //   auto path2 = ::g_psystem->m_ppathsystem->defer_process_relative_path(psz2);
 
    //   const i32 iBufSize = MAX_PATH * 8;
 
@@ -651,7 +651,7 @@ namespace acme_windows_common
 
       auto path = path_system()->defer_process_relative_path(pathParam);
 
-      m_pacmedirectory->create(file_path_folder(path));
+      m_pdirectorysystem->create(file_path_folder(path));
 
       ::windows::file_instance file;
 

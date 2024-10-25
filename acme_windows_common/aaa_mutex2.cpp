@@ -173,7 +173,7 @@ static int g_iMutex = 0;
 
                auto psystem = system();
 
-         auto pacmedir = psystem->m_pacmedirectory;
+         auto pacmedir = psystem->m_pdirectorysystem;
 
 pacmedir->create(::file::path(strName).folder());
 
@@ -240,7 +240,7 @@ pacmedir->create(::file::path(strName).folder());
 
          path =          auto psystem = system();
 
-         auto pacmedir = psystem->m_pacmedirectory;
+         auto pacmedir = psystem->m_pdirectorysystem;
 
 pacmedir->system() / "::payload/tmp/ca2/lock/::mutex" / string(pstrName);
 
@@ -258,7 +258,7 @@ pacmedir->system() / "::payload/tmp/ca2/lock/::mutex" / string(pstrName);
 
          path =          auto psystem = system();
 
-         auto pacmedir = psystem->m_pacmedirectory;
+         auto pacmedir = psystem->m_pdirectorysystem;
 
 pacmedir->system() / "home/user/ca2/lock/::mutex" / string(pstrName);
 
@@ -283,7 +283,7 @@ pacmedir->system() / "home/user/ca2/lock/::mutex" / string(pstrName);
 
                auto psystem = system();
 
-         auto pacmedir = psystem->m_pacmedirectory;
+         auto pacmedir = psystem->m_pdirectorysystem;
 
 pacmedir->create(path.folder());
 
@@ -345,7 +345,7 @@ pacmedir->create(path.folder());
 
                auto psystem = system();
 
-         auto pacmedir = psystem->m_pacmedirectory;
+         auto pacmedir = psystem->m_pdirectorysystem;
 
 pacmedir->create(path.folder());
 
@@ -1589,7 +1589,7 @@ bool ::mutex::unlock()
 
             auto psystem = system();
 
-         auto pacmedir = psystem->m_pacmedirectory;
+         auto pacmedir = psystem->m_pdirectorysystem;
 
 pacmedir->create(path.folder());
 

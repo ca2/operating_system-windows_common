@@ -21,7 +21,7 @@ namespace windows
 
 
       ::pointer<file_system>     m_pfilesystem;
-      ::pointer<directory_system>      m_pdirsystem;
+      ::pointer<directory_system>      m_pdirectorysystem;
 
 
       file_context();

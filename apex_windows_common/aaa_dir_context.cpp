@@ -42,7 +42,7 @@ namespace windows
 
       __refer(m_pfilesystem, psystem->m_pfilesystem);
 
-      __refer(m_pdirsystem, psystem->m_pdirsystem);
+      __refer(m_pdirectorysystem, psystem->m_pdirectorysystem);
 
       return ::success;
 
@@ -78,7 +78,7 @@ namespace windows
       //      if (m_papplication->dir().is(pathFolderTime))
       //      {
 
-      //         m_pdirsystem->m_strTimeFolder = pathFolderTime;
+      //         m_pdirectorysystem->m_strTimeFolder = pathFolderTime;
 
       //      }
 
@@ -87,7 +87,7 @@ namespace windows
       //      if (m_papplication->dir().is(pathFolderNetseed))
       //      {
 
-      //         m_pdirsystem->m_strNetSeedFolder = pathFolderNetseed;
+      //         m_pdirectorysystem->m_strNetSeedFolder = pathFolderNetseed;
 
       //      }
 
@@ -823,7 +823,7 @@ namespace windows
    ::file::path directory_context::time()
    {
       
-      return m_pdirsystem->m_strTimeFolder;
+      return m_pdirectorysystem->m_strTimeFolder;
 
    }
 
@@ -847,7 +847,7 @@ namespace windows
    ::file::path directory_context::netseed()
    {
 
-      return m_pdirsystem->m_strNetSeedFolder;
+      return m_pdirectorysystem->m_strNetSeedFolder;
 
    }
 
@@ -857,7 +857,7 @@ namespace windows
 
       ::pointer<::apex::system>psystem = system();
 
-      return psystem->m_pdirsystem->m_pathModule;
+      return psystem->m_pdirectorysystem->m_pathModule;
 
    }
 
@@ -867,7 +867,7 @@ namespace windows
 
       ::pointer<::apex::system>psystem = system();
 
-      return psystem->m_pdirsystem->m_pathCa2Module;
+      return psystem->m_pdirectorysystem->m_pathCa2Module;
 
    }
 
@@ -1156,7 +1156,7 @@ namespace windows
    ::file::path directory_context::commonappdata_root()
    {
 
-      return m_pdirsystem->m_strCommonAppData;
+      return m_pdirectorysystem->m_strCommonAppData;
 
    }
 
@@ -1164,7 +1164,7 @@ namespace windows
    ::file::path directory_context::userquicklaunch()
    {
 
-      return m_pdirsystem->m_strAppData / "Microsoft\\Internet Explorer\\Quick Launch";
+      return m_pdirectorysystem->m_strAppData / "Microsoft\\Internet Explorer\\Quick Launch";
 
    }
 
@@ -1172,7 +1172,7 @@ namespace windows
    ::file::path directory_context::userprograms()
    {
 
-      return m_pdirsystem->m_strPrograms;
+      return m_pdirectorysystem->m_strPrograms;
 
    }
 
@@ -1180,7 +1180,7 @@ namespace windows
    ::file::path directory_context::commonprograms()
    {
 
-      return m_pdirsystem->m_strCommonPrograms;
+      return m_pdirectorysystem->m_strCommonPrograms;
 
    }
 
