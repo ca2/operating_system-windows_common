@@ -178,11 +178,11 @@ namespace draw2d_direct2d
 
       auto psession = session();
 
-      auto paurasession = psession->m_paurasession;
+      auto paurasession = psession;
 
       auto puser = paurasession->user();
 
-      auto pwindowing = puser->windowing();
+      auto pwindowing = system()->windowing();
 
       auto pdisplay = pwindowing->display();
 
