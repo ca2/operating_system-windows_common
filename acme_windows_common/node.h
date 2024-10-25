@@ -68,7 +68,7 @@ namespace acme_windows_common
       ::pointer < ::mutex > get_install_mutex(::particle * pparticleContext, const ::string & strPlatform, const ::string & strSuffix) override;
 
 
-//      ::pointer < ::platform::exclusive > _get_exclusive(::particle * pparticleContext, const ::string & strName, const ::security_attributes & securityattributes = nullptr) override;
+//      ::pointer < ::acme::exclusive > _get_exclusive(::particle * pparticleContext, const ::string & strName, const ::security_attributes & securityattributes = nullptr) override;
 
       //virtual bool memcnts();
 
