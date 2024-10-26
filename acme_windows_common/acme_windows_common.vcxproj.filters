@@ -50,13 +50,13 @@
     <ClInclude Include="variant.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="acme_file.h">
+    <ClInclude Include="file_system.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="acme_path.h">
+    <ClInclude Include="path_system.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="acme_directory.h">
+    <ClInclude Include="directory_system.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="exception_translator.h">
@@ -103,13 +103,13 @@
     <ClCompile Include="com.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="acme_file.cpp">
+    <ClCompile Include="file_system.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="acme_path.cpp">
+    <ClCompile Include="path_system.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="acme_directory.cpp">
+    <ClCompile Include="directory_system.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="file.cpp">
