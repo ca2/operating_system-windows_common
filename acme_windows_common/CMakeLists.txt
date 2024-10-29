@@ -7,6 +7,8 @@ list(APPEND library_source
         _.cpp
         _.h
         _factory.cpp
+   bstring.cpp
+   bstring.h
    directory_system.cpp
    directory_system.h
    file_system.cpp

@@ -10,6 +10,8 @@ list(APPEND library_source
    framework.h
    node.cpp
    node.h
+   single_threaded_handler_manager.cpp
+   single_threaded_handler_manager.h
 )
 
 
