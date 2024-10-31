@@ -108,7 +108,18 @@ namespace imaging_wic
 
       }
 
-      hr = piStream->InitializeFromMemory(memory.data(), (::u32)memory.size());
+      const char * pszData = (const char *) memory.data();
+
+      auto size = memory.size();
+
+      if(::is_null(pszData) || size <= 0)
+      {
+
+         return;
+
+      }
+
+      hr = piStream->InitializeFromMemory((WICInProcPointer) pszData, size);
 
       if (FAILED(hr))
       {
