@@ -45,11 +45,11 @@ CREDUIAPI
 BOOL
 WINAPI
 CredPackAuthenticationBufferWfoo(
-_In_ u32                                      dwFlags,
+_In_ unsigned int                                      dwFlags,
 _In_ LPWSTR                                     pszUserName,
 _In_ LPWSTR                                     pszPassword,
 _Out_writes_bytes_opt_(*pcbPackedCredentials) PBYTE   pPackedCredentials,
-_Inout_ u32*                                  pcbPackedCredentials
+_Inout_ unsigned int*                                  pcbPackedCredentials
 );
 
 
@@ -152,7 +152,7 @@ namespace windows
       /*if (!ExitWindowsEx(EWX_REBOOT | EWX_FORCE,
       SHTDN_REASON_MAJOR_SOFTWARE | SHTDN_REASON_MINOR_INSTALLATION))
       {
-      u32 dwLastError = ::GetLastError();
+      unsigned int dwLastError = ::GetLastError();
       return false;
       }*/
       //reset the previlages
@@ -164,7 +164,7 @@ namespace windows
    void os_context::terminate_processes_by_title(const ::string & lpszName)
    {
 
-      u32 uPid;
+      unsigned int uPid;
 
       while(get_pid_by_title(lpszName, uPid))
       {
@@ -172,7 +172,7 @@ namespace windows
          HANDLE hProcess = ::OpenProcess( PROCESS_QUERY_INFORMATION |
                                           PROCESS_VM_READ,
                                           false, uPid);
-         TerminateProcess(hProcess, (::u32) -1);
+         TerminateProcess(hProcess, (unsigned int) -1);
          CloseHandle(hProcess);
          /*::EnumWindows((WNDENUMPROC)
          CKillProcessHelper::TerminateAppEnum,
@@ -192,11 +192,11 @@ namespace windows
       }
    }
 
-   bool os_context::get_pid_by_path(const ::string & lpszName, u32 & dwPid)
+   bool os_context::get_pid_by_path(const ::string & lpszName, unsigned int & dwPid)
    {
       u32_array dwa;
       get_all_processes(dwa);
-      for(i32 i = 0; i < dwa.get_count(); i++)
+      for(int i = 0; i < dwa.get_count(); i++)
       {
          if(get_process_path(dwa[i]).case_insensitive_order(lpszName) == 0)
          {
@@ -207,11 +207,11 @@ namespace windows
       return false;
    }
 
-   bool os_context::get_pid_by_title(const ::string & lpszName, u32 & dwPid)
+   bool os_context::get_pid_by_title(const ::string & lpszName, unsigned int & dwPid)
    {
       u32_array dwa;
       get_all_processes(dwa);
-      for(i32 i = 0; i < dwa.get_count(); i++)
+      for(int i = 0; i < dwa.get_count(); i++)
       {
          if(get_process_path(dwa[i]).title().case_insensitive_order(lpszName) == 0)
          {
@@ -233,7 +233,7 @@ namespace windows
 
 
 
-   ::file::path os_context::get_process_path(u32 dwPid)
+   ::file::path os_context::get_process_path(unsigned int dwPid)
    {
       string strName = ":<unknown>";
       // get a handle to the process.
@@ -269,7 +269,7 @@ namespace windows
    void os_context::get_all_processes(u32_array & ua)
    {
 
-      ASSERT(sizeof(::u32) == sizeof(u32));
+      ASSERT(sizeof(unsigned int) == sizeof(unsigned int));
 
       ua.allocate(0);
 
@@ -280,14 +280,14 @@ namespace windows
 
          ua.allocate(ua.get_count() + 1024);
 
-         if(!EnumProcesses((DWORD *) ua.get_data(), (DWORD) (ua.get_count() * sizeof(::u32)), &cbNeeded))
+         if(!EnumProcesses((DWORD *) ua.get_data(), (DWORD) (ua.get_count() * sizeof(unsigned int)), &cbNeeded))
          {
 
             return;
 
          }
 
-         ua.allocate(cbNeeded / sizeof(u32));
+         ua.allocate(cbNeeded / sizeof(unsigned int));
 
       }
 
@@ -308,7 +308,7 @@ namespace windows
 
          key1.get("DefaultConnectionSettings", mem);
 
-         bool bAutoDetect = (((::u8*)mem.get_data())[8] & 0x08) != 0;
+         bool bAutoDetect = (((unsigned char*)mem.get_data())[8] & 0x08) != 0;
 
          if (!bAutoDetect)
          {
@@ -809,7 +809,7 @@ namespace windows
    struct TOKEN_INFO
    {
       TOKEN_USER tokenUser;
-      ::u8 buffer[SECURITY_MAX_SID_SIZE];
+      unsigned char buffer[SECURITY_MAX_SID_SIZE];
    };
 
 
@@ -830,7 +830,7 @@ namespace windows
             TOKEN_READ,                     // Read access only
             &tokenHandle))                  // Access token handle
       {
-         u32 win32Status = GetLastError();
+         unsigned int win32Status = GetLastError();
          debug_print("Cannot open token handle: %d\n",win32Status);
          bOk = false;
       }
@@ -847,7 +847,7 @@ namespace windows
             sizeof(tokenInfo),        // Size of the buffer
             &bytesReturned))                // Size needed
       {
-         u32 win32Status = GetLastError();
+         unsigned int win32Status = GetLastError();
          debug_print("Cannot query token information: %d\n",win32Status);
          bOk = false;
       }
@@ -959,7 +959,7 @@ namespace windows
    {
 
       HRESULT hr = S_OK;
-      u32   dwResult;
+      unsigned int   dwResult;
       sec_cotaskptr < PVOID > pvInAuthBlob;
       sec_cotaskptr < PVOID > pvAuthBlob;
       CREDUI_INFOW u;
@@ -969,9 +969,9 @@ namespace windows
       WCHAR szDomain[CREDUI_MAX_DOMAIN_TARGET_LENGTH + 1];
 //      TOKEN_INFO ti;
 
-      u32 maxLenName = CREDUI_MAX_USERNAME_LENGTH + 1;
-      u32 maxLenPass = CREDUI_MAX_PASSWORD_LENGTH + 1;
-      u32 maxLenDomain = CREDUI_MAX_DOMAIN_TARGET_LENGTH + 1;
+      unsigned int maxLenName = CREDUI_MAX_USERNAME_LENGTH + 1;
+      unsigned int maxLenPass = CREDUI_MAX_PASSWORD_LENGTH + 1;
+      unsigned int maxLenDomain = CREDUI_MAX_DOMAIN_TARGET_LENGTH + 1;
 
       HICON hicon = nullptr;
 
@@ -982,18 +982,18 @@ namespace windows
 
       // Retrieve the user name and domain name.
       // SID_NAME_USE    SidUse;
-      u32           cchTmpUsername = CREDUI_MAX_USERNAME_LENGTH +1;
-      u32           cchTmpDomain = CREDUI_MAX_DOMAIN_TARGET_LENGTH + 1;
-      u32           cchDomainAndUser = CREDUI_MAX_USERNAME_LENGTH + CREDUI_MAX_DOMAIN_TARGET_LENGTH + 1;
+      unsigned int           cchTmpUsername = CREDUI_MAX_USERNAME_LENGTH +1;
+      unsigned int           cchTmpDomain = CREDUI_MAX_DOMAIN_TARGET_LENGTH + 1;
+      unsigned int           cchDomainAndUser = CREDUI_MAX_USERNAME_LENGTH + CREDUI_MAX_DOMAIN_TARGET_LENGTH + 1;
 
       wstring wstrCaption("\"ca2 : " + strService + "\" Authentication");
       wstring wstrMessage("The Service \"ca2 : " + strService + "\" requires current user password for installing Windows Service.");
 
-      u32 lenUserName = CREDUI_MAX_USERNAME_LENGTH + 1;
+      unsigned int lenUserName = CREDUI_MAX_USERNAME_LENGTH + 1;
 
       //::GetUserNameW(szUsername,&lenUserName);
 
-      u32 dwLastError = 0;
+      unsigned int dwLastError = 0;
 
       bool bOk;
 
@@ -1090,10 +1090,10 @@ retry:
                  &u,             // Customizing information
                  dwLastError,               // Error code to display
                  &ulAuthPackage,  // Authorization package
-                 pvInAuthBlob,    // Credential ::u8 array
+                 pvInAuthBlob,    // Credential unsigned char array
                  pvInAuthBlob.m_size,    // Size of credential input buffer
-                 &pvAuthBlob,     // Output credential ::u8 array
-                 &pvAuthBlob.m_size,     // Size of credential ::u8 array
+                 &pvAuthBlob,     // Output credential unsigned char array
+                 &pvAuthBlob.m_size,     // Size of credential unsigned char array
                  &fSave,          // Select the save check box.
                  //CREDUIWIN_SECURE_PROMPT |
                  CREDUIWIN_IN_CRED_ONLY |
@@ -1235,7 +1235,7 @@ retry:
       if(hdlSCM == 0)
       {
 
-         u32 dwLastError = ::GetLastError();
+         unsigned int dwLastError = ::GetLastError();
 
          return false;
 
@@ -1370,7 +1370,7 @@ retry:
       if(!hdlServ)
       {
 
-         u32 Ret = ::GetLastError();
+         unsigned int Ret = ::GetLastError();
 
          TRACELASTERROR();
 
@@ -1417,7 +1417,7 @@ retry:
 
       if(!hdlServ)
       {
-         u32 Ret = ::GetLastError();
+         unsigned int Ret = ::GetLastError();
          CloseServiceHandle(hdlSCM);
          if(Ret == 1060) // O serviço já não existe. Service already doesn't exist.
             return true; // do self-healing
@@ -1426,7 +1426,7 @@ retry:
 
       if(!::DeleteService(hdlServ))
       {
-         u32 Ret = ::GetLastError();
+         unsigned int Ret = ::GetLastError();
          CloseServiceHandle(hdlServ);
          CloseServiceHandle(hdlSCM);
          return false;
@@ -1530,7 +1530,7 @@ retry:
    }
 
 
-   DECLSPEC_NO_RETURN void os_context::raise_exception( u32 dwExceptionCode, u32 dwExceptionFlags)
+   DECLSPEC_NO_RETURN void os_context::raise_exception( unsigned int dwExceptionCode, unsigned int dwExceptionFlags)
    {
       RaiseException( dwExceptionCode, dwExceptionFlags, 0, nullptr );
    }
@@ -1549,7 +1549,7 @@ retry:
 
    {
 
-      u32 wAttr;
+      unsigned int wAttr;
       FILETIME creationTime;
       FILETIME lastAccessTime;
       FILETIME lastWriteTime;
@@ -1561,24 +1561,24 @@ retry:
 
       wstring wstr(pszFileName);
 
-      if((wAttr = windows_get_file_attributes(pszFileName)) == (u32)-1L)
+      if((wAttr = windows_get_file_attributes(pszFileName)) == (unsigned int)-1L)
       {
 
-         ::file::throw_os_error( (::i32)GetLastError());
+         ::file::throw_os_error( (int)GetLastError());
 
       }
 
-      if ((u32)status.m_attribute != wAttr && (wAttr & ::windows::file::readOnly))
+      if ((unsigned int)status.m_attribute != wAttr && (wAttr & ::windows::file::readOnly))
       {
 
          // set file attribute, only if currently readonly.
          // This way we will be able to modify the time assuming the
          // caller changed the file from readonly.
 
-         if (!SetFileAttributesW(wstr, (u32)status.m_attribute))
+         if (!SetFileAttributesW(wstr, (unsigned int)status.m_attribute))
          {
 
-            ::file::throw_os_error( (::i32)GetLastError());
+            ::file::throw_os_error( (int)GetLastError());
 
          }
 
@@ -1624,7 +1624,7 @@ retry:
       if(hFile == INVALID_HANDLE_VALUE)
       {
 
-         ::file::throw_os_error( (::i32)::GetLastError());
+         ::file::throw_os_error( (int)::GetLastError());
 
       }
 
@@ -1632,24 +1632,24 @@ retry:
 
       {
 
-         ::file::throw_os_error( (::i32)::GetLastError());
+         ::file::throw_os_error( (int)::GetLastError());
 
       }
 
       if(!::CloseHandle(hFile))
       {
 
-         ::file::throw_os_error( (::i32)::GetLastError());
+         ::file::throw_os_error( (int)::GetLastError());
 
       }
 
-      if ((u32)status.m_attribute != wAttr && !(wAttr & ::windows::file::readOnly))
+      if ((unsigned int)status.m_attribute != wAttr && !(wAttr & ::windows::file::readOnly))
       {
 
-         if (!::SetFileAttributesW(wstr, (u32)status.m_attribute))
+         if (!::SetFileAttributesW(wstr, (unsigned int)status.m_attribute))
          {
 
-            ::file::throw_os_error( (::i32)GetLastError());
+            ::file::throw_os_error( (int)GetLastError());
 
          }
 
@@ -1756,7 +1756,7 @@ retry:
 
             HWND hwnd = nullptr;
 
-            u32 fFlags = 0;
+            unsigned int fFlags = 0;
 
             //fFlags |= pinteraction == nullptr ? (SLR_NO_UI | (10 << 16)) : 0;
             fFlags |= SLR_NO_UI;
@@ -2060,7 +2060,7 @@ retry:
 
          ShellExecuteExW(&si);
 
-         //u32 dwLastError = ::GetLastError();
+         //unsigned int dwLastError = ::GetLastError();
 
          //int iResult = (int) si.hInstApp;
 
@@ -2995,7 +2995,7 @@ repeat:
             if (rgSpec.get_size() > 0)
             {
 
-               pfileopen->SetFileTypes(::u32(rgSpec.get_size()), rgSpec.get_data());
+               pfileopen->SetFileTypes(unsigned int(rgSpec.get_size()), rgSpec.get_data());
 
             }
 
@@ -3071,7 +3071,7 @@ repeat:
                      hr = pitema->GetCount(&dwNumItems);  // get number of selected items
 
                      // Loop through IShellItemArray and construct string for display
-                     for (u32 i = 0; i < dwNumItems; i++)
+                     for (unsigned int i = 0; i < dwNumItems; i++)
                      {
                         comptr < IShellItem > pitem;
 
@@ -3241,7 +3241,7 @@ repeat:
             if (rgSpec.get_size() > 0)
             {
 
-               pfilesave->SetFileTypes(::u32 (rgSpec.get_size()), rgSpec.get_data());
+               pfilesave->SetFileTypes(unsigned int (rgSpec.get_size()), rgSpec.get_data());
 
             }
 
@@ -3580,7 +3580,7 @@ repeat:
    void os_context::list_process(::file::path_array & patha, u32_array & uaPid)
    {
 
-      ASSERT(sizeof(::u32) == sizeof(u32));
+      ASSERT(sizeof(unsigned int) == sizeof(unsigned int));
 
       get_all_processes(uaPid);
 

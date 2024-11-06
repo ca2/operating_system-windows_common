@@ -37,18 +37,18 @@ namespace windows
          void close();
 
          
-         void value(void * pvalue, const ::string & pcszValueName, ::u32 & dwType, ::u32 & cbValue);
-         void _value(void * pvalue, const ::string & pcszValueName, ::u32& dwType, ::u32& cbValue);
+         void value(void * pvalue, const ::string & pcszValueName, unsigned int & dwType, unsigned int & cbValue);
+         void _value(void * pvalue, const ::string & pcszValueName, unsigned int& dwType, unsigned int& cbValue);
 
-         void _set_value(const void* pvalue, const ::string & pcszValueName, ::u32 dwType, ::u32 cbValue);
-
-
-         void value_type_and_size(const ::string & pcszValueName, ::u32 & dwType, ::u32 & cbValue);
-         void _value_type_and_size(const ::string & pcszValueName, ::u32& dwType, ::u32& cbValue) { return _value(nullptr, pcszValueName, dwType, cbValue); }
+         void _set_value(const void* pvalue, const ::string & pcszValueName, unsigned int dwType, unsigned int cbValue);
 
 
-         void get(const ::string & pcszValueName, ::u32 & dwValue);
-         void _get(const ::string & pcszValueName, ::u32 & dwValue);
+         void value_type_and_size(const ::string & pcszValueName, unsigned int & dwType, unsigned int & cbValue);
+         void _value_type_and_size(const ::string & pcszValueName, unsigned int& dwType, unsigned int& cbValue) { return _value(nullptr, pcszValueName, dwType, cbValue); }
+
+
+         void get(const ::string & pcszValueName, unsigned int & dwValue);
+         void _get(const ::string & pcszValueName, unsigned int & dwValue);
 
          
          void get(const ::string & pcszValueName, string & strValue);
@@ -62,8 +62,8 @@ namespace windows
          inline ::payload get(const ::string & pcszValueName);
 
 
-         void set(const ::string & pcszValueName, ::u32 dwValue);
-         void _set(const ::string & pcszValueName, ::u32 dwValue);
+         void set(const ::string & pcszValueName, unsigned int dwValue);
+         void _set(const ::string & pcszValueName, unsigned int dwValue);
 
 
          void set(const ::string & pcszValueName, const ::string & strValue);

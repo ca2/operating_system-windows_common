@@ -335,7 +335,7 @@ namespace windows
 
    ::file::listing & directory_context::root_ones(::file::listing & listing)
    {
-      ::u32 dwSize = ::GetLogicalDriveStringsW(0, nullptr);
+      unsigned int dwSize = ::GetLogicalDriveStringsW(0, nullptr);
       ::acme::malloc < LPWSTR > pszAlloc;
 
       pszAlloc.alloc((dwSize + 1) * sizeof(WCHAR));
@@ -411,7 +411,7 @@ namespace windows
 
             ls_dir(dira, listing.m_pathUser);
 
-            for (i32 i = 0; i < dira.get_count(); i++)
+            for (int i = 0; i < dira.get_count(); i++)
             {
 
                ::file::path directory_context = dira[i];
@@ -595,7 +595,7 @@ namespace windows
 
             ls_dir(dira, listing.m_pathUser);
 
-            for (i32 i = 0; i < dira.get_count(); i++)
+            for (int i = 0; i < dira.get_count(); i++)
             {
 
                ::file::path directory_context = dira[i];
@@ -751,7 +751,7 @@ namespace windows
 
       }
 
-      ::u32 dwAttrib;
+      unsigned int dwAttrib;
 
       dwAttrib = windows_get_file_attributes(pcszPath);
 
@@ -807,7 +807,7 @@ namespace windows
 
       }
 
-      ::u32 dwAttrib;
+      unsigned int dwAttrib;
 
       dwAttrib = windows_get_file_attributes(str);
 
@@ -1251,11 +1251,11 @@ namespace windows
    //   VERIFY(FindClose(hFind));
 
    //   // strip attribute of NORMAL bit, our API doesn't have a "normal" bit.
-   //   rStatus.m_attribute = (::u8)(findFileData.dwFileAttributes & ~FILE_ATTRIBUTE_NORMAL);
+   //   rStatus.m_attribute = (unsigned char)(findFileData.dwFileAttributes & ~FILE_ATTRIBUTE_NORMAL);
 
-   //   // get just the low ::u32 of the file size_i32
+   //   // get just the low unsigned int of the file size_i32
    //   ASSERT(findFileData.nFileSizeHigh == 0);
-   //   rStatus.m_size = (::i32)findFileData.nFileSizeLow;
+   //   rStatus.m_size = (int)findFileData.nFileSizeLow;
 
    //   // convert times as appropriate
    //   rStatus.m_ctime = ::earth::time(findFileData.ftCreationTime);

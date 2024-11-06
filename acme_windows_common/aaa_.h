@@ -18,7 +18,7 @@ struct lib_main_int
 
 #ifndef CUBE
 
-CLASS_DECL_ACME int_bool _001DefaultDllMain(hinstance hinstance, ::u32 dwReason, void * pReserved, int iLibMainDebugBox = 0, const lib_main_int & intDelayMs = {});
+CLASS_DECL_ACME int_bool _001DefaultDllMain(hinstance hinstance, unsigned int dwReason, void * pReserved, int iLibMainDebugBox = 0, const lib_main_int & intDelayMs = {});
 
 #endif
 

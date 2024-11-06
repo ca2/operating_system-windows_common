@@ -366,8 +366,8 @@ void task::on_task()
 void task::start(
    ::matter* pmatter,
    ::enum_priority epriority,
-   u32 nStackSize,
-   u32 uCreateFlags)
+   unsigned int nStackSize,
+   unsigned int uCreateFlags)
 {
 
    m_pmatter = pmatter;
@@ -381,8 +381,8 @@ void task::start(
 
 void task::begin_task(
    ::enum_priority epriority,
-   u32 nStackSize,
-   u32 uCreateFlags)
+   unsigned int nStackSize,
+   unsigned int uCreateFlags)
 {
 
    if (m_atom.is_empty())
@@ -484,7 +484,7 @@ void task::begin_task(
 }
 
 
-::task_pointer task::launch(::matter * pmatter, ::enum_priority epriority, ::u32 nStackSize, u32 uCreateFlags)
+::task_pointer task::launch(::matter * pmatter, ::enum_priority epriority, unsigned int nStackSize, unsigned int uCreateFlags)
 {
 
    auto ptask = __allocate task();

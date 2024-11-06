@@ -7,13 +7,13 @@ class CLASS_DECL_ACME shared_memory :
 public:
 
 
-   ::u32                                   m_nAllocFlags;
+   unsigned int                                   m_nAllocFlags;
    HGLOBAL                                m_hGlobalMemory;
    bool                                   m_bAllowGrow;
 
 
    shared_memory(const memory_base & memory);
-   shared_memory(memory_container * pmsc = nullptr, double dAllocationRateUp = 4096, ::u32 nAllocFlags = 0);
+   shared_memory(memory_container * pmsc = nullptr, double dAllocationRateUp = 4096, unsigned int nAllocFlags = 0);
    shared_memory(memory_container * pmsc, void * pMemory, memsize dwSize);
    shared_memory(const void *, memsize iCount);
    virtual ~shared_memory();
@@ -21,14 +21,14 @@ public:
 
    virtual void SetHandle(HGLOBAL hGlobalMemory, bool bAllowGrow = true);
 
-   virtual ::u8 * impl_alloc(memsize nBytes) override;
-   virtual ::u8 * impl_realloc(void * pdata, memsize nBytes) override;
-   virtual void impl_free(::u8 * pMem) override;
+   virtual unsigned char * impl_alloc(memsize nBytes) override;
+   virtual unsigned char * impl_realloc(void * pdata, memsize nBytes) override;
+   virtual void impl_free(unsigned char * pMem) override;
 
 
 
-   ::u8 * detach_shared_memory(HGLOBAL & hglobal);
-   //::u8 * detach(HGLOBAL & hglobal);
+   unsigned char * detach_shared_memory(HGLOBAL & hglobal);
+   //unsigned char * detach(HGLOBAL & hglobal);
 //      virtual bool allocate_internal(memsize dwNewLength);
 
 

@@ -15,7 +15,7 @@ namespace windows
       iptr           m_hsync;
       bool              m_bManualEvent;
       bool              m_bSignaled;  // meaningful only when m_bManualEvent
-      i32           m_iSignalId;  // meaningful only when m_bManualEvent
+      int           m_iSignalId;  // meaningful only when m_bManualEvent
 
 #elif defined(ANDROID)
 

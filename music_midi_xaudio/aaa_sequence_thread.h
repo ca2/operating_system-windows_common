@@ -47,7 +47,7 @@ namespace music
             void _ExecuteCommand(::pointer<::music::midi::player::command>pcommand);
 
             virtual bool initialize_thread() override;
-            virtual i32 exit_instance();
+            virtual int exit_instance();
 
             DECLARE_MESSAGE_HANDLER(OnCommand)
             DECLARE_MESSAGE_HANDLER(OnMidiSequenceEvent)

@@ -24,7 +24,7 @@ namespace draw2d_direct2d
    }
 
 
-   void bitmap::CreateBitmap(::draw2d::graphics* pgraphics, const ::size_i32& sizeParam, ::u32 nPlanes, ::u32 nBitcount, const void * lpBits, int stride)
+   void bitmap::CreateBitmap(::draw2d::graphics* pgraphics, const ::size_i32& sizeParam, unsigned int nPlanes, unsigned int nBitcount, const void * lpBits, int stride)
    {
 
       //::draw2d::lock draw2dlock;
@@ -188,7 +188,7 @@ namespace draw2d_direct2d
    }
 
 
-   void bitmap::CreateDIBitmap(::draw2d::graphics* pgraphics, int cx, int cy, u32 flInit, const void *pjBits, ::u32 iUsage)
+   void bitmap::CreateDIBitmap(::draw2d::graphics* pgraphics, int cx, int cy, unsigned int flInit, const void *pjBits, unsigned int iUsage)
    {
 
       //return false;
@@ -196,14 +196,14 @@ namespace draw2d_direct2d
    }
 
 
-   u32 bitmap::SetBitmapBits(u32 dwCount, const void * lpBits)
+   unsigned int bitmap::SetBitmapBits(unsigned int dwCount, const void * lpBits)
    {
 
       //return ::SetBitmapBits((HBITMAP)get_handle(), dwCount, lpBits);
       return 0;
 
    }
-   u32 bitmap::GetBitmapBits(u32 dwCount, LPVOID lpBits) const
+   unsigned int bitmap::GetBitmapBits(unsigned int dwCount, LPVOID lpBits) const
    {
       //return ::GetBitmapBits((HBITMAP)get_handle(), dwCount, lpBits);
       return 0;
@@ -243,7 +243,7 @@ namespace draw2d_direct2d
    }
 
 
-   bool bitmap::LoadBitmap(::u32 nIDResource)
+   bool bitmap::LoadBitmap(unsigned int nIDResource)
    {
 
       //return Attach(::LoadBitmap(::aura::FindResourceHandle(MAKEINTRESOURCE(nIDResource), RT_BITMAP), MAKEINTRESOURCE(nIDResource)));
@@ -252,7 +252,7 @@ namespace draw2d_direct2d
    }
 
 
-   bool bitmap::LoadOEMBitmap(::u32 nIDBitmap)
+   bool bitmap::LoadOEMBitmap(unsigned int nIDBitmap)
    {
 
       //return Attach(::LoadBitmap(nullptr, MAKEINTRESOURCE(nIDBitmap)));

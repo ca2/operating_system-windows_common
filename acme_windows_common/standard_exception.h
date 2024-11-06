@@ -55,7 +55,7 @@ namespace acme_windows_common
 #ifdef WINDOWS
       EXCEPTION_POINTERS * m_ppointers;
 #else
-      i32            m_iSignal;
+      int            m_iSignal;
       void * m_psiginfo;
 #ifndef ANDROID
       ucontext_t     m_ucontext;
@@ -65,7 +65,7 @@ namespace acme_windows_common
 
 
 
-      u32         code() const { return m_ppointers->ExceptionRecord->ExceptionCode; }
+      unsigned int         code() const { return m_ppointers->ExceptionRecord->ExceptionCode; }
       void * address() const { return m_ppointers->ExceptionRecord->ExceptionAddress; }
       EXCEPTION_POINTERS * info() const { return m_ppointers; }
       const char * name() const { return exception_translator::_get_standard_exception_name(code()); }

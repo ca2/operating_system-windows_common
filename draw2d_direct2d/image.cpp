@@ -391,14 +391,14 @@ namespace draw2d_direct2d
 
       }
 
-      ::u8 * r1 = (::u8*) pimage1->image32();
-      ::u8 * r2 = (::u8*) pimage2->image32();
-      ::u8 * srcM = (::u8*) pimageM->image32();
-      ::u8 * dest = (::u8*) image32();
+      unsigned char * r1 = (unsigned char*) pimage1->image32();
+      unsigned char * r2 = (unsigned char*) pimage2->image32();
+      unsigned char * srcM = (unsigned char*) pimageM->image32();
+      unsigned char * dest = (unsigned char*) image32();
       int iSize = cx * cy;
 
-      ::u8 b;
-      ::u8 bMax;
+      unsigned char b;
+      unsigned char bMax;
       while (iSize-- > 0)
       {
          if (srcM[0] == 255)
@@ -408,11 +408,11 @@ namespace draw2d_direct2d
          else
          {
             bMax = 0;
-            b = (::u8)(r1[0] - r2[0]);
+            b = (unsigned char)(r1[0] - r2[0]);
             bMax = maximum(b, bMax);
-            b = (::u8)(r1[1] - r2[1]);
+            b = (unsigned char)(r1[1] - r2[1]);
             bMax = maximum(b, bMax);
-            b = (::u8)(r1[2] - r2[2]);
+            b = (unsigned char)(r1[2] - r2[2]);
             bMax = maximum(b, bMax);
             bMax = 255 - bMax;
          }
@@ -755,7 +755,7 @@ namespace draw2d_direct2d
    //   double dDiv = cx * cy;
    //   if(dDiv > 0)
    //   {
-   //      ::u8 * lpb = (::u8 *) m_pcolorref;
+   //      unsigned char * lpb = (unsigned char *) m_pcolorref;
    //      for (int y = 0; y < cy; y++)
    //      {
    //         iRLine = 0;
@@ -929,50 +929,50 @@ namespace draw2d_direct2d
    //      return;
    //   }
    //   int iCount = cx * cy;
-   //   ::u8 * lp = ((::u8 *) m_pcolorref);
+   //   unsigned char * lp = ((unsigned char *) m_pcolorref);
    //   int i = 0;
    //   int iCount1 = iCount - iCount % 8;
    //   for(; i < iCount1; i++)
    //   {
-   //      lp[0] /= (::u8) iDivide;
-   //      lp[1] /= (::u8) iDivide;
-   //      lp[2] /= (::u8) iDivide;
+   //      lp[0] /= (unsigned char) iDivide;
+   //      lp[1] /= (unsigned char) iDivide;
+   //      lp[2] /= (unsigned char) iDivide;
 
-   //      lp[4] /= (::u8) iDivide;
-   //      lp[5] /= (::u8) iDivide;
-   //      lp[6] /= (::u8) iDivide;
+   //      lp[4] /= (unsigned char) iDivide;
+   //      lp[5] /= (unsigned char) iDivide;
+   //      lp[6] /= (unsigned char) iDivide;
 
-   //      lp[8] /= (::u8) iDivide;
-   //      lp[9] /= (::u8) iDivide;
-   //      lp[10] /= (::u8) iDivide;
+   //      lp[8] /= (unsigned char) iDivide;
+   //      lp[9] /= (unsigned char) iDivide;
+   //      lp[10] /= (unsigned char) iDivide;
 
-   //      lp[12] /= (::u8) iDivide;
-   //      lp[13] /= (::u8) iDivide;
-   //      lp[14] /= (::u8) iDivide;
+   //      lp[12] /= (unsigned char) iDivide;
+   //      lp[13] /= (unsigned char) iDivide;
+   //      lp[14] /= (unsigned char) iDivide;
 
-   //      lp[16] /= (::u8) iDivide;
-   //      lp[17] /= (::u8) iDivide;
-   //      lp[28] /= (::u8) iDivide;
+   //      lp[16] /= (unsigned char) iDivide;
+   //      lp[17] /= (unsigned char) iDivide;
+   //      lp[28] /= (unsigned char) iDivide;
 
-   //      lp[20] /= (::u8) iDivide;
-   //      lp[21] /= (::u8) iDivide;
-   //      lp[22] /= (::u8) iDivide;
+   //      lp[20] /= (unsigned char) iDivide;
+   //      lp[21] /= (unsigned char) iDivide;
+   //      lp[22] /= (unsigned char) iDivide;
 
-   //      lp[24] /= (::u8) iDivide;
-   //      lp[25] /= (::u8) iDivide;
-   //      lp[26] /= (::u8) iDivide;
+   //      lp[24] /= (unsigned char) iDivide;
+   //      lp[25] /= (unsigned char) iDivide;
+   //      lp[26] /= (unsigned char) iDivide;
 
-   //      lp[28] /= (::u8) iDivide;
-   //      lp[29] /= (::u8) iDivide;
-   //      lp[30] /= (::u8) iDivide;
+   //      lp[28] /= (unsigned char) iDivide;
+   //      lp[29] /= (unsigned char) iDivide;
+   //      lp[30] /= (unsigned char) iDivide;
 
    //      lp += 4 * 8;
    //   }
    //   for(; i < iCount; i++)
    //   {
-   //      lp[0] /= (::u8) iDivide;
-   //      lp[1] /= (::u8) iDivide;
-   //      lp[2] /= (::u8) iDivide;
+   //      lp[0] /= (unsigned char) iDivide;
+   //      lp[1] /= (unsigned char) iDivide;
+   //      lp[2] /= (unsigned char) iDivide;
    //      lp +=4;
    //   }
    //}
@@ -984,13 +984,13 @@ namespace draw2d_direct2d
    //      return;
    //   }
    //   int iCount = cx * cy;
-   //   ::u8 * lp = ((::u8 *) m_pcolorref);
+   //   unsigned char * lp = ((unsigned char *) m_pcolorref);
    //   for(int i = 0; i < iCount; i++)
    //   {
-   //      lp[0] /= (::u8) iDivide;
-   //      lp[1] /= (::u8) iDivide;
-   //      lp[2] /= (::u8) iDivide;
-   //      lp[3] /= (::u8) iDivide;
+   //      lp[0] /= (unsigned char) iDivide;
+   //      lp[1] /= (unsigned char) iDivide;
+   //      lp[2] /= (unsigned char) iDivide;
+   //      lp[3] /= (unsigned char) iDivide;
    //      lp +=4;
    //   }
    //}
@@ -1002,10 +1002,10 @@ namespace draw2d_direct2d
    //      return;
    //   }
    //   int iCount = cx * cy;
-   //   ::u8 * lp = ((::u8 *) m_pcolorref);
+   //   unsigned char * lp = ((unsigned char *) m_pcolorref);
    //   for(int i = 0; i < iCount; i++)
    //   {
-   //      lp[3] /= (::u8) iDivide;
+   //      lp[3] /= (unsigned char) iDivide;
    //      lp +=4;
    //   }
    //}
@@ -1462,7 +1462,7 @@ namespace draw2d_direct2d
    //}
 
 
-   void image::blend(const ::point_i32 & pointDst, ::image::image * pimageSrc, const ::point_i32 & pointSrc, const ::size_i32 & sizeParam, ::u8 bA)
+   void image::blend(const ::point_i32 & pointDst, ::image::image * pimageSrc, const ::point_i32 & pointSrc, const ::size_i32 & sizeParam, unsigned char bA)
    {
 
       //return 

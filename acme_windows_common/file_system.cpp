@@ -375,7 +375,7 @@ namespace acme_windows_common
 
    //   auto path2 = ::g_psystem->m_ppathsystem->defer_process_relative_path(psz2);
 
-   //   const i32 iBufSize = MAX_PATH * 8;
+   //   const int iBufSize = MAX_PATH * 8;
 
    //   wstring pwsz1 = utf8_to_unicode(path1);
 
@@ -389,7 +389,7 @@ namespace acme_windows_common
 
    //   unichar * pwszPath2 = ___new unichar[iBufSize];
 
-   //   i32 iCmp = -1;
+   //   int iCmp = -1;
 
    //   if (GetFullPathNameW(pwsz1, iBufSize, pwszPath1, &pwszFile1))
    //   {
@@ -613,7 +613,7 @@ namespace acme_windows_common
 
    //   memory.set_size(iReadAtMostByteCount);
 
-   //   auto dwRead = ::fread(memory.data(), 1, (u32)iReadAtMostByteCount, file);
+   //   auto dwRead = ::fread(memory.data(), 1, (unsigned int)iReadAtMostByteCount, file);
 
    //   memory.set_size(dwRead);
 

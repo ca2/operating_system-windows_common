@@ -34,7 +34,7 @@ namespace draw2d_directx
       virtual ~path();
 
 
-      virtual bool create(::draw2d::graphics * pgraphics, i8 iCreate) override;
+      virtual bool create(::draw2d::graphics * pgraphics, char iCreate) override;
       virtual void destroy() override;
 
 

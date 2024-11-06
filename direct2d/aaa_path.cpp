@@ -162,7 +162,7 @@ namespace draw2d_direct2d
 
       comptr < IDWriteTextLayout> textLayout;
 
-      pfactory->CreateTextLayout(szOutline, (::u32) szOutline.length(),(IDWriteTextFormat *)pfont->get_os_data(pgraphics),1024 * 1024,1024 * 1024,&textLayout);
+      pfactory->CreateTextLayout(szOutline, (unsigned int) szOutline.length(),(IDWriteTextFormat *)pfont->get_os_data(pgraphics),1024 * 1024,1024 * 1024,&textLayout);
 
       comptr < IDWriteTextRenderer > textRenderer;
 
@@ -289,7 +289,7 @@ namespace draw2d_direct2d
    }
 
 
-   bool path::create(::draw2d::graphics* pgraphicsParam, ::i8 iCreate)
+   bool path::create(::draw2d::graphics* pgraphicsParam, char iCreate)
    {
 
       auto pgraphics = __graphics(pgraphicsParam);
@@ -342,7 +342,7 @@ namespace draw2d_direct2d
 
       _set_create(pgraphics);
 
-      /*for(i32 i = 0; i < m_elementa.get_count(); i++)
+      /*for(int i = 0; i < m_elementa.get_count(); i++)
       {
 
          if (m_elementa.ptr_at(i))
@@ -452,10 +452,10 @@ namespace draw2d_direct2d
 
       //::rectangle_f64 rectangle;
 
-      //rectangle.left()      = (::i32) (arc.m_pointCenter.x() - arc.m_sizeRadius.cx());
-      //rectangle.right()     = (::i32) (arc.m_pointCenter.x() + arc.m_sizeRadius.cx());
-      //rectangle.top()       = (::i32) (arc.m_pointCenter.y() - arc.m_sizeRadius.cy());
-      //rectangle.bottom()    = (::i32) (arc.m_pointCenter.y() + arc.m_sizeRadius.cy());
+      //rectangle.left()      = (int) (arc.m_pointCenter.x() - arc.m_sizeRadius.cx());
+      //rectangle.right()     = (int) (arc.m_pointCenter.x() + arc.m_sizeRadius.cx());
+      //rectangle.top()       = (int) (arc.m_pointCenter.y() - arc.m_sizeRadius.cy());
+      //rectangle.bottom()    = (int) (arc.m_pointCenter.y() + arc.m_sizeRadius.cy());
 
       //bool bOk = internal_add_arc(pgraphics, parc);
 
@@ -639,10 +639,10 @@ namespace draw2d_direct2d
 
    //   //::rectangle_f64 rectangle;
 
-   //   //rectangle.left()      = (::i32) (arc.m_pointCenter.x() - arc.m_sizeRadius.cx());
-   //   //rectangle.right()     = (::i32) (arc.m_pointCenter.x() + arc.m_sizeRadius.cx());
-   //   //rectangle.top()       = (::i32) (arc.m_pointCenter.y() - arc.m_sizeRadius.cy());
-   //   //rectangle.bottom()    = (::i32) (arc.m_pointCenter.y() + arc.m_sizeRadius.cy());
+   //   //rectangle.left()      = (int) (arc.m_pointCenter.x() - arc.m_sizeRadius.cx());
+   //   //rectangle.right()     = (int) (arc.m_pointCenter.x() + arc.m_sizeRadius.cx());
+   //   //rectangle.top()       = (int) (arc.m_pointCenter.y() - arc.m_sizeRadius.cy());
+   //   //rectangle.bottom()    = (int) (arc.m_pointCenter.y() + arc.m_sizeRadius.cy());
 
    //   //bool bOk = internal_add_arc(pgraphics, parc);
 
@@ -739,7 +739,7 @@ public:
 private:
    DWORD cRefCount_;
    FLOAT m_pixelsPerDip;   // Number of pixels per DIP.
-   ::u32 m_ref;
+   unsigned int m_ref;
 };
 
 

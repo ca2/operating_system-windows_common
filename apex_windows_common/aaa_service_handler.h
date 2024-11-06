@@ -22,21 +22,21 @@ namespace windows
       DWORD m_dwStopTimeout;
       
 
-      service_handler(u32 controlsAccepted = SERVICE_ACCEPT_PAUSE_CONTINUE | SERVICE_ACCEPT_STOP | SERVICE_ACCEPT_SHUTDOWN);
+      service_handler(unsigned int controlsAccepted = SERVICE_ACCEPT_PAUSE_CONTINUE | SERVICE_ACCEPT_STOP | SERVICE_ACCEPT_SHUTDOWN);
       virtual ~service_handler();
 
 
-      virtual void control_start(u32 uControl);
+      virtual void control_start(unsigned int uControl);
 
-      virtual void control_stop(u32 uControl);
+      virtual void control_stop(unsigned int uControl);
 
       virtual void _server();
 
       virtual void SetServiceStatus();
 
-      virtual void update_state(u32 state, HRESULT errorCode = S_OK);
+      virtual void update_state(unsigned int state, HRESULT errorCode = S_OK);
 
-      //virtual void _main_server(::u32 argumentCount, wchar_t * arguments);
+      //virtual void _main_server(unsigned int argumentCount, wchar_t * arguments);
 
       static void WINAPI ServiceMain(DWORD argumentCount, PWSTR * arguments);
 
@@ -48,7 +48,7 @@ namespace windows
       
       static void serve(service * pservice);
 
-      virtual void _main_server(::u32 argumentCount, PWSTR * arguments);
+      virtual void _main_server(unsigned int argumentCount, PWSTR * arguments);
 
       virtual void defer_service();
 

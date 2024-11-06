@@ -4,7 +4,7 @@
 #ifdef UNIVERSAL_WINDOWS
 [MTAThread]
 #endif
-int_bool WINAPI DllMain(HINSTANCE hInstance, ::u32 dwReason, LPVOID pReserved)
+int_bool WINAPI DllMain(HINSTANCE hInstance, unsigned int dwReason, LPVOID pReserved)
 
 {
 

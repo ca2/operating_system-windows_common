@@ -145,7 +145,7 @@ namespace acme_windows_common
 
       auto timeStart = ::time::now();
 
-      //::u32 dwFileSharingViolationRetryTimeout = ::get_task() != nullptr ? ::get_task()->get_file_sharing_violation_timeout_total_milliseconds() : 0;
+      //unsigned int dwFileSharingViolationRetryTimeout = ::get_task() != nullptr ? ::get_task()->get_file_sharing_violation_timeout_total_milliseconds() : 0;
 
    retry:
 
@@ -245,7 +245,7 @@ namespace acme_windows_common
       //if (m_iCharacterPutBack != I32_MINIMUM)
       //{
 
-      //   ((::u8 *)pdata)[0] = (::u8)m_iCharacterPutBack;
+      //   ((unsigned char *)pdata)[0] = (unsigned char)m_iCharacterPutBack;
 
       //   m_iCharacterPutBack = I32_MINIMUM;
 
@@ -263,7 +263,7 @@ namespace acme_windows_common
 
       //}
 
-      auto data = (::u8 *) p;
+      auto data = (unsigned char *) p;
 
       ASSERT(::is_set(data));
 
@@ -448,7 +448,7 @@ namespace acme_windows_common
       ASSERT(m_file.is_ok());
 
       //bool bError = false;
-      //::u32 dwLastError = 0;
+      //unsigned int dwLastError = 0;
       //m_dwAccessMode = 0;
 
       m_eopen = ::file::e_open_none;
@@ -664,7 +664,7 @@ namespace acme_windows_common
       else
       {
 
-         filestatus.m_attribute = (::u8)information.dwFileAttributes & 0xff;
+         filestatus.m_attribute = (unsigned char)information.dwFileAttributes & 0xff;
 
       }
 
@@ -773,7 +773,7 @@ bool CLASS_DECL_ACME_WINDOWS_COMMON window_get_full_path(wstring & wstrFullPath,
    // first, fully qualify the path name
    unichar * pszFilePart;
 
-   strsize dwLen = GetFullPathNameW(wstrPath, (::u32)dwAllocLen, pwszFullPath, &pszFilePart);
+   strsize dwLen = GetFullPathNameW(wstrPath, (unsigned int)dwAllocLen, pwszFullPath, &pszFilePart);
 
    wstrFullPath.release_buffer();
 
@@ -793,7 +793,7 @@ bool CLASS_DECL_ACME_WINDOWS_COMMON window_get_full_path(wstring & wstrFullPath,
 
       dwAllocLen = dwLen + _MAX_PATH;
 
-      dwLen = GetFullPathNameW(wstrPath, (::u32)dwAllocLen, pwszFullPath, &pszFilePart);
+      dwLen = GetFullPathNameW(wstrPath, (unsigned int)dwAllocLen, pwszFullPath, &pszFilePart);
 
       wstrFullPath.release_buffer();
 
@@ -858,7 +858,7 @@ bool CLASS_DECL_ACME_WINDOWS_COMMON window_get_full_path(wstring & wstrFullPath,
 
             auto pwsz = wstrFullPath.get_buffer(iFilePart + iLenFileName + 32); // arrange more space with more 32 extra wchars
 
-            wcsncpy(pwsz, wstrBackup, (i32)iFilePart);
+            wcsncpy(pwsz, wstrBackup, (int)iFilePart);
 
             wstrFullPath.release_buffer();
 

@@ -13,7 +13,7 @@ namespace windows
    ///				it monitors only the specified directory
    ///  \lparam		filter filter conditions that satisfy a machine notification wait
    ///				can take values described by enum filter
-   file_change_event::file_change_event(::matter * pobject, const ::string & path, bool watchsubtree, u32 filter) :
+   file_change_event::file_change_event(::matter * pobject, const ::string & path, bool watchsubtree, unsigned int filter) :
       synchronization_object(::FindFirstChangeNotificationW(utf8_to_unicode(path), watchsubtree, filter))
    {
       if (hsync() == nullptr)
@@ -29,7 +29,7 @@ namespace windows
    bool file_change_event::lock(const duration & durationTimeout)
    {
 
-      u32 dwRet = ::WaitForSingleObject(hsync(), durationTimeout.u32_millis());
+      unsigned int dwRet = ::WaitForSingleObject(hsync(), durationTimeout.u32_millis());
 
       if (dwRet == WAIT_OBJECT_0 || dwRet == WAIT_ABANDONED)
       {
@@ -74,7 +74,7 @@ namespace windows
    synchronization_result file_change_event::wait(const duration & duration)
    {
 
-      return synchronization_result((u32) ::WaitForSingleObject(hsync(), duration.u32_millis()));
+      return synchronization_result((unsigned int) ::WaitForSingleObject(hsync(), duration.u32_millis()));
 
    }
 

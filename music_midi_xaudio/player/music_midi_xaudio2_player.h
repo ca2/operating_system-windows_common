@@ -48,11 +48,11 @@ namespace music
 
                void SendMmsgDone(::music::midi::sequence *pSeq, ::music::midi::LPMIDIDONEDATA lpmdd);
                void SetCallbackWindow(::pointer<::user::interaction>puie);
-               bool Play(double dRate = 0.0, u32 dwEllapse = 584);
-               bool Play(class ::time tickStart, u32 dwEllapse = 584);
+               bool Play(double dRate = 0.0, unsigned int dwEllapse = 584);
+               bool Play(class ::time tickStart, unsigned int dwEllapse = 584);
 
                virtual bool initialize_thread() override;
-               virtual i32 exit_instance();
+               virtual int exit_instance();
                virtual void pre_translate_message(::message::message * pmessage);
                void OnMmsgDone(::music::midi::sequence *pSeq);
                DECLARE_MESSAGE_HANDLER(OnUserMessage)
@@ -61,17 +61,17 @@ namespace music
                void Pause();
                void CloseFile();
                void SendReset();
-               bool ExecuteCommand(::music::midi::player::enum_command ecommand, u32 dwEllapse);
+               bool ExecuteCommand(::music::midi::player::enum_command ecommand, unsigned int dwEllapse);
                virtual void OnMidiOutDeviceChange();
 
-               u32 GetMidiOutDevice();
+               unsigned int GetMidiOutDevice();
                void PostNotifyEvent(::music::midi::player::e_notify_event eevent);
 
                class ::time RateToTicks(double dRate);
 
-               bool SetTempoShift(i32 iTempoShift);
+               bool SetTempoShift(int iTempoShift);
 
-               bool SetMidiOutDevice(u32 uiDevice);
+               bool SetMidiOutDevice(unsigned int uiDevice);
 
                void     SetInterface(player_interface * pinterface);
 

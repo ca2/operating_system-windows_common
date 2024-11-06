@@ -3,7 +3,7 @@
 
 #define  VERSION_MINOR              0x00
 #define  VERSION_MAJOR              0x04
-#define  SEQ_VERSION                ((u32)(::u16)((::u8)VERSION_MINOR | (((::u16)(::u8)VERSION_MAJOR) << 8)))
+#define  SEQ_VERSION                ((unsigned int)(unsigned short)((unsigned char)VERSION_MINOR | (((unsigned short)(unsigned char)VERSION_MAJOR) << 8)))
 
 #define MMSG_DONE                   (WM_USER+20)
 
@@ -55,7 +55,7 @@ namespace music
 
                bool IsPrepared();
                void Reset();
-               void Initialize(i32 iSize, uptr dwUser);
+               void Initialize(int iSize, uptr dwUser);
 
                //void     midiStreamOut(HMIDISTRM hmidiout);
                //void     midiOutPrepareHeader(HMIDIOUT hmidiout);
@@ -77,7 +77,7 @@ namespace music
 
 
                void Reset();
-               void Initialize(i32 iCount, i32 iSize, uptr dwUser);
+               void Initialize(int iCount, int iSize, uptr dwUser);
 
 
      /*          void     midiStreamOut(HMIDISTRM hmidiout);
@@ -111,36 +111,36 @@ namespace music
             virtual ~sequence();
 
 
-            inline u32 GetState();
-            inline u32 GetPreviousState();
-            u32 SetState(u32 uiState);
+            inline unsigned int GetState();
+            inline unsigned int GetPreviousState();
+            unsigned int SetState(unsigned int uiState);
 
             void SetSpecialModeV001Flag(bool bSet = true);
 
-            void MuteAll(bool bMute = true, i32 iExcludeTrack = -1);
-            void MuteTrack(i32 iIndex, bool bMute = true);
+            void MuteAll(bool bMute = true, int iExcludeTrack = -1);
+            void MuteTrack(int iIndex, bool bMute = true);
 
 
-            virtual i32 GetDefaultCodePage();
+            virtual int GetDefaultCodePage();
 
             void Prepare(::ikaraoke::data & data);
-            void Prepare(i32 iTrack, ::ikaraoke::data & data);
+            void Prepare(int iTrack, ::ikaraoke::data & data);
             void Prepare(
             string_array_array & straa,
             imedia_position_2darray & tickaaTokensTicks,
-            i32 iMelodyTrack,
+            int iMelodyTrack,
             int2a & ia2TokenLine,
             ::ikaraoke::data & data);
 
             ::duration GetPositionTicks();
-            void SetLevelMeter(i32 iLevel);
+            void SetLevelMeter(int iLevel);
             void     CloseStream();
-            bool SetMidiOutDevice(u32 uiDevice);
-            i32 SetKeyShift(i32 iKeyShift);
-            i32 GetKeyShift();
+            bool SetMidiOutDevice(unsigned int uiDevice);
+            int SetKeyShift(int iKeyShift);
+            int GetKeyShift();
 
             void on_midi_playback_end(::music::midi::sequence::event * pevent);
-            i32 SetTempoShift(i32 iTempoShift);
+            int SetTempoShift(int iTempoShift);
 
             void OnPositionCB(LPMIDIHDR lpmidihdr);
             void OnDone(HMIDISTRM hmidistream, LPMIDIHDR lpmidihdr);
@@ -159,7 +159,7 @@ namespace music
             virtual void SetTempoChangeFlag(bool bSet = true);
             virtual bool IsChangingTempo();
 
-            virtual i32 GetTempoShift();
+            virtual int GetTempoShift();
             virtual void GetMidiDoneData(::music::midi::LPMIDIDONEDATA lpmdd);
             virtual bool IsInSpecialModeV001();
             virtual bool WasInSpecialModeV001();
@@ -172,11 +172,11 @@ namespace music
 
             VOID FreeBuffers();
 
-            //void     OpenFile(const ::string & lpFileName, i32 openMode);
-            void     OpenFile(::music::midi::sequence & sequence, i32 iOpenMode);
-            void     OpenFile(::file::file & ar, i32 openMode);
-            void     OpenFile(const ::string & lpFileName, i32 openMode);
-            void     OpenFile(memory * pmemorystorage, i32 openMode, ::music::e_storage estorage);
+            //void     OpenFile(const ::string & lpFileName, int openMode);
+            void     OpenFile(::music::midi::sequence & sequence, int iOpenMode);
+            void     OpenFile(::file::file & ar, int openMode);
+            void     OpenFile(const ::string & lpFileName, int openMode);
+            void     OpenFile(memory * pmemorystorage, int openMode, ::music::e_storage estorage);
 
             void     CloseFile();
             void     SaveFile(const ::string & lpFileName);
@@ -190,7 +190,7 @@ namespace music
 
             void     Restart();
 
-            //void     Stop(u32 dwEllapse);
+            //void     Stop(unsigned int dwEllapse);
             void     Stop();
 
             void get_position(::duration  & time);
@@ -206,7 +206,7 @@ namespace music
 
             bool IsPlaying();
 
-            static void CALLBACK MidiOutProc(HMIDIOUT hmo, ::u32 wMsg, DWORD_PTR dwInstance, DWORD_PTR dwParam1, DWORD_PTR dwParam2);
+            static void CALLBACK MidiOutProc(HMIDIOUT hmo, unsigned int wMsg, DWORD_PTR dwInstance, DWORD_PTR dwParam1, DWORD_PTR dwParam2);
 
 
             bool IsSettingPosition();

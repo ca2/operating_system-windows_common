@@ -11,7 +11,7 @@ extern CLASS_DECL_ACME const unichar gen_WndControlBar[]; // controls with gray 
 extern CLASS_DECL_ACME const unichar gen_WndMDIFrame[];
 extern CLASS_DECL_ACME const unichar gen_WndFrameOrView[];
 extern CLASS_DECL_ACME const unichar gen_WndOleControl[];
-CLASS_DECL_ACME bool __is_combo_box_control(::windowing::window * pwindow, ::u32 nStyle);
+CLASS_DECL_ACME bool __is_combo_box_control(::windowing::window * pwindow, unsigned int nStyle);
 CLASS_DECL_ACME bool __check_center_dialog(const ::string & pszResource);
 
 CLASS_DECL_ACME bool __compare_class_name(::windowing::window * pwindow, const ::string & pszClassName);

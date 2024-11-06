@@ -18,7 +18,7 @@
 //
 //#else
 //
-//   usleep((::u32)usec);
+//   usleep((unsigned int)usec);
 //
 //   return true;
 //

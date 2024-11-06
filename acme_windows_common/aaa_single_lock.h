@@ -18,7 +18,7 @@ public:
    synchronization_result wait();
    synchronization_result wait(const duration & duration);
    bool unlock();
-   bool unlock(::i32 lCount, ::i32 * lPrevCount = nullptr);
+   bool unlock(int lCount, int * lPrevCount = nullptr);
    bool IsLocked();
 
 

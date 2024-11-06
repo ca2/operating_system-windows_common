@@ -15,7 +15,7 @@ public:
    bstring() { m_bstr = nullptr; }
    bstring(const OLECHAR * sz) { m_bstr = allocate_string(sz); }
 
-   bstring(const char * psz, int len = -1) { m_bstr = ::is_null(psz) ? nullptr : string_byte_len(psz, len < 0 ? (::u32) strlen(psz) : len); }
+   bstring(const char * psz, int len = -1) { m_bstr = ::is_null(psz) ? nullptr : string_byte_len(psz, len < 0 ? (unsigned int) strlen(psz) : len); }
 
    ~bstring() { if(m_bstr) allocate_string(m_bstr); m_bstr = nullptr; }
 
@@ -33,14 +33,14 @@ public:
 
    static void free_string(BSTR bstr);
 
-   inline static ::u32 SysStringByteLen(BSTR bstr)
+   inline static unsigned int SysStringByteLen(BSTR bstr)
    {
       if (bstr == 0)
          return 0;
-      return *((::u32 *)bstr - 1);
+      return *((unsigned int *)bstr - 1);
    }
 
-   inline static ::u32 SysStringLen(BSTR bstr)
+   inline static unsigned int SysStringLen(BSTR bstr)
    {
       return SysStringByteLen(bstr) / sizeof(OLECHAR);
    }

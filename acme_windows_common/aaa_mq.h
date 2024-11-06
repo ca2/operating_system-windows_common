@@ -76,8 +76,8 @@ public:
    message_queue();
    virtual ~message_queue();
 
-   int_bool peek_message(MESSAGE * pMsg, oswindow oswindow, ::u32 wMsgFilterMin, ::u32 wMsgFilterMax, ::u32 wRemoveMsg);
-   int_bool get_message(MESSAGE * pMsg, oswindow oswindow, ::u32 wMsgFilterMin, ::u32 wMsgFilterMax);
+   int_bool peek_message(MESSAGE * pMsg, oswindow oswindow, unsigned int wMsgFilterMin, unsigned int wMsgFilterMax, unsigned int wRemoveMsg);
+   int_bool get_message(MESSAGE * pMsg, oswindow oswindow, unsigned int wMsgFilterMin, unsigned int wMsgFilterMax);
    int_bool post_message(oswindow oswindow, const ::atom & atom, WPARAM wParam, LPARAM lParam);
    int_bool post_message(const mq_message & message);
 

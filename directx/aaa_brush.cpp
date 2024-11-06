@@ -29,7 +29,7 @@ namespace draw2d_directx
    }
 
 
-   bool brush::create(::draw2d::graphics* pgraphicsParam, ::i8 iCreate)
+   bool brush::create(::draw2d::graphics* pgraphicsParam, char iCreate)
    {
 
       auto pgraphics = __graphics(pgraphicsParam);

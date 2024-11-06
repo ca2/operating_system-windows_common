@@ -73,7 +73,7 @@ namespace acme_windows_common
    //
    //         key.open(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize");
    //
-   //         ::u32 dw;
+   //         unsigned int dw;
    //
    //         auto estatus = key._get("AppsUseLightTheme", dw);
    //
@@ -114,7 +114,7 @@ namespace acme_windows_common
    //
    //         key.open(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize");
    //
-   //         ::u32 dw;
+   //         unsigned int dw;
    //
    //         auto estatus = key._get("SystemUseLightTheme", dw);
    //
@@ -171,7 +171,7 @@ namespace acme_windows_common
    //   }
    //
    //   
-   //   void node::set_console_colors(::u32 dwScreenColors, ::u32 dwPopupColors, ::u32 dwWindowAlpha)
+   //   void node::set_console_colors(unsigned int dwScreenColors, unsigned int dwPopupColors, unsigned int dwWindowAlpha)
    //   {
    //
    //      ::acme_windows::registry::key key(HKEY_CURRENT_USER, "Console", true);
@@ -189,7 +189,7 @@ namespace acme_windows_common
    //
    //      ::acme_windows::registry::key key(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", true);
    //
-   //      ::u32 dwSystemUseLightTheme;
+   //      unsigned int dwSystemUseLightTheme;
    //      if (bSet)
    //      {
    //         dwSystemUseLightTheme = 0;
@@ -210,7 +210,7 @@ namespace acme_windows_common
    //
    //      ::acme_windows::registry::key key(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", true);
    //
-   //      ::u32 dwAppsUseLightTheme;
+   //      unsigned int dwAppsUseLightTheme;
    //      if (bSet)
    //      {
    //         dwAppsUseLightTheme = 0;
@@ -240,7 +240,7 @@ namespace acme_windows_common
    //
    //         DYNAMIC_TIME_ZONE_INFORMATION i = {};
    //
-   //         ::u32 dw = GetDynamicTimeZoneInformation(&i);
+   //         unsigned int dw = GetDynamicTimeZoneInformation(&i);
    //
    //         if (dw == TIME_ZONE_ID_STANDARD)
    //         {
@@ -586,11 +586,11 @@ namespace acme_windows_common
       //{
       //   ::file::path str = directory_system()->system() / "CrashDumps" / strModuleNameWithTheExeExtension;
       //   wstring wstr = str;
-      //   RegSetValueExW(k.m_hkey, L"DumpFolder", 0, REG_EXPAND_SZ, (::u8*)wstr.c_str(), ::u32((wcslen(wstr) + 1) * sizeof(wchar_t)));
-      //   ::u32 dw = 10;
-      //   RegSetValueExW(k.m_hkey, L"DumpCount", 0, REG_DWORD, (::u8*)&dw, sizeof(dw));
+      //   RegSetValueExW(k.m_hkey, L"DumpFolder", 0, REG_EXPAND_SZ, (unsigned char*)wstr.c_str(), unsigned int((wcslen(wstr) + 1) * sizeof(wchar_t)));
+      //   unsigned int dw = 10;
+      //   RegSetValueExW(k.m_hkey, L"DumpCount", 0, REG_DWORD, (unsigned char*)&dw, sizeof(dw));
       //   dw = 2;
-      //   RegSetValueExW(k.m_hkey, L"DumpType", 0, REG_DWORD, (::u8*)&dw, sizeof(dw));
+      //   RegSetValueExW(k.m_hkey, L"DumpType", 0, REG_DWORD, (unsigned char*)&dw, sizeof(dw));
 
       //}
 

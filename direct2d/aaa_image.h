@@ -44,7 +44,7 @@ namespace draw2d_direct2d
       virtual bool _draw_raw(const ::rectangle_i32 & rectangleTarget, ::image::image * pimage, const ::point_i32 & pointSrc) override;
 
 
-      virtual void SetIconMask(::image::icon * picon, i32 cx, i32 cy) override;
+      virtual void SetIconMask(::image::icon * picon, int cx, int cy) override;
 
 
       virtual bool defer_realize(::draw2d::graphics * pgraphics) const;
@@ -53,7 +53,7 @@ namespace draw2d_direct2d
       virtual bool is_realized() const;
 
       using ::image::blend;
-      virtual bool blend(const ::point_i32 & pointDst, ::image::image * pimageSrc, const ::point_i32 & pointSrc, const ::size_i32 & size, ::u8 bA) override;
+      virtual bool blend(const ::point_i32 & pointDst, ::image::image * pimageSrc, const ::point_i32 & pointSrc, const ::size_i32 & size, unsigned char bA) override;
 
       using ::image::tint;
       virtual bool tint(::image::image * pimage, const ::color::color & color32) override;

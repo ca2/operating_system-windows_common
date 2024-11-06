@@ -6,7 +6,7 @@
 
 //#include "exception.h"
 
-string get_error_message(::u32 dwError);
+string get_error_message(unsigned int dwError);
 
 
 //CLASS_DECL_APEX_WINDOWS_COMMON bool __initialize();
@@ -33,9 +33,9 @@ string get_error_message(::u32 dwError);
 
 
 //void CLASS_DECL_APEX_WINDOWS_COMMON __cdecl _ca2_purecall();
-//void CLASS_DECL_APEX_WINDOWS_COMMON __cdecl _null_se_translator(u32 uiCode, EXCEPTION_POINTERS * ppointers);
+//void CLASS_DECL_APEX_WINDOWS_COMMON __cdecl _null_se_translator(unsigned int uiCode, EXCEPTION_POINTERS * ppointers);
 //bool CLASS_DECL_APEX_WINDOWS_COMMON __windows_init();
-i32 CLASS_DECL_APEX_WINDOWS_COMMON __windows_main(::apex::system * psystem, ::create * pmaininitdata);
+int CLASS_DECL_APEX_WINDOWS_COMMON __windows_main(::apex::system * psystem, ::create * pmaininitdata);
 
 
 
@@ -58,7 +58,7 @@ i32 CLASS_DECL_APEX_WINDOWS_COMMON __windows_main(::apex::system * psystem, ::cr
 
 ///////////////////////////////////////////////////////////////////////////////
 //// locale-invariant comparison helpers till CRT gets that support
-//inline i32 __invariant_stricmp(const ::string &pszLeft, const ::string &pszRight)
+//inline int __invariant_stricmp(const ::string &pszLeft, const ::string &pszRight)
 //{
 //#ifdef WINDOWS_DESKTOP
 //   return ::CompareStringA(MAKELCID(MAKELANGID(LANG_ENGLISH,SUBLANG_ENGLISH_US),SORT_DEFAULT),
@@ -72,7 +72,7 @@ i32 CLASS_DECL_APEX_WINDOWS_COMMON __windows_main(::apex::system * psystem, ::cr
 //#endif
 //}
 //
-//inline i32 __invariant_stricmp(const unichar *pwszLeft,const unichar *pwszRight)
+//inline int __invariant_stricmp(const unichar *pwszLeft,const unichar *pwszRight)
 //{
 //#ifdef WINDOWS_DESKTOP
 //   return ::CompareStringW(MAKELCID(MAKELANGID(LANG_ENGLISH,SUBLANG_ENGLISH_US),SORT_DEFAULT),
@@ -91,8 +91,8 @@ i32 CLASS_DECL_APEX_WINDOWS_COMMON __windows_main(::apex::system * psystem, ::cr
 
 #define __set_dialog_control_id(oswindow, nID)     SetWindowLong(oswindow, GWL_ID, nID)
 #define __set_dialog_control_id_(oswindow, nID)     oswindow->SetWindowLong(GWL_ID, nID)
-#define __get_dialog_control_id(oswindow)         ((::u32)(::u16)::GetDlgCtrlID(oswindow))
-#define __get_dialog_control_id_(oswindow)         ((::u32)(::u16)oswindow->GetDlgCtrlId())
+#define __get_dialog_control_id(oswindow)         ((unsigned int)(unsigned short)::GetDlgCtrlID(oswindow))
+#define __get_dialog_control_id_(oswindow)         ((unsigned int)(unsigned short)oswindow->GetDlgCtrlId())
 
 
 //#include "pipe.h"
@@ -115,24 +115,24 @@ i32 CLASS_DECL_APEX_WINDOWS_COMMON __windows_main(::apex::system * psystem, ::cr
 //
 //   class windows
 //   {
-//      i32 function();
+//      int function();
 //   };
 //
 //   CLASS_DECL_APEX_WINDOWS_COMMON HINSTANCE   load_library(const ::string & psz);
 //
-//   CLASS_DECL_APEX_WINDOWS_COMMON bool        shell_get_special_folder_path(::windowing::window * pwindow,::file::path &str,i32 csidl,bool fCreate);
-//   CLASS_DECL_APEX_WINDOWS_COMMON ::file::path  shell_get_special_folder_path(i32 csidl, bool fCreate = true, ::windowing::window * pwindow = nullptr);
-//   CLASS_DECL_APEX_WINDOWS_COMMON ::u32       get_file_attributes(const ::string & pFileName);
+//   CLASS_DECL_APEX_WINDOWS_COMMON bool        shell_get_special_folder_path(::windowing::window * pwindow,::file::path &str,int csidl,bool fCreate);
+//   CLASS_DECL_APEX_WINDOWS_COMMON ::file::path  shell_get_special_folder_path(int csidl, bool fCreate = true, ::windowing::window * pwindow = nullptr);
+//   CLASS_DECL_APEX_WINDOWS_COMMON unsigned int       get_file_attributes(const ::string & pFileName);
 //
-//   CLASS_DECL_APEX_WINDOWS_COMMON ::u32       get_current_directory(string & str);
-//   CLASS_DECL_APEX_WINDOWS_COMMON ::u32       get_temp_path(string & str);
-//   CLASS_DECL_APEX_WINDOWS_COMMON ::i32        reg_query_value(HKEY hkey, const ::string & pszSubKey,string & str);
+//   CLASS_DECL_APEX_WINDOWS_COMMON unsigned int       get_current_directory(string & str);
+//   CLASS_DECL_APEX_WINDOWS_COMMON unsigned int       get_temp_path(string & str);
+//   CLASS_DECL_APEX_WINDOWS_COMMON int        reg_query_value(HKEY hkey, const ::string & pszSubKey,string & str);
 //
-//   CLASS_DECL_APEX_WINDOWS_COMMON HICON       extract_icon(HINSTANCE hInst, const ::string & pszExeFileName,::u32 nIconIndex);
+//   CLASS_DECL_APEX_WINDOWS_COMMON HICON       extract_icon(HINSTANCE hInst, const ::string & pszExeFileName,unsigned int nIconIndex);
 //
 //   CLASS_DECL_APEX_WINDOWS_COMMON bool        delete_file(const ::string & pFileName);
 //
-//   CLASS_DECL_APEX_WINDOWS_COMMON i32     get_menu_string(HMENU hMenu,::u32 uDItem,string & str,::u32 flags);
+//   CLASS_DECL_APEX_WINDOWS_COMMON int     get_menu_string(HMENU hMenu,unsigned int uDItem,string & str,unsigned int flags);
 //   CLASS_DECL_APEX_WINDOWS_COMMON void        time_to_filetime(::particle * pparticle,const ::earth::time& time,LPFILETIME pFileTime);
 //
 //
@@ -142,19 +142,19 @@ i32 CLASS_DECL_APEX_WINDOWS_COMMON __windows_main(::apex::system * psystem, ::cr
 //
 //
 //
-//CLASS_DECL_APEX_WINDOWS_COMMON ::i32 delete_registry_tree_helper(HKEY hParentKey,const ::string & strKeyName);
+//CLASS_DECL_APEX_WINDOWS_COMMON int delete_registry_tree_helper(HKEY hParentKey,const ::string & strKeyName);
 //
 //
 //CLASS_DECL_APEX_WINDOWS_COMMON HINSTANCE __get_resource_handle();
 //CLASS_DECL_APEX_WINDOWS_COMMON void __set_resource_handle(HINSTANCE hInstResource);
 //
 //CLASS_DECL_APEX_WINDOWS_COMMON HINSTANCE __get_resource_handle();
-//CLASS_DECL_APEX_WINDOWS_COMMON HINSTANCE __find_string_resource_handle(::u32 nID);
+//CLASS_DECL_APEX_WINDOWS_COMMON HINSTANCE __find_string_resource_handle(unsigned int nID);
 //
 
 CLASS_DECL_APEX_WINDOWS_COMMON ::pointer<::apex::application>__get_app();
 
-CLASS_DECL_APEX_WINDOWS_COMMON i32 app_main(::apex::system * psystem, HINSTANCE hInstance, HINSTANCE hPrevInstance, char * pCmdLine, ::e_display edisplay);
+CLASS_DECL_APEX_WINDOWS_COMMON int app_main(::apex::system * psystem, HINSTANCE hInstance, HINSTANCE hPrevInstance, char * pCmdLine, ::e_display edisplay);
 
 
 

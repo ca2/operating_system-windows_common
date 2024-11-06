@@ -24,10 +24,10 @@ namespace multimedia
          virtual ~source();
 
 
-         void     mixerGetLineInfo(u32 dwSource, u32 dwDestination, u32 fdwInfo);
-         void     mixerGetLineInfo(u32 dwSource, ::audio_mixer::destination * pdestination);
+         void     mixerGetLineInfo(unsigned int dwSource, unsigned int dwDestination, unsigned int fdwInfo);
+         void     mixerGetLineInfo(unsigned int dwSource, ::audio_mixer::destination * pdestination);
 
-         u32 GetLineID();
+         unsigned int GetLineID();
          virtual string get_name();
          void update_all_controls();
          MIXERLINECONTROLS & get_mixer_line_controls();
@@ -41,7 +41,7 @@ namespace multimedia
 
          void OnMixerLineChange();
          //void OnArrayReallocation(void *pNewPointer);
-         //void     GetControl(u32 dwControlType, u32 dwControlFlags, ::audio_mixer::control ** ppControl);
+         //void     GetControl(unsigned int dwControlType, unsigned int dwControlFlags, ::audio_mixer::control ** ppControl);
          void     GetLineControls();
 
          inline bool HasV001Controls();

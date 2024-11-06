@@ -157,7 +157,7 @@ namespace windows
 
          DWORD_PTR dwptr;
 
-         if (!::SendMessageTimeout((HWND)get_hwnd(), WM_COPYDATA, (WPARAM)0, (LPARAM)&cds, SMTO_ABORTIFHUNG, (::u32)(durationTimeout.u32_millis()), &dwptr))
+         if (!::SendMessageTimeout((HWND)get_hwnd(), WM_COPYDATA, (WPARAM)0, (LPARAM)&cds, SMTO_ABORTIFHUNG, (unsigned int)(durationTimeout.u32_millis()), &dwptr))
          {
 
             return false;
@@ -212,7 +212,7 @@ namespace windows
 
          DWORD_PTR dwptr;
 
-         if (!::SendMessageTimeout((HWND)get_hwnd(), WM_COPYDATA, (WPARAM)0, (LPARAM)&cds, SMTO_BLOCK, (::u32)(durationTimeout.u32_millis()), &dwptr))
+         if (!::SendMessageTimeout((HWND)get_hwnd(), WM_COPYDATA, (WPARAM)0, (LPARAM)&cds, SMTO_BLOCK, (unsigned int)(durationTimeout.u32_millis()), &dwptr))
          {
 
             return false;

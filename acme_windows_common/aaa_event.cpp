@@ -59,7 +59,7 @@ event::event(char * sz, bool bInitiallyOwn, bool bManualReset, const ::string & 
 
 #elif defined(UNIVERSAL_WINDOWS)
 
-   u32 dwFlags = 0;
+   unsigned int dwFlags = 0;
 
    if(bInitiallyOwn)
    {
@@ -99,7 +99,7 @@ event::event(char * sz, bool bInitiallyOwn, bool bManualReset, const ::string & 
       pthread_mutexattr_t  attr;
       pthread_mutexattr_init(&attr);
       pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
-      i32 rc;
+      int rc;
       m_mutex = ___new pthread_mutex_t;
       if((rc = pthread_mutex_init((pthread_mutex_t *) m_mutex,&attr)))
       {
@@ -168,7 +168,7 @@ event::event(char * sz, bool bInitiallyOwn, bool bManualReset, const ::string & 
 
       }
 
-      semctl((i32) m_sem, 0, SETVAL, semctl_arg);
+      semctl((int) m_sem, 0, SETVAL, semctl_arg);
 
    }
 
@@ -285,7 +285,7 @@ bool event::SetEvent()
       sb.sem_num  = 0;
       sb.sem_flg  = m_bManualEvent ? 0 : SEM_UNDO;
 
-      return semop((i32) m_sem, &sb, 1) == 0;
+      return semop((int) m_sem, &sb, 1) == 0;
 
    }
 
@@ -314,7 +314,7 @@ bool event::SetEvent()
 //   sb.sem_num  = 0;
 //   sb.sem_flg  = SEM_UNDO;
 //
-//   return semop((i32) m_hsync, &sb, 1) == 0;
+//   return semop((int) m_hsync, &sb, 1) == 0;
 //
 //#endif
 //
@@ -435,7 +435,7 @@ synchronization_result event::wait ()
    if(m_bManualEvent)
    {
 
-      i32 iSignal = m_iSignalId;
+      int iSignal = m_iSignalId;
 
       while(!m_bSignaled && iSignal == m_iSignalId)
       {
@@ -482,7 +482,7 @@ synchronization_result event::wait ()
       sb.sem_num  = 0;
       sb.sem_flg  = 0;
 
-      semop((i32) m_sem, &sb, 1);
+      semop((int) m_sem, &sb, 1);
 
    }
 
@@ -535,7 +535,7 @@ synchronization_result event::wait (const duration & durationTimeout)
 
    auto osduration = durationTimeout.u32_millis();
 
-   result = synchronization_result((u32) ::WaitForSingleObjectEx(hsync(), osduration,false));
+   result = synchronization_result((unsigned int) ::WaitForSingleObjectEx(hsync(), osduration,false));
 
 #elif defined(ANDROID)
 
@@ -555,7 +555,7 @@ synchronization_result event::wait (const duration & durationTimeout)
    if(m_bManualEvent)
    {
 
-      i32 iSignal = m_iSignalId;
+      int iSignal = m_iSignalId;
 
       while(!m_bSignaled && iSignal == m_iSignalId)
       {
@@ -598,7 +598,7 @@ synchronization_result event::wait (const duration & durationTimeout)
          while(!m_bSignaled && iSignal == m_iSignalId)
          {
 
-            i32 error = pthread_cond_wait((pthread_cond_t *) m_pcond, (pthread_mutex_t *) m_mutex);
+            int error = pthread_cond_wait((pthread_cond_t *) m_pcond, (pthread_mutex_t *) m_mutex);
 
             if(error != 0)
             {
@@ -647,7 +647,7 @@ synchronization_result event::wait (const duration & durationTimeout)
          while(!m_bSignaled && iSignal == m_iSignalId)
          {
 
-            i32 error = pthread_cond_timedwait((pthread_cond_t *) m_pcond, (pthread_mutex_t *) m_mutex, &abstime);
+            int error = pthread_cond_timedwait((pthread_cond_t *) m_pcond, (pthread_mutex_t *) m_mutex, &abstime);
 
             if(error == EBUSY || error == ETIMEDOUT)
             {
@@ -679,7 +679,7 @@ synchronization_result event::wait (const duration & durationTimeout)
 
       delay.tv_nsec = 1000 * 1000;
 
-      u32 timeout = durationTimeout.u32_millis();
+      unsigned int timeout = durationTimeout.u32_millis();
 
       auto start = ::duration::now();
 
@@ -693,7 +693,7 @@ synchronization_result event::wait (const duration & durationTimeout)
          sb.sem_num  = 0;
          sb.sem_flg  = IPC_NOWAIT;
 
-         i32 ret = semop((i32) m_sem, &sb, 1);
+         int ret = semop((int) m_sem, &sb, 1);
 
          if(ret < 0)
          {
@@ -795,7 +795,7 @@ bool event::is_signaled() const
       sb.sem_num  = 0;
       sb.sem_flg  = IPC_NOWAIT;
 
-      i32 ret = semop((i32) m_sem, &sb, 1);
+      int ret = semop((int) m_sem, &sb, 1);
 
       if(ret < 0)
       {
@@ -835,7 +835,7 @@ bool event::lock(const duration & durationTimeout)
 
 //#ifdef WINDOWS
 //
-//   u32 dwRet = ::WaitForSingleObjectEx((HANDLE)m_hsync,durationTimeout.u32_millis(),false);
+//   unsigned int dwRet = ::WaitForSingleObjectEx((HANDLE)m_hsync,durationTimeout.u32_millis(),false);
 //
 //   if (dwRet == WAIT_OBJECT_0 || dwRet == WAIT_ABANDONED)
 //      return true;
@@ -852,7 +852,7 @@ bool event::lock(const duration & durationTimeout)
 //   if(m_bManualEvent)
 //   {
 //
-//      i32 iSignal = m_iSignalId;
+//      int iSignal = m_iSignalId;
 //
 //      while(!m_bSignaled && iSignal == m_iSignalId)
 //      {
@@ -899,9 +899,9 @@ bool event::lock(const duration & durationTimeout)
 //   else
 //   {
 //
-//      u32 timeout = durationTimeout.u32_millis();
+//      unsigned int timeout = durationTimeout.u32_millis();
 //
-//      u32 start= ::duration::now();
+//      unsigned int start= ::duration::now();
 //
 //      while(start.elapsed() < timeout)
 //      {
@@ -912,7 +912,7 @@ bool event::lock(const duration & durationTimeout)
 //         sb.sem_num  = 0;
 //         sb.sem_flg  = IPC_NOWAIT;
 //
-//         i32 ret = semop((i32) m_hsync, &sb, 1);
+//         int ret = semop((int) m_hsync, &sb, 1);
 //
 //         if(ret < 0)
 //         {

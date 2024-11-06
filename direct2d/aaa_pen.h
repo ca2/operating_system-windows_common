@@ -23,12 +23,12 @@ namespace draw2d_direct2d
 
 
       virtual void destroy() override;
-      virtual bool create(::draw2d::graphics * pgraphics, i8 iCreate) override;
+      virtual bool create(::draw2d::graphics * pgraphics, char iCreate) override;
 
       /*virtual void construct(int nPenStyle, double nWidth, color32_t crColor);
-      virtual void construct(int nPenStyle, double nWidth, const LOGBRUSH* pLogBrush, int nStyleCount = 0, const ::u32* lpStyle = nullptr);
+      virtual void construct(int nPenStyle, double nWidth, const LOGBRUSH* pLogBrush, int nStyleCount = 0, const unsigned int* lpStyle = nullptr);
       bool CreatePen(int nPenStyle, double nWidth, color32_t crColor);
-      bool CreatePen(int nPenStyle, double nWidth, const LOGBRUSH* pLogBrush, int nStyleCount = 0, const ::u32* lpStyle = nullptr);*/
+      bool CreatePen(int nPenStyle, double nWidth, const LOGBRUSH* pLogBrush, int nStyleCount = 0, const unsigned int* lpStyle = nullptr);*/
 
       //virtual bool create_solid(::draw2d::graphics * pgraphics, double dWidth, color32_t crColor);
 

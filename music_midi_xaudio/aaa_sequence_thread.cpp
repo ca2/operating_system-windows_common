@@ -30,7 +30,7 @@ namespace music
             return true;
          }
 
-         i32 sequence_thread::exit_thread()
+         int sequence_thread::exit_thread()
          {
             return thread::exit_thread();
          }
@@ -244,7 +244,7 @@ namespace music
             ::math::math::MaxClip(&dRate, 1.0);
             ::math::math::MinClip(&dRate,  0.0);
 
-            preroll.tickBase = (::duration) (i32) ((double) get_sequence()->m_tkLength * dRate);
+            preroll.tickBase = (::duration) (int) ((double) get_sequence()->m_tkLength * dRate);
             preroll.tickEnd  = get_sequence()->m_tkLength;
 
             get_sequence()->SetMidiOutDevice(m_pplayer->GetMidiOutDevice());

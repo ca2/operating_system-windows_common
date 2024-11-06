@@ -31,7 +31,7 @@ namespace multimedia
 
 
          static LRESULT CALLBACK MessageProc(
-            i32 code,       // hook code
+            int code,       // hook code
             WPARAM wParam,  // undefined
             LPARAM lParam   // address of structure with message data
             );
@@ -40,8 +40,8 @@ namespace multimedia
          void install_message_routing(::channel * pchannel);
 
          virtual bool initialize_thread() override;
-         virtual i32 exit_instance();
-         virtual bool on_idle(::i32 lCount);
+         virtual int exit_instance();
+         virtual bool on_idle(int lCount);
          virtual void pre_translate_message(::message::message * pmessage);
 
 

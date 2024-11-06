@@ -77,13 +77,13 @@
 //
 //
 //
-//int_bool message_queue::get_message(MESSAGE * pMsg, oswindow oswindow, ::u32 wMsgFilterMin, ::u32 wMsgFilterMax)
+//int_bool message_queue::get_message(MESSAGE * pMsg, oswindow oswindow, unsigned int wMsgFilterMin, unsigned int wMsgFilterMax)
 //{
 //
 //   if (wMsgFilterMax == 0)
 //   {
 //
-//      wMsgFilterMax = (::u32)-1;
+//      wMsgFilterMax = (unsigned int)-1;
 //
 //   }
 //
@@ -92,7 +92,7 @@
 //   while (true)
 //   {
 //
-//      for (i32 i = 0; i < m_messagea.get_count();)
+//      for (int i = 0; i < m_messagea.get_count();)
 //      {
 //
 //         auto & msg = m_messagea[i];
@@ -164,13 +164,13 @@
 //}
 //
 //
-//int_bool message_queue::peek_message(MESSAGE * pMsg, oswindow oswindow,::u32 wMsgFilterMin,::u32 wMsgFilterMax,::u32 wRemoveMsg)
+//int_bool message_queue::peek_message(MESSAGE * pMsg, oswindow oswindow,unsigned int wMsgFilterMin,unsigned int wMsgFilterMax,unsigned int wRemoveMsg)
 //{
 //
 //   if(wMsgFilterMax == 0)
 //   {
 //
-//      wMsgFilterMax = (::u32)-1;
+//      wMsgFilterMax = (unsigned int)-1;
 //
 //   }
 //
@@ -178,7 +178,7 @@
 //
 //   ::collection::count count = m_messagea.get_count();
 //
-//   for(i32 i = 0; i < count; i++)
+//   for(int i = 0; i < count; i++)
 //   {
 //
 //      MESSAGE & msg = m_messagea[i].m_message;
@@ -394,7 +394,7 @@
 //
 //
 //
-//CLASS_DECL_ACME int_bool mq_peek_message(MESSAGE * pMsg, oswindow oswindow, ::u32 wMsgFilterMin, ::u32 wMsgFilterMax, ::u32 wRemoveMsg)
+//CLASS_DECL_ACME int_bool mq_peek_message(MESSAGE * pMsg, oswindow oswindow, unsigned int wMsgFilterMin, unsigned int wMsgFilterMax, unsigned int wRemoveMsg)
 //{
 //
 //   auto pmq = ::aaa_get_message_queue(::current_itask(), false);
@@ -418,7 +418,7 @@
 //}
 //
 //
-//CLASS_DECL_ACME int_bool mq_get_message(MESSAGE * pMsg, oswindow oswindow, ::u32 wMsgFilterMin, ::u32 wMsgFilterMax)
+//CLASS_DECL_ACME int_bool mq_get_message(MESSAGE * pMsg, oswindow oswindow, unsigned int wMsgFilterMin, unsigned int wMsgFilterMax)
 //{
 //
 //   auto pmq = ::aaa_get_message_queue(::current_itask(), true);

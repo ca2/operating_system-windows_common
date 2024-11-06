@@ -21,12 +21,12 @@ namespace draw2d_direct2d
 
       operator HPALETTE() const;
       int GetEntryCount();
-      ::u32 GetPaletteEntries(::u32 nStartIndex, ::u32 nNumEntries, LPPALETTEENTRY lpPaletteColors) const;
-      ::u32 SetPaletteEntries(::u32 nStartIndex, ::u32 nNumEntries, LPPALETTEENTRY lpPaletteColors);
+      unsigned int GetPaletteEntries(unsigned int nStartIndex, unsigned int nNumEntries, LPPALETTEENTRY lpPaletteColors) const;
+      unsigned int SetPaletteEntries(unsigned int nStartIndex, unsigned int nNumEntries, LPPALETTEENTRY lpPaletteColors);
 
-      void AnimatePalette(::u32 nStartIndex, ::u32 nNumEntries, LPPALETTEENTRY lpPaletteColors);
-      ::u32 GetNearestPaletteIndex(color32_t crColor) const;
-      bool ResizePalette(::u32 nNumEntries);
+      void AnimatePalette(unsigned int nStartIndex, unsigned int nNumEntries, LPPALETTEENTRY lpPaletteColors);
+      unsigned int GetNearestPaletteIndex(color32_t crColor) const;
+      bool ResizePalette(unsigned int nNumEntries);
 
 
    };

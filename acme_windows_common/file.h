@@ -56,7 +56,7 @@ namespace acme_windows_common
       };*/
 
       ::windows::file            m_file;
-      //::u32                      m_dwAccessMode;
+      //unsigned int                      m_dwAccessMode;
       ::windows_path             m_windowspath;
       //int               m_iCharacterPutBack;
 

@@ -25,10 +25,10 @@ namespace windows
 
       virtual void terminate_processes_by_title(const ::string & lpszName) override;
       //virtual ::file::path get_module_path(HMODULE hmodule) override;
-      virtual bool get_pid_by_path(const ::string & lpszName, u32 & dwPid) override;
-      virtual bool get_pid_by_title(const ::string & lpszName, u32 & dwPid) override;
+      virtual bool get_pid_by_path(const ::string & lpszName, unsigned int & dwPid) override;
+      virtual bool get_pid_by_title(const ::string & lpszName, unsigned int & dwPid) override;
       virtual void get_all_processes(u32_array & dwa) override;
-      virtual ::file::path get_process_path(u32 dwPid) override;
+      virtual ::file::path get_process_path(unsigned int dwPid) override;
 
       virtual int get_pid() override;
 
@@ -83,7 +83,7 @@ namespace windows
       virtual bool resolve_lnk_link(::file::path & path, const ::string & strSource, string * pstrDirectory = nullptr, string * pstrParams = nullptr);
 
 
-      DECLSPEC_NO_RETURN void raise_exception(u32 dwExceptionCode, u32 dwExceptionFlags);
+      DECLSPEC_NO_RETURN void raise_exception(unsigned int dwExceptionCode, unsigned int dwExceptionFlags);
 
       virtual bool is_remote_session() override;
 

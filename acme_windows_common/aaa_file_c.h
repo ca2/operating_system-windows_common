@@ -25,11 +25,11 @@ using HANDLE = void *;
 
 //CLASS_DECL_ACME hfile hfile_create(
 //const char *            pFileName,
-//::u32                   dwDesiredAccess,
-//::u32                   dwShareMode,
+//unsigned int                   dwDesiredAccess,
+//unsigned int                   dwShareMode,
 //void *                  pSecurityAttributes,
-//::u32                   dwCreationDisposition,
-//::u32                   dwFlagsAndAttributes,
+//unsigned int                   dwCreationDisposition,
+//unsigned int                   dwFlagsAndAttributes,
 //HANDLE                  hTemplateFile
 //);
 //

@@ -48,7 +48,7 @@ namespace acme_windows_common
    }
 
 
-   void __cdecl exception_translator::filter2(u32 uiCode, EXCEPTION_POINTERS* ppointers)
+   void __cdecl exception_translator::filter2(unsigned int uiCode, EXCEPTION_POINTERS* ppointers)
    {
 
       if (g_bExiting)
@@ -98,9 +98,9 @@ namespace acme_windows_common
 
 //#ifndef WINDOWS
 //
-//      void filter_sigsegv(i32 signal, siginfo_t* psiginfo, void* pc);
-//      void filter_sigfpe(i32 signal, siginfo_t* psiginfo, void* pc);
-//      void filter_sigpipe(i32 signal, siginfo_t* psiginfo, void* pc);
+//      void filter_sigsegv(int signal, siginfo_t* psiginfo, void* pc);
+//      void filter_sigfpe(int signal, siginfo_t* psiginfo, void* pc);
+//      void filter_sigpipe(int signal, siginfo_t* psiginfo, void* pc);
 //
 //#endif
 
@@ -222,7 +222,7 @@ namespace acme_windows_common
    }
 
 
-   void exception_translator::filter(u32 uiCode, EXCEPTION_POINTERS* ppointers)
+   void exception_translator::filter(unsigned int uiCode, EXCEPTION_POINTERS* ppointers)
    {
 
       __UNREFERENCED_PARAMETER(uiCode);
@@ -257,7 +257,7 @@ namespace acme_windows_common
    }
 
 
-   //string exception_translator::_get_standard_exception_name(u32 uiCode)
+   //string exception_translator::_get_standard_exception_name(unsigned int uiCode)
    //{
 
    //   auto pszName = _get_standard_exception_name(uiCode);
@@ -267,7 +267,7 @@ namespace acme_windows_common
    //}
 
 
-   //string exception_translator::_get_standard_exception_description(u32 uiCode)
+   //string exception_translator::_get_standard_exception_description(unsigned int uiCode)
    //{
 
    //   auto pszDescription= _get_standard_exception_description(uiCode);
@@ -277,7 +277,7 @@ namespace acme_windows_common
    //}
 
 
-   const char * exception_translator::_get_standard_exception_name(u32 uiCode)
+   const char * exception_translator::_get_standard_exception_name(unsigned int uiCode)
    {
 
       const char * pszName = nullptr;
@@ -321,7 +321,7 @@ namespace acme_windows_common
    }
 
 
-   const char * exception_translator::_get_standard_exception_description(u32 uiCode)
+   const char * exception_translator::_get_standard_exception_description(unsigned int uiCode)
    {
 
       const char* pszDescription = nullptr;
@@ -337,7 +337,7 @@ namespace acme_windows_common
          pszDescription = "The thread attempted to read from or write to a virtual address for which it does not have the appropriate access";
          break;
       case EXCEPTION_DATATYPE_MISALIGNMENT:
-         pszDescription = "The thread attempted to read or write data that is misaligned on hardware that does not provide alignment. For example, 16-bit values must be aligned on 2-::u8 boundaries, 32-bit values on 4-::u8 boundaries, and so on";
+         pszDescription = "The thread attempted to read or write data that is misaligned on hardware that does not provide alignment. For example, 16-bit values must be aligned on 2-unsigned char boundaries, 32-bit values on 4-unsigned char boundaries, and so on";
          break;
       case EXCEPTION_BREAKPOINT:
          pszDescription = "A breakpoint was encountered";

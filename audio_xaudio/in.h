@@ -30,13 +30,13 @@ namespace multimedia
 
          void in_initialize_encoder() override;
 
-         virtual void     in_add_buffer(i32 iBuffer);
+         virtual void     in_add_buffer(int iBuffer);
          //virtual void     in_add_buffer(LPWAVEHDR lpwavehdr);
 
          //HWAVEIN in_get_safe_HWAVEIN();
          virtual void * get_os_data();
 
-         void in_open(i32 iBufferCount, i32 iBufferSampleCount);
+         void in_open(int iBufferCount, int iBufferSampleCount);
          void in_close() override;
          void in_stop() override;
          void in_start() override;
@@ -48,7 +48,7 @@ namespace multimedia
          void term_task() override;
          virtual void pre_translate_message(::message::message * pmessage);
 
-         //static void CALLBACK in_proc(HWAVEIN hwi, ::u32 uMsg, ::u32 dwInstance, ::u32 dwParam1, ::u32 dwParam2);
+         //static void CALLBACK in_proc(HWAVEIN hwi, unsigned int uMsg, unsigned int dwInstance, unsigned int dwParam1, unsigned int dwParam2);
 
          WAVEFORMATEX * wave_format();
          //LPWAVEHDR wave_hdr(int iBuffer);

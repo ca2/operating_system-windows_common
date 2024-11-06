@@ -1,7 +1,7 @@
 #pragma once
 
 
-typedef u32 THREAD_PROC(void * p);
+typedef unsigned int THREAD_PROC(void * p);
 
 typedef THREAD_PROC * thread_proc;
 
@@ -11,8 +11,8 @@ typedef THREAD_PROC * thread_proc;
 //thread_proc proc,
 //void * p,
 //::enum_priority epriority = ::e_priority_normal,
-//::u32 nStackSize = 0,
-//u32 uiCreateFlags = 0,
+//unsigned int nStackSize = 0,
+//unsigned int uiCreateFlags = 0,
 //LPSECURITY_ATTRIBUTES psa = nullptr,
 //
 //itask_t * puiId = nullptr);
@@ -148,7 +148,7 @@ inline synchronization_result wait(synchronization_object * psync,const duration
 ///  \lparam    waitableItem item to wait for (item can be thread, event, socket, file, semaphore, ...)
 ///  \lparam    duration time period to wait for item (default: infinite)
 ///  \return   result of waiting action as defined in synchronization_result
-synchronization_result wait(i32 numberOfItems, synchronization_object * psync, const duration & duration = duration::infinite(),bool waitForAll = false);
+synchronization_result wait(int numberOfItems, synchronization_object * psync, const duration & duration = duration::infinite(),bool waitForAll = false);
 
 #else
 

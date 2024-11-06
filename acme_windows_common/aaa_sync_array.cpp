@@ -83,7 +83,7 @@ bool synchronization_array::add_item(synchronization_object * psync)
    if (hsync != nullptr && hsync != INVALID_HSYNC_VALUE)
    {
 
-      m_byteaSyncIndex[m_hsyncaCache.get_size()] = (::u8) m_synchronizationa.get_size();
+      m_byteaSyncIndex[m_hsyncaCache.get_size()] = (unsigned char) m_synchronizationa.get_size();
 
       m_hsyncaCache.add(hsync);
 
@@ -181,7 +181,7 @@ synchronization_result synchronization_array::wait(bool waitForAll, const durati
 
    }
 
-   u32 winResult;
+   unsigned int winResult;
 
    if (m_synchronizationa.size() == m_hsyncaCache.size())
    {
@@ -193,7 +193,7 @@ synchronization_result synchronization_array::wait(bool waitForAll, const durati
 
          auto ::duration = duration.u32_millis();
 
-         winResult = ::MsgWaitForMultipleObjectsEx((u32)m_hsyncaCache.size(), m_hsyncaCache.get_data(), ::duration, QS_ALLEVENTS, waitForAll ? MWMO_WAITALL : 0);
+         winResult = ::MsgWaitForMultipleObjectsEx((unsigned int)m_hsyncaCache.size(), m_hsyncaCache.get_data(), ::duration, QS_ALLEVENTS, waitForAll ? MWMO_WAITALL : 0);
 
       }
       else
@@ -202,7 +202,7 @@ synchronization_result synchronization_array::wait(bool waitForAll, const durati
 
          auto ::duration = duration.u32_millis();
 
-         ::u32 uCount = (u32)m_hsyncaCache.size();
+         unsigned int uCount = (unsigned int)m_hsyncaCache.size();
 
          auto psynca = m_hsyncaCache.get_data();
 
@@ -243,14 +243,14 @@ synchronization_result synchronization_array::wait(bool waitForAll, const durati
          if (bWaitMessageQueue)
          {
 
-            winResult = ::MsgWaitForMultipleObjectsEx((u32)m_hsyncaCache.size(), m_hsyncaCache.get_data(),  __os(duration - start.elapsed()), QS_ALLEVENTS, waitForAll ? MWMO_WAITALL : 0);
+            winResult = ::MsgWaitForMultipleObjectsEx((unsigned int)m_hsyncaCache.size(), m_hsyncaCache.get_data(),  __os(duration - start.elapsed()), QS_ALLEVENTS, waitForAll ? MWMO_WAITALL : 0);
 
          }
          else
 #endif
          {
 
-            winResult = ::WaitForMultipleObjectsEx((u32)m_hsyncaCache.size(), m_hsyncaCache.get_data(), waitForAll, __os(duration - start.elapsed()), true);
+            winResult = ::WaitForMultipleObjectsEx((unsigned int)m_hsyncaCache.size(), m_hsyncaCache.get_data(), waitForAll, __os(duration - start.elapsed()), true);
 
          }
 
@@ -288,18 +288,18 @@ synchronization_result synchronization_array::wait(bool waitForAll, const durati
       //      {
       //         if(m_waitableelementa[position].m_psynccallback)
       //         {
-      //            i32 res = ::WaitForSingleObjectEx(m_synchronizationa[position], 0, false);
+      //            int res = ::WaitForSingleObjectEx(m_synchronizationa[position], 0, false);
 
       //            if ( res != WAIT_TIMEOUT )
       //               m_waitableelementa[position].m_psynccallback->on_sync(m_waitableelementa[position].m_psync);
       //         }
       //         else if(!FoundExternal)
       //         {
-      //            i32 res = ::WaitForSingleObjectEx(m_synchronizationa[position], 0, false);
+      //            int res = ::WaitForSingleObjectEx(m_synchronizationa[position], 0, false);
 
       //            if ( res != WAIT_TIMEOUT )
       //            {
-      //               winResult= (u32) (res + position);
+      //               winResult= (unsigned int) (res + position);
       //               FoundExternal=true;
       //            }
       //         }
@@ -338,10 +338,10 @@ synchronization_result synchronization_array::contains( const synchronization_re
    //{
    //   if(!m_waitableelementa[position].m_psynccallback)
    //   {
-   //      i32 res = ::WaitForSingleObjectEx(m_synchronizationa[position], 0, false);
+   //      int res = ::WaitForSingleObjectEx(m_synchronizationa[position], 0, false);
    //      if ( res == WAIT_TIMEOUT )
    //         continue;
-   //      return synchronization_result( static_cast<i32>(position), m_synchronizationa.get_size() );
+   //      return synchronization_result( static_cast<int>(position), m_synchronizationa.get_size() );
    //   }
    //}
 

@@ -74,15 +74,15 @@ public:
 
    virtual void begin_task(
       ::enum_priority epriority = e_priority_normal,
-      u32 nStackSize = 0,
-      u32 dwCreateFlags = 0);
+      unsigned int nStackSize = 0,
+      unsigned int dwCreateFlags = 0);
 
 
    virtual void start(
       ::matter* pmatter,
       ::enum_priority epriority = e_priority_normal,
-      u32 nStackSize = 0,
-      u32 dwCreateFlags = 0);
+      unsigned int nStackSize = 0,
+      unsigned int dwCreateFlags = 0);
 
 
 
@@ -103,8 +103,8 @@ public:
    static ::task_pointer launch(
       ::matter* pmatter,
       ::enum_priority epriority = e_priority_normal,
-      u32 nStackSize = 0,
-      u32 dwCreateFlags = 0);
+      unsigned int nStackSize = 0,
+      unsigned int dwCreateFlags = 0);
 
 
    virtual ::object * thread_parent();

@@ -63,7 +63,7 @@
 
 
 
-//string FormatMessageFromSystem(u32 dwError)
+//string FormatMessageFromSystem(unsigned int dwError)
 //{
 //
 //   return ::get_last_error_message(dwError);

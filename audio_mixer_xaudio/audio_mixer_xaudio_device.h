@@ -31,14 +31,14 @@ namespace multimedia
          void MapDlgCtrlIDToLineControls(::audio_mixer::source * pSource);
          void MapDlgCtrlIDToControls();
          void MapLineControls(::audio_mixer::source * pSource);
-         void OnMixerControlChange(u32 dwControlID);
-         void OnMixerLineChange(u32 dwLineID);
+         void OnMixerControlChange(unsigned int dwControlID);
+         void OnMixerLineChange(unsigned int dwLineID);
          void map_lines();
          void map_controls();
          void     get_destination(::audio_mixer::e_destination edestination, ::audio_mixer::destination ** ppDestination);
          void     initialize_destinations();
          void     initialize_capabilities();
-         void     open(u32 uiMixerId, u32 dwCallback, u32 dwInstance, u32 fdwOpen);
+         void     open(unsigned int uiMixerId, unsigned int dwCallback, unsigned int dwInstance, unsigned int fdwOpen);
 
 
       };

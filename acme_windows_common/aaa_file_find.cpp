@@ -55,7 +55,7 @@ namespace windows
    }
 
 
-   bool file_find::find_file(const ::string & pstrName /* = nullptr */, ::u32 dwUnused /* = 0 */)
+   bool file_find::find_file(const ::string & pstrName /* = nullptr */, unsigned int dwUnused /* = 0 */)
    {
 
       UNUSED_ALWAYS(dwUnused);

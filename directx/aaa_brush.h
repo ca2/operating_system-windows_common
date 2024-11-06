@@ -27,15 +27,15 @@ namespace draw2d_directx
 
 
       virtual void destroy() override;
-      virtual bool create(::draw2d::graphics * pgraphics, i8 iCreate) override;
+      virtual bool create(::draw2d::graphics * pgraphics, char iCreate) override;
 
       //virtual ID2D1Brush * get_os_brush(::draw2d_directx::graphics * pgraphics) const;
 
       //bool CreateSolidBrush(color32_t crColor);
       //bool CreateHatchBrush(int nIndex, color32_t crColor);
       //bool CreatePatternBrush(::draw2d::bitmap* pBitmap);
-      //bool CreateDIBPatternBrush(HGLOBAL hPackedDIB, ::u32 nUsage);
-      //bool CreateDIBPatternBrush(const void * lpPackedDIB, ::u32 nUsage);
+      //bool CreateDIBPatternBrush(HGLOBAL hPackedDIB, unsigned int nUsage);
+      //bool CreateDIBPatternBrush(const void * lpPackedDIB, unsigned int nUsage);
       //bool CreateSysColorBrush(int nIndex);
 
 

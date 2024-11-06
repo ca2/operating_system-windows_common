@@ -84,7 +84,7 @@ namespace windows
       m_si.wShowWindow = e_display_none;
 
 
-      ::u32 dwPriorityClass = ::get_os_priority_class(epriority);
+      unsigned int dwPriorityClass = ::get_os_priority_class(epriority);
 
       wstring wstrDir(pszDir);
 
@@ -127,7 +127,7 @@ namespace windows
       }
 
       unichar * pwszCommandLine = (unichar * ) (const unichar *) wstrCommandLine;
-      ::u32 dwFlags = 0;
+      unsigned int dwFlags = 0;
       if (is_true("inherit"))
       {
          dwFlags = CREATE_NEW_CONSOLE | CREATE_UNICODE_ENVIRONMENT;
@@ -156,7 +156,7 @@ namespace windows
          output_debug_string("\r\n");
          output_debug_string("CreateProcessW Error!!");
          output_debug_string("\r\n");
-         output_debug_string(strMessage + " (" + ::as_string((u32) dwLastError) + ")");
+         output_debug_string(strMessage + " (" + ::as_string((unsigned int) dwLastError) + ")");
          output_debug_string("\r\n");
 
          return false;
@@ -303,7 +303,7 @@ namespace windows
 
    bool process::kill()
    {
-      ::system(string("taskkill /F /T /PID " ) + ::as_string((i32) m_pi.dwProcessId));
+      ::system(string("taskkill /F /T /PID " ) + ::as_string((int) m_pi.dwProcessId));
       return true;
       //return TerminateProcess(m_pi.hthread, -1) != false;
 

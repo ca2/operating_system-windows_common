@@ -36,9 +36,9 @@ namespace draw2d_direct2d
       //ASSERT(get_handle() != nullptr); return ::UnrealizeObject(get_handle());
       return 0;
    }
-   ::u32 object::GetObjectType() const
+   unsigned int object::GetObjectType() const
    {
-      //return (::u32)::GetObjectType(get_handle());
+      //return (unsigned int)::GetObjectType(get_handle());
       return 0;
    }
 

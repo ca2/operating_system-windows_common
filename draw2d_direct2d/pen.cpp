@@ -76,7 +76,7 @@ namespace draw2d_direct2d
 
    }
 
-   void pen::create(::draw2d::graphics* pgraphicsParam, ::i8 iCreate)
+   void pen::create(::draw2d::graphics* pgraphicsParam, char iCreate)
    {
 
       auto pgraphics = __graphics(pgraphicsParam);

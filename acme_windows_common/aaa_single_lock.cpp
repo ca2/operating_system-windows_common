@@ -141,7 +141,7 @@ bool single_lock::unlock()
 }
 
 
-bool single_lock::unlock(::i32 lCount, ::i32 * pPrevCount /* = nullptr */)
+bool single_lock::unlock(int lCount, int * pPrevCount /* = nullptr */)
 {
 
    ASSERT(m_psync != nullptr);

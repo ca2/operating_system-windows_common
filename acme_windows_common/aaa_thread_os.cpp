@@ -18,7 +18,7 @@
 //
 //   }
 //
-//   virtual u32 thread_proc();
+//   virtual unsigned int thread_proc();
 //
 //
 //};
@@ -36,8 +36,8 @@
 //thread_proc proc,
 //void * p,
 //::enum_priority epriority,
-//::u32 nStackSize,
-//u32 uiCreateFlags,
+//unsigned int nStackSize,
+//unsigned int uiCreateFlags,
 //LPSECURITY_ATTRIBUTES psa,
 //
 //itask_t * puiId)
@@ -57,7 +57,7 @@
 CLASS_DECL_ACME PPROC_SIMPLE g_axisoninitthread = nullptr;
 CLASS_DECL_ACME PPROC_SIMPLE g_axisontermthread = nullptr;
 
-//u32 thread_proc_runner::thread_proc()
+//unsigned int thread_proc_runner::thread_proc()
 //{
 //
 //   if (g_axisoninitthread)
@@ -74,7 +74,7 @@ CLASS_DECL_ACME PPROC_SIMPLE g_axisontermthread = nullptr;
 //
 //   }
 //
-//   u32 u = m_proc(m_p);
+//   unsigned int u = m_proc(m_p);
 //
 //   try
 //   {

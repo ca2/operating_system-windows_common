@@ -50,13 +50,13 @@ public:
    ///  \lparam		objectCount number of items in event_collection
 
 
-   explicit synchronization_result(::u32 uStatus, ::collection::count objectCount = 1);
+   explicit synchronization_result(unsigned int uStatus, ::collection::count objectCount = 1);
 
 
 //#endif
    ///  \brief		constructor with result value passed
    ///  \lparam		value waiting result value as passed by Windows API function
-   explicit synchronization_result(i32 iEvent)
+   explicit synchronization_result(int iEvent)
       : m_iEvent(iEvent)
    {}
 

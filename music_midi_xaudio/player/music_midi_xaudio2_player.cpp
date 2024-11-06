@@ -50,7 +50,7 @@ namespace music
                return true;
             }
 
-            i32 player::exit_thread()
+            int player::exit_thread()
             {
                // TODO:  perform any per-thread cleanup here
                //   if(!get_sequence()->IsNull())
@@ -72,7 +72,7 @@ namespace music
                MESSAGE_LINK(MM_MOM_POSITIONCB, pchannel, this, &player::OnMultimediaMidiOutputMessagePositionCB);
             }
 
-            bool player::Play(::time tickStart, u32 dwEllapse)
+            bool player::Play(::time tickStart, unsigned int dwEllapse)
             {
 
                ::music::midi::player::command * pcommand = ___new ::music::midi::player::command(this);
@@ -91,7 +91,7 @@ namespace music
                return bFinished;
             }
 
-            bool player::Play(double dRate, u32 dwEllapse)
+            bool player::Play(double dRate, unsigned int dwEllapse)
             {
 
                ::music::midi::player::command * pcommand = ___new ::music::midi::player::command(this);
@@ -115,7 +115,7 @@ namespace music
             {
                ASSERT(dRate >= 0.0);
                ASSERT(dRate <= 1.0);
-               return (::time) (i32) (get_sequence()->m_tkLength * dRate);
+               return (::time) (int) (get_sequence()->m_tkLength * dRate);
             }
 
 
@@ -127,7 +127,7 @@ namespace music
 
             }
 
-            bool player::ExecuteCommand(::music::midi::player::enum_command ecommand, u32 dwEllapse)
+            bool player::ExecuteCommand(::music::midi::player::enum_command ecommand, unsigned int dwEllapse)
             {
 
                ::music::midi::player::command * pcommand = ___new ::music::midi::player::command(this);
@@ -330,7 +330,7 @@ namespace music
             }
 
 
-            bool player::SetMidiOutDevice(u32 uiDevice)
+            bool player::SetMidiOutDevice(unsigned int uiDevice)
             {
                __UNREFERENCED_PARAMETER(uiDevice);
                OnMidiOutDeviceChange();
@@ -339,7 +339,7 @@ namespace music
 
 
 
-            bool player::SetTempoShift(i32 iTempoShift)
+            bool player::SetTempoShift(int iTempoShift)
             {
                //   if(IsPlaying())
                {
@@ -396,7 +396,7 @@ namespace music
 
             }
 
-            u32 player::GetMidiOutDevice()
+            unsigned int player::GetMidiOutDevice()
             {
 
                return papplication->midi()->GetMidiOutDevice();
@@ -489,7 +489,7 @@ namespace music
             {
                HMIDIOUT hmidiout = nullptr;
                void     estatus;
-               u32 uDeviceID = 0;
+               unsigned int uDeviceID = 0;
                estatus = midiOutOpen(&hmidiout, uDeviceID,  0, 0, CALLBACK_NULL);
                if(estatus != MMSYSERR_NOERROR)
                   return;

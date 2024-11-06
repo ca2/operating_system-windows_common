@@ -4,7 +4,7 @@
 
 
 
-//CLASS_DECL_ACME ::u32 get_last_error()
+//CLASS_DECL_ACME unsigned int get_last_error()
 //{
 //
 //   return GetLastError();
@@ -12,7 +12,7 @@
 //}
 
 //
-//CLASS_DECL_ACME void set_last_error(::u32 dw)
+//CLASS_DECL_ACME void set_last_error(unsigned int dw)
 //{
 //
 //   SetLastError(dw);

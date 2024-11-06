@@ -8,7 +8,7 @@
 #endif
 
 
-synchronization_result::synchronization_result(u32 value, ::collection::count objectCount)
+synchronization_result::synchronization_result(unsigned int value, ::collection::count objectCount)
 {
 
    switch ( value )

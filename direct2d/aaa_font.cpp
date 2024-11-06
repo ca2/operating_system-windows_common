@@ -29,7 +29,7 @@ namespace draw2d_direct2d
    }
 
 
-   bool font::create(::draw2d::graphics * pgraphics, i8 iCreate)
+   bool font::create(::draw2d::graphics * pgraphics, char iCreate)
    {
 
       if(m_pformat == nullptr || is_modified())

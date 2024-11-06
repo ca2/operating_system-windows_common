@@ -48,7 +48,7 @@ namespace acme_windows_common
       //#elif defined(MUTEX_NAMED_VSEM)
       //
       //   key_t                   m_key;
-      //   i32                     m_semid;
+      //   int                     m_semid;
       //
       //#endif
       //
@@ -64,7 +64,7 @@ namespace acme_windows_common
       //#elif defined(MUTEX_NAMED_FD)
       //   mutex(enum_create_new ecreatenew, const char * pstrName, int iFd, bool bOwner = true);
       //#elif defined(MUTEX_NAMED_VSEM)
-      //   mutex(enum_create_new ecreatenew, const char * pstrName,key_t key, i32 semid, bool bOwner = true);
+      //   mutex(enum_create_new ecreatenew, const char * pstrName,key_t key, int semid, bool bOwner = true);
       //#endif
       mutex(::particle * pparticle, bool bInitiallyOwn, const char * pszName, security_attributes * psecurityattributes = nullptr);
       mutex(enum_create_new ecreatenew = e_create_new, bool bInitiallyOwn = false);

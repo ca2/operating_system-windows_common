@@ -55,7 +55,7 @@ condition::condition()
          semctl_arg.val = 0;
       }
 
-      semctl((i32) m_hsync, 0, SETVAL, semctl_arg);
+      semctl((int) m_hsync, 0, SETVAL, semctl_arg);
 
    */
 
@@ -106,7 +106,7 @@ bool condition::SetEvent()
    sb.sem_num = 0;
    sb.sem_flg = SEM_UNDO;
 
-   return semop((i32)m_hsync, &sb, 1) == 0;
+   return semop((int)m_hsync, &sb, 1) == 0;
 
 #endif
 }
@@ -157,7 +157,7 @@ bool condition::pulse()
    sb.sem_num = 0;
    sb.sem_flg = SEM_UNDO;
 
-   return semop((i32)m_hsync, &sb, 1) == 0;
+   return semop((int)m_hsync, &sb, 1) == 0;
 
 #endif
 }
@@ -195,7 +195,7 @@ synchronization_result condition::wait()
    sb.sem_num = 0;
    sb.sem_flg = 0;
 
-   semop((i32)m_hsync, &sb, 1);
+   semop((int)m_hsync, &sb, 1);
 
 #endif
 
@@ -210,13 +210,13 @@ synchronization_result condition::wait(const duration& duration)
 
 #ifdef WINDOWS
 
-   u32 timeout = duration.u32_millis();
+   unsigned int timeout = duration.u32_millis();
 
    return synchronization_result(SleepConditionVariableCS(&m_var, &m_sect, timeout));
 
 #elif defined(ANDROID)
 
-   u32 timeout = duration.u32_millis();
+   unsigned int timeout = duration.u32_millis();
 
    pthread_mutex_lock(&m_mutex);
 
@@ -267,7 +267,7 @@ synchronization_result condition::wait(const duration& duration)
       sb.sem_num = 0;
       sb.sem_flg = IPC_NOWAIT;
 
-      i32 ret = semop((i32)m_hsync, &sb, 1);
+      int ret = semop((int)m_hsync, &sb, 1);
 
       if (ret < 0)
       {
@@ -353,7 +353,7 @@ bool condition::lock(const duration& durationTimeout)
 
 #else
 
-   u32 timeout = durationTimeout.u32_millis();
+   unsigned int timeout = durationTimeout.u32_millis();
 
    auto start = ::duration::now();
 
@@ -370,7 +370,7 @@ bool condition::lock(const duration& durationTimeout)
       sb.sem_num = 0;
       sb.sem_flg = IPC_NOWAIT;
 
-      i32 ret = semop((i32)m_hsync, &sb, 1);
+      int ret = semop((int)m_hsync, &sb, 1);
 
       if (ret < 0)
       {

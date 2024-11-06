@@ -39,7 +39,7 @@ public:
 #elif defined(MUTEX_NAMED_VSEM)
 
    key_t                   m_key;
-   i32                     m_semid;
+   int                     m_semid;
 
 #endif
 
@@ -55,7 +55,7 @@ public:
 #elif defined(MUTEX_NAMED_FD)
    ::mutex(enum_create_new ecreatenew, const ::string & pstrName, int iFd, bool bOwner = true);
 #elif defined(MUTEX_NAMED_VSEM)
-   ::mutex(enum_create_new ecreatenew, const ::string & pstrName,key_t key, i32 semid, bool bOwner = true);
+   ::mutex(enum_create_new ecreatenew, const ::string & pstrName,key_t key, int semid, bool bOwner = true);
 #endif
    ::mutex(enum_create_new ecreatenew, bool bInitiallyOwn, const ::string & lpszName, sync_options * psyncoptions = nullptr);
    ::mutex(enum_create_new ecreatenew = e_create_new, bool bInitiallyOwn = false);

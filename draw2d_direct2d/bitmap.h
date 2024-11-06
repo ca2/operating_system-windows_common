@@ -46,16 +46,16 @@ namespace draw2d_direct2d
 
 
       bool LoadBitmap(const ::string & lpszResourceName);
-      bool LoadBitmap(::u32 nIDResource);
-      bool LoadOEMBitmap(::u32 nIDBitmap); // for OBM_/OCR_/OIC_
+      bool LoadBitmap(unsigned int nIDResource);
+      bool LoadOEMBitmap(unsigned int nIDBitmap); // for OBM_/OCR_/OIC_
 
 
-      virtual void CreateBitmap(::draw2d::graphics * pgraphics, const ::size_i32& size, ::u32 nPlanes, ::u32 nBitcount, const void * lpBits, int stride) override;
+      virtual void CreateBitmap(::draw2d::graphics * pgraphics, const ::size_i32& size, unsigned int nPlanes, unsigned int nBitcount, const void * lpBits, int stride) override;
       virtual bool CreateBitmapIndirect(::draw2d::graphics * pgraphics, LPBITMAP lpBitmap);
       virtual void CreateCompatibleBitmap(::draw2d::graphics * pgraphics, int nWidth, int nHeight);
       virtual void CreateDiscardableBitmap(::draw2d::graphics * pgraphics, int nWidth, int nHeight);
       virtual void create_bitmap(::draw2d::graphics * pgraphics, const ::size_i32 & size, void **ppvBits, int * stride) override;
-      virtual void CreateDIBitmap(::draw2d::graphics * pgraphics, int cx, int cy, u32 flInit, const void *pjBits, ::u32 iUsage) override;
+      virtual void CreateDIBitmap(::draw2d::graphics * pgraphics, int cx, int cy, unsigned int flInit, const void *pjBits, unsigned int iUsage) override;
 
 
       virtual void attach(void * posdata);
@@ -63,8 +63,8 @@ namespace draw2d_direct2d
 
       virtual void defer_update(::draw2d::graphics * pgraphics) const;
 
-      u32 SetBitmapBits(u32 dwCount, const void * lpBits);
-      u32 GetBitmapBits(u32 dwCount, LPVOID lpBits) const;
+      unsigned int SetBitmapBits(unsigned int dwCount, const void * lpBits);
+      unsigned int GetBitmapBits(unsigned int dwCount, LPVOID lpBits) const;
       //::size_i32 SetBitmapDimension(int nWidth, int nHeight);
       ::size_i32 GetBitmapDimension() const;
 

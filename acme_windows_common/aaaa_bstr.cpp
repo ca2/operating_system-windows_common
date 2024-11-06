@@ -8,7 +8,7 @@
 //
 //   strsize nLen = utf_to_utf_length(bstr, pchData, nDataLength);
 //
-//   bstr = ::SysAllocStringLen(nullptr, (::u32)nLen);
+//   bstr = ::SysAllocStringLen(nullptr, (unsigned int)nLen);
 //
 //   if (bstr != nullptr)
 //   {
@@ -28,7 +28,7 @@
 //
 //   strsize nLen = utf_to_utf_length(pbstr, pchData, nDataLength);
 //
-//   bool bSuccess = ::SysReAllocStringLen(pbstr, nullptr, (::u32)nLen) != 0;
+//   bool bSuccess = ::SysReAllocStringLen(pbstr, nullptr, (unsigned int)nLen) != 0;
 //
 //   if (bSuccess)
 //   {

@@ -6,7 +6,7 @@ template < primitive_payload PAYLOAD >
 inline void copy(PAYLOAD * ppayload, const DWORD * pdw)
 {
 
-   ppayload->operator = ((const ::u32 &)*pdw);
+   ppayload->operator = ((const unsigned int &)*pdw);
 
 }
 
@@ -15,7 +15,7 @@ template < primitive_payload PAYLOAD >
 inline void copy(PAYLOAD * ppayload, const long * pl)
 {
 
-   ppayload->operator = ((const::i32 &)*pl);
+   ppayload->operator = ((constint &)*pl);
 
 }
 
@@ -23,7 +23,7 @@ inline void copy(PAYLOAD * ppayload, const long * pl)
 //inline void copy(payload & payload, const DWORD & dw)
 //{
 //
-//   payload.operator = ((const ::u32 &)dw);
+//   payload.operator = ((const unsigned int &)dw);
 //
 //}
 
@@ -31,7 +31,7 @@ inline void copy(PAYLOAD * ppayload, const long * pl)
 //inline void __copy(LPDWORD * ppdw, const payload * ppayload)
 //{
 //
-//   *ppdw = (LPDWORD) (u32*) *ppayload;
+//   *ppdw = (LPDWORD) (unsigned int*) *ppayload;
 //
 //}
 
@@ -49,7 +49,7 @@ template < primitive_payload PAYLOAD >
 inline void copy(DWORD * pdw, const PAYLOAD * ppayload)
 {
 
-   *pdw = ppayload->u32();
+   *pdw = ppayload->unsigned int();
 
 }
 
@@ -57,12 +57,12 @@ inline void copy(DWORD * pdw, const PAYLOAD * ppayload)
 
 #ifdef WINDOWS
 
-typedef u32 itask_t;
-typedef ::u32 thread_data_index;
+typedef unsigned int itask_t;
+typedef unsigned int thread_data_index;
 
 #else
 
-using thread_data_index = ::u32;
+using thread_data_index = unsigned int;
 
 #endif
 
@@ -72,7 +72,7 @@ using thread_data_index = ::u32;
 
 typedef iptr htask_t;
 
-//typedef ::u32 itask_t;
+//typedef unsigned int itask_t;
 
 
 #define null_hthread ((htask_t)0)

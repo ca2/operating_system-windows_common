@@ -60,7 +60,7 @@ namespace multimedia
       }
 
 
-      void out::out_open_ex(thread * pthreadCallback, u32 uiSamplesPerSec, u32 uiChannelCount, u32 uiBitsPerSample, ::wave::enum_purpose epurpose)
+      void out::out_open_ex(thread * pthreadCallback, unsigned int uiSamplesPerSec, unsigned int uiChannelCount, unsigned int uiBitsPerSample, ::wave::enum_purpose epurpose)
       {
 
          single_lock sLock(synchronization(), true);
@@ -213,8 +213,8 @@ namespace multimedia
 
          ::e_status estatus;
 
-//         i32 i, iSize;
-         //i32 iSize;
+//         int i, iSize;
+         //int iSize;
 
          auto iSize =  out_get_buffer()->GetBufferCount();
 
@@ -326,8 +326,8 @@ namespace multimedia
          zero(b);
 
          b.pContext = pbuffer;
-         b.AudioBytes = (::u32) (pwbuffer->m_uiBufferSize);
-         b.pAudioData = (const ::u8 *)pbuffer->m_pData;
+         b.AudioBytes = (unsigned int) (pwbuffer->m_uiBufferSize);
+         b.pAudioData = (const unsigned char *)pbuffer->m_pData;
          b.Flags = m_bEOS ? XAUDIO2_END_OF_STREAM : 0;
 
          //single_lock sLock(mutex(),true);
@@ -669,7 +669,7 @@ namespace multimedia
       //
       // Callback handlers, only implement the buffer events for maintaining play state
       //
-      void out::OnVoiceProcessingPassStart(::u32 /*bytesRequired*/)
+      void out::OnVoiceProcessingPassStart(unsigned int /*bytesRequired*/)
       {
       }
       void out::OnVoiceProcessingPassEnd()
@@ -706,7 +706,7 @@ namespace multimedia
 
          //pbuffer->m_bIsPlaying = false;
 
-         i32 iBuffer = (i32)pbuffer->m_iIndex;
+         int iBuffer = (int)pbuffer->m_iIndex;
 
          m_psynthtask->on_free(iBuffer);
 
@@ -735,7 +735,7 @@ namespace multimedia
       //}
 
 
-      //i32 out::run_step_thread::run()
+      //int out::run_step_thread::run()
       //{
 
       //   while(m_bRun && m_pout->m_eoutstate == out::wave::e_out_state_playing)

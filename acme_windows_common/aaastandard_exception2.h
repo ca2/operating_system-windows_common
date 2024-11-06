@@ -49,7 +49,7 @@ namespace acme_windows_common
 #ifdef WINDOWS
       EXCEPTION_POINTERS * m_ppointers;
 #else
-      i32            m_iSignal;
+      int            m_iSignal;
       void * m_psiginfo;
 #ifndef ANDROID
       ucontext_t     m_ucontext;
@@ -60,13 +60,13 @@ namespace acme_windows_common
 
 
 #ifdef WINDOWS
-      u32         code() const { return m_ppointers->ExceptionRecord->ExceptionCode; }
+      unsigned int         code() const { return m_ppointers->ExceptionRecord->ExceptionCode; }
       void * address() const { return m_ppointers->ExceptionRecord->ExceptionAddress; }
       EXCEPTION_POINTERS * info() const { return m_ppointers; }
       const char * name() const { return ::windows_common::exception_translator::_s_get_standard_exception_name(code()); }
       const char * description() const { return ::windows_common::exception_translator::_s_get_standard_exception_description(code()); }
 #else
-      u32         code() const;
+      unsigned int         code() const;
       void * address() const;
       const void * info() const;    // siginfo_t *
       const char * name() const;
@@ -103,7 +103,7 @@ namespace acme_windows_common
       static void * siginfodup(void * psiginfo);
       static void siginfofree(void * psiginfo);
 
-      standard_exception(i32 iSignal, void * psiginfo, void * pc, i32 iSkip = DEFAULT_SE_EXCEPTION_CALLSTACK_SKIP, void * caller_address = nullptr) :
+      standard_exception(int iSignal, void * psiginfo, void * pc, int iSkip = DEFAULT_SE_EXCEPTION_CALLSTACK_SKIP, void * caller_address = nullptr) :
          exception(error_exception, iSkip, caller_address),
          m_iSignal(iSignal),
          m_psiginfo(siginfodup(psiginfo))
@@ -124,7 +124,7 @@ namespace acme_windows_common
       }
 
 
-      //u32         code() const { return m_ppointers->ExceptionRecord->ExceptionCode; }
+      //unsigned int         code() const { return m_ppointers->ExceptionRecord->ExceptionCode; }
       //void * address() const { return m_ppointers->ExceptionRecord->ExceptionAddress; }
 
 

@@ -37,7 +37,7 @@ namespace draw2d_direct2d
    //}
 
 
-   void font::create(::draw2d::graphics * pgraphics, i8 iCreate)
+   void font::create(::draw2d::graphics * pgraphics, char iCreate)
    {
 
       if(m_pformat == nullptr || is_modified(::draw2d::e_default_object))
@@ -151,7 +151,7 @@ namespace draw2d_direct2d
       comptr<IDWriteFontCollection> pcollection;
 
       WCHAR name[256];
-      ::u32 findex;
+      unsigned int findex;
       BOOL exists;
 
       if (::is_null(m_pformat))
@@ -256,11 +256,11 @@ namespace draw2d_direct2d
 
       double ratio = m_pformat->GetFontSize() / (float)metrics.designUnitsPerEm;
 
-      m_textmetric2.m_dAscent = (::i32)(metrics.ascent * ratio);
-      m_textmetric2.m_dDescent = (::i32)(metrics.descent * ratio);
-      m_textmetric2.m_dInternalLeading = (::i32)0;
-      m_textmetric2.m_dExternalLeading = (::i32)(metrics.lineGap * ratio);
-      m_textmetric2.m_dHeight = (::i32)((metrics.ascent + metrics.descent + metrics.lineGap) * ratio);
+      m_textmetric2.m_dAscent = (int)(metrics.ascent * ratio);
+      m_textmetric2.m_dDescent = (int)(metrics.descent * ratio);
+      m_textmetric2.m_dInternalLeading = (int)0;
+      m_textmetric2.m_dExternalLeading = (int)(metrics.lineGap * ratio);
+      m_textmetric2.m_dHeight = (int)((metrics.ascent + metrics.descent + metrics.lineGap) * ratio);
 
    }
 

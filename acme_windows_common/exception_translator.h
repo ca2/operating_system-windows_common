@@ -23,7 +23,7 @@ namespace acme_windows_common
       ~exception_translator() override;
 
 
-      static void __cdecl filter2(u32 uiCode, EXCEPTION_POINTERS* ppointers);
+      static void __cdecl filter2(unsigned int uiCode, EXCEPTION_POINTERS* ppointers);
 
 
       virtual bool attach() override;
@@ -31,14 +31,14 @@ namespace acme_windows_common
 
       virtual bool detach() override;
 
-      virtual void filter(u32 uiCode, EXCEPTION_POINTERS* ppointers);
+      virtual void filter(unsigned int uiCode, EXCEPTION_POINTERS* ppointers);
 
 
-      //virtual string _get_standard_exception_name(u32 uiCode) override;
-      //virtual string _get_standard_exception_description(u32 uiCode) override;
+      //virtual string _get_standard_exception_name(unsigned int uiCode) override;
+      //virtual string _get_standard_exception_description(unsigned int uiCode) override;
 
-      static const char * _get_standard_exception_name(u32 uiCode);
-      static const char * _get_standard_exception_description(u32 uiCode);
+      static const char * _get_standard_exception_name(unsigned int uiCode);
+      static const char * _get_standard_exception_description(unsigned int uiCode);
 
    };
 

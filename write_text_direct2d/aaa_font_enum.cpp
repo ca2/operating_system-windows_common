@@ -79,7 +79,7 @@ wingdi_font_enum::~wingdi_font_enum()
    }
 
 
-   BOOL CALLBACK wingdi_font_enum::callback(LPLOGFONTW plf, LPNEWTEXTMETRICW lpntm, ::u32 dwFontType, LPVOID p)
+   BOOL CALLBACK wingdi_font_enum::callback(LPLOGFONTW plf, LPNEWTEXTMETRICW lpntm, unsigned int dwFontType, LPVOID p)
    {
 
       wingdi_font_enum * penum = (wingdi_font_enum *)p;
@@ -127,7 +127,7 @@ wingdi_font_enum::~wingdi_font_enum()
    }
 
 
-   BOOL CALLBACK wingdi_font_enum::callback_cs(LPLOGFONTW plf, LPNEWTEXTMETRICW lpntm, ::u32 dwFontType, LPVOID p)
+   BOOL CALLBACK wingdi_font_enum::callback_cs(LPLOGFONTW plf, LPNEWTEXTMETRICW lpntm, unsigned int dwFontType, LPVOID p)
    {
 
       ::write_text::font_enumeration_item * pitem = (::write_text::font_enumeration_item *)p;

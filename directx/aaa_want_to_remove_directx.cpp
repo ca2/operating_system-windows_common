@@ -110,7 +110,7 @@ namespace draw2d_directx
    {
       // This flag adds support for surfaces with a different color channel ordering
       // than the API default. It is required for compatibility with Direct2D.
-      ::u32 creationFlags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
+      unsigned int creationFlags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
       ComPtr<IDXGIDevice> dxgiDevice;
 
 #if defined(_DEBUG)
@@ -339,7 +339,7 @@ namespace draw2d_directx
 
       // Create a depth stencil impact for use with 3D rendering if needed.
       CD3D11_TEXTURE2D_DESC depthStencilDesc(
-         DXGI_FORMAT_D24_UNORM_S8_::u32,
+         DXGI_FORMAT_D24_UNORM_S8_unsigned int,
          backBufferDesc.Width,
          backBufferDesc.Height,
          1,

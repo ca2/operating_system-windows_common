@@ -107,9 +107,9 @@ namespace imaging_wic
 
       comptr < IWICStream > pwicstream;
 
-      ::u32 uWidth = pimage->width();
+      unsigned int uWidth = pimage->width();
 
-      ::u32 uHeight = pimage->height();
+      unsigned int uHeight = pimage->height();
 
       HRESULT hr = CoCreateInstance(
          CLSID_WICImagingFactory,
@@ -281,7 +281,7 @@ namespace imaging_wic
             if (SUCCEEDED(hr))
             {
 
-               hr = pbitmapframeencode->WritePixels(uHeight, iScan, uHeight * iScan, (::u8 *)pimage32);
+               hr = pbitmapframeencode->WritePixels(uHeight, iScan, uHeight * iScan, (unsigned char *)pimage32);
 
             }
 
@@ -300,7 +300,7 @@ namespace imaging_wic
                   GUID_WICPixelFormat32bppBGRA,
                   pimage->scan_size(),
                   pimage->scan_size() * pimage->height(),
-                  (::u8 *)pimage->data(),
+                  (unsigned char *)pimage->data(),
                   &pbitmap
                );
 
@@ -323,8 +323,8 @@ namespace imaging_wic
             }
 
             //Step 4: Create render target and D2D bitmap from IWICBitmapSource
-            //::u32 width=0;
-            //::u32 height=0;
+            //unsigned int width=0;
+            //unsigned int height=0;
             //if(SUCCEEDED(hr))
             //{
             //   hr = pbitmap->GetSize(&width,&height);

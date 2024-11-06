@@ -35,7 +35,7 @@ namespace music
 
             //MMRESULT estatus;
 
-            //u32 uDeviceID = 0;
+            //unsigned int uDeviceID = 0;
 
             //m_hmidiout = nullptr;
 
