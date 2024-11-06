@@ -27,7 +27,7 @@ namespace windows
       //virtual ::file::path get_module_path(HMODULE hmodule) override;
       virtual bool get_pid_by_path(const ::string & lpszName, unsigned int & dwPid) override;
       virtual bool get_pid_by_title(const ::string & lpszName, unsigned int & dwPid) override;
-      virtual void get_all_processes(u32_array & dwa) override;
+      virtual void get_all_processes(unsigned_int_array & dwa) override;
       virtual ::file::path get_process_path(unsigned int dwPid) override;
 
       virtual int get_pid() override;
@@ -105,7 +105,7 @@ namespace windows
 
       virtual bool add_default_program(string_array & straExtension, string_array & straMimeType) override;
 
-      virtual void list_process(::file::path_array & patha, u32_array & uaPid) override;
+      virtual void list_process(::file::path_array & patha, unsigned_int_array & uaPid) override;
 
       //virtual icon_pointer load_icon(const ::payload & payloadFile) override;
 

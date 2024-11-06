@@ -194,7 +194,7 @@ namespace windows
 
    bool os_context::get_pid_by_path(const ::string & lpszName, unsigned int & dwPid)
    {
-      u32_array dwa;
+      unsigned_int_array dwa;
       get_all_processes(dwa);
       for(int i = 0; i < dwa.get_count(); i++)
       {
@@ -209,7 +209,7 @@ namespace windows
 
    bool os_context::get_pid_by_title(const ::string & lpszName, unsigned int & dwPid)
    {
-      u32_array dwa;
+      unsigned_int_array dwa;
       get_all_processes(dwa);
       for(int i = 0; i < dwa.get_count(); i++)
       {
@@ -266,7 +266,7 @@ namespace windows
    }
 
 
-   void os_context::get_all_processes(u32_array & ua)
+   void os_context::get_all_processes(unsigned_int_array & ua)
    {
 
       ASSERT(sizeof(unsigned int) == sizeof(unsigned int));
@@ -3577,7 +3577,7 @@ repeat:
    }
 
 
-   void os_context::list_process(::file::path_array & patha, u32_array & uaPid)
+   void os_context::list_process(::file::path_array & patha, unsigned_int_array & uaPid)
    {
 
       ASSERT(sizeof(unsigned int) == sizeof(unsigned int));
