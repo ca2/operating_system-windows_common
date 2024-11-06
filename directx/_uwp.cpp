@@ -331,13 +331,13 @@ IFACEMETHODIMP CustomTextRenderer::DrawUnderline(
          );
    }
 
-   // Draw the outline of the rectangle_i32
+   // Draw the outline of the int_rectangle
    m_prendertarget->DrawGeometry(
       pTransformedGeometry,
       m_pbrushOutline
       );
 
-   // Fill in the rectangle_i32
+   // Fill in the int_rectangle
    m_prendertarget->FillGeometry(
       pTransformedGeometry,
       m_pbrushFill
@@ -396,13 +396,13 @@ IFACEMETHODIMP CustomTextRenderer::DrawStrikethrough(
          );
    }
 
-   // Draw the outline of the rectangle_i32
+   // Draw the outline of the int_rectangle
    m_prendertarget->DrawGeometry(
       pTransformedGeometry,
       m_pbrushOutline
       );
 
-   // Fill in the rectangle_i32
+   // Fill in the int_rectangle
    m_prendertarget->FillGeometry(
       pTransformedGeometry,
       m_pbrushFill

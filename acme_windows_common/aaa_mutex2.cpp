@@ -581,7 +581,7 @@ mutexmutex(e_create_new enew, const ::string & pstrName, key_t key, int semid, b
 
 #elif defined(MUTEX_NAMED_FD)
 
-   if(m_strName.has_char())
+   if(m_strName.has_character())
    {
 
       if(m_iFd >= 0)
@@ -707,7 +707,7 @@ synchronization_result ::mutex::wait(const duration & duration)
 
 #elif defined(MUTEX_NAMED_FD)
 
-   if (m_strName.has_char())
+   if (m_strName.has_character())
    {
 
       int rc = pthread_mutex_lock(&m_mutex);
@@ -1084,7 +1084,7 @@ bool ::mutex::lock()
 
 #elif defined(MUTEX_NAMED_FD)
 
-   if (m_strName.has_char())
+   if (m_strName.has_character())
    {
 
       int rc = pthread_mutex_lock(&m_mutex);
@@ -1348,7 +1348,7 @@ bool ::mutex::unlock()
 
 #elif defined(MUTEX_NAMED_FD)
 
-   if (m_strName.has_char())
+   if (m_strName.has_character())
    {
 
       int rc = pthread_mutex_lock(&m_mutex);

@@ -29,16 +29,16 @@ namespace draw2d_direct2d
 
 
       void SetRectRgn(int x1, int y1, int x2, int y2);
-      void SetRectRgn(const ::rectangle_i32 & rectangle);
+      void SetRectRgn(const ::int_rectangle & rectangle);
       int CombineRgn(const ::draw2d::region* pRgn1, const ::draw2d::region* pRgn2, int nCombineMode);
       int copy_rgn(const ::draw2d::region* pRgnSrc);
       bool EqualRgn(const ::draw2d::region* pRgn) const;
       int OffsetRgn(int x, int y);
-      int OffsetRgn(const ::point_i32 & point);
-      int GetRgnBox(::rectangle_i32 * prectangle) const;
+      int OffsetRgn(const ::int_point & point);
+      int GetRgnBox(::int_rectangle * prectangle) const;
       bool contains(::draw2d::graphics * pgraphics, int x, int y) const;
-      bool contains(::draw2d::graphics * pgraphics, const ::point_i32 & point) const;
-      bool RectInRegion(const ::rectangle_i32 & rectangle) const;
+      bool contains(::draw2d::graphics * pgraphics, const ::int_point & point) const;
+      bool RectInRegion(const ::int_rectangle & rectangle) const;
       int GetRegionData(LPRGNDATA lpRgnData, int nCount) const;
 
 

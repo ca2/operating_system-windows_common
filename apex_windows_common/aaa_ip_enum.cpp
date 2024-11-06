@@ -26,7 +26,7 @@ namespace windows
       m_bWinsockInitialized = true;
 
       //Code requires at least Winsock 1.1
-      if ((lower_u8(wsaData.wVersion) != 1) || (HIBYTE(wsaData.wVersion) != 1))
+      if ((lower_unsigned_char(wsaData.wVersion) != 1) || (HIBYTE(wsaData.wVersion) != 1))
       {
          informationf("Failed to find a usable winsock stack which supports Winsock 1.1\n");
          throw ::exception(error_not_supported);

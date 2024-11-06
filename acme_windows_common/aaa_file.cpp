@@ -766,7 +766,7 @@ directory_system()create(path.folder());
       ASSERT_VALID(this);
       ASSERT(m_handleFile != INVALID_HANDLE_VALUE);
 
-      if (!::LockFile((HANDLE)m_handleFile, lower_u32(dwPos), upper_u32(dwPos), lower_u32(dwCount), upper_u32(dwCount)))
+      if (!::LockFile((HANDLE)m_handleFile, lower_unsigned_int(dwPos), upper_unsigned_int(dwPos), lower_unsigned_int(dwCount), upper_unsigned_int(dwCount)))
       {
 
          DWORD dwLastError = ::GetLastError();
@@ -782,7 +782,7 @@ directory_system()create(path.folder());
       ASSERT_VALID(this);
       ASSERT(m_handleFile != INVALID_HANDLE_VALUE);
 
-      if (!::UnlockFile((HANDLE)m_handleFile, lower_u32(dwPos), upper_u32(dwPos), lower_u32(dwCount), upper_u32(dwCount)))
+      if (!::UnlockFile((HANDLE)m_handleFile, lower_unsigned_int(dwPos), upper_unsigned_int(dwPos), lower_unsigned_int(dwCount), upper_unsigned_int(dwCount)))
       {
 
          DWORD dwLastError = ::GetLastError();
@@ -1019,16 +1019,16 @@ directory_system()create(path.folder());
 
    }
 
-   //u64 file::ReadHuge(void * pBuffer, u64 dwCount)
+   //huge_natural file::ReadHuge(void * pBuffer, huge_natural dwCount)
 
    //{
 
-   //   return (u64) read(pBuffer, (unsigned int)dwCount);
+   //   return (huge_natural) read(pBuffer, (unsigned int)dwCount);
 
 
    //}
 
-   //void file::WriteHuge(const void * pBuffer, u64 dwCount)
+   //void file::WriteHuge(const void * pBuffer, huge_natural dwCount)
 
    //{
 
@@ -1060,14 +1060,14 @@ bool CLASS_DECL_ACME_WINDOWS_COMMON window_get_full_path(wstring & wstrFullPath,
 // (both in ANSI character set)
 {
 
-   strsize dwAllocLen = wstrPath.get_length() + _MAX_PATH;
+   character_count dwAllocLen = wstrPath.get_length() + _MAX_PATH;
 
    auto pwszFullPath = wstrFullPath.get_buffer(dwAllocLen);
 
    // first, fully qualify the path name
    unichar * pszFilePart;
 
-   strsize dwLen = GetFullPathNameW(wstrPath, (unsigned int)dwAllocLen, pwszFullPath, &pszFilePart);
+   character_count dwLen = GetFullPathNameW(wstrPath, (unsigned int)dwAllocLen, pwszFullPath, &pszFilePart);
 
    wstrFullPath.release_buffer();
 
@@ -1148,7 +1148,7 @@ bool CLASS_DECL_ACME_WINDOWS_COMMON window_get_full_path(wstring & wstrFullPath,
 
             wstring wstrBackup = wstrFullPath;
 
-            strsize iFilePart = pszFilePart - wstrFullPath;
+            character_count iFilePart = pszFilePart - wstrFullPath;
 
             auto pwsz = wstrFullPath.get_buffer(iFilePart + iLenFileName + 32); // arrange more space with more 32 extra wchars
 

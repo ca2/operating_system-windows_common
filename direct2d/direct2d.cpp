@@ -181,7 +181,7 @@ namespace direct2d
    }
 
 
-   comptr < ID2D1PathGeometry1 > direct2d::create_rectangle_path_geometry(const ::rectangle_f64 & rectangle)
+   comptr < ID2D1PathGeometry1 > direct2d::create_rectangle_path_geometry(const ::double_rectangle & rectangle)
    {
 
       comptr < ID2D1PathGeometry1 > ppathgeometry;

@@ -56,7 +56,7 @@ namespace draw2d_directx
    bool path::internal_add_arc(::draw2d::graphics* pgraphics, const ::arc & arc)
    {
 
-      ::point_f64 point;
+      ::double_point point;
 
       D2D1_ARC_SEGMENT arcseg;
 
@@ -92,7 +92,7 @@ namespace draw2d_directx
    }
 
 
-   bool path::internal_add_lines(::draw2d::graphics* pgraphics, const ::point_i32_array& pointa, bool bClose)
+   bool path::internal_add_lines(::draw2d::graphics* pgraphics, const ::int_point_array& pointa, bool bClose)
    {
 
       if (pointa.get_count() < 1)
@@ -235,7 +235,7 @@ namespace draw2d_directx
    }
 
 
-   bool path::internal_get_arc(::point_f64 & pointStart,D2D1_ARC_SEGMENT & arcseg, const ::arc & arc)
+   bool path::internal_get_arc(::double_point & pointStart,D2D1_ARC_SEGMENT & arcseg, const ::arc & arc)
    {
 
       D2D1_POINT_2F pointCenter;
@@ -450,7 +450,7 @@ namespace draw2d_directx
    bool path::_set(::draw2d::graphics * pgraphics, const ::arc & arc)
    {
 
-      //::rectangle_f64 rectangle;
+      //::double_rectangle rectangle;
 
       //rectangle.left()      = (int) (arc.m_pointCenter.x() - arc.m_sizeRadius.cx());
       //rectangle.right()     = (int) (arc.m_pointCenter.x() + arc.m_sizeRadius.cx());
@@ -572,7 +572,7 @@ namespace draw2d_directx
    }
 
 
-   bool path::_set(::draw2d::graphics* pgraphics, const ::rectangle_i32 & rectangle)
+   bool path::_set(::draw2d::graphics* pgraphics, const ::int_rectangle & rectangle)
    {
 
       return internal_add_rect(pgraphics, rectangle.left(), rectangle.top(), rectangle.width(), rectangle.height());
@@ -580,7 +580,7 @@ namespace draw2d_directx
    }
 
 
-   bool path::_set(::draw2d::graphics* pgraphics, const ::rectangle_f64& rectangle)
+   bool path::_set(::draw2d::graphics* pgraphics, const ::double_rectangle& rectangle)
    {
 
       return internal_add_rect(pgraphics, rectangle.left(), rectangle.top(), rectangle.width(), rectangle.height());
@@ -591,7 +591,7 @@ namespace draw2d_directx
    bool path::_set(::draw2d::graphics* pgraphics, const ::lines & lines)
    {
 
-      return internal_add_lines(pgraphics, (const ::point_i32_array &) lines, false);
+      return internal_add_lines(pgraphics, (const ::int_point_array &) lines, false);
 
    }
 
@@ -604,17 +604,17 @@ namespace draw2d_directx
    }
 
 
-   bool path::_set(::draw2d::graphics* pgraphics, const ::polygon_i32 & polygon_i32)
+   bool path::_set(::draw2d::graphics* pgraphics, const ::int_polygon & int_polygon)
    {
 
-      return internal_add_lines(pgraphics, (const ::point_i32_array&)polygon_i32, true);
+      return internal_add_lines(pgraphics, (const ::int_point_array&)int_polygon, true);
 
    }
 
-   bool path::_set(::draw2d::graphics* pgraphics, const ::polygon_f64& polygon_i32)
+   bool path::_set(::draw2d::graphics* pgraphics, const ::double_polygon& int_polygon)
    {
 
-      return internal_add_lines(pgraphics, (const ::point_f64_array&)polygon_i32, true);
+      return internal_add_lines(pgraphics, (const ::point_f64_array&)int_polygon, true);
 
    }
 
@@ -637,7 +637,7 @@ namespace draw2d_directx
    //bool path::_set(::draw2d::graphics* pgraphics, ::draw2d::path::close* pclose)
    //{
 
-   //   //::rectangle_f64 rectangle;
+   //   //::double_rectangle rectangle;
 
    //   //rectangle.left()      = (int) (arc.m_pointCenter.x() - arc.m_sizeRadius.cx());
    //   //rectangle.right()     = (int) (arc.m_pointCenter.x() + arc.m_sizeRadius.cx());

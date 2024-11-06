@@ -34,7 +34,7 @@ namespace imaging_wic
 
    comptr < IWICImagingFactory > get_imaging_factory();
 
-   //bool draw2d_gif_load_frame(::image::image * pimageCanvas, image_frame_array * pframea, ::image::image_frame * pframe, int uFrameIndex, u8 * ba, int iScan, color_array & colora, int transparentIndex);
+   //bool draw2d_gif_load_frame(::image::image * pimageCanvas, image_frame_array * pframea, ::image::image_frame * pframe, int uFrameIndex, unsigned char * ba, int iScan, color_array & colora, int transparentIndex);
    bool windows_image_from_bitmap_source(::image::image * pimage, IWICBitmapSource * pbitmapsource, IWICImagingFactory * pimagingfactory);
    ::color::color windows_image_metadata_get_background_color(IWICMetadataQueryReader * pqueryreader, IWICBitmapDecoder * pbitmapdecoder, IWICImagingFactory * pimagingfactory);
 
@@ -540,7 +540,7 @@ namespace imaging_wic
 
             pframe->GetSize(&width, &height);
 
-            pimage->create(::size_i32(width, height));
+            pimage->create(::int_size(width, height));
 
             pimage->map();
 
@@ -974,7 +974,7 @@ namespace imaging_wic
 
       }
 
-      //if (!draw2d_gif_load_frame(pimageCompose, pframea, pframe, uFrameIndex, (u8 *)ba.data(), width, colora, transparentIndex))
+      //if (!draw2d_gif_load_frame(pimageCompose, pframea, pframe, uFrameIndex, (unsigned char *)ba.data(), width, colora, transparentIndex))
       //{
 
       //   return false;

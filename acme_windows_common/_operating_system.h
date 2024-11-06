@@ -40,7 +40,7 @@ template < primitive_payload PAYLOAD >
 inline void copy(long * pl, const PAYLOAD * ppayload)
 {
 
-   *pl = (long)ppayload->i64();
+   *pl = (long)ppayload->huge_integer();
 
 }
 

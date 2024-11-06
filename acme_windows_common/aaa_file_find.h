@@ -34,7 +34,7 @@ namespace windows
 
 
       
-      i64 get_length() const;
+      huge_integer get_length() const;
       virtual ::file::path GetFileName() const;
       virtual ::file::path GetFilePath() const;
       virtual string GetFileTitle() const;
@@ -139,11 +139,11 @@ namespace windows
 
    }
 
-   inline i64 file_find::get_length() const
+   inline huge_integer file_find::get_length() const
    {
 
       if (m_pFoundInfo != nullptr)
-         return m_pFoundInfo->nFileSizeLow + (((i64)m_pFoundInfo->nFileSizeHigh) << 32);
+         return m_pFoundInfo->nFileSizeLow + (((huge_integer)m_pFoundInfo->nFileSizeHigh) << 32);
       else
          return 0;
 

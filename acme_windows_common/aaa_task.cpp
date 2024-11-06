@@ -70,7 +70,7 @@ bool task::set_thread_name(const ::string & pszThreadName)
 
    m_strTaskName = pszThreadName;
 
-   if (m_strTaskTag.is_empty() && m_strTaskName.has_char())
+   if (m_strTaskTag.is_empty() && m_strTaskName.has_character())
    {
 
       m_strTaskTag = m_strTaskName;
@@ -199,7 +199,7 @@ void task::erase_notify(::matter* pmatter)
 bool task::on_get_thread_name(string & strThreadName)
 {
 
-   if (m_strTaskTag.has_char())
+   if (m_strTaskTag.has_character())
    {
 
       //::set_thread_name(m_strTaskTag);
@@ -458,7 +458,7 @@ void task::begin_task(
    if (nStackSize > 0)
    {
 
-      pthread_attr_setstacksize(&taskAttr, nStackSize); // Set the stack size_i32 of the task
+      pthread_attr_setstacksize(&taskAttr, nStackSize); // Set the stack int_size of the task
 
    }
 

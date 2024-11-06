@@ -254,7 +254,7 @@ namespace exception
          if (sigaction(SIGFPE, &m_sig.m_saFpe, &m_sig.m_saFpeOld) < 0)
          {
 
-            output_debug_string("failed to install floating point_i32 exception signal handler");
+            output_debug_string("failed to install floating int_point exception signal handler");
 
          }
 
@@ -433,25 +433,25 @@ namespace exception
          str = "The thread attempted to access an bastandard_array matter that is out of bounds, and the underlying hardware supports bounds checking";
          break;
       case EXCEPTION_FLT_DENORMAL_OPERAND:
-         str = "One of the operands in a floating-point_i32 operation is denormal. A denormal value is one that is too small to represent as a standard floating-point_i32 value";
+         str = "One of the operands in a floating-int_point operation is denormal. A denormal value is one that is too small to represent as a standard floating-int_point value";
          break;
       case EXCEPTION_FLT_DIVIDE_BY_ZERO:
-         str = "The thread attempted to divide a floating-point_i32 value by a floating-point_i32 divisor of zero";
+         str = "The thread attempted to divide a floating-int_point value by a floating-int_point divisor of zero";
          break;
       case EXCEPTION_FLT_INEXACT_RESULT:
-         str = "The result of a floating-point_i32 operation cannot be represented exactly as a decimal fraction";
+         str = "The result of a floating-int_point operation cannot be represented exactly as a decimal fraction";
          break;
       case EXCEPTION_FLT_INVALID_OPERATION:
-         str = "This exception represents any floating-point_i32 exception not included in this list";
+         str = "This exception represents any floating-int_point exception not included in this list";
          break;
       case EXCEPTION_FLT_OVERFLOW:
-         str = "The exponent of a floating-point_i32 operation is greater than the magnitude allowed by the corresponding type";
+         str = "The exponent of a floating-int_point operation is greater than the magnitude allowed by the corresponding type";
          break;
       case EXCEPTION_FLT_STACK_CHECK:
-         str = "The stack overflowed or underflowed as the result of a floating-point_i32 operation";
+         str = "The stack overflowed or underflowed as the result of a floating-int_point operation";
          break;
       case EXCEPTION_FLT_UNDERFLOW:
-         str = "The exponent of a floating-point_i32 operation is less than the magnitude allowed by the corresponding type";
+         str = "The exponent of a floating-int_point operation is less than the magnitude allowed by the corresponding type";
          break;
       case EXCEPTION_INT_DIVIDE_BY_ZERO:
          str = "The thread attempted to divide an integer value by an integer divisor of zero";

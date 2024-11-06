@@ -136,7 +136,7 @@ namespace multimedia
          unsigned int nBalanceID = nID++;
          unsigned int nBalanceLabelID = nID++;
 
-         ::rectangle_i32 rectangle(0, 0, 0, 0);
+         ::int_rectangle rectangle(0, 0, 0, 0);
 
          ::audio_mixer_user::level_control * plevelcontrol = source->get_device()->get_mixer()->get_callback()->allocate_level_control();
          if(plevelcontrol == nullptr)

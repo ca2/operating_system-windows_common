@@ -172,7 +172,7 @@ namespace multimedia
 
          uiBufferSize = maximum(uiBufferSize,2048);
 
-         ASSERT((uiBufferSize % 2048) == 0);// Streaming size_i32 must be 2K aligned to use for async I/O
+         ASSERT((uiBufferSize % 2048) == 0);// Streaming int_size must be 2K aligned to use for async I/O
 
          iBufferSampleCount = uiBufferSize / (m_pwaveformat->m_waveformat.nChannels * 2);
 
@@ -543,7 +543,7 @@ namespace multimedia
 
             m_psourcevoice->GetState(&s);
 
-            //i64 i = s.SamplesPlayed;
+            //huge_integer i = s.SamplesPlayed;
             //i *= 1000;
             //i /= m_pwaveformat->m_waveformat.nSamplesPerSec;
             return second_time((double)s.SamplesPlayed/(double)m_pwaveformat->m_waveformat.nSamplesPerSec);
@@ -695,10 +695,10 @@ namespace multimedia
 
          //}
 
-         ::u64 freq;
+         huge_natural freq;
          QueryPerformanceFrequency((LARGE_INTEGER*)&freq);
          double timerFrequency = (1.0 / freq);
-         ::u64 startTime;
+         huge_natural startTime;
          QueryPerformanceCounter((LARGE_INTEGER *)&startTime);
 
 
@@ -710,7 +710,7 @@ namespace multimedia
 
          m_psynthtask->on_free(iBuffer);
 
-         ::u64 endTime;
+         huge_natural endTime;
          QueryPerformanceCounter((LARGE_INTEGER *)&endTime);
          double timeDifferenceInseconds = ((endTime - startTime) * timerFrequency);
          if(timeDifferenceInseconds > 0.040)

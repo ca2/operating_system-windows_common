@@ -766,14 +766,14 @@ bool CLASS_DECL_ACME_WINDOWS_COMMON window_get_full_path(wstring & wstrFullPath,
 // (both in ANSI character set)
 {
 
-   strsize dwAllocLen = wstrPath.length() + _MAX_PATH;
+   character_count dwAllocLen = wstrPath.length() + _MAX_PATH;
 
    auto pwszFullPath = wstrFullPath.get_buffer(dwAllocLen);
 
    // first, fully qualify the path name
    unichar * pszFilePart;
 
-   strsize dwLen = GetFullPathNameW(wstrPath, (unsigned int)dwAllocLen, pwszFullPath, &pszFilePart);
+   character_count dwLen = GetFullPathNameW(wstrPath, (unsigned int)dwAllocLen, pwszFullPath, &pszFilePart);
 
    wstrFullPath.release_buffer();
 
@@ -854,7 +854,7 @@ bool CLASS_DECL_ACME_WINDOWS_COMMON window_get_full_path(wstring & wstrFullPath,
 
             wstring wstrBackup = wstrFullPath;
 
-            strsize iFilePart = pszFilePart - wstrFullPath;
+            character_count iFilePart = pszFilePart - wstrFullPath;
 
             auto pwsz = wstrFullPath.get_buffer(iFilePart + iLenFileName + 32); // arrange more space with more 32 extra wchars
 

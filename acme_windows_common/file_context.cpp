@@ -262,7 +262,7 @@ namespace acme_windows_common
       // strip attribute of NORMAL bit, our API doesn't have a "normal" bit.
       rStatus.m_attribute = (unsigned char)(findfile.m_finddata.dwFileAttributes & ~FILE_ATTRIBUTE_NORMAL);
 
-      // get just the low unsigned int of the file size_i32
+      // get just the low unsigned int of the file int_size
       //ASSERT(findFileData.nFileSizeHigh == 0);
       rStatus.m_filesize = (::filesize)make64_from32(findfile.m_finddata.nFileSizeLow, findfile.m_finddata.nFileSizeHigh);
 

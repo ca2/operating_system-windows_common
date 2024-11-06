@@ -416,7 +416,7 @@ namespace acme_windows_common
    //}
 
 
-   //string file_system::as_string(const ::file::path & path, strsize iReadAtMostByteCount)
+   //string file_system::as_string(const ::file::path & path, character_count iReadAtMostByteCount)
    //{
 
    //   string str;
@@ -440,7 +440,7 @@ namespace acme_windows_common
 
    //   dwSize = (DWORD)size(pfile);
 
-   //   iReadAtMostByteCount = iReadAtMostByteCount < 0 ? dwSize : minimum(iReadAtMostByteCount, (::strsize)dwSize);
+   //   iReadAtMostByteCount = iReadAtMostByteCount < 0 ? dwSize : minimum(iReadAtMostByteCount, (::character_count)dwSize);
 
    //   char * psz = str.get_buffer(iReadAtMostByteCount);
 
@@ -473,7 +473,7 @@ namespace acme_windows_common
    //}
 
 
-   memory file_system::as_memory(const ::file::path & pathParam, strsize iReadAtMostByteCount, bool bNoExceptionIfNotFound)
+   memory file_system::as_memory(const ::file::path & pathParam, character_count iReadAtMostByteCount, bool bNoExceptionIfNotFound)
    {
 
       return ::file_system::as_memory(pathParam, iReadAtMostByteCount, bNoExceptionIfNotFound);
@@ -509,13 +509,13 @@ namespace acme_windows_common
       //if (iReadAtMostByteCount < 0)
       //{
 
-      //   iReadAtMostByteCount = (strsize)uSize;
+      //   iReadAtMostByteCount = (character_count)uSize;
 
       //}
       //else
       //{
 
-      //   iReadAtMostByteCount = minimum(iReadAtMostByteCount, (strsize)uSize);
+      //   iReadAtMostByteCount = minimum(iReadAtMostByteCount, (character_count)uSize);
 
       //}
 
@@ -609,7 +609,7 @@ namespace acme_windows_common
 
    //   }
 
-   //   iReadAtMostByteCount = minimum_non_negative(iReadAtMostByteCount, (::strsize)iSize);
+   //   iReadAtMostByteCount = minimum_non_negative(iReadAtMostByteCount, (::character_count)iSize);
 
    //   memory.set_size(iReadAtMostByteCount);
 

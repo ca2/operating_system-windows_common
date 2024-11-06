@@ -45,7 +45,7 @@ namespace direct2d
       ID2D1Device* draw_get_d2d1_device();
 
 
-      comptr < ID2D1PathGeometry1 > create_rectangle_path_geometry(const ::rectangle_f64 & rectangle);
+      comptr < ID2D1PathGeometry1 > create_rectangle_path_geometry(const ::double_rectangle & rectangle);
 
 
 

@@ -3,7 +3,7 @@
 #include "acme/prototype/string/string.h"
 
 
-BSTR bstring::string_byte_len(const char * psz, strsize len)
+BSTR bstring::string_byte_len(const char * psz, character_count len)
 {
 
    auto srclen = len < 0 ? strlen(psz) : len;

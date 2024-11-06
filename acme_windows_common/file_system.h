@@ -46,10 +46,10 @@ namespace acme_windows_common
       
       //int_bool file_is_equal_path_dup(const ::file::path & path1, const ::file::path & path2)
 
-      //string as_string(const ::file::path & path, strsize iReadAtMostByteCount) override;
+      //string as_string(const ::file::path & path, character_count iReadAtMostByteCount) override;
       //memsize as_memory(const ::file::path & path, void * p, memsize s) override;
       //bool as_memory(memory_base & memory, const ::file::path & path, memsize iReadAtMostByteCount) override;
-      memory as_memory(const ::file::path & path, strsize iReadAtMostByteCount, bool bNoExceptionIfNotFound = true) override;
+      memory as_memory(const ::file::path & path, character_count iReadAtMostByteCount, bool bNoExceptionIfNotFound = true) override;
       //void delete_file(const ::file::path & pathFileName) override;
 
       void put_block(const ::file::path & path, const block& block) override;

@@ -209,7 +209,7 @@ namespace draw2d_direct2d
               pCommandList,&props,nullptr,&pImageBrush);
       }
 
-      // Fill a rectangle_i32 with the image brush.
+      // Fill a int_rectangle with the image brush.
       /*if (SUCCEEDED(hr))
       {
       pDeviceContext->fill_rectangle(

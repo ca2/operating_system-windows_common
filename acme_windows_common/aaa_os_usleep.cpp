@@ -10,7 +10,7 @@
 //#ifdef WINDOWS
 //   LARGE_INTEGER ft;
 //
-//   ft.QuadPart = -(10 * (::i64)usec);
+//   ft.QuadPart = -(10 * (huge_integer)usec);
 //   SetWaitableTimer(m_hTimer, &ft, 0, NULL, NULL, 0);
 //   WaitForSingleObject(m_hTimer, U32_INFINITE_TIMEOUT);
 //

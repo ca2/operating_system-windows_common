@@ -46,7 +46,7 @@ namespace draw2d_direct2d
    }
 
 
-   void image::create_ex(const ::size_i32 & size, ::image32_t * pimage32, int iScan, ::enum_flag eflagCreate, int iGoodStride, bool bPreserve)
+   void image::create_ex(const ::int_size & size, ::image32_t * pimage32, int iScan, ::enum_flag eflagCreate, int iGoodStride, bool bPreserve)
    {
 
       //::draw2d::lock draw2dlock;
@@ -155,7 +155,7 @@ namespace draw2d_direct2d
    }
 
 
-   void image::create(const ::size_i32 & size, ::enum_flag eflagCreate, int iGoodStride, bool bPreserve)
+   void image::create(const ::int_size & size, ::enum_flag eflagCreate, int iGoodStride, bool bPreserve)
    {
 
       //auto estatus = 
@@ -174,7 +174,7 @@ namespace draw2d_direct2d
    }
 
 
-   void image::initialize(const ::size_i32 & size, ::image32_t * pimage32, int iScan, ::enum_flag eflagCreate)
+   void image::initialize(const ::int_size & size, ::image32_t * pimage32, int iScan, ::enum_flag eflagCreate)
    {
 
       //auto estatus =
@@ -213,7 +213,7 @@ namespace draw2d_direct2d
 
       }
 
-      ::size_i32 size = pbitmap->get_size();
+      ::int_size size = pbitmap->get_size();
 
       create(size);
 
@@ -234,7 +234,7 @@ namespace draw2d_direct2d
    void image::copy_from(::image::image * pimage, ::enum_flag eflagCreate)
    {
 
-      ::size_i32 s(pimage->width(), pimage->height());
+      ::int_size s(pimage->width(), pimage->height());
 
       if (size() != s)
       {
@@ -301,7 +301,7 @@ namespace draw2d_direct2d
 
 
 
-   //bool image::draw(::draw2d::graphics* pgraphics, const ::point_i32 & point, const ::size_i32 & size, const ::point_i32 & pointSrc)
+   //bool image::draw(::draw2d::graphics* pgraphics, const ::int_point & point, const ::int_size & size, const ::int_point & pointSrc)
    //{
 
    //   return pgraphics->BitBlt(point.x(), point.y(), size.cx(), size.cy(), get_graphics(), pointSrc.x(), pointSrc.y()) != false;
@@ -341,7 +341,7 @@ namespace draw2d_direct2d
 
          ::image::image_source imagesource(picon);
 
-         ::image::image_drawing_options imagedrawingoptions(::size_f64(cx, cy));
+         ::image::image_drawing_options imagedrawingoptions(::double_size(cx, cy));
 
          ::image::image_drawing imagedrawing(imagedrawingoptions, imagesource);
 
@@ -358,7 +358,7 @@ namespace draw2d_direct2d
 
          ::image::image_source imagesource(picon);
 
-         ::image::image_drawing_options imagedrawingoptions(::size_f64(cx, cy));
+         ::image::image_drawing_options imagedrawingoptions(::double_size(cx, cy));
 
          ::image::image_drawing imagedrawing(imagedrawingoptions, imagesource);
 
@@ -383,7 +383,7 @@ namespace draw2d_direct2d
 
          ::image::image_source imagesource(picon);
 
-         ::image::image_drawing_options imagedrawingoptions(::size_f64(cx, cy));
+         ::image::image_drawing_options imagedrawingoptions(::double_size(cx, cy));
 
          ::image::image_drawing imagedrawing(imagedrawingoptions, imagesource);
 
@@ -586,14 +586,14 @@ namespace draw2d_direct2d
    //   }
    //}
 
-   //void image::rotate(image image, const ::rectangle_i32 & rectangle, double dAngle, double dScale)
+   //void image::rotate(image image, const ::int_rectangle & rectangle, double dAngle, double dScale)
    //{
    //   // image image(this);
    //   //   pimage->Paste(this);
 
 
 
-   //   ::rectangle_i32 rectangle(rectangle);
+   //   ::int_rectangle rectangle(rectangle);
 
    //   int cx = rectangle.width();
    //   int cy = rectangle.height();
@@ -691,7 +691,7 @@ namespace draw2d_direct2d
    /*void image::Fill (int A, int R, int G, int B )
    {
    ::color::color color = rgb ( B, G, R ) | (A << 24);
-   int size_i32=stride*cy;
+   int int_size=stride*cy;
 
    ::color::color * pcr;
 
@@ -736,7 +736,7 @@ namespace draw2d_direct2d
    pcr[31] = color;
    }
 
-   for (i=0; i<size_i32; i++ )
+   for (i=0; i<int_size; i++ )
    {
    m_pcolorref[i]=color;
    }
@@ -803,7 +803,7 @@ namespace draw2d_direct2d
    //   }
    //}
 
-   //void image::create_frame(::size_i32 size, int iFrameCount)
+   //void image::create_frame(::int_size size, int iFrameCount)
    //{
    //   int iSliceCount = (int) sqrt((double) iFrameCount);
    //   int iFrameWidth = size.cx() / iSliceCount;
@@ -1010,7 +1010,7 @@ namespace draw2d_direct2d
    //   }
    //}
 
-   //bool image::_draw_raw(const ::rectangle_i32 & rectangleTarget, ::image::image * pimage, const ::point_i32 & pointSrc)
+   //bool image::_draw_raw(const ::int_rectangle & rectangleTarget, ::image::image * pimage, const ::int_point & pointSrc)
    //{
 
    //   return ::image::draw(rectangleTarget, pimage, pointSrc);
@@ -1310,7 +1310,7 @@ namespace draw2d_direct2d
 
    ////   pgraphics->m_iType = 11;
 
-   ////   ::size_i32 size = m_pbitmapMap->GetBitmapDimension();
+   ////   ::int_size size = m_pbitmapMap->GetBitmapDimension();
 
    ////   D2D1_SIZE_U sizeu = D2D1::SizeU(size.cx(), size.cy());
 
@@ -1445,7 +1445,7 @@ namespace draw2d_direct2d
    //bool image::update_window(::aura::draw_interface * puserinteraction, ::message::message * pmessage, bool bTransferBuffer)
    //{
 
-   //   rectangle_i64 rectangleWindow;
+   //   huge_integer_rectangle rectangleWindow;
 
    //   puserinteraction->window_rectangle(rectangleWindow);
 
@@ -1453,7 +1453,7 @@ namespace draw2d_direct2d
 
    //   map(false);
 
-   //   ::rectangle_i32 rectangle(rectangleWindow);
+   //   ::int_rectangle rectangle(rectangleWindow);
 
    //   //      papplication->window_graphics_update_window(puserinteraction->get_window_graphics(),puserinteraction->get_handle(),m_pcolorref,rectangle,this->width(), this->height(), m_iScan, bTransferBuffer);
 
@@ -1462,14 +1462,14 @@ namespace draw2d_direct2d
    //}
 
 
-   void image::blend(const ::point_i32 & pointDst, ::image::image * pimageSrc, const ::point_i32 & pointSrc, const ::size_i32 & sizeParam, unsigned char bA)
+   void image::blend(const ::int_point & pointDst, ::image::image * pimageSrc, const ::int_point & pointSrc, const ::int_size & sizeParam, unsigned char bA)
    {
 
       //return 
       
       //::image::blend(pointDst, pimageSrc, pointSrc, sizeParam, bA);
 
-      //::size_i32 size(sizeParam);
+      //::int_size size(sizeParam);
 
       //::draw2d::lock draw2dlock;
 
@@ -1516,7 +1516,7 @@ namespace draw2d_direct2d
 
       //   bool bSmallerSourceRegion = false;
 
-      //   ::size_i32 sizeSource;
+      //   ::int_size sizeSource;
 
       //   {
 
@@ -1578,7 +1578,7 @@ namespace draw2d_direct2d
 
       //      ::draw2d::savedc k1(pgraphics);
 
-      //      ::rectangle_i32 rDst;
+      //      ::int_rectangle rDst;
       //      rDst.left() = pointDst.x();
       //      rDst.top() = pointDst.y();
       //      rDst.right() = pointDst.x() + size.cx();
@@ -1652,7 +1652,7 @@ namespace draw2d_direct2d
 
       //}
 
-      //::rectangle_i32 rectangleDib1(::point_i32(), pimage->get_size());
+      //::int_rectangle rectangleDib1(::int_point(), pimage->get_size());
 
       //fill(a_rgb(255, rgb));
 
@@ -1665,7 +1665,7 @@ namespace draw2d_direct2d
       //pgraphicsDib1->m_pdevicecontext->DrawImage(
       //pimage->get_bitmap()->get_os_data< ID2D1Bitmap>(),
       //D2D1::Point2F(0.f, 0.f),
-      //d2d1::rectangle_f32(rectangleDib1),
+      //d2d1::float_rectangle(rectangleDib1),
       //D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR,
       //D2D1_COMPOSITE_MODE_SOU_IN);
 

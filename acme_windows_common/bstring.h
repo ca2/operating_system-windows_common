@@ -25,7 +25,7 @@ public:
 
    BSTR c_str() const { return m_bstr; }
 
-   static BSTR string_byte_len(const char * psz, strsize i);
+   static BSTR string_byte_len(const char * psz, character_count i);
 
    static BSTR allocate_string(const OLECHAR * sz);
 
