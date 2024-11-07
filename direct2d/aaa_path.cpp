@@ -118,7 +118,7 @@ namespace draw2d_direct2d
    }
 
 
-   bool path::internal_add_lines(::draw2d::graphics* pgraphics, const ::point_f64_array& pointa, bool bClose)
+   bool path::internal_add_lines(::draw2d::graphics* pgraphics, const ::double_point_array& pointa, bool bClose)
    {
 
       if (pointa.get_count() < 1)
@@ -599,7 +599,7 @@ namespace draw2d_direct2d
    bool path::_set(::draw2d::graphics* pgraphics, const ::linesd& lines)
    {
 
-      return internal_add_lines(pgraphics, (const ::point_f64_array&) lines, false);
+      return internal_add_lines(pgraphics, (const ::double_point_array&) lines, false);
 
    }
 
@@ -614,7 +614,7 @@ namespace draw2d_direct2d
    bool path::_set(::draw2d::graphics* pgraphics, const ::double_polygon& int_polygon)
    {
 
-      return internal_add_lines(pgraphics, (const ::point_f64_array&)int_polygon, true);
+      return internal_add_lines(pgraphics, (const ::double_point_array&)int_polygon, true);
 
    }
 

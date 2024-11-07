@@ -54,7 +54,7 @@ namespace draw2d_direct2d
 
       virtual bool internal_add_lines(::draw2d::graphics* pgraphics, const ::int_point_array & pointa, bool bClose);
 
-      virtual bool internal_add_lines(::draw2d::graphics* pgraphics, const ::point_f64_array& pointa, bool bClose);
+      virtual bool internal_add_lines(::draw2d::graphics* pgraphics, const ::double_point_array& pointa, bool bClose);
 
       virtual bool internal_add_string(::draw2d_direct2d::graphics * pgraphics, double x, double y, const ::string & strText, ::write_text::font * pfont);
 

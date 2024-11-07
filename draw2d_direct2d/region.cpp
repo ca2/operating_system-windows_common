@@ -315,7 +315,7 @@ namespace draw2d_direct2d
 
       auto ppath = pgraphics->__create < ::draw2d::path > ();
 
-      point_f64_array pa;
+      double_point_array pa;
 
       /*if(m_efillmode == ::draw2d::e_fill_mode_alternate)
       {

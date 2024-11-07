@@ -119,7 +119,9 @@ namespace imaging_wic
 
       }
 
-      hr = piStream->InitializeFromMemory((WICInProcPointer) pszData, size);
+      auto dwSize = (DWORD) size;
+
+      hr = piStream->InitializeFromMemory((WICInProcPointer) pszData, dwSize);
 
       if (FAILED(hr))
       {
