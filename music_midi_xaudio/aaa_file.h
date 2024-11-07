@@ -90,7 +90,7 @@ namespace music
 
             //int CalcMelodyTrack(::music::midi::events ** ppEvents, imedia_position_array & ticka);
 
-            //int WorkCalcMelodyTrack(::music::midi::events ** ppEvents, imedia_position_array & positiona, ::i32_array & iaTokenLine);
+            //int WorkCalcMelodyTrack(::music::midi::events ** ppEvents, imedia_position_array & positiona, ::int_array & iaTokenLine);
 
             int GetFormat();
 
