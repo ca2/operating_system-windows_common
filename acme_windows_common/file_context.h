@@ -31,7 +31,7 @@ namespace acme_windows_common
       void term_system() override;
 
 
-      void finalize() override;
+      void destroy() override;
 
 
       virtual void get_status(const ::file::path & path, ::file::file_status & status);

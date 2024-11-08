@@ -128,46 +128,14 @@ namespace imaging_wic
    }
 
 
-   void image_context::finalize()
+   void image_context::destroy()
    {
 
-      if (m_pmanagerImageLoadSlowQueue)
-      {
+      m_pmanagerImageLoadSlowQueue.defer_destroy();
 
-         try
-         {
+      m_pmanagerImageLoadFastQueue.defer_destroy();
 
-            m_pmanagerImageLoadSlowQueue->set_finish();
-
-         }
-         catch (...)
-         {
-
-         }
-
-      }
-
-      m_pmanagerImageLoadSlowQueue.release();
-
-      if (m_pmanagerImageLoadFastQueue)
-      {
-
-         try
-         {
-
-            m_pmanagerImageLoadFastQueue->set_finish();
-
-         }
-         catch (...)
-         {
-
-         }
-
-      }
-
-      m_pmanagerImageLoadFastQueue.release();
-
-      ::image::image_context::finalize();
+      ::image::image_context::destroy();
 
    }
 

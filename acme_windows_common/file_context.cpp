@@ -83,10 +83,10 @@ namespace acme_windows_common
    }
    
    
-   void file_context::finalize()
+   void file_context::destroy()
    {
 
-      ::file_context::finalize();
+      ::file_context::destroy();
 
    }
 
