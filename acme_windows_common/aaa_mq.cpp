@@ -69,7 +69,7 @@
 //
 //   m_messagea.add(message);
 //
-//   m_happeningNewMessage.set_event();
+//   m_happeningNewMessage.set_happening();
 //
 //   return true;
 //

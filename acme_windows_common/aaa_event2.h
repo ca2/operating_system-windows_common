@@ -46,7 +46,7 @@ public:
    //virtual HSYNC hsync() const;
 
    bool set_happening();
-   bool set_event() {return set_happening(); }
+   bool set_happening() {return set_happening(); }
    //bool PulseEvent();
    bool reset_happening();
 

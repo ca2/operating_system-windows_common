@@ -8,7 +8,7 @@
 //
 //         m_var = payload;
 //
-//         m_happening.set_event();
+//         m_happening.set_happening();
 //
 //      }))
 //{
