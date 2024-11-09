@@ -26,7 +26,7 @@ public:
    ::pointer<::object>   m_pobjectParent;
 
    ::pointer<::matter>           m_pmatter;
-   ::pointer<manual_reset_event>      m_pevSleep;
+   ::pointer<manual_reset_happening>      m_pevSleep;
 
 #ifdef WINDOWS
    HRESULT                          m_hresultCoInitialize;

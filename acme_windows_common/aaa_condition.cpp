@@ -304,7 +304,7 @@ synchronization_result condition::wait(const duration& duration)
 
 //*****************************************************************************
 //
-//      Class:          manual_reset_event
+//      Class:          manual_reset_happening
 //      Author:         Kenny Kerr
 //      Date created:   10 April 2004
 //      Description:    Notifies one or more waiting threads that an condition has
@@ -330,7 +330,7 @@ bool condition::is_signaled() const
 
 //end**************************************************************************
 //
-//      Class:          manual_reset_event
+//      Class:          manual_reset_happening
 //      Author:         Kenny Kerr
 //      Date created:   10 April 2004
 //      Description:    Notifies one or more waiting threads that an condition has

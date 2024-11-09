@@ -25,7 +25,7 @@ public:
 
 
    ::payload                                    m_var;
-   ::pointer<manual_reset_event>         m_peventCompletion;
+   ::pointer<manual_reset_happening>         m_peventCompletion;
 
 
    virtual ~sync_future() {}

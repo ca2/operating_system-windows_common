@@ -569,7 +569,7 @@ CLASS_DECL_ACME bool __task_sleep(task* pthread, const class ::wait & wait)
    try
    {
 
-      ::pointer<manual_reset_event>spev;
+      ::pointer<manual_reset_happening>spev;
 
       {
 
@@ -578,7 +578,7 @@ CLASS_DECL_ACME bool __task_sleep(task* pthread, const class ::wait & wait)
          if (pthread->m_pevSleep.is_null())
          {
 
-            pthread->m_pevSleep = __allocate manual_reset_event();
+            pthread->m_pevSleep = __allocate manual_reset_happening();
 
             pthread->m_pevSleep->ResetEvent();
 

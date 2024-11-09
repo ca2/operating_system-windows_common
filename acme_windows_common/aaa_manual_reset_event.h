@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-//      Class:          manual_reset_event
+//      Class:          manual_reset_happening
 //      Author:         Kenny Kerr
 //      Date created:   10 April 2004
 //      Description:    Notifies one or more waiting threads that an event has
@@ -16,16 +16,16 @@ TYPE * m_pnext; \
 ::factory_item::reusable_factory_item < TYPE, TYPE > * m_pfactory; \
 virtual void delete_this() { if(m_pfactory) m_pfactory->return_back(this); else delete this;}
 
-class CLASS_DECL_ACME manual_reset_event :
+class CLASS_DECL_ACME manual_reset_happening :
    public ::event
 {
 public:
 
 
-   DECLARE_REUSABLE(manual_reset_event);
+   DECLARE_REUSABLE(manual_reset_happening);
 
 
-   manual_reset_event(char * sz = nullptr, bool bInitiallyOwn = false);
+   manual_reset_happening(char * sz = nullptr, bool bInitiallyOwn = false);
 
 
    void reuse() { ResetEvent(); }
@@ -34,7 +34,7 @@ public:
 
 
 class CLASS_DECL_ACME long_counter :
-   public manual_reset_event
+   public manual_reset_happening
 {
 public:
 
