@@ -5,7 +5,7 @@ namespace windows
 {
 
 
-   /// This class represents events for file changes
+   /// This class represents happenings for file changes
    class CLASS_DECL_ACME file_change_event :
       virtual public synchronization_object
    {

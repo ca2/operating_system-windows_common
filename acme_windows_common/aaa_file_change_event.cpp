@@ -17,7 +17,7 @@ namespace windows
       synchronization_object(::FindFirstChangeNotificationW(utf8_to_unicode(path), watchsubtree, filter))
    {
       if (hsync() == nullptr)
-         throw ::exception(runtime_error("file_change_event: failed to create event"));
+         throw ::exception(runtime_error("file_change_event: failed to create happening"));
    }
 
    ///  \brief		destructor

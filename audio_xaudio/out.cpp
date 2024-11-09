@@ -613,7 +613,7 @@ namespace multimedia
             delete peffect;
          }
 
-         m_pplayer->post_event(::wave::e_player_event_playback_end);
+         m_pplayer->post_event(::wave::e_player_happening_playback_end);
 
       }
 
@@ -667,7 +667,7 @@ namespace multimedia
 
 
       //
-      // Callback handlers, only implement the buffer events for maintaining play state
+      // Callback handlers, only implement the buffer happenings for maintaining play state
       //
       void out::OnVoiceProcessingPassStart(unsigned int /*bytesRequired*/)
       {

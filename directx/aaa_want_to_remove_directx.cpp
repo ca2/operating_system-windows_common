@@ -198,7 +198,7 @@ namespace draw2d_directx
    }
 
    // Helps track the DPI in the helper class.
-   // This is called in the dpiChanged event handler in the impact class.
+   // This is called in the dpiChanged happening handler in the impact class.
    void directx::SetDpi(float dpi)
    {
       if (dpi != m_dpi)
@@ -210,13 +210,13 @@ namespace draw2d_directx
          m_d2dContext->SetDpi(m_dpi, m_dpi);
 
          // Often a DPI change implies a window size change. In some cases Windows will issue
-         // both a size changed event and a DPI changed event. In this case, the resulting bounds
+         // both a size changed happening and a DPI changed happening. In this case, the resulting bounds
          // will not change, and the window resize code will only be executed once.
          UpdateForWindowSizeChange();
       }
    }
 
-   // This routine is called in the event handler for the impact SizeChanged event.
+   // This routine is called in the happening handler for the impact SizeChanged happening.
    void directx::UpdateForWindowSizeChange()
    {
       // Only handle window size changed if there is no pending DPI change.
@@ -243,10 +243,10 @@ namespace draw2d_directx
       */
    }
 
-   // Allocate all memory resources that change on a window SizeChanged event.
+   // Allocate all memory resources that change on a window SizeChanged happening.
    void directx::CreateWindowSizeDependentResources()
    {
-      // Store the window bounds so the next time we get a SizeChanged event we can
+      // Store the window bounds so the next time we get a SizeChanged happening we can
       // avoid rebuilding everything if the size is identical.
       m_windowBounds = m_window->Bounds;
 

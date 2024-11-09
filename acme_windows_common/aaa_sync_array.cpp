@@ -313,7 +313,7 @@ synchronization_result synchronization_array::wait(bool waitForAll, const durati
    while (winResult != WAIT_TIMEOUT && winResult != WAIT_FAILED);
    //while (winResult!=WAIT_TIMEOUT && winResult!= WAIT_FAILED && FoundExternal==false);
 
-   ////MBO: erase events to avoid double signalization
+   ////MBO: erase happenings to avoid double signalization
    //comparable_array < waitable_element >::iterator it;
    //for (it = m_waitableelementa.begin(); it != m_waitableelementa.end(); ++it)
    //   (*it).m_psync->exit_wait();

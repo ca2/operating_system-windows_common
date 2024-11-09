@@ -89,7 +89,7 @@ namespace music
                   return false;
                }
                m_pmidiplayer->ResumeThread();
-               m_pmidiplayer->m_evInitialized.wait();
+               m_pmidiplayer->m_happeningInitialized.wait();
                return true;
             }
 

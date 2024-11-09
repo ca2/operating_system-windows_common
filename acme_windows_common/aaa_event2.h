@@ -7,7 +7,7 @@
 
 
 
-class CLASS_DECL_ACME event :
+class CLASS_DECL_ACME happening :
    public synchronization_object
 {
 public:
@@ -33,9 +33,9 @@ public:
 #endif
 
 
-   event(char * sz = nullptr,bool bInitiallyOwn = false, bool bManualReset = false, const ::string & pszNAme = nullptr, sync_options * psyncoptions = nullptr);
+   happening(char * sz = nullptr,bool bInitiallyOwn = false, bool bManualReset = false, const ::string & pszNAme = nullptr, sync_options * psyncoptions = nullptr);
 
-   virtual ~event();
+   virtual ~happening();
 
    // using event_base::lock;
    virtual bool lock(const duration & durationTimeout = duration::infinite());
@@ -54,11 +54,11 @@ public:
    * \brief	Session independent waitables (windows version)
    */
 
-   ///  \brief		waits for an event forever
+   ///  \brief		waits for an happening forever
    virtual synchronization_result wait ();
 
-   ///  \brief		waits for an event for a specified time
-   ///  \lparam		duration time period to wait for an event
+   ///  \brief		waits for an happening for a specified time
+   ///  \lparam		duration time period to wait for an happening
    ///  \return	waiting action result as WaitResult
    virtual synchronization_result wait (const duration & duration);
 

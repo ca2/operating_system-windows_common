@@ -42,7 +42,7 @@ void clock_getrealtime(struct timespec * pts)
 #endif
 
 
-event::event(char * sz, bool bInitiallyOwn, bool bManualReset, const ::string & pstrName,sync_options * psyncoptions)
+happening::happening(char * sz, bool bInitiallyOwn, bool bManualReset, const ::string & pstrName,sync_options * psyncoptions)
 {
 
 #ifdef WINDOWS_DESKTOP
@@ -141,7 +141,7 @@ event::event(char * sz, bool bInitiallyOwn, bool bManualReset, const ::string & 
       if(pstrName != nullptr && *pstrName != '\0')
       {
 
-         string strPath = "/::payload/tmp/ca2/ftok/event/" + string(pstrName);
+         string strPath = "/::payload/tmp/ca2/ftok/happening/" + string(pstrName);
 
          m_sem = semget(ftok(strPath, 0), 1, 0666 | IPC_CREAT);
 
@@ -179,7 +179,7 @@ event::event(char * sz, bool bInitiallyOwn, bool bManualReset, const ::string & 
 }
 
 
-event::~event()
+happening::~happening()
 {
 
 #if defined(LINUX)
@@ -209,7 +209,7 @@ event::~event()
 
 
 
-bool event::set_happening()
+bool happening::set_happening()
 {
 
 #ifdef WINDOWS
@@ -296,7 +296,7 @@ bool event::set_happening()
 }
 
 
-//bool event::pulse_happening()
+//bool happening::pulse_happening()
 //{
 //
 //#ifdef WINDOWS_DESKTOP
@@ -322,7 +322,7 @@ bool event::set_happening()
 
 
 
-bool event::reset_happening()
+bool happening::reset_happening()
 {
 
 #ifdef WINDOWS
@@ -333,7 +333,7 @@ bool event::reset_happening()
       if(m_hsync == NULL)
       {
 
-         ::output_debug_string(L"error reset event (1)");
+         ::output_debug_string(L"error reset happening (1)");
 
          return false;
 
@@ -345,7 +345,7 @@ bool event::reset_happening()
    catch(...)
    {
 
-      ::output_debug_string(L"error reset event (2)");
+      ::output_debug_string(L"error reset happening (2)");
 
    }
 
@@ -377,7 +377,7 @@ bool event::reset_happening()
 }
 
 
-synchronization_result event::wait ()
+synchronization_result happening::wait ()
 {
 
    //throw ::exception(todo("thread"));
@@ -507,10 +507,10 @@ synchronization_result event::wait ()
 
 }
 
-///  \brief		waits for an event for a specified time
-///  \lparam		duration time period to wait for an event
+///  \brief		waits for an happening for a specified time
+///  \lparam		duration time period to wait for an happening
 ///  \return	waiting action result as WaitResult
-synchronization_result event::wait (const duration & durationTimeout)
+synchronization_result happening::wait (const duration & durationTimeout)
 {
 
    synchronization_result result;
@@ -745,17 +745,17 @@ synchronization_result event::wait (const duration & durationTimeout)
 //      Class:          manual_reset_happening
 //      Author:         Kenny Kerr
 //      Date created:   10 April 2004
-//      Description:    Notifies one or more waiting threads that an event has
+//      Description:    Notifies one or more waiting threads that an happening has
 //                      occurred.
 //
 //*****************************************************************************
 //*****************************************************************************
 //
 //      Name:           Signaled
-//      Description:    Determines whether the event is currently signaled.
+//      Description:    Determines whether the happening is currently signaled.
 //
 //*****************************************************************************
-bool event::is_signaled() const
+bool happening::is_signaled() const
 {
 
 #ifdef WINDOWS
@@ -773,7 +773,7 @@ bool event::is_signaled() const
    else
    {
 
-      return ((event *) this)->wait(::duration(0)).signaled();
+      return ((happening *) this)->wait(::duration(0)).signaled();
 
    }
 
@@ -823,12 +823,12 @@ bool event::is_signaled() const
 //      Class:          manual_reset_happening
 //      Author:         Kenny Kerr
 //      Date created:   10 April 2004
-//      Description:    Notifies one or more waiting threads that an event has
+//      Description:    Notifies one or more waiting threads that an happening has
 //                      occurred.
 //
 //end**************************************************************************
 
-bool event::lock(const duration & durationTimeout)
+bool happening::lock(const duration & durationTimeout)
 {
 
    return wait(durationTimeout).succeeded();
@@ -941,7 +941,7 @@ bool event::lock(const duration & durationTimeout)
 }
 
 
-bool event::unlock()
+bool happening::unlock()
 {
 
    return true;
@@ -949,7 +949,7 @@ bool event::unlock()
 }
 
 
-//HSYNC event::hsync() const
+//HSYNC happening::hsync() const
 //{
 //
 //#ifdef WINDOWS_DESKTOP
@@ -958,7 +958,7 @@ bool event::unlock()
 //
 //#else
 //
-//   return (event *) this;
+//   return (happening *) this;
 //
 //#endif
 //

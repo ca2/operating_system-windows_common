@@ -253,7 +253,7 @@ namespace multimedia
             if(lpdata->bVisible)
             {
             lpdata->lpDataCentral->m_csBuildAlbumThreadData.lock();
-            lpdata->m_evStarted.lock();
+            lpdata->m_happeningStarted.lock();
             //lpdata->m_ptaskdlg->m_pCloseWindow = pAlbum;
             //            lpdata->m_ptaskdlg->m_lparamClose = 10;
             lpdata->lpDataCentral->m_csBuildAlbumThreadData.unlock();

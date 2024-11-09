@@ -3,7 +3,7 @@
 //      Class:          manual_reset_happening
 //      Author:         Kenny Kerr
 //      Date created:   10 April 2004
-//      Description:    Notifies one or more waiting threads that an event has
+//      Description:    Notifies one or more waiting threads that an happening has
 //                      occurred.
 //
 //*****************************************************************************
@@ -17,7 +17,7 @@ TYPE * m_pnext; \
 virtual void delete_this() { if(m_pfactory) m_pfactory->return_back(this); else delete this;}
 
 class CLASS_DECL_ACME manual_reset_happening :
-   public ::event
+   public ::happening
 {
 public:
 

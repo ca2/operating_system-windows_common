@@ -86,8 +86,8 @@ namespace music
 
             };
 
-            class event :
-               public ::music::midi::sequence::event
+            class happening :
+               public ::music::midi::sequence::happening
             {
             public:
 
@@ -139,7 +139,7 @@ namespace music
             int SetKeyShift(int iKeyShift);
             int GetKeyShift();
 
-            void on_midi_playback_end(::music::midi::sequence::event * pevent);
+            void on_midi_playback_end(::music::midi::sequence::happening * pevent);
             int SetTempoShift(int iTempoShift);
 
             void OnPositionCB(LPMIDIHDR lpmidihdr);
@@ -165,7 +165,7 @@ namespace music
             virtual bool WasInSpecialModeV001();
             virtual void set_operation(e_operation eoperation);
 
-            virtual void OnEvent(::music::midi::sequence::event * pevent);
+            virtual void OnHappening(::music::midi::sequence::happening * pevent);
 
 
             void     AllocBuffers();
@@ -226,7 +226,7 @@ namespace music
             }
 
             using ::music::midi::sequence::create_new_event;
-            virtual ::music::midi::sequence::event * create_new_event(::music::midi::sequence::e_event eevent, LPMIDIHDR lpmidihdr);
+            virtual ::music::midi::sequence::happening * create_new_event(::music::midi::sequence::e_happening ehappening, LPMIDIHDR lpmidihdr);
 
          };
 

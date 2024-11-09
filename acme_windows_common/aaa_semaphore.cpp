@@ -35,7 +35,7 @@ semaphore::semaphore(int lInitialCount, int lMaxCount, const ::string & pstrName
    if(pstrName != nullptr && *pstrName != '\0')
    {
 
-      m_strName = "/acme/time/ftok/event/" + string(pstrName);
+      m_strName = "/acme/time/ftok/happening/" + string(pstrName);
 
 
       if((m_psem= sem_open(m_strName,O_CREAT | O_EXCL,0666,lInitialCount)) != SEM_FAILED)

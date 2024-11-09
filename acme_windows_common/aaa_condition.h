@@ -55,11 +55,11 @@ namespace windows
       * \brief	Session independent waitables (windows version)
       */
 
-      ///  \brief		waits for an event forever
+      ///  \brief		waits for an happening forever
       virtual synchronization_result wait();
 
-      ///  \brief		waits for an event for a specified time
-      ///  \lparam		duration time period to wait for an event
+      ///  \brief		waits for an happening for a specified time
+      ///  \lparam		duration time period to wait for an happening
       ///  \return	waiting action result as WaitResult
       virtual synchronization_result wait(const duration & duration);
 

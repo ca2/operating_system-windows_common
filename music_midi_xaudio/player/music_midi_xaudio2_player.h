@@ -65,7 +65,7 @@ namespace music
                virtual void OnMidiOutDeviceChange();
 
                unsigned int GetMidiOutDevice();
-               void PostNotifyEvent(::music::midi::player::e_notify_event eevent);
+               void PostNotifyEvent(::music::midi::player::e_notify_event ehappening);
 
                class ::time RateToTicks(double dRate);
 
