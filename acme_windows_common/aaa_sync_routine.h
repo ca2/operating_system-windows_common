@@ -23,7 +23,7 @@ namespace promise
          m_procedure(routine)
       {
 
-         __defer_construct(m_peventCompletion);
+         __defer_construct(m_phappeningCompletion);
 
       }
 
@@ -32,7 +32,7 @@ namespace promise
 
 
       routine                          m_procedure;
-      ::pointer<manual_reset_happening>   m_peventCompletion;
+      ::pointer<manual_reset_happening>   m_phappeningCompletion;
       ::duration                       m_duration;
       void                        m_estatus;
 
@@ -45,7 +45,7 @@ namespace promise
 
          m_estatus = m_procedure();
 
-         m_peventCompletion->SetEvent();
+         m_phappeningCompletion->SetEvent();
 
          return m_estatus;
 
@@ -55,7 +55,7 @@ namespace promise
       virtual synchronization_result wait(const duration &durationTimeout) override
       {
 
-         return m_peventCompletion->wait(durationTimeout);
+         return m_phappeningCompletion->wait(durationTimeout);
 
       }
 

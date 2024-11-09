@@ -8,7 +8,7 @@
 //
 //         m_var = payload;
 //
-//         m_event.set_event();
+//         m_happening.set_event();
 //
 //      }))
 //{
@@ -19,7 +19,7 @@
 //sync_future::~sync_future()
 //{
 //
-//   m_event.lock();
+//   m_happening.lock();
 //
 //}
 //

@@ -18,14 +18,14 @@ protected:
    sync_future()
    {
 
-      __defer_construct(m_peventCompletion);
+      __defer_construct(m_phappeningCompletion);
 
    }
 public:
 
 
    ::payload                                    m_var;
-   ::pointer<manual_reset_happening>         m_peventCompletion;
+   ::pointer<manual_reset_happening>         m_phappeningCompletion;
 
 
    virtual ~sync_future() {}
@@ -36,14 +36,14 @@ public:
 
       m_var = payload;
 
-      m_peventCompletion->SetEvent();
+      m_phappeningCompletion->SetEvent();
 
    }
 
    inline synchronization_result wait(const ::duration& duration = duration::infinite())
    {
 
-      return m_peventCompletion->wait(duration);
+      return m_phappeningCompletion->wait(duration);
 
    }
 

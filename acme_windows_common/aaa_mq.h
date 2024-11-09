@@ -67,7 +67,7 @@ public:
 
 
    mq_message_array        m_messagea;
-   manual_reset_happening      m_eventNewMessage;
+   manual_reset_happening      m_happeningNewMessage;
    itask_t                 m_itask;
    bool                    m_bKickIdle;
    bool                    m_bQuit;

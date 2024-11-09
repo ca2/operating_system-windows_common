@@ -847,7 +847,7 @@ seq_Preroll_Cleanup:
             SetState(e_state_stopping);
             m_flags.add(::music::midi::sequence::e_flag_waiting);
 
-            m_eventMidiPlaybackEnd.ResetEvent();
+            m_happeningMidiPlaybackEnd.ResetEvent();
 
             if(m_hstream != nullptr)
             {
@@ -867,7 +867,7 @@ seq_Preroll_Cleanup:
 
             }
 
-            //m_eventMidiPlaybackEnd.lock();
+            //m_happeningMidiPlaybackEnd.lock();
 
             SetLevelMeter(0);
 
@@ -1209,7 +1209,7 @@ seq_Preroll_Cleanup:
             ASSERT(lpmidihdr != nullptr);
             LPBYTE lpbData = (LPBYTE) (lpmidihdr->lpData + lpmidihdr->dwOffset);
             MIDIEVENT * lpme = (MIDIEVENT *) lpbData;
-            file::buffer::midi_stream_event_header * pheader = (file::buffer::midi_stream_event_header *) &lpme->dwParms[0];
+            file::buffer::midi_stream_happening_header * pheader = (file::buffer::midi_stream_happening_header *) &lpme->dwParms[0];
             lpbData = (LPBYTE) pheader;
             LPDWORD lpdwParam;
 
@@ -1220,10 +1220,10 @@ seq_Preroll_Cleanup:
             {
                array < ::ikaraoke::lyric_event_v1, ::ikaraoke::lyric_event_v1 &> * plyriceventa = nullptr;
                array < ::ikaraoke::lyric_event_v1, ::ikaraoke::lyric_event_v1 &> lyriceventa;
-               for(int i = sizeof(file::buffer::midi_stream_event_header); i < iSize;)
+               for(int i = sizeof(file::buffer::midi_stream_happening_header); i < iSize;)
                {
-                  pheader = (file::buffer::midi_stream_event_header *) &lpbData[i];
-                  lpdwParam = (LPDWORD) &lpbData[i + sizeof(file::buffer::midi_stream_event_header)];
+                  pheader = (file::buffer::midi_stream_happening_header *) &lpbData[i];
+                  lpdwParam = (LPDWORD) &lpbData[i + sizeof(file::buffer::midi_stream_happening_header)];
                   ASSERT(*lpdwParam == pheader->m_dwType);
                   switch(pheader->m_dwType)
                   {
@@ -1255,7 +1255,7 @@ seq_Preroll_Cleanup:
                   }
                   break;
                   }
-                  i += pheader->m_dwLength + sizeof(file::buffer::midi_stream_event_header);
+                  i += pheader->m_dwLength + sizeof(file::buffer::midi_stream_happening_header);
                }
                /*         if(plyriceventa != nullptr)
                {
@@ -1836,10 +1836,10 @@ seq_Preroll_Cleanup:
                pLyricEventsV2B = ___new ::ikaraoke::lyric_events_v2();
                pLyricEventsV2C = ___new ::ikaraoke::lyric_events_v2();
                pLyricEventsV2_ = ___new ::ikaraoke::lyric_events_v2();
-               staticdata.m_eventsv1.add(pLyricEventsV2);
-               staticdata.m_eventsv1.add(pLyricEventsV2B);
-               staticdata.m_eventsv1.add(pLyricEventsV2C);
-               staticdata.m_eventsv1.add(pLyricEventsV2_);
+               staticdata.m_happeningsv1.add(pLyricEventsV2);
+               staticdata.m_happeningsv1.add(pLyricEventsV2B);
+               staticdata.m_happeningsv1.add(pLyricEventsV2C);
+               staticdata.m_happeningsv1.add(pLyricEventsV2_);
                lyricEvents.add(pLyricEventsV2_);
                lyricEventsForScoring.add(pLyricEventsV2);
                lyricEventsForPositionCB.add(pLyricEventsV2B);
@@ -1969,7 +1969,7 @@ seq_Preroll_Cleanup:
             for(i = 0; i < tickaaTokensTicks.get_size(); i++)
             {
                pLyricEventsV2 = (::ikaraoke::lyric_events_v2 *) lyricEvents.get_at(i);
-               staticdata.m_eventstracks.add(pLyricEventsV2);
+               staticdata.m_happeningstracks.add(pLyricEventsV2);
                file.TimeToPosition(
                pLyricEventsV2->m_tickaTokensPosition,
                ms2DTokensMillis[i],
@@ -2013,7 +2013,7 @@ seq_Preroll_Cleanup:
                pLyricEventsV1 = ___new ::ikaraoke::lyric_events_v1();
                pLyricEventsV1->m_iType = ikaraoke::EventAdvanceShow;
                pLyricEventsV1->m_iOrder = i;
-               //staticdata.m_eventsTracksForPositionCB.add(pLyricEventsV1);
+               //staticdata.m_happeningsTracksForPositionCB.add(pLyricEventsV1);
                file.TimeToPosition(
                pLyricEventsV1->m_tickaTokensPosition,
                ms2DTokensMillis[i],
@@ -2026,7 +2026,7 @@ seq_Preroll_Cleanup:
             for(i = 0; i < tickaaTokensTicks.get_size(); i++)
             {
                pLyricEventsV2 = (::ikaraoke::lyric_events_v2 *) lyricEventsForScoring.get_at(i);
-               staticdata.m_eventsTracksForScoring.add(pLyricEventsV2);
+               staticdata.m_happeningsTracksForScoring.add(pLyricEventsV2);
                file.TimeToPosition(
                pLyricEventsV2->m_tickaTokensPosition,
                ms2DTokensMillis[i],
@@ -2074,9 +2074,9 @@ seq_Preroll_Cleanup:
             for(i = 0; i < tickaaTokensTicks.get_size(); i++)
             {
                pLyricEventsV2 = (::ikaraoke::lyric_events_v2 *) lyricEventsForPositionCB.get_at(i);
-               staticdata.m_eventsTracksForPositionCB.add(pLyricEventsV2);
+               staticdata.m_happeningsTracksForPositionCB.add(pLyricEventsV2);
 
-               staticdata.m_eventstracksV002.add(pLyricEventsV2);
+               staticdata.m_happeningstracksV002.add(pLyricEventsV2);
 
                file.TimeToPosition(
                pLyricEventsV2->m_tickaTokensPosition,
@@ -2138,7 +2138,7 @@ seq_Preroll_Cleanup:
             for(i = 0; i < tickaaTokensTicks.get_size(); i++)
             {
                pLyricEventsV2 = (::ikaraoke::lyric_events_v2 *) lyricEventsForBouncingBall.get_at(i);
-               staticdata.m_eventsTracksForBouncingBall.add(pLyricEventsV2);
+               staticdata.m_happeningsTracksForBouncingBall.add(pLyricEventsV2);
 
                file.TimeToPosition(
                pLyricEventsV2->m_tickaTokensPosition,

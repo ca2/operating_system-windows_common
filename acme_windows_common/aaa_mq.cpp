@@ -69,7 +69,7 @@
 //
 //   m_messagea.add(message);
 //
-//   m_eventNewMessage.set_event();
+//   m_happeningNewMessage.set_event();
 //
 //   return true;
 //
@@ -151,11 +151,11 @@
 //
 //         synchronouslock.unlock();
 //
-//         m_eventNewMessage.wait();
+//         m_happeningNewMessage.wait();
 //
 //         synchronouslock.lock();
 //
-//         m_eventNewMessage.ResetEvent();
+//         m_happeningNewMessage.ResetEvent();
 //
 //      }
 //

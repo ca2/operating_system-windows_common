@@ -5,7 +5,7 @@
 //      m_pobjectRunnable(pobjectRunnable)
 //{
 //
-//   m_event.ResetEvent();
+//   m_happening.ResetEvent();
 //
 //}
 //
@@ -40,7 +40,7 @@
 //
 //   }
 //
-//   m_event.SetEvent();
+//   m_happening.SetEvent();
 //
 //   return estatus;
 //

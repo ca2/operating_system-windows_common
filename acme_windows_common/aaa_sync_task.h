@@ -7,7 +7,7 @@
 //public:
 //
 //
-//   manual_reset_happening               m_event;
+//   manual_reset_happening               m_happening;
 //   ::pointer<::matter>     m_pobjectRunnable;
 //
 //
