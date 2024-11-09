@@ -47,7 +47,7 @@ namespace windows
       bool pulse();
       bool set_happening();
       bool set_happening() { return set_happening(); }
-      //bool PulseEvent();
+      //bool pulse_happening();
       bool reset_happening();
 
 

@@ -296,7 +296,7 @@ bool event::set_happening()
 }
 
 
-//bool event::PulseEvent()
+//bool event::pulse_happening()
 //{
 //
 //#ifdef WINDOWS_DESKTOP
@@ -304,7 +304,7 @@ bool event::set_happening()
 //
 //   ASSERT(m_hsync != nullptr);
 //
-//   return ::PulseEvent(m_hsync) != false;
+//   return ::pulse_happening(m_hsync) != false;
 //
 //#else
 //
