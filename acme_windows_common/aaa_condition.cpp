@@ -71,7 +71,7 @@ condition::~condition()
 #endif
 }
 
-bool condition::SetEvent()
+bool condition::set_happening()
 {
 #ifdef WINDOWS
 
@@ -394,7 +394,7 @@ bool condition::lock(const duration& durationTimeout)
 #endif
 }
 
-bool condition::ResetEvent()
+bool condition::reset_happening()
 {
 #ifdef ANDROID
 
@@ -415,7 +415,7 @@ bool condition::ResetEvent()
 
 bool condition::unlock()
 {
-   return ResetEvent();
+   return reset_happening();
 }
 
 void* condition::get_os_data() const

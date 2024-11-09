@@ -28,7 +28,7 @@ public:
    manual_reset_happening(char * sz = nullptr, bool bInitiallyOwn = false);
 
 
-   void reuse() { ResetEvent(); }
+   void reuse() { reset_happening(); }
 
 };
 
@@ -53,7 +53,7 @@ public:
       if (l <= 0)
       {
 
-         SetEvent();
+         set_happening();
 
       }
 

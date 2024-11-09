@@ -155,7 +155,7 @@
 //
 //         synchronouslock.lock();
 //
-//         m_happeningNewMessage.ResetEvent();
+//         m_happeningNewMessage.reset_happening();
 //
 //      }
 //

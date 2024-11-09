@@ -580,7 +580,7 @@ CLASS_DECL_ACME bool __task_sleep(task* pthread, const class ::wait & wait)
 
             pthread->m_pevSleep = __allocate manual_reset_happening();
 
-            pthread->m_pevSleep->ResetEvent();
+            pthread->m_pevSleep->reset_happening();
 
          }
 

@@ -45,10 +45,10 @@ public:
 
    //virtual HSYNC hsync() const;
 
-   bool SetEvent();
-   bool set_event() {return SetEvent(); }
+   bool set_happening();
+   bool set_event() {return set_happening(); }
    //bool PulseEvent();
-   bool ResetEvent();
+   bool reset_happening();
 
    /**
    * \brief	Session independent waitables (windows version)

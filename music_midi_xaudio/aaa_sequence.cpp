@@ -708,7 +708,7 @@ seq_Preroll_Cleanup:
 
             SetState(::music::midi::sequence::e_state_playing);
 
-            m_evMmsgDone.ResetEvent();
+            m_evMmsgDone.reset_happening();
 
             void     estatus = ::success;
             if(m_hstream != nullptr)
@@ -797,7 +797,7 @@ seq_Preroll_Cleanup:
                return error_unsupported_function;
 
             SetState(e_state_playing);
-            m_evMmsgDone.ResetEvent();
+            m_evMmsgDone.reset_happening();
 
             //    void     estatus = 0;
             //    single_lock slStream(&m_csStream, false);
@@ -847,7 +847,7 @@ seq_Preroll_Cleanup:
             SetState(e_state_stopping);
             m_flags.add(::music::midi::sequence::e_flag_waiting);
 
-            m_happeningMidiPlaybackEnd.ResetEvent();
+            m_happeningMidiPlaybackEnd.reset_happening();
 
             if(m_hstream != nullptr)
             {
@@ -1092,7 +1092,7 @@ seq_Preroll_Cleanup:
 
             if(m_uBuffersInMMSYSTEM <= 0)
             {
-               m_evBuffersZero.SetEvent();
+               m_evBuffersZero.set_happening();
             }
 
             if (e_state_reset == GetState())
@@ -1559,7 +1559,7 @@ seq_Preroll_Cleanup:
                m_estatusLastError = ::success;
                m_flags.erase(e_flag_waiting);
 
-               m_evMmsgDone.SetEvent();
+               m_evMmsgDone.set_happening();
             }
          }
 

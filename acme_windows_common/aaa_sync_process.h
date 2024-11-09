@@ -36,7 +36,7 @@ public:
 
       m_var = payload;
 
-      m_phappeningCompletion->SetEvent();
+      m_phappeningCompletion->set_happening();
 
    }
 

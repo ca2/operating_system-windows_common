@@ -289,7 +289,7 @@ namespace music
          void sequence_thread::SendTempoChange()
          {
             ASSERT(!get_sequence()->IsPlaying());
-            get_sequence()->m_evMmsgDone.ResetEvent();
+            get_sequence()->m_evMmsgDone.reset_happening();
             PostTempoChange();
             get_sequence()->m_evMmsgDone.wait();
          }
@@ -356,7 +356,7 @@ namespace music
             break;
             case ::music::midi::player::command_stop:
             {
-               m_happeningStop.ResetEvent();
+               m_happeningStop.reset_happening();
                void                estatus;
                ::music::midi::sequence::PlayerLink & link = get_sequence()->GetPlayerLink();
                link.SetCommand(spcommand);
