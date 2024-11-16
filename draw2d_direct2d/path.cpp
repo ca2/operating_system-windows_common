@@ -64,7 +64,7 @@ namespace draw2d_direct2d
    }
 
 
-   bool path::internal_add_arc(::draw2d::graphics* pgraphics, const ::arc_double & arc)
+   bool path::internal_add_arc(::draw2d::graphics* pgraphics, const ::double_arc & arc)
    {
 
       ::double_point point;
@@ -133,7 +133,7 @@ namespace draw2d_direct2d
 
       internal_start_figure(pgraphics, x + cx, y + cy / 2.0);
 
-      ::arc_double arc{};
+      ::double_arc arc{};
 
       arc.left() = x;
       arc.top() = y;
@@ -382,7 +382,7 @@ namespace draw2d_direct2d
 
 
 
-   bool path::internal_get_arc(::double_point & pointStart,D2D1_ARC_SEGMENT & arcseg, const ::arc_double & arc)
+   bool path::internal_get_arc(::double_point & pointStart,D2D1_ARC_SEGMENT & arcseg, const ::double_arc & arc)
    {
 
       D2D1_POINT_2F pointCenter;
@@ -673,7 +673,7 @@ namespace draw2d_direct2d
    //}
 
 
-   bool path::_set(::draw2d::graphics * pgraphics, const ::arc_double & arc)
+   bool path::_set(::draw2d::graphics * pgraphics, const ::double_arc & arc)
    {
 
       //::double_rectangle rectangle;
@@ -821,7 +821,7 @@ namespace draw2d_direct2d
 
 
 
-   bool path::_set(::draw2d::graphics* pgraphics, const ::lines_double & lines)
+   bool path::_set(::draw2d::graphics* pgraphics, const ::double_lines & lines)
    {
 
       return internal_add_lines(pgraphics, (const ::int_point_array &) lines, false);

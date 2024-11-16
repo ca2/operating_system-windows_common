@@ -310,13 +310,13 @@ namespace draw2d_direct2d
       void line_to(double x, double y) override;
       void draw_line(double x1, double y1, double x2, double y2, ::draw2d::pen * ppen) override;
       //  bool line_to(const ::double_point & point) override;
-      void arc(double x1, double y1, double w, double h, ::angle_double start, ::angle_double extends) override;
+      void arc(double x1, double y1, double w, double h, ::double_angle start, ::double_angle extends) override;
       void arc(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4) override;
       //bool Arc(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4) override;
       void arc(const ::double_rectangle & rectangle, const ::double_point & pointStart, const ::double_point & pointEnd) override;
       void polyline(const ::double_point* ppoints, ::collection::count nCount) override;
 
-      void angle_arc(double x, double y, double nRadius, ::angle_double fStartAngle, ::angle_double fSweepAngle) override;
+      void angle_arc(double x, double y, double nRadius, ::double_angle fStartAngle, ::double_angle fSweepAngle) override;
       //void arc(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4) override;
       //void arc(const ::double_rectangle & rectangle, const ::double_point & pointStart, const ::double_point & pointEnd) override;
       //int GetArcDirection() override;

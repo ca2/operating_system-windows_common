@@ -1151,7 +1151,7 @@ namespace draw2d_direct2d
    //}
 
 
-   void graphics::arc(double x1, double y1, double w, double h, ::angle_double start, ::angle_double extends)
+   void graphics::arc(double x1, double y1, double w, double h, ::double_angle start, ::double_angle extends)
    {
 
       auto ppath = __create < ::draw2d::path >();
@@ -1181,11 +1181,11 @@ namespace draw2d_direct2d
       double centerx = (x2 + x1) / 2.0;
       double centery = (y2 + y1) / 2.0;
 
-      //angle_double start{ with_t{}, atan2(y3 - centery, x3 - centerx) * 180.0 / pi };
-      //angle_double end{ with_t{}, atan2(y4 - centery, x4 - centerx) * 180.0 / pi };
+      //double_angle start{ with_t{}, atan2(y3 - centery, x3 - centerx) * 180.0 / pi };
+      //double_angle end{ with_t{}, atan2(y4 - centery, x4 - centerx) * 180.0 / pi };
 
-      angle_double start;
-      angle_double end;
+      double_angle start;
+      double_angle end;
 
       start.atan(y3 - centery, x3 - centerx);
       end.atan(y4 - centery, x4 - centerx);
@@ -2918,7 +2918,7 @@ namespace draw2d_direct2d
 
       //}
 
-   void graphics::angle_arc(double x, double y, double nRadius, angle_double fStartAngle, angle_double fSweepAngle)
+   void graphics::angle_arc(double x, double y, double nRadius, double_angle fStartAngle, double_angle fSweepAngle)
    {
 
       throw ::exception(todo);

@@ -57,7 +57,7 @@ namespace draw2d_direct2d
       ID2D1GeometryRealization * _get_stroked_geometry_realization(::draw2d::graphics * pgraphics, int iWidth);
       ID2D1GeometryRealization * _get_filled_geometry_realization(::draw2d::graphics * pgraphics);
 
-      virtual bool internal_add_arc(::draw2d::graphics * pgraphics, const ::arc_double & arc);
+      virtual bool internal_add_arc(::draw2d::graphics * pgraphics, const ::double_arc & arc);
 
       virtual bool internal_add_line(::draw2d::graphics* pgraphics, double x, double y);
 
@@ -75,7 +75,7 @@ namespace draw2d_direct2d
 
       virtual bool internal_start_figure(::draw2d::graphics* pgraphics, double x, double y);
 
-      virtual bool internal_get_arc(::double_point & pointStart, D2D1_ARC_SEGMENT & arcseg, const ::arc_double & arc);
+      virtual bool internal_get_arc(::double_point & pointStart, D2D1_ARC_SEGMENT & arcseg, const ::double_arc & arc);
 
       virtual void * detach(::draw2d::graphics * pgraphics);
 
@@ -95,11 +95,11 @@ namespace draw2d_direct2d
 
       virtual bool _set(::draw2d::graphics* pgraphics, const ::draw2d::enum_item& eitem);
 
-      virtual bool _set(::draw2d::graphics* pgraphics, const ::arc_double& parc);
+      virtual bool _set(::draw2d::graphics* pgraphics, const ::double_arc& parc);
 
       virtual bool _set(::draw2d::graphics* pgraphics, const ::double_line& pline);
 
-      virtual bool _set(::draw2d::graphics* pgraphics, const ::lines_double& pline);
+      virtual bool _set(::draw2d::graphics* pgraphics, const ::double_lines& pline);
 
       virtual bool _set(::draw2d::graphics* pgraphics, const ::double_rectangle & rectangle);
 
