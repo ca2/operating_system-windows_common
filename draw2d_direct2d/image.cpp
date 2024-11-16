@@ -1161,7 +1161,7 @@ namespace draw2d_direct2d
 
       auto area = (iScan / sizeof(*pimage32)) * m_size.cy();
 
-      pixmap::init(m_size, pimage32, iScan);
+      pixmap::initialize(m_size, pimage32, iScan);
 
       m_bMapped = true;
 
