@@ -373,7 +373,7 @@ namespace apex_windows_common
       ::cast < ::thread > pthread = system();
 
       //auto estatus = 
-      system()->m_pnode->m_papexnode->thread_initialize(pthread);
+      system()->m_pnode->thread_initialize(pthread);
 
       //if (!estatus)
       //{
