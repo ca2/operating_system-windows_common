@@ -1078,6 +1078,15 @@ namespace acme_windows_common
       return false;
    }
 
+
+   ::string node::display_file_path(const ::file::path & path)
+   {
+
+      return path.windows_path().path();
+
+   }
+
+
    
 } // namespace acme_windows_common
 

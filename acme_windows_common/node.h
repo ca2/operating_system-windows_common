@@ -98,6 +98,9 @@ namespace acme_windows_common
       bool defer_component_factory(const ::scoped_string & scopedstrComponent) override;
 
 
+      ::string display_file_path(const ::file::path & path) override;
+
+
    };
 
 
