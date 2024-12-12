@@ -100,6 +100,8 @@ namespace acme_windows_common
 
       ::string display_file_path(const ::file::path & path) override;
 
+      ::string get_computer_name() override;
+
 
    };
 

@@ -1087,6 +1087,24 @@ namespace acme_windows_common
    }
 
 
+   ::string node::get_computer_name()
+   {
+
+#define INFO_BUFFER_SIZE 32767
+      CHAR  infoBuf[INFO_BUFFER_SIZE];
+      DWORD  bufCharCount = INFO_BUFFER_SIZE;
+
+      // Get and display the name of the computer.
+      if (!::GetComputerNameA(infoBuf, &bufCharCount))
+      {
+         return{};
+
+      }
+
+      return {infoBuf, infoBuf + bufCharCount};
+
+   }
+
    
 } // namespace acme_windows_common
 
