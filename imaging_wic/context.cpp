@@ -257,8 +257,7 @@ namespace imaging_wic
 
             pimage->map();
 
-            vertical_swap_copy_image32(
-               pimage->get_data(),
+            pimage->image32()->vertical_swap_copy(
                pimage->width(),
                pimage->height(),
                pimage->scan_size(),

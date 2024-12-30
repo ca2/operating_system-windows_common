@@ -401,14 +401,14 @@ namespace imaging_wic
 #ifdef UNIVERSAL_WINDOWS
 
 
-   bool node_save_image(::winrt::Windows::Storage::Streams::InMemoryRandomAccessStream const & randomAccessStream, ::image::image * pimage, const ::image::save_image * psaveimage)
+   bool node_save_image(::winrt::Windows::Storage::Streams::InMemoryRandomAccessStream const & randomAccessStream, ::image::image * pimage, const ::image::save_options & saveoptions)
    {
 
       comptr < IStream > pstream;
 
       ::CreateStreamOverRandomAccessStream(winrt::get_unknown(randomAccessStream), IID_PPV_ARGS(&pstream));
 
-      if (!node_save_image(pstream, pimage, psaveimage))
+      if (!node_save_image(pstream, pimage, saveoptions))
       {
 
          return false;
