@@ -31,7 +31,7 @@ namespace draw2d_direct2d
       void destroy_os_data() override;
       void create(::draw2d::graphics * pgraphics, char iCreate) override;
 
-      comptr < ID2D1StrokeStyle1 > _create_stroke_style(::draw2d::graphics * pgraphicsParam);
+      //comptr < ID2D1StrokeStyle1 > _create_stroke_style(::draw2d::graphics * pgraphicsParam);
 
       /*virtual void construct(int nPenStyle, double nWidth, ::color::color crColor);
       virtual void construct(int nPenStyle, double nWidth, const LOGBRUSH* pLogBrush, int nStyleCount = 0, const unsigned int* lpStyle = nullptr);
