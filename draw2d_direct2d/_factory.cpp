@@ -7,6 +7,7 @@
 #include "palette.h"
 #include "region.h"
 #include "font.h"
+#include "internal_font.h"
 #include "graphics.h"
 #include "draw2d.h"
 //#include "aura/printer.h"
@@ -41,6 +42,7 @@ __FACTORY_EXPORT void draw2d_direct2d_factory(::factory::factory * pfactory)
       pfactory->add_factory_item < ::draw2d_direct2d::palette, ::draw2d::palette >();
       pfactory->add_factory_item < ::draw2d_direct2d::region, ::draw2d::region >();
       pfactory->add_factory_item < ::draw2d_direct2d::font, ::write_text::font >();
+      pfactory->add_factory_item < ::draw2d_direct2d::internal_font, ::write_text::internal_font >();
 
       pfactory->add_factory_item < ::draw2d_direct2d::graphics, ::draw2d::graphics > ();
 

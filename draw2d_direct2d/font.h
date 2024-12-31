@@ -16,7 +16,10 @@ namespace draw2d_direct2d
    public:
 
 
-      comptr < IDWriteTextFormat >    m_pformat;
+      comptr < IDWriteFontCollection >    m_pcollection;
+      comptr < IDWriteFontFamily >        m_pfamily;
+      comptr < IDWriteTextFormat >        m_pformat;
+      comptr < IDWriteFont >              m_pfont;
 
 
       font();
@@ -32,6 +35,13 @@ namespace draw2d_direct2d
       void destroy_os_data() override;
       void create(::draw2d::graphics * pgraphics, char iCreate) override;
       void create_text_metrics(::draw2d::graphics * pgraphics) override;
+
+
+
+      DWRITE_FONT_STYLE _dwrite_font_style();
+      DWRITE_FONT_STRETCH _dwrite_font_stretch();
+      DWRITE_FONT_WEIGHT _dwrite_font_weight();
+      float _dwrite_font_size(::draw2d::graphics * pgraphics);
 
       /*      virtual void construct(const ::write_text::font & pfontParam);
 

@@ -5548,7 +5548,7 @@ namespace draw2d_direct2d
 
       size.cx() = (double)(m.widthIncludingTrailingWhitespace * m_pfont->m_dFontWidth);
 
-      size.cy() = (double)m.height;
+      size.cy() = m.height;
 
       text.m_size = size;
 
