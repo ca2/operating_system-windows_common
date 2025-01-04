@@ -251,7 +251,7 @@ namespace acme_windows_common
 
       m_pdirectorysystem->create(file_path_folder(path));
 
-      wstring wstrPath(path);
+      wstring wstrPath(path.windows_path().path());
 
       if (exists(path))
       {

@@ -85,17 +85,19 @@ namespace imaging_wic
       //}
 
 
-//#ifdef UNIVERSAL_WINDOWS
-//
-//      m_pmanagerImageLoad = __allocate multi_threaded_handler_manager();
-//
-//#else
-//
+#ifdef UNIVERSAL_WINDOWS
+
+      m_pmanagerImageLoadSlowQueue = __allocate multi_threaded_handler_manager();
+
+      m_pmanagerImageLoadFastQueue = __allocate multi_threaded_handler_manager();
+
+#else
+
       m_pmanagerImageLoadSlowQueue = __allocate single_threaded_handler_manager();
 
       m_pmanagerImageLoadFastQueue = __allocate single_threaded_handler_manager();
 
-//#endif
+#endif
 
       if (!m_pmanagerImageLoadSlowQueue || !m_pmanagerImageLoadFastQueue)
       {
@@ -257,8 +259,7 @@ namespace imaging_wic
 
             pimage->map();
 
-            vertical_swap_copy_image32(
-               pimage->get_data(),
+            pimage->image32()->vertical_swap_copy(
                pimage->width(),
                pimage->height(),
                pimage->scan_size(),

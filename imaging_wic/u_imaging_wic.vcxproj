@@ -67,7 +67,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="context_image.h" />
+    <ClInclude Include="context.h" />
     <ClInclude Include="factory_exchange.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="_.h" />
@@ -75,7 +75,7 @@
     <ClInclude Include="_winrt_applicationmodel_datatransfer.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="context_image.cpp" />
+    <ClCompile Include="context.cpp" />
     <ClCompile Include="load.cpp" />
     <ClCompile Include="load_multi_frame.cpp" />
     <ClCompile Include="_factory.cpp" />

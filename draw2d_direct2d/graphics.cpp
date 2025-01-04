@@ -5546,9 +5546,9 @@ namespace draw2d_direct2d
 
       playout->GetMetrics(&m);
 
-      size.cx() = (int)(m.widthIncludingTrailingWhitespace * m_pfont->m_dFontWidth);
+      size.cx() = (double)(m.widthIncludingTrailingWhitespace * m_pfont->m_dFontWidth);
 
-      size.cy() = (int)m.height;
+      size.cy() = m.height;
 
       text.m_size = size;
 

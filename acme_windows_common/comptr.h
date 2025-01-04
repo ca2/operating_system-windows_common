@@ -48,6 +48,12 @@ public:
 
    }
 
+   comptr(::transfer_t , TYPE * p)
+   {
+      m_p = p;
+
+   }
+
    comptr(TYPE * p)
    {
       if (p != nullptr)

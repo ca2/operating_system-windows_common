@@ -154,3 +154,15 @@ inline D2D1_COLOR_F & copy(D2D1_COLOR_F & colorTarget, const ::color32_t & color
 
 
 
+namespace direct2d
+{
+
+   class graphics;
+
+   class object;
+
+   class direct2d;
+
+} // namespace direct2d
+ 
+

@@ -369,7 +369,7 @@ namespace imaging_wic
 #ifdef UNIVERSAL_WINDOWS
 
 
-   bool node_save_image(::winrt::Windows::Storage::Streams::IRandomAccessStream const & stream, ::image::image * pimage, const ::image::save_image * psaveimage)
+   bool node_save_image(::winrt::Windows::Storage::Streams::IRandomAccessStream const & stream, ::image::image * pimage, const ::image::save_options & saveoptions)
    {
 
       ::winrt::Windows::Storage::Streams::InMemoryRandomAccessStream randomAccessStream;
@@ -378,7 +378,7 @@ namespace imaging_wic
 
       ::CreateStreamOverRandomAccessStream(winrt::get_unknown(randomAccessStream), IID_PPV_ARGS(&pstream));
 
-      return node_save_image(pstream, pimage, psaveimage);
+      return node_save_image(pstream, pimage, saveoptions);
 
    }
 

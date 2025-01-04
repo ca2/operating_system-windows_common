@@ -13,7 +13,7 @@ namespace imaging_wic
 #ifdef UNIVERSAL_WINDOWS
 
 
-   CLASS_DECL_IMAGING_WIC bool node_save_image(::winrt::Windows::Storage::Streams::IRandomAccessStream const & stream, ::image::image * pimage, const ::image::save_image * psaveimage);
+   CLASS_DECL_IMAGING_WIC bool node_save_image(::winrt::Windows::Storage::Streams::IRandomAccessStream const & stream, ::image::image * pimage, const ::image::save_options & saveoptions);
 
 
 #endif

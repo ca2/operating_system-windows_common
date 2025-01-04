@@ -67,10 +67,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="acme_dir.h" />
-    <ClInclude Include="acme_directory.h" />
-    <ClInclude Include="acme_file.h" />
-    <ClInclude Include="acme_path.h" />
+    <ClInclude Include="directory_system.h" />
+    <ClInclude Include="file_system.h" />
+    <ClInclude Include="path_system.h" />
     <ClInclude Include="bstring.h" />
     <ClInclude Include="comptr.h" />
     <ClInclude Include="cotaskptr.h" />
@@ -102,9 +101,9 @@
     <ClInclude Include="_windows_common.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="acme_directory.cpp" />
-    <ClCompile Include="acme_file.cpp" />
-    <ClCompile Include="acme_path.cpp" />
+    <ClCompile Include="directory_system.cpp" />
+    <ClCompile Include="file_system.cpp" />
+    <ClCompile Include="path_system.cpp" />
     <ClCompile Include="bstring.cpp" />
     <ClCompile Include="com.cpp" />
     <ClCompile Include="exception_translator.cpp" />
