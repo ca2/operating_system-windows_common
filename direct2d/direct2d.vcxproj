@@ -706,6 +706,8 @@
   <ItemGroup>
     <ClCompile Include="direct2d.cpp" />
     <ClCompile Include="geometry.cpp" />
+    <ClCompile Include="graphics.cpp" />
+    <ClCompile Include="object.cpp" />
     <ClCompile Include="_factory.cpp" />
     <ClCompile Include="framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

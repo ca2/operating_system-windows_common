@@ -704,6 +704,7 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="image.h" />
+    <ClInclude Include="internal_font.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="palette.h" />
     <ClInclude Include="path.h" />
@@ -718,6 +719,7 @@
     <ClCompile Include="bitmap.cpp" />
     <ClCompile Include="brush.cpp" />
     <ClCompile Include="draw2d.cpp" />
+    <ClCompile Include="internal_font.cpp" />
     <ClCompile Include="_factory.cpp" />
     <ClCompile Include="font.cpp" />
     <ClCompile Include="framework.cpp">
