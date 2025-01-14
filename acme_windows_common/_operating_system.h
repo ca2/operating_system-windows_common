@@ -57,7 +57,7 @@ inline void copy(DWORD * pdw, const PAYLOAD * ppayload)
 
 #ifdef WINDOWS
 
-typedef unsigned int itask_t;
+typedef unsigned int itask;
 typedef unsigned int thread_data_index;
 
 #else
@@ -70,29 +70,29 @@ using thread_data_index = unsigned int;
 #ifdef WINDOWS
 
 
-typedef iptr htask_t;
+typedef iptr htask;
 
-//typedef unsigned int itask_t;
-
-
-#define null_hthread ((htask_t)0)
-#define null_ithread ((itask_t)0)
+//typedef unsigned int itask;
 
 
-inline int ithread_equals(itask_t a, itask_t b) { return a == b; }
+#define null_hthread ((htask)0)
+#define null_ithread ((itask)0)
+
+
+inline int ithread_equals(itask a, itask b) { return a == b; }
 
 #else
 
 
 
-#define htask_t pthread_t
+#define htask pthread_t
 
-#define itask_t pthread_t
+#define itask pthread_t
 
-#define null_hthread ((htask_t)0)
-#define null_ithread ((itask_t)0)
+#define null_hthread ((htask)0)
+#define null_ithread ((itask)0)
 
-inline int ithread_equals(itask_t a, itask_t b) { return pthread_equal(a, b); }
+inline int ithread_equals(itask a, itask b) { return pthread_equal(a, b); }
 
 
 #endif

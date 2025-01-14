@@ -21,7 +21,7 @@ namespace acme_windows_common
 
 #ifdef MUTEX_DEBUG
       string                  m_strThread;
-      itask_t                 m_itask;
+      itask                 m_itask;
 #endif
 
 

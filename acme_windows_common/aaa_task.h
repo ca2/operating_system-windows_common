@@ -2,8 +2,8 @@
 
 
 typedef pointer_array < ::matter > object_array;
-typedef map < itask_t, ::pointer<task >>task_map;
-typedef map < task *, itask_t > task_id_map;
+typedef map < itask, ::pointer<task >>task_map;
+typedef map < task *, itask > task_id_map;
 
 
 class CLASS_DECL_ACME task :
@@ -19,8 +19,8 @@ public:
    int                                 m_bitCoInitialize : 1;
 
 
-   htask_t                           m_htask;
-   itask_t                           m_itask;
+   htask                           m_htask;
+   itask                           m_itask;
    string                              m_strTaskName;
    string                              m_strTaskTag;
    ::pointer<::object>   m_pobjectParent;

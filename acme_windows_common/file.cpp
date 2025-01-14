@@ -714,7 +714,7 @@ namespace acme_windows_common
    file::operator HANDLE() const
    {
 
-      return m_file;
+      return (HANDLE) m_file.m_u;
 
    }
 

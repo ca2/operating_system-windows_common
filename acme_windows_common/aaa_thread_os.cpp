@@ -32,7 +32,7 @@
 
 
 //// very close to the operating system
-//CLASS_DECL_ACME htask_t create_thread(
+//CLASS_DECL_ACME htask create_thread(
 //thread_proc proc,
 //void * p,
 //::enum_priority epriority,
@@ -40,7 +40,7 @@
 //unsigned int uiCreateFlags,
 //LPSECURITY_ATTRIBUTES psa,
 //
-//itask_t * puiId)
+//itask * puiId)
 //{
 //
 //   thread_proc_runner * pdata = ___new thread_proc_runner(proc, p);

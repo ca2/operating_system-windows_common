@@ -100,7 +100,7 @@ bool task::task_get_run() const
 bool task::task_active() const
 {
 
-   return m_htask != (htask_t) 0;
+   return m_htask != (htask) 0;
 
 }
 

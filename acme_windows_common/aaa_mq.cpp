@@ -8,7 +8,7 @@
 //#if defined(LINUX) // || defined(ANDROID)
 //
 //
-//bool apex_defer_process_x_message(htask_t htask,MESSAGE * pMsg,oswindow oswindow,bool bPeek);
+//bool apex_defer_process_x_message(htask htask,MESSAGE * pMsg,oswindow oswindow,bool bPeek);
 //
 //
 //#endif
@@ -222,10 +222,10 @@
 //::mutex * g_pmutexMq;
 //
 //
-//map < itask_t, ::pointer<message_queue >>* g_pmapMq;
+//map < itask, ::pointer<message_queue >>* g_pmapMq;
 //
 //
-//message_queue * aaa_get_message_queue(itask_t itask, bool bCreate)
+//message_queue * aaa_get_message_queue(itask itask, bool bCreate)
 //{
 //
 //   synchronous_lock synchronouslock(g_pmutexMq);
@@ -257,7 +257,7 @@
 //}
 //
 //
-//void aaa_clear_message_queue(itask_t idthread)
+//void aaa_clear_message_queue(itask idthread)
 //{
 //
 //   synchronous_lock synchronouslock(g_pmutexMq);
@@ -289,7 +289,7 @@
 //////
 //////   }
 //////
-//////   itask_t idthread = pinteraction->m_pthreadUserInteraction->get_os_int();
+//////   itask idthread = pinteraction->m_pthreadUserInteraction->get_os_int();
 //////
 //////   auto pmq = ::aaa_get_message_queue(idthread, message.message != e_message_quit);
 //////
@@ -324,7 +324,7 @@
 //////
 //////   }
 //////
-//////   itask_t idthread = pinteraction->get_application()->get_os_int();
+//////   itask idthread = pinteraction->get_application()->get_os_int();
 //////
 //////   message_queue * pmq = __get_mq(idthread, false);
 //////
@@ -349,7 +349,7 @@
 ////}
 ////
 //
-//CLASS_DECL_ACME void mq_clear(itask_t idthread)
+//CLASS_DECL_ACME void mq_clear(itask idthread)
 //{
 //
 //   auto pmq = ::aaa_get_message_queue(idthread, false);
@@ -368,7 +368,7 @@
 //}
 //
 //
-//int_bool mq_post_thread_message(itask_t idthread, const ::atom & atom, wparam wparam, lparam lparam)
+//int_bool mq_post_thread_message(class ::task_index & taskindex, const ::atom & atom, wparam wparam, lparam lparam)
 //{
 //
 //   if (atom.m_etype != ::atom::e_type_message)
@@ -450,7 +450,7 @@
 //
 //   g_pmutexMq = ___new mutex();
 //
-//   g_pmapMq = ___new map < itask_t, ::pointer<message_queue >>);
+//   g_pmapMq = ___new map < itask, ::pointer<message_queue >>);
 //
 //}
 //

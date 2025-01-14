@@ -118,4 +118,4 @@ namespace exception
 
 
 
-//CLASS_DECL_ACME thread* __begin_thread(::matter * pobject, __THREADPROC pfnThreadProc, LPVOID pParam, int epriority = ::e_priority_normal, unsigned int nStackSize = 0, unsigned int dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = nullptr, itask_t * puiId = nullptr, error * perror = nullptr);
+//CLASS_DECL_ACME thread* __begin_thread(::matter * pobject, __THREADPROC pfnThreadProc, LPVOID pParam, int epriority = ::e_priority_normal, unsigned int nStackSize = 0, unsigned int dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = nullptr, itask * puiId = nullptr, error * perror = nullptr);
