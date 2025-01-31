@@ -346,9 +346,9 @@ void task::on_task()
 
          }
 
-         m_atom = pmatter->type_name();
+         id() = pmatter->type_name();
 
-         set_thread_name(m_atom);
+         set_thread_name(id());
 
          m_pmatter.m_p = nullptr;
 
@@ -372,7 +372,7 @@ void task::start(
 
    m_pmatter = pmatter;
 
-   m_atom = pmatter->type_name();
+   id() = pmatter->type_name();
 
    return begin_task(epriority, nStackSize, uCreateFlags);
 
@@ -385,25 +385,25 @@ void task::begin_task(
    unsigned int uCreateFlags)
 {
 
-   if (m_atom.is_empty())
+   if (id().is_empty())
    {
 
       if (m_pmatter)
       {
 
-         m_atom = m_pmatter->type_name();
+         id() = m_pmatter->type_name();
 
       }
       else
       {
 
-         m_atom = type_name();
+         id() = type_name();
 
       }
 
    }
 
-   if (m_atom.is_empty() || m_atom == "task" || m_atom == "thread")
+   if (id().is_empty() || id() == "task" || id() == "thread")
    {
 
       throw ::exception(error_bad_argument);

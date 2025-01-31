@@ -4,11 +4,11 @@
 struct mq_message 
 {
 
-   ::atom        m_atom;
+   ::atom        id();
    MESSAGE     m_message;
 
    mq_message(const ::atom & atom) :
-      m_atom(atom)
+      id()(atom)
    {
       m_message.message = atom.umessage();
 
@@ -21,7 +21,7 @@ struct mq_message
    }
 
    mq_message(const MESSAGE& message) :
-      m_atom((enum_message) message.message)
+      id()((enum_message) message.message)
    {
 
       memory_copy(&m_message, &message, sizeof(MESSAGE));
@@ -41,7 +41,7 @@ struct mq_message
    {
 
 
-      m_atom = (enum_message)message.message;
+      id() = (enum_message)message.message;
 
       memory_copy(&m_message, &message, sizeof(MESSAGE));
 
@@ -78,7 +78,7 @@ public:
 
    int_bool peek_message(MESSAGE * pMsg, oswindow oswindow, unsigned int wMsgFilterMin, unsigned int wMsgFilterMax, unsigned int wRemoveMsg);
    int_bool get_message(MESSAGE * pMsg, oswindow oswindow, unsigned int wMsgFilterMin, unsigned int wMsgFilterMax);
-   int_bool post_message(oswindow oswindow, const ::atom & atom, WPARAM wParam, LPARAM lParam);
+   int_bool post_message(oswindow oswindow, ::enum_message emessage, ::wparam wparam, ::lparam lparam);
    int_bool post_message(const mq_message & message);
 
 

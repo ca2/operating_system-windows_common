@@ -80,7 +80,7 @@ namespace music
 
             pseq->OnHappening(pevent);
 
-            switch(ptopic->m_atom)
+            switch(ptopic->id())
             {
             case ::music::midi::sequence::EventStopped:
             {

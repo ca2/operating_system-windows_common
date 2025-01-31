@@ -32,7 +32,7 @@
 //}
 //
 //
-//int_bool message_queue::post_message(oswindow oswindow, const ::atom & atom, WPARAM wParam, LPARAM lParam)
+//int_bool message_queue::post_message(oswindow oswindow, ::enum_message emessage, ::wparam wparam, ::lparam lparam)
 //{
 //
 //   if (m_bQuit)
@@ -368,7 +368,7 @@
 //}
 //
 //
-//int_bool mq_post_thread_message(class ::task_index & taskindex, const ::atom & atom, wparam wparam, lparam lparam)
+//int_bool mq_post_thread_message(class ::task_index & taskindex, ::enum_message emessage, ::wparam wparam, ::lparam lparam)
 //{
 //
 //   if (atom.m_etype != ::atom::e_type_message)

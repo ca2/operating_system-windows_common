@@ -106,7 +106,7 @@ CLASS_DECL_ACME bool task_get_run();
 //
 //   //CLASS_DECL_ACME void post_quit_to_all_threads();
 //
-//   //CLASS_DECL_ACME void post_to_all_threads(const ::atom & atom, wparam wparam, lparam lparam);
+//   //CLASS_DECL_ACME void post_to_all_threads(::enum_message emessage, ::wparam wparam, ::lparam lparam);
 //
 //   ////CLASS_DECL_ACME bool wait_threads(::duration duration, pointer_array < ::thread > threadaExcept = pointer_array < ::thread >());
 //

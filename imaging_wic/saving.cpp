@@ -2,7 +2,7 @@
 #include "context.h"
 #include "acme/exception/exception.h"
 #include "acme/platform/node.h"
-#include "aura/graphics/image/save_options.h"
+#include "aura/graphics/image/encoding_options.h"
 #include "acme_windows_common/comptr.h"
 
 
@@ -20,10 +20,10 @@ namespace imaging_wic
 {
 
 
-   CLASS_DECL_IMAGING_WIC bool node_save_image(IStream* pstream, ::image::image * pimage, const ::image::save_options & saveoptions);
+   CLASS_DECL_IMAGING_WIC bool node_save_image(IStream* pstream, ::image::image * pimage, const ::image::encoding_options & encodingoptions);
 
 
-   void image_context::save_image(memory & mem, ::image::image * pimage, const ::image::save_options & saveoptions)
+   void image_context::save_image(memory & mem, ::image::image * pimage, const ::image::encoding_options & encodingoptions)
    {
 
       if (::is_null(pimage))
@@ -51,7 +51,7 @@ namespace imaging_wic
 
 #endif
 
-      node_save_image(pstream, pimage, saveoptions);
+      node_save_image(pstream, pimage, encodingoptions);
 
       STATSTG stg;
       zero(stg);
@@ -94,7 +94,7 @@ namespace imaging_wic
    }
 
 
-   bool node_save_image(IStream * pstream, ::image::image * pimage, const ::image::save_options & saveoptions)
+   bool node_save_image(IStream * pstream, ::image::image * pimage, const ::image::encoding_options & encodingoptions)
    {
 
       comptr < IWICImagingFactory > pimagingfactory;
@@ -135,7 +135,7 @@ namespace imaging_wic
       if (SUCCEEDED(hr))
       {
 
-         switch (saveoptions.m_eformat)
+         switch (encodingoptions.m_eformat)
          {
          case ::image::e_format_bmp:
             hr = pimagingfactory->CreateEncoder(GUID_ContainerFormatBmp, nullptr, &pbitmapencoder);
@@ -220,7 +220,7 @@ namespace imaging_wic
          //   }
          //}
 
-         if (saveoptions.m_eformat == ::image::e_format_jpeg)
+         if (encodingoptions.m_eformat == ::image::e_format_jpeg)
          {
 
             PROPBAG2 option = { 0 };
@@ -228,7 +228,7 @@ namespace imaging_wic
             VARIANT varValue;
             VariantInit(&varValue);
             varValue.vt = VT_R4;
-            varValue.fltVal = maximum(0.f, minimum(1.f, saveoptions.m_iQuality / 100.0f));
+            varValue.fltVal = maximum(0.f, minimum(1.f, encodingoptions.m_iQuality / 100.0f));
             if (SUCCEEDED(hr))
             {
                hr = ppropertybag->Write(1, &option, &varValue);
@@ -245,10 +245,10 @@ namespace imaging_wic
 
       }
 
-      if (saveoptions.m_iDpi > 0)
+      if (encodingoptions.m_iDpi > 0)
       {
 
-         pbitmapframeencode->SetResolution(saveoptions.m_iDpi, saveoptions.m_iDpi);
+         pbitmapframeencode->SetResolution(encodingoptions.m_iDpi, encodingoptions.m_iDpi);
 
       }
 
@@ -369,7 +369,7 @@ namespace imaging_wic
 #ifdef UNIVERSAL_WINDOWS
 
 
-   bool node_save_image(::winrt::Windows::Storage::Streams::IRandomAccessStream const & stream, ::image::image * pimage, const ::image::save_options & saveoptions)
+   bool node_save_image(::winrt::Windows::Storage::Streams::IRandomAccessStream const & stream, ::image::image * pimage, const ::image::encoding_options & encodingoptions)
    {
 
       ::winrt::Windows::Storage::Streams::InMemoryRandomAccessStream randomAccessStream;
@@ -378,7 +378,7 @@ namespace imaging_wic
 
       ::CreateStreamOverRandomAccessStream(winrt::get_unknown(randomAccessStream), IID_PPV_ARGS(&pstream));
 
-      return node_save_image(pstream, pimage, saveoptions);
+      return node_save_image(pstream, pimage, encodingoptions);
 
    }
 

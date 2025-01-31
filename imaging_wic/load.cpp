@@ -3,7 +3,7 @@
 #include "acme/filesystem/file/file.h"
 #include "apex/parallelization/handler_manager.h"
 #include "aura/graphics/image/load_image.h"
-#include "aura/graphics/image/save_options.h"
+#include "aura/graphics/image/encoding_options.h"
 #include "acme_windows_common/comptr.h"
 #include "acme_windows_common/bstring.h"
 
@@ -248,7 +248,7 @@ namespace imaging_wic
 
    }
 
-   bool node_save_image(IStream * pstream, ::image::image * pimage, const ::image::save_options & saveoptions);
+   bool node_save_image(IStream * pstream, ::image::image * pimage, const ::image::encoding_options & encodingoptions);
 
 
    //#ifdef UNIVERSAL_WINDOWS
@@ -423,7 +423,7 @@ namespace imaging_wic
 #endif
 
 
-   bool image_context::_save_image(::file::file * pfile, ::image::image * pimage, const ::image::save_options & saveoptions)
+   bool image_context::_save_image(::file::file * pfile, ::image::image * pimage, const ::image::encoding_options & encodingoptions)
    {
 
 #ifdef UNIVERSAL_WINDOWS
@@ -442,7 +442,7 @@ namespace imaging_wic
 
 #endif
 
-      if (!node_save_image(pstream, pimage, saveoptions))
+      if (!node_save_image(pstream, pimage, encodingoptions))
       {
 
          return false;

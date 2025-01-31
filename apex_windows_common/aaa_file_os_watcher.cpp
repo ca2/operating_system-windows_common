@@ -185,7 +185,7 @@ namespace file
 
             action.m_pwatch = pwatch;
 
-            action.m_atom = pwatch->m_atom;
+            action.id() = pwatch->id();
 
             action.m_pathFolder = pwatch->m_pathFolder;
 

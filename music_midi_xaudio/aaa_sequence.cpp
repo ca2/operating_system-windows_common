@@ -1565,7 +1565,7 @@ seq_Preroll_Cleanup:
 
          void sequence::OnHappening(::music::midi::sequence::happening * pevent)
          {
-            switch(ptopic->m_atom)
+            switch(ptopic->id())
             {
             case EventSpecialModeV001End:
             {
@@ -2541,7 +2541,7 @@ seq_Preroll_Cleanup:
 
             happening * pevent          = ___new happening();
 
-            ptopic->m_atom        = ehappening;
+            ptopic->id()        = ehappening;
             ptopic->m_psequence     = this;
             ptopic->m_lpmh          = lpmidihdr;
 

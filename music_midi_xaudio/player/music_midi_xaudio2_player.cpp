@@ -242,7 +242,7 @@ namespace music
                //   }
                if(pusermessage->m_puserinteraction == nullptr)
                {
-                  switch(pusermessage->m_atom)
+                  switch(pusermessage->id())
                   {
                   case WM_USER + 100:
                   {
@@ -253,13 +253,13 @@ namespace music
                   return;
                   }
                }
-               if(pusermessage->m_atom == MMSG_DONE)
+               if(pusermessage->id() == MMSG_DONE)
                {
                   OnMmsgDone((::music::midi::sequence *) pusermessage->m_wparam);
                   pusermessage->m_bRet = true;
                   return;
                }
-               else if(pusermessage->m_atom == WM_USER)
+               else if(pusermessage->id() == WM_USER)
                {
                   //      OnUserMessage(pMsg->wParam, pMsg->lParam);
                }
