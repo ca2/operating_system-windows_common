@@ -15,7 +15,7 @@ struct custom_data_size_key
 {
 
    void *            data;
-   ::huge_natural    size;
+   unsigned long long    size;
 
 };
 

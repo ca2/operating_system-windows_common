@@ -543,7 +543,7 @@ namespace multimedia
 
             m_psourcevoice->GetState(&s);
 
-            //huge_integer i = s.SamplesPlayed;
+            //long long i = s.SamplesPlayed;
             //i *= 1000;
             //i /= m_pwaveformat->m_waveformat.nSamplesPerSec;
             return second_time((double)s.SamplesPlayed/(double)m_pwaveformat->m_waveformat.nSamplesPerSec);
@@ -695,10 +695,10 @@ namespace multimedia
 
          //}
 
-         huge_natural freq;
+         unsigned long long freq;
          QueryPerformanceFrequency((LARGE_INTEGER*)&freq);
          double timerFrequency = (1.0 / freq);
-         huge_natural startTime;
+         unsigned long long startTime;
          QueryPerformanceCounter((LARGE_INTEGER *)&startTime);
 
 
@@ -710,7 +710,7 @@ namespace multimedia
 
          m_psynthtask->on_free(iBuffer);
 
-         huge_natural endTime;
+         unsigned long long endTime;
          QueryPerformanceCounter((LARGE_INTEGER *)&endTime);
          double timeDifferenceInseconds = ((endTime - startTime) * timerFrequency);
          if(timeDifferenceInseconds > 0.040)

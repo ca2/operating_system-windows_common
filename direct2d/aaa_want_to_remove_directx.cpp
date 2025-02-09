@@ -238,8 +238,8 @@ namespace draw2d_direct2d
 
       psystem->m_puserinteraction->m_rectangleParentClient.left()     = 0;
       psystem->m_puserinteraction->m_rectangleParentClient.top()      = 0;
-      psystem->m_puserinteraction->m_rectangleParentClient.right()    = (huge_integer) m_window.Bounds.Width;
-      psystem->m_puserinteraction->m_rectangleParentClient.bottom()   = (huge_integer) m_window.Bounds.Height;
+      psystem->m_puserinteraction->m_rectangleParentClient.right()    = (long long) m_window.Bounds.Width;
+      psystem->m_puserinteraction->m_rectangleParentClient.bottom()   = (long long) m_window.Bounds.Height;
       */
    }
 
