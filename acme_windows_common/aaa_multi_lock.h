@@ -7,7 +7,7 @@ public:
 
 
    synchronization_array          m_synchronizationa;
-   bits < huge_natural >        m_bitsLocked;
+   bits < unsigned long long >        m_bitsLocked;
 
 
    multi_lock(const synchronization_array & synca,bool bInitialLock = false);

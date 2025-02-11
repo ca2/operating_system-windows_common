@@ -145,7 +145,7 @@ namespace acme_windows_common
    //   }
    //
    //
-   //   ::color::color node::get_default_color(huge_natural u)
+   //   ::color::color node::get_default_color(unsigned long long u)
    //   {
    //
    //      switch (u)
@@ -912,11 +912,11 @@ namespace acme_windows_common
 
          ::output_debug_string("Failed to ::CoInitializeEx(nullptr, COINIT_MULTITHREADED) at __node_pre_init");
 
-         return { e_error_code_type_hresult, (huge_integer) t_hresultCoInitialize };
+         return { e_error_code_type_hresult, (long long) t_hresultCoInitialize };
 
       }
 
-      return { e_error_code_type_hresult, (huge_integer)t_hresultCoInitialize };
+      return { e_error_code_type_hresult, (long long)t_hresultCoInitialize };
 
    }
 

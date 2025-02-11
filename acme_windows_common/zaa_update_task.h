@@ -1,7 +1,7 @@
 #pragma once
 
 
-typedef huge_integer UPDATE_SERIAL();
+typedef long long UPDATE_SERIAL();
 using PFN_UPDATE_SERIAL = UPDATE_SERIAL *;
 
 
@@ -20,14 +20,14 @@ protected:
    element_array m_elementa;
 
 
-   static ::pointer<update_task>& task(huge_integer iUpdate);
+   static ::pointer<update_task>& task(long long iUpdate);
 
    virtual void add(::matter * pmatter);
    virtual void erase(::matter * pmatter);
 
-   static void _add(huge_integer iUpdate, ::matter* pmatter);
+   static void _add(long long iUpdate, ::matter* pmatter);
 
-   static void _erase(huge_integer iUpdate, ::matter* pmatter);
+   static void _erase(long long iUpdate, ::matter* pmatter);
 
    static void _erase(::matter* pmatter);
 
@@ -41,8 +41,8 @@ public:
 
    bool                    m_bModified;
    int                     m_iMillisSleep;
-   huge_integer                   m_iUpdate;
-   huge_integer                   m_iSerial;
+   long long                   m_iUpdate;
+   long long                   m_iSerial;
 
 
    update_task();
@@ -51,7 +51,7 @@ public:
    virtual void notify();
 
 
-   static void set_modified(huge_integer iUpdate);
+   static void set_modified(long long iUpdate);
 
 
 
@@ -83,7 +83,7 @@ public:
 //   PAYLOAD         m_payload;
 //   HAS_CHANGED *   m_pfnHasChanged;
 //
-//   update_task(huge_integer iUpdate, HAS_CHANGED * pfnHasChanged, int iMillisSleep = 300) :
+//   update_task(long long iUpdate, HAS_CHANGED * pfnHasChanged, int iMillisSleep = 300) :
 //      update_task(iUpdate, iMillisSleep),
 //      m_pfnHasChanged(pfnHasChanged)
 //   {

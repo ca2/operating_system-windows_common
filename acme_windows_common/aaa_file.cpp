@@ -1019,16 +1019,16 @@ directory_system()create(path.folder());
 
    }
 
-   //huge_natural file::ReadHuge(void * pBuffer, huge_natural dwCount)
+   //unsigned long long file::ReadHuge(void * pBuffer, unsigned long long dwCount)
 
    //{
 
-   //   return (huge_natural) read(pBuffer, (unsigned int)dwCount);
+   //   return (unsigned long long) read(pBuffer, (unsigned int)dwCount);
 
 
    //}
 
-   //void file::WriteHuge(const void * pBuffer, huge_natural dwCount)
+   //void file::WriteHuge(const void * pBuffer, unsigned long long dwCount)
 
    //{
 

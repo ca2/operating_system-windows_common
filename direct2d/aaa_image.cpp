@@ -1135,7 +1135,7 @@ namespace draw2d_direct2d
 
       int compare_scan = this->width() * sizeof(color32_t);
 
-      huge_integer i = m_iScan * this->height() / sizeof(color32_t);
+      long long i = m_iScan * this->height() / sizeof(color32_t);
 
       if (bApplyAlphaTransform)
       {
@@ -1207,11 +1207,11 @@ namespace draw2d_direct2d
 
          }
 
-         huge_integer iArea = area();
+         long long iArea = area();
 
          unsigned char * p = (unsigned char *)m_pimage32Raw;
 
-         huge_integer i = m_iScan * this->height() / sizeof(color32_t);
+         long long i = m_iScan * this->height() / sizeof(color32_t);
 
          if (m_bTrans)
          {
@@ -1480,7 +1480,7 @@ namespace draw2d_direct2d
    //bool image::update_window(::aura::draw_interface * puserinteraction, ::message::message * pmessage, bool bTransferBuffer)
    //{
 
-   //   huge_integer_rectangle rectangleWindow;
+   //   long_long_rectangle rectangleWindow;
 
    //   puserinteraction->window_rectangle(rectangleWindow);
 

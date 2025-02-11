@@ -75,7 +75,7 @@ namespace windows
 
       virtual void * on_interprocess_receive(::inteprocess::handler * prx, const ::string & pszMessage);
       virtual void * on_interprocess_receive(::inteprocess::handler * prx, int message, void * pdata, memsize len);
-      virtual void * on_interprocess_post(::inteprocess::handler * prx, huge_integer a, huge_integer b);
+      virtual void * on_interprocess_post(::inteprocess::handler * prx, long long a, long long b);
 
 
       virtual bool on_idle();
