@@ -103,6 +103,9 @@ namespace acme_windows_common
       ::string get_computer_name() override;
 
 
+      ::string dynamic_library_suffix() override;
+
+
    };
 
 

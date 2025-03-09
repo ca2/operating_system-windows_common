@@ -1105,6 +1105,16 @@ namespace acme_windows_common
 
    }
 
+
+   ::string node::dynamic_library_suffix()
+   {
+
+      return ".dll";
+
+   }
+
+
+
    
 } // namespace acme_windows_common
 
