@@ -301,7 +301,7 @@ namespace windows
 
       }
 
-      SetTimer((HWND)get_hwnd(), 888888, 84, nullptr);
+      set_timer((HWND)get_hwnd(), 888888, 84, nullptr);
 
       SetWindowLongPtr((HWND)get_hwnd(), GWLP_USERDATA, (LONG_PTR)this);
 
