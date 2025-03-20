@@ -36,21 +36,21 @@ namespace acme_windows_common
 
       string strNew(pathNewParam);
 
-      if (strNew.length() >= MAX_PATH)
-      {
+      //if (strNew.length() >= MAX_PATH)
+      //{
 
-         strNew = "\\\\.\\" + strNew;
+      //   strNew = "\\\\.\\" + strNew;
 
-      }
+      //}
 
       string strSrc(pathSrcParam);
 
-      if (strSrc.length() >= MAX_PATH)
-      {
+      //if (strSrc.length() >= MAX_PATH)
+      //{
 
-         strSrc = "\\\\.\\" + strSrc;
+      //   strSrc = "\\\\.\\" + strSrc;
 
-      }
+      //}
 
       auto pathNew = path_system()->defer_process_relative_path(strNew);
 
