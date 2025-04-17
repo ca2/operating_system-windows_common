@@ -2918,7 +2918,7 @@ repeat:
    }
 
 
-   bool os_context::browse_file_open(property_set & set)
+   bool os_context::browse_file_open(::property_set & set)
    {
 
       //::user::interaction* pinteraction = nullptr;
@@ -3169,7 +3169,7 @@ repeat:
    }
 
 
-   bool os_context::browse_file_save(property_set & set)
+   bool os_context::browse_file_save(::property_set & set)
    {
 
       //::user::interaction* pinteraction = puiOwner->get_wnd();
@@ -3342,7 +3342,7 @@ repeat:
 
 
 
-   bool os_context::browse_folder( property_set & set)
+   bool os_context::browse_folder( ::property_set & set)
    {
 
       //::user::interaction* pinteraction = puiOwner->get_wnd();
@@ -3459,7 +3459,7 @@ repeat:
 
    }
 
-   bool os_context::browse_file_or_folder(property_set & set)
+   bool os_context::browse_file_or_folder(::property_set & set)
    {
 
       //::user::interaction* pinteraction = puiOwner->get_wnd();

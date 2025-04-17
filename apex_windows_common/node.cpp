@@ -333,7 +333,7 @@ namespace apex_windows_common
 
       path /= "regsvr32.exe";
 
-      property_set set;
+      ::property_set set;
 
       set["privileged"] = true;
       int iExitCode = -1;

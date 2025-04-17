@@ -56,10 +56,10 @@ namespace windows
 
       virtual bool file_open(::file::path path, string strParams = "", string strFolder = "") override;
 
-      virtual bool browse_file_open(property_set & set) override;
-      virtual bool browse_file_save(property_set & set) override;
-      virtual bool browse_folder(property_set & set) override;
-      virtual bool browse_file_or_folder(property_set & set) override;
+      virtual bool browse_file_open(::property_set & set) override;
+      virtual bool browse_file_save(::property_set & set) override;
+      virtual bool browse_folder(::property_set & set) override;
+      virtual bool browse_file_or_folder(::property_set & set) override;
 
       virtual void enable_service() override;
       virtual void disable_service() override;
