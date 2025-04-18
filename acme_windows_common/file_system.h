@@ -37,7 +37,7 @@ namespace acme_windows_common
 
       using ::file_system::put_contents;
 
-      void put_contents(const ::file::path & path, const ::scoped_string & scopedstr) override;
+      void put_contents(const ::file::path & path, const ::block & block) override;
 
 
       using ::file_system::get_size;

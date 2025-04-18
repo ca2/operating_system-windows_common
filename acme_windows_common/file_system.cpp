@@ -305,7 +305,7 @@ namespace acme_windows_common
    }
 
 
-   void file_system::put_contents(const ::file::path & pathParam, const ::scoped_string & scopedstrContents)
+   void file_system::put_contents(const ::file::path & pathParam, const ::block & blockContents)
    {
 
       auto path = path_system()->defer_process_relative_path(pathParam);
@@ -332,7 +332,7 @@ namespace acme_windows_common
 
       }
 
-      pfile->write(scopedstrContents);
+      pfile->write(blockContents);
 
    }
 
