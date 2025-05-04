@@ -25,8 +25,8 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_DEFAULT
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2024,0913,0040,16
- PRODUCTVERSION 2024,0913,0040,16
+ FILEVERSION 2025,0504,1540,01
+ PRODUCTVERSION 2025,0504,1540,01
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -41,11 +41,11 @@ BEGIN
     BEGIN
         BLOCK "040904b0"
         BEGIN
-			VALUE "CompanyName", "operating_system-posix"
-			VALUE "FileDescription", "operating_system_posix_windowing_system_wayland"
-            VALUE "FileVersion", "2024.0913.0040.16"
-            VALUE "LegalCopyright", "Copyright (C) 2024-09-13-00-40-16"
-            VALUE "ProductVersion", "2024.0913.0040.16"
+			VALUE "CompanyName", "operating_system-windows_common"
+			VALUE "FileDescription", "operating_system_windows_common_nano_graphics_direct2d"
+            VALUE "FileVersion", "2025.0504.1540.01"
+            VALUE "LegalCopyright", "Copyright (C) 2025-05-04-15-40-01"
+            VALUE "ProductVersion", "2025.0504.1540.01"
         END
     END
     BLOCK "VarFileInfo"
