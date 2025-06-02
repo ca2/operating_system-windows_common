@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "cube/gpu/frame.h"
+#include "aura/graphics/gpu/frame.h"
 
 
 namespace gpu_directx
@@ -32,7 +32,7 @@ namespace gpu_directx
 
 		//int frameIndex;
 		//float frameTime;
-		VkCommandBuffer commandBuffer;
+		//VkCommandBuffer commandBuffer;
 		//::graphics3d::camera &camera;
 		//VkDescriptorSet globalDescriptorSet;
 		//::graphics3d::scene_object::map& gameObjects;

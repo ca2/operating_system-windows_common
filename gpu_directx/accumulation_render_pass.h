@@ -18,15 +18,17 @@ namespace gpu_directx
 	public:
 
 
-		::array<VkImage>				m_imagesAlphaAccumulation;
-		::array<VkDeviceMemory>		m_imagememoriesAlphaAccumulation;
-		::array<VkImageView>			m_imageviewsAlphaAccumulation;
-		VkFormat							m_formatAlphaAccumulation;
+		//::array<VkImage>				m_imagesAlphaAccumulation;
+		//::array<VkDeviceMemory>		m_imagememoriesAlphaAccumulation;
+		//::array<VkImageView>			m_imageviewsAlphaAccumulation;
+		//VkFormat							m_formatAlphaAccumulation;
 
 		static constexpr int MAX_FRAMES_IN_FLIGHT = 2;
 
-		accumulation_render_pass(renderer* pgpurenderer, VkExtent2D windowExtent);
-		accumulation_render_pass(renderer* pgpurenderer, VkExtent2D windowExtent, ::pointer <render_pass>previous);
+
+		accumulation_render_pass();
+		//accumulation_render_pass(renderer* pgpurenderer, VkExtent2D windowExtent);
+		//accumulation_render_pass(renderer* pgpurenderer, VkExtent2D windowExtent, ::pointer <render_pass>previous);
 		~accumulation_render_pass();
 
 		
@@ -45,10 +47,10 @@ namespace gpu_directx
 		//float extentAspectRatio() {
 		//	return static_cast<float>(m_extent.width) / static_cast<float>(m_extent.height);
 		//}
-		VkFormat findDepthFormat();
+		//VkFormat findDepthFormat();
 
 		HRESULT acquireNextImage() override;
-		HRESULT submitCommandBuffers(const VkCommandBuffer* buffers);
+		//HRESULT submitCommandBuffers(const VkCommandBuffer* buffers);
 
 		//bool compareSwapFormats(const offscreen_render_pass& swapChain) const {
 		//	return swapChain.depthFormat == depthFormat &&
@@ -65,7 +67,7 @@ namespace gpu_directx
 		void createFramebuffers();
 		void createSyncObjects();
 
-		HRESULT submitSamplingWork(const VkCommandBuffer buffer, uint32_t* imageIndex);
+		// HRESULT submitSamplingWork(const VkCommandBuffer buffer, uint32_t* imageIndex);
 
 		//// Helper functions
 		//VkSurfaceFormatKHR chooseSwapSurfaceFormat(
@@ -81,13 +83,13 @@ namespace gpu_directx
 		//::array<VkFramebuffer> swapChainFramebuffers;
 		//VkRenderPass m_vkrenderpass;
 
-		//::array<VkImage> depthImages;
-		//::array<VkDeviceMemory> depthImageMemorys;
-		//::array<VkImageView> depthImageViews;
-		VkSampler m_vksampler;
-		::array<VkDeviceMemory> m_imagememories;
-		//::array<VkImage> swapChainImages;
-		//::array<VkImageView> swapChainImageViews;
+		////::array<VkImage> depthImages;
+		////::array<VkDeviceMemory> depthImageMemorys;
+		////::array<VkImageView> depthImageViews;
+		//VkSampler m_vksampler;
+		//::array<VkDeviceMemory> m_imagememories;
+		////::array<VkImage> swapChainImages;
+		////::array<VkImageView> swapChainImageViews;
 
 		//context* m_pgpucontext;
 		//VkExtent2D windowExtent;

@@ -4,6 +4,7 @@
 #include "geometry.h"
 #include "acme/prototype/geometry2d/ellipse.h"
 #include "acme/prototype/geometry2d/polygon.h"
+#include "aura/platform/application.h"
 
 
 namespace direct2d

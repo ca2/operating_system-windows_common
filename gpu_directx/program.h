@@ -1,7 +1,7 @@
 #pragma once
 //
 //
-//#include "cube/gpu/program.h"
+//#include "aura/graphics/gpu/program.h"
 //
 //
 //namespace gpu_directx

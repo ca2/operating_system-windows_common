@@ -1,9 +1,9 @@
 // Created by camilo on 2023-04-27 17:06 <3ThomasBorregaardSorensen!!
 #pragma once
 
-
-#undef USUAL_OPERATING_SYSTEM_SUPPRESSIONS
-#include "acme/_operating_system.h"
+//
+//#undef USUAL_OPERATING_SYSTEM_SUPPRESSIONS
+//#include "acme/_operating_system.h"
 
 
 //#include <directx/directx.h>
@@ -14,8 +14,8 @@ namespace directx
 
 //
 //
-//   /** @brief Returns an error code as a string */
-//   CLASS_DECL_GPU_DIRECTX ::string errorString(HRESULT errorCode);
+   /** @brief Returns an error code as a string */
+   CLASS_DECL_GPU_DIRECTX ::string errorString(HRESULT errorCode);
 //
 //   /** @brief Returns the device type as a string */
 //   CLASS_DECL_GPU_DIRECTX ::string physicalDeviceTypeString(VkPhysicalDeviceType type);

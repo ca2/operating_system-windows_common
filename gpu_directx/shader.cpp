@@ -8,7 +8,7 @@
 #include "renderer.h"
 #include "pipeline.h"
 #include "renderer.h"
-//#include "cube/impact.h"
+//#include "aura/user/user/graphics3d.h"
 
 
 namespace gpu_directx
@@ -18,7 +18,7 @@ namespace gpu_directx
    shader::shader()
    {
 
-      m_vktopology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
+      //m_vktopology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
 
    }
 
@@ -28,7 +28,7 @@ namespace gpu_directx
 
       ::cast < context > pgpucontext = m_pgpurenderer->m_pgpucontext;
 
-      vkDestroyPipelineLayout(pgpucontext->logicalDevice(), m_vkpipelinelayout, nullptr);
+      // vkDestroyPipelineLayout(pgpucontext->logicalDevice(), m_vkpipelinelayout, nullptr);
 
    }
 
@@ -40,65 +40,65 @@ namespace gpu_directx
 
       ::cast < device > pgpudevice = pgpucontext->m_pgpudevice;
 
-      VkPushConstantRange pushConstantRange{};
-      pushConstantRange.stageFlags = VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT;
-      pushConstantRange.offset = 0;
-      //pushConstantRange.size = sizeof(PointLightPushConstants);
-      pushConstantRange.size = iSize;
+      //VkPushConstantRange pushConstantRange{};
+      //pushConstantRange.stageFlags = VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT;
+      //pushConstantRange.offset = 0;
+      ////pushConstantRange.size = sizeof(PointLightPushConstants);
+      //pushConstantRange.size = iSize;
 
-      ::array<VkDescriptorSetLayout> descriptorSetLayouts;
+      //::array<VkDescriptorSetLayout> descriptorSetLayouts;
 
-      if (m_edescriptorsetslota.contains(e_descriptor_set_slot_global))
-      {
+      //if (m_edescriptorsetslota.contains(e_descriptor_set_slot_global))
+      //{
 
-         auto globalSetLayout = pgpucontext->m_psetdescriptorlayoutGlobal->getDescriptorSetLayout();
+      //   auto globalSetLayout = pgpucontext->m_psetdescriptorlayoutGlobal->getDescriptorSetLayout();
 
-         descriptorSetLayouts.add(globalSetLayout);
+      //   descriptorSetLayouts.add(globalSetLayout);
 
-      }
+      //}
 
-      if (m_pLocalDescriptorSet)
-      {
+      //if (m_pLocalDescriptorSet)
+      //{
 
-         ::cast < ::gpu_directx::set_descriptor_layout > pset = m_pLocalDescriptorSet;
+      //   ::cast < ::gpu_directx::set_descriptor_layout > pset = m_pLocalDescriptorSet;
 
-         auto setLayout = pset->getDescriptorSetLayout();
+      //   auto setLayout = pset->getDescriptorSetLayout();
 
-         descriptorSetLayouts.add(setLayout);
+      //   descriptorSetLayouts.add(setLayout);
 
-      }
+      //}
 
-      VkPipelineLayoutCreateInfo pipelineLayoutInfo{};
-      pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-      pipelineLayoutInfo.setLayoutCount = static_cast<uint32_t>(descriptorSetLayouts.size());
-      pipelineLayoutInfo.pSetLayouts = descriptorSetLayouts.data();
+      //VkPipelineLayoutCreateInfo pipelineLayoutInfo{};
+      //pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
+      //pipelineLayoutInfo.setLayoutCount = static_cast<uint32_t>(descriptorSetLayouts.size());
+      //pipelineLayoutInfo.pSetLayouts = descriptorSetLayouts.data();
 
-      if (iSize > 0)
-      {
-         pipelineLayoutInfo.pushConstantRangeCount = 1;
-         pipelineLayoutInfo.pPushConstantRanges = &pushConstantRange;
-      }
-      else
-      {
-         pipelineLayoutInfo.pushConstantRangeCount = 0;
-         pipelineLayoutInfo.pPushConstantRanges = NULL;
+      //if (iSize > 0)
+      //{
+      //   pipelineLayoutInfo.pushConstantRangeCount = 1;
+      //   pipelineLayoutInfo.pPushConstantRanges = &pushConstantRange;
+      //}
+      //else
+      //{
+      //   pipelineLayoutInfo.pushConstantRangeCount = 0;
+      //   pipelineLayoutInfo.pPushConstantRanges = NULL;
 
 
-      }
+      //}
 
-      //pipelineLayoutInfo.pPushConstantRanges = nullptr;
+      ////pipelineLayoutInfo.pPushConstantRanges = nullptr;
 
-      if (vkCreatePipelineLayout(
-         pgpucontext->logicalDevice(),
-         &pipelineLayoutInfo,
-         nullptr,
-         &m_vkpipelinelayout) !=
-         VK_SUCCESS)
-      {
+      //if (vkCreatePipelineLayout(
+      //   pgpucontext->logicalDevice(),
+      //   &pipelineLayoutInfo,
+      //   nullptr,
+      //   &m_vkpipelinelayout) !=
+      //   VK_SUCCESS)
+      //{
 
-         throw ::exception(error_failed, "failed to create pipeline layout!");
+      //   throw ::exception(error_failed, "failed to create pipeline layout!");
 
-      }
+      //}
 
    }
 
@@ -120,142 +120,142 @@ namespace gpu_directx
 
       ::cast < shader_vertex_input > pshadervertexinput = m_pVertexInput;
 
-      if (pshadervertexinput)
-      {
+      //if (pshadervertexinput)
+      //{
 
-         pipelineConfig.bindingDescriptions.copy(pshadervertexinput->m_bindings);
-         pipelineConfig.attributeDescriptions.copy(pshadervertexinput->m_attribs);
+      //   pipelineConfig.bindingDescriptions.copy(pshadervertexinput->m_bindings);
+      //   pipelineConfig.attributeDescriptions.copy(pshadervertexinput->m_attribs);
 
-      }
+      //}
 
       pipeline::defaultPipelineConfigInfo(pipelineConfig);
 
-      if (m_eflag & e_flag_clear_default_bindings_and_attributes_descriptions)
-      {
+      //if (m_eflag & e_flag_clear_default_bindings_and_attributes_descriptions)
+      //{
 
-         pipelineConfig.attributeDescriptions.clear();
-         pipelineConfig.bindingDescriptions.clear();
+      //   pipelineConfig.attributeDescriptions.clear();
+      //   pipelineConfig.bindingDescriptions.clear();
 
-      }
-      if (m_bDepthTestButNoDepthWrite)
-      {
-         pipelineConfig.depthStencilInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO;
-         pipelineConfig.depthStencilInfo.depthTestEnable = VK_TRUE;
-         pipelineConfig.depthStencilInfo.depthWriteEnable = VK_FALSE;
-         pipelineConfig.depthStencilInfo.depthCompareOp = VK_COMPARE_OP_LESS;
-            pipelineConfig.depthStencilInfo.depthBoundsTestEnable = VK_FALSE;
-         pipelineConfig.depthStencilInfo.stencilTestEnable = VK_FALSE;
+      //}
+      //if (m_bDepthTestButNoDepthWrite)
+      //{
+      //   pipelineConfig.depthStencilInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO;
+      //   pipelineConfig.depthStencilInfo.depthTestEnable = VK_TRUE;
+      //   pipelineConfig.depthStencilInfo.depthWriteEnable = VK_FALSE;
+      //   pipelineConfig.depthStencilInfo.depthCompareOp = VK_COMPARE_OP_LESS;
+      //      pipelineConfig.depthStencilInfo.depthBoundsTestEnable = VK_FALSE;
+      //   pipelineConfig.depthStencilInfo.stencilTestEnable = VK_FALSE;
 
 
-      }
-      else if (m_bDisableDepthTest)
-      {
+      //}
+      //else if (m_bDisableDepthTest)
+      //{
 
-         pipelineConfig.depthStencilInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO;
-         pipelineConfig.depthStencilInfo.depthTestEnable = VK_FALSE;
-         pipelineConfig.depthStencilInfo.depthWriteEnable = VK_FALSE;
-         pipelineConfig.depthStencilInfo.depthCompareOp = VK_COMPARE_OP_ALWAYS; // doesn't matter since test is disabled
-         pipelineConfig.depthStencilInfo.depthBoundsTestEnable = VK_FALSE;
-         pipelineConfig.depthStencilInfo.stencilTestEnable = VK_FALSE;
+      //   pipelineConfig.depthStencilInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO;
+      //   pipelineConfig.depthStencilInfo.depthTestEnable = VK_FALSE;
+      //   pipelineConfig.depthStencilInfo.depthWriteEnable = VK_FALSE;
+      //   pipelineConfig.depthStencilInfo.depthCompareOp = VK_COMPARE_OP_ALWAYS; // doesn't matter since test is disabled
+      //   pipelineConfig.depthStencilInfo.depthBoundsTestEnable = VK_FALSE;
+      //   pipelineConfig.depthStencilInfo.stencilTestEnable = VK_FALSE;
 
-      }
-      pipelineConfig.colorBlendAttachments.clear();
-      if (m_bAccumulationEnable)
-      {
+      //}
+      //pipelineConfig.colorBlendAttachments.clear();
+      //if (m_bAccumulationEnable)
+      //{
 
-         VkPipelineColorBlendAttachmentState state;
-         state.blendEnable = VK_TRUE;
-         state.srcColorBlendFactor = VK_BLEND_FACTOR_ONE;  // use alpha blending
-         state.dstColorBlendFactor = VK_BLEND_FACTOR_ONE;
-         state.colorBlendOp = VK_BLEND_OP_ADD;
-         state.srcAlphaBlendFactor = VK_BLEND_FACTOR_ONE;
-         state.dstAlphaBlendFactor = VK_BLEND_FACTOR_ONE;
-         state.alphaBlendOp = VK_BLEND_OP_ADD;
-         state.colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT |
-            VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
-         pipelineConfig.colorBlendAttachments.add(state);
-         if (m_iColorAttachmentCount > 1)
-         {
+      //   VkPipelineColorBlendAttachmentState state;
+      //   state.blendEnable = VK_TRUE;
+      //   state.srcColorBlendFactor = VK_BLEND_FACTOR_ONE;  // use alpha blending
+      //   state.dstColorBlendFactor = VK_BLEND_FACTOR_ONE;
+      //   state.colorBlendOp = VK_BLEND_OP_ADD;
+      //   state.srcAlphaBlendFactor = VK_BLEND_FACTOR_ONE;
+      //   state.dstAlphaBlendFactor = VK_BLEND_FACTOR_ONE;
+      //   state.alphaBlendOp = VK_BLEND_OP_ADD;
+      //   state.colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT |
+      //      VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
+      //   pipelineConfig.colorBlendAttachments.add(state);
+      //   if (m_iColorAttachmentCount > 1)
+      //   {
 
-            state.blendEnable = VK_TRUE;
-            state.srcColorBlendFactor = VK_BLEND_FACTOR_ONE;  // use alpha blending
-            state.dstColorBlendFactor = VK_BLEND_FACTOR_ONE;
-            state.colorBlendOp = VK_BLEND_OP_ADD;
-            state.srcAlphaBlendFactor = VK_BLEND_FACTOR_ONE;
-            state.dstAlphaBlendFactor = VK_BLEND_FACTOR_ONE;
-            state.alphaBlendOp = VK_BLEND_OP_ADD;
-            state.colorWriteMask = VK_COLOR_COMPONENT_R_BIT;
-            pipelineConfig.colorBlendAttachments.add(state);
-         }
+      //      state.blendEnable = VK_TRUE;
+      //      state.srcColorBlendFactor = VK_BLEND_FACTOR_ONE;  // use alpha blending
+      //      state.dstColorBlendFactor = VK_BLEND_FACTOR_ONE;
+      //      state.colorBlendOp = VK_BLEND_OP_ADD;
+      //      state.srcAlphaBlendFactor = VK_BLEND_FACTOR_ONE;
+      //      state.dstAlphaBlendFactor = VK_BLEND_FACTOR_ONE;
+      //      state.alphaBlendOp = VK_BLEND_OP_ADD;
+      //      state.colorWriteMask = VK_COLOR_COMPONENT_R_BIT;
+      //      pipelineConfig.colorBlendAttachments.add(state);
+      //   }
 
-         pipelineConfig.colorBlendInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO;
-         pipelineConfig.colorBlendInfo.logicOpEnable = VK_FALSE;
-         pipelineConfig.colorBlendInfo.attachmentCount = pipelineConfig.colorBlendAttachments.get_count();
-         pipelineConfig.colorBlendInfo.pAttachments = pipelineConfig.colorBlendAttachments.data();
+      //   pipelineConfig.colorBlendInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO;
+      //   pipelineConfig.colorBlendInfo.logicOpEnable = VK_FALSE;
+      //   pipelineConfig.colorBlendInfo.attachmentCount = pipelineConfig.colorBlendAttachments.get_count();
+      //   pipelineConfig.colorBlendInfo.pAttachments = pipelineConfig.colorBlendAttachments.data();
 
-      }
-      else if (m_bEnableBlend)
-      {
+      //}
+      //else if (m_bEnableBlend)
+      //{
 
-         for (int i = 0; i < m_iColorAttachmentCount; i++)
-         {
-            VkPipelineColorBlendAttachmentState state;
-            state.blendEnable = VK_TRUE;
-            state.srcColorBlendFactor = VK_BLEND_FACTOR_ONE;
-            state.dstColorBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
-            state.colorBlendOp = VK_BLEND_OP_ADD;
-            state.srcAlphaBlendFactor = VK_BLEND_FACTOR_ONE;
-            state.dstAlphaBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
-            state.alphaBlendOp = VK_BLEND_OP_ADD;
-            //state.srcColorBlendFactor = VK_BLEND_FACTOR_ONE;  // use alpha blending
-            //state.dstColorBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
-            //state.colorBlendOp = VK_BLEND_OP_ADD;
-            //state.srcAlphaBlendFactor = VK_BLEND_FACTOR_ONE;
-            //state.dstAlphaBlendFactor = VK_BLEND_FACTOR_ZERO;
-            //state.alphaBlendOp = VK_BLEND_OP_ADD;
-            state.colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT |
-               VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
-            pipelineConfig.colorBlendAttachments.add(state);
-         }
+      //   for (int i = 0; i < m_iColorAttachmentCount; i++)
+      //   {
+      //      VkPipelineColorBlendAttachmentState state;
+      //      state.blendEnable = VK_TRUE;
+      //      state.srcColorBlendFactor = VK_BLEND_FACTOR_ONE;
+      //      state.dstColorBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
+      //      state.colorBlendOp = VK_BLEND_OP_ADD;
+      //      state.srcAlphaBlendFactor = VK_BLEND_FACTOR_ONE;
+      //      state.dstAlphaBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
+      //      state.alphaBlendOp = VK_BLEND_OP_ADD;
+      //      //state.srcColorBlendFactor = VK_BLEND_FACTOR_ONE;  // use alpha blending
+      //      //state.dstColorBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
+      //      //state.colorBlendOp = VK_BLEND_OP_ADD;
+      //      //state.srcAlphaBlendFactor = VK_BLEND_FACTOR_ONE;
+      //      //state.dstAlphaBlendFactor = VK_BLEND_FACTOR_ZERO;
+      //      //state.alphaBlendOp = VK_BLEND_OP_ADD;
+      //      state.colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT |
+      //         VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
+      //      pipelineConfig.colorBlendAttachments.add(state);
+      //   }
 
-         pipelineConfig.colorBlendInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO;
-         pipelineConfig.colorBlendInfo.logicOpEnable = VK_FALSE;
-         pipelineConfig.colorBlendInfo.attachmentCount = pipelineConfig.colorBlendAttachments.get_count();
-         pipelineConfig.colorBlendInfo.pAttachments = pipelineConfig.colorBlendAttachments.data();
+      //   pipelineConfig.colorBlendInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO;
+      //   pipelineConfig.colorBlendInfo.logicOpEnable = VK_FALSE;
+      //   pipelineConfig.colorBlendInfo.attachmentCount = pipelineConfig.colorBlendAttachments.get_count();
+      //   pipelineConfig.colorBlendInfo.pAttachments = pipelineConfig.colorBlendAttachments.data();
 
-      }
-      else
-      {
+      //}
+      //else
+      //{
 
-         for (int i = 0; i < m_iColorAttachmentCount; i++)
-         {
-            VkPipelineColorBlendAttachmentState state;
-            state.colorWriteMask =
-               VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT |
-               VK_COLOR_COMPONENT_A_BIT;
-            state.blendEnable = VK_FALSE;
-            state.srcColorBlendFactor = VK_BLEND_FACTOR_ONE;   // Optional
-            state.dstColorBlendFactor = VK_BLEND_FACTOR_ZERO;  // Optional
-            state.colorBlendOp = VK_BLEND_OP_ADD;              // Optional
-            state.srcAlphaBlendFactor = VK_BLEND_FACTOR_ONE;   // Optional
-            state.dstAlphaBlendFactor = VK_BLEND_FACTOR_ZERO;  // Optional
-            state.alphaBlendOp = VK_BLEND_OP_ADD;              // Optional
-            pipelineConfig.colorBlendAttachments.add(state);
-         }
+      //   for (int i = 0; i < m_iColorAttachmentCount; i++)
+      //   {
+      //      VkPipelineColorBlendAttachmentState state;
+      //      state.colorWriteMask =
+      //         VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT |
+      //         VK_COLOR_COMPONENT_A_BIT;
+      //      state.blendEnable = VK_FALSE;
+      //      state.srcColorBlendFactor = VK_BLEND_FACTOR_ONE;   // Optional
+      //      state.dstColorBlendFactor = VK_BLEND_FACTOR_ZERO;  // Optional
+      //      state.colorBlendOp = VK_BLEND_OP_ADD;              // Optional
+      //      state.srcAlphaBlendFactor = VK_BLEND_FACTOR_ONE;   // Optional
+      //      state.dstAlphaBlendFactor = VK_BLEND_FACTOR_ZERO;  // Optional
+      //      state.alphaBlendOp = VK_BLEND_OP_ADD;              // Optional
+      //      pipelineConfig.colorBlendAttachments.add(state);
+      //   }
 
-         pipelineConfig.colorBlendInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO;
-         pipelineConfig.colorBlendInfo.logicOpEnable = VK_FALSE;
-         pipelineConfig.colorBlendInfo.attachmentCount = pipelineConfig.colorBlendAttachments.get_count();
-         pipelineConfig.colorBlendInfo.pAttachments = pipelineConfig.colorBlendAttachments.data();
+      //   pipelineConfig.colorBlendInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO;
+      //   pipelineConfig.colorBlendInfo.logicOpEnable = VK_FALSE;
+      //   pipelineConfig.colorBlendInfo.attachmentCount = pipelineConfig.colorBlendAttachments.get_count();
+      //   pipelineConfig.colorBlendInfo.pAttachments = pipelineConfig.colorBlendAttachments.data();
 
-      }
+      //}
 
-      pipelineConfig.inputAssemblyInfo.topology = m_vktopology;
-      pipelineConfig.dynamicStateEnables.append_unique(m_dynamicstateaEnable);
-      pipelineConfig.dynamicStateInfo.dynamicStateCount = pipelineConfig.dynamicStateEnables.size();
-      auto prenderpass = prenderer->m_pvkcrenderpass;
-      pipelineConfig.renderPass = prenderpass->m_vkrenderpass;
-      pipelineConfig.pipelineLayout = m_vkpipelinelayout;
+      //pipelineConfig.inputAssemblyInfo.topology = m_vktopology;
+      //pipelineConfig.dynamicStateEnables.append_unique(m_dynamicstateaEnable);
+      //pipelineConfig.dynamicStateInfo.dynamicStateCount = pipelineConfig.dynamicStateEnables.size();
+      //auto prenderpass = prenderer->m_pvkcrenderpass;
+      //pipelineConfig.renderPass = prenderpass->m_vkrenderpass;
+      //pipelineConfig.pipelineLayout = m_vkpipelinelayout;
 
       pgpudevice->defer_shader_memory(m_memoryVertex, m_pathVertex);
       pgpudevice->defer_shader_memory(m_memoryFragment, m_pathFragment);
@@ -278,7 +278,7 @@ namespace gpu_directx
 
       ::cast <renderer> prenderer = m_pgpurenderer;
 
-      auto commandBuffer = prenderer->getCurrentCommandBuffer();
+      /*auto commandBuffer = prenderer->getCurrentCommandBuffer();
 
       m_ppipeline->bind(commandBuffer);
 
@@ -297,7 +297,7 @@ namespace gpu_directx
             0,
             nullptr);
 
-      }
+      }*/
 
    }
 
@@ -307,29 +307,29 @@ namespace gpu_directx
 
       ::cast < renderer > prenderer = m_pgpurenderer;
 
-      auto commandBuffer = prenderer->getCurrentCommandBuffer();
+   //   auto commandBuffer = prenderer->getCurrentCommandBuffer();
 
-      vkCmdPushConstants(
-         commandBuffer,
-         m_vkpipelinelayout,
-         VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT,
-         0,
-         m_properties.size(),
-         m_properties.data());
-
-   }
-
-
-   void shader::draw()
-   {
-
-      ::cast < renderer > prenderer = m_pgpurenderer;
-
-      auto commandBuffer = prenderer->getCurrentCommandBuffer();
-
-      vkCmdDraw(commandBuffer, 6, 1, 0, 0);
+   //   vkCmdPushConstants(
+   //      commandBuffer,
+   //      m_vkpipelinelayout,
+   //      VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT,
+   //      0,
+   //      m_properties.size(),
+   //      m_properties.data());
 
    }
+
+
+   //void shader::draw()
+   //{
+
+   //   ::cast < renderer > prenderer = m_pgpurenderer;
+
+   //   auto commandBuffer = prenderer->getCurrentCommandBuffer();
+
+   //   vkCmdDraw(commandBuffer, 6, 1, 0, 0);
+
+   //}
 
 
 } // namespace gpu_directx

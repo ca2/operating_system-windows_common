@@ -3,6 +3,8 @@
 
 //#include "acme/prototype/geometry2d/_geometry2d.h"
 #include "geometry_sink_text_renderer.h"
+#include "apex/platform/app_consumer.h"
+#include "aura/platform/application.h"
 
 
 namespace direct2d
@@ -10,7 +12,7 @@ namespace direct2d
 
 
    class CLASS_DECL_DIRECT2D direct2d :
-      virtual public ::matter
+      virtual public ::app_consumer<::aura::application>
    {
    public:
 

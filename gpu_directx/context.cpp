@@ -9,8 +9,8 @@
 #include "shader.h"
 #include "acme/platform/application.h"
 #include "aura/graphics/image/image.h"
-#include "cube/gpu/types.h"
-#include "app-graphics3d/gpu_directx/descriptors.h"
+#include "aura/graphics/gpu/types.h"
+#include "gpu_directx/descriptors.h"
 #include "glm/mat4x4.hpp"
 #include "initializers.h"
 
@@ -26,7 +26,7 @@ namespace gpu_directx
    {
       
 
-      m_vksampler001 = nullptr;
+      //m_vksampler001 = nullptr;
       //m_bOffscreen = true;
       //      m_emode = e_mode_none;
             //m_itaskGpu = 0;
@@ -47,8 +47,8 @@ namespace gpu_directx
       //this->logicalDevice() = VK_NULL_HANDLE;
       //m_vkcommandpool = VK_NULL_HANDLE;
 
-      m_vkqueuePresent = nullptr;
-      m_vkqueueGraphics = nullptr;
+      //m_vkqueuePresent = nullptr;
+      //m_vkqueueGraphics = nullptr;
 
 
 
@@ -383,43 +383,43 @@ namespace gpu_directx
    }
 
 
-   VkSampler context::_001VkSampler()
-   {
+   //VkSampler context::_001VkSampler()
+   //{
 
-      if (!m_vksampler001)
-      {
+   //   if (!m_vksampler001)
+   //   {
 
-         VkSamplerCreateInfo samplerInfo = {
-   .sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO,
-   .magFilter = VK_FILTER_LINEAR,
-   .minFilter = VK_FILTER_LINEAR,
-      .mipmapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR,
+   //      VkSamplerCreateInfo samplerInfo = {
+   //.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO,
+   //.magFilter = VK_FILTER_LINEAR,
+   //.minFilter = VK_FILTER_LINEAR,
+   //   .mipmapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR,
 
-   .addressModeU = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
-   .addressModeV = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
-   .addressModeW = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
-   .mipLodBias = 0.0f,
-   .anisotropyEnable = VK_FALSE,
-   .maxAnisotropy = 1.0f,
-   .compareEnable = VK_FALSE,
-   .compareOp = VK_COMPARE_OP_ALWAYS,
-   .minLod = 0.0f,
-   .maxLod = 0.0f,
-      .borderColor = VK_BORDER_COLOR_INT_OPAQUE_BLACK,
-   .unnormalizedCoordinates = VK_FALSE,
+   //.addressModeU = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
+   //.addressModeV = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
+   //.addressModeW = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
+   //.mipLodBias = 0.0f,
+   //.anisotropyEnable = VK_FALSE,
+   //.maxAnisotropy = 1.0f,
+   //.compareEnable = VK_FALSE,
+   //.compareOp = VK_COMPARE_OP_ALWAYS,
+   //.minLod = 0.0f,
+   //.maxLod = 0.0f,
+   //   .borderColor = VK_BORDER_COLOR_INT_OPAQUE_BLACK,
+   //.unnormalizedCoordinates = VK_FALSE,
 
-         };
+   //      };
 
 
-         if (vkCreateSampler(this->logicalDevice(), &samplerInfo, NULL, &m_vksampler001) != VK_SUCCESS) {
-            // Handle error
-         }
+   //      if (vkCreateSampler(this->logicalDevice(), &samplerInfo, NULL, &m_vksampler001) != VK_SUCCESS) {
+   //         // Handle error
+   //      }
 
-      }
+   //   }
 
-      return m_vksampler001;
+   //   return m_vksampler001;
 
-   }
+   //}
 
 
 
@@ -846,19 +846,19 @@ namespace gpu_directx
 
       m_pgpudevice = startcontext.m_pgpudevice;
 
-      if (m_pgpudevice->m_queuefamilyindices.graphicsFamily >= 0)
-      {
+      //if (m_pgpudevice->m_queuefamilyindices.graphicsFamily >= 0)
+      //{
 
-         vkGetDeviceQueue(this->logicalDevice(), m_pgpudevice->m_queuefamilyindices.graphicsFamily, 0, &m_vkqueueGraphics);
+      //   vkGetDeviceQueue(this->logicalDevice(), m_pgpudevice->m_queuefamilyindices.graphicsFamily, 0, &m_vkqueueGraphics);
 
-      }
+      //}
 
-      if (m_pgpudevice->m_queuefamilyindices.presentFamily >= 0)
-      {
+      //if (m_pgpudevice->m_queuefamilyindices.presentFamily >= 0)
+      //{
 
-         vkGetDeviceQueue(this->logicalDevice(), m_pgpudevice->m_queuefamilyindices.presentFamily, 0, &m_vkqueuePresent);
+      //   vkGetDeviceQueue(this->logicalDevice(), m_pgpudevice->m_queuefamilyindices.presentFamily, 0, &m_vkqueuePresent);
 
-      }
+      //}
 
       _create_context_win32(startcontext);
 
@@ -866,42 +866,42 @@ namespace gpu_directx
 
 
 
-   void context::endSingleTimeCommands(VkCommandBuffer commandBuffer)
-   {
+   //void context::endSingleTimeCommands(VkCommandBuffer commandBuffer)
+   //{
 
-      VkSubmitInfo submitInfo{};
-      submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
-      submitInfo.commandBufferCount = 1;
-      submitInfo.pCommandBuffers = &commandBuffer;
+   //   VkSubmitInfo submitInfo{};
+   //   submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+   //   submitInfo.commandBufferCount = 1;
+   //   submitInfo.pCommandBuffers = &commandBuffer;
 
-      endSingleTimeCommands(commandBuffer,1, &submitInfo);
+   //   endSingleTimeCommands(commandBuffer,1, &submitInfo);
 
-   }
-
-
-   void context::endSingleTimeCommands(VkCommandBuffer commandBuffer, int iSubmitCount, VkSubmitInfo* psubmitinfo)
-   {
-
-      vkEndCommandBuffer(commandBuffer);
-     
-      vkQueueSubmit(m_vkqueueGraphics, 1, psubmitinfo, VK_NULL_HANDLE);
-
-      vkQueueWaitIdle(m_vkqueueGraphics);
-
-      vkFreeCommandBuffers(this->logicalDevice(), m_pgpudevice->getCommandPool(), 1, &commandBuffer);
-
-   }
+   //}
 
 
+   //void context::endSingleTimeCommands(VkCommandBuffer commandBuffer, int iSubmitCount, VkSubmitInfo* psubmitinfo)
+   //{
 
-   VkDevice context::logicalDevice() 
-   {
-      
-      ::cast < device > pgpudevice = m_pgpudevice;
+   //   vkEndCommandBuffer(commandBuffer);
+   //  
+   //   vkQueueSubmit(m_vkqueueGraphics, 1, psubmitinfo, VK_NULL_HANDLE);
 
-      return pgpudevice->logicalDevice();
+   //   vkQueueWaitIdle(m_vkqueueGraphics);
 
-   }
+   //   vkFreeCommandBuffers(this->logicalDevice(), m_pgpudevice->getCommandPool(), 1, &commandBuffer);
+
+   //}
+
+
+
+   //VkDevice context::logicalDevice() 
+   //{
+   //   
+   //   ::cast < device > pgpudevice = m_pgpudevice;
+
+   //   return pgpudevice->logicalDevice();
+
+   //}
 
 
 //   HRESULT context::createLogicalDevice(
@@ -1726,7 +1726,7 @@ namespace gpu_directx
    //}
 
 
-   //void context::initialize_context(::cube::impact * pimpact)
+   //void context::initialize_context(::user::graphics3d * pimpact)
    //{
 
    //   m_pimpact = pimpact;
@@ -2079,67 +2079,67 @@ namespace gpu_directx
    //}
 
 
-   void context::createBuffer(
-      VkDeviceSize size,
-      VkBufferUsageFlags usage,
-      VkMemoryPropertyFlags properties,
-      VkBuffer & buffer,
-      VkDeviceMemory & bufferMemory)
-   {
+   //void context::createBuffer(
+   //   VkDeviceSize size,
+   //   VkBufferUsageFlags usage,
+   //   VkMemoryPropertyFlags properties,
+   //   VkBuffer & buffer,
+   //   VkDeviceMemory & bufferMemory)
+   //{
 
-      VkBufferCreateInfo bufferInfo{};
-      bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
-      bufferInfo.size = size;
-      bufferInfo.usage = usage;
-      bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+   //   VkBufferCreateInfo bufferInfo{};
+   //   bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
+   //   bufferInfo.size = size;
+   //   bufferInfo.usage = usage;
+   //   bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 
-      if (vkCreateBuffer(this->logicalDevice(), &bufferInfo, nullptr, &buffer) != VK_SUCCESS)
-      {
+   //   if (vkCreateBuffer(this->logicalDevice(), &bufferInfo, nullptr, &buffer) != VK_SUCCESS)
+   //   {
 
-         throw ::exception(error_failed, "failed to create vertex buffer!");
+   //      throw ::exception(error_failed, "failed to create vertex buffer!");
 
-      }
+   //   }
 
-      VkMemoryRequirements memRequirements;
-      vkGetBufferMemoryRequirements(this->logicalDevice(), buffer, &memRequirements);
+   //   VkMemoryRequirements memRequirements;
+   //   vkGetBufferMemoryRequirements(this->logicalDevice(), buffer, &memRequirements);
 
-      VkMemoryAllocateInfo allocInfo{};
-      allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
-      allocInfo.allocationSize = memRequirements.size;
-      allocInfo.memoryTypeIndex = m_pgpudevice->m_pphysicaldevice->findMemoryType(memRequirements.memoryTypeBits, properties);
+   //   VkMemoryAllocateInfo allocInfo{};
+   //   allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+   //   allocInfo.allocationSize = memRequirements.size;
+   //   allocInfo.memoryTypeIndex = m_pgpudevice->m_pphysicaldevice->findMemoryType(memRequirements.memoryTypeBits, properties);
 
-      if (vkAllocateMemory(this->logicalDevice(), &allocInfo, nullptr, &bufferMemory) != VK_SUCCESS)
-      {
+   //   if (vkAllocateMemory(this->logicalDevice(), &allocInfo, nullptr, &bufferMemory) != VK_SUCCESS)
+   //   {
 
-         throw ::exception(error_failed, "failed to allocate vertex buffer memory!");
+   //      throw ::exception(error_failed, "failed to allocate vertex buffer memory!");
 
-      }
+   //   }
 
-      vkBindBufferMemory(this->logicalDevice(), buffer, bufferMemory, 0);
+   //   vkBindBufferMemory(this->logicalDevice(), buffer, bufferMemory, 0);
 
-   }
+   //}
 
 
-   VkCommandBuffer context::beginSingleTimeCommands()
-   {
+   //VkCommandBuffer context::beginSingleTimeCommands()
+   //{
 
-      VkCommandBufferAllocateInfo allocInfo{};
-      allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
-      allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-      allocInfo.commandPool = m_pgpudevice->getCommandPool();
-      allocInfo.commandBufferCount = 1;
+   //   VkCommandBufferAllocateInfo allocInfo{};
+   //   allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
+   //   allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
+   //   allocInfo.commandPool = m_pgpudevice->getCommandPool();
+   //   allocInfo.commandBufferCount = 1;
 
-      VkCommandBuffer commandBuffer;
-      vkAllocateCommandBuffers(this->logicalDevice(), &allocInfo, &commandBuffer);
+   //   VkCommandBuffer commandBuffer;
+   //   vkAllocateCommandBuffers(this->logicalDevice(), &allocInfo, &commandBuffer);
 
-      VkCommandBufferBeginInfo beginInfo{};
-      beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
-      beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
+   //   VkCommandBufferBeginInfo beginInfo{};
+   //   beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+   //   beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
 
-      vkBeginCommandBuffer(commandBuffer, &beginInfo);
-      return commandBuffer;
+   //   vkBeginCommandBuffer(commandBuffer, &beginInfo);
+   //   return commandBuffer;
 
-   }
+   //}
 
 
    //void context::endSingleTimeCommands(VkCommandBuffer commandBuffer)
@@ -2160,102 +2160,102 @@ namespace gpu_directx
    //}
 
 
-   void context::copyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size)
-   {
-      VkCommandBuffer commandBuffer = beginSingleTimeCommands();
+   //void context::copyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size)
+   //{
+   //   VkCommandBuffer commandBuffer = beginSingleTimeCommands();
 
-      VkBufferCopy copyRegion{};
-      copyRegion.srcOffset = 0;  // Optional
-      copyRegion.dstOffset = 0;  // Optional
-      copyRegion.size = size;
-      vkCmdCopyBuffer(commandBuffer, srcBuffer, dstBuffer, 1, &copyRegion);
+   //   VkBufferCopy copyRegion{};
+   //   copyRegion.srcOffset = 0;  // Optional
+   //   copyRegion.dstOffset = 0;  // Optional
+   //   copyRegion.size = size;
+   //   vkCmdCopyBuffer(commandBuffer, srcBuffer, dstBuffer, 1, &copyRegion);
 
-      endSingleTimeCommands(commandBuffer);
+   //   endSingleTimeCommands(commandBuffer);
 
-   }
-
-
-   void context::copyBufferToImage(
-      VkBuffer buffer, VkImage image, uint32_t width, uint32_t height, uint32_t layerCount)
-   {
-
-      VkCommandBuffer commandBuffer = beginSingleTimeCommands();
-
-      VkBufferImageCopy region{};
-      region.bufferOffset = 0;
-      region.bufferRowLength = 0;
-      region.bufferImageHeight = 0;
-
-      region.imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-      region.imageSubresource.mipLevel = 0;
-      region.imageSubresource.baseArrayLayer = 0;
-      region.imageSubresource.layerCount = layerCount;
-
-      region.imageOffset = { 0, 0, 0 };
-      region.imageExtent = { width, height, 1 };
-
-      vkCmdCopyBufferToImage(
-         commandBuffer,
-         buffer,
-         image,
-         VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
-         1,
-         &region);
-
-      endSingleTimeCommands(commandBuffer);
-
-   }
+   //}
 
 
-   void context::createImageWithInfo(
-      const VkImageCreateInfo & imageInfo,
-      VkMemoryPropertyFlags properties,
-      VkImage & image,
-      VkDeviceMemory & imageMemory)
-   {
+   //void context::copyBufferToImage(
+   //   VkBuffer buffer, VkImage image, uint32_t width, uint32_t height, uint32_t layerCount)
+   //{
 
-      if (vkCreateImage(this->logicalDevice(), &imageInfo, nullptr, &image) != VK_SUCCESS)
-      {
+   //   VkCommandBuffer commandBuffer = beginSingleTimeCommands();
 
-         throw ::exception(error_failed, "failed to create image!");
+   //   VkBufferImageCopy region{};
+   //   region.bufferOffset = 0;
+   //   region.bufferRowLength = 0;
+   //   region.bufferImageHeight = 0;
 
-      }
+   //   region.imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+   //   region.imageSubresource.mipLevel = 0;
+   //   region.imageSubresource.baseArrayLayer = 0;
+   //   region.imageSubresource.layerCount = layerCount;
 
-      VkMemoryRequirements memRequirements;
-      vkGetImageMemoryRequirements(this->logicalDevice(), image, &memRequirements);
+   //   region.imageOffset = { 0, 0, 0 };
+   //   region.imageExtent = { width, height, 1 };
 
-      VkMemoryAllocateInfo allocInfo{};
-      allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
-      allocInfo.allocationSize = memRequirements.size;
-      allocInfo.memoryTypeIndex = m_pgpudevice->m_pphysicaldevice->findMemoryType(memRequirements.memoryTypeBits, properties);
+   //   vkCmdCopyBufferToImage(
+   //      commandBuffer,
+   //      buffer,
+   //      image,
+   //      VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
+   //      1,
+   //      &region);
 
-      if (vkAllocateMemory(this->logicalDevice(), &allocInfo, nullptr, &imageMemory) != VK_SUCCESS) {
-         throw ::exception(error_failed, "failed to allocate image memory!");
-      }
+   //   endSingleTimeCommands(commandBuffer);
 
-      if (vkBindImageMemory(this->logicalDevice(), image, imageMemory, 0) != VK_SUCCESS) {
-         throw ::exception(error_failed, "failed to bind image memory!");
-      }
-   }
+   //}
 
 
+   //void context::createImageWithInfo(
+   //   const VkImageCreateInfo & imageInfo,
+   //   VkMemoryPropertyFlags properties,
+   //   VkImage & image,
+   //   VkDeviceMemory & imageMemory)
+   //{
+
+   //   if (vkCreateImage(this->logicalDevice(), &imageInfo, nullptr, &image) != VK_SUCCESS)
+   //   {
+
+   //      throw ::exception(error_failed, "failed to create image!");
+
+   //   }
+
+   //   VkMemoryRequirements memRequirements;
+   //   vkGetImageMemoryRequirements(this->logicalDevice(), image, &memRequirements);
+
+   //   VkMemoryAllocateInfo allocInfo{};
+   //   allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+   //   allocInfo.allocationSize = memRequirements.size;
+   //   allocInfo.memoryTypeIndex = m_pgpudevice->m_pphysicaldevice->findMemoryType(memRequirements.memoryTypeBits, properties);
+
+   //   if (vkAllocateMemory(this->logicalDevice(), &allocInfo, nullptr, &imageMemory) != VK_SUCCESS) {
+   //      throw ::exception(error_failed, "failed to allocate image memory!");
+   //   }
+
+   //   if (vkBindImageMemory(this->logicalDevice(), image, imageMemory, 0) != VK_SUCCESS) {
+   //      throw ::exception(error_failed, "failed to bind image memory!");
+   //   }
+   //}
 
 
 
-   void context::submitWork(VkCommandBuffer cmdBuffer, VkQueue queue)
-   {
-      VkSubmitInfo submitInfo = initializers::submitInfo();
-      submitInfo.commandBufferCount = 1;
-      submitInfo.pCommandBuffers = &cmdBuffer;
-      //m_submitInfo.commandBufferCount = 1;
-      //m_submitInfo.pCommandBuffers = &cmdBuffer;
-      VkFenceCreateInfo fenceInfo = initializers::fenceCreateInfo();
-      VkFence fence;
-      VK_CHECK_RESULT(vkCreateFence(this->logicalDevice(), &fenceInfo, nullptr, &fence));
-      VK_CHECK_RESULT(vkQueueSubmit(queue, 1, &submitInfo, fence));
-      VK_CHECK_RESULT(vkWaitForFences(this->logicalDevice(), 1, &fence, VK_TRUE, UINT64_MAX));
-      vkDestroyFence(this->logicalDevice(), fence, nullptr);
-   }
+
+
+   //void context::submitWork(VkCommandBuffer cmdBuffer, VkQueue queue)
+   //{
+   //   VkSubmitInfo submitInfo = initializers::submitInfo();
+   //   submitInfo.commandBufferCount = 1;
+   //   submitInfo.pCommandBuffers = &cmdBuffer;
+   //   //m_submitInfo.commandBufferCount = 1;
+   //   //m_submitInfo.pCommandBuffers = &cmdBuffer;
+   //   VkFenceCreateInfo fenceInfo = initializers::fenceCreateInfo();
+   //   VkFence fence;
+   //   VK_CHECK_RESULT(vkCreateFence(this->logicalDevice(), &fenceInfo, nullptr, &fence));
+   //   VK_CHECK_RESULT(vkQueueSubmit(queue, 1, &submitInfo, fence));
+   //   VK_CHECK_RESULT(vkWaitForFences(this->logicalDevice(), 1, &fence, VK_TRUE, UINT64_MAX));
+   //   vkDestroyFence(this->logicalDevice(), fence, nullptr);
+   //}
 
 
    //void context::submitSamplingWork(VkCommandBuffer cmdBuffer, VkQueue queue)
@@ -2286,27 +2286,27 @@ namespace gpu_directx
 
       m_uboBuffers.set_size(iFrameCount);
 
-      for (int i = 0; i < m_uboBuffers.size(); i++)
-      {
+      //for (int i = 0; i < m_uboBuffers.size(); i++)
+      //{
 
-         m_uboBuffers[i] = __allocate buffer();
+      //   m_uboBuffers[i] = __allocate buffer();
 
-         m_uboBuffers[i]->initialize_buffer(
-            this,
-            iGlobalUboSize,
-            1,
-            VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
-            VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
+      //   m_uboBuffers[i]->initialize_buffer(
+      //      this,
+      //      iGlobalUboSize,
+      //      1,
+      //      VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
+      //      VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
 
-         m_uboBuffers[i]->map();
+      //   m_uboBuffers[i]->map();
 
-         auto bufferInfo = m_uboBuffers[i]->descriptorInfo();
+      //   auto bufferInfo = m_uboBuffers[i]->descriptorInfo();
 
-         descriptor_writer(*m_psetdescriptorlayoutGlobal, *m_pdescriptorpoolGlobal)
-            .writeBuffer(0, &bufferInfo)
-            .build(m_descriptorsetsGlobal[i]);
+      //   descriptor_writer(*m_psetdescriptorlayoutGlobal, *m_pdescriptorpoolGlobal)
+      //      .writeBuffer(0, &bufferInfo)
+      //      .build(m_descriptorsetsGlobal[i]);
 
-      }
+      //}
 
       //auto globalSetLayout = m_psetdescriptorlayoutGlobal->getDescriptorSetLayout();
 
@@ -2318,9 +2318,9 @@ namespace gpu_directx
 
       auto iFrameIndex = m_pgpurenderer->get_frame_index();
 
-      m_uboBuffers[iFrameIndex]->writeToBuffer(block.data());
+      //m_uboBuffers[iFrameIndex]->writeToBuffer(block.data());
 
-      m_uboBuffers[iFrameIndex]->flush();
+      //m_uboBuffers[iFrameIndex]->flush();
 
    }
 
@@ -2328,48 +2328,48 @@ namespace gpu_directx
    void context::engine_on_frame_context_initialization()
    {
 
-      // Global UBO descriptors
-      if (!m_psetdescriptorlayoutGlobal)
-      {
-
-         auto pgpurenderer = get_renderer(::gpu::e_scene_3d);
-
-         m_psetdescriptorlayoutGlobal = set_descriptor_layout::Builder(this)
-            .addBinding(0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_ALL_GRAPHICS)
-            .build();
-
-         auto iFrameCount = pgpurenderer->get_frame_count();
-
-         m_descriptorsetsGlobal.resize(iFrameCount);
-
-         auto pdescriptorpoolbuilder = __allocate::gpu_directx::descriptor_pool::Builder();
-
-         pdescriptorpoolbuilder->initialize_builder(this);
-         pdescriptorpoolbuilder->setMaxSets(iFrameCount);
-         pdescriptorpoolbuilder->addPoolSize(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, iFrameCount);
-
-         m_pdescriptorpoolGlobal = pdescriptorpoolbuilder->build();
-
-      }
-
-
-
-   }
-
-
-   VkDescriptorSet context::getGlobalDescriptorSet(::gpu_directx::renderer* prenderer)
-   {
-
-      //if (m_globalDescriptorSets.is_empty())
+      //// Global UBO descriptors
+      //if (!m_psetdescriptorlayoutGlobal)
       //{
 
+      //   auto pgpurenderer = get_renderer(::gpu::e_scene_3d);
+
+      //   m_psetdescriptorlayoutGlobal = set_descriptor_layout::Builder(this)
+      //      .addBinding(0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_ALL_GRAPHICS)
+      //      .build();
+
+      //   auto iFrameCount = pgpurenderer->get_frame_count();
+
+      //   m_descriptorsetsGlobal.resize(iFrameCount);
+
+      //   auto pdescriptorpoolbuilder = __allocate::gpu_directx::descriptor_pool::Builder();
+
+      //   pdescriptorpoolbuilder->initialize_builder(this);
+      //   pdescriptorpoolbuilder->setMaxSets(iFrameCount);
+      //   pdescriptorpoolbuilder->addPoolSize(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, iFrameCount);
+
+      //   m_pdescriptorpoolGlobal = pdescriptorpoolbuilder->build();
 
       //}
 
-      return m_descriptorsetsGlobal[prenderer->get_frame_index()];
+
 
    }
-      
+
+
+   //VkDescriptorSet context::getGlobalDescriptorSet(::gpu_directx::renderer* prenderer)
+   //{
+
+   //   //if (m_globalDescriptorSets.is_empty())
+   //   //{
+
+
+   //   //}
+
+   //   return m_descriptorsetsGlobal[prenderer->get_frame_index()];
+
+   //}
+   //   
 
 } // namespace gpu_directx
 

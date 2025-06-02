@@ -6,10 +6,10 @@
 #include "aura_windows_common/_.h"
 
 
+#undef USUAL_OPERATING_SYSTEM_SUPPRESSIONS
+#include "acme/_operating_system.h"
 #include "acme_windows_common/comptr.h"
 
-
-#include "acme/_operating_system.h"
 
 
 //#include <winapifamily.h>

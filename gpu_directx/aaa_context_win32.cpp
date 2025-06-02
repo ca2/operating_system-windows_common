@@ -3,7 +3,7 @@
 #include "approach.h"
 #include "cpu_buffer.h"
 #include "physical_device.h"
-#include "cube/gpu/approach.h"
+#include "aura/graphics/gpu/approach.h"
 #include "aura/graphics/image/image.h"
 #include "acme/platform/application.h"
 #include "aura/platform/system.h"

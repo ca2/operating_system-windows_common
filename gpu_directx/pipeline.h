@@ -11,7 +11,7 @@ namespace gpu_directx
    struct PipelineConfigInfo
    {
 
-      ::array<VkVertexInputBindingDescription> bindingDescriptions{};
+      /*::array<VkVertexInputBindingDescription> bindingDescriptions{};
       ::array<VkVertexInputAttributeDescription> attributeDescriptions{};
       VkPipelineViewportStateCreateInfo viewportInfo;
       VkPipelineInputAssemblyStateCreateInfo inputAssemblyInfo;
@@ -23,7 +23,7 @@ namespace gpu_directx
       ::comparable_array<VkDynamicState> dynamicStateEnables;
       VkPipelineDynamicStateCreateInfo dynamicStateInfo;
       VkPipelineLayout pipelineLayout = nullptr;
-      VkRenderPass renderPass = nullptr;
+      VkRenderPass renderPass = nullptr;*/
       uint32_t subpass = 0;
    };
 
@@ -34,9 +34,9 @@ namespace gpu_directx
 
 
       ::pointer < renderer > m_pgpurenderer;
-      VkPipeline graphicsPipeline;
-      VkShaderModule vertShaderModule;
-      VkShaderModule fragShaderModule;
+      //VkPipeline graphicsPipeline;
+      //VkShaderModule vertShaderModule;
+      //VkShaderModule fragShaderModule;
 
 
 
@@ -54,7 +54,7 @@ namespace gpu_directx
       ~pipeline();
 
 
-      void bind(VkCommandBuffer commandBuffer);
+      //void bind(VkCommandBuffer commandBuffer);
 
       static void defaultPipelineConfigInfo(PipelineConfigInfo & configInfo);
    //private:
@@ -65,7 +65,8 @@ namespace gpu_directx
          const ::block & blockFragment,
          const PipelineConfigInfo & configInfo);
 
-      void createShaderModule(const ::block & block, VkShaderModule * shaderModule);
+      //void createShaderModule(const ::block & block, VkShaderModule * shaderModule);
+      void createShaderModule(const ::block& block, void* shaderModule);
 
    };
 

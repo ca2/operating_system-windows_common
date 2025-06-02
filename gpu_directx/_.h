@@ -2,15 +2,8 @@
 #pragma once
 
 
-#include "cube/_.h"
+#include "aura/_.h"
 #include "directx/_.h"
-
-
-//#if defined(WINDOWS_DESKTOP)
-//#include "windowing_win32/_.h"
-//#endif
-//#undef USUAL_OPERATING_SYSTEM_SUPPRESSIONS
-//#include "acme/_operating_system.h"
 
 
 #if defined(_gpu_directx_project)
@@ -20,7 +13,7 @@
 #endif
 
 
-//#include "_gpu_directx.h"
+#include "_gpu_directx.h"
 
 
 namespace gpu_directx

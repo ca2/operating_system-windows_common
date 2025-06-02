@@ -6,7 +6,7 @@
 //#include "offscreen.h"
 //#include "swapchain.h"
 #include "render_pass.h"
-#include "cube/gpu/renderer.h"
+#include "aura/graphics/gpu/renderer.h"
 
 
 constexpr unsigned int FRAME_OVERLAP = 2;
@@ -20,8 +20,8 @@ namespace gpu_directx
    {
    public:
 
-      ::array < VkVertexInputBindingDescription >     m_bindings;
-      ::array < VkVertexInputAttributeDescription >   m_attribs;
+      //::array < VkVertexInputBindingDescription >     m_bindings;
+      //::array < VkVertexInputAttributeDescription >   m_attribs;
 
    };
 
@@ -38,9 +38,9 @@ namespace gpu_directx
       {
 
 
-         VkExtent2D			      m_vkextent2d;
-         VkDeviceMemory		      m_vkdevicememory;
-         VkImage				      m_vkimage;
+         //VkExtent2D			      m_vkextent2d;
+         //VkDeviceMemory		      m_vkdevicememory;
+         //VkImage				      m_vkimage;
 
 
          ::pointer < context >   m_pgpucontext;
@@ -54,10 +54,10 @@ namespace gpu_directx
          void initialize_cpu_buffer_sampler(::gpu::context* pgpucontext);
 
          void clear();
-         void update(VkExtent2D vkextent2d);
+         //void update(VkExtent2D vkextent2d);
          void destroy();
 
-         void sample(VkImage vkimage);
+///         void sample(VkImage vkimage);
 
          void send_sample();
 
@@ -68,25 +68,25 @@ namespace gpu_directx
          virtual public ::particle
       {
       public:
-         ::array<VkDescriptorSet>   m_descriptorsets;
-         VkPipelineLayout		      m_vkpipelinelayout = nullptr;
+         //::array<VkDescriptorSet>   m_descriptorsets;
+         //VkPipelineLayout		      m_vkpipelinelayout = nullptr;
       };
 
       class model :
          virtual public ::particle
       {
       public:
-         VkBuffer m_vertexBuffer = nullptr;
-         VkDeviceMemory m_vertexMemory = nullptr;
-         VkBuffer m_indexBuffer = nullptr;
-         VkDeviceMemory m_indexMemory = nullptr;
+         //VkBuffer m_vertexBuffer = nullptr;
+         //VkDeviceMemory m_vertexMemory = nullptr;
+         //VkBuffer m_indexBuffer = nullptr;
+         //VkDeviceMemory m_indexMemory = nullptr;
       };
 
       ::pointer<::gpu::shader>                        m_pshaderImageBlend;
       ::pointer<::gpu::shader>                        m_pshaderImageSet;
-      map < VkImage, ::pointer < descriptor > >       m_imagedescriptor;
-      map < VkImage, ::pointer < model > >       m_imagemodel;
-      //::pointer < ::cube::impact >	m_pimpact;
+      //map < VkImage, ::pointer < descriptor > >       m_imagedescriptor;
+      //map < VkImage, ::pointer < model > >       m_imagemodel;
+      //::pointer < ::user::graphics3d >	m_pimpact;
       ::pointer < context >				               m_pgpucontext;
       ::pointer < cpu_buffer_sampler >	               m_pcpubuffersampler;
       //::pointer<swap_chain_render_pass>			m_pvkcswapchain;
@@ -96,8 +96,8 @@ namespace gpu_directx
       //::pointer<::gpu::shader>                        m_pshaderResolve;
       //::pointer<model>                                m_pmodelResolve;
 
-      ::array<VkCommandBuffer>	commandBuffers;
-      VkExtent2D m_extentRenderer;
+      //::array<VkCommandBuffer>	commandBuffers;
+      //VkExtent2D m_extentRenderer;
       //int currentFrameIndex = 0;
       bool isFrameStarted = false;
       bool m_bNeedToRecreateSwapChain = false;
@@ -136,15 +136,15 @@ namespace gpu_directx
 
       }
 
-      VkRenderPass getRenderPass() const
-      {
+      //VkRenderPass getRenderPass() const
+      //{
 
-         return m_pvkcrenderpass->getRenderPass();
-         //return m_bOffScreen ?
-            //m_pvkcoffscreen->getRenderPass():
-            //m_pvkcswapchain->getRenderPass(); 
+      //   return m_pvkcrenderpass->getRenderPass();
+      //   //return m_bOffScreen ?
+      //      //m_pvkcoffscreen->getRenderPass():
+      //      //m_pvkcswapchain->getRenderPass(); 
 
-      }
+      //}
 
       void sample();
       //void resolve_color_and_alpha_accumulation_buffers();
@@ -173,10 +173,10 @@ namespace gpu_directx
       bool isFrameInProgress() const { return isFrameStarted; }
 
 
-      VkCommandBuffer getCurrentCommandBuffer() const {
-         assert(isFrameStarted && "Cannot get command buffer when frame not in progress");
-         return commandBuffers[get_frame_index()];
-      }
+      //VkCommandBuffer getCurrentCommandBuffer() const {
+      //   assert(isFrameStarted && "Cannot get command buffer when frame not in progress");
+      //   return commandBuffers[get_frame_index()];
+      //}
 
       int get_frame_index() const override;
       int get_frame_count() const override;
@@ -212,17 +212,17 @@ namespace gpu_directx
       void endDraw(::user::interaction * puserinteraction, ::gpu::renderer* pgpurendererSrc) override;
 
 
-      void _set_image(VkImage image, const ::int_rectangle& rectangle, bool bYSwap);
+      //void _set_image(VkImage image, const ::int_rectangle& rectangle, bool bYSwap);
 
-      void _blend_image(VkImage image, const ::int_rectangle& rectangle, bool bYSwap);
-      void _on_graphics_end_draw(VkImage image, const ::int_rectangle& rectangle);
+      //void _blend_image(VkImage image, const ::int_rectangle& rectangle, bool bYSwap);
+      //void _on_graphics_end_draw(VkImage image, const ::int_rectangle& rectangle);
 
       void _blend_renderer(::gpu_directx::renderer* prendererSrc, bool bYSwap);
       void _on_graphics_end_draw(::gpu_directx::renderer * prendererSrc);
 
       //void _on_frame_draw(::gpu_directx::renderer* prendererUpper);
 
-      void _copy_image(VkImage image, const ::int_rectangle& rectangle, bool bYSwap);
+      //void _copy_image(VkImage image, const ::int_rectangle& rectangle, bool bYSwap);
 
       ::gpu::shader * get_image_blend_shader();
 

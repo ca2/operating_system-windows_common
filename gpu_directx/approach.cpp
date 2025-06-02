@@ -8,7 +8,7 @@
 #include "renderer.h"
 #include "acme/filesystem/file/file.h"
 #include "acme/filesystem/filesystem/file_context.h"
-#include "cube/gpu/context.h"
+#include "aura/graphics/gpu/context.h"
 #include "acme/platform/application.h"
 
 
@@ -57,22 +57,22 @@ namespace gpu_directx
 
 #endif
 
-      m_vkinstance = VK_NULL_HANDLE;
-      //m_physicaldevice = VK_NULL_HANDLE;
-      //m_physicaldeviceproperties = {};
-      //m_physicaldevicefeatures = {};
-      //m_physicaldevicememoryproperties = {};
-      //m_physicaldevicefeaturesEnabled = {};
-      m_vkdevice = VK_NULL_HANDLE;
-      m_vkqueue = VK_NULL_HANDLE;
-      m_formatDepth = VK_FORMAT_UNDEFINED;
-      m_vkcommandpool = VK_NULL_HANDLE;
-      m_pipelinestageflagsSubmit = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
-      m_submitinfo = {};
-      m_vkrenderpass = VK_NULL_HANDLE;
+      //m_vkinstance = VK_NULL_HANDLE;
+      ////m_physicaldevice = VK_NULL_HANDLE;
+      ////m_physicaldeviceproperties = {};
+      ////m_physicaldevicefeatures = {};
+      ////m_physicaldevicememoryproperties = {};
+      ////m_physicaldevicefeaturesEnabled = {};
+      //m_vkdevice = VK_NULL_HANDLE;
+      //m_vkqueue = VK_NULL_HANDLE;
+      //m_formatDepth = VK_FORMAT_UNDEFINED;
+      //m_vkcommandpool = VK_NULL_HANDLE;
+      //m_pipelinestageflagsSubmit = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+      //m_submitinfo = {};
+      //m_vkrenderpass = VK_NULL_HANDLE;
       m_uCurrentBuffer = 0;
-      m_descriptorpool = {};
-      m_vkpipelinecache = {};
+      //m_descriptorpool = {};
+      //m_vkpipelinecache = {};
       m_bRequiresStencil = false;
 
    }
@@ -120,7 +120,7 @@ namespace gpu_directx
 
       // Create the instance
       HRESULT result = createInstance();
-      if (result != VK_SUCCESS) {
+      if (FAILED(result)) {
          auto str = "Could not create DirectX instance : \n" + errorString(result);
          throw ::exception(error_failed);
       }
@@ -129,31 +129,31 @@ namespace gpu_directx
       vks::android::loadDirectXFunctions(instance);
 #endif
 
-      // If requested, we enable the default validation layers for debugging
-      if (settings.validation)
-      {
+      //// If requested, we enable the default validation layers for debugging
+      //if (settings.validation)
+      //{
 
-         debug::setupDebugging(m_vkinstance);
+      //   debug::setupDebugging(m_vkinstance);
 
-      }
+      //}
 
       // Physical device
       uint32_t gpuCount = 0;
-      // Get number of available physical devices
-      VK_CHECK_RESULT(vkEnumeratePhysicalDevices(m_vkinstance, &gpuCount, nullptr));
-      if (gpuCount == 0) {
-         exitFatal("No device with DirectX support found", -1);
-         throw ::exception(error_failed);
-      }
-      // Enumerate devices
-      ::array<VkPhysicalDevice> physicalDevices;
+      //// Get number of available physical devices
+      //VK_CHECK_RESULT(vkEnumeratePhysicalDevices(m_vkinstance, &gpuCount, nullptr));
+      //if (gpuCount == 0) {
+      //   exitFatal("No device with DirectX support found", -1);
+      //   throw ::exception(error_failed);
+      //}
+      //// Enumerate devices
+      //::array<VkPhysicalDevice> physicalDevices;
 
-      physicalDevices.set_size(gpuCount);
-      result = vkEnumeratePhysicalDevices(m_vkinstance, &gpuCount, physicalDevices.data());
-      if (result != VK_SUCCESS) {
-         exitFatal("Could not enumerate physical devices : \n" + errorString(result), result);
-         throw ::exception(error_failed);
-      }
+      //physicalDevices.set_size(gpuCount);
+      //result = vkEnumeratePhysicalDevices(m_vkinstance, &gpuCount, physicalDevices.data());
+      //if (result != VK_SUCCESS) {
+      //   exitFatal("Could not enumerate physical devices : \n" + errorString(result), result);
+      //   throw ::exception(error_failed);
+      //}
 
       // GPU selection
 
@@ -184,11 +184,11 @@ namespace gpu_directx
       //         }
       //#endif
 
-      auto physicaldevice = physicalDevices[selectedDevice];
-
+//      auto physicaldevice = physicalDevices[selectedDevice];
+//
       auto pphysicaldevice = __create_new < physical_device >();
 
-      pphysicaldevice->_initialize_physical_device(this, physicaldevice);
+  //    pphysicaldevice->_initialize_physical_device(this, physicaldevice);
 
       m_pphysicaldevice = pphysicaldevice;
 
@@ -268,52 +268,52 @@ namespace gpu_directx
 
       ::array<const char*> instanceExtensions;
 
-      if (m_papplication->m_bUseSwapChainWindow)
-      {
+//      if (m_papplication->m_bUseSwapChainWindow)
+//      {
+//
+//         instanceExtensions.add(VK_KHR_SURFACE_EXTENSION_NAME);
+//
+//         // Enable surface extensions depending on os
+//#if defined(_WIN32)
+//         instanceExtensions.add(VK_KHR_WIN32_SURFACE_EXTENSION_NAME);
+//#elif defined(VK_USE_PLATFORM_ANDROID_KHR)
+//         instanceExtensions.add(VK_KHR_ANDROID_SURFACE_EXTENSION_NAME);
+//#elif defined(_DIRECT2DISPLAY)
+//         instanceExtensions.add(VK_KHR_DISPLAY_EXTENSION_NAME);
+//#elif defined(VK_USE_PLATFORM_DIRECTFB_EXT)
+//         instanceExtensions.add(VK_EXT_DIRECTFB_SURFACE_EXTENSION_NAME);
+//#elif defined(VK_USE_PLATFORM_WAYLAND_KHR)
+//         instanceExtensions.add(VK_KHR_WAYLAND_SURFACE_EXTENSION_NAME);
+//#elif defined(VK_USE_PLATFORM_XCB_KHR)
+//         instanceExtensions.add(VK_KHR_XCB_SURFACE_EXTENSION_NAME);
+//#elif defined(VK_USE_PLATFORM_IOS_MVK)
+//         instanceExtensions.add(VK_MVK_IOS_SURFACE_EXTENSION_NAME);
+//#elif defined(VK_USE_PLATFORM_MACOS_MVK)
+//         instanceExtensions.add(VK_MVK_MACOS_SURFACE_EXTENSION_NAME);
+//#elif defined(VK_USE_PLATFORM_METAL_EXT)
+//         instanceExtensions.add(VK_EXT_METAL_SURFACE_EXTENSION_NAME);
+//#elif defined(VK_USE_PLATFORM_HEADLESS_EXT)
+//         instanceExtensions.add(VK_EXT_HEADLESS_SURFACE_EXTENSION_NAME);
+//#elif defined(VK_USE_PLATFORM_SCREEN_QNX)
+//         instanceExtensions.add(VK_QNX_SCREEN_SURFACE_EXTENSION_NAME);
+//#endif
+//
+//      }
 
-         instanceExtensions.add(VK_KHR_SURFACE_EXTENSION_NAME);
-
-         // Enable surface extensions depending on os
-#if defined(_WIN32)
-         instanceExtensions.add(VK_KHR_WIN32_SURFACE_EXTENSION_NAME);
-#elif defined(VK_USE_PLATFORM_ANDROID_KHR)
-         instanceExtensions.add(VK_KHR_ANDROID_SURFACE_EXTENSION_NAME);
-#elif defined(_DIRECT2DISPLAY)
-         instanceExtensions.add(VK_KHR_DISPLAY_EXTENSION_NAME);
-#elif defined(VK_USE_PLATFORM_DIRECTFB_EXT)
-         instanceExtensions.add(VK_EXT_DIRECTFB_SURFACE_EXTENSION_NAME);
-#elif defined(VK_USE_PLATFORM_WAYLAND_KHR)
-         instanceExtensions.add(VK_KHR_WAYLAND_SURFACE_EXTENSION_NAME);
-#elif defined(VK_USE_PLATFORM_XCB_KHR)
-         instanceExtensions.add(VK_KHR_XCB_SURFACE_EXTENSION_NAME);
-#elif defined(VK_USE_PLATFORM_IOS_MVK)
-         instanceExtensions.add(VK_MVK_IOS_SURFACE_EXTENSION_NAME);
-#elif defined(VK_USE_PLATFORM_MACOS_MVK)
-         instanceExtensions.add(VK_MVK_MACOS_SURFACE_EXTENSION_NAME);
-#elif defined(VK_USE_PLATFORM_METAL_EXT)
-         instanceExtensions.add(VK_EXT_METAL_SURFACE_EXTENSION_NAME);
-#elif defined(VK_USE_PLATFORM_HEADLESS_EXT)
-         instanceExtensions.add(VK_EXT_HEADLESS_SURFACE_EXTENSION_NAME);
-#elif defined(VK_USE_PLATFORM_SCREEN_QNX)
-         instanceExtensions.add(VK_QNX_SCREEN_SURFACE_EXTENSION_NAME);
-#endif
-
-      }
-
-      // Get extensions supported by the instance and store for later use
-      uint32_t extCount = 0;
-      vkEnumerateInstanceExtensionProperties(nullptr, &extCount, nullptr);
-      if (extCount > 0)
-      {
-         ::array<VkExtensionProperties> extensions(extCount);
-         if (vkEnumerateInstanceExtensionProperties(nullptr, &extCount, extensions.data()) == VK_SUCCESS)
-         {
-            for (VkExtensionProperties& extension : extensions)
-            {
-               m_straSupportedInstanceExtensions.add(extension.extensionName);
-            }
-         }
-      }
+      //// Get extensions supported by the instance and store for later use
+      //uint32_t extCount = 0;
+      //vkEnumerateInstanceExtensionProperties(nullptr, &extCount, nullptr);
+      //if (extCount > 0)
+      //{
+      //   ::array<VkExtensionProperties> extensions(extCount);
+      //   if (vkEnumerateInstanceExtensionProperties(nullptr, &extCount, extensions.data()) == VK_SUCCESS)
+      //   {
+      //      for (VkExtensionProperties& extension : extensions)
+      //      {
+      //         m_straSupportedInstanceExtensions.add(extension.extensionName);
+      //      }
+      //   }
+      //}
 
 #if (defined(VK_USE_PLATFORM_IOS_MVK) || defined(VK_USE_PLATFORM_MACOS_MVK) || defined(VK_USE_PLATFORM_METAL_EXT))
       // SRS - When running on iOS/macOS with MoltenVK, enable VK_KHR_get_physical_device_properties2 if not already enabled by the example (required by VK_KHR_portability_subset)
@@ -338,23 +338,23 @@ namespace gpu_directx
       }
       //}
 
-      VkApplicationInfo appInfo{};
-      appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
-      appInfo.pApplicationName = m_strName;
-      appInfo.pEngineName = m_strName;
-      appInfo.apiVersion = m_uApiVersion;
+      //VkApplicationInfo appInfo{};
+      //appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
+      //appInfo.pApplicationName = m_strName;
+      //appInfo.pEngineName = m_strName;
+      //appInfo.apiVersion = m_uApiVersion;
 
-      VkInstanceCreateInfo instanceCreateInfo{};
-      instanceCreateInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
-      instanceCreateInfo.pApplicationInfo = &appInfo;
+      //VkInstanceCreateInfo instanceCreateInfo{};
+      //instanceCreateInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
+      //instanceCreateInfo.pApplicationInfo = &appInfo;
 
-      VkDebugUtilsMessengerCreateInfoEXT debugUtilsMessengerCI{};
-      if (settings.validation)
-      {
-         debug::setupDebugingMessengerCreateInfo(debugUtilsMessengerCI);
-         debugUtilsMessengerCI.pNext = instanceCreateInfo.pNext;
-         instanceCreateInfo.pNext = &debugUtilsMessengerCI;
-      }
+      //VkDebugUtilsMessengerCreateInfoEXT debugUtilsMessengerCI{};
+      //if (settings.validation)
+      //{
+      //   debug::setupDebugingMessengerCreateInfo(debugUtilsMessengerCI);
+      //   debugUtilsMessengerCI.pNext = instanceCreateInfo.pNext;
+      //   instanceCreateInfo.pNext = &debugUtilsMessengerCI;
+      //}
 
 #if (defined(VK_USE_PLATFORM_IOS_MVK) || defined(VK_USE_PLATFORM_MACOS_MVK) || defined(VK_USE_PLATFORM_METAL_EXT)) && defined(VK_KHR_portability_enumeration)
       // SRS - When running on iOS/macOS with MoltenVK and VK_KHR_portability_enumeration is defined and supported by the instance, enable the extension and the flag
@@ -365,63 +365,65 @@ namespace gpu_directx
       }
 #endif
 
-      // Enable the debug utils extension if available (e.g. when debugging tools are present)
-      if (settings.validation || m_straSupportedInstanceExtensions.contains(VK_EXT_DEBUG_UTILS_EXTENSION_NAME))
-      {
-         instanceExtensions.add(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
-      }
+      //// Enable the debug utils extension if available (e.g. when debugging tools are present)
+      //if (settings.validation || m_straSupportedInstanceExtensions.contains(VK_EXT_DEBUG_UTILS_EXTENSION_NAME))
+      //{
+      //   instanceExtensions.add(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
+      //}
 
-      if (!instanceExtensions.empty()) {
-         instanceCreateInfo.enabledExtensionCount = (uint32_t)instanceExtensions.size();
-         instanceCreateInfo.ppEnabledExtensionNames = instanceExtensions.data();
-      }
+      //if (!instanceExtensions.empty()) {
+      //   instanceCreateInfo.enabledExtensionCount = (uint32_t)instanceExtensions.size();
+      //   instanceCreateInfo.ppEnabledExtensionNames = instanceExtensions.data();
+      //}
 
-      // The VK_LAYER_KHRONOS_validation contains all current validation functionality.
-      // Note that on Android this layer requires at least NDK r20
-      const char* validationLayerName = "VK_LAYER_KHRONOS_validation";
-      if (settings.validation) {
-         // Check if this layer is available at instance level
-         uint32_t instanceLayerCount;
-         vkEnumerateInstanceLayerProperties(&instanceLayerCount, nullptr);
-         ::array<VkLayerProperties> instanceLayerProperties(instanceLayerCount);
-         vkEnumerateInstanceLayerProperties(&instanceLayerCount, instanceLayerProperties.data());
-         bool validationLayerPresent = false;
-         for (VkLayerProperties& layer : instanceLayerProperties) {
-            if (strcmp(layer.layerName, validationLayerName) == 0) {
-               validationLayerPresent = true;
-               break;
-            }
-         }
-         if (validationLayerPresent) {
-            instanceCreateInfo.ppEnabledLayerNames = &validationLayerName;
-            instanceCreateInfo.enabledLayerCount = 1;
-         }
-         else {
-            warning() << "Validation layer VK_LAYER_KHRONOS_validation not present, validation is disabled";
-         }
-      }
+      //// The VK_LAYER_KHRONOS_validation contains all current validation functionality.
+      //// Note that on Android this layer requires at least NDK r20
+      //const char* validationLayerName = "VK_LAYER_KHRONOS_validation";
+      //if (settings.validation) {
+      //   // Check if this layer is available at instance level
+      //   uint32_t instanceLayerCount;
+      //   vkEnumerateInstanceLayerProperties(&instanceLayerCount, nullptr);
+      //   ::array<VkLayerProperties> instanceLayerProperties(instanceLayerCount);
+      //   vkEnumerateInstanceLayerProperties(&instanceLayerCount, instanceLayerProperties.data());
+      //   bool validationLayerPresent = false;
+      //   for (VkLayerProperties& layer : instanceLayerProperties) {
+      //      if (strcmp(layer.layerName, validationLayerName) == 0) {
+      //         validationLayerPresent = true;
+      //         break;
+      //      }
+      //   }
+      //   if (validationLayerPresent) {
+      //      instanceCreateInfo.ppEnabledLayerNames = &validationLayerName;
+      //      instanceCreateInfo.enabledLayerCount = 1;
+      //   }
+      //   else {
+      //      warning() << "Validation layer VK_LAYER_KHRONOS_validation not present, validation is disabled";
+      //   }
+      //}
 
-      // If layer settings are defined, then activate the sample's required layer settings during instance creation.
-      // Layer settings are typically used to activate specific features of a layer, such as the Validation Layer's
-      // printf feature, or to configure specific capabilities of drivers such as MoltenVK on macOS and/or iOS.
-      VkLayerSettingsCreateInfoEXT layerSettingsCreateInfo{ VK_STRUCTURE_TYPE_LAYER_SETTINGS_CREATE_INFO_EXT };
-      if (m_layersettingsEnabled.has_element())
-      {
-         layerSettingsCreateInfo.settingCount = static_cast<uint32_t>(m_layersettingsEnabled.size());
-         layerSettingsCreateInfo.pSettings = m_layersettingsEnabled.data();
-         layerSettingsCreateInfo.pNext = instanceCreateInfo.pNext;
-         instanceCreateInfo.pNext = &layerSettingsCreateInfo;
-      }
+      //// If layer settings are defined, then activate the sample's required layer settings during instance creation.
+      //// Layer settings are typically used to activate specific features of a layer, such as the Validation Layer's
+      //// printf feature, or to configure specific capabilities of drivers such as MoltenVK on macOS and/or iOS.
+      //VkLayerSettingsCreateInfoEXT layerSettingsCreateInfo{ VK_STRUCTURE_TYPE_LAYER_SETTINGS_CREATE_INFO_EXT };
+      //if (m_layersettingsEnabled.has_element())
+      //{
+      //   layerSettingsCreateInfo.settingCount = static_cast<uint32_t>(m_layersettingsEnabled.size());
+      //   layerSettingsCreateInfo.pSettings = m_layersettingsEnabled.data();
+      //   layerSettingsCreateInfo.pNext = instanceCreateInfo.pNext;
+      //   instanceCreateInfo.pNext = &layerSettingsCreateInfo;
+      //}
 
-      HRESULT result = vkCreateInstance(&instanceCreateInfo, nullptr, &m_vkinstance);
+      //HRESULT result = vkCreateInstance(&instanceCreateInfo, nullptr, &m_vkinstance);
 
-      // If the debug utils extension is present we set up debug functions, so samples can label objects for debugging
-      if (m_straSupportedInstanceExtensions.contains(VK_EXT_DEBUG_UTILS_EXTENSION_NAME))
-      {
-         debugutils::setup(m_vkinstance);
-      }
+      //// If the debug utils extension is present we set up debug functions, so samples can label objects for debugging
+      //if (m_straSupportedInstanceExtensions.contains(VK_EXT_DEBUG_UTILS_EXTENSION_NAME))
+      //{
+      //   debugutils::setup(m_vkinstance);
+      //}
 
-      return result;
+     // return result;
+
+      return S_OK;
 
    }
 

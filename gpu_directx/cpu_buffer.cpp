@@ -3,7 +3,7 @@
 #include "acme/parallelization/synchronous_lock.h"
 #include "aura/graphics/image/image.h"
 #include "aura/graphics/image/target.h"
-#include "cube/gpu/context.h"
+#include "aura/graphics/gpu/context.h"
 
 
 namespace gpu_directx

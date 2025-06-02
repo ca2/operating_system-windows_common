@@ -12,8 +12,8 @@
 #include "acme/filesystem/filesystem/file_context.h"
 #include "acme/platform/application.h"
 #include "aura/graphics/image/image.h"
-#include "cube/gpu/types.h"
-#include "app-graphics3d/gpu_directx/descriptors.h"
+#include "aura/graphics/gpu/types.h"
+#include "gpu_directx/descriptors.h"
 #include "glm/mat4x4.hpp"
 #include "initializers.h"
 
@@ -43,10 +43,10 @@ namespace gpu_directx
 
       m_estatus = error_not_initialized;
 
-      m_physicaldevicefeaturesCreate = {};
-      m_physicaldevicefeaturesEnabled = {};
-      m_vkdevice = VK_NULL_HANDLE;
-      m_vkcommandpool = VK_NULL_HANDLE;
+      //m_physicaldevicefeaturesCreate = {};
+      //m_physicaldevicefeaturesEnabled = {};
+      //m_vkdevice = VK_NULL_HANDLE;
+      //m_vkcommandpool = VK_NULL_HANDLE;
 
       //m_vkqueuePresent = nullptr;
       //m_vkqueueGraphics = nullptr;
@@ -791,7 +791,7 @@ namespace gpu_directx
 
       auto pphysicaldevice = pgpuapproach->m_pphysicaldevice;
 
-      assert(pphysicaldevice && pphysicaldevice->m_physicaldevice);
+      //assert(pphysicaldevice && pphysicaldevice->m_physicaldevice);
 
       m_pphysicaldevice = pphysicaldevice;
 
@@ -811,22 +811,22 @@ namespace gpu_directx
 
       //}
 
-      auto physicaldevice = pphysicaldevice->m_physicaldevice;
+      //auto physicaldevice = pphysicaldevice->m_physicaldevice;
 
-      // Get list of supported extensions
-      uint32_t extCount = 0;
-      vkEnumerateDeviceExtensionProperties(physicaldevice, nullptr, &extCount, nullptr);
-      if (extCount > 0)
-      {
-         ::array<VkExtensionProperties> extensions(extCount);
-         if (vkEnumerateDeviceExtensionProperties(physicaldevice, nullptr, &extCount, extensions.data()) == VK_SUCCESS)
-         {
-            for (auto& ext : extensions)
-            {
-               m_straSupportedExtensions.add(ext.extensionName);
-            }
-         }
-      }
+      //// Get list of supported extensions
+      //uint32_t extCount = 0;
+      //vkEnumerateDeviceExtensionProperties(physicaldevice, nullptr, &extCount, nullptr);
+      //if (extCount > 0)
+      //{
+      //   ::array<VkExtensionProperties> extensions(extCount);
+      //   if (vkEnumerateDeviceExtensionProperties(physicaldevice, nullptr, &extCount, extensions.data()) == VK_SUCCESS)
+      //   {
+      //      for (auto& ext : extensions)
+      //      {
+      //         m_straSupportedExtensions.add(ext.extensionName);
+      //      }
+      //   }
+      //}
 
       // Derived examples can enable extensions based on the list of supported extensions read from the physical device
       //getEnabledExtensions();
@@ -836,30 +836,30 @@ namespace gpu_directx
       bool useSwapChain = bAddSwapChainSupport;
 
       //m_itaskGpu = ::current_itask();
-
-      VkPhysicalDeviceScalarBlockLayoutFeatures scalarBlockLayoutSupport = {
-.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SCALAR_BLOCK_LAYOUT_FEATURES,
-      .scalarBlockLayout = TRUE };
-      pgpuapproach->m_pDeviceCreatepNextChain = &scalarBlockLayoutSupport;
-      m_physicaldevicefeaturesCreate.logicOp = TRUE;
-      m_physicaldevicefeaturesCreate.independentBlend = TRUE;
-      HRESULT result = createLogicalDevice(
-         m_physicaldevicefeaturesCreate,
-         pgpuapproach->m_pszaEnabledDeviceExtensions,
-         pgpuapproach->m_pDeviceCreatepNextChain,
-         useSwapChain);
-
-      if (result != VK_SUCCESS)
-      {
-
-         //m_itaskGpu = {};
-
-         exitFatal("Could not create DirectX device: \n" + errorString(result) + " HRESULT=" + ::as_string(result), result);
-
-         throw ::exception(error_failed);
-
-      }
-
+//
+//      VkPhysicalDeviceScalarBlockLayoutFeatures scalarBlockLayoutSupport = {
+//.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SCALAR_BLOCK_LAYOUT_FEATURES,
+//      .scalarBlockLayout = TRUE };
+//      pgpuapproach->m_pDeviceCreatepNextChain = &scalarBlockLayoutSupport;
+//      m_physicaldevicefeaturesCreate.logicOp = TRUE;
+//      m_physicaldevicefeaturesCreate.independentBlend = TRUE;
+//      HRESULT result = createLogicalDevice(
+//         m_physicaldevicefeaturesCreate,
+//         pgpuapproach->m_pszaEnabledDeviceExtensions,
+//         pgpuapproach->m_pDeviceCreatepNextChain,
+//         useSwapChain);
+//
+//      if (result != VK_SUCCESS)
+//      {
+//
+//         //m_itaskGpu = {};
+//
+//         exitFatal("Could not create DirectX device: \n" + errorString(result) + " HRESULT=" + ::as_string(result), result);
+//
+//         throw ::exception(error_failed);
+//
+//      }
+//
 
       //device = directxDevice->logicalDevice;
 
@@ -875,179 +875,179 @@ namespace gpu_directx
 
    //}
 
+//
+//   HRESULT device::createLogicalDevice(
+//      VkPhysicalDeviceFeatures enabledFeatures,
+//      ::array<const char*> enabledExtensions,
+//      void* pNextChain,
+//      bool useSwapChain,
+//      VkQueueFlags requestedQueueTypes)
+//   {
+//
+//      ::cast < approach > pgpuapproach = application()->get_gpu();
+//
+//      ::cast < physical_device > pphysicaldevice = pgpuapproach->m_pphysicaldevice;
+//
+//      // Desired queues need to be requested upon logical device creation
+//      // Due to differing queue family configurations of DirectX implementations this can be a bit tricky, especially if the application
+//      // requests different queue types
+//
+//      ::array<VkDeviceQueueCreateInfo> queueCreateInfos{};
+//
+//      // Get queue family indices for the requested queue family types
+//      // Note that the indices may overlap depending on the implementation
+//
+//      const float defaultQueuePriority(0.0f);
+//
+//      m_queuefamilyindices = pphysicaldevice->findQueueFamilies();
+//
+//      // Graphics queue
+//      if (requestedQueueTypes & VK_QUEUE_GRAPHICS_BIT
+//         && m_queuefamilyindices.graphicsFamilyHasValue)
+//      {
+//         //m_queuefamilyindices.graphics = pphysicaldevice->getQueueFamilyIndex(VK_QUEUE_GRAPHICS_BIT);
+//         VkDeviceQueueCreateInfo queueInfo{};
+//         queueInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+//         queueInfo.queueFamilyIndex = m_queuefamilyindices.graphicsFamily;
+//         queueInfo.queueCount = 1;
+//         queueInfo.pQueuePriorities = &defaultQueuePriority;
+//         queueCreateInfos.add(queueInfo);
+//      }
+//      else
+//      {
+//         m_queuefamilyindices.graphicsFamily = 0;
+//      }
+//
+//      // Dedicated compute queue
+//      if (requestedQueueTypes & VK_QUEUE_COMPUTE_BIT
+//         && m_queuefamilyindices.computeFamilyHasValue)
+//      {
+//         //m_queuefamilyindices.compute = pphysicaldevice->getQueueFamilyIndex(VK_QUEUE_COMPUTE_BIT);
+//         if (m_queuefamilyindices.computeFamily != m_queuefamilyindices.graphicsFamily)
+//         {
+//            // If compute family index differs, we need an additional queue create info for the compute queue
+//            VkDeviceQueueCreateInfo queueInfo{};
+//            queueInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+//            queueInfo.queueFamilyIndex = m_queuefamilyindices.computeFamily;
+//            queueInfo.queueCount = 1;
+//            queueInfo.pQueuePriorities = &defaultQueuePriority;
+//            queueCreateInfos.add(queueInfo);
+//         }
+//      }
+//      else
+//      {
+//         // Else we use the same queue
+//         m_queuefamilyindices.computeFamily = m_queuefamilyindices.graphicsFamily;
+//      }
+//
+//      // Dedicated transfer queue
+//      if (requestedQueueTypes & VK_QUEUE_TRANSFER_BIT
+//         && m_queuefamilyindices.transferFamilyHasValue)
+//      {
+//         //m_queuefamilyindices.transfer = pphysicaldevice->getQueueFamilyIndex(VK_QUEUE_TRANSFER_BIT);
+//         if ((m_queuefamilyindices.transferFamily != m_queuefamilyindices.graphicsFamily)
+//            && (m_queuefamilyindices.transferFamily != m_queuefamilyindices.computeFamily))
+//         {
+//            // If transfer family index differs, we need an additional queue create info for the transfer queue
+//            VkDeviceQueueCreateInfo queueInfo{};
+//            queueInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+//            queueInfo.queueFamilyIndex = m_queuefamilyindices.transferFamily;
+//            queueInfo.queueCount = 1;
+//            queueInfo.pQueuePriorities = &defaultQueuePriority;
+//            queueCreateInfos.add(queueInfo);
+//         }
+//      }
+//      else
+//      {
+//         // Else we use the same queue
+//         m_queuefamilyindices.transferFamily = m_queuefamilyindices.graphicsFamily;
+//      }
+//
+//      // Create the logical device representation
+//      ::array<const char*> deviceExtensions(enabledExtensions);
+//      if (useSwapChain)
+//      {
+//
+//         // If the device will be used for presenting to a display via a swapchain we need to request the swapchain extension
+//         deviceExtensions.add(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
+//
+//      }
+//
+//      VkDeviceCreateInfo deviceCreateInfo = {};
+//      deviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
+//      deviceCreateInfo.queueCreateInfoCount = static_cast<uint32_t>(queueCreateInfos.size());;
+//      deviceCreateInfo.pQueueCreateInfos = queueCreateInfos.data();
+//      deviceCreateInfo.pEnabledFeatures = &enabledFeatures;
+//
+//      // If a pNext(Chain) has been passed, we need to add it to the device creation info
+//      VkPhysicalDeviceFeatures2 physicalDeviceFeatures2{};
+//      if (pNextChain) {
+//         physicalDeviceFeatures2.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2;
+//         physicalDeviceFeatures2.features = enabledFeatures;
+//         physicalDeviceFeatures2.pNext = pNextChain;
+//         deviceCreateInfo.pEnabledFeatures = nullptr;
+//         deviceCreateInfo.pNext = &physicalDeviceFeatures2;
+//      }
+//
+//#if (defined(VK_USE_PLATFORM_IOS_MVK) || defined(VK_USE_PLATFORM_MACOS_MVK) || defined(VK_USE_PLATFORM_METAL_EXT)) && defined(VK_KHR_portability_subset)
+//      // SRS - When running on iOS/macOS with MoltenVK and VK_KHR_portability_subset is defined and supported by the device, enable the extension
+//      if (extensionSupported(VK_KHR_PORTABILITY_SUBSET_EXTENSION_NAME))
+//      {
+//         deviceExtensions.add(VK_KHR_PORTABILITY_SUBSET_EXTENSION_NAME);
+//      }
+//#endif
+//
+//      if (deviceExtensions.size() > 0)
+//      {
+//         for (const char* enabledExtension : deviceExtensions)
+//         {
+//            if (!isExtensionSupported(enabledExtension)) {
+//               information() << "Enabled device extension \"" << enabledExtension << "\" is not present at device level\n";
+//            }
+//         }
+//
+//         deviceCreateInfo.enabledExtensionCount = (uint32_t)deviceExtensions.size();
+//         deviceCreateInfo.ppEnabledExtensionNames = deviceExtensions.data();
+//      }
+//
+//      this->m_physicaldevicefeaturesEnabled = enabledFeatures;
+//
+//      auto physicaldevice = pphysicaldevice->m_physicaldevice;
+//
+//      HRESULT result = vkCreateDevice(physicaldevice, &deviceCreateInfo, nullptr, &m_vkdevice);
+//      if (result != VK_SUCCESS)
+//      {
+//         return result;
+//      }
+//
+//      // Create a default command pool for graphics command buffers
+//      m_vkcommandpool = createCommandPool(m_queuefamilyindices.graphicsFamily);
+//
+//      return result;
+//
+//   }
 
-   HRESULT device::createLogicalDevice(
-      VkPhysicalDeviceFeatures enabledFeatures,
-      ::array<const char*> enabledExtensions,
-      void* pNextChain,
-      bool useSwapChain,
-      VkQueueFlags requestedQueueTypes)
-   {
 
-      ::cast < approach > pgpuapproach = application()->get_gpu();
-
-      ::cast < physical_device > pphysicaldevice = pgpuapproach->m_pphysicaldevice;
-
-      // Desired queues need to be requested upon logical device creation
-      // Due to differing queue family configurations of DirectX implementations this can be a bit tricky, especially if the application
-      // requests different queue types
-
-      ::array<VkDeviceQueueCreateInfo> queueCreateInfos{};
-
-      // Get queue family indices for the requested queue family types
-      // Note that the indices may overlap depending on the implementation
-
-      const float defaultQueuePriority(0.0f);
-
-      m_queuefamilyindices = pphysicaldevice->findQueueFamilies();
-
-      // Graphics queue
-      if (requestedQueueTypes & VK_QUEUE_GRAPHICS_BIT
-         && m_queuefamilyindices.graphicsFamilyHasValue)
-      {
-         //m_queuefamilyindices.graphics = pphysicaldevice->getQueueFamilyIndex(VK_QUEUE_GRAPHICS_BIT);
-         VkDeviceQueueCreateInfo queueInfo{};
-         queueInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-         queueInfo.queueFamilyIndex = m_queuefamilyindices.graphicsFamily;
-         queueInfo.queueCount = 1;
-         queueInfo.pQueuePriorities = &defaultQueuePriority;
-         queueCreateInfos.add(queueInfo);
-      }
-      else
-      {
-         m_queuefamilyindices.graphicsFamily = 0;
-      }
-
-      // Dedicated compute queue
-      if (requestedQueueTypes & VK_QUEUE_COMPUTE_BIT
-         && m_queuefamilyindices.computeFamilyHasValue)
-      {
-         //m_queuefamilyindices.compute = pphysicaldevice->getQueueFamilyIndex(VK_QUEUE_COMPUTE_BIT);
-         if (m_queuefamilyindices.computeFamily != m_queuefamilyindices.graphicsFamily)
-         {
-            // If compute family index differs, we need an additional queue create info for the compute queue
-            VkDeviceQueueCreateInfo queueInfo{};
-            queueInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-            queueInfo.queueFamilyIndex = m_queuefamilyindices.computeFamily;
-            queueInfo.queueCount = 1;
-            queueInfo.pQueuePriorities = &defaultQueuePriority;
-            queueCreateInfos.add(queueInfo);
-         }
-      }
-      else
-      {
-         // Else we use the same queue
-         m_queuefamilyindices.computeFamily = m_queuefamilyindices.graphicsFamily;
-      }
-
-      // Dedicated transfer queue
-      if (requestedQueueTypes & VK_QUEUE_TRANSFER_BIT
-         && m_queuefamilyindices.transferFamilyHasValue)
-      {
-         //m_queuefamilyindices.transfer = pphysicaldevice->getQueueFamilyIndex(VK_QUEUE_TRANSFER_BIT);
-         if ((m_queuefamilyindices.transferFamily != m_queuefamilyindices.graphicsFamily)
-            && (m_queuefamilyindices.transferFamily != m_queuefamilyindices.computeFamily))
-         {
-            // If transfer family index differs, we need an additional queue create info for the transfer queue
-            VkDeviceQueueCreateInfo queueInfo{};
-            queueInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-            queueInfo.queueFamilyIndex = m_queuefamilyindices.transferFamily;
-            queueInfo.queueCount = 1;
-            queueInfo.pQueuePriorities = &defaultQueuePriority;
-            queueCreateInfos.add(queueInfo);
-         }
-      }
-      else
-      {
-         // Else we use the same queue
-         m_queuefamilyindices.transferFamily = m_queuefamilyindices.graphicsFamily;
-      }
-
-      // Create the logical device representation
-      ::array<const char*> deviceExtensions(enabledExtensions);
-      if (useSwapChain)
-      {
-
-         // If the device will be used for presenting to a display via a swapchain we need to request the swapchain extension
-         deviceExtensions.add(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
-
-      }
-
-      VkDeviceCreateInfo deviceCreateInfo = {};
-      deviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
-      deviceCreateInfo.queueCreateInfoCount = static_cast<uint32_t>(queueCreateInfos.size());;
-      deviceCreateInfo.pQueueCreateInfos = queueCreateInfos.data();
-      deviceCreateInfo.pEnabledFeatures = &enabledFeatures;
-
-      // If a pNext(Chain) has been passed, we need to add it to the device creation info
-      VkPhysicalDeviceFeatures2 physicalDeviceFeatures2{};
-      if (pNextChain) {
-         physicalDeviceFeatures2.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2;
-         physicalDeviceFeatures2.features = enabledFeatures;
-         physicalDeviceFeatures2.pNext = pNextChain;
-         deviceCreateInfo.pEnabledFeatures = nullptr;
-         deviceCreateInfo.pNext = &physicalDeviceFeatures2;
-      }
-
-#if (defined(VK_USE_PLATFORM_IOS_MVK) || defined(VK_USE_PLATFORM_MACOS_MVK) || defined(VK_USE_PLATFORM_METAL_EXT)) && defined(VK_KHR_portability_subset)
-      // SRS - When running on iOS/macOS with MoltenVK and VK_KHR_portability_subset is defined and supported by the device, enable the extension
-      if (extensionSupported(VK_KHR_PORTABILITY_SUBSET_EXTENSION_NAME))
-      {
-         deviceExtensions.add(VK_KHR_PORTABILITY_SUBSET_EXTENSION_NAME);
-      }
-#endif
-
-      if (deviceExtensions.size() > 0)
-      {
-         for (const char* enabledExtension : deviceExtensions)
-         {
-            if (!isExtensionSupported(enabledExtension)) {
-               information() << "Enabled device extension \"" << enabledExtension << "\" is not present at device level\n";
-            }
-         }
-
-         deviceCreateInfo.enabledExtensionCount = (uint32_t)deviceExtensions.size();
-         deviceCreateInfo.ppEnabledExtensionNames = deviceExtensions.data();
-      }
-
-      this->m_physicaldevicefeaturesEnabled = enabledFeatures;
-
-      auto physicaldevice = pphysicaldevice->m_physicaldevice;
-
-      HRESULT result = vkCreateDevice(physicaldevice, &deviceCreateInfo, nullptr, &m_vkdevice);
-      if (result != VK_SUCCESS)
-      {
-         return result;
-      }
-
-      // Create a default command pool for graphics command buffers
-      m_vkcommandpool = createCommandPool(m_queuefamilyindices.graphicsFamily);
-
-      return result;
-
-   }
-
-
-   /**
-   * Create a command pool for allocation command buffers from
-   *
-   * @param queueFamilyIndex Family index of the queue to create the command pool for
-   * @param createFlags (Optional) Command pool creation flags (Defaults to VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT)
-   *
-   * @note Command buffers allocated from the created pool can only be submitted to a queue with the same family index
-   *
-   * @return A handle to the created command buffer
-   */
-   VkCommandPool device::createCommandPool(uint32_t queueFamilyIndex, VkCommandPoolCreateFlags createFlags)
-   {
-      VkCommandPoolCreateInfo cmdPoolInfo = {};
-      cmdPoolInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
-      cmdPoolInfo.queueFamilyIndex = queueFamilyIndex;
-      cmdPoolInfo.flags = createFlags;
-      VkCommandPool cmdPool;
-      VK_CHECK_RESULT(vkCreateCommandPool(m_vkdevice, &cmdPoolInfo, nullptr, &cmdPool));
-      return cmdPool;
-   }
+   ///**
+   //* Create a command pool for allocation command buffers from
+   //*
+   //* @param queueFamilyIndex Family index of the queue to create the command pool for
+   //* @param createFlags (Optional) Command pool creation flags (Defaults to VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT)
+   //*
+   //* @note Command buffers allocated from the created pool can only be submitted to a queue with the same family index
+   //*
+   //* @return A handle to the created command buffer
+   //*/
+   //VkCommandPool device::createCommandPool(uint32_t queueFamilyIndex, VkCommandPoolCreateFlags createFlags)
+   //{
+   //   VkCommandPoolCreateInfo cmdPoolInfo = {};
+   //   cmdPoolInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
+   //   cmdPoolInfo.queueFamilyIndex = queueFamilyIndex;
+   //   cmdPoolInfo.flags = createFlags;
+   //   VkCommandPool cmdPool;
+   //   VK_CHECK_RESULT(vkCreateCommandPool(m_vkdevice, &cmdPoolInfo, nullptr, &cmdPool));
+   //   return cmdPool;
+   //}
 
 
    /**
@@ -1644,45 +1644,45 @@ namespace gpu_directx
    }
 
 
-   // local callback functions
-   static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(
-      VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
-      VkDebugUtilsMessageTypeFlagsEXT messageType,
-      const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData,
-      void* pUserData) {
-      //std::cerr << "validation layer: " << pCallbackData->pMessage;
-      warning() << "validation layer: " << pCallbackData->pMessage;
-      return VK_FALSE;
-   }
+   //// local callback functions
+   //static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(
+   //   VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
+   //   VkDebugUtilsMessageTypeFlagsEXT messageType,
+   //   const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData,
+   //   void* pUserData) {
+   //   //std::cerr << "validation layer: " << pCallbackData->pMessage;
+   //   warning() << "validation layer: " << pCallbackData->pMessage;
+   //   return VK_FALSE;
+   //}
 
-   HRESULT CreateDebugUtilsMessengerEXT(
-      VkInstance m_vkinstance,
-      const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo,
-      const VkAllocationCallbacks* pAllocator,
-      VkDebugUtilsMessengerEXT* pDebugMessenger)
-   {
-      auto func = (PFN_vkCreateDebugUtilsMessengerEXT)vkGetInstanceProcAddr(
-         m_vkinstance,
-         "vkCreateDebugUtilsMessengerEXT");
-      if (func != nullptr) {
-         return func(m_vkinstance, pCreateInfo, pAllocator, pDebugMessenger);
-      }
-      else {
-         return VK_ERROR_EXTENSION_NOT_PRESENT;
-      }
-   }
+   //HRESULT CreateDebugUtilsMessengerEXT(
+   //   VkInstance m_vkinstance,
+   //   const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo,
+   //   const VkAllocationCallbacks* pAllocator,
+   //   VkDebugUtilsMessengerEXT* pDebugMessenger)
+   //{
+   //   auto func = (PFN_vkCreateDebugUtilsMessengerEXT)vkGetInstanceProcAddr(
+   //      m_vkinstance,
+   //      "vkCreateDebugUtilsMessengerEXT");
+   //   if (func != nullptr) {
+   //      return func(m_vkinstance, pCreateInfo, pAllocator, pDebugMessenger);
+   //   }
+   //   else {
+   //      return VK_ERROR_EXTENSION_NOT_PRESENT;
+   //   }
+   //}
 
-   void DestroyDebugUtilsMessengerEXT(
-      VkInstance m_vkinstance,
-      VkDebugUtilsMessengerEXT debugMessenger,
-      const VkAllocationCallbacks* pAllocator) {
-      auto func = (PFN_vkDestroyDebugUtilsMessengerEXT)vkGetInstanceProcAddr(
-         m_vkinstance,
-         "vkDestroyDebugUtilsMessengerEXT");
-      if (func != nullptr) {
-         func(m_vkinstance, debugMessenger, pAllocator);
-      }
-   }
+   //void DestroyDebugUtilsMessengerEXT(
+   //   VkInstance m_vkinstance,
+   //   VkDebugUtilsMessengerEXT debugMessenger,
+   //   const VkAllocationCallbacks* pAllocator) {
+   //   auto func = (PFN_vkDestroyDebugUtilsMessengerEXT)vkGetInstanceProcAddr(
+   //      m_vkinstance,
+   //      "vkDestroyDebugUtilsMessengerEXT");
+   //   if (func != nullptr) {
+   //      func(m_vkinstance, debugMessenger, pAllocator);
+   //   }
+   //}
 
    //// class member functions
    ////device::device(::graphics3d_directx::DirectXDevice* pgpudevice) : m_vkdevice{pgpudevice->logicalDevice} {
@@ -1719,7 +1719,7 @@ namespace gpu_directx
    //}
 
 
-   //void device::initialize_context(::cube::impact * pimpact)
+   //void device::initialize_context(::user::graphics3d * pimpact)
    //{
 
    //   m_pimpact = pimpact;
@@ -1928,21 +1928,21 @@ namespace gpu_directx
    //}
 
 
-   void device::populateDebugMessengerCreateInfo(
-      VkDebugUtilsMessengerCreateInfoEXT& createInfo)
-   {
+   //void device::populateDebugMessengerCreateInfo(
+   //   VkDebugUtilsMessengerCreateInfoEXT& createInfo)
+   //{
 
-      createInfo = {};
-      createInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
-      createInfo.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT |
-         VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
-      createInfo.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT |
-         VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT |
-         VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
-      createInfo.pfnUserCallback = debugCallback;
-      createInfo.pUserData = nullptr;  // Optional
+   //   createInfo = {};
+   //   createInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
+   //   createInfo.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT |
+   //      VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
+   //   createInfo.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT |
+   //      VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT |
+   //      VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
+   //   createInfo.pfnUserCallback = debugCallback;
+   //   createInfo.pUserData = nullptr;  // Optional
 
-   }
+   //}
 
 
    //void device::setupDebugMessenger()
@@ -1971,32 +1971,32 @@ namespace gpu_directx
 
    bool device::checkValidationLayerSupport()
    {
-      uint32_t layerCount;
-      vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
+      //uint32_t layerCount;
+      //vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
 
-      ::array<VkLayerProperties> availableLayers(layerCount);
-      vkEnumerateInstanceLayerProperties(&layerCount, availableLayers.data());
+      //::array<VkLayerProperties> availableLayers(layerCount);
+      //vkEnumerateInstanceLayerProperties(&layerCount, availableLayers.data());
 
-      for (const char* layerName : validationLayers)
-      {
-         bool layerFound = false;
+      //for (const char* layerName : validationLayers)
+      //{
+      //   bool layerFound = false;
 
 
-         printf_line("checking for validation layer : %s", layerName);
-         for (const auto& layerProperties : availableLayers)
-         {
-            printf_line("an available layer : %s", layerProperties.layerName);
-            if (strcmp(layerName, layerProperties.layerName) == 0)
-            {
-               layerFound = true;
-               break;
-            }
-         }
+      //   printf_line("checking for validation layer : %s", layerName);
+      //   for (const auto& layerProperties : availableLayers)
+      //   {
+      //      printf_line("an available layer : %s", layerProperties.layerName);
+      //      if (strcmp(layerName, layerProperties.layerName) == 0)
+      //      {
+      //         layerFound = true;
+      //         break;
+      //      }
+      //   }
 
-         if (!layerFound) {
-            return false;
-         }
-      }
+      //   if (!layerFound) {
+      //      return false;
+      //   }
+      //}
 
       return true;
 
@@ -2250,90 +2250,92 @@ namespace gpu_directx
    //}
 
 
-   directx::QueueFamilyIndices physical_device::findQueueFamilies()
-   {
+   //directx::QueueFamilyIndices physical_device::findQueueFamilies()
+   //{
 
-      directx::QueueFamilyIndices indices;
+   //   directx::QueueFamilyIndices indices;
 
-      uint32_t queueFamilyCount = 0;
-      vkGetPhysicalDeviceQueueFamilyProperties(m_physicaldevice, &queueFamilyCount, nullptr);
+   //   uint32_t queueFamilyCount = 0;
+   //   vkGetPhysicalDeviceQueueFamilyProperties(m_physicaldevice, &queueFamilyCount, nullptr);
 
-      ::array<VkQueueFamilyProperties> queueFamilies(queueFamilyCount);
-      vkGetPhysicalDeviceQueueFamilyProperties(m_physicaldevice, &queueFamilyCount, queueFamilies.data());
+   //   ::array<VkQueueFamilyProperties> queueFamilies(queueFamilyCount);
+   //   vkGetPhysicalDeviceQueueFamilyProperties(m_physicaldevice, &queueFamilyCount, queueFamilies.data());
 
-      int i = 0;
-      for (const auto& queueFamily : queueFamilies)
-      {
-         if (queueFamily.queueCount > 0 && queueFamily.queueFlags & VK_QUEUE_GRAPHICS_BIT)
-         {
-            indices.graphicsFamily = i;
-            indices.graphicsFamilyHasValue = true;
-         }
-         if (queueFamily.queueCount > 0 && queueFamily.queueFlags & VK_QUEUE_COMPUTE_BIT)
-         {
-            indices.computeFamily = i;
-            indices.computeFamilyHasValue = true;
-         }
-         if (queueFamily.queueCount > 0 && queueFamily.queueFlags & VK_QUEUE_TRANSFER_BIT)
-         {
-            indices.transferFamily = i;
-            indices.transferFamilyHasValue = true;
-         }
-         if (m_vksurfacekhr)
-         {
-            VkBool32 presentSupport = false;
-            vkGetPhysicalDeviceSurfaceSupportKHR(m_physicaldevice, i, m_vksurfacekhr, &presentSupport);
-            if (queueFamily.queueCount > 0 && presentSupport)
-            {
-               indices.presentFamily = i;
-               indices.presentFamilyHasValue = true;
-            }
-         }
-         //if (indices.isComplete()) {
-           // break;
-         //}
+   //   int i = 0;
+   //   for (const auto& queueFamily : queueFamilies)
+   //   {
+   //      if (queueFamily.queueCount > 0 && queueFamily.queueFlags & VK_QUEUE_GRAPHICS_BIT)
+   //      {
+   //         indices.graphicsFamily = i;
+   //         indices.graphicsFamilyHasValue = true;
+   //      }
+   //      if (queueFamily.queueCount > 0 && queueFamily.queueFlags & VK_QUEUE_COMPUTE_BIT)
+   //      {
+   //         indices.computeFamily = i;
+   //         indices.computeFamilyHasValue = true;
+   //      }
+   //      if (queueFamily.queueCount > 0 && queueFamily.queueFlags & VK_QUEUE_TRANSFER_BIT)
+   //      {
+   //         indices.transferFamily = i;
+   //         indices.transferFamilyHasValue = true;
+   //      }
+   //      if (m_vksurfacekhr)
+   //      {
+   //         VkBool32 presentSupport = false;
+   //         vkGetPhysicalDeviceSurfaceSupportKHR(m_physicaldevice, i, m_vksurfacekhr, &presentSupport);
+   //         if (queueFamily.queueCount > 0 && presentSupport)
+   //         {
+   //            indices.presentFamily = i;
+   //            indices.presentFamilyHasValue = true;
+   //         }
+   //      }
+   //      //if (indices.isComplete()) {
+   //        // break;
+   //      //}
 
-         i++;
-      }
+   //      i++;
+   //   }
 
-      return indices;
+   //   return indices;
 
-   }
+   //}
 
 
    SwapChainSupportDetails physical_device::querySwapChainSupport()
    {
 
-      if (!m_vksurfacekhr)
-      {
-
-         throw ::exception(error_wrong_state, "querying swap chain support but no vksurfacekhr");
-
-      }
-
       SwapChainSupportDetails details{};
 
-      vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_physicaldevice, m_vksurfacekhr, &details.capabilities);
+      //if (!m_vksurfacekhr)
+      //{
 
-      uint32_t formatCount;
-      vkGetPhysicalDeviceSurfaceFormatsKHR(m_physicaldevice, m_vksurfacekhr, &formatCount, nullptr);
+      //   throw ::exception(error_wrong_state, "querying swap chain support but no vksurfacekhr");
 
-      if (formatCount != 0) {
-         details.formats.resize(formatCount);
-         vkGetPhysicalDeviceSurfaceFormatsKHR(m_physicaldevice, m_vksurfacekhr, &formatCount, details.formats.data());
-      }
+      //}
 
-      uint32_t presentModeCount;
-      vkGetPhysicalDeviceSurfacePresentModesKHR(m_physicaldevice, m_vksurfacekhr, &presentModeCount, nullptr);
+      //SwapChainSupportDetails details{};
 
-      if (presentModeCount != 0) {
-         details.presentModes.resize(presentModeCount);
-         vkGetPhysicalDeviceSurfacePresentModesKHR(
-            m_physicaldevice,
-            m_vksurfacekhr,
-            &presentModeCount,
-            details.presentModes.data());
-      }
+      //vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_physicaldevice, m_vksurfacekhr, &details.capabilities);
+
+      //uint32_t formatCount;
+      //vkGetPhysicalDeviceSurfaceFormatsKHR(m_physicaldevice, m_vksurfacekhr, &formatCount, nullptr);
+
+      //if (formatCount != 0) {
+      //   details.formats.resize(formatCount);
+      //   vkGetPhysicalDeviceSurfaceFormatsKHR(m_physicaldevice, m_vksurfacekhr, &formatCount, details.formats.data());
+      //}
+
+      //uint32_t presentModeCount;
+      //vkGetPhysicalDeviceSurfacePresentModesKHR(m_physicaldevice, m_vksurfacekhr, &presentModeCount, nullptr);
+
+      //if (presentModeCount != 0) {
+      //   details.presentModes.resize(presentModeCount);
+      //   vkGetPhysicalDeviceSurfacePresentModesKHR(
+      //      m_physicaldevice,
+      //      m_vksurfacekhr,
+      //      &presentModeCount,
+      //      details.presentModes.data());
+      //}
 
       return details;
 

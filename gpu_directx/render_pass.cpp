@@ -19,29 +19,30 @@ namespace gpu_directx
 {
 
 
-   render_pass::render_pass(renderer* pgpurenderer, VkExtent2D extent)
-      : m_pgpurenderer(pgpurenderer), windowExtent(extent)
+   render_pass::render_pass()
+   //render_pass::render_pass(renderer* pgpurenderer, VkExtent2D extent)
+      //: m_pgpurenderer(pgpurenderer), windowExtent(extent)
    {
        m_bNeedRebuild = false;
-      m_pgpucontext = pgpurenderer->m_pgpucontext;
+      //m_pgpucontext = pgpurenderer->m_pgpucontext;
       //init();
       //m_pvkcrenderpassOld = nullptr;
    }
 
    
-   render_pass::render_pass(renderer * pgpurenderer, VkExtent2D extent, ::pointer<render_pass> previous)
-      : m_pgpurenderer{ pgpurenderer }, windowExtent{ extent }, m_pvkcrenderpassOld{ previous }
-   {
-       m_bNeedRebuild = false;
-      m_pgpucontext = pgpurenderer->m_pgpucontext;
-      //init();
-      // Cleans up old swap chain since it's no longer needed after resizing
-      //m_pvkcrenderpassOld = nullptr;
-   }
-   
-   
+   //render_pass::render_pass(renderer * pgpurenderer, VkExtent2D extent, ::pointer<render_pass> previous)
+   //   : m_pgpurenderer{ pgpurenderer }, windowExtent{ extent }, m_pvkcrenderpassOld{ previous }
+   //{
+   //    m_bNeedRebuild = false;
+   //   m_pgpucontext = pgpurenderer->m_pgpucontext;
+   //   //init();
+   //   // Cleans up old swap chain since it's no longer needed after resizing
+   //   //m_pvkcrenderpassOld = nullptr;
+   //}
+   //
+   //
 
-   
+   //
    void render_pass::init() 
    {
       createRenderPassImpl();
@@ -58,37 +59,37 @@ namespace gpu_directx
 
    render_pass::~render_pass()
    {
-      for (auto imageView : m_imageviews) 
-      {
-         vkDestroyImageView(m_pgpucontext->logicalDevice(), imageView, nullptr);
-      }
-      m_imageviews.clear();
+      //for (auto imageView : m_imageviews) 
+      //{
+      //   vkDestroyImageView(m_pgpucontext->logicalDevice(), imageView, nullptr);
+      //}
+      //m_imageviews.clear();
 
       //if (swapChain != nullptr) {
       //   vkDestroySwapchainKHR(m_pgpucontext->logicalDevice(), swapChain, nullptr);
       //   swapChain = nullptr;
       //}
 
-      for (int i = 0; i < depthImages.size(); i++) 
-      {
-         vkDestroyImageView(m_pgpucontext->logicalDevice(), depthImageViews[i], nullptr);
-         vkDestroyImage(m_pgpucontext->logicalDevice(), depthImages[i], nullptr);
-         vkFreeMemory(m_pgpucontext->logicalDevice(), depthImageMemorys[i], nullptr);
-      }
+      //for (int i = 0; i < depthImages.size(); i++) 
+      //{
+      //   vkDestroyImageView(m_pgpucontext->logicalDevice(), depthImageViews[i], nullptr);
+      //   vkDestroyImage(m_pgpucontext->logicalDevice(), depthImages[i], nullptr);
+      //   vkFreeMemory(m_pgpucontext->logicalDevice(), depthImageMemorys[i], nullptr);
+      //}
 
-      for (auto framebuffer : m_framebuffers)
-      {
-         vkDestroyFramebuffer(m_pgpucontext->logicalDevice(), framebuffer, nullptr);
-      }
+      //for (auto framebuffer : m_framebuffers)
+      //{
+      //   vkDestroyFramebuffer(m_pgpucontext->logicalDevice(), framebuffer, nullptr);
+      //}
 
-      vkDestroyRenderPass(m_pgpucontext->logicalDevice(), m_vkrenderpass, nullptr);
+      //vkDestroyRenderPass(m_pgpucontext->logicalDevice(), m_vkrenderpass, nullptr);
 
-      // cleanup synchronization objects
-      for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++)
-      {
-         vkDestroySemaphore(m_pgpucontext->logicalDevice(), renderFinishedSemaphores[i], nullptr);
-         vkDestroySemaphore(m_pgpucontext->logicalDevice(), imageAvailableSemaphores[i], nullptr);
-      }
+      //// cleanup synchronization objects
+      //for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++)
+      //{
+      //   vkDestroySemaphore(m_pgpucontext->logicalDevice(), renderFinishedSemaphores[i], nullptr);
+      //   vkDestroySemaphore(m_pgpucontext->logicalDevice(), imageAvailableSemaphores[i], nullptr);
+      //}
    }
 
 
@@ -126,62 +127,63 @@ namespace gpu_directx
       //   VK_NULL_HANDLE,
       //   imageIndex);
 
-      return VK_ERROR_FEATURE_NOT_PRESENT;
+      //return VK_ERROR_FEATURE_NOT_PRESENT;
+      return E_FAIL;
 
    }
 
 
-   HRESULT render_pass::submitCommandBuffers(const VkCommandBuffer* buffers)
-   {
+   //HRESULT render_pass::submitCommandBuffers(const VkCommandBuffer* buffers)
+   //{
 
-      //if (imagesInFlight[*imageIndex] != VK_NULL_HANDLE) {
-      //   vkWaitForFences(m_pgpucontext->logicalDevice(), 1, &imagesInFlight[*imageIndex], VK_TRUE, UINT64_MAX);
-      //}
-      //imagesInFlight[*imageIndex] = inFlightFences[currentFrame];
+   //   //if (imagesInFlight[*imageIndex] != VK_NULL_HANDLE) {
+   //   //   vkWaitForFences(m_pgpucontext->logicalDevice(), 1, &imagesInFlight[*imageIndex], VK_TRUE, UINT64_MAX);
+   //   //}
+   //   //imagesInFlight[*imageIndex] = inFlightFences[currentFrame];
 
-      //VkSubmitInfo submitInfo = {};
-      //submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+   //   //VkSubmitInfo submitInfo = {};
+   //   //submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 
-      //VkSemaphore waitSemaphores[] = { imageAvailableSemaphores[currentFrame] };
-      //VkPipelineStageFlags waitStages[] = { VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT };
-      //submitInfo.waitSemaphoreCount = 1;
-      //submitInfo.pWaitSemaphores = waitSemaphores;
-      //submitInfo.pWaitDstStageMask = waitStages;
+   //   //VkSemaphore waitSemaphores[] = { imageAvailableSemaphores[currentFrame] };
+   //   //VkPipelineStageFlags waitStages[] = { VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT };
+   //   //submitInfo.waitSemaphoreCount = 1;
+   //   //submitInfo.pWaitSemaphores = waitSemaphores;
+   //   //submitInfo.pWaitDstStageMask = waitStages;
 
-      //submitInfo.commandBufferCount = 1;
-      //submitInfo.pCommandBuffers = buffers;
+   //   //submitInfo.commandBufferCount = 1;
+   //   //submitInfo.pCommandBuffers = buffers;
 
-      //VkSemaphore signalSemaphores[] = { renderFinishedSemaphores[currentFrame] };
-      //submitInfo.signalSemaphoreCount = 1;
-      //submitInfo.pSignalSemaphores = signalSemaphores;
+   //   //VkSemaphore signalSemaphores[] = { renderFinishedSemaphores[currentFrame] };
+   //   //submitInfo.signalSemaphoreCount = 1;
+   //   //submitInfo.pSignalSemaphores = signalSemaphores;
 
-      //vkResetFences(m_pgpucontext->logicalDevice(), 1, &inFlightFences[currentFrame]);
-      //if (vkQueueSubmit(m_pgpucontext->graphicsQueue(), 1, &submitInfo, inFlightFences[currentFrame]) !=
-      //   VK_SUCCESS) {
-      //   throw ::exception(error_failed,"failed to submit draw command buffer!");
-      //}
+   //   //vkResetFences(m_pgpucontext->logicalDevice(), 1, &inFlightFences[currentFrame]);
+   //   //if (vkQueueSubmit(m_pgpucontext->graphicsQueue(), 1, &submitInfo, inFlightFences[currentFrame]) !=
+   //   //   VK_SUCCESS) {
+   //   //   throw ::exception(error_failed,"failed to submit draw command buffer!");
+   //   //}
 
-      //VkPresentInfoKHR presentInfo = {};
-      //presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
+   //   //VkPresentInfoKHR presentInfo = {};
+   //   //presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
 
-      //presentInfo.waitSemaphoreCount = 1;
-      //presentInfo.pWaitSemaphores = signalSemaphores;
+   //   //presentInfo.waitSemaphoreCount = 1;
+   //   //presentInfo.pWaitSemaphores = signalSemaphores;
 
-      //VkSwapchainKHR swapChains[] = { swapChain };
-      //presentInfo.swapchainCount = 1;
-      //presentInfo.pSwapchains = swapChains;
+   //   //VkSwapchainKHR swapChains[] = { swapChain };
+   //   //presentInfo.swapchainCount = 1;
+   //   //presentInfo.pSwapchains = swapChains;
 
-      //presentInfo.pImageIndices = imageIndex;
+   //   //presentInfo.pImageIndices = imageIndex;
 
-      //auto result = vkQueuePresentKHR(m_pgpucontext->presentQueue(), &presentInfo);
+   //   //auto result = vkQueuePresentKHR(m_pgpucontext->presentQueue(), &presentInfo);
 
-      //currentFrame = (currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
+   //   //currentFrame = (currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
 
-      //return result;
+   //   //return result;
 
-      return VK_SUCCESS;
+   //   return VK_SUCCESS;
 
-   }
+   //}
 
 
    void render_pass::createRenderPassImpl() 
@@ -253,29 +255,29 @@ namespace gpu_directx
    void render_pass::createImageViews() 
    {
 
-      m_imageviews.resize(m_images.size());
+      //m_imageviews.resize(m_images.size());
 
-      for (size_t i = 0; i < m_images.size(); i++) 
-      {
+      //for (size_t i = 0; i < m_images.size(); i++) 
+      //{
 
-         VkImageViewCreateInfo viewInfo{};
-         viewInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
-         viewInfo.image = m_images[i];
-         viewInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
-         viewInfo.format = m_formatImage;
-         viewInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-         viewInfo.subresourceRange.baseMipLevel = 0;
-         viewInfo.subresourceRange.levelCount = 1;
-         viewInfo.subresourceRange.baseArrayLayer = 0;
-         viewInfo.subresourceRange.layerCount = 1;
+      //   VkImageViewCreateInfo viewInfo{};
+      //   viewInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
+      //   viewInfo.image = m_images[i];
+      //   viewInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
+      //   viewInfo.format = m_formatImage;
+      //   viewInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+      //   viewInfo.subresourceRange.baseMipLevel = 0;
+      //   viewInfo.subresourceRange.levelCount = 1;
+      //   viewInfo.subresourceRange.baseArrayLayer = 0;
+      //   viewInfo.subresourceRange.layerCount = 1;
 
-         if (vkCreateImageView(m_pgpucontext->logicalDevice(), &viewInfo, nullptr, &m_imageviews[i]) !=
-            VK_SUCCESS) 
-         {
-            throw ::exception(error_failed,"failed to create texture image view!");
-         }
+      //   if (vkCreateImageView(m_pgpucontext->logicalDevice(), &viewInfo, nullptr, &m_imageviews[i]) !=
+      //      VK_SUCCESS) 
+      //   {
+      //      throw ::exception(error_failed,"failed to create texture image view!");
+      //   }
 
-      }
+      //}
 
    }
 
@@ -283,68 +285,68 @@ namespace gpu_directx
    void render_pass::createRenderPass() 
    {
 
-      VkAttachmentDescription depthAttachment{};
-      depthAttachment.format = findDepthFormat();
-      depthAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
-      depthAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
-      depthAttachment.storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-      depthAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-      depthAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-      depthAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-      depthAttachment.finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+      //VkAttachmentDescription depthAttachment{};
+      //depthAttachment.format = findDepthFormat();
+      //depthAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
+      //depthAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
+      //depthAttachment.storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+      //depthAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+      //depthAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+      //depthAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+      //depthAttachment.finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
 
-      VkAttachmentReference depthAttachmentRef{};
-      depthAttachmentRef.attachment = 1;
-      depthAttachmentRef.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+      //VkAttachmentReference depthAttachmentRef{};
+      //depthAttachmentRef.attachment = 1;
+      //depthAttachmentRef.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
 
-      VkAttachmentDescription colorAttachment = {};
-      colorAttachment.format = getImageFormat();
-      colorAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
-      colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
-      colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
-      colorAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-      colorAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-      colorAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-      colorAttachment.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
+      //VkAttachmentDescription colorAttachment = {};
+      //colorAttachment.format = getImageFormat();
+      //colorAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
+      //colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
+      //colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
+      //colorAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+      //colorAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+      //colorAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+      //colorAttachment.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
 
-      VkAttachmentReference colorAttachmentRef = {};
-      colorAttachmentRef.attachment = 0;
-      colorAttachmentRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+      //VkAttachmentReference colorAttachmentRef = {};
+      //colorAttachmentRef.attachment = 0;
+      //colorAttachmentRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 
-      VkSubpassDescription subpass = {};
-      subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
-      subpass.colorAttachmentCount = 1;
-      subpass.pColorAttachments = &colorAttachmentRef;
-      subpass.pDepthStencilAttachment = &depthAttachmentRef;
+      //VkSubpassDescription subpass = {};
+      //subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
+      //subpass.colorAttachmentCount = 1;
+      //subpass.pColorAttachments = &colorAttachmentRef;
+      //subpass.pDepthStencilAttachment = &depthAttachmentRef;
 
-      VkSubpassDependency dependency = {};
-      dependency.dstSubpass = 0;
-      dependency.dstAccessMask =
-         VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT | VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT;
-      dependency.dstStageMask =
-         VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT | VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT;
-      dependency.srcSubpass = VK_SUBPASS_EXTERNAL;
-      dependency.srcAccessMask = 0;
-      dependency.srcStageMask =
-         VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT | VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT;
+      //VkSubpassDependency dependency = {};
+      //dependency.dstSubpass = 0;
+      //dependency.dstAccessMask =
+      //   VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT | VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT;
+      //dependency.dstStageMask =
+      //   VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT | VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT;
+      //dependency.srcSubpass = VK_SUBPASS_EXTERNAL;
+      //dependency.srcAccessMask = 0;
+      //dependency.srcStageMask =
+      //   VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT | VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT;
 
 
-      VkAttachmentDescription attachments[2] = {colorAttachment, depthAttachment};
-      VkRenderPassCreateInfo renderPassInfo = {};
-      renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
-      renderPassInfo.attachmentCount = 2;
-      renderPassInfo.pAttachments = attachments;
-      renderPassInfo.subpassCount = 1;
-      renderPassInfo.pSubpasses = &subpass;
-      renderPassInfo.dependencyCount = 1;
-      renderPassInfo.pDependencies = &dependency;
+      //VkAttachmentDescription attachments[2] = {colorAttachment, depthAttachment};
+      //VkRenderPassCreateInfo renderPassInfo = {};
+      //renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
+      //renderPassInfo.attachmentCount = 2;
+      //renderPassInfo.pAttachments = attachments;
+      //renderPassInfo.subpassCount = 1;
+      //renderPassInfo.pSubpasses = &subpass;
+      //renderPassInfo.dependencyCount = 1;
+      //renderPassInfo.pDependencies = &dependency;
 
-      if (vkCreateRenderPass(m_pgpucontext->logicalDevice(), &renderPassInfo, nullptr, &m_vkrenderpass) != VK_SUCCESS) 
-      {
+      //if (vkCreateRenderPass(m_pgpucontext->logicalDevice(), &renderPassInfo, nullptr, &m_vkrenderpass) != VK_SUCCESS) 
+      //{
 
-         throw ::exception(error_failed,"failed to create render pass!");
+      //   throw ::exception(error_failed,"failed to create render pass!");
 
-      }
+      //}
 
    }
 
@@ -352,35 +354,35 @@ namespace gpu_directx
    void render_pass::createFramebuffers() 
    {
 
-      m_framebuffers.resize(imageCount());
+      //m_framebuffers.resize(imageCount());
 
-      for (size_t i = 0; i < imageCount(); i++) 
-      {
+      //for (size_t i = 0; i < imageCount(); i++) 
+      //{
 
-         VkImageView attachments[2] = {m_imageviews[i], depthImageViews[i]};
+      //   VkImageView attachments[2] = {m_imageviews[i], depthImageViews[i]};
 
-         VkExtent2D extent = getExtent();
-         VkFramebufferCreateInfo framebufferInfo = {};
-         framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
-         framebufferInfo.renderPass = m_vkrenderpass;
-         framebufferInfo.attachmentCount = 2;
-         framebufferInfo.pAttachments = attachments;
-         framebufferInfo.width = extent.width;
-         framebufferInfo.height = extent.height;
-         framebufferInfo.layers = 1;
+      //   VkExtent2D extent = getExtent();
+      //   VkFramebufferCreateInfo framebufferInfo = {};
+      //   framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
+      //   framebufferInfo.renderPass = m_vkrenderpass;
+      //   framebufferInfo.attachmentCount = 2;
+      //   framebufferInfo.pAttachments = attachments;
+      //   framebufferInfo.width = extent.width;
+      //   framebufferInfo.height = extent.height;
+      //   framebufferInfo.layers = 1;
 
-         if (vkCreateFramebuffer(
-            m_pgpucontext->logicalDevice(),
-            &framebufferInfo,
-            nullptr,
-            &m_framebuffers[i]) != VK_SUCCESS) 
-         {
+      //   if (vkCreateFramebuffer(
+      //      m_pgpucontext->logicalDevice(),
+      //      &framebufferInfo,
+      //      nullptr,
+      //      &m_framebuffers[i]) != VK_SUCCESS) 
+      //   {
 
-            throw ::exception(error_failed,"failed to create framebuffer!");
+      //      throw ::exception(error_failed,"failed to create framebuffer!");
 
-         }
+      //   }
 
-      }
+      //}
 
    }
 
@@ -388,58 +390,58 @@ namespace gpu_directx
    void render_pass::createDepthResources()
    {
 
-      VkFormat depthFormat = findDepthFormat();
+      //VkFormat depthFormat = findDepthFormat();
 
-      m_formatDepth = depthFormat;
+      //m_formatDepth = depthFormat;
 
-      VkExtent2D extent = getExtent();
+      //VkExtent2D extent = getExtent();
 
-      depthImages.resize(imageCount());
-      depthImageMemorys.resize(imageCount());
-      depthImageViews.resize(imageCount());
+      //depthImages.resize(imageCount());
+      //depthImageMemorys.resize(imageCount());
+      //depthImageViews.resize(imageCount());
 
-      for (int i = 0; i < depthImages.size(); i++) 
-      {
+      //for (int i = 0; i < depthImages.size(); i++) 
+      //{
 
-         VkImageCreateInfo imageInfo{};
-         imageInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
-         imageInfo.imageType = VK_IMAGE_TYPE_2D;
-         imageInfo.extent.width = extent.width;
-         imageInfo.extent.height = extent.height;
-         imageInfo.extent.depth = 1;
-         imageInfo.mipLevels = 1;
-         imageInfo.arrayLayers = 1;
-         imageInfo.format = depthFormat;
-         imageInfo.tiling = VK_IMAGE_TILING_OPTIMAL;
-         imageInfo.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-         imageInfo.usage = VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT;
-         imageInfo.samples = VK_SAMPLE_COUNT_1_BIT;
-         imageInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
-         imageInfo.flags = 0;
+      //   VkImageCreateInfo imageInfo{};
+      //   imageInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
+      //   imageInfo.imageType = VK_IMAGE_TYPE_2D;
+      //   imageInfo.extent.width = extent.width;
+      //   imageInfo.extent.height = extent.height;
+      //   imageInfo.extent.depth = 1;
+      //   imageInfo.mipLevels = 1;
+      //   imageInfo.arrayLayers = 1;
+      //   imageInfo.format = depthFormat;
+      //   imageInfo.tiling = VK_IMAGE_TILING_OPTIMAL;
+      //   imageInfo.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+      //   imageInfo.usage = VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT;
+      //   imageInfo.samples = VK_SAMPLE_COUNT_1_BIT;
+      //   imageInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+      //   imageInfo.flags = 0;
 
-         m_pgpucontext->createImageWithInfo(
-            imageInfo,
-            VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
-            depthImages[i],
-            depthImageMemorys[i]);
+      //   m_pgpucontext->createImageWithInfo(
+      //      imageInfo,
+      //      VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
+      //      depthImages[i],
+      //      depthImageMemorys[i]);
 
-         VkImageViewCreateInfo viewInfo{};
-         viewInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
-         viewInfo.image = depthImages[i];
-         viewInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
-         viewInfo.format = depthFormat;
-         viewInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_DEPTH_BIT;
-         viewInfo.subresourceRange.baseMipLevel = 0;
-         viewInfo.subresourceRange.levelCount = 1;
-         viewInfo.subresourceRange.baseArrayLayer = 0;
-         viewInfo.subresourceRange.layerCount = 1;
+      //   VkImageViewCreateInfo viewInfo{};
+      //   viewInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
+      //   viewInfo.image = depthImages[i];
+      //   viewInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
+      //   viewInfo.format = depthFormat;
+      //   viewInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_DEPTH_BIT;
+      //   viewInfo.subresourceRange.baseMipLevel = 0;
+      //   viewInfo.subresourceRange.levelCount = 1;
+      //   viewInfo.subresourceRange.baseArrayLayer = 0;
+      //   viewInfo.subresourceRange.layerCount = 1;
 
-         if (vkCreateImageView(m_pgpucontext->logicalDevice(), &viewInfo, nullptr, &depthImageViews[i]) != VK_SUCCESS) 
-         {
-            throw ::exception(error_failed,"failed to create texture image view!");
-         }
+      //   if (vkCreateImageView(m_pgpucontext->logicalDevice(), &viewInfo, nullptr, &depthImageViews[i]) != VK_SUCCESS) 
+      //   {
+      //      throw ::exception(error_failed,"failed to create texture image view!");
+      //   }
 
-      }
+      //}
 
    }
 
@@ -447,33 +449,33 @@ namespace gpu_directx
    void render_pass::createSyncObjects() 
    {
 
-      imageAvailable.resize(MAX_FRAMES_IN_FLIGHT);
-      imageAvailableSemaphores.resize(MAX_FRAMES_IN_FLIGHT);
-      renderFinishedSemaphores.resize(MAX_FRAMES_IN_FLIGHT);
-      inFlightFences.resize(MAX_FRAMES_IN_FLIGHT);
-      imagesInFlight.resize(imageCount(), VK_NULL_HANDLE);
+      //imageAvailable.resize(MAX_FRAMES_IN_FLIGHT);
+      //imageAvailableSemaphores.resize(MAX_FRAMES_IN_FLIGHT);
+      //renderFinishedSemaphores.resize(MAX_FRAMES_IN_FLIGHT);
+      //inFlightFences.resize(MAX_FRAMES_IN_FLIGHT);
+      //imagesInFlight.resize(imageCount(), VK_NULL_HANDLE);
 
 
-      VkSemaphoreCreateInfo semaphoreInfo = {};
-      semaphoreInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
+      //VkSemaphoreCreateInfo semaphoreInfo = {};
+      //semaphoreInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
 
-      VkFenceCreateInfo fenceInfo = {};
-      fenceInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
-      fenceInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
+      //VkFenceCreateInfo fenceInfo = {};
+      //fenceInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
+      //fenceInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
 
-      for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) 
-      {
-         imageAvailable[i] = 0;
-         if (vkCreateSemaphore(m_pgpucontext->logicalDevice(), &semaphoreInfo, nullptr, &imageAvailableSemaphores[i]) !=
-            VK_SUCCESS ||
-            vkCreateSemaphore(m_pgpucontext->logicalDevice(), &semaphoreInfo, nullptr, &renderFinishedSemaphores[i]) !=
-            VK_SUCCESS 
-            ||        vkCreateFence(m_pgpucontext->logicalDevice(), &fenceInfo, nullptr, &inFlightFences[i]) != VK_SUCCESS
-             ) 
-         {
-            throw ::exception(error_failed,"failed to create synchronization objects for a frame!");
-         }
-      }
+      //for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) 
+      //{
+      //   imageAvailable[i] = 0;
+      //   if (vkCreateSemaphore(m_pgpucontext->logicalDevice(), &semaphoreInfo, nullptr, &imageAvailableSemaphores[i]) !=
+      //      VK_SUCCESS ||
+      //      vkCreateSemaphore(m_pgpucontext->logicalDevice(), &semaphoreInfo, nullptr, &renderFinishedSemaphores[i]) !=
+      //      VK_SUCCESS 
+      //      ||        vkCreateFence(m_pgpucontext->logicalDevice(), &fenceInfo, nullptr, &inFlightFences[i]) != VK_SUCCESS
+      //       ) 
+      //   {
+      //      throw ::exception(error_failed,"failed to create synchronization objects for a frame!");
+      //   }
+      //}
    }
 
    
@@ -527,15 +529,15 @@ namespace gpu_directx
    //   }
    //}
 
-   VkFormat render_pass::findDepthFormat() 
-   {
+   //VkFormat render_pass::findDepthFormat() 
+   //{
 
-      return m_pgpucontext->m_pgpudevice->m_pphysicaldevice->findSupportedFormat(
-         { VK_FORMAT_D32_SFLOAT, VK_FORMAT_D32_SFLOAT_S8_UINT, VK_FORMAT_D24_UNORM_S8_UINT },
-         VK_IMAGE_TILING_OPTIMAL,
-         VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT);
+   //   return m_pgpucontext->m_pgpudevice->m_pphysicaldevice->findSupportedFormat(
+   //      { VK_FORMAT_D32_SFLOAT, VK_FORMAT_D32_SFLOAT_S8_UINT, VK_FORMAT_D24_UNORM_S8_UINT },
+   //      VK_IMAGE_TILING_OPTIMAL,
+   //      VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT);
 
-   }
+   //}
 
 } // namespace gpu_directx
 

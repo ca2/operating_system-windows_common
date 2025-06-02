@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "cube/gpu/approach.h"
+#include "aura/graphics/gpu/approach.h"
 #include <glm/glm.hpp>
 
 
@@ -142,7 +142,7 @@ namespace gpu_directx
 
       ::string m_strTitle = "DirectX Example";
       ::string m_strName = "directxExample";
-      uint32_t m_uApiVersion = VK_API_VERSION_1_0;
+      //uint32_t m_uApiVersion = VK_API_VERSION_1_0;
 
       /** @brief Default depth stencil attachment used by the default render pass */
       struct {

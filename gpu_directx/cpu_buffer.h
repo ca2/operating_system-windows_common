@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "cube/gpu/cpu_buffer.h"
+#include "aura/graphics/gpu/cpu_buffer.h"
 
 
 namespace gpu_directx

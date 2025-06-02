@@ -18,8 +18,9 @@ namespace gpu_directx
 
 		static constexpr int MAX_FRAMES_IN_FLIGHT = 2;
 
-		offscreen_render_pass(renderer* pgpurenderer, VkExtent2D windowExtent);
-		offscreen_render_pass(renderer * pgpurenderer, VkExtent2D windowExtent, ::pointer <render_pass>previous);
+		offscreen_render_pass();
+		//offscreen_render_pass(renderer* pgpurenderer, VkExtent2D windowExtent);
+		//offscreen_render_pass(renderer * pgpurenderer, VkExtent2D windowExtent, ::pointer <render_pass>previous);
 		~offscreen_render_pass();
 
 
@@ -35,10 +36,10 @@ namespace gpu_directx
 		//float extentAspectRatio() {
 		//	return static_cast<float>(m_extent.width) / static_cast<float>(m_extent.height);
 		//}
-		VkFormat findDepthFormat();
+//		VkFormat findDepthFormat();
 
 		HRESULT acquireNextImage() override;
-		HRESULT submitCommandBuffers(const VkCommandBuffer* buffers);
+		//HRESULT submitCommandBuffers(const VkCommandBuffer* buffers);
 
 		//bool compareSwapFormats(const offscreen_render_pass& swapChain) const {
 		//	return swapChain.depthFormat == depthFormat &&
@@ -55,7 +56,7 @@ namespace gpu_directx
 		void createSyncObjects();
 
 		//HRESULT submitSamplingWork(const VkCommandBuffer buffer, uint32_t* imageIndex);
-		HRESULT submitSamplingWork(const VkCommandBuffer buffer);
+		//HRESULT submitSamplingWork(const VkCommandBuffer buffer);
 
 
 		virtual void defer_resize(const ::int_size& size);
@@ -74,13 +75,13 @@ namespace gpu_directx
 		//::array<VkFramebuffer> swapChainFramebuffers;
 		//VkRenderPass m_vkrenderpass;
 
-		//::array<VkImage> depthImages;
-		//::array<VkDeviceMemory> depthImageMemorys;
-		//::array<VkImageView> depthImageViews;
-		VkSampler m_vksampler;
-		 ::array<VkDeviceMemory> m_imagememories;
-		//::array<VkImage> swapChainImages;
-		//::array<VkImageView> swapChainImageViews;
+		////::array<VkImage> depthImages;
+		////::array<VkDeviceMemory> depthImageMemorys;
+		////::array<VkImageView> depthImageViews;
+		//VkSampler m_vksampler;
+		// ::array<VkDeviceMemory> m_imagememories;
+		////::array<VkImage> swapChainImages;
+		////::array<VkImageView> swapChainImageViews;
 
 		//context* m_pgpucontext;
 		//VkExtent2D windowExtent;

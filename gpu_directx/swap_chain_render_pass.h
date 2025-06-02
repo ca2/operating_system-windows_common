@@ -13,14 +13,15 @@ namespace gpu_directx
    {
    public:
 
-      VkSwapchainKHR       m_vkswapchain;
+      //VkSwapchainKHR       m_vkswapchain;
       uint32_t             currentImageIndex;
       
 
       static constexpr int MAX_FRAMES_IN_FLIGHT = 2;
 
-      swap_chain_render_pass(renderer* pgpurenderer, VkExtent2D windowExtent);
-      swap_chain_render_pass(renderer * pgpurenderer, VkExtent2D windowExtent, ::pointer <render_pass>previous);
+      swap_chain_render_pass();
+      //swap_chain_render_pass(renderer* pgpurenderer, VkExtent2D windowExtent);
+      //swap_chain_render_pass(renderer * pgpurenderer, VkExtent2D windowExtent, ::pointer <render_pass>previous);
       ~swap_chain_render_pass();
 
       //swap_chain_render_pass(const swap_chain_render_pass&) = delete;
@@ -38,10 +39,10 @@ namespace gpu_directx
       //float extentAspectRatio() {
       //   return static_cast<float>(m_extent.width) / static_cast<float>(m_extent.height);
       //}
-      VkFormat findDepthFormat();
+  //    VkFormat findDepthFormat();
 
       HRESULT acquireNextImage() override;
-      HRESULT submitCommandBuffers(const VkCommandBuffer* buffers) override;
+//      HRESULT submitCommandBuffers(const VkCommandBuffer* buffers) override;
       int get_image_index() const override;
       //bool compareSwapFormats(const swap_chain_render_pass& m_swapchain) const {
       //   return m_swapchain.swapChainDepthFormat == swapChainDepthFormat &&
@@ -57,12 +58,12 @@ namespace gpu_directx
       void createFramebuffers();
       void createSyncObjects();
 
-      // Helper functions
-      VkSurfaceFormatKHR chooseSwapSurfaceFormat(
-         const ::array<VkSurfaceFormatKHR>& availableFormats);
-      VkPresentModeKHR chooseSwapPresentMode(
-         const ::array<VkPresentModeKHR>& availablePresentModes);
-      VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities);
+      //// Helper functions
+      //VkSurfaceFormatKHR chooseSwapSurfaceFormat(
+      //   const ::array<VkSurfaceFormatKHR>& availableFormats);
+      //VkPresentModeKHR chooseSwapPresentMode(
+      //   const ::array<VkPresentModeKHR>& availablePresentModes);
+      //VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities);
 
       /*VkFormat swapChainImageFormat;
       VkFormat swapChainDepthFormat;

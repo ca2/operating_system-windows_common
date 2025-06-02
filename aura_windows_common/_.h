@@ -3,7 +3,6 @@
 
 #include "aura/_.h"
 #include "apex_windows_common/_.h"
-//#include "acme/operating_system.h"
 
 
 
@@ -12,59 +11,6 @@
 #else
 #define CLASS_DECL_AURA_WINDOWS_COMMON  CLASS_DECL_IMPORT
 #endif
-
-
-//void gdiplus_draw_text(::draw2d::graphics * pgraphics, ::draw2d::path * ppath, const ::string & str, double_rectangle & rectangleParam, const ::e_align & ealign, const ::e_draw_text & edrawtext, ::write_text::font * pfont, double dFontWidth, ::draw2d::brush * pbrush = nullptr, bool bMeasure = false);
-
-
-//inline auto gdiplus_color(const ::color::color& color)
-//{
-//   return Gdiplus::Color(color.m_iA, color.m_iR, color.m_iG, color.m_iB);
-//}
-//
-//
-//
-//#define __graphics(pgraphics) ((::draw2d_gdiplus::graphics *) pgraphics->m_pthis)
-//#define __pen(ppen) ((::draw2d_gdiplus::pen *) ppen->m_pthis)
-//#define __brush(pbrush) ((::draw2d_gdiplus::brush *) pbrush->m_pthis)
-//#define __font(pfont) ((::draw2d_gdiplus::font *) pfont->m_pthis)
-//#define __graphics_path(ppath) ((::draw2d_gdiplus::path *) ppath->m_pthis)
-//
-//
-//
-//
-//class g_keep
-//{
-//
-//public:
-//
-//   Gdiplus::Graphics* int_point;
-//   Gdiplus::GraphicsState s;
-//
-//   g_keep(Gdiplus::Graphics* point1)
-//   {
-//
-//      point = point1;
-//
-//      s = int_point->Save();
-//
-//   }
-//
-//   ~g_keep()
-//   {
-//
-//      int_point->Restore(s);
-//
-//   }
-//
-//};
-
-
-//#include "tts_speaker.h"
-
-
-
-//#include "node.h"
 
 
 

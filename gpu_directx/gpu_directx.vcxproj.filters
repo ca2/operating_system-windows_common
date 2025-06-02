@@ -50,7 +50,7 @@
     <ClInclude Include="assimp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="aaa_gpu_directx.h">
+    <ClInclude Include="_gpu_directx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="initializers.h">
@@ -131,9 +131,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="assimp.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXExample.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="_gpu_directx.cpp">

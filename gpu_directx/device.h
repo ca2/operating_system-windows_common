@@ -3,7 +3,7 @@
 #pragma once
 
 
-#include "cube/gpu/device.h"
+#include "aura/graphics/gpu/device.h"
 #include "acme/prototype/prototype/memory.h"
 #include "directx/directx.h"
 
@@ -87,7 +87,7 @@ namespace gpu_directx
       //VkInstance m_vkinstance;
       //VkDebugUtilsMessengerEXT debugMessenger;
       //VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
-      //::pointer < ::cube::impact > m_pimpact;
+      //::pointer < ::user::graphics3d > m_pimpact;
 
       //VkCommandPool m_vkcommandpool;
 
@@ -160,21 +160,21 @@ namespace gpu_directx
       //void on_create_context(const ::gpu::start_context_t& startcontext) override;
 
 
-      VkDevice logicalDevice() const
+  /*    VkDevice logicalDevice() const
       {
 
          return m_vkdevice;
 
-      }
+      }*/
 
-      virtual HRESULT createLogicalDevice(
-         VkPhysicalDeviceFeatures enabledFeatures,
-         ::array<const char*> enabledExtensions,
-         void* pNextChain,
-         bool useSwapChain = true,
-         VkQueueFlags requestedQueueTypes = VK_QUEUE_GRAPHICS_BIT | VK_QUEUE_COMPUTE_BIT);
-      //virtual uint32_t getQueueFamilyIndex(VkQueueFlags queueFlags) const;
-      virtual VkCommandPool createCommandPool(uint32_t queueFamilyIndex, VkCommandPoolCreateFlags createFlags = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT);
+      //virtual HRESULT createLogicalDevice(
+      //   VkPhysicalDeviceFeatures enabledFeatures,
+      //   ::array<const char*> enabledExtensions,
+      //   void* pNextChain,
+      //   bool useSwapChain = true,
+      //   VkQueueFlags requestedQueueTypes = VK_QUEUE_GRAPHICS_BIT | VK_QUEUE_COMPUTE_BIT);
+      ////virtual uint32_t getQueueFamilyIndex(VkQueueFlags queueFlags) const;
+      //virtual VkCommandPool createCommandPool(uint32_t queueFamilyIndex, VkCommandPoolCreateFlags createFlags = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT);
       virtual bool isExtensionSupported(const ::scoped_string& scopedstrExtension);
 
       virtual void _create_offscreen_window(const ::int_size& size);
@@ -204,8 +204,8 @@ namespace gpu_directx
       //graphics3d_directx::context
 
 
-      VkCommandPool getCommandPool() { return m_vkcommandpool; }
-      VkDevice logicalDevice() { return m_vkdevice; }
+      //VkCommandPool getCommandPool() { return m_vkcommandpool; }
+      //VkDevice logicalDevice() { return m_vkdevice; }
 
       //VkQueue graphicsQueue() { return m_vkqueueGraphics; }
       //VkQueue presentQueue() { return m_vkqueuePresent; }
@@ -243,7 +243,7 @@ namespace gpu_directx
       //bool isDeviceSuitable(VkPhysicalDevice pvkcdevice);
       //::array<const char *> getRequiredExtensions();
       bool checkValidationLayerSupport();
-      void populateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo);
+      //void populateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo);
       //void hasGflwRequiredInstanceExtensions();
       //bool checkDeviceExtensionSupport(VkPhysicalDevice pvkcdevice);
 

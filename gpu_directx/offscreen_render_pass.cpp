@@ -15,18 +15,26 @@ namespace gpu_directx
 {
 
 
-   offscreen_render_pass::offscreen_render_pass(renderer* pgpurenderer, VkExtent2D extent)
-      : render_pass(pgpurenderer, extent)
+   offscreen_render_pass::offscreen_render_pass()
    {
+
 
    }
 
 
-   offscreen_render_pass::offscreen_render_pass(renderer* pgpurenderer, VkExtent2D extent, ::pointer<render_pass> previous)
-      : render_pass(pgpurenderer, extent, previous)
-   {
 
-   }
+   //offscreen_render_pass::offscreen_render_pass(renderer* pgpurenderer, VkExtent2D extent)
+   //   : render_pass(pgpurenderer, extent)
+   //{
+
+   //}
+
+
+   //offscreen_render_pass::offscreen_render_pass(renderer* pgpurenderer, VkExtent2D extent, ::pointer<render_pass> previous)
+   //   : render_pass(pgpurenderer, extent, previous)
+   //{
+
+   //}
 
 
    void offscreen_render_pass::init()
@@ -47,28 +55,28 @@ namespace gpu_directx
    offscreen_render_pass::~offscreen_render_pass() 
    {
 
-      for (auto imageView : m_imageviews) 
-      {
+      //for (auto imageView : m_imageviews) 
+      //{
 
-         vkDestroyImageView(m_pgpucontext->logicalDevice(), imageView, nullptr);
+      //   vkDestroyImageView(m_pgpucontext->logicalDevice(), imageView, nullptr);
 
-      }
+      //}
 
-      m_imageviews.clear();
+      //m_imageviews.clear();
 
       //if (swapChain != nullptr) {
       //   vkDestroySwapchainKHR(m_pgpucontext->logicalDevice(), swapChain, nullptr);
       //   swapChain = nullptr;
       //}
 
-      for (int i = 0; i < depthImages.size(); i++) 
-      {
+      //for (int i = 0; i < depthImages.size(); i++) 
+      //{
 
-         vkDestroyImageView(m_pgpucontext->logicalDevice(), depthImageViews[i], nullptr);
-         vkDestroyImage(m_pgpucontext->logicalDevice(), depthImages[i], nullptr);
-         vkFreeMemory(m_pgpucontext->logicalDevice(), depthImageMemorys[i], nullptr);
+      //   vkDestroyImageView(m_pgpucontext->logicalDevice(), depthImageViews[i], nullptr);
+      //   vkDestroyImage(m_pgpucontext->logicalDevice(), depthImages[i], nullptr);
+      //   vkFreeMemory(m_pgpucontext->logicalDevice(), depthImageMemorys[i], nullptr);
 
-      }
+      //}
 
       //for (auto framebuffer : m_framebuffers) {
       //   vkDestroyFramebuffer(m_pgpucontext->logicalDevice(), framebuffer, nullptr);
@@ -106,152 +114,153 @@ namespace gpu_directx
       //   VK_NULL_HANDLE,
       //   imageIndex);
 
-      return VK_SUCCESS;
+      //return VK_SUCCESS;
+      return S_OK;
 
    }
 
 
-   HRESULT offscreen_render_pass::submitCommandBuffers(const VkCommandBuffer* buffers)
-   {
+   //HRESULT offscreen_render_pass::submitCommandBuffers(const VkCommandBuffer* buffers)
+   //{
 
-      //if (imagesInFlight[*imageIndex] != VK_NULL_HANDLE)
-      //{
+   //   //if (imagesInFlight[*imageIndex] != VK_NULL_HANDLE)
+   //   //{
 
-      //   vkWaitForFences(m_pgpucontext->logicalDevice(), 1, &imagesInFlight[*imageIndex], VK_TRUE, UINT64_MAX);
+   //   //   vkWaitForFences(m_pgpucontext->logicalDevice(), 1, &imagesInFlight[*imageIndex], VK_TRUE, UINT64_MAX);
 
-      //}
+   //   //}
 
-      //imagesInFlight[*imageIndex] = inFlightFences[m_pgpurenderer->get_frame_index()];
+   //   //imagesInFlight[*imageIndex] = inFlightFences[m_pgpurenderer->get_frame_index()];
 
-      VkSubmitInfo submitInfo = {};
-      submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+   //   VkSubmitInfo submitInfo = {};
+   //   submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 
-      ::array<VkSemaphore> waitSemaphores;
-      ::array<VkPipelineStageFlags> waitStages;
-      if (imageAvailable[m_pgpurenderer->get_frame_index()] > 0)
-      {
-         waitSemaphores.add(imageAvailableSemaphores[m_pgpurenderer->get_frame_index()]);
-         waitStages.add(VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT);
-      }
-      waitStages.add_copies(VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT, m_semaphoreaWaitToSubmit.size());
-      waitSemaphores.append(::transfer(m_semaphoreaWaitToSubmit));
-      submitInfo.waitSemaphoreCount = waitSemaphores.size();
-      submitInfo.pWaitSemaphores = waitSemaphores.data();
-      submitInfo.pWaitDstStageMask = waitStages.data();
-
-
-      submitInfo.commandBufferCount = 1;
-      submitInfo.pCommandBuffers = buffers;
-
-      ::array<VkSemaphore> signalSemaphores;
-      
-      signalSemaphores.add(renderFinishedSemaphores[m_pgpurenderer->get_frame_index()]);
-      signalSemaphores.append(::transfer(m_semaphoreaSignalOnSubmit));
-      submitInfo.signalSemaphoreCount = signalSemaphores.count();
-      submitInfo.pSignalSemaphores = signalSemaphores.data();
-
-      //vkResetFences(m_pgpucontext->logicalDevice(), 1, &inFlightFences[m_pgpurenderer->get_frame_index()]);
-
-      auto queueGraphics = m_pgpucontext->graphicsQueue();
-
-      //if (vkQueueSubmit(queueGraphics, 1, &submitInfo, inFlightFences[m_pgpurenderer->get_frame_index()]) != VK_SUCCESS)
-      if (vkQueueSubmit(queueGraphics, 1, &submitInfo, VK_NULL_HANDLE) != VK_SUCCESS)
-      {
-
-         throw ::exception(error_failed,"failed to submit draw command buffer!");
-         
-      }
-
-      //VK_CHECK(vkWaitForFences(m_pgpucontext->logicalDevice(), 1, &inFlightFences[m_pgpurenderer->get_frame_index()], VK_TRUE, UINT64_MAX));
+   //   ::array<VkSemaphore> waitSemaphores;
+   //   ::array<VkPipelineStageFlags> waitStages;
+   //   if (imageAvailable[m_pgpurenderer->get_frame_index()] > 0)
+   //   {
+   //      waitSemaphores.add(imageAvailableSemaphores[m_pgpurenderer->get_frame_index()]);
+   //      waitStages.add(VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT);
+   //   }
+   //   waitStages.add_copies(VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT, m_semaphoreaWaitToSubmit.size());
+   //   waitSemaphores.append(::transfer(m_semaphoreaWaitToSubmit));
+   //   submitInfo.waitSemaphoreCount = waitSemaphores.size();
+   //   submitInfo.pWaitSemaphores = waitSemaphores.data();
+   //   submitInfo.pWaitDstStageMask = waitStages.data();
 
 
-      //VkPresentInfoKHR presentInfo = {};
-      //presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
+   //   submitInfo.commandBufferCount = 1;
+   //   submitInfo.pCommandBuffers = buffers;
 
-      //presentInfo.waitSemaphoreCount = 1;
-      //presentInfo.pWaitSemaphores = signalSemaphores;
+   //   ::array<VkSemaphore> signalSemaphores;
+   //   
+   //   signalSemaphores.add(renderFinishedSemaphores[m_pgpurenderer->get_frame_index()]);
+   //   signalSemaphores.append(::transfer(m_semaphoreaSignalOnSubmit));
+   //   submitInfo.signalSemaphoreCount = signalSemaphores.count();
+   //   submitInfo.pSignalSemaphores = signalSemaphores.data();
 
-      //VkSwapchainKHR swapChains[] = { swapChain };
-      //presentInfo.swapchainCount = 1;
-      //presentInfo.pSwapchains = swapChains;
+   //   //vkResetFences(m_pgpucontext->logicalDevice(), 1, &inFlightFences[m_pgpurenderer->get_frame_index()]);
 
-      //presentInfo.pImageIndices = imageIndex;
+   //   auto queueGraphics = m_pgpucontext->graphicsQueue();
 
-      //auto result = vkQueuePresentKHR(m_pgpucontext->presentQueue(), &presentInfo);
+   //   //if (vkQueueSubmit(queueGraphics, 1, &submitInfo, inFlightFences[m_pgpurenderer->get_frame_index()]) != VK_SUCCESS)
+   //   if (vkQueueSubmit(queueGraphics, 1, &submitInfo, VK_NULL_HANDLE) != VK_SUCCESS)
+   //   {
 
-      return VK_SUCCESS;
+   //      throw ::exception(error_failed,"failed to submit draw command buffer!");
+   //      
+   //   }
 
-   }
+   //   //VK_CHECK(vkWaitForFences(m_pgpucontext->logicalDevice(), 1, &inFlightFences[m_pgpurenderer->get_frame_index()], VK_TRUE, UINT64_MAX));
+
+
+   //   //VkPresentInfoKHR presentInfo = {};
+   //   //presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
+
+   //   //presentInfo.waitSemaphoreCount = 1;
+   //   //presentInfo.pWaitSemaphores = signalSemaphores;
+
+   //   //VkSwapchainKHR swapChains[] = { swapChain };
+   //   //presentInfo.swapchainCount = 1;
+   //   //presentInfo.pSwapchains = swapChains;
+
+   //   //presentInfo.pImageIndices = imageIndex;
+
+   //   //auto result = vkQueuePresentKHR(m_pgpucontext->presentQueue(), &presentInfo);
+
+   //   return VK_SUCCESS;
+
+   //}
 
 
 
-   HRESULT offscreen_render_pass::submitSamplingWork(const VkCommandBuffer buffer)
-   {
+   //HRESULT offscreen_render_pass::submitSamplingWork(const VkCommandBuffer buffer)
+   //{
 
-      if (imagesInFlight[get_image_index()] != VK_NULL_HANDLE)
-      {
+   //   if (imagesInFlight[get_image_index()] != VK_NULL_HANDLE)
+   //   {
 
-         vkWaitForFences(m_pgpucontext->logicalDevice(), 1, &imagesInFlight[get_image_index()], VK_TRUE, UINT64_MAX);
+   //      vkWaitForFences(m_pgpucontext->logicalDevice(), 1, &imagesInFlight[get_image_index()], VK_TRUE, UINT64_MAX);
 
-      }
+   //   }
 
-      imagesInFlight[get_image_index()] = inFlightFences[m_pgpurenderer->get_frame_index()];
+   //   imagesInFlight[get_image_index()] = inFlightFences[m_pgpurenderer->get_frame_index()];
 
-      VkSubmitInfo submitInfo = {};
-      submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+   //   VkSubmitInfo submitInfo = {};
+   //   submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 
-      VkSemaphore waitSemaphores[] = { renderFinishedSemaphores[m_pgpurenderer->get_frame_index()] };
-      VkPipelineStageFlags waitStages[] = { VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT };
-      submitInfo.waitSemaphoreCount = 1;
-      submitInfo.pWaitSemaphores = waitSemaphores;
-      submitInfo.pWaitDstStageMask = waitStages;
+   //   VkSemaphore waitSemaphores[] = { renderFinishedSemaphores[m_pgpurenderer->get_frame_index()] };
+   //   VkPipelineStageFlags waitStages[] = { VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT };
+   //   submitInfo.waitSemaphoreCount = 1;
+   //   submitInfo.pWaitSemaphores = waitSemaphores;
+   //   submitInfo.pWaitDstStageMask = waitStages;
 
-      submitInfo.commandBufferCount = 1;
-      submitInfo.pCommandBuffers = &buffer;
+   //   submitInfo.commandBufferCount = 1;
+   //   submitInfo.pCommandBuffers = &buffer;
 
-      VkSemaphore signalSemaphores[] = { imageAvailableSemaphores[m_pgpurenderer->get_frame_index()] };
-      submitInfo.signalSemaphoreCount = 1;
-      submitInfo.pSignalSemaphores = signalSemaphores;
-      imageAvailable[m_pgpurenderer->get_frame_index()]++;
-      if (imageAvailable[m_pgpurenderer->get_frame_index()] <= 0)
-      {
-         imageAvailable[m_pgpurenderer->get_frame_index()]=1;
-      }
+   //   VkSemaphore signalSemaphores[] = { imageAvailableSemaphores[m_pgpurenderer->get_frame_index()] };
+   //   submitInfo.signalSemaphoreCount = 1;
+   //   submitInfo.pSignalSemaphores = signalSemaphores;
+   //   imageAvailable[m_pgpurenderer->get_frame_index()]++;
+   //   if (imageAvailable[m_pgpurenderer->get_frame_index()] <= 0)
+   //   {
+   //      imageAvailable[m_pgpurenderer->get_frame_index()]=1;
+   //   }
 
-      vkResetFences(m_pgpucontext->logicalDevice(), 1, &inFlightFences[m_pgpurenderer->get_frame_index()]);
+   //   vkResetFences(m_pgpucontext->logicalDevice(), 1, &inFlightFences[m_pgpurenderer->get_frame_index()]);
 
-      if (vkQueueSubmit(m_pgpucontext->graphicsQueue(), 1, &submitInfo, inFlightFences[m_pgpurenderer->get_frame_index()]) != VK_SUCCESS)
-      {
+   //   if (vkQueueSubmit(m_pgpucontext->graphicsQueue(), 1, &submitInfo, inFlightFences[m_pgpurenderer->get_frame_index()]) != VK_SUCCESS)
+   //   {
 
-         throw ::exception(error_failed,"failed to submit draw command buffer!");
+   //      throw ::exception(error_failed,"failed to submit draw command buffer!");
 
-      }
+   //   }
 
-      VK_CHECK(vkWaitForFences(m_pgpucontext->logicalDevice(), 1, &inFlightFences[m_pgpurenderer->get_frame_index()], VK_TRUE, UINT64_MAX));
+   //   VK_CHECK(vkWaitForFences(m_pgpucontext->logicalDevice(), 1, &inFlightFences[m_pgpurenderer->get_frame_index()], VK_TRUE, UINT64_MAX));
 
-      //VkPresentInfoKHR presentInfo = {};
-      //presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
+   //   //VkPresentInfoKHR presentInfo = {};
+   //   //presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
 
-      //presentInfo.waitSemaphoreCount = 1;
-      //presentInfo.pWaitSemaphores = signalSemaphores;
+   //   //presentInfo.waitSemaphoreCount = 1;
+   //   //presentInfo.pWaitSemaphores = signalSemaphores;
 
-      //VkSwapchainKHR swapChains[] = { swapChain };
-      //presentInfo.swapchainCount = 1;
-      //presentInfo.pSwapchains = swapChains;
+   //   //VkSwapchainKHR swapChains[] = { swapChain };
+   //   //presentInfo.swapchainCount = 1;
+   //   //presentInfo.pSwapchains = swapChains;
 
-      //presentInfo.pImageIndices = imageIndex;
+   //   //presentInfo.pImageIndices = imageIndex;
 
-      //auto result = vkQueuePresentKHR(m_pgpucontext->presentQueue(), &presentInfo);
+   //   //auto result = vkQueuePresentKHR(m_pgpucontext->presentQueue(), &presentInfo);
 
-      //currentFrame = (currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
+   //   //currentFrame = (currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
 
-      //m_iFrameSerial++;
+   //   //m_iFrameSerial++;
 
-      //currentFrame = (currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
+   //   //currentFrame = (currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
 
-      return VK_SUCCESS;
+   //   return VK_SUCCESS;
 
-   }
+   //}
 
 
    void offscreen_render_pass::defer_resize(const ::int_size& size)
@@ -328,200 +337,200 @@ namespace gpu_directx
       ////offscreenPass.width = FB_DIM;
       ////offscreenPass.height = FB_DIM;
 
-      m_extent.width = windowExtent.width;
-      m_extent.height = windowExtent.height;
+      //m_extent.width = windowExtent.width;
+      //m_extent.height = windowExtent.height;
 
       ::cast < context > pgpucontext = m_pgpucontext;
 
-      //// Find a suitable depth format
-      VkFormat fbDepthFormat;
-      VkBool32 validDepthFormat = getSupportedDepthFormat(
-         pgpucontext->m_pgpudevice->m_pphysicaldevice->m_physicaldevice, &fbDepthFormat);
-      ASSERT(validDepthFormat);
+      ////// Find a suitable depth format
+      //VkFormat fbDepthFormat;
+      //VkBool32 validDepthFormat = getSupportedDepthFormat(
+      //   pgpucontext->m_pgpudevice->m_pphysicaldevice->m_physicaldevice, &fbDepthFormat);
+      //ASSERT(validDepthFormat);
 
-      //// Color attachment
-      VkImageCreateInfo image = initializers::imageCreateInfo();
-      image.imageType = VK_IMAGE_TYPE_2D;
-      image.format = m_formatImage;
-      image.extent.width = m_extent.width;
-      image.extent.height = m_extent.height;
-      image.extent.depth = 1;
-      image.mipLevels = 1;
-      image.arrayLayers = 1;
-      image.samples = VK_SAMPLE_COUNT_1_BIT;
-      image.tiling = VK_IMAGE_TILING_OPTIMAL;
-      //// We will sample directly from the color attachment
-      image.usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_SAMPLED_BIT |
-         VK_IMAGE_USAGE_TRANSFER_SRC_BIT;
-      //image.initialLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+      ////// Color attachment
+      //VkImageCreateInfo image = initializers::imageCreateInfo();
+      //image.imageType = VK_IMAGE_TYPE_2D;
+      //image.format = m_formatImage;
+      //image.extent.width = m_extent.width;
+      //image.extent.height = m_extent.height;
+      //image.extent.depth = 1;
+      //image.mipLevels = 1;
+      //image.arrayLayers = 1;
+      //image.samples = VK_SAMPLE_COUNT_1_BIT;
+      //image.tiling = VK_IMAGE_TILING_OPTIMAL;
+      ////// We will sample directly from the color attachment
+      //image.usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_SAMPLED_BIT |
+      //   VK_IMAGE_USAGE_TRANSFER_SRC_BIT;
+      ////image.initialLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 
-      //VkMemoryAllocateInfo memAlloc = initializers::memory_allocate_info();
-      //VkMemoryRequirements memReqs;
+      ////VkMemoryAllocateInfo memAlloc = initializers::memory_allocate_info();
+      ////VkMemoryRequirements memReqs;
 
-      m_images.resize(MAX_FRAMES_IN_FLIGHT);
-      m_imagememories.resize(MAX_FRAMES_IN_FLIGHT);
+      //m_images.resize(MAX_FRAMES_IN_FLIGHT);
+      //m_imagememories.resize(MAX_FRAMES_IN_FLIGHT);
 
-      for (int i = 0; i < m_images.size(); i++)
-      {
-
-         m_pgpucontext->createImageWithInfo(
-            image,
-            VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
-            m_images[i],
-            m_imagememories[i]
-         );
-         //VK_CHECK_RESULT(vkCreateImage(m_pgpucontext->logicalDevice(), &image, nullptr, &m_images[i]));
-         //vkGetImageMemoryRequirements(m_pgpucontext->logicalDevice(), m_images[i], &memReqs);
-         //memAlloc.allocationSize = memReqs.size;
-         //memAlloc.memoryTypeIndex = m_pgpucontext->findMemoryType(memReqs.memoryTypeBits, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
-         //VK_CHECK_RESULT(vkAllocateMemory(m_pgpucontext->logicalDevice(), &memAlloc, nullptr, &m_imagememories[i]));
-         //VK_CHECK_RESULT(vkBindImageMemory(m_pgpucontext->logicalDevice(), m_images[i], m_imagememories[i], 0));
-
-      }
-
-      //VkImageViewCreateInfo colorImageView = initializers::imageViewCreateInfo();
-      //colorImageView.viewType = VK_IMAGE_VIEW_TYPE_2D;
-      //colorImageView.format = m_formatImage;
-      //colorImageView.subresourceRange = {};
-      //colorImageView.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-      //colorImageView.subresourceRange.baseMipLevel = 0;
-      //colorImageView.subresourceRange.levelCount = 1;
-      //colorImageView.subresourceRange.baseArrayLayer = 0;
-      //colorImageView.subresourceRange.layerCount = 1;
-      //colorImageView.image = offscreenPass.color.image;
-      //VK_CHECK_RESULT(vkCreateImageView(context, &colorImageView, nullptr, &offscreenPass.color.view));
-
-      // Create sampler to sample from the attachment in the fragment shader
-      VkSamplerCreateInfo samplerInfo = initializers::samplerCreateInfo();
-      samplerInfo.magFilter = VK_FILTER_LINEAR;
-      samplerInfo.minFilter = VK_FILTER_LINEAR;
-      samplerInfo.mipmapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR;
-      samplerInfo.addressModeU = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
-      samplerInfo.addressModeV = samplerInfo.addressModeU;
-      samplerInfo.addressModeW = samplerInfo.addressModeU;
-      samplerInfo.mipLodBias = 0.0f;
-      samplerInfo.maxAnisotropy = 1.0f;
-      samplerInfo.minLod = 0.0f;
-      samplerInfo.maxLod = 1.0f;
-      samplerInfo.borderColor = VK_BORDER_COLOR_FLOAT_OPAQUE_WHITE;
-      VK_CHECK_RESULT(vkCreateSampler(m_pgpucontext->logicalDevice(), &samplerInfo, nullptr, &m_vksampler));
-
-      //// Depth stencil attachment
-      //image.format = fbDepthFormat;
-      //image.usage = VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT;
-
-      //depthImages.resize(MAX_FRAMES_IN_FLIGHT);
-      //depthImageMemorys.resize(MAX_FRAMES_IN_FLIGHT);
-
-      //for (int i = 0; i < depthImages.size(); i++)
+      //for (int i = 0; i < m_images.size(); i++)
       //{
-      //   VK_CHECK_RESULT(vkCreateImage(m_pgpucontext->logicalDevice(), &image, nullptr, &depthImages[i]));
-      //   vkGetImageMemoryRequirements(m_pgpucontext->logicalDevice(), depthImages[i], &memReqs);
-      //   memAlloc.allocationSize = memReqs.size;
-      //   memAlloc.memoryTypeIndex = m_pgpucontext->findMemoryType(memReqs.memoryTypeBits, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
-      //   VK_CHECK_RESULT(vkAllocateMemory(m_pgpucontext->logicalDevice(), &memAlloc, nullptr, &depthImageMemorys[i]));
-      //   VK_CHECK_RESULT(vkBindImageMemory(m_pgpucontext->logicalDevice(), depthImages[i], depthImageMemorys[i], 0));
+
+      //   m_pgpucontext->createImageWithInfo(
+      //      image,
+      //      VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
+      //      m_images[i],
+      //      m_imagememories[i]
+      //   );
+      //   //VK_CHECK_RESULT(vkCreateImage(m_pgpucontext->logicalDevice(), &image, nullptr, &m_images[i]));
+      //   //vkGetImageMemoryRequirements(m_pgpucontext->logicalDevice(), m_images[i], &memReqs);
+      //   //memAlloc.allocationSize = memReqs.size;
+      //   //memAlloc.memoryTypeIndex = m_pgpucontext->findMemoryType(memReqs.memoryTypeBits, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
+      //   //VK_CHECK_RESULT(vkAllocateMemory(m_pgpucontext->logicalDevice(), &memAlloc, nullptr, &m_imagememories[i]));
+      //   //VK_CHECK_RESULT(vkBindImageMemory(m_pgpucontext->logicalDevice(), m_images[i], m_imagememories[i], 0));
 
       //}
 
-      //VkImageViewCreateInfo depthStencilView = initializers::imageViewCreateInfo();
-      //depthStencilView.viewType = VK_IMAGE_VIEW_TYPE_2D;
-      //depthStencilView.format = fbDepthFormat;
-      //depthStencilView.flags = 0;
-      //depthStencilView.subresourceRange = {};
-      //depthStencilView.subresourceRange.aspectMask = VK_IMAGE_ASPECT_DEPTH_BIT;
-      //if (fbDepthFormat >= VK_FORMAT_D16_UNORM_S8_UINT) {
-      //   depthStencilView.subresourceRange.aspectMask |= VK_IMAGE_ASPECT_STENCIL_BIT;
-      //}
-      //depthStencilView.subresourceRange.baseMipLevel = 0;
-      //depthStencilView.subresourceRange.levelCount = 1;
-      //depthStencilView.subresourceRange.baseArrayLayer = 0;
-      //depthStencilView.subresourceRange.layerCount = 1;
-      //depthStencilView.image = offscreenPass.depth.image;
-      //VK_CHECK_RESULT(vkCreateImageView(context, &depthStencilView, nullptr, &offscreenPass.depth.view));
+      ////VkImageViewCreateInfo colorImageView = initializers::imageViewCreateInfo();
+      ////colorImageView.viewType = VK_IMAGE_VIEW_TYPE_2D;
+      ////colorImageView.format = m_formatImage;
+      ////colorImageView.subresourceRange = {};
+      ////colorImageView.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+      ////colorImageView.subresourceRange.baseMipLevel = 0;
+      ////colorImageView.subresourceRange.levelCount = 1;
+      ////colorImageView.subresourceRange.baseArrayLayer = 0;
+      ////colorImageView.subresourceRange.layerCount = 1;
+      ////colorImageView.image = offscreenPass.color.image;
+      ////VK_CHECK_RESULT(vkCreateImageView(context, &colorImageView, nullptr, &offscreenPass.color.view));
 
-      //// Create a separate render pass for the offscreen rendering as it may differ from the one used for scene rendering
+      //// Create sampler to sample from the attachment in the fragment shader
+      //VkSamplerCreateInfo samplerInfo = initializers::samplerCreateInfo();
+      //samplerInfo.magFilter = VK_FILTER_LINEAR;
+      //samplerInfo.minFilter = VK_FILTER_LINEAR;
+      //samplerInfo.mipmapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR;
+      //samplerInfo.addressModeU = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
+      //samplerInfo.addressModeV = samplerInfo.addressModeU;
+      //samplerInfo.addressModeW = samplerInfo.addressModeU;
+      //samplerInfo.mipLodBias = 0.0f;
+      //samplerInfo.maxAnisotropy = 1.0f;
+      //samplerInfo.minLod = 0.0f;
+      //samplerInfo.maxLod = 1.0f;
+      //samplerInfo.borderColor = VK_BORDER_COLOR_FLOAT_OPAQUE_WHITE;
+      //VK_CHECK_RESULT(vkCreateSampler(m_pgpucontext->logicalDevice(), &samplerInfo, nullptr, &m_vksampler));
 
-      //std::array<VkAttachmentDescription, 2> attchmentDescriptions = {};
-      //// Color attachment
-      //attchmentDescriptions[0].format = FB_COLOR_FORMAT;
-      //attchmentDescriptions[0].samples = VK_SAMPLE_COUNT_1_BIT;
-      //attchmentDescriptions[0].loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
-      //attchmentDescriptions[0].storeOp = VK_ATTACHMENT_STORE_OP_STORE;
-      //attchmentDescriptions[0].stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-      //attchmentDescriptions[0].stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-      //attchmentDescriptions[0].initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-      //attchmentDescriptions[0].finalLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-      //// Depth attachment
-      //attchmentDescriptions[1].format = fbDepthFormat;
-      //attchmentDescriptions[1].samples = VK_SAMPLE_COUNT_1_BIT;
-      //attchmentDescriptions[1].loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
-      //attchmentDescriptions[1].storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-      //attchmentDescriptions[1].stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-      //attchmentDescriptions[1].stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-      //attchmentDescriptions[1].initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-      //attchmentDescriptions[1].finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+      ////// Depth stencil attachment
+      ////image.format = fbDepthFormat;
+      ////image.usage = VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT;
 
-      //VkAttachmentReference colorReference = { 0, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL };
-      //VkAttachmentReference depthReference = { 1, VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL };
+      ////depthImages.resize(MAX_FRAMES_IN_FLIGHT);
+      ////depthImageMemorys.resize(MAX_FRAMES_IN_FLIGHT);
 
-      //VkSubpassDescription subpassDescription = {};
-      //subpassDescription.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
-      //subpassDescription.colorAttachmentCount = 1;
-      //subpassDescription.pColorAttachments = &colorReference;
-      //subpassDescription.pDepthStencilAttachment = &depthReference;
+      ////for (int i = 0; i < depthImages.size(); i++)
+      ////{
+      ////   VK_CHECK_RESULT(vkCreateImage(m_pgpucontext->logicalDevice(), &image, nullptr, &depthImages[i]));
+      ////   vkGetImageMemoryRequirements(m_pgpucontext->logicalDevice(), depthImages[i], &memReqs);
+      ////   memAlloc.allocationSize = memReqs.size;
+      ////   memAlloc.memoryTypeIndex = m_pgpucontext->findMemoryType(memReqs.memoryTypeBits, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
+      ////   VK_CHECK_RESULT(vkAllocateMemory(m_pgpucontext->logicalDevice(), &memAlloc, nullptr, &depthImageMemorys[i]));
+      ////   VK_CHECK_RESULT(vkBindImageMemory(m_pgpucontext->logicalDevice(), depthImages[i], depthImageMemorys[i], 0));
 
-      //// Use subpass dependencies for layout transitions
-      //std::array<VkSubpassDependency, 2> dependencies;
+      ////}
 
-      //dependencies[0].srcSubpass = VK_SUBPASS_EXTERNAL;
-      //dependencies[0].dstSubpass = 0;
-      //dependencies[0].srcStageMask = VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT;
-      //dependencies[0].dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT | VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT | VK_PIPELINE_STAGE_LATE_FRAGMENT_TESTS_BIT;
-      //dependencies[0].srcAccessMask = VK_ACCESS_NONE_KHR;
-      //dependencies[0].dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT | VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT | VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT;
-      //dependencies[0].dependencyFlags = VK_DEPENDENCY_BY_REGION_BIT;
+      ////VkImageViewCreateInfo depthStencilView = initializers::imageViewCreateInfo();
+      ////depthStencilView.viewType = VK_IMAGE_VIEW_TYPE_2D;
+      ////depthStencilView.format = fbDepthFormat;
+      ////depthStencilView.flags = 0;
+      ////depthStencilView.subresourceRange = {};
+      ////depthStencilView.subresourceRange.aspectMask = VK_IMAGE_ASPECT_DEPTH_BIT;
+      ////if (fbDepthFormat >= VK_FORMAT_D16_UNORM_S8_UINT) {
+      ////   depthStencilView.subresourceRange.aspectMask |= VK_IMAGE_ASPECT_STENCIL_BIT;
+      ////}
+      ////depthStencilView.subresourceRange.baseMipLevel = 0;
+      ////depthStencilView.subresourceRange.levelCount = 1;
+      ////depthStencilView.subresourceRange.baseArrayLayer = 0;
+      ////depthStencilView.subresourceRange.layerCount = 1;
+      ////depthStencilView.image = offscreenPass.depth.image;
+      ////VK_CHECK_RESULT(vkCreateImageView(context, &depthStencilView, nullptr, &offscreenPass.depth.view));
 
-      //dependencies[1].srcSubpass = 0;
-      //dependencies[1].dstSubpass = VK_SUBPASS_EXTERNAL;
-      //dependencies[1].srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT | VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT | VK_PIPELINE_STAGE_LATE_FRAGMENT_TESTS_BIT;
-      //dependencies[1].dstStageMask = VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT;
-      //dependencies[1].srcAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT | VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT | VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT;
-      //dependencies[1].dstAccessMask = VK_ACCESS_MEMORY_READ_BIT;
-      //dependencies[1].dependencyFlags = VK_DEPENDENCY_BY_REGION_BIT;
+      ////// Create a separate render pass for the offscreen rendering as it may differ from the one used for scene rendering
 
-      //// Create the actual renderpass
-      //VkRenderPassCreateInfo renderPassInfo = {};
-      //renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
-      //renderPassInfo.attachmentCount = static_cast<uint32_t>(attchmentDescriptions.size());
-      //renderPassInfo.pAttachments = attchmentDescriptions.data();
-      //renderPassInfo.subpassCount = 1;
-      //renderPassInfo.pSubpasses = &subpassDescription;
-      //renderPassInfo.dependencyCount = static_cast<uint32_t>(dependencies.size());
-      //renderPassInfo.pDependencies = dependencies.data();
+      ////std::array<VkAttachmentDescription, 2> attchmentDescriptions = {};
+      ////// Color attachment
+      ////attchmentDescriptions[0].format = FB_COLOR_FORMAT;
+      ////attchmentDescriptions[0].samples = VK_SAMPLE_COUNT_1_BIT;
+      ////attchmentDescriptions[0].loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
+      ////attchmentDescriptions[0].storeOp = VK_ATTACHMENT_STORE_OP_STORE;
+      ////attchmentDescriptions[0].stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+      ////attchmentDescriptions[0].stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+      ////attchmentDescriptions[0].initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+      ////attchmentDescriptions[0].finalLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+      ////// Depth attachment
+      ////attchmentDescriptions[1].format = fbDepthFormat;
+      ////attchmentDescriptions[1].samples = VK_SAMPLE_COUNT_1_BIT;
+      ////attchmentDescriptions[1].loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
+      ////attchmentDescriptions[1].storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+      ////attchmentDescriptions[1].stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+      ////attchmentDescriptions[1].stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+      ////attchmentDescriptions[1].initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+      ////attchmentDescriptions[1].finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
 
-      //VK_CHECK_RESULT(vkCreateRenderPass(context, &renderPassInfo, nullptr, &offscreenPass.renderPass));
+      ////VkAttachmentReference colorReference = { 0, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL };
+      ////VkAttachmentReference depthReference = { 1, VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL };
 
-      //VkImageView attachments[2];
-      //attachments[0] = offscreenPass.color.view;
-      //attachments[1] = offscreenPass.depth.view;
+      ////VkSubpassDescription subpassDescription = {};
+      ////subpassDescription.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
+      ////subpassDescription.colorAttachmentCount = 1;
+      ////subpassDescription.pColorAttachments = &colorReference;
+      ////subpassDescription.pDepthStencilAttachment = &depthReference;
 
-      //VkFramebufferCreateInfo fbufCreateInfo = initializers::framebufferCreateInfo();
-      //fbufCreateInfo.renderPass = offscreenPass.renderPass;
-      //fbufCreateInfo.attachmentCount = 2;
-      //fbufCreateInfo.pAttachments = attachments;
-      //fbufCreateInfo.width = offscreenPass.width;
-      //fbufCreateInfo.height = offscreenPass.height;
-      //fbufCreateInfo.layers = 1;
+      ////// Use subpass dependencies for layout transitions
+      ////std::array<VkSubpassDependency, 2> dependencies;
 
-      //VK_CHECK_RESULT(vkCreateFramebuffer(context, &fbufCreateInfo, nullptr, &offscreenPass.frameBuffer));
+      ////dependencies[0].srcSubpass = VK_SUBPASS_EXTERNAL;
+      ////dependencies[0].dstSubpass = 0;
+      ////dependencies[0].srcStageMask = VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT;
+      ////dependencies[0].dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT | VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT | VK_PIPELINE_STAGE_LATE_FRAGMENT_TESTS_BIT;
+      ////dependencies[0].srcAccessMask = VK_ACCESS_NONE_KHR;
+      ////dependencies[0].dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT | VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT | VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT;
+      ////dependencies[0].dependencyFlags = VK_DEPENDENCY_BY_REGION_BIT;
 
-      //// Fill a descriptor for later use in a descriptor set
-      //offscreenPass.descriptor.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-      //offscreenPass.descriptor.imageView = offscreenPass.color.view;
-      //offscreenPass.descriptor.sampler = offscreenPass.sampler;
+      ////dependencies[1].srcSubpass = 0;
+      ////dependencies[1].dstSubpass = VK_SUBPASS_EXTERNAL;
+      ////dependencies[1].srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT | VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT | VK_PIPELINE_STAGE_LATE_FRAGMENT_TESTS_BIT;
+      ////dependencies[1].dstStageMask = VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT;
+      ////dependencies[1].srcAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT | VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT | VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT;
+      ////dependencies[1].dstAccessMask = VK_ACCESS_MEMORY_READ_BIT;
+      ////dependencies[1].dependencyFlags = VK_DEPENDENCY_BY_REGION_BIT;
 
-      m_extent = windowExtent;
+      ////// Create the actual renderpass
+      ////VkRenderPassCreateInfo renderPassInfo = {};
+      ////renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
+      ////renderPassInfo.attachmentCount = static_cast<uint32_t>(attchmentDescriptions.size());
+      ////renderPassInfo.pAttachments = attchmentDescriptions.data();
+      ////renderPassInfo.subpassCount = 1;
+      ////renderPassInfo.pSubpasses = &subpassDescription;
+      ////renderPassInfo.dependencyCount = static_cast<uint32_t>(dependencies.size());
+      ////renderPassInfo.pDependencies = dependencies.data();
+
+      ////VK_CHECK_RESULT(vkCreateRenderPass(context, &renderPassInfo, nullptr, &offscreenPass.renderPass));
+
+      ////VkImageView attachments[2];
+      ////attachments[0] = offscreenPass.color.view;
+      ////attachments[1] = offscreenPass.depth.view;
+
+      ////VkFramebufferCreateInfo fbufCreateInfo = initializers::framebufferCreateInfo();
+      ////fbufCreateInfo.renderPass = offscreenPass.renderPass;
+      ////fbufCreateInfo.attachmentCount = 2;
+      ////fbufCreateInfo.pAttachments = attachments;
+      ////fbufCreateInfo.width = offscreenPass.width;
+      ////fbufCreateInfo.height = offscreenPass.height;
+      ////fbufCreateInfo.layers = 1;
+
+      ////VK_CHECK_RESULT(vkCreateFramebuffer(context, &fbufCreateInfo, nullptr, &offscreenPass.frameBuffer));
+
+      ////// Fill a descriptor for later use in a descriptor set
+      ////offscreenPass.descriptor.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+      ////offscreenPass.descriptor.imageView = offscreenPass.color.view;
+      ////offscreenPass.descriptor.sampler = offscreenPass.sampler;
+
+      //m_extent = windowExtent;
 
    }
 
@@ -558,67 +567,67 @@ namespace gpu_directx
    {
 
 
-      VkAttachmentDescription depthAttachment{};
-      depthAttachment.format = findDepthFormat();
-      depthAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
-      depthAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
-      depthAttachment.storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-      depthAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-      depthAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-      depthAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-      depthAttachment.finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+      //VkAttachmentDescription depthAttachment{};
+      //depthAttachment.format = findDepthFormat();
+      //depthAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
+      //depthAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
+      //depthAttachment.storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+      //depthAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+      //depthAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+      //depthAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+      //depthAttachment.finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
 
-      VkAttachmentReference depthAttachmentRef{};
-      depthAttachmentRef.attachment = 1;
-      depthAttachmentRef.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+      //VkAttachmentReference depthAttachmentRef{};
+      //depthAttachmentRef.attachment = 1;
+      //depthAttachmentRef.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
 
-      VkAttachmentDescription colorAttachment = {};
-      colorAttachment.format = getImageFormat();
-      colorAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
-      colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
-      colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
-      colorAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-      colorAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-      colorAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-      //colorAttachment.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
-      colorAttachment.finalLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+      //VkAttachmentDescription colorAttachment = {};
+      //colorAttachment.format = getImageFormat();
+      //colorAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
+      //colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
+      //colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
+      //colorAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+      //colorAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+      //colorAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+      ////colorAttachment.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
+      //colorAttachment.finalLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 
-      VkAttachmentReference colorAttachmentRef = {};
-      colorAttachmentRef.attachment = 0;
-      colorAttachmentRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+      //VkAttachmentReference colorAttachmentRef = {};
+      //colorAttachmentRef.attachment = 0;
+      //colorAttachmentRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 
-      VkSubpassDescription subpass = {};
-      subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
-      subpass.colorAttachmentCount = 1;
-      subpass.pColorAttachments = &colorAttachmentRef;
-      subpass.pDepthStencilAttachment = &depthAttachmentRef;
+      //VkSubpassDescription subpass = {};
+      //subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
+      //subpass.colorAttachmentCount = 1;
+      //subpass.pColorAttachments = &colorAttachmentRef;
+      //subpass.pDepthStencilAttachment = &depthAttachmentRef;
 
-      VkSubpassDependency dependency = {};
-      dependency.dstSubpass = 0;
-      dependency.dstAccessMask =
-         VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT | VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT;
-      dependency.dstStageMask =
-         VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT | VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT;
-      dependency.srcSubpass = VK_SUBPASS_EXTERNAL;
-      dependency.srcAccessMask = 0;
-      dependency.srcStageMask =
-         VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT | VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT;
+      //VkSubpassDependency dependency = {};
+      //dependency.dstSubpass = 0;
+      //dependency.dstAccessMask =
+      //   VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT | VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT;
+      //dependency.dstStageMask =
+      //   VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT | VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT;
+      //dependency.srcSubpass = VK_SUBPASS_EXTERNAL;
+      //dependency.srcAccessMask = 0;
+      //dependency.srcStageMask =
+      //   VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT | VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT;
 
 
-      VkAttachmentDescription attachments[2] = {colorAttachment, depthAttachment};
-      VkRenderPassCreateInfo renderPassInfo = {};
-      renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
-      renderPassInfo.attachmentCount = 2;
-      renderPassInfo.pAttachments = attachments;
-      renderPassInfo.subpassCount = 1;
-      renderPassInfo.pSubpasses = &subpass;
-      renderPassInfo.dependencyCount = 1;
-      renderPassInfo.pDependencies = &dependency;
+      //VkAttachmentDescription attachments[2] = {colorAttachment, depthAttachment};
+      //VkRenderPassCreateInfo renderPassInfo = {};
+      //renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
+      //renderPassInfo.attachmentCount = 2;
+      //renderPassInfo.pAttachments = attachments;
+      //renderPassInfo.subpassCount = 1;
+      //renderPassInfo.pSubpasses = &subpass;
+      //renderPassInfo.dependencyCount = 1;
+      //renderPassInfo.pDependencies = &dependency;
 
-      if (vkCreateRenderPass(m_pgpucontext->logicalDevice(), &renderPassInfo, nullptr, &m_vkrenderpass) != VK_SUCCESS) 
-      {
-         throw ::exception(error_failed,"failed to create render pass!");
-      }
+      //if (vkCreateRenderPass(m_pgpucontext->logicalDevice(), &renderPassInfo, nullptr, &m_vkrenderpass) != VK_SUCCESS) 
+      //{
+      //   throw ::exception(error_failed,"failed to create render pass!");
+      //}
 
    }
 
@@ -779,15 +788,15 @@ namespace gpu_directx
    //   }
    //}
 
-   VkFormat offscreen_render_pass::findDepthFormat()
-   {
-      return render_pass::findDepthFormat();
+   //VkFormat offscreen_render_pass::findDepthFormat()
+   //{
+   //   return render_pass::findDepthFormat();
 
-      //return m_pgpucontext->findSupportedFormat(
-      //   { VK_FORMAT_D32_SFLOAT, VK_FORMAT_D32_SFLOAT_S8_UINT, VK_FORMAT_D24_UNORM_S8_UINT },
-      //   VK_IMAGE_TILING_OPTIMAL,
-      //   VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT);
-   }
+   //   //return m_pgpucontext->findSupportedFormat(
+   //   //   { VK_FORMAT_D32_SFLOAT, VK_FORMAT_D32_SFLOAT_S8_UINT, VK_FORMAT_D24_UNORM_S8_UINT },
+   //   //   VK_IMAGE_TILING_OPTIMAL,
+   //   //   VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT);
+   //}
 
 
 } // namespace gpu_directx

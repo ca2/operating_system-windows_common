@@ -1,6 +1,8 @@
 #include "framework.h"
 #include "direct2d.h"
 #include "directx/directx.h"
+#include "gpu_directx/approach.h"
+#include "gpu_directx/device.h"
 #include "acme/graphics/write_text/font_weight.h"
 #include "acme/prototype/geometry2d/rectangle.h"
 #include "acme_windows_common/hresult_exception.h"
@@ -104,7 +106,11 @@ namespace direct2d
 
       //::directx::defer_initialize(pparticle);
 
-      auto& pdxgidevice = ::directx::directx()->m_pdxgidevice;
+      ::cast < ::gpu_directx::approach > papproach = m_papplication->get_gpu();
+
+      ::cast < ::gpu_directx::device > pgpudevice = papproach->m_pgpudevice;
+
+      auto& pdxgidevice = pgpudevice->m_pdxgidevice;
 
       // Create the Direct2D device object and a corresponding context.
       ::defer_throw_hresult(d2d1_factory1()->CreateDevice(pdxgidevice, &m_pd2device));

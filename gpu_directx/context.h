@@ -1,9 +1,9 @@
 #pragma once
 
 
-#include "cube/gpu/context.h"
+#include "aura/graphics/gpu/context.h"
 #include "acme/prototype/prototype/memory.h"
-#include "app-graphics3d/gpu_directx/device.h"
+#include "gpu_directx/device.h"
 
 
 namespace gpu_directx
@@ -17,7 +17,7 @@ namespace gpu_directx
 
 
       //itask									m_itaskGpu;
-      VkSampler m_vksampler001;
+      //VkSampler m_vksampler001;
 
       //unsigned int                     m_VAO;
       //unsigned int                     m_VBO;
@@ -82,20 +82,20 @@ namespace gpu_directx
 //      VkInstance m_vkinstance;
 //      VkDebugUtilsMessengerEXT debugMessenger;
 //      //VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
-//      //::pointer < ::cube::impact > m_pimpact;
+//      //::pointer < ::user::graphics3d > m_pimpact;
 //
 //      //VkCommandPool m_vkcommandpool;
 //
 //      //VkDevice m_vkdevice;
 //      //VkSurfaceKHR m_vksurfacekhr;
-      VkQueue m_vkqueueGraphics;
-      VkQueue m_vkqueuePresent;
+      //VkQueue m_vkqueueGraphics;
+      //VkQueue m_vkqueuePresent;
 
       //::array<const char *> validationLayers;
       //::array<const char *> deviceExtensions;
 
       ::pointer<::gpu_directx::set_descriptor_layout>           m_psetdescriptorlayoutGlobal;
-      ::array<VkDescriptorSet>                                 m_descriptorsetsGlobal;
+      //::array<VkDescriptorSet>                                 m_descriptorsetsGlobal;
       ::pointer_array<::gpu_directx::buffer>							m_uboBuffers;
       ::pointer <::gpu_directx::descriptor_pool>                m_pdescriptorpoolGlobal;
 
@@ -115,7 +115,7 @@ namespace gpu_directx
 
       void swap_buffers() override;
 
-      VkSampler _001VkSampler();
+      //VkSampler _001VkSampler();
 
       //set_descriptor_layout* get_set_descriptor_layout();
       //virtual VkDescriptorSet getCurrentDescriptorSet(::gpu_directx::renderer* prenderer);
@@ -153,7 +153,7 @@ namespace gpu_directx
       void on_create_context(const ::gpu::start_context_t & startcontext) override;
 
 
-      VkDevice logicalDevice();
+      //VkDevice logicalDevice();
 
       //virtual HRESULT createLogicalDevice(
       //   VkPhysicalDeviceFeatures enabledFeatures,

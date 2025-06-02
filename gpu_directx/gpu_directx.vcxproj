@@ -485,7 +485,7 @@
       </EntryPointSymbol>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
-      <AdditionalDependencies>assimp.lib;directx-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <MapFileName>
       </MapFileName>
       <OptimizeReferences>false</OptimizeReferences>
@@ -712,7 +712,7 @@
     <ClInclude Include="swap_chain_render_pass.h" />
     <ClInclude Include="_.h" />
     <ClInclude Include="framework.h" />
-    <ClInclude Include="aaa_gpu_directx.h" />
+    <ClInclude Include="_gpu_directx.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="accumulation_render_pass.cpp" />
@@ -741,16 +741,6 @@
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="render_pass.cpp" />
     <ClCompile Include="swap_chain_render_pass.cpp" />
-    <ClCompile Include="DirectXExample.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="_factory.cpp" />
     <ClCompile Include="framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -771,35 +761,6 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="deployment.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\app\acme\acme.vcxproj">
-      <Project>{638b242f-0f21-41c3-9f66-724660046133}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\app\apex\apex.vcxproj">
-      <Project>{e000ffaf-392f-4e32-bf51-777ca238991f}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\app\aqua\aqua.vcxproj">
-      <Project>{1b06fe5f-f783-41a1-ac68-0e02880dbbac}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\app\aura\aura.vcxproj">
-      <Project>{e000ffaf-392f-4e32-bf51-fd7ed638991f}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\app\axis\axis.vcxproj">
-      <Project>{a2cbd4ed-ed0f-482b-9b16-f48f21c32835}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\app\base\base.vcxproj">
-      <Project>{a216abd4-26c4-4746-96b3-9d30ed28cf92}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\app\bred\bred.vcxproj">
-      <Project>{dfbf067f-aff9-4bd6-a5e1-72af984d1476}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\app\core\core.vcxproj">
-      <Project>{29c1eb5b-060e-4021-ae12-d1bcfb1b1359}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\cube\cube.vcxproj">
-      <Project>{c5fadcf3-ca08-483d-b5f9-2ce2d2beccbe}</Project>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="shader\image_blend.frag">
@@ -944,6 +905,23 @@ application_build_helper --binary-to-unsigned-int "$(ProjectDir)/shader/%(Filena
     <None Include="shader\resolve.frag.spv.inl" />
     <None Include="shader\shader.frag.spv.inl" />
     <None Include="shader\shader.vert.spv.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\source\app\acme\acme.vcxproj">
+      <Project>{638b242f-0f21-41c3-9f66-724660046133}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\source\app\apex\apex.vcxproj">
+      <Project>{e000ffaf-392f-4e32-bf51-777ca238991f}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\source\app\aqua\aqua.vcxproj">
+      <Project>{1b06fe5f-f783-41a1-ac68-0e02880dbbac}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\source\app\aura\aura.vcxproj">
+      <Project>{e000ffaf-392f-4e32-bf51-fd7ed638991f}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\directx\directx.vcxproj">
+      <Project>{a149252d-1de3-4cba-b1cb-7e9868793e6e}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

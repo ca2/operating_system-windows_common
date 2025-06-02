@@ -4,7 +4,7 @@
 
 
 
-#include "cube/gpu/shader.h"
+#include "aura/graphics/gpu/shader.h"
 
 
 namespace gpu_directx
@@ -24,9 +24,9 @@ namespace gpu_directx
       bool m_bEnableBlend = false;
       bool m_bAccumulationEnable = false;
       int m_iColorAttachmentCount = 1;
-      VkPrimitiveTopology m_vktopology;
+      //VkPrimitiveTopology m_vktopology;
 
-      ::comparable_array<VkDynamicState> m_dynamicstateaEnable;
+      //s::comparable_array<VkDynamicState> m_dynamicstateaEnable;
 
       shader();
       ~shader();
@@ -49,12 +49,12 @@ namespace gpu_directx
       VkPipeline graphicsPipeline;
       VkShaderModule vertShaderModule;
       VkShaderModule fragShaderModule;*/
-      VkPipelineLayout		m_vkpipelinelayout;
+      //VkPipelineLayout		m_vkpipelinelayout;
 
 
       void _create_pipeline_layout(int iSize);
 
-      void draw() override;
+      //void draw() override;
 
       //void initialize_shader(
       //	::gpu::context* pgpucontext,
@@ -82,7 +82,7 @@ namespace gpu_directx
 //#pragma once
 //
 //
-//#include "cube/gpu/shader.h"
+//#include "aura/graphics/gpu/shader.h"
 //
 //
 //namespace gpu_directx
