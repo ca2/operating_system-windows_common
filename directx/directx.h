@@ -25,8 +25,6 @@ namespace directx
       D3D_FEATURE_LEVEL                               m_featurelevel;
 
 
-      static directx *                                s_pdirectx;
-
 
       directx();
       ~directx() override;
@@ -45,14 +43,6 @@ namespace directx
    };
 
 
-   inline directx * directx() 
-   { 
-
-      return directx::s_pdirectx; 
-   
-   }
-
- 
 
 } // namespace directx
 

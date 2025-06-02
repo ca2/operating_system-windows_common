@@ -102,7 +102,7 @@ namespace direct2d
    void direct2d::initialize(::particle * pparticle)
    {
 
-      ::directx::defer_initialize(pparticle);
+      //::directx::defer_initialize(pparticle);
 
       auto& pdxgidevice = ::directx::directx()->m_pdxgidevice;
 

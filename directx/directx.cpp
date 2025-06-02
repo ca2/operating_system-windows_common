@@ -8,9 +8,6 @@ namespace directx
 {
 
 
-   class directx * directx::s_pdirectx = nullptr;
-
-
    directx::directx()
    {
 
@@ -149,29 +146,29 @@ namespace directx
    typedef FN_DXGIGetDebugInterface* PFN_DXGIGetDebugInterface;
 
 
-   CLASS_DECL_DIRECTX void defer_initialize(::particle * pparticle)
-   {
+   //CLASS_DECL_DIRECTX void defer_initialize(::particle * pparticle)
+   //{
 
-      if (::is_set(directx::s_pdirectx))
-      {
+   //   //if (::is_set(directx::s_pdirectx))
+   //   //{
 
-         return;
+   //   //   return;
 
-      }
+   //   //}
 
-      directx::s_pdirectx = ___new class directx;
+   //   directx::s_pdirectx = ___new class directx;
 
-      directx::s_pdirectx->initialize(pparticle);
+   //   directx::s_pdirectx->initialize(pparticle);
 
-   }
+   //}
 
 
-   CLASS_DECL_DIRECTX void terminate()
-   {
+   //CLASS_DECL_DIRECTX void terminate()
+   //{
 
-      ::acme::del(directx::s_pdirectx);
+   //   ::acme::del(directx::s_pdirectx);
 
-   }
+   //}
 
 
 } // namespace directx

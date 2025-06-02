@@ -57,8 +57,8 @@ namespace directx
 #endif
 
 
-   CLASS_DECL_DIRECTX void defer_initialize(::particle * pparticle);
-   CLASS_DECL_DIRECTX void finalize();
+   //CLASS_DECL_DIRECTX void defer_initialize(::particle * pparticle);
+   //CLASS_DECL_DIRECTX void finalize();
 
 
 } // namespace directx
