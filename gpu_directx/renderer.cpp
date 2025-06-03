@@ -574,8 +574,55 @@ namespace gpu_directx
    }
 
 
-  // void renderer::cpu_buffer_sampler::sample(VkImage vkimage)
-  // {
+   void renderer::cpu_buffer_sampler::sample(ID3D11Texture2D * ptexture)
+   {
+
+      D3D11_TEXTURE2D_DESC desc;
+
+      ptexture->GetDesc(&desc);
+
+      ::cast < ::gpu_directx::context > pcontext = m_pgpucontext;
+
+      if (desc.Width != m_size.width() || desc.Height != m_size.height())
+      {
+
+         m_ptextureStaging.Release();
+
+         //m_pimagetarget->m_imagebuffer.set_storing_fla
+         //if (outWidth) *outWidth = desc.Width;
+         //if (outHeight) *outHeight = desc.Height;
+
+         if (desc.Format != DXGI_FORMAT_R8G8B8A8_UNORM) {
+            printf("Unsupported format for readback.\n");
+            throw ::exception(error_wrong_state);
+         }
+
+         D3D11_TEXTURE2D_DESC stagingDesc = desc;
+         stagingDesc.BindFlags = 0;
+         stagingDesc.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
+         stagingDesc.Usage = D3D11_USAGE_STAGING;
+         stagingDesc.MiscFlags = 0;
+
+         ::cast < ::gpu_directx::device > pdevice = pcontext->m_pgpudevice;
+
+         if (FAILED(pdevice->m_pdevice->CreateTexture2D(&stagingDesc, NULL, &m_ptextureStaging)))
+         {
+            printf("Failed to create staging texture.\n");
+            throw ::exception(error_wrong_state);
+         }
+
+         m_size.cx() = desc.Width;
+         m_size.cy() = desc.Height;
+
+
+      }
+
+      pcontext->m_pcontext->CopyResource((ID3D11Resource*)m_ptextureStaging, (ID3D11Resource*)ptexture);
+
+
+      //stagingTexture->lpVtbl->Release(stagingTexture);
+
+      //return rgbaData;
 
   //    if (!m_vkimage || !m_vkdevicememory)
   //    {
@@ -660,12 +707,60 @@ namespace gpu_directx
   //    vkFreeCommandBuffers(m_pgpucontext->logicalDevice(), m_pgpucontext->m_pgpudevice->getCommandPool(), 1, &copyCmd);
 
 
-  // }
+   }
 
 
-   //void renderer::cpu_buffer_sampler::send_sample()
-   //{
+   void renderer::cpu_buffer_sampler::send_sample()
+   {
 
+      D3D11_MAPPED_SUBRESOURCE mapped;
+
+      ::cast < ::gpu_directx::context > pcontext = m_pgpucontext;
+
+      D3D11_TEXTURE2D_DESC desc;
+
+      m_ptextureStaging->GetDesc(&desc);
+
+      if (FAILED(pcontext->m_pcontext->Map((ID3D11Resource*)m_ptextureStaging, 0, D3D11_MAP_READ, 0, &mapped)))
+      {
+         
+         warning() << "Failed to map staging texture.";
+         
+         throw ::exception(error_wrong_state);
+
+      }
+
+      int width = desc.Width;
+      int height = desc.Height;
+      UINT rowPitch = mapped.RowPitch;
+      auto data = mapped.pData;
+
+      //m_pimagetarget->m_pimage->create({ width, height });
+
+      // Allocate RGBA buffer (contiguous memory)
+      //auto lock = m_pimagetarget->no_padded_lock(::image::e_copy_disposition_none);
+
+      //if (!lock.data()) {
+      //   context->Unmap((ID3D11Resource*)stagingTexture, 0);
+      //   throw ::exception(error_wrong_state);
+      //}
+
+      auto pgpucontext = m_pgpucontext;
+
+      auto pcpubuffer = pgpucontext->m_pcpubuffer;
+
+      pcpubuffer->set_pixels(
+         data,
+         width,
+         height,
+         (int)rowPitch);
+
+      //// Copy row by row
+      //for (UINT y = 0; y < height; ++y) {
+      //   memcpy(lock.data() + y * width, (unsigned char*)mapped.pData + y * rowPitch, width * 4);
+      //}
+
+      pcontext->m_pcontext->Unmap((ID3D11Resource*)m_ptextureStaging, 0);
    //   if (!m_vkimage || !m_vkdevicememory)
    //   {
 
@@ -703,15 +798,15 @@ namespace gpu_directx
    //   //const bool colorSwizzle = (std::find(formatsBGR.begin(), formatsBGR.end(), VK_FORMAT_R8G8B8A8_UNORM) != formatsBGR.end());
    //   //{
 
-   //   auto pgpucontext = m_pgpucontext;
+      //auto pgpucontext = m_pgpucontext;
 
-   //   auto pcpubuffer = pgpucontext->m_pcpubuffer;
+      //auto pcpubuffer = pgpucontext->m_pcpubuffer;
 
-   //   pcpubuffer->set_pixels(
-   //      imagedata,
-   //      m_vkextent2d.width,
-   //      m_vkextent2d.height,
-   //      (int)subResourceLayout.rowPitch);
+      //pcpubuffer->set_pixels(
+      //   imagedata,
+      //   m_vkextent2d.width,
+      //   m_vkextent2d.height,
+      //   (int)subResourceLayout.rowPitch);
 
    //   //_synchronous_lock synchronouslock(m_pgpucontext->m_pmutexOffscreen);
    //   //   m_pgpucontext->m_sizeOffscreen.cx() = m_vkextent2d.width;
@@ -735,7 +830,7 @@ namespace gpu_directx
 
    //   vkUnmapMemory(m_pgpucontext->logicalDevice(), m_vkdevicememory);
 
-   //}
+   }
 
 
    void renderer::sample()
@@ -745,7 +840,24 @@ namespace gpu_directx
 
       //__defer_construct(m_pgpucontext->m_pcpubuffer);
 
-      m_pgpucontext->m_pcpubuffer->gpu_read();
+      //m_pgpucontext->m_pcpubuffer->gpu_read();
+
+      ///auto& memory = m_pimagetarget->m_imagebuffer.m_memory;
+      ::cast< context > pgpucontext = m_pgpucontext;
+      ::cast< renderer > prenderer = pgpucontext->m_pgpurenderer;
+      auto prendertargetview = prenderer->m_prendertargetview;
+      ::cast < offscreen_render_target_view > poffscreenrendertargetview = prendertargetview;
+      ::cast< device > pgpudevice = pgpucontext->m_pgpudevice;
+      ID3D11Device* device = pgpudevice->m_pdevice;
+      ID3D11DeviceContext* context = pgpucontext->m_pcontext;
+      ID3D11Texture2D* offscreenTexture = poffscreenrendertargetview->m_ptextureOffscreen;
+      if (!device || !context || !offscreenTexture)
+      {
+         throw ::exception(error_wrong_state);
+      }
+
+
+      m_pcpubuffersampler->sample(offscreenTexture);
 
       //auto callback = m_callbackImage32CpuBuffer;
 
@@ -833,7 +945,7 @@ namespace gpu_directx
       //      //vkMapMemory(m_pgpucontext->logicalDevice(), dstImageMemory, 0, VK_WHOLE_SIZE, 0, (void**)&imagedata);
       //      //imagedata += subResourceLayout.offset;
 
-      //      m_pcpubuffersampler->send_sample();
+            m_pcpubuffersampler->send_sample();
 
       //      ///*
       //      //	Save host visible framebuffer image to disk (ppm format)

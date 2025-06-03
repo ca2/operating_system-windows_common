@@ -187,76 +187,8 @@ namespace gpu_directx
    void cpu_buffer::gpu_read()
    {
 
-      auto& memory = m_pimagetarget->m_imagebuffer.m_memory;
-      ::cast< context > pgpucontext = m_pgpucontext;
-      ::cast< renderer > prenderer = pgpucontext->m_pgpurenderer;
-      auto prendertargetview = prenderer->m_prendertargetview;
-      ::cast < offscreen_render_target_view > poffscreenrendertargetview = prendertargetview;
-      ::cast< device > pgpudevice = pgpucontext->m_pgpudevice;
-      ID3D11Device* device = pgpudevice->m_pdevice;
-      ID3D11DeviceContext* context = pgpucontext->m_pcontext;
-      ID3D11Texture2D* offscreenTexture = poffscreenrendertargetview->m_ptextureOffscreen;
-      if (!device || !context || !offscreenTexture)
-      {
-         throw ::exception(error_wrong_state);
-      }
 
 
-      D3D11_TEXTURE2D_DESC desc;
-      offscreenTexture->GetDesc(&desc);
-
-      //m_pimagetarget->m_imagebuffer.set_storing_fla
-      //if (outWidth) *outWidth = desc.Width;
-      //if (outHeight) *outHeight = desc.Height;
-
-      if (desc.Format != DXGI_FORMAT_R8G8B8A8_UNORM) {
-         printf("Unsupported format for readback.\n");
-         throw ::exception(error_wrong_state);
-      }
-
-      D3D11_TEXTURE2D_DESC stagingDesc = desc;
-      stagingDesc.BindFlags = 0;
-      stagingDesc.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
-      stagingDesc.Usage = D3D11_USAGE_STAGING;
-      stagingDesc.MiscFlags = 0;
-
-      comptr<ID3D11Texture2D>stagingTexture;
-      if (FAILED(device->CreateTexture2D(&stagingDesc, NULL, &stagingTexture))) {
-         printf("Failed to create staging texture.\n");
-         throw ::exception(error_wrong_state);
-      }
-
-      context->CopyResource((ID3D11Resource*)stagingTexture, (ID3D11Resource*)offscreenTexture);
-
-      D3D11_MAPPED_SUBRESOURCE mapped;
-      if (FAILED(context->Map((ID3D11Resource*)stagingTexture, 0, D3D11_MAP_READ, 0, &mapped))) {
-         printf("Failed to map staging texture.\n");
-         throw ::exception(error_wrong_state);
-      }
-
-      int width = desc.Width;
-      int height = desc.Height;
-      UINT rowPitch = mapped.RowPitch;
-
-      m_pimagetarget->m_pimage->create({ width, height });
-
-      // Allocate RGBA buffer (contiguous memory)
-      auto lock = m_pimagetarget->no_padded_lock(::image::e_copy_disposition_none);
-         
-      if (!lock.data()) {
-         context->Unmap((ID3D11Resource*)stagingTexture, 0);
-         throw ::exception(error_wrong_state);
-      }
-
-      // Copy row by row
-      for (UINT y = 0; y < height; ++y) {
-         memcpy(lock.data() + y * width, (unsigned char*)mapped.pData + y * rowPitch, width * 4);
-      }
-
-      context->Unmap((ID3D11Resource*)stagingTexture, 0);
-      //stagingTexture->lpVtbl->Release(stagingTexture);
-
-      //return rgbaData;
    }
 
 

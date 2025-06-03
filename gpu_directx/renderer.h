@@ -45,7 +45,8 @@ namespace gpu_directx
 
          ::pointer < context >   m_pgpucontext;
          ::pointer < renderer >  m_prenderer;
-
+         comptr<ID3D11Texture2D>       m_ptextureStaging;
+         ::int_size              m_size;
 
          cpu_buffer_sampler();
          ~cpu_buffer_sampler();
@@ -57,7 +58,7 @@ namespace gpu_directx
          //void update(VkExtent2D vkextent2d);
          void destroy();
 
-///         void sample(VkImage vkimage);
+         void sample(ID3D11Texture2D* ptexture);
 
          void send_sample();
 
