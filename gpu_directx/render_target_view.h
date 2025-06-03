@@ -13,18 +13,19 @@ namespace gpu_directx
 {
 
 
-   class CLASS_DECL_GPU_DIRECTX render_pass :
+   class CLASS_DECL_GPU_DIRECTX render_target_view :
       virtual public ::particle
    {
    public:
 
+      comptr<ID3D11RenderTargetView>      m_prendertargetview;
 
       //VkFormat m_formatImage;
       //VkFormat m_formatDepth;
-      //VkExtent2D m_extent;
+      ::int_size m_size;
 
       //::array<VkFramebuffer> m_framebuffers;
-      //VkRenderPass m_vkrenderpass;
+      //VkRenderPass m_vkrendertargetview;
 
       ::pointer < renderer >  m_pgpurenderer;
 
@@ -40,7 +41,7 @@ namespace gpu_directx
       //VkExtent2D windowExtent;
 
       //VkSwapchainKHR swapChain;
-      ::pointer<render_pass> m_pvkcrenderpassOld;
+      ::pointer<render_target_view> m_prendertargetviewOld;
 
       ::int_array imageAvailable;
       //::array<VkSemaphore> imageAvailableSemaphores;
@@ -51,17 +52,17 @@ namespace gpu_directx
 
       static constexpr int MAX_FRAMES_IN_FLIGHT = 2;
 
-      render_pass();
-      ////render_pass(renderer* prenderer, VkExtent2D windowExtent);
-      ////render_pass(renderer* prenderer, VkExtent2D windowExtent, ::pointer <render_pass>previous);
-      ~render_pass();
+      //render_target_view();
+      render_target_view(renderer* prenderer, const ::int_size & size);
+      render_target_view(renderer* prenderer, const ::int_size& size, ::pointer <render_target_view>previous);
+      ~render_target_view();
 
       virtual void on_before_begin_render(frame* pframe);
 
       //VkFramebuffer getFrameBuffer(int index) { return m_framebuffers[index]; }
       //VkFramebuffer getCurrentFrameBuffer() { return m_framebuffers[get_image_index()]; }
       virtual int get_image_index() const;
-      //VkRenderPass getRenderPass() { return m_vkrenderpass; }
+      //VkRenderPass getRenderPass() { return m_vkrendertargetview; }
       //VkImageView getImageView(int index) { return m_imageviews[index]; }
       //size_t imageCount() { return m_images.size(); }
       size_t imageCount() { return 0; }
@@ -81,9 +82,9 @@ namespace gpu_directx
       virtual HRESULT acquireNextImage();
       // virtual HRESULT submitCommandBuffers(const VkCommandBuffer* buffers);
 
-      //bool compareFormats(const render_pass& renderpass) const {
-      //   return renderpass.m_formatDepth == m_formatDepth &&
-      //      renderpass.m_formatImage == m_formatImage;
+      //bool compareFormats(const render_pass& rendertargetview) const {
+      //   return rendertargetview.m_formatDepth == m_formatDepth &&
+      //      rendertargetview.m_formatImage == m_formatImage;
       //}
 
 

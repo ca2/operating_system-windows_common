@@ -22,6 +22,8 @@ namespace gpu_directx
 {
 
 
+   extern thread_local device* t_pgpudevice;
+
    context::context()
    {
       
@@ -777,6 +779,12 @@ namespace gpu_directx
       ::defer_throw_hresult(pgpudevice->m_pdevicecontext.as(m_pcontext));
 
       ::defer_throw_hresult(pgpudevice->m_pdevicecontext.as(m_pcontext1));
+
+      if (m_eoutput == ::gpu::e_output_cpu_buffer)
+      {
+
+
+      }
 
 //      auto pphysicaldevice = pgpudevice->m_pphysicaldevice;
 //

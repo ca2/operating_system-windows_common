@@ -1,10 +1,10 @@
-// From offscreen_render_pass by
+// From offscreen_render_target_view by
 //    camilo on 2025-05-27 15:49 <3ThomasBorregaardSorensen!!
 // From vk_swapchain by camilo on 2025-05-09 <3ThomasBorregaardSorensen!!
 #pragma once
 
 
-#include "render_pass.h"
+#include "render_target_view.h"
 
 
 
@@ -12,8 +12,8 @@ namespace gpu_directx
 {
 
 
-	class CLASS_DECL_GPU_DIRECTX accumulation_render_pass :
-		virtual public render_pass
+	class CLASS_DECL_GPU_DIRECTX accumulation_render_target_view :
+		virtual public render_target_view
 	{
 	public:
 
@@ -26,17 +26,17 @@ namespace gpu_directx
 		static constexpr int MAX_FRAMES_IN_FLIGHT = 2;
 
 
-		accumulation_render_pass();
-		//accumulation_render_pass(renderer* pgpurenderer, VkExtent2D windowExtent);
-		//accumulation_render_pass(renderer* pgpurenderer, VkExtent2D windowExtent, ::pointer <render_pass>previous);
-		~accumulation_render_pass();
+		accumulation_render_target_view();
+		//accumulation_render_target_view(renderer* pgpurenderer, VkExtent2D windowExtent);
+		//accumulation_render_target_view(renderer* pgpurenderer, VkExtent2D windowExtent, ::pointer <render_target_view>previous);
+		~accumulation_render_target_view();
 
 		
 		void on_before_begin_render(frame* pframe) override;
 
 
 		//VkFramebuffer getFrameBuffer(int index) { return swapChainFramebuffers[index]; }
-		//VkRenderPass getRenderPass() { return m_vkrenderpass; }
+		//VkRenderPass getRenderPass() { return m_vkrendertargetview; }
 		//VkImageView getImageView(int index) { return m_imageview[index]; }
 		//size_t imageCount() { return m_images.size(); }
 		//VkFormat getImageFormat() { return imageFormat; }
@@ -52,7 +52,7 @@ namespace gpu_directx
 		HRESULT acquireNextImage() override;
 		//HRESULT submitCommandBuffers(const VkCommandBuffer* buffers);
 
-		//bool compareSwapFormats(const offscreen_render_pass& swapChain) const {
+		//bool compareSwapFormats(const offscreen_render_target_view& swapChain) const {
 		//	return swapChain.depthFormat == depthFormat &&
 		//		swapChain.imageFormat == imageFormat;
 		//}
@@ -81,7 +81,7 @@ namespace gpu_directx
 		//VkExtent2D m_extent;
 
 		//::array<VkFramebuffer> swapChainFramebuffers;
-		//VkRenderPass m_vkrenderpass;
+		//VkRenderPass m_vkrendertargetview;
 
 		////::array<VkImage> depthImages;
 		////::array<VkDeviceMemory> depthImageMemorys;
@@ -95,7 +95,7 @@ namespace gpu_directx
 		//VkExtent2D windowExtent;
 
 		////VkSwapchainKHR swapChain;
-		//::pointer<offscreen_render_pass> oldOffScreen;
+		//::pointer<offscreen_render_target_view> oldOffScreen;
 
 		//::array<VkSemaphore> imageAvailableSemaphores;
 		//::array<VkSemaphore> renderFinishedSemaphores;

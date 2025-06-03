@@ -1,34 +1,34 @@
 #pragma once
 
 
-#include "render_pass.h"
+#include "render_target_view.h"
 
 
 namespace gpu_directx
 {
 
 
-   class swap_chain_render_pass :
-      virtual public render_pass
+   class swap_chain_render_target_view :
+      virtual public render_target_view
    {
    public:
 
       //VkSwapchainKHR       m_vkswapchain;
       uint32_t             currentImageIndex;
-      
+      //::int_size m_size;
 
       static constexpr int MAX_FRAMES_IN_FLIGHT = 2;
 
-      swap_chain_render_pass();
-      //swap_chain_render_pass(renderer* pgpurenderer, VkExtent2D windowExtent);
-      //swap_chain_render_pass(renderer * pgpurenderer, VkExtent2D windowExtent, ::pointer <render_pass>previous);
-      ~swap_chain_render_pass();
+      //swap_chain_render_target_view();
+      swap_chain_render_target_view(renderer* pgpurenderer, const ::int_size & size);
+      swap_chain_render_target_view(renderer * pgpurenderer, const ::int_size& size, ::pointer <render_target_view>previous);
+      ~swap_chain_render_target_view();
 
-      //swap_chain_render_pass(const swap_chain_render_pass&) = delete;
-      //swap_chain_render_pass& operator=(const swap_chain_render_pass&) = delete;
+      //swap_chain_render_target_view(const swap_chain_render_target_view&) = delete;
+      //swap_chain_render_target_view& operator=(const swap_chain_render_target_view&) = delete;
 
       //VkFramebuffer getFrameBuffer(int index) { return swapChainFramebuffers[index]; }
-      //VkRenderPass getRenderPass() { return m_vkrenderpass; }
+      //VkRenderPass getRenderPass() { return m_vkrendertargetview; }
       //VkImageView getImageView(int index) { return swapChainImageViews[index]; }
       //size_t imageCount() { return swapChainImages.size(); }
       //VkFormat getSwapChainImageFormat() { return swapChainImageFormat; }
@@ -44,7 +44,7 @@ namespace gpu_directx
       HRESULT acquireNextImage() override;
 //      HRESULT submitCommandBuffers(const VkCommandBuffer* buffers) override;
       int get_image_index() const override;
-      //bool compareSwapFormats(const swap_chain_render_pass& m_swapchain) const {
+      //bool compareSwapFormats(const swap_chain_render_target_view& m_swapchain) const {
       //   return m_swapchain.swapChainDepthFormat == swapChainDepthFormat &&
       //      m_swapchain.swapChainImageFormat == swapChainImageFormat;
       //}
@@ -70,7 +70,7 @@ namespace gpu_directx
       VkExtent2D m_extent;
 
       ::array<VkFramebuffer> swapChainFramebuffers;
-      VkRenderPass m_vkrenderpass;
+      VkRenderPass m_vkrendertargetview;
 
       ::array<VkImage> depthImages;
       ::array<VkDeviceMemory> depthImageMemorys;
@@ -81,7 +81,7 @@ namespace gpu_directx
       ::pointer < context > m_pgpucontext;
       VkExtent2D windowExtent;*/
 
-      //::pointer<swap_chain_render_pass> oldSwapChain;
+      //::pointer<swap_chain_render_target_view> oldSwapChain;
 
       //::array<VkSemaphore> imageAvailableSemaphores;
       //::array<VkSemaphore> renderFinishedSemaphores;

@@ -45,6 +45,12 @@ namespace gpu_directx
 
    class frame;
 
+   class render_target_view;
+
+   class offscreen_render_target_view;
+
+   class swap_chain_render_target_view;
+
 
 } // namespace gpu_directx
 

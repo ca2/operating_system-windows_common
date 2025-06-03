@@ -68,13 +68,13 @@
     <ClInclude Include="renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="offscreen_render_pass.h">
+    <ClInclude Include="offscreen_render_target_view.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="render_pass.h">
+    <ClInclude Include="render_target_view.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="swap_chain_render_pass.h">
+    <ClInclude Include="swap_chain_render_target_view.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="descriptors.h">
@@ -89,7 +89,7 @@
     <ClInclude Include="device.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="accumulation_render_pass.h">
+    <ClInclude Include="aaa_accumulation_render_pass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="dxgi_debug.h">
@@ -142,13 +142,13 @@
     <ClCompile Include="physical_device.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="offscreen_render_pass.cpp">
+    <ClCompile Include="offscreen_render_target_view.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="render_pass.cpp">
+    <ClCompile Include="render_target_view.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="swap_chain_render_pass.cpp">
+    <ClCompile Include="swap_chain_render_target_view.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="renderer.cpp">
@@ -166,7 +166,7 @@
     <ClCompile Include="device.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="accumulation_render_pass.cpp">
+    <ClCompile Include="aaa_accumulation_render_pass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="dxgi_debug.cpp">

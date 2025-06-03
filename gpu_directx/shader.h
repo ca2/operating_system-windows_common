@@ -37,7 +37,8 @@ namespace gpu_directx
       ~shader();
 
 
-      virtual ::comptr < ID3DBlob> create_shader_blob(const ::block& block);
+      virtual ::comptr < ID3DBlob> create_vertex_shader_blob(const ::block& block);
+      virtual ::comptr < ID3DBlob> create_pixel_shader_blob(const ::block& block);
       virtual void create_vertex_shader(const ::block& block);
       virtual void create_pixel_shader(const ::block& block);
       //void bind(VkCommandBuffer commandBuffer);

@@ -52,7 +52,7 @@ namespace gpu_directx
       //// Command buffers used for rendering
       //::array<VkCommandBuffer>         m_commandbuffera;
       //// Global render pass for frame buffer writes
-      //VkRenderPass                     m_vkrenderpass;
+      //VkRenderPass                     m_vkrendertargetview;
       //// List of available frame buffers (same as number of swap chain images)
       //::array<VkFramebuffer>           m_frameBuffera;
       // Active frame buffer index

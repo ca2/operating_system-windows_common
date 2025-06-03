@@ -689,7 +689,7 @@
     <Bscmake />
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="accumulation_render_pass.h" />
+    <ClInclude Include="aaa_accumulation_render_pass.h" />
     <ClInclude Include="assimp.h" />
     <ClInclude Include="buffer.h" />
     <ClInclude Include="cpu_buffer.h" />
@@ -702,20 +702,29 @@
     <ClInclude Include="initializers.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="approach.h" />
-    <ClInclude Include="offscreen_render_pass.h" />
+    <ClInclude Include="offscreen_render_target_view.h" />
     <ClInclude Include="physical_device.h" />
     <ClInclude Include="program.h" />
     <ClInclude Include="renderer.h" />
-    <ClInclude Include="render_pass.h" />
+    <ClInclude Include="render_target_view.h" />
     <ClInclude Include="shader.h" />
     <ClInclude Include="swap_chain.h" />
-    <ClInclude Include="swap_chain_render_pass.h" />
+    <ClInclude Include="swap_chain_render_target_view.h" />
     <ClInclude Include="_.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="_gpu_directx.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="accumulation_render_pass.cpp" />
+    <ClCompile Include="aaa_accumulation_render_pass.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="assimp.cpp" />
     <ClCompile Include="buffer.cpp" />
     <ClCompile Include="cpu_buffer.cpp" />
@@ -735,12 +744,12 @@
     <ClCompile Include="device.cpp" />
     <ClCompile Include="dxgi_debug.cpp" />
     <ClCompile Include="object.cpp" />
-    <ClCompile Include="offscreen_render_pass.cpp" />
+    <ClCompile Include="offscreen_render_target_view.cpp" />
     <ClCompile Include="operating_system\windows.cpp" />
     <ClCompile Include="physical_device.cpp" />
     <ClCompile Include="renderer.cpp" />
-    <ClCompile Include="render_pass.cpp" />
-    <ClCompile Include="swap_chain_render_pass.cpp" />
+    <ClCompile Include="render_target_view.cpp" />
+    <ClCompile Include="swap_chain_render_target_view.cpp" />
     <ClCompile Include="_factory.cpp" />
     <ClCompile Include="framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

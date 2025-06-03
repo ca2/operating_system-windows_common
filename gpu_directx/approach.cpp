@@ -69,7 +69,7 @@ namespace gpu_directx
       //m_vkcommandpool = VK_NULL_HANDLE;
       //m_pipelinestageflagsSubmit = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
       //m_submitinfo = {};
-      //m_vkrenderpass = VK_NULL_HANDLE;
+      //m_vkrendertargetview = VK_NULL_HANDLE;
       m_uCurrentBuffer = 0;
       //m_descriptorpool = {};
       //m_vkpipelinecache = {};
@@ -548,7 +548,7 @@ namespace gpu_directx
 
          auto pathFolder = pathShader.folder();
 
-         return pathFolder / "directx/SpirV" / (pathShader.name() + ".spv");
+         return pathFolder / "directx" / pathShader.name();
 
       }
 

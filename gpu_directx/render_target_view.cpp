@@ -1,7 +1,7 @@
 // From vk_swapchain by camilo on 2025-05-09 02:01 <3ThomasBorregaardSorensen!!
 #include "framework.h"
 #include "physical_device.h"
-#include "render_pass.h"
+#include "render_target_view.h"
 #include "renderer.h"
 //// std
 //#include <array>
@@ -18,32 +18,41 @@
 namespace gpu_directx
 {
 
+   
+   //render_target_view::render_target_view()
+   //{
 
-   render_pass::render_pass()
-   //render_pass::render_pass(renderer* pgpurenderer, VkExtent2D extent)
-      //: m_pgpurenderer(pgpurenderer), windowExtent(extent)
+
+   //}
+
+
+   //render_target_view::render_target_view()
+   render_target_view::render_target_view(renderer* pgpurenderer, const ::int_size & size):
+       m_pgpurenderer(pgpurenderer), m_size(size)
    {
-       m_bNeedRebuild = false;
+       //m_bNeedRebuild = false;
       //m_pgpucontext = pgpurenderer->m_pgpucontext;
       //init();
-      //m_pvkcrenderpassOld = nullptr;
+      //m_prendertargetviewOld = nullptr;
    }
 
    
-   //render_pass::render_pass(renderer * pgpurenderer, VkExtent2D extent, ::pointer<render_pass> previous)
-   //   : m_pgpurenderer{ pgpurenderer }, windowExtent{ extent }, m_pvkcrenderpassOld{ previous }
-   //{
-   //    m_bNeedRebuild = false;
-   //   m_pgpucontext = pgpurenderer->m_pgpucontext;
-   //   //init();
-   //   // Cleans up old swap chain since it's no longer needed after resizing
-   //   //m_pvkcrenderpassOld = nullptr;
-   //}
-   //
-   //
+   render_target_view::render_target_view(renderer * pgpurenderer, const ::int_size & size, ::pointer<render_target_view> previous):
+      m_pgpurenderer(pgpurenderer),
+      m_size(size),
+      m_prendertargetviewOld( previous)
+   {
+       m_bNeedRebuild = false;
+      m_pgpucontext = pgpurenderer->m_pgpucontext;
+      //init();
+      // Cleans up old swap chain since it's no longer needed after resizing
+      //m_prendertargetviewOld = nullptr;
+   }
+   
+   
 
-   //
-   void render_pass::init() 
+   
+   void render_target_view::init() 
    {
       createRenderPassImpl();
       createImageViews();
@@ -52,12 +61,12 @@ namespace gpu_directx
       createFramebuffers();
       createSyncObjects();
       // Cleans up old swap chain since it's no longer needed after resizing
-      m_pvkcrenderpassOld = nullptr;
+      m_prendertargetviewOld = nullptr;
 
    }
 
 
-   render_pass::~render_pass()
+   render_target_view::~render_target_view()
    {
       //for (auto imageView : m_imageviews) 
       //{
@@ -82,7 +91,7 @@ namespace gpu_directx
       //   vkDestroyFramebuffer(m_pgpucontext->logicalDevice(), framebuffer, nullptr);
       //}
 
-      //vkDestroyRenderPass(m_pgpucontext->logicalDevice(), m_vkrenderpass, nullptr);
+      //vkDestroyRenderPass(m_pgpucontext->logicalDevice(), m_vkrendertargetview, nullptr);
 
       //// cleanup synchronization objects
       //for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++)
@@ -93,14 +102,14 @@ namespace gpu_directx
    }
 
 
-   void render_pass::on_before_begin_render(frame* pframe)
+   void render_target_view::on_before_begin_render(frame* pframe)
    {
 
 
    }
 
 
-   int render_pass::get_image_index() const
+   int render_target_view::get_image_index() const
    {
       
       return m_pgpurenderer->get_frame_index(); 
@@ -109,7 +118,7 @@ namespace gpu_directx
 
 
    
-   HRESULT render_pass::acquireNextImage() 
+   HRESULT render_target_view::acquireNextImage() 
    {
 
       //vkWaitForFences(
@@ -133,7 +142,7 @@ namespace gpu_directx
    }
 
 
-   //HRESULT render_pass::submitCommandBuffers(const VkCommandBuffer* buffers)
+   //HRESULT render_target_view::submitCommandBuffers(const VkCommandBuffer* buffers)
    //{
 
    //   //if (imagesInFlight[*imageIndex] != VK_NULL_HANDLE) {
@@ -186,7 +195,7 @@ namespace gpu_directx
    //}
 
 
-   void render_pass::createRenderPassImpl() 
+   void render_target_view::createRenderPassImpl() 
    {
 
       //SwapChainSupportDetails swapChainSupport = m_pgpucontext->getSwapChainSupport();
@@ -252,7 +261,7 @@ namespace gpu_directx
    }
 
    
-   void render_pass::createImageViews() 
+   void render_target_view::createImageViews() 
    {
 
       //m_imageviews.resize(m_images.size());
@@ -282,7 +291,7 @@ namespace gpu_directx
    }
 
 
-   void render_pass::createRenderPass() 
+   void render_target_view::createRenderPass() 
    {
 
       //VkAttachmentDescription depthAttachment{};
@@ -341,7 +350,7 @@ namespace gpu_directx
       //renderPassInfo.dependencyCount = 1;
       //renderPassInfo.pDependencies = &dependency;
 
-      //if (vkCreateRenderPass(m_pgpucontext->logicalDevice(), &renderPassInfo, nullptr, &m_vkrenderpass) != VK_SUCCESS) 
+      //if (vkCreateRenderPass(m_pgpucontext->logicalDevice(), &renderPassInfo, nullptr, &m_vkrendertargetview) != VK_SUCCESS) 
       //{
 
       //   throw ::exception(error_failed,"failed to create render pass!");
@@ -351,7 +360,7 @@ namespace gpu_directx
    }
 
 
-   void render_pass::createFramebuffers() 
+   void render_target_view::createFramebuffers() 
    {
 
       //m_framebuffers.resize(imageCount());
@@ -364,7 +373,7 @@ namespace gpu_directx
       //   VkExtent2D extent = getExtent();
       //   VkFramebufferCreateInfo framebufferInfo = {};
       //   framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
-      //   framebufferInfo.renderPass = m_vkrenderpass;
+      //   framebufferInfo.renderPass = m_vkrendertargetview;
       //   framebufferInfo.attachmentCount = 2;
       //   framebufferInfo.pAttachments = attachments;
       //   framebufferInfo.width = extent.width;
@@ -387,7 +396,7 @@ namespace gpu_directx
    }
 
 
-   void render_pass::createDepthResources()
+   void render_target_view::createDepthResources()
    {
 
       //VkFormat depthFormat = findDepthFormat();
@@ -446,7 +455,7 @@ namespace gpu_directx
    }
 
 
-   void render_pass::createSyncObjects() 
+   void render_target_view::createSyncObjects() 
    {
 
       //imageAvailable.resize(MAX_FRAMES_IN_FLIGHT);
@@ -479,7 +488,7 @@ namespace gpu_directx
    }
 
    
-   //VkSurfaceFormatKHR render_pass::chooseSwapSurfaceFormat(
+   //VkSurfaceFormatKHR render_target_view::chooseSwapSurfaceFormat(
    //   const ::array<VkSurfaceFormatKHR>& availableFormats) {
    //   for (const auto& availableFormat : availableFormats) {
    //      // SRGB can be changed to "UNORM" instead
@@ -492,7 +501,7 @@ namespace gpu_directx
    //   return availableFormats[0];
    //}
 
-   //VkPresentModeKHR render_pass::chooseSwapPresentMode(
+   //VkPresentModeKHR render_target_view::chooseSwapPresentMode(
    //   const ::array<VkPresentModeKHR>& availablePresentModes) {
    //   for (const auto& availablePresentMode : availablePresentModes) {
    //      if (availablePresentMode == VK_PRESENT_MODE_MAILBOX_KHR) {
@@ -512,7 +521,7 @@ namespace gpu_directx
    //   return VK_PRESENT_MODE_FIFO_KHR;
    //}
 
-   //VkExtent2D render_pass::chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities) {
+   //VkExtent2D render_target_view::chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities) {
    //   if (capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max()) {
    //      return capabilities.currentExtent;
    //   }
@@ -529,7 +538,7 @@ namespace gpu_directx
    //   }
    //}
 
-   //VkFormat render_pass::findDepthFormat() 
+   //VkFormat render_target_view::findDepthFormat() 
    //{
 
    //   return m_pgpucontext->m_pgpudevice->m_pphysicaldevice->findSupportedFormat(

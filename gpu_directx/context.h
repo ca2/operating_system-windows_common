@@ -16,9 +16,9 @@ namespace gpu_directx
    public:
 
 
-      comptr < ID3D11Buffer> m_pbufferGlobalUbo;
-      comptr<ID3D11DeviceContext>        m_pcontext;
-      comptr<ID3D11DeviceContext1>       m_pcontext1;
+      comptr < ID3D11Buffer>              m_pbufferGlobalUbo;
+      comptr<ID3D11DeviceContext>         m_pcontext;
+      comptr<ID3D11DeviceContext1>        m_pcontext1;
 
       //itask									m_itaskGpu;
       //VkSampler m_vksampler001;

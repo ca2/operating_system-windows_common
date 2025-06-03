@@ -3,10 +3,10 @@
 #include "descriptors.h"
 #include "frame.h"
 #include "renderer.h"
-#include "accumulation_render_pass.h"
-#include "offscreen_render_pass.h"
+//#include "accumulation_render_target_view.h"
+#include "offscreen_render_target_view.h"
 #include "physical_device.h"
-#include "swap_chain_render_pass.h"
+#include "swap_chain_render_target_view.h"
 #include "initializers.h"
 #include "aura/graphics/gpu/cpu_buffer.h"
 #include "gpu_directx/shader.h"
@@ -74,14 +74,14 @@ namespace gpu_directx
    //int renderer::width()
    //{
 
-   //   return m_pvkcrenderpass->width();
+   //   return m_prendertargetview->width();
 
    //}
 
    //int renderer::height()
    //{
 
-   //   return m_pvkcrenderpass->height();
+   //   return m_prendertargetview->height();
 
    //}
 
@@ -143,7 +143,7 @@ namespace gpu_directx
 
       m_iFrameSerial2++;
 
-      m_iCurrentFrame2 = (m_iCurrentFrame2 + 1) % render_pass::MAX_FRAMES_IN_FLIGHT;
+      m_iCurrentFrame2 = (m_iCurrentFrame2 + 1) % render_target_view::MAX_FRAMES_IN_FLIGHT;
 
       on_happening(e_happening_new_frame);
 
@@ -165,7 +165,7 @@ namespace gpu_directx
    int renderer::get_frame_count() const
    {
 
-      return ::gpu_directx::render_pass::MAX_FRAMES_IN_FLIGHT;
+      return ::gpu_directx::render_target_view::MAX_FRAMES_IN_FLIGHT;
 
    }
 
@@ -179,7 +179,7 @@ namespace gpu_directx
 
       //auto size = m_pimpact->size();
 
-      defer_update_render_pass();
+      defer_update_renderer();
 
       //auto extent = vkcWindow.getExtent();
       //while (extent.width == 0 || extent.height == 0) {
@@ -188,11 +188,11 @@ namespace gpu_directx
       //vkDeviceWaitIdle(m_pgpucontext->logicalDevice());
 
       //if (vkcSwapChain == nullptr) {
-      //	vkcSwapChain = std::make_unique<swap_chain_render_pass>(m_pgpucontext, extent);
+      //	vkcSwapChain = std::make_unique<swap_chain_render_target_view>(m_pgpucontext, extent);
       //}
       //else {
-      //	::pointer<swap_chain_render_pass> oldSwapChain = std::move(vkcSwapChain);
-      //	vkcSwapChain = std::make_unique<swap_chain_render_pass>(m_pgpucontext, extent, oldSwapChain);
+      //	::pointer<swap_chain_render_target_view> oldSwapChain = std::move(vkcSwapChain);
+      //	vkcSwapChain = std::make_unique<swap_chain_render_target_view>(m_pgpucontext, extent, oldSwapChain);
       //	if (!oldSwapChain->compareSwapFormats(*vkcSwapChain.get())) {
       //		throw ::exception(error_failed, "Swap chain image(or depth) format has changed!");
       //	}
@@ -201,65 +201,65 @@ namespace gpu_directx
    }
 
 
-   void renderer::defer_update_render_pass()
+   void renderer::defer_update_renderer()
    {
 
-      //if (m_extentRenderer.width == m_pgpucontext->rectangle().width()
-      //   && m_extentRenderer.height == m_pgpucontext->rectangle().height())
-      //{
+      if (m_sizeRenderer.width() == m_pgpucontext->rectangle().width()
+         && m_sizeRenderer.height() == m_pgpucontext->rectangle().height())
+      {
 
-      //   return;
+         return;
 
-      //}
+      }
 
       m_bNeedToRecreateSwapChain = true;
 
-      //m_extentRenderer.width = m_pgpucontext->rectangle().width();
+      auto size = m_pgpucontext->rectangle().size();
 
-      //m_extentRenderer.height = m_pgpucontext->rectangle().height();
+      m_sizeRenderer = size;
 
       auto eoutput = m_eoutput;
 
-//      if (eoutput == ::gpu::e_output_cpu_buffer)
-//      {
-//
-//         auto poffscreenrenderpass = __allocate offscreen_render_pass(this, m_extentRenderer, m_pvkcrenderpass);
+      if (eoutput == ::gpu::e_output_cpu_buffer)
+      {
+
+         auto poffscreenrendertargetview = __allocate offscreen_render_target_view(this, size, m_prendertargetview);
 //#ifdef WINDOWS_DESKTOP
-//         poffscreenrenderpass->m_formatImage = VK_FORMAT_B8G8R8A8_UNORM;
+//         poffscreenrendertargetview->m_formatImage = VK_FORMAT_B8G8R8A8_UNORM;
 //#else
-//         poffscreenrenderpass->m_formatImage = VK_FORMAT_R8G8B8A8_UNORM;
+//         poffscreenrendertargetview->m_formatImage = VK_FORMAT_R8G8B8A8_UNORM;
 //#endif
-//         m_pvkcrenderpass = poffscreenrenderpass;
+         m_prendertargetview = poffscreenrendertargetview;
 //         //m_prendererResolve.release();
 //
-//      }
-//      else if (eoutput == ::gpu::e_output_swap_chain)
-//      {
-//
-//         m_pvkcrenderpass = __allocate swap_chain_render_pass(this, m_extentRenderer, m_pvkcrenderpass);
-//         //m_prendererResolve.release();
-//
-//      }
+      }
+      else if (eoutput == ::gpu::e_output_swap_chain)
+      {
+
+         m_prendertargetview = __allocate swap_chain_render_target_view(this, size, m_prendertargetview);
+         //m_prendererResolve.release();
+
+      }
 //      else if (eoutput == ::gpu::e_output_gpu_buffer)
 //      {
 //
-//         auto poffscreenrenderpass = __allocate offscreen_render_pass(this, m_extentRenderer, m_pvkcrenderpass);
+//         auto poffscreenrendertargetview = __allocate offscreen_render_target_view(this, m_extentRenderer, m_prendertargetview);
 //#ifdef WINDOWS_DESKTOP
-//         poffscreenrenderpass->m_formatImage = VK_FORMAT_B8G8R8A8_UNORM;
+//         poffscreenrendertargetview->m_formatImage = VK_FORMAT_B8G8R8A8_UNORM;
 //#else
-//         poffscreenrenderpass->m_formatImage = VK_FORMAT_R8G8B8A8_UNORM;
+//         poffscreenrendertargetview->m_formatImage = VK_FORMAT_R8G8B8A8_UNORM;
 //#endif
-//         m_pvkcrenderpass = poffscreenrenderpass;
+//         m_prendertargetview = poffscreenrendertargetview;
 //         //m_prendererResolve;
 //
 //      }
 //      else if (eoutput == ::gpu::e_output_color_and_alpha_accumulation_buffers)
 //      {
 //
-//         auto paccumulationrenderpass = __allocate accumulation_render_pass(this, m_extentRenderer, m_pvkcrenderpass);
-//         paccumulationrenderpass->m_formatImage = VK_FORMAT_R32G32B32A32_SFLOAT;
-//         paccumulationrenderpass->m_formatAlphaAccumulation = VK_FORMAT_R32_SFLOAT;
-//         m_pvkcrenderpass = paccumulationrenderpass;
+//         auto paccumulationrendertargetview = __allocate accumulation_render_target_view(this, m_extentRenderer, m_prendertargetview);
+//         paccumulationrendertargetview->m_formatImage = VK_FORMAT_R32G32B32A32_SFLOAT;
+//         paccumulationrendertargetview->m_formatAlphaAccumulation = VK_FORMAT_R32_SFLOAT;
+//         m_prendertargetview = paccumulationrendertargetview;
 //
 //         //__construct_new(m_prendererResolve);
 //
@@ -267,24 +267,24 @@ namespace gpu_directx
 //
 //         //m_prendererResolve->set_placement(m_pgpucontext->rectangle);
 //         //
-//         //            auto poffscreenrenderpass = __allocate offscreen_render_pass(m_pgpucontext, m_extentRenderer, m_pvkcrenderpassResolve);
+//         //            auto poffscreenrendertargetview = __allocate offscreen_render_target_view(m_pgpucontext, m_extentRenderer, m_prendertargetviewResolve);
 //         //#ifdef WINDOWS_DESKTOP
-//         //            poffscreenrenderpass->m_formatImage = VK_FORMAT_B8G8R8A8_UNORM;
+//         //            poffscreenrendertargetview->m_formatImage = VK_FORMAT_B8G8R8A8_UNORM;
 //         //#else
-//         //            poffscreenrenderpass->m_formatImage = VK_FORMAT_R8G8B8A8_UNORM;
+//         //            poffscreenrendertargetview->m_formatImage = VK_FORMAT_R8G8B8A8_UNORM;
 //         //#endif
-//         //            m_pvkcrenderpassResolve = poffscreenrenderpass;
+//         //            m_prendertargetviewResolve = poffscreenrendertargetview;
 //      }
 //      else if (eoutput == ::gpu::e_output_resolve_color_and_alpha_accumulation_buffers)
 //      {
 //
-//         auto poffscreenrenderpass = __allocate offscreen_render_pass(this, m_extentRenderer, m_pvkcrenderpass);
+//         auto poffscreenrendertargetview = __allocate offscreen_render_target_view(this, m_extentRenderer, m_prendertargetview);
 //#ifdef WINDOWS_DESKTOP
-//         poffscreenrenderpass->m_formatImage = VK_FORMAT_B8G8R8A8_UNORM;
+//         poffscreenrendertargetview->m_formatImage = VK_FORMAT_B8G8R8A8_UNORM;
 //#else
-//         poffscreenrenderpass->m_formatImage = VK_FORMAT_R8G8B8A8_UNORM;
+//         poffscreenrendertargetview->m_formatImage = VK_FORMAT_R8G8B8A8_UNORM;
 //#endif
-//         m_pvkcrenderpass = poffscreenrenderpass;
+//         m_prendertargetview = poffscreenrendertargetview;
 //
 //      }
 //      else
@@ -294,20 +294,20 @@ namespace gpu_directx
 //
 //      }
 //
-//      if (m_pvkcrenderpass->m_images.is_empty())
-//      {
-//
-//         m_pvkcrenderpass->init();
-//
-//      }
+      if (!m_prendertargetview->has_ok_flag() && m_sizeRenderer.area() > 0)
+      {
+
+         m_prendertargetview->init();
+
+      }
 
       //if (m_prendererResolve)
       //{
 
-      //	if (m_prendererResolve->m_pvkcrenderpass->m_images.is_empty())
+      //	if (m_prendererResolve->m_prendertargetview->m_images.is_empty())
       //	{
 
-      //		m_prendererResolve->defer_update_render_pass();
+      //		m_prendererResolve->defer_update_render_target_view();
 
       //	}
 
@@ -321,7 +321,7 @@ namespace gpu_directx
    void renderer::createCommandBuffers()
    {
 
-      //commandBuffers.resize(render_pass::MAX_FRAMES_IN_FLIGHT);
+      //commandBuffers.resize(render_target_view::MAX_FRAMES_IN_FLIGHT);
 
       //VkCommandBufferAllocateInfo allocInfo{};
       //allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
@@ -367,13 +367,13 @@ namespace gpu_directx
       //if (m_bOffScreen)
       {
 
-         auto result = m_pvkcrenderpass->acquireNextImage();
+         auto result = m_prendertargetview->acquireNextImage();
 
          //if (result == VK_ERROR_OUT_OF_DATE_KHR
-         //   || m_pvkcrenderpass->m_bNeedRebuild)
+         //   || m_prendertargetview->m_bNeedRebuild)
          //{
          //   vkDeviceWaitIdle(m_pgpucontext->logicalDevice());
-         //   m_pvkcrenderpass->init();
+         //   m_prendertargetview->init();
          //   //set_placement(size);
          //   //throw ::exception(todo, "resize?!?!");
          //   //return nullptr;
@@ -651,7 +651,7 @@ namespace gpu_directx
 
   //    VK_CHECK_RESULT(vkEndCommandBuffer(copyCmd));
 
-  //    ::cast < offscreen_render_pass > ppass = m_prenderer->m_pvkcrenderpass;
+  //    ::cast < offscreen_render_target_view > ppass = m_prenderer->m_prendertargetview;
 
   //    ppass->submitSamplingWork(copyCmd);
 
@@ -741,19 +741,25 @@ namespace gpu_directx
    void renderer::sample()
    {
 
+      //::cast < ::gpu_directx::offscreen_render_target_view > ptargetview = m_prendertargetview;
+
+      //__defer_construct(m_pgpucontext->m_pcpubuffer);
+
+      m_pgpucontext->m_pcpubuffer->gpu_read();
+
       //auto callback = m_callbackImage32CpuBuffer;
 
   //      if (callback)
       //{
 
-      //   m_pcpubuffersampler->update(m_pvkcrenderpass->getExtent());
+      //   m_pcpubuffersampler->update(m_prendertargetview->getExtent());
       //   /*
       //      Copy framebuffer image to host visible image
       //   */
       //   /*const char* imagedata;*/
       //   {
 
-      //      m_pcpubuffersampler->sample(m_pvkcrenderpass->m_images[get_frame_index()]);
+      //      m_pcpubuffersampler->sample(m_prendertargetview->m_images[get_frame_index()]);
 
       //      //// Create the linear tiled destination image to copy to and to read the memory from
 
@@ -783,14 +789,14 @@ namespace gpu_directx
       //      //imageCopyRegion.srcSubresource.layerCount = 1;
       //      //imageCopyRegion.dstSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
       //      //imageCopyRegion.dstSubresource.layerCount = 1;
-      //      //imageCopyRegion.extent.width = m_pvkcrenderpass->width();
-      //      //imageCopyRegion.extent.height = m_pvkcrenderpass->height();
+      //      //imageCopyRegion.extent.width = m_prendertargetview->width();
+      //      //imageCopyRegion.extent.height = m_prendertargetview->height();
       //      //imageCopyRegion.extent.depth = 1;
 
       //      //vkCmdCopyImage(
       //      //	copyCmd,
       //      //	//colorAttachment.image, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL,
-      //      //	m_pvkcrenderpass->m_images[iIndex], VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL,
+      //      //	m_prendertargetview->m_images[iIndex], VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL,
       //      //	dstImage, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
       //      //	1,
       //      //	&imageCopyRegion);
@@ -842,8 +848,8 @@ namespace gpu_directx
       //      //if (callback)
       //      //{
       //      //	callback((void*)imagedata, 
-      //      //		m_pvkcrenderpass->width(),
-      //      //		m_pvkcrenderpass->height(),
+      //      //		m_prendertargetview->width(),
+      //      //		m_prendertargetview->height(),
       //      //		subResourceLayout.rowPitch);
 
       //      //}
@@ -919,7 +925,7 @@ namespace gpu_directx
    //
    //		auto cmdBuffer = m_pgpucontext->beginSingleTimeCommands();
    //
-   //		::cast < accumulation_render_pass > ppass = m_pvkcrenderpass;
+   //		::cast < accumulation_render_target_view > ppass = m_prendertargetview;
    //
    //		auto iPassCurrentFrame = get_frame_index();
    //
@@ -955,14 +961,14 @@ namespace gpu_directx
    //		::array<VkSemaphore> waitSemaphores;
    //		::array<VkPipelineStageFlags> waitStages;
    //		waitStages.add(VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT);
-   //		waitSemaphores.add(m_pvkcrenderpass->renderFinishedSemaphores[iPassCurrentFrame]);
+   //		waitSemaphores.add(m_prendertargetview->renderFinishedSemaphores[iPassCurrentFrame]);
    //		submitInfo.waitSemaphoreCount = waitSemaphores.size();
    //		submitInfo.pWaitSemaphores = waitSemaphores.data();
    //		submitInfo.pWaitDstStageMask = waitStages.data();
    //		m_pgpucontext->endSingleTimeCommands(cmdBuffer, 1, &submitInfo);
    //
-   //		//m_prendererResolve->m_pvkcrenderpass->m_semaphoreaWaitToSubmit.add(
-   //		//   m_pvkcrenderpass->renderFinishedSemaphores[iPassCurrentFrame]
+   //		//m_prendererResolve->m_prendertargetview->m_semaphoreaWaitToSubmit.add(
+   //		//   m_prendertargetview->renderFinishedSemaphores[iPassCurrentFrame]
    //		//);
    ////
    //		//m_prendererResolve->_resolve_color_and_alpha_accumulation_buffers();
@@ -979,7 +985,7 @@ namespace gpu_directx
 
       //	auto iFrameIndex1 = get_frame_index();
 
-      //	VkImage image1 = m_pvkcrenderpass->m_images[iFrameIndex1];
+      //	VkImage image1 = m_prendertargetview->m_images[iFrameIndex1];
 
       //	if (is_starting_frame())
       //	{
@@ -1104,20 +1110,20 @@ namespace gpu_directx
 
       //		::cast < renderer > pgpurendererParent = m_pgpucontext->m_pgpurenderer;
 
-      //		::cast < accumulation_render_pass > paccumulationrenderpass = pgpurendererParent->m_pvkcrenderpass;
+      //		::cast < accumulation_render_target_view > paccumulationrendertargetview = pgpurendererParent->m_prendertargetview;
 
       //		for (int i = 0; i < get_frame_count(); i++)
       //		{
       //			VkDescriptorImageInfo imageinfo;
 
       //			imageinfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-      //			imageinfo.imageView = paccumulationrenderpass->m_imageviews[i];
+      //			imageinfo.imageView = paccumulationrendertargetview->m_imageviews[i];
       //			imageinfo.sampler = m_pgpucontext->_001VkSampler();
 
       //			VkDescriptorImageInfo imageinfo2;
 
       //			imageinfo2.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-      //			imageinfo2.imageView = paccumulationrenderpass->m_imageviewsAlphaAccumulation[i];
+      //			imageinfo2.imageView = paccumulationrendertargetview->m_imageviewsAlphaAccumulation[i];
       //			imageinfo2.sampler = m_pgpucontext->_001VkSampler();
 
       //			auto& playout = m_psetdescriptorlayoutResolve;
@@ -1229,12 +1235,12 @@ namespace gpu_directx
       //if (vkEndCommandBuffer(commandBuffer) != VK_SUCCESS) {
       //   throw ::exception(error_failed, "failed to record command buffer!");
       //}
-      //auto result = m_pvkcrenderpass->submitCommandBuffers(&commandBuffer);
+      //auto result = m_prendertargetview->submitCommandBuffers(&commandBuffer);
       //if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR ||
       //   m_bNeedToRecreateSwapChain)
       //{
       //   m_bNeedToRecreateSwapChain = false;
-      //   defer_update_render_pass();
+      //   defer_update_render_target_view();
       //}
       //else if (result != VK_SUCCESS)
       //{
@@ -1269,7 +1275,7 @@ namespace gpu_directx
       //   if (vkEndCommandBuffer(commandBuffer) != VK_SUCCESS) {
       //      throw ::exception(error_failed, "failed to record command buffer!");
       //   }
-      //   auto result = m_pvkcrenderpass->submitCommandBuffers(&commandBuffer, &currentImageIndex);
+      //   auto result = m_prendertargetview->submitCommandBuffers(&commandBuffer, &currentImageIndex);
       //   //if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR ||
       //   //	vkcWindow.wasWindowResized()) 
       //   //{
@@ -1292,7 +1298,7 @@ namespace gpu_directx
 
       }
       isFrameStarted = false;
-      //currentFrameIndex = (currentFrameIndex + 1) % render_pass::MAX_FRAMES_IN_FLIGHT;
+      //currentFrameIndex = (currentFrameIndex + 1) % render_target_view::MAX_FRAMES_IN_FLIGHT;
 
       //}
       //else
@@ -1316,7 +1322,7 @@ namespace gpu_directx
       //	//	throw ::exception(error_failed, "failed to present swap chain image!");
       //	//}
       //	isFrameStarted = false;
-      //	currentFrameIndex = (currentFrameIndex + 1) % swap_chain_render_pass::MAX_FRAMES_IN_FLIGHT;
+      //	currentFrameIndex = (currentFrameIndex + 1) % swap_chain_render_target_view::MAX_FRAMES_IN_FLIGHT;
 
       //}
 
@@ -2275,7 +2281,7 @@ namespace gpu_directx
    void renderer::_blend_renderer(::gpu_directx::renderer* prendererSrc, bool bYSwap)
    {
 
-    //  VkImage image = prendererSrc->m_pvkcrenderpass->m_images[prendererSrc->get_frame_index()];
+    //  VkImage image = prendererSrc->m_prendertargetview->m_images[prendererSrc->get_frame_index()];
 
     //  auto rectanglePlacement = prendererSrc->m_pgpucontext->m_rectangle;
 
@@ -2471,7 +2477,7 @@ namespace gpu_directx
     //     //     }
 
     //     ::cast < device > pgpudevice = m_pgpucontext->m_pgpudevice;
-    //     ::cast < accumulation_render_pass > ppass = prendererSrc->m_pvkcrenderpass;
+    //     ::cast < accumulation_render_target_view > ppass = prendererSrc->m_prendertargetview;
 
     //     for (int i = 0; i < get_frame_count(); i++)
     //     {
@@ -2598,11 +2604,11 @@ namespace gpu_directx
 
       //   VkRenderPassBeginInfo renderPassInfo{};
       //   renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
-      //   renderPassInfo.renderPass = m_pvkcrenderpass->getRenderPass();
-      //   renderPassInfo.framebuffer = m_pvkcrenderpass->getCurrentFrameBuffer();
+      //   renderPassInfo.renderPass = m_prendertargetview->getRenderPass();
+      //   renderPassInfo.framebuffer = m_prendertargetview->getCurrentFrameBuffer();
 
       //   renderPassInfo.renderArea.offset = { 0, 0 };
-      //   renderPassInfo.renderArea.extent = m_pvkcrenderpass->getExtent();
+      //   renderPassInfo.renderArea.extent = m_prendertargetview->getExtent();
 
       //   VkClearValue clearValues[2];
       //   //clearValues[0].color = { 2.01f, 0.01f, 0.01f, 1.0f };
@@ -2616,11 +2622,11 @@ namespace gpu_directx
       //   VkViewport viewport{};
       //   viewport.x = 0.0f;
       //   viewport.y = 0.0f;
-      //   viewport.width = static_cast<float>(m_pvkcrenderpass->getExtent().width);
-      //   viewport.height = static_cast<float>(m_pvkcrenderpass->getExtent().height);
+      //   viewport.width = static_cast<float>(m_prendertargetview->getExtent().width);
+      //   viewport.height = static_cast<float>(m_prendertargetview->getExtent().height);
       //   viewport.minDepth = 0.0f;
       //   viewport.maxDepth = 1.0f;
-      //   VkRect2D scissor{ {0, 0}, m_pvkcrenderpass->getExtent() };
+      //   VkRect2D scissor{ {0, 0}, m_prendertargetview->getExtent() };
       //   vkCmdSetViewport(commandBuffer, 0, 1, &viewport);
       //   vkCmdSetScissor(commandBuffer, 0, 1, &scissor);
 
@@ -2672,12 +2678,12 @@ namespace gpu_directx
 
       //auto commandBuffer = pframe->commandBuffer;
 
-      ////m_pvkcrenderpass->m_iFrameSerial++;
+      ////m_prendertargetview->m_iFrameSerial++;
 
-      ////m_pvkcrenderpass->m_iCurrentFrame = (m_pvkcrenderpass->m_iCurrentFrame + 1) % 
+      ////m_prendertargetview->m_iCurrentFrame = (m_prendertargetview->m_iCurrentFrame + 1) % 
       ////   get_frame_count();
 
-      //m_pvkcrenderpass->on_before_begin_render(pframe);
+      //m_prendertargetview->on_before_begin_render(pframe);
 
       ////if (m_bOffScreen)
       //{
@@ -2689,11 +2695,11 @@ namespace gpu_directx
 
       //   VkRenderPassBeginInfo renderPassInfo{};
       //   renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
-      //   renderPassInfo.renderPass = m_pvkcrenderpass->getRenderPass();
-      //   renderPassInfo.framebuffer = m_pvkcrenderpass->getCurrentFrameBuffer();
+      //   renderPassInfo.renderPass = m_prendertargetview->getRenderPass();
+      //   renderPassInfo.framebuffer = m_prendertargetview->getCurrentFrameBuffer();
 
       //   renderPassInfo.renderArea.offset = { 0, 0 };
-      //   renderPassInfo.renderArea.extent = m_pvkcrenderpass->getExtent();
+      //   renderPassInfo.renderArea.extent = m_prendertargetview->getExtent();
 
       //   VkClearValue clearValues[2];
       //   //clearValues[0].color = { 2.01f, 0.01f, 0.01f, 1.0f };
@@ -2707,11 +2713,11 @@ namespace gpu_directx
       //   VkViewport viewport{};
       //   viewport.x = 0.0f;
       //   viewport.y = 0.0f;
-      //   viewport.width = static_cast<float>(m_pvkcrenderpass->getExtent().width);
-      //   viewport.height = static_cast<float>(m_pvkcrenderpass->getExtent().height);
+      //   viewport.width = static_cast<float>(m_prendertargetview->getExtent().width);
+      //   viewport.height = static_cast<float>(m_prendertargetview->getExtent().height);
       //   viewport.minDepth = 0.0f;
       //   viewport.maxDepth = 1.0f;
-      //   VkRect2D scissor{ {0, 0}, m_pvkcrenderpass->getExtent() };
+      //   VkRect2D scissor{ {0, 0}, m_prendertargetview->getExtent() };
       //   vkCmdSetViewport(commandBuffer, 0, 1, &viewport);
       //   vkCmdSetScissor(commandBuffer, 0, 1, &scissor);
 
@@ -2802,11 +2808,11 @@ namespace gpu_directx
       ////if (m_bOffScreen)
       //{
 
-      //   auto result = m_pvkcrenderpass->acquireNextImage();
+      //   auto result = m_prendertargetview->acquireNextImage();
 
       //   if (result == VK_ERROR_OUT_OF_DATE_KHR) {
       //      //defer_layout();
-      //      m_pvkcrenderpass->init();
+      //      m_prendertargetview->init();
       //      //throw ::exception(todo, "resize happened?!?!");
       //      return nullptr;
       //   }
@@ -2824,9 +2830,9 @@ namespace gpu_directx
       //   if (vkBeginCommandBuffer(commandBuffer, &beginInfo) != VK_SUCCESS) {
       //      throw ::exception(error_failed, "failed to begin recording command buffer!");
       //   }
-      //   auto pframe = __create_new < ::gpu_directx::frame >();
+        //auto pframe = __create_new < ::gpu_directx::frame >();
       //   pframe->commandBuffer = commandBuffer;
-      //   m_pframe = pframe;
+         __defer_construct(m_pframe);
       //   on_happening(e_happening_begin_frame);
       //   return m_pframe;
 
@@ -2860,10 +2866,9 @@ namespace gpu_directx
       ////}
       on_happening(e_happening_begin_frame);
 
-      return {};
+      return m_pframe;
 
    }
-
 
    void renderer::endFrame()
    {
@@ -2880,13 +2885,13 @@ namespace gpu_directx
       //   throw ::exception(error_failed, "failed to record command buffer!");
       //}
 
-      //auto result = m_pvkcrenderpass->submitCommandBuffers(&commandBuffer);
+      //auto result = m_prendertargetview->submitCommandBuffers(&commandBuffer);
 
       //if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR ||
       //   m_bNeedToRecreateSwapChain)
       //{
       //   m_bNeedToRecreateSwapChain = false;
-      //   defer_update_render_pass();
+      //   defer_update_render_target_view();
       //}
       //else if (result != VK_SUCCESS)
       //{
@@ -2907,8 +2912,23 @@ namespace gpu_directx
 
       ////}
 
-      ////rrentImageIndex = m_pvkcrenderpass->currentFrame;
-      ////currentFrameIndex = (currentFrameIndex + 1) % ::gpu_directx::render_pass::MAX_FRAMES_IN_FLIGHT;
+      auto eoutput = m_pgpucontext->m_eoutput;
+
+      if (eoutput == ::gpu::e_output_swap_chain)
+      {
+
+         m_pgpucontext->swap_buffers();
+
+      }
+      else if (eoutput == ::gpu::e_output_cpu_buffer)
+      {
+
+         this->sample();
+
+      }
+
+      ////rrentImageIndex = m_prendertargetview->currentFrame;
+      ////currentFrameIndex = (currentFrameIndex + 1) % ::gpu_directx::render_target_view::MAX_FRAMES_IN_FLIGHT;
 
       ////}
       ////else
@@ -2932,7 +2952,7 @@ namespace gpu_directx
       ////	//	throw ::exception(error_failed, "failed to present swap chain image!");
       ////	//}
       ////	isFrameStarted = false;
-      ////	currentFrameIndex = (currentFrameIndex + 1) % swap_chain_render_pass::MAX_FRAMES_IN_FLIGHT;
+      ////	currentFrameIndex = (currentFrameIndex + 1) % swap_chain_render_target_view::MAX_FRAMES_IN_FLIGHT;
 
       ////}
 
@@ -3065,9 +3085,9 @@ namespace gpu_directx
 
       m_pgpucontext->set_placement(prenderer->m_pgpucontext->rectangle());
 
-      //VkImage image = prenderer->m_pvkcrenderpass->m_images[prenderer->get_frame_index()];
+      //VkImage image = prenderer->m_prendertargetview->m_images[prenderer->get_frame_index()];
 
-      //defer_update_render_pass();
+      defer_update_renderer();
 
       //on_new_frame();
 
@@ -3106,7 +3126,7 @@ namespace gpu_directx
       //   //VkSubmitInfo submitInfo = {};
       //   //submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 
-      //   //VkSemaphore waitSemaphores[] = { prendererSrc->m_pvkcrenderpass->renderFinishedSemaphores[prendererSrc->m_pvkcrenderpass->currentFrame] };
+      //   //VkSemaphore waitSemaphores[] = { prendererSrc->m_prendertargetview->renderFinishedSemaphores[prendererSrc->m_prendertargetview->currentFrame] };
       //   //VkPipelineStageFlags waitStages[] = { VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT };
       //   //submitInfo.waitSemaphoreCount = 1;
       //   //submitInfo.pWaitSemaphores = waitSemaphores;
@@ -3138,14 +3158,14 @@ namespace gpu_directx
       //   ::array<VkSemaphore> waitSemaphores;
       //   ::array<VkPipelineStageFlags> waitStages;
       //   waitStages.add(VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT);
-      //   waitSemaphores.add(prenderer->m_pvkcrenderpass->renderFinishedSemaphores[prenderer->get_frame_index()]);
+      //   waitSemaphores.add(prenderer->m_prendertargetview->renderFinishedSemaphores[prenderer->get_frame_index()]);
       //   submitInfo.waitSemaphoreCount = waitSemaphores.size();
       //   submitInfo.pWaitSemaphores = waitSemaphores.data();
       //   submitInfo.pWaitDstStageMask = waitStages.data();
       //   m_pgpucontext->endSingleTimeCommands(cmdBuffer, 1, &submitInfo);
 
-      //   //m_prendererResolve->m_pvkcrenderpass->m_semaphoreaWaitToSubmit.add(
-      //   //   m_pvkcrenderpass->renderFinishedSemaphores[iPassCurrentFrame]
+      //   //m_prendererResolve->m_prendertargetview->m_semaphoreaWaitToSubmit.add(
+      //   //   m_prendertargetview->renderFinishedSemaphores[iPassCurrentFrame]
       //   //);
 
 
@@ -3154,7 +3174,7 @@ namespace gpu_directx
       //if (auto pframe = beginFrame())
       //{
 
-      //   m_pvkcrenderpass->m_semaphoreaSignalOnSubmit.add(prendererSrc->m_pvkcrenderpass->imageAvailableSemaphores[prendererSrc->get_frame_index()]);
+      //   m_prendertargetview->m_semaphoreaSignalOnSubmit.add(prendererSrc->m_prendertargetview->imageAvailableSemaphores[prendererSrc->get_frame_index()]);
 
 
       //   //on_begin_frame();
@@ -3232,7 +3252,7 @@ namespace gpu_directx
 
       ::cast < renderer > prenderer = pgpurendererSrc;
 
-      //VkImage vkimage = prenderer->m_pvkcrenderpass->m_images[prenderer->get_frame_index()];
+      //VkImage vkimage = prenderer->m_prendertargetview->m_images[prenderer->get_frame_index()];
 
       //::int_rectangle rectangle = prenderer->m_pgpucontext->rectangle();
 
@@ -3256,14 +3276,14 @@ namespace gpu_directx
       //::array<VkSemaphore> waitSemaphores;
       //::array<VkPipelineStageFlags> waitStages;
       //waitStages.add(VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT);
-      //waitSemaphores.add(prenderer->m_pvkcrenderpass->renderFinishedSemaphores[prenderer->get_frame_index()]);
+      //waitSemaphores.add(prenderer->m_prendertargetview->renderFinishedSemaphores[prenderer->get_frame_index()]);
       //submitInfo.waitSemaphoreCount = waitSemaphores.size();
       //submitInfo.pWaitSemaphores = waitSemaphores.data();
       //submitInfo.pWaitDstStageMask = waitStages.data();
 
       //m_pgpucontext->endSingleTimeCommands(copyCmd);
 
-      //defer_update_render_pass();
+      //defer_update_render_target_view();
 
       //on_new_frame();
 

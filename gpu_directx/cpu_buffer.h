@@ -26,6 +26,16 @@ namespace gpu_directx
       
 
 
+      //// Utility function to read RGBA pixel data from a GPU texture
+      //void ReadBackTextureRGBA(
+      //   //memory& memory,
+      //   //ID3D11Device* device,
+      //   //ID3D11DeviceContext* context,
+      //   ID3D11Texture2D* offscreenTexture);
+      //   //UINT* outWidth,
+      //   //UINT* outHeight)
+    
+
    };
 
 

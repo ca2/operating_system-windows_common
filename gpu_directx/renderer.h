@@ -5,7 +5,7 @@
 #include "context.h"
 //#include "offscreen.h"
 //#include "swapchain.h"
-#include "render_pass.h"
+#include "render_target_view.h"
 #include "aura/graphics/gpu/renderer.h"
 
 
@@ -89,9 +89,9 @@ namespace gpu_directx
       //::pointer < ::user::graphics3d >	m_pimpact;
       ::pointer < context >				               m_pgpucontext;
       ::pointer < cpu_buffer_sampler >	               m_pcpubuffersampler;
-      //::pointer<swap_chain_render_pass>			m_pvkcswapchain;
-      //::pointer<offscreen_render_pass>			m_pvkcoffscreen;
-      ::pointer<render_pass>			                  m_pvkcrenderpass;
+      //::pointer<swap_chain_render_target_view>			m_pvkcswapchain;
+      //::pointer<offscreen_render_target_view>			m_pvkcoffscreen;
+      ::pointer<render_target_view>			            m_prendertargetview;
       //::pointer<renderer>			                     m_prendererResolve;
       //::pointer<::gpu::shader>                        m_pshaderResolve;
       //::pointer<model>                                m_pmodelResolve;
@@ -117,6 +117,8 @@ namespace gpu_directx
       ::collection::index m_iCurrentFrame2 = -1;
       ::collection::index m_iFrameSerial2 = -1;
 
+      ::int_size m_sizeRenderer;
+
 
       renderer();
       ~renderer();
@@ -139,7 +141,7 @@ namespace gpu_directx
       //VkRenderPass getRenderPass() const
       //{
 
-      //   return m_pvkcrenderpass->getRenderPass();
+      //   return m_prendertargetview->getRenderPass();
       //   //return m_bOffScreen ?
       //      //m_pvkcoffscreen->getRenderPass():
       //      //m_pvkcswapchain->getRenderPass(); 
@@ -157,7 +159,7 @@ namespace gpu_directx
          //if (m_bOffScreen)
          {
 
-            return m_pvkcrenderpass->extentAspectRatio();
+            return m_prendertargetview->extentAspectRatio();
 
          }
          //else
@@ -181,7 +183,7 @@ namespace gpu_directx
       int get_frame_index() const override;
       int get_frame_count() const override;
 
-      void defer_update_render_pass();
+      void defer_update_renderer() override;
 
       //::pointer < ::graphics3d::frame> beginFrame() override;
       //void endFrame() override;

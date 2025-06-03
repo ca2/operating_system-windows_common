@@ -36,15 +36,19 @@ namespace gpu_directx
    }
 
 
-   ::comptr < ID3DBlob> shader::create_shader_blob(const ::block& block)
+   ::comptr < ID3DBlob> shader::create_vertex_shader_blob(const ::block& block)
    {
 
       comptr <ID3DBlob> pblobShader;
       comptr <ID3DBlob> pblobError;
 
+      auto data = (const char*)block.data();
+
+      auto size = block.size();
+
       HRESULT hr = D3DCompile(
-         block.data(),            // pointer to shader source
-         block.size(),             // size of shader source
+         data,            // pointer to shader source
+         size,             // size of shader source
          nullptr,                       // optional source name
          nullptr,                       // macro definitions
          nullptr,                       // include handler
@@ -62,6 +66,52 @@ namespace gpu_directx
          if (pblobError)
          {
 
+            ::string strError((const char *) pblobError->GetBufferPointer(),
+               pblobError->GetBufferSize());
+
+            throw ::exception(error_failed);
+
+         }
+      }
+
+      return pblobShader;
+
+   }
+
+
+   ::comptr < ID3DBlob> shader::create_pixel_shader_blob(const ::block& block)
+   {
+
+      comptr <ID3DBlob> pblobShader;
+      comptr <ID3DBlob> pblobError;
+
+      auto data = (const char*)block.data();
+
+      auto size = block.size();
+
+      HRESULT hr = D3DCompile(
+         data,            // pointer to shader source
+         size,             // size of shader source
+         nullptr,                       // optional source name
+         nullptr,                       // macro definitions
+         nullptr,                       // include handler
+         "PSMain",                      // entry point
+         "ps_5_0",                      // target profile (e.g., vs_5_0, ps_5_0)
+         0,                             // compile flags
+         0,                             // effect flags
+         &pblobShader,                   // compiled shader
+         &pblobError                     // error messages
+      );
+
+      if (FAILED(hr))
+      {
+
+         if (pblobError)
+         {
+
+            ::string strError((const char*)pblobError->GetBufferPointer(),
+               pblobError->GetBufferSize());
+
             throw ::exception(error_failed);
 
          }
@@ -75,7 +125,7 @@ namespace gpu_directx
    void shader::create_vertex_shader(const ::block& block)
    {
 
-      auto pblobShader = create_shader_blob(block);
+      auto pblobShader = create_vertex_shader_blob(block);
 
       ::cast < device > pgpudevice = m_pgpurenderer->m_pgpucontext->m_pgpudevice;
 
@@ -96,12 +146,18 @@ namespace gpu_directx
       ::array < D3D11_INPUT_ELEMENT_DESC > layout;
       
       layout.add({ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 });
-      layout.add({ "COLOR",    0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 });
+      layout.add({ "COLOR",    0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 });
+      layout.add({ "NORMAL",    0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 24, D3D11_INPUT_PER_VERTEX_DATA, 0 });
+      layout.add({ "TEXCOORD",   0, DXGI_FORMAT_R32G32_FLOAT, 0, 36, D3D11_INPUT_PER_VERTEX_DATA, 0 });
+      
 
+      auto data = layout.data();
+      auto size = layout.size();
+      
       //ID3D11InputLayout* inputLayout = nullptr;
       hresult = pgpudevice->m_pdevice->CreateInputLayout(
-         layout.data(),
-         layout.size(),
+         data,
+         size,
          pblobShader->GetBufferPointer(),
          pblobShader->GetBufferSize(),
          &m_pinputlayout
@@ -119,7 +175,7 @@ namespace gpu_directx
    void shader::create_pixel_shader(const ::block& block)
    {
 
-      auto pblobShader = create_shader_blob(block);
+      auto pblobShader = create_pixel_shader_blob(block);
 
       ::cast < device > pgpudevice = m_pgpurenderer->m_pgpucontext->m_pgpudevice;
 
@@ -363,8 +419,8 @@ namespace gpu_directx
       //pipelineConfig.inputAssemblyInfo.topology = m_vktopology;
       //pipelineConfig.dynamicStateEnables.append_unique(m_dynamicstateaEnable);
       //pipelineConfig.dynamicStateInfo.dynamicStateCount = pipelineConfig.dynamicStateEnables.size();
-      //auto prenderpass = prenderer->m_pvkcrenderpass;
-      //pipelineConfig.renderPass = prenderpass->m_vkrenderpass;
+      //auto prendertargetview = prenderer->m_prendertargetview;
+      //pipelineConfig.renderPass = prendertargetview->m_vkrendertargetview;
       //pipelineConfig.pipelineLayout = m_vkpipelinelayout;
 
       
