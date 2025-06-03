@@ -2391,7 +2391,7 @@ namespace gpu_directx
       DXGI_SWAP_CHAIN_DESC scd = {};
       scd.BufferDesc.Width = 800;
       scd.BufferDesc.Height = 600;
-      scd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+      scd.BufferDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
       scd.BufferCount = 1;
       scd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
       scd.OutputWindow = pwin32window->m_hwnd;

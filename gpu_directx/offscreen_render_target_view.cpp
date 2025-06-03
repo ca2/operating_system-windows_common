@@ -51,7 +51,7 @@ namespace gpu_directx
       texDesc.Height = m_size.cy();
       texDesc.MipLevels = 1;
       texDesc.ArraySize = 1;
-      texDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+      texDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
       texDesc.SampleDesc.Count = 1;
       texDesc.Usage = D3D11_USAGE_DEFAULT;
       texDesc.BindFlags = D3D11_BIND_RENDER_TARGET;
@@ -61,11 +61,22 @@ namespace gpu_directx
 
       auto pdevice = pgpudevice->m_pdevice;
 
-      HRESULT hr = pdevice->CreateTexture2D(&texDesc, nullptr, &m_ptextureOffscreen);
-      if (FAILED(hr)) 
+      HRESULT hrCreateTexture = pdevice->CreateTexture2D(&texDesc, nullptr, &m_ptextureOffscreen);
+
+      if (FAILED(hrCreateTexture))
       {
-         throw ::exception(::error_wrong_state);
+
+         throw ::hresult_exception(hrCreateTexture, "Failed to create offscreen texture");
          
+      }
+
+      HRESULT hrCreateRenderTargetView = pdevice->CreateRenderTargetView(m_ptextureOffscreen, nullptr, &m_prendertargetview);
+
+      if (FAILED(hrCreateRenderTargetView))
+      {
+
+         throw ::hresult_exception(hrCreateRenderTargetView, "Failed to create offscreen render target view");
+
       }
 
       createRenderPassImpl();

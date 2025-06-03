@@ -1621,6 +1621,29 @@ namespace gpu_directx
 
       ////return estatus;
 
+      ::cast < ::gpu_directx::renderer > prenderer = m_pgpurenderer;
+
+      if (prenderer)
+      {
+
+         auto pgpurendertargetview = prenderer->m_prendertargetview;
+
+         if (pgpurendertargetview)
+         {
+
+            auto prendertargetview = pgpurendertargetview->m_prendertargetview;
+
+            if (prendertargetview)
+            {
+
+               m_pcontext->OMSetRenderTargets(1, &prendertargetview, nullptr);
+
+            }
+
+         }
+
+      }
+
    }
 
 

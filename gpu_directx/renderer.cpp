@@ -592,7 +592,7 @@ namespace gpu_directx
          //if (outWidth) *outWidth = desc.Width;
          //if (outHeight) *outHeight = desc.Height;
 
-         if (desc.Format != DXGI_FORMAT_R8G8B8A8_UNORM) {
+         if (desc.Format != DXGI_FORMAT_B8G8R8A8_UNORM) {
             printf("Unsupported format for readback.\n");
             throw ::exception(error_wrong_state);
          }
@@ -2869,6 +2869,16 @@ namespace gpu_directx
       ////	vkCmdSetViewport(commandBuffer, 0, 1, &viewport);
       ////	vkCmdSetScissor(commandBuffer, 0, 1, &scissor);
 
+      ::cast < ::gpu_directx::context > pcontext = m_pgpucontext;
+
+
+      // Clear render target
+      float clear[4] = { 0.5f * .5f, 0.70f * .5f, 0.90f * .5f, .5f };
+
+
+///pcontext->g_pImmediateContext->OMSetRenderTargets(1, rtv.GetAddressOf(), nullptr);
+
+      pcontext->m_pcontext->ClearRenderTargetView(m_prendertargetview->m_prendertargetview, clear);
 
       ////}
       on_happening(e_happening_begin_render);
