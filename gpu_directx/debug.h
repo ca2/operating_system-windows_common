@@ -5,9 +5,9 @@
  *
  * This code is licensed under the MIT license (MIT) (http://opensource.org/licenses/MIT)
  */
-
 #pragma once
-#include "directx/directx.h"
+
+//#include "gpu_directx/directx.h"
 
 #define GLM_FORCE_RADIANS
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE

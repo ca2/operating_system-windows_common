@@ -16,8 +16,16 @@
 #include "gpu_directx/descriptors.h"
 #include "glm/mat4x4.hpp"
 #include "initializers.h"
+#include "windowing_win32/window.h"
 
+#include <glm/glm.hpp>
+#include <DirectXMath.h>
 
+DirectX::XMMATRIX GLMToDX_Transposed(const glm::mat4& m) {
+   return DirectX::XMMatrixTranspose(
+      DirectX::XMMATRIX(reinterpret_cast<const float*>(&m))
+   );
+}
 using namespace directx;
 
 
@@ -58,6 +66,11 @@ namespace gpu_directx
 
    device::~device()
    {
+#if defined(_DEBUG)
+
+      ::directx::dxgi_debug_terminate();
+
+#endif
 
    }
 
@@ -777,6 +790,19 @@ namespace gpu_directx
       //pickPhysicalDevice();
       //createLogicalDevice();
       //createCommandPool();
+
+      if (bAddSwapChainSupport)
+      {
+
+         initialize_swap_chain(pwindow);
+
+      }
+      else
+      {
+
+         initialize_cpu_buffer(pwindow);
+
+      }
 
       ::cast < approach > pgpuapproach = pgpuapproachParam;
 
@@ -2353,6 +2379,191 @@ namespace gpu_directx
          procedure();
 
       }
+
+   }
+
+
+   void device::initialize_swap_chain(::windowing::window* pwindow)
+   {
+
+      ::cast < ::windowing_win32::window > pwin32window = pwindow;
+      // Swap chain description
+      DXGI_SWAP_CHAIN_DESC scd = {};
+      scd.BufferDesc.Width = 800;
+      scd.BufferDesc.Height = 600;
+      scd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+      scd.BufferCount = 1;
+      scd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+      scd.OutputWindow = pwin32window->m_hwnd;
+      scd.SampleDesc.Count = 1;
+      scd.Windowed = TRUE;
+      scd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
+
+      // Create D3D11 device and swap chain
+      ID3D11Device* device = nullptr;
+      ID3D11DeviceContext* context = nullptr;
+      IDXGISwapChain* swapChain = nullptr;
+      D3D_FEATURE_LEVEL featureLevel;
+
+      HRESULT hr = D3D11CreateDeviceAndSwapChain(
+         nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, 0, nullptr, 0,
+         D3D11_SDK_VERSION, &scd, &swapChain, &device, &featureLevel, &context
+      );
+      assert(SUCCEEDED(hr));
+
+   }
+
+
+   void device::initialize_cpu_buffer(::windowing::window * pwindow)
+   {
+
+      // This flag adds support for surfaces with a different color channel ordering
+      // than the API default. It is required for compatibility with Direct2D.
+      unsigned int creationFlags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
+
+#if defined(__DEBUG)
+
+      // If the project is in a debug build, enable debugging via SDK Layers with this flag.
+      creationFlags |= D3D11_CREATE_DEVICE_DEBUG;
+
+#endif
+
+      // This array defines the set of DirectX hardware feature levels this app will support.
+      // Note the ordering should be preserved.
+      // Don't forget to declare your application's minimum required feature level in its
+      // description.  All applications are assumed to support 9.1 unless otherwise stated.
+      D3D_FEATURE_LEVEL featureLevels[] =
+      {
+
+         D3D_FEATURE_LEVEL_11_1,
+         D3D_FEATURE_LEVEL_11_0,
+         D3D_FEATURE_LEVEL_10_1,
+         D3D_FEATURE_LEVEL_10_0,
+         D3D_FEATURE_LEVEL_9_3,
+         D3D_FEATURE_LEVEL_9_2,
+         D3D_FEATURE_LEVEL_9_1
+
+      };
+
+      // Create the Direct3D 11 API device object and a corresponding context.
+      comptr<ID3D11Device> device;
+
+      comptr<ID3D11DeviceContext> context;
+
+      HRESULT hr = D3D11CreateDevice(
+         nullptr,                    // Specify nullptr to use the default adapter.
+         D3D_DRIVER_TYPE_HARDWARE,
+         0,
+         creationFlags,              // Set debug and Direct2D compatibility flags.
+         featureLevels,              // List of feature levels this app can support.
+         ARRAYSIZE(featureLevels),
+         D3D11_SDK_VERSION,          // Always set this to D3D11_SDK_VERSION for Metro style apps.
+         &device,                    // Returns the Direct3D device created.
+         &m_featurelevel,            // Returns feature level of device created.
+         &context                    // Returns the device immediate context.
+      );
+
+      ::defer_throw_hresult(hr);
+
+      // Get the Direct3D 11.1 API device and context interfaces.
+      ::defer_throw_hresult(device.as(m_pdevice));
+
+      ::defer_throw_hresult(device.as(m_pdevice1));
+
+      ::defer_throw_hresult(context.as(m_pdevicecontext));
+
+
+      // Get the underlying DXGI device of the Direct3D device.
+      ::defer_throw_hresult(device.as(m_pdxgidevice));
+
+#if defined(_DEBUG)
+
+      ::directx::defer_dxgi_debug_initialize();
+
+#endif
+
+      //return ::success;
+
+   }
+
+
+   ID3D11Device* device::draw_get_d3d11_device()
+   {
+
+      return m_pdevice;
+
+   }
+
+
+   ID3D11Device1* device::draw_get_d3d11_device1()
+   {
+
+      return m_pdevice1;
+
+   }
+
+
+
+   IDXGIDevice* device::draw_get_dxgi_device()
+   {
+
+      return m_pdxgidevice;
+
+   }
+
+
+   typedef HRESULT WINAPI FN_DXGIGetDebugInterface(REFIID riid, void** ppDebug);
+
+
+   typedef FN_DXGIGetDebugInterface* PFN_DXGIGetDebugInterface;
+
+
+   //CLASS_DECL_DIRECTX void defer_initialize(::particle * pparticle)
+   //{
+
+   //   //if (::is_set(directx::s_pdirectx))
+   //   //{
+
+   //   //   return;
+
+   //   //}
+
+   //   directx::s_pdirectx = ___new class directx;
+
+   //   directx::s_pdirectx->initialize(pparticle);
+
+   //}
+
+
+   //CLASS_DECL_DIRECTX void terminate()
+   //{
+
+   //   ::acme::del(directx::s_pdirectx);
+
+   //}
+
+   int device::get_type_size(::gpu::enum_type etype)
+   {
+
+      switch (etype)
+      {
+      case ::gpu::e_type_int: return sizeof(int);
+      case ::gpu::e_type_float: return sizeof(float);
+      case ::gpu::e_type_seq4: return sizeof(::glm::vec4);
+      case ::gpu::e_type_mat4: return sizeof(::glm::mat4);
+      default:
+         throw ::exception(error_wrong_state);
+
+      }
+
+
+   }
+
+   void device::set_mat4(void* p, const ::glm::mat4& mat4)
+   {
+
+      auto m = GLMToDX_Transposed(mat4);
+      *((decltype(&m))p) = m;
 
    }
 

@@ -16,8 +16,13 @@ namespace gpu_directx
    {
    public:
 
+      ::comptr <ID3D11VertexShader> m_pvertexshader ;
 
-      ::pointer < pipeline > m_ppipeline;
+      ::comptr < ID3D11PixelShader> m_ppixelshader;
+
+      ::comptr <ID3D11InputLayout > m_pinputlayout;
+
+      //::pointer < pipeline > m_ppipeline;
 
       bool m_bDisableDepthTest = false;
       bool m_bDepthTestButNoDepthWrite = false;
@@ -32,6 +37,9 @@ namespace gpu_directx
       ~shader();
 
 
+      virtual ::comptr < ID3DBlob> create_shader_blob(const ::block& block);
+      virtual void create_vertex_shader(const ::block& block);
+      virtual void create_pixel_shader(const ::block& block);
       //void bind(VkCommandBuffer commandBuffer);
 
       ///static void defaultPipelineConfigInfo(PipelineConfigInfo& configInfo);
@@ -52,7 +60,7 @@ namespace gpu_directx
       //VkPipelineLayout		m_vkpipelinelayout;
 
 
-      void _create_pipeline_layout(int iSize);
+      //void _create_pipeline_layout(int iSize);
 
       //void draw() override;
 

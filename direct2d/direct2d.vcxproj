@@ -737,8 +737,8 @@
     <ProjectReference Include="..\acme_windows_common\acme_windows_common.vcxproj">
       <Project>{eb9dc9c0-0573-4da0-8700-4dbb371773f1}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\directx\directx.vcxproj">
-      <Project>{a149252d-1de3-4cba-b1cb-7e9868793e6e}</Project>
+    <ProjectReference Include="..\gpu_directx\gpu_directx.vcxproj">
+      <Project>{f693b649-3301-4d73-9469-f004ea94708d}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

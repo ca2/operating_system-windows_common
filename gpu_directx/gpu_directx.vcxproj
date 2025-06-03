@@ -697,13 +697,13 @@
     <ClInclude Include="debug.h" />
     <ClInclude Include="descriptors.h" />
     <ClInclude Include="device.h" />
+    <ClInclude Include="dxgi_debug.h" />
     <ClInclude Include="frame.h" />
     <ClInclude Include="initializers.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="approach.h" />
     <ClInclude Include="offscreen_render_pass.h" />
     <ClInclude Include="physical_device.h" />
-    <ClInclude Include="pipeline.h" />
     <ClInclude Include="program.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="render_pass.h" />
@@ -733,11 +733,11 @@
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="descriptors.cpp" />
     <ClCompile Include="device.cpp" />
+    <ClCompile Include="dxgi_debug.cpp" />
     <ClCompile Include="object.cpp" />
     <ClCompile Include="offscreen_render_pass.cpp" />
     <ClCompile Include="operating_system\windows.cpp" />
     <ClCompile Include="physical_device.cpp" />
-    <ClCompile Include="pipeline.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="render_pass.cpp" />
     <ClCompile Include="swap_chain_render_pass.cpp" />
@@ -919,8 +919,8 @@ application_build_helper --binary-to-unsigned-int "$(ProjectDir)/shader/%(Filena
     <ProjectReference Include="..\..\..\source\app\aura\aura.vcxproj">
       <Project>{e000ffaf-392f-4e32-bf51-fd7ed638991f}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\directx\directx.vcxproj">
-      <Project>{a149252d-1de3-4cba-b1cb-7e9868793e6e}</Project>
+    <ProjectReference Include="..\acme_windows_common\acme_windows_common.vcxproj">
+      <Project>{eb9dc9c0-0573-4da0-8700-4dbb371773f1}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

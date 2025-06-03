@@ -754,7 +754,7 @@ namespace gpu_directx
 
 
 
-   void context::_create_context_win32(const ::gpu::start_context_t& startcontext)
+   void context::_create_context_directx(const ::gpu::start_context_t& startcontext)
    {
 
       //createInstance();
@@ -772,6 +772,11 @@ namespace gpu_directx
          throw ::exception(error_failed);
 
       }
+
+
+      ::defer_throw_hresult(pgpudevice->m_pdevicecontext.as(m_pcontext));
+
+      ::defer_throw_hresult(pgpudevice->m_pdevicecontext.as(m_pcontext1));
 
 //      auto pphysicaldevice = pgpudevice->m_pphysicaldevice;
 //
@@ -860,7 +865,7 @@ namespace gpu_directx
 
       //}
 
-      _create_context_win32(startcontext);
+      _create_context_directx(startcontext);
 
    }
 
@@ -2286,6 +2291,16 @@ namespace gpu_directx
 
       m_uboBuffers.set_size(iFrameCount);
 
+      D3D11_BUFFER_DESC cbd = {};
+      cbd.Usage = D3D11_USAGE_DEFAULT;
+      cbd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+      cbd.CPUAccessFlags = 0;
+      ::cast < device > pgpudevice = m_pgpudevice;
+
+      // GlobalUbo
+      cbd.ByteWidth = iGlobalUboSize;
+      pgpudevice->m_pdevice->CreateBuffer(&cbd, nullptr, &m_pbufferGlobalUbo);
+
       //for (int i = 0; i < m_uboBuffers.size(); i++)
       //{
 
@@ -2370,6 +2385,23 @@ namespace gpu_directx
 
    //}
    //   
+
+
+   ID3D11DeviceContext* context::draw_get_d3d11_device_context()
+   {
+
+      return m_pcontext;
+
+   }
+
+
+   ID3D11DeviceContext1* context::draw_get_d3d11_device_context1()
+   {
+
+      return m_pcontext1;
+
+   }
+
 
 } // namespace gpu_directx
 

@@ -1,6 +1,6 @@
 #include "framework.h"
 #include "direct2d.h"
-#include "directx/directx.h"
+//#include "directx/directx.h"
 #include "gpu_directx/approach.h"
 #include "gpu_directx/device.h"
 #include "acme/graphics/write_text/font_weight.h"

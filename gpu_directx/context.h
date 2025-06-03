@@ -16,6 +16,10 @@ namespace gpu_directx
    public:
 
 
+      comptr < ID3D11Buffer> m_pbufferGlobalUbo;
+      comptr<ID3D11DeviceContext>        m_pcontext;
+      comptr<ID3D11DeviceContext1>       m_pcontext1;
+
       //itask									m_itaskGpu;
       //VkSampler m_vksampler001;
 
@@ -148,7 +152,7 @@ namespace gpu_directx
 
 
 
-      virtual void _create_context_win32(const ::gpu::start_context_t& startcontext);
+      virtual void _create_context_directx(const ::gpu::start_context_t& startcontext);
 
       void on_create_context(const ::gpu::start_context_t & startcontext) override;
 
@@ -258,6 +262,8 @@ namespace gpu_directx
 
       void engine_on_frame_context_initialization() override;
 
+      ID3D11DeviceContext* draw_get_d3d11_device_context();
+      ID3D11DeviceContext1* draw_get_d3d11_device_context1();
 
    };
 

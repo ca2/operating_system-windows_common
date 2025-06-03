@@ -6,9 +6,12 @@
 #include "context.h"
 #include "descriptors.h"
 #include "renderer.h"
-#include "pipeline.h"
+//#include "pipeline.h"
 #include "renderer.h"
+#include "acme_windows_common/hresult_exception.h"
+#include <d3dcompiler.h>
 //#include "aura/user/user/graphics3d.h"
+
 
 
 namespace gpu_directx
@@ -33,82 +36,179 @@ namespace gpu_directx
    }
 
 
-   void shader::_create_pipeline_layout(int iSize)
+   ::comptr < ID3DBlob> shader::create_shader_blob(const ::block& block)
    {
 
-      ::cast < context > pgpucontext = m_pgpurenderer->m_pgpucontext;
+      comptr <ID3DBlob> pblobShader;
+      comptr <ID3DBlob> pblobError;
 
-      ::cast < device > pgpudevice = pgpucontext->m_pgpudevice;
+      HRESULT hr = D3DCompile(
+         block.data(),            // pointer to shader source
+         block.size(),             // size of shader source
+         nullptr,                       // optional source name
+         nullptr,                       // macro definitions
+         nullptr,                       // include handler
+         "VSMain",                      // entry point
+         "vs_5_0",                      // target profile (e.g., vs_5_0, ps_5_0)
+         0,                             // compile flags
+         0,                             // effect flags
+         &pblobShader,                   // compiled shader
+         &pblobError                     // error messages
+      );
 
-      //VkPushConstantRange pushConstantRange{};
-      //pushConstantRange.stageFlags = VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT;
-      //pushConstantRange.offset = 0;
-      ////pushConstantRange.size = sizeof(PointLightPushConstants);
-      //pushConstantRange.size = iSize;
+      if (FAILED(hr))
+      {
 
-      //::array<VkDescriptorSetLayout> descriptorSetLayouts;
+         if (pblobError)
+         {
 
-      //if (m_edescriptorsetslota.contains(e_descriptor_set_slot_global))
-      //{
+            throw ::exception(error_failed);
 
-      //   auto globalSetLayout = pgpucontext->m_psetdescriptorlayoutGlobal->getDescriptorSetLayout();
+         }
+      }
 
-      //   descriptorSetLayouts.add(globalSetLayout);
-
-      //}
-
-      //if (m_pLocalDescriptorSet)
-      //{
-
-      //   ::cast < ::gpu_directx::set_descriptor_layout > pset = m_pLocalDescriptorSet;
-
-      //   auto setLayout = pset->getDescriptorSetLayout();
-
-      //   descriptorSetLayouts.add(setLayout);
-
-      //}
-
-      //VkPipelineLayoutCreateInfo pipelineLayoutInfo{};
-      //pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-      //pipelineLayoutInfo.setLayoutCount = static_cast<uint32_t>(descriptorSetLayouts.size());
-      //pipelineLayoutInfo.pSetLayouts = descriptorSetLayouts.data();
-
-      //if (iSize > 0)
-      //{
-      //   pipelineLayoutInfo.pushConstantRangeCount = 1;
-      //   pipelineLayoutInfo.pPushConstantRanges = &pushConstantRange;
-      //}
-      //else
-      //{
-      //   pipelineLayoutInfo.pushConstantRangeCount = 0;
-      //   pipelineLayoutInfo.pPushConstantRanges = NULL;
-
-
-      //}
-
-      ////pipelineLayoutInfo.pPushConstantRanges = nullptr;
-
-      //if (vkCreatePipelineLayout(
-      //   pgpucontext->logicalDevice(),
-      //   &pipelineLayoutInfo,
-      //   nullptr,
-      //   &m_vkpipelinelayout) !=
-      //   VK_SUCCESS)
-      //{
-
-      //   throw ::exception(error_failed, "failed to create pipeline layout!");
-
-      //}
+      return pblobShader;
 
    }
+
+
+   void shader::create_vertex_shader(const ::block& block)
+   {
+
+      auto pblobShader = create_shader_blob(block);
+
+      ::cast < device > pgpudevice = m_pgpurenderer->m_pgpucontext->m_pgpudevice;
+
+      auto hresult = pgpudevice->m_pdevice->CreateVertexShader(
+         pblobShader->GetBufferPointer(),
+         pblobShader->GetBufferSize(),
+         nullptr,
+         &m_pvertexshader
+      );
+
+      if (FAILED(hresult))
+      {
+
+         throw ::hresult_exception(hresult);
+
+      }
+
+      ::array < D3D11_INPUT_ELEMENT_DESC > layout;
+      
+      layout.add({ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 });
+      layout.add({ "COLOR",    0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 });
+
+      //ID3D11InputLayout* inputLayout = nullptr;
+      hresult = pgpudevice->m_pdevice->CreateInputLayout(
+         layout.data(),
+         layout.size(),
+         pblobShader->GetBufferPointer(),
+         pblobShader->GetBufferSize(),
+         &m_pinputlayout
+      );
+
+      if (FAILED(hresult))
+      {
+
+         throw ::hresult_exception(hresult);
+
+      }
+   }
+
+   
+   void shader::create_pixel_shader(const ::block& block)
+   {
+
+      auto pblobShader = create_shader_blob(block);
+
+      ::cast < device > pgpudevice = m_pgpurenderer->m_pgpucontext->m_pgpudevice;
+
+      pgpudevice->m_pdevice->CreatePixelShader(
+         pblobShader->GetBufferPointer(),
+         pblobShader->GetBufferSize(),
+         nullptr,
+         &m_ppixelshader
+      );
+
+   }
+
+
+   //void shader::_create_pipeline_layout(int iSize)
+   //{
+
+   //   ::cast < context > pgpucontext = m_pgpurenderer->m_pgpucontext;
+
+   //   ::cast < device > pgpudevice = pgpucontext->m_pgpudevice;
+
+   //   //VkPushConstantRange pushConstantRange{};
+   //   //pushConstantRange.stageFlags = VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT;
+   //   //pushConstantRange.offset = 0;
+   //   ////pushConstantRange.size = sizeof(PointLightPushConstants);
+   //   //pushConstantRange.size = iSize;
+
+   //   //::array<VkDescriptorSetLayout> descriptorSetLayouts;
+
+   //   //if (m_edescriptorsetslota.contains(e_descriptor_set_slot_global))
+   //   //{
+
+   //   //   auto globalSetLayout = pgpucontext->m_psetdescriptorlayoutGlobal->getDescriptorSetLayout();
+
+   //   //   descriptorSetLayouts.add(globalSetLayout);
+
+   //   //}
+
+   //   //if (m_pLocalDescriptorSet)
+   //   //{
+
+   //   //   ::cast < ::gpu_directx::set_descriptor_layout > pset = m_pLocalDescriptorSet;
+
+   //   //   auto setLayout = pset->getDescriptorSetLayout();
+
+   //   //   descriptorSetLayouts.add(setLayout);
+
+   //   //}
+
+   //   //VkPipelineLayoutCreateInfo pipelineLayoutInfo{};
+   //   //pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
+   //   //pipelineLayoutInfo.setLayoutCount = static_cast<uint32_t>(descriptorSetLayouts.size());
+   //   //pipelineLayoutInfo.pSetLayouts = descriptorSetLayouts.data();
+
+   //   //if (iSize > 0)
+   //   //{
+   //   //   pipelineLayoutInfo.pushConstantRangeCount = 1;
+   //   //   pipelineLayoutInfo.pPushConstantRanges = &pushConstantRange;
+   //   //}
+   //   //else
+   //   //{
+   //   //   pipelineLayoutInfo.pushConstantRangeCount = 0;
+   //   //   pipelineLayoutInfo.pPushConstantRanges = NULL;
+
+
+   //   //}
+
+   //   ////pipelineLayoutInfo.pPushConstantRanges = nullptr;
+
+   //   //if (vkCreatePipelineLayout(
+   //   //   pgpucontext->logicalDevice(),
+   //   //   &pipelineLayoutInfo,
+   //   //   nullptr,
+   //   //   &m_vkpipelinelayout) !=
+   //   //   VK_SUCCESS)
+   //   //{
+
+   //   //   throw ::exception(error_failed, "failed to create pipeline layout!");
+
+   //   //}
+
+   //}
 
 
    void shader::on_initialize_shader()
    {
 
-      _create_pipeline_layout(m_properties.m_memory.size());
+      //_create_pipeline_layout(m_properties.m_memory.size());
 
-      __construct_new(m_ppipeline);
+      //__construct_new(m_ppipeline);
 
       ::cast <context> pgpucontext = m_pgpurenderer->m_pgpucontext;
 
@@ -116,9 +216,19 @@ namespace gpu_directx
 
       ::cast <renderer> prenderer = m_pgpurenderer;
 
-      PipelineConfigInfo pipelineConfig{};
+      //PipelineConfigInfo pipelineConfig{};
 
       ::cast < shader_vertex_input > pshadervertexinput = m_pVertexInput;
+
+
+      pgpudevice->defer_shader_memory(m_memoryVertex, m_pathVertex);
+      pgpudevice->defer_shader_memory(m_memoryFragment, m_pathFragment);
+
+
+      create_vertex_shader(m_memoryVertex);
+      create_pixel_shader(m_memoryFragment);
+
+
 
       //if (pshadervertexinput)
       //{
@@ -128,7 +238,7 @@ namespace gpu_directx
 
       //}
 
-      pipeline::defaultPipelineConfigInfo(pipelineConfig);
+      ///pipeline::defaultPipelineConfigInfo(pipelineConfig);
 
       //if (m_eflag & e_flag_clear_default_bindings_and_attributes_descriptions)
       //{
@@ -257,14 +367,12 @@ namespace gpu_directx
       //pipelineConfig.renderPass = prenderpass->m_vkrenderpass;
       //pipelineConfig.pipelineLayout = m_vkpipelinelayout;
 
-      pgpudevice->defer_shader_memory(m_memoryVertex, m_pathVertex);
-      pgpudevice->defer_shader_memory(m_memoryFragment, m_pathFragment);
-
-      m_ppipeline->initialize_pipeline(m_pgpurenderer,
+      
+      /*m_ppipeline->initialize_pipeline(m_pgpurenderer,
          m_memoryVertex,
          m_memoryFragment,
          pipelineConfig);
-
+*/
 
    }
 
@@ -277,6 +385,10 @@ namespace gpu_directx
       ::cast <device> pgpudevice = pgpucontext->m_pgpudevice;
 
       ::cast <renderer> prenderer = m_pgpurenderer;
+
+      pgpucontext->m_pcontext->IASetInputLayout(m_pinputlayout);
+      pgpucontext->m_pcontext->VSSetShader(m_pvertexshader, nullptr, 0);
+      pgpucontext->m_pcontext->PSSetShader(m_ppixelshader, nullptr, 0);
 
       /*auto commandBuffer = prenderer->getCurrentCommandBuffer();
 
@@ -307,15 +419,15 @@ namespace gpu_directx
 
       ::cast < renderer > prenderer = m_pgpurenderer;
 
-   //   auto commandBuffer = prenderer->getCurrentCommandBuffer();
+      //   auto commandBuffer = prenderer->getCurrentCommandBuffer();
 
-   //   vkCmdPushConstants(
-   //      commandBuffer,
-   //      m_vkpipelinelayout,
-   //      VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT,
-   //      0,
-   //      m_properties.size(),
-   //      m_properties.data());
+      //   vkCmdPushConstants(
+      //      commandBuffer,
+      //      m_vkpipelinelayout,
+      //      VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT,
+      //      0,
+      //      m_properties.size(),
+      //      m_properties.data());
 
    }
 

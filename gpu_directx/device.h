@@ -5,7 +5,7 @@
 
 #include "aura/graphics/gpu/device.h"
 #include "acme/prototype/prototype/memory.h"
-#include "directx/directx.h"
+//#include "directx/directx.h"
 
 
 namespace gpu_directx
@@ -15,10 +15,33 @@ namespace gpu_directx
 
 
    class CLASS_DECL_GPU_DIRECTX device :
-      virtual public ::gpu::device,
-      virtual public ::directx::directx
+      virtual public ::gpu::device//,
+      //virtual public ::directx::directx
    {
    public:
+
+
+
+
+      comptr<ID3D11Device>                            m_pdevice;
+      comptr<ID3D11Device1>                           m_pdevice1;
+      comptr<IDXGIDevice>                             m_pdxgidevice;
+
+      comptr < ID3D11DeviceContext>                   m_pdevicecontext;
+      ::pointer<::windowing::window>            m_pimpl;
+
+
+      D3D_FEATURE_LEVEL                               m_featurelevel;
+
+
+
+      //directx();
+      //~directx() override;
+
+
+      virtual void initialize_swap_chain(::windowing::window * pwindow);
+      virtual void initialize_cpu_buffer(::windowing::window* pwindow);
+
 
 
       //itask									m_itaskGpu;
@@ -255,6 +278,14 @@ namespace gpu_directx
 
       
       void on_top_end_frame() override;
+
+
+      ID3D11Device* draw_get_d3d11_device();
+      ID3D11Device1* draw_get_d3d11_device1();
+      IDXGIDevice* draw_get_dxgi_device();
+
+      int get_type_size(::gpu::enum_type etype) override;
+      void set_mat4(void* p, const ::glm::mat4& mat4) override;
 
 
    };

@@ -10,6 +10,15 @@
  *
  * This code is licensed under the MIT license (MIT) (http://opensource.org/licenses/MIT)
  */
+#pragma comment( lib, "D3DCompiler.lib" )
+#pragma comment( lib, "d2d1.lib" )
+#pragma comment( lib, "d3d11.lib" )
+#pragma comment( lib, "dxgi.lib" )
+#pragma comment( lib, "dwrite.lib" )
+
+
+
+//d2d1.lib; d3d11.lib; dxgi.lib; dwrite.lib
 
  //
  //#if !(defined(VK_USE_PLATFORM_IOS_MVK) || defined(VK_USE_PLATFORM_MACOS_MVK) || defined(VK_USE_PLATFORM_METAL_EXT))

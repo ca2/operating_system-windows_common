@@ -26,7 +26,7 @@ namespace directx
    }
 
 
-   void directx::initialize(::particle * pparticle)
+   void directx::initialize_directx()
    {
 
       // This flag adds support for surfaces with a different color channel ordering
@@ -169,6 +169,8 @@ namespace directx
    //   ::acme::del(directx::s_pdirectx);
 
    //}
+
+
 
 
 } // namespace directx

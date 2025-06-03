@@ -30,7 +30,7 @@ namespace directx
       ~directx() override;
 
 
-      void initialize(::particle * pparticle) override;
+      virtual void initialize_directx();
 
 
       ID3D11Device * draw_get_d3d11_device();
