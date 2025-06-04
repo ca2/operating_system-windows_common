@@ -19,6 +19,9 @@ namespace gpu_directx
    public:
 
       comptr<ID3D11RenderTargetView>      m_prendertargetview;
+      comptr<ID3D11Texture2D> m_ptextureDepthStencil;
+      comptr<ID3D11DepthStencilView>m_pdepthstencilview;
+      comptr <ID3D11DepthStencilState>m_pdepthstencilstate;
 
       //VkFormat m_formatImage;
       //VkFormat m_formatDepth;

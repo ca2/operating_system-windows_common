@@ -14,6 +14,8 @@
 #include "aura/graphics/image/image.h"
 #include "aura/graphics/gpu/types.h"
 #include "gpu_directx/descriptors.h"
+#define GLM_FORCE_DEPTH_ZERO_TO_ONE
+#define GLM_FORCE_LEFT_HANDED
 #include "glm/mat4x4.hpp"
 #include "initializers.h"
 #include "windowing_win32/window.h"
@@ -25,6 +27,9 @@ DirectX::XMMATRIX GLMToDX_Transposed(const glm::mat4& m) {
    return DirectX::XMMatrixTranspose(
       DirectX::XMMATRIX(reinterpret_cast<const float*>(&m))
    );
+}
+DirectX::XMMATRIX GLMToDX(const glm::mat4& m) {
+   return DirectX::XMMATRIX(reinterpret_cast<const float*>(&m));
 }
 using namespace directx;
 
@@ -1648,7 +1653,7 @@ namespace gpu_directx
    void device::_translate_shader(string_array& stra)
    {
 
-      device::_translate_shader(stra);
+      ::gpu::device::_translate_shader(stra);
 
       character_count iFindPrecision = stra.case_insensitive_find_first_begins("precision ");
 
@@ -2563,7 +2568,8 @@ namespace gpu_directx
    {
 
       auto m = GLMToDX_Transposed(mat4);
-      *((decltype(&m))p) = m;
+      auto& mTarget = *((decltype(&m))p);
+      mTarget = m;
 
    }
 

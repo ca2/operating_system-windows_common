@@ -22,6 +22,9 @@ namespace gpu_directx
 
       ::comptr <ID3D11InputLayout > m_pinputlayout;
 
+      comptr < ID3D11Buffer> m_pbufferPushConstants;
+      int m_iSizePushConstants = -1;
+
       //::pointer < pipeline > m_ppipeline;
 
       bool m_bDisableDepthTest = false;
@@ -72,9 +75,11 @@ namespace gpu_directx
       //	const ::gpu::property* pproperties) override;
 
       void on_initialize_shader() override;
-
+      void draw() override;
 
       void bind() override;
+
+      void unbind() override;
 
 
       void push_properties() override;

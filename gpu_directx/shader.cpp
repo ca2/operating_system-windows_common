@@ -6,8 +6,8 @@
 #include "context.h"
 #include "descriptors.h"
 #include "renderer.h"
-//#include "pipeline.h"
-#include "renderer.h"
+#include "offscreen_render_target_view.h"
+#include "aura/graphics/gpu/types.h"
 #include "acme_windows_common/hresult_exception.h"
 #include <d3dcompiler.h>
 //#include "aura/user/user/graphics3d.h"
@@ -52,7 +52,7 @@ namespace gpu_directx
          nullptr,                       // optional source name
          nullptr,                       // macro definitions
          nullptr,                       // include handler
-         "VSMain",                      // entry point
+         "main",                      // entry point
          "vs_5_0",                      // target profile (e.g., vs_5_0, ps_5_0)
          0,                             // compile flags
          0,                             // effect flags
@@ -95,7 +95,7 @@ namespace gpu_directx
          nullptr,                       // optional source name
          nullptr,                       // macro definitions
          nullptr,                       // include handler
-         "PSMain",                      // entry point
+         "main",                      // entry point
          "ps_5_0",                      // target profile (e.g., vs_5_0, ps_5_0)
          0,                             // compile flags
          0,                             // effect flags
@@ -144,11 +144,16 @@ namespace gpu_directx
       }
 
       ::array < D3D11_INPUT_ELEMENT_DESC > layout;
+
+      UINT uOffset0 = offsetof(gpu::Vertex, position);
+      UINT uOffset1 = offsetof(gpu::Vertex, color);
+      UINT uOffset2 = offsetof(gpu::Vertex, normal);
+      UINT uOffset3 = offsetof(gpu::Vertex, uv);
       
-      layout.add({ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 });
-      layout.add({ "COLOR",    0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 });
-      layout.add({ "NORMAL",    0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 24, D3D11_INPUT_PER_VERTEX_DATA, 0 });
-      layout.add({ "TEXCOORD",   0, DXGI_FORMAT_R32G32_FLOAT, 0, 36, D3D11_INPUT_PER_VERTEX_DATA, 0 });
+      layout.add({ "POSITION" , 0, DXGI_FORMAT_R32G32B32_FLOAT , 0, uOffset0, D3D11_INPUT_PER_VERTEX_DATA, 0 });
+      layout.add({ "COLOR"    , 0, DXGI_FORMAT_R32G32B32_FLOAT , 0, uOffset1, D3D11_INPUT_PER_VERTEX_DATA, 0 });
+      layout.add({ "NORMAL"   , 0, DXGI_FORMAT_R32G32B32_FLOAT , 0, uOffset2, D3D11_INPUT_PER_VERTEX_DATA, 0 });
+      layout.add({ "TEXCOORD" , 0, DXGI_FORMAT_R32G32_FLOAT    , 0, uOffset3, D3D11_INPUT_PER_VERTEX_DATA, 0 });
       
 
       auto data = layout.data();
@@ -443,8 +448,45 @@ namespace gpu_directx
       ::cast <renderer> prenderer = m_pgpurenderer;
 
       pgpucontext->m_pcontext->IASetInputLayout(m_pinputlayout);
+
+      //defer_throw_hresult(hr1);
+
       pgpucontext->m_pcontext->VSSetShader(m_pvertexshader, nullptr, 0);
+
+      ///defer_throw_hresult(hr2);
+
       pgpucontext->m_pcontext->PSSetShader(m_ppixelshader, nullptr, 0);
+
+      if (prenderer)
+      {
+
+         auto pgpurendertargetview = prenderer->m_prendertargetview;
+
+         if (pgpurendertargetview)
+         {
+
+            ::cast < offscreen_render_target_view > poffscreenrendertargetview = pgpurendertargetview;
+
+            if (poffscreenrendertargetview)
+            {
+
+               auto pshaderresourceview = poffscreenrendertargetview->m_pshaderresourceview;
+
+               if (pshaderresourceview)
+               {
+
+                  pgpucontext->m_pcontext->PSSetShaderResources(0, 1, pshaderresourceview.pp());
+
+               }
+
+            }
+
+         }
+
+
+      }
+
+      //defer_throw_hresult(hr3);
 
       /*auto commandBuffer = prenderer->getCurrentCommandBuffer();
 
@@ -470,6 +512,68 @@ namespace gpu_directx
    }
 
 
+   void shader::unbind()
+   {
+
+      ::cast <context> pgpucontext = m_pgpurenderer->m_pgpucontext;
+
+      ::cast <device> pgpudevice = pgpucontext->m_pgpudevice;
+
+      ::cast <renderer> prenderer = m_pgpurenderer;
+
+      //pgpucontext->m_pcontext->IASetInputLayout(m_pinputlayout);
+
+      //defer_throw_hresult(hr1);
+
+      if (m_pvertexshader)
+      {
+
+         pgpucontext->m_pcontext->VSSetShader(nullptr, nullptr, 0);
+
+      }
+
+      ///defer_throw_hresult(hr2);
+
+      if (m_ppixelshader)
+      {
+
+         pgpucontext->m_pcontext->PSSetShader(m_ppixelshader, nullptr, 0);
+
+      }
+
+      if (prenderer)
+      {
+
+         auto pgpurendertargetview = prenderer->m_prendertargetview;
+
+         if (pgpurendertargetview)
+         {
+
+            ::cast < offscreen_render_target_view > poffscreenrendertargetview = pgpurendertargetview;
+
+            if (poffscreenrendertargetview)
+            {
+
+               auto pshaderresourceview = poffscreenrendertargetview->m_pshaderresourceview;
+
+               if (pshaderresourceview)
+               {
+
+                  ID3D11ShaderResourceView* nullSRV[1] = { nullptr };
+                  pgpucontext->m_pcontext->PSSetShaderResources(0, 1, nullSRV);
+
+               }
+
+            }
+
+         }
+
+
+      }
+
+   }
+
+
    void shader::push_properties()
    {
 
@@ -485,19 +589,90 @@ namespace gpu_directx
       //      m_properties.size(),
       //      m_properties.data());
 
+      if (m_properties.size() <= 0)
+      {
+
+         return;
+
+      }
+
+      ::cast <context> pgpucontext = m_pgpurenderer->m_pgpucontext;
+
+      ::cast <device> pgpudevice = pgpucontext->m_pgpudevice;
+
+      auto iSetSize = m_properties.size();
+
+      if (iSetSize != m_iSizePushConstants || !m_pbufferPushConstants)
+      {
+
+         m_pbufferPushConstants.Release();
+
+         D3D11_BUFFER_DESC cbDesc = {};
+         cbDesc.ByteWidth = (m_properties.size() + 15) & ~15;
+         cbDesc.Usage = D3D11_USAGE_DYNAMIC;
+         cbDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+         cbDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+
+         auto pdevice = pgpudevice->m_pdevice;
+
+         HRESULT hr = pdevice->CreateBuffer(&cbDesc, nullptr, &m_pbufferPushConstants);
+
+         if (FAILED(hr))
+         {
+
+            throw ::hresult_exception(hr);
+
+         }
+
+         m_iSizePushConstants = m_properties.size();
+
+
+
+      }
+
+      //PushConstants pc = { XMFLOAT4(1, 0, 0, 1), currentTime };
+
+      D3D11_MAPPED_SUBRESOURCE mapped;
+      HRESULT hrMap = pgpucontext->m_pcontext->Map(m_pbufferPushConstants, 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
+
+      if (FAILED(hrMap))
+      {
+
+         throw ::hresult_exception(hrMap);
+
+      }
+      
+      memcpy(mapped.pData, m_properties.data(), m_properties.size());
+      pgpucontext->m_pcontext->Unmap(m_pbufferPushConstants, 0);
+
+
+      pgpucontext->m_pcontext->VSSetConstantBuffers(0, 1, pgpucontext->m_pbufferGlobalUbo.pp());
+      pgpucontext->m_pcontext->PSSetConstantBuffers(0, 1, pgpucontext->m_pbufferGlobalUbo.pp());
+
+
+      auto pVS = m_pbufferPushConstants.m_p;
+      pgpucontext->m_pcontext->VSSetConstantBuffers(1, 1, &pVS);
+      auto pPS = m_pbufferPushConstants.m_p;
+      pgpucontext->m_pcontext->PSSetConstantBuffers(1, 1, &pPS);
+
+
+
    }
 
 
-   //void shader::draw()
-   //{
+   void shader::draw()
+   {
 
+      ::cast <context> pgpucontext = m_pgpurenderer->m_pgpucontext;
+      pgpucontext->m_pcontext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+      pgpucontext->m_pcontext->Draw(6, 0);
    //   ::cast < renderer > prenderer = m_pgpurenderer;
 
    //   auto commandBuffer = prenderer->getCurrentCommandBuffer();
 
    //   vkCmdDraw(commandBuffer, 6, 1, 0, 0);
 
-   //}
+   }
 
 
 } // namespace gpu_directx

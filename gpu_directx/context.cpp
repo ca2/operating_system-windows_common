@@ -7,11 +7,14 @@
 #include "program.h"
 #include "renderer.h"
 #include "shader.h"
+#include "offscreen_render_target_view.h"
 #include "acme/platform/application.h"
 #include "aura/graphics/image/image.h"
 #include "aura/graphics/gpu/types.h"
 #include "gpu_directx/descriptors.h"
-#include "glm/mat4x4.hpp"
+#define GLM_FORCE_DEPTH_ZERO_TO_ONE
+#define GLM_FORCE_LEFT_HANDED
+#include <glm/mat4x4.hpp>
 #include "initializers.h"
 
 
@@ -26,7 +29,7 @@ namespace gpu_directx
 
    context::context()
    {
-      
+
 
       //m_vksampler001 = nullptr;
       //m_bOffscreen = true;
@@ -308,7 +311,7 @@ namespace gpu_directx
    }
 
 
-   void context::set_bitmap_1(::image::image * pimage)
+   void context::set_bitmap_1(::image::image* pimage)
    {
 
       ASSERT(is_current_task());
@@ -650,14 +653,14 @@ namespace gpu_directx
       //}
 
 
-   void context::set_matrix_uniform(const ::gpu::payload & uniformMatrix)
+   void context::set_matrix_uniform(const ::gpu::payload& uniformMatrix)
    {
 
       //m_iMatrixUniform = uniformMatrix.m_iUniform;
 
    }
 
-   ::pointer < ::gpu::context > allocate_system_context(::particle * pparticle)
+   ::pointer < ::gpu::context > allocate_system_context(::particle* pparticle)
    {
 
       return pparticle->__create_new <context>();
@@ -687,7 +690,7 @@ namespace gpu_directx
    }
 
 
-   void context::_create_offscreen_window(const ::int_size & size)
+   void context::_create_offscreen_window(const ::int_size& size)
    {
       //if (::IsWindow(m_hwnd))
       //{
@@ -786,73 +789,73 @@ namespace gpu_directx
 
       }
 
-//      auto pphysicaldevice = pgpudevice->m_pphysicaldevice;
-//
-//      assert(pphysicaldevice && pphysicaldevice->m_physicaldevice);
-//      
-//      m_pphysicaldevice = pphysicaldevice;
-//
-//      if (startcontext.m_eoutput == ::gpu::e_output_swap_chain)
-//      {
-//
-//         m_pphysicaldevice->createWindowSurface(startcontext.m_pwindow);
-//
-//      }
-//   
-//      auto physicaldevice = pphysicaldevice->m_physicaldevice;
-//
-//      // Get list of supported extensions
-//      uint32_t extCount = 0;
-//      vkEnumerateDeviceExtensionProperties(physicaldevice, nullptr, &extCount, nullptr);
-//      if (extCount > 0)
-//      {
-//         ::array<VkExtensionProperties> extensions(extCount);
-//         if (vkEnumerateDeviceExtensionProperties(physicaldevice, nullptr, &extCount, extensions.data()) == VK_SUCCESS)
-//         {
-//            for (auto & ext : extensions)
-//            {
-//               m_straSupportedExtensions.add(ext.extensionName);
-//            }
-//         }
-//      }
-//
-//      // Derived examples can enable extensions based on the list of supported extensions read from the physical device
-//      //getEnabledExtensions();
-//
-//      bool useSwapChain = m_eoutput == ::gpu::e_output_swap_chain;
-//
-//      m_itaskGpu = ::current_itask();
-//
-//      VkPhysicalDeviceScalarBlockLayoutFeatures scalarBlockLayoutSupport = {
-//.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SCALAR_BLOCK_LAYOUT_FEATURES,
-//      .scalarBlockLayout = TRUE};
-//      pgpuapproach->m_pDeviceCreatepNextChain = &scalarBlockLayoutSupport;
-//      m_physicaldevicefeaturesCreate.logicOp = TRUE;
-//
-//      HRESULT result = createLogicalDevice(
-//         m_physicaldevicefeaturesCreate,
-//         pgpuapproach->m_pszaEnabledDeviceExtensions,
-//         pgpuapproach->m_pDeviceCreatepNextChain,
-//         useSwapChain);
-//
-//      if (result != VK_SUCCESS)
-//      {
-//
-//         m_itaskGpu = {};
-//
-//         exitFatal("Could not create DirectX device: \n" + errorString(result) + " HRESULT=" + ::as_string(result), result);
-//
-//         throw ::exception(error_failed);
-//
-//      }
+      //      auto pphysicaldevice = pgpudevice->m_pphysicaldevice;
+      //
+      //      assert(pphysicaldevice && pphysicaldevice->m_physicaldevice);
+      //      
+      //      m_pphysicaldevice = pphysicaldevice;
+      //
+      //      if (startcontext.m_eoutput == ::gpu::e_output_swap_chain)
+      //      {
+      //
+      //         m_pphysicaldevice->createWindowSurface(startcontext.m_pwindow);
+      //
+      //      }
+      //   
+      //      auto physicaldevice = pphysicaldevice->m_physicaldevice;
+      //
+      //      // Get list of supported extensions
+      //      uint32_t extCount = 0;
+      //      vkEnumerateDeviceExtensionProperties(physicaldevice, nullptr, &extCount, nullptr);
+      //      if (extCount > 0)
+      //      {
+      //         ::array<VkExtensionProperties> extensions(extCount);
+      //         if (vkEnumerateDeviceExtensionProperties(physicaldevice, nullptr, &extCount, extensions.data()) == VK_SUCCESS)
+      //         {
+      //            for (auto & ext : extensions)
+      //            {
+      //               m_straSupportedExtensions.add(ext.extensionName);
+      //            }
+      //         }
+      //      }
+      //
+      //      // Derived examples can enable extensions based on the list of supported extensions read from the physical device
+      //      //getEnabledExtensions();
+      //
+      //      bool useSwapChain = m_eoutput == ::gpu::e_output_swap_chain;
+      //
+      //      m_itaskGpu = ::current_itask();
+      //
+      //      VkPhysicalDeviceScalarBlockLayoutFeatures scalarBlockLayoutSupport = {
+      //.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SCALAR_BLOCK_LAYOUT_FEATURES,
+      //      .scalarBlockLayout = TRUE};
+      //      pgpuapproach->m_pDeviceCreatepNextChain = &scalarBlockLayoutSupport;
+      //      m_physicaldevicefeaturesCreate.logicOp = TRUE;
+      //
+      //      HRESULT result = createLogicalDevice(
+      //         m_physicaldevicefeaturesCreate,
+      //         pgpuapproach->m_pszaEnabledDeviceExtensions,
+      //         pgpuapproach->m_pDeviceCreatepNextChain,
+      //         useSwapChain);
+      //
+      //      if (result != VK_SUCCESS)
+      //      {
+      //
+      //         m_itaskGpu = {};
+      //
+      //         exitFatal("Could not create DirectX device: \n" + errorString(result) + " HRESULT=" + ::as_string(result), result);
+      //
+      //         throw ::exception(error_failed);
+      //
+      //      }
 
 
-      //device = directxDevice->logicalDevice;
+            //device = directxDevice->logicalDevice;
 
    }
 
 
-   void context::on_create_context(const ::gpu::start_context_t & startcontext)
+   void context::on_create_context(const ::gpu::start_context_t& startcontext)
    {
 
       //m_itaskGpu = ::current_itask();
@@ -1278,7 +1281,7 @@ namespace gpu_directx
    //}
 
 
-   void context::_create_window_context(::windowing::window * pwindowParam)
+   void context::_create_window_context(::windowing::window* pwindowParam)
    {
 
       //m_itaskGpu = ::current_itask();
@@ -1503,7 +1506,7 @@ namespace gpu_directx
    }
 
 
-   void context::_create_cpu_buffer(const ::int_size & size)
+   void context::_create_cpu_buffer(const ::int_size& size)
    {
 
       _create_offscreen_window(size);
@@ -1515,7 +1518,7 @@ namespace gpu_directx
    }
 
 
-   void context::defer_create_window_context(::windowing::window * pwindow)
+   void context::defer_create_window_context(::windowing::window* pwindow)
    {
 
       //if (m_hrc)
@@ -1530,7 +1533,7 @@ namespace gpu_directx
    }
 
 
-   void context::_defer_create_window_context(::windowing::window * pwindow)
+   void context::_defer_create_window_context(::windowing::window* pwindow)
    {
 
       _create_window_context(pwindow);
@@ -1538,7 +1541,7 @@ namespace gpu_directx
    }
 
 
-   void context::resize_cpu_buffer(const ::int_size & sizeParam)
+   void context::resize_cpu_buffer(const ::int_size& sizeParam)
    {
 
       if (m_papplication->m_bUseSwapChainWindow)
@@ -1586,7 +1589,7 @@ namespace gpu_directx
             //glutPostRedisplay();
 
             //return ::success;
-            });
+         });
 
 
    }
@@ -1636,13 +1639,88 @@ namespace gpu_directx
             if (prendertargetview)
             {
 
-               m_pcontext->OMSetRenderTargets(1, &prendertargetview, nullptr);
+               m_pcontext->OMSetRenderTargets(1, prendertargetview.pp(), nullptr);
+
+               D3D11_VIEWPORT vp = {};
+               vp.TopLeftX = 0;
+               vp.TopLeftY = 0;
+               vp.Width = static_cast<float>(m_rectangle.width());
+               vp.Height = static_cast<float>(m_rectangle.height());
+               vp.MinDepth = 0.0f;
+               vp.MaxDepth = 1.0f;
+
+               m_pcontext->RSSetViewports(1, &vp);
 
             }
+
+            auto pdepthstencilstate = pgpurendertargetview->m_pdepthstencilstate;
+
+            if (pdepthstencilstate)
+            {
+
+               auto pdepthstencilview = pgpurendertargetview->m_pdepthstencilview;
+
+               if (!pdepthstencilview)
+               {
+
+                  throw ::exception(error_wrong_state);
+
+               }
+
+               m_pcontext->OMSetDepthStencilState(pdepthstencilstate, 0);
+
+               m_pcontext->OMSetRenderTargets(1, prendertargetview.pp(), pdepthstencilview);
+
+               m_pcontext->ClearDepthStencilView(pdepthstencilview, D3D11_CLEAR_DEPTH, 1.0f, 0);
+
+            }
+
+            ::cast < offscreen_render_target_view > poffscreenrendertargetview = pgpurendertargetview;
+
+            if (poffscreenrendertargetview)
+            {
+
+               auto psamplerstate = poffscreenrendertargetview->m_psamplerstate;
+
+               if (psamplerstate)
+               {
+
+                  m_pcontext->PSSetSamplers(0, 1, psamplerstate.pp());
+
+               }
+
+            }
+
 
          }
 
       }
+
+
+      if (!m_prasterizerstate)
+      {
+
+         // 1. Define rasterizer state descriptor
+         D3D11_RASTERIZER_DESC rasterizerDesc = {};
+         rasterizerDesc.FillMode = D3D11_FILL_SOLID;
+         rasterizerDesc.CullMode = D3D11_CULL_BACK;        // Cull back faces
+         rasterizerDesc.FrontCounterClockwise = false; // Treat CCW as front-facing
+         rasterizerDesc.DepthClipEnable = TRUE;
+
+         // 2. Create rasterizer state object
+         //ID3D11RasterizerState* pRasterizerState = nullptr;
+         HRESULT hr = m_pgpudevice->m_pdevice->CreateRasterizerState(&rasterizerDesc, &m_prasterizerstate);
+         if (FAILED(hr)) {
+            // Handle error (e.g., log or exit)
+            throw ::hresult_exception(hr);
+         }
+
+         // 3. Set rasterizer state on the device context
+         
+
+      }
+
+      m_pcontext->RSSetState(m_prasterizerstate);
 
    }
 
@@ -1700,10 +1778,10 @@ namespace gpu_directx
    }
 
 
-   void context::_translate_shader(string_array & stra)
+   void context::_translate_shader(string_array& stra)
    {
 
-      context::_translate_shader(stra);
+      ::gpu::context::_translate_shader(stra);
 
       character_count iFindPrecision = stra.case_insensitive_find_first_begins("precision ");
 
@@ -2323,9 +2401,9 @@ namespace gpu_directx
       m_uboBuffers.set_size(iFrameCount);
 
       D3D11_BUFFER_DESC cbd = {};
-      cbd.Usage = D3D11_USAGE_DEFAULT;
+      cbd.Usage = D3D11_USAGE_DYNAMIC;
       cbd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-      cbd.CPUAccessFlags = 0;
+      cbd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
       ::cast < device > pgpudevice = m_pgpudevice;
 
       // GlobalUbo
@@ -2367,6 +2445,28 @@ namespace gpu_directx
       //m_uboBuffers[iFrameIndex]->writeToBuffer(block.data());
 
       //m_uboBuffers[iFrameIndex]->flush();
+
+      //ID3D11Buffer* globalUBOBuffer = nullptr;
+      //D3D11_BUFFER_DESC cbd = {};
+      //cbd.Usage = D3D11_USAGE_DYNAMIC;
+      //cbd.ByteWidth = block;
+      //cbd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+      //cbd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+
+      //device->CreateBuffer(&cbd, nullptr, &globalUBOBuffer);
+      if (m_pbufferGlobalUbo)
+      {
+
+         D3D11_MAPPED_SUBRESOURCE mapped;
+         m_pcontext->Map(m_pbufferGlobalUbo, 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
+         memcpy(mapped.pData, block.data(), block.size());
+         m_pcontext->Unmap(m_pbufferGlobalUbo, 0);
+
+
+      }
+
+      //m_pbufferGlobalUbo
+      //m_pbufferGlobalUbo
 
    }
 

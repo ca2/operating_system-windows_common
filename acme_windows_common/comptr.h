@@ -152,13 +152,16 @@ public:
 
    }
 
+   // Returns a pointer to this pointer suitable for IID_PPV_ARGS.
+   TYPE*const* pp() const
+   {
+      return &m_p;
+   }
 
 
    TYPE ** operator & ()
    {
-
       Release();
-
       return &(TYPE * &)m_p;
 
    }

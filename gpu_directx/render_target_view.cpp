@@ -399,6 +399,72 @@ namespace gpu_directx
    void render_target_view::createDepthResources()
    {
 
+      D3D11_TEXTURE2D_DESC depthDesc = {};
+      depthDesc.Width = m_size.cx();
+      depthDesc.Height = m_size.cy();
+      depthDesc.MipLevels = 1;
+      depthDesc.ArraySize = 1;
+      int MorePrecisionNoStencil = 0;
+      if (MorePrecisionNoStencil)
+      {
+         depthDesc.Format = DXGI_FORMAT_D32_FLOAT;
+      }
+      else
+      {
+         depthDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+      }
+      depthDesc.SampleDesc.Count = 1;
+      depthDesc.Usage = D3D11_USAGE_DEFAULT;
+      depthDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+      ::cast < ::gpu_directx::device > pgpudevice = m_pgpucontext->m_pgpudevice;
+
+      auto pdevice = pgpudevice->m_pdevice;
+
+      HRESULT hrCreateTexture = pdevice->CreateTexture2D(&depthDesc, nullptr, &m_ptextureDepthStencil);
+
+      if (FAILED(hrCreateTexture))
+      {
+
+         throw ::hresult_exception(hrCreateTexture);
+
+      }
+      D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
+
+      if (MorePrecisionNoStencil)
+      {
+
+         dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;
+         dsvDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+      }
+      HRESULT hrCreateDepthStencilView = pdevice->CreateDepthStencilView(
+         m_ptextureDepthStencil,
+         MorePrecisionNoStencil ? &dsvDesc: nullptr, &m_pdepthstencilview);
+
+      if (FAILED(hrCreateDepthStencilView))
+      {
+
+         throw ::hresult_exception(hrCreateDepthStencilView);
+
+      }
+
+      //ID3D11DepthStencilState* depthStencilState = nullptr;
+
+      D3D11_DEPTH_STENCIL_DESC dsDesc = {};
+      dsDesc.DepthEnable = TRUE;
+      dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+      dsDesc.DepthFunc = D3D11_COMPARISON_LESS;
+
+      HRESULT hrCreateDepthStencilState = pdevice->CreateDepthStencilState(&dsDesc, &m_pdepthstencilstate);
+
+      if (FAILED(hrCreateDepthStencilState))
+      {
+
+         throw ::hresult_exception(hrCreateDepthStencilState);
+
+      }
+
+
+
       //VkFormat depthFormat = findDepthFormat();
 
       //m_formatDepth = depthFormat;

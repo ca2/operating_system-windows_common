@@ -16,7 +16,8 @@ namespace gpu_directx
 	public:
 
 		comptr<ID3D11Texture2D> m_ptextureOffscreen;
-
+		comptr< ID3D11SamplerState> m_psamplerstate;
+		comptr<ID3D11ShaderResourceView>m_pshaderresourceview;
 		static constexpr int MAX_FRAMES_IN_FLIGHT = 2;
 
 		//offscreen_render_target_view();

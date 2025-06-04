@@ -31,7 +31,7 @@ namespace gpu_directx
    {
    public:
 
-
+      ::color::hls m_hlsClear;
 
       struct CLASS_DECL_GPU_DIRECTX cpu_buffer_sampler :
          virtual public ::particle

@@ -67,7 +67,8 @@ namespace gpu_directx
    // renderer::renderer(VkWindow& window, context* pvkcdevice) : vkcWindow{ window }, m_pgpucontext{ pvkcdevice } 
    renderer::renderer()
    {
-
+      m_hlsClear.m_dL = 0.75;
+      m_hlsClear.m_dS = 0.5;
    }
 
 
@@ -617,6 +618,8 @@ namespace gpu_directx
 
       }
 
+      pcontext->m_pcontext->Flush();
+
       pcontext->m_pcontext->CopyResource((ID3D11Resource*)m_ptextureStaging, (ID3D11Resource*)ptexture);
 
 
@@ -753,7 +756,9 @@ namespace gpu_directx
          data,
          width,
          height,
-         (int)rowPitch);
+         (int)rowPitch,
+         //false);
+         false);
 
       //// Copy row by row
       //for (UINT y = 0; y < height; ++y) {
@@ -2871,9 +2876,13 @@ namespace gpu_directx
 
       ::cast < ::gpu_directx::context > pcontext = m_pgpucontext;
 
-
+      m_hlsClear.m_dH = fmod(m_hlsClear.m_dH + 0.0001, 1.0);
+      ::color::color colorClear = m_hlsClear;
       // Clear render target
-      float clear[4] = { 0.5f * .5f, 0.70f * .5f, 0.90f * .5f, .5f };
+      float clear[4] = { 
+         colorClear.f32_red() * .5f, 
+         colorClear.f32_green() * .5f, 
+         colorClear.f32_blue() * .5f, .5f };
 
 
 ///pcontext->g_pImmediateContext->OMSetRenderTargets(1, rtv.GetAddressOf(), nullptr);

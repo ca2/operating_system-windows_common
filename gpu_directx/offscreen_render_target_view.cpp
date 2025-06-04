@@ -54,7 +54,7 @@ namespace gpu_directx
       texDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
       texDesc.SampleDesc.Count = 1;
       texDesc.Usage = D3D11_USAGE_DEFAULT;
-      texDesc.BindFlags = D3D11_BIND_RENDER_TARGET;
+      texDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
 
       
       ::cast < ::gpu_directx::device > pgpudevice = m_pgpucontext->m_pgpudevice;
@@ -78,6 +78,19 @@ namespace gpu_directx
          throw ::hresult_exception(hrCreateRenderTargetView, "Failed to create offscreen render target view");
 
       }
+      
+      HRESULT hrCreateShaderResourceView = pdevice->CreateShaderResourceView(m_ptextureOffscreen, nullptr, &m_pshaderresourceview);
+      
+      if (FAILED(hrCreateShaderResourceView))
+      {
+
+         throw ::hresult_exception(hrCreateShaderResourceView, "Failed to create offscreen shader resource view");
+
+      }
+      D3D11_SAMPLER_DESC samp = {};
+      samp.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+      samp.AddressU = samp.AddressV = samp.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+      pdevice->CreateSamplerState(&samp, &m_psamplerstate);
 
       createRenderPassImpl();
       createImageViews();
@@ -698,6 +711,11 @@ namespace gpu_directx
    void offscreen_render_target_view::createDepthResources()
    {
       render_target_view::createDepthResources();
+
+
+      //ID3D11Texture2D* depthStencilBuffer = nullptr;
+      //ID3D11DepthStencilView* depthStencilView = nullptr;
+
       //VkFormat depthFormat = findDepthFormat();
       //m_formatDepth = depthFormat;
       //VkExtent2D extent = getExtent();

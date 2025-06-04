@@ -20,6 +20,7 @@ namespace gpu_directx
       comptr<ID3D11DeviceContext>         m_pcontext;
       comptr<ID3D11DeviceContext1>        m_pcontext1;
 
+      comptr < ID3D11RasterizerState> m_prasterizerstate;
       //itask									m_itaskGpu;
       //VkSampler m_vksampler001;
 
