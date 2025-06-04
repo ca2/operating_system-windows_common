@@ -221,7 +221,8 @@ namespace gpu_directx
 
       auto eoutput = m_eoutput;
 
-      if (eoutput == ::gpu::e_output_cpu_buffer)
+      if (eoutput == ::gpu::e_output_cpu_buffer
+         || eoutput == ::gpu::e_output_gpu_buffer)
       {
 
          auto poffscreenrendertargetview = __allocate offscreen_render_target_view(this, size, m_prendertargetview);

@@ -10,6 +10,7 @@
 #include "CustomRenderer.h"
 #include "acme/exception/not_implemented.h"
 #include "acme/parallelization/synchronous_lock.h"
+#include "acme/platform/node.h"
 #include "acme/platform/scoped_restore.h"
 #include "acme/prototype/geometry2d/ellipse.h"
 #include "aura/windowing/windowing.h"
@@ -19,6 +20,9 @@
 #include "aura/graphics/draw2d/lock.h"
 #include "aura/graphics/draw2d/region.h"
 #include "aura/graphics/draw2d/device_lock.h"
+#include "aura/graphics/gpu/approach.h"
+#include "aura/graphics/gpu/context.h"
+#include "aura/graphics/gpu/types.h"
 #include "aura/graphics/image/context.h"
 #include "aura/graphics/image/drawing.h"
 #include "aura/graphics/image/frame_array.h"
@@ -26,6 +30,7 @@
 //#include "acme/prototype/geometry2d/_collection_enhanced.h"
 //#include "acme/prototype/geometry2d/_defer_shape.h"
 #include "aura/platform/session.h"
+#include "aura/windowing/window.h"
 #include <math.h>
 
 
@@ -152,132 +157,188 @@ namespace draw2d_direct2d
 
       }
 
-      /*::direct2d::direct2d() = __allocate ::draw2d_direct2d::plugin();
+      ::user::interaction* puserinteraction = m_puserinteraction;
 
-      ::direct2d::direct2d()->initialize();*/
-
-      HRESULT hr;
-
-      comptr<ID2D1DeviceContext> pdevicecontextTemplate;
-
-      if (FAILED(hr = ::direct2d::direct2d()->m_pd2device->CreateDeviceContext(
-         //D2D1_DEVICE_CONTEXT_OPTIONS_NONE,
-         D2D1_DEVICE_CONTEXT_OPTIONS_ENABLE_MULTITHREADED_OPTIMIZATIONS,
-         &pdevicecontextTemplate)))
+      if (::is_null(puserinteraction))
       {
 
-         warning() << "graphics::CreateCompatibleDC, CreateDeviceContext (1) " << hresult_text(hr);
-
-         //return false;
-
-         throw ::exception(error_failed);
+         puserinteraction = dynamic_cast < ::user::interaction * >(m_papplication->m_pacmeuserinteractionMain.m_p);
 
       }
 
-      comptr<ID2D1RenderTarget> prendertargetTemplate;
+      auto pwindow = puserinteraction->window();
 
-      auto psession = session();
+      auto rectanglePlacement = pwindow->get_window_rectangle();
 
-      auto paurasession = psession;
+      auto pdevice = m_papplication->get_gpu()->get_device(pwindow, rectanglePlacement);
 
-      auto puser = paurasession->user();
+      __defer_construct(m_pgpucontext);
 
-      auto pwindowing = system()->windowing();
+      m_pgpucontext->start_gpu_context(
+         ::gpu::start_gpu_output_context_t
+         {
+            this,
+            pdevice,
+            ::gpu::e_output_gpu_buffer,
+            rectanglePlacement
+         });
 
-      auto pdisplay = pwindowing->display();
+      m_pgpucontext->_send([this]()
+         {
 
-      auto dpi = pdisplay->get_dpi();
+            /*::direct2d::direct2d() = __allocate ::draw2d_direct2d::plugin();
 
-      if (dpi <= 0.0)
-      {
+            ::direct2d::get()->initialize();*/
 
-         ASSERT(false);
+            HRESULT hr;
 
-         throw ::exception(error_failed);
+            ::user::interaction* puserinteraction = m_puserinteraction;
 
-      }
+            if (!puserinteraction)
+            {
 
-      pdevicecontextTemplate->SetDpi(dpi, dpi);
+               puserinteraction = dynamic_cast <::user::interaction*>(m_papplication->m_pacmeuserinteractionMain.m_p);
 
-      if (FAILED(hr = pdevicecontextTemplate->QueryInterface(IID_ID2D1RenderTarget, (void **)&prendertargetTemplate)))
-      {
+            }
 
-         warning() << "graphics::CreateCompatibleDC, QueryInterface (2) " << hresult_text(hr);
+            auto pwindow = puserinteraction->window();
 
-         throw ::exception(error_failed);
+            auto rectanglePlacement = pwindow->get_window_rectangle();
 
-      }
+            ::direct2d::lock lock;
 
-      D2D1_SIZE_U sizeu = D2D1::SizeU(256, 256);
+            auto pdirect2d = ::direct2d::get();
 
-      D2D1_PIXEL_FORMAT pixelformat;
+            m_pdevice = pdirect2d->create_device(pwindow, rectanglePlacement);
 
-      pixelformat.alphaMode = D2D1_ALPHA_MODE_PREMULTIPLIED;
+            comptr < ID2D1DeviceContext > pdevicecontextTemplate;
 
-      pixelformat.format = DXGI_FORMAT_B8G8R8A8_UNORM;
+            hr = m_pdevice->CreateDeviceContext(
+               //D2D1_DEVICE_CONTEXT_OPTIONS_NONE,
+               D2D1_DEVICE_CONTEXT_OPTIONS_ENABLE_MULTITHREADED_OPTIMIZATIONS,
+               &pdevicecontextTemplate);
 
-      if (FAILED(hr = prendertargetTemplate->CreateCompatibleRenderTarget(
-         nullptr,
-         &sizeu,
-         &pixelformat,
-         D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS_NONE,
-         &m_pbitmaprendertarget)))
-      {
+            if (FAILED(hr))
+            {
 
-         warning() << "graphics::CreateCompatibleDC, CreateCompatibleRenderTarget (3) " << hresult_text(hr);
+               warning() << "graphics::CreateCompatibleDC, CreateDeviceContext (1) " << hresult_text(hr);
 
-         throw ::exception(error_failed);
+               //return false;
 
-      }
+               throw ::exception(error_failed);
 
-      hr = m_pbitmaprendertarget.as(m_prendertarget);
+            }
 
-      if (FAILED(hr))
-      {
+            auto psession = session();
 
-         m_pbitmaprendertarget = nullptr;
+            auto paurasession = psession;
 
-         throw ::exception(error_failed);
+            auto puser = paurasession->user();
 
-      }
+            auto pwindowing = system()->windowing();
 
-      hr = m_pbitmaprendertarget.as(m_pdevicecontext);
+            auto pdisplay = pwindowing->display();
 
-      m_pdevicecontext.as(m_pdevicecontext1);
+            auto dpi = pdisplay->get_dpi();
 
-      if (FAILED(hr))
-      {
+            if (dpi <= 0.0)
+            {
 
-         m_prendertarget = nullptr;
+               ASSERT(false);
 
-         m_pbitmaprendertarget = nullptr;
+               throw ::exception(error_failed);
 
-         throw ::exception(error_failed);
+            }
 
-      }
+            pdevicecontextTemplate->SetDpi(dpi, dpi);
 
-      __defer_construct(m_pbitmap);
+            comptr < ID2D1RenderTarget > prendertargetTemplate;
 
-      ID2D1Bitmap * pbitmap;
+            hr = pdevicecontextTemplate->QueryInterface(IID_ID2D1RenderTarget, (void**)&prendertargetTemplate);
 
-      hr = m_pbitmaprendertarget->GetBitmap(&pbitmap);
+            if (FAILED(hr))
+            {
 
-      if (FAILED(hr))
-      {
+               warning() << "graphics::CreateCompatibleDC, QueryInterface (2) " << hresult_text(hr);
 
-         m_pbitmaprendertarget = nullptr;
+               throw ::exception(error_failed);
 
-         throw ::exception(error_failed);
+            }
 
-      }
+            D2D1_SIZE_U sizeu = D2D1::SizeU(256, 256);
 
-      m_pbitmap->attach(pbitmap);
+            D2D1_PIXEL_FORMAT pixelformat;
 
-      m_iType = 3;
+            pixelformat.alphaMode = D2D1_ALPHA_MODE_PREMULTIPLIED;
 
-      m_osdata[data_device_context] = m_pdevicecontext;
+            pixelformat.format = DXGI_FORMAT_B8G8R8A8_UNORM;
 
-      m_osdata[data_render_target] = m_prendertarget;
+            hr = prendertargetTemplate->CreateCompatibleRenderTarget(
+               nullptr,
+               &sizeu,
+               &pixelformat,
+               D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS_NONE,
+               &m_pbitmaprendertarget);
+
+            if (FAILED(hr))
+            {
+
+               warning() << "graphics::CreateCompatibleDC, CreateCompatibleRenderTarget (3) " << hresult_text(hr);
+
+               throw ::exception(error_failed);
+
+            }
+
+            hr = m_pbitmaprendertarget.as(m_prendertarget);
+
+            if (FAILED(hr))
+            {
+
+               m_pbitmaprendertarget = nullptr;
+
+               throw ::exception(error_failed);
+
+            }
+
+            hr = m_pbitmaprendertarget.as(m_pdevicecontext);
+
+            m_pdevicecontext.as(m_pdevicecontext1);
+
+            if (FAILED(hr))
+            {
+
+               m_prendertarget = nullptr;
+
+               m_pbitmaprendertarget = nullptr;
+
+               throw ::exception(error_failed);
+
+            }
+
+            __defer_construct(m_pbitmap);
+
+            ID2D1Bitmap* pbitmap;
+
+            hr = m_pbitmaprendertarget->GetBitmap(&pbitmap);
+
+            if (FAILED(hr))
+            {
+
+               m_pbitmaprendertarget = nullptr;
+
+               throw ::exception(error_failed);
+
+            }
+
+            m_pbitmap->attach(pbitmap);
+
+            m_iType = 3;
+
+            m_osdata[data_device_context] = m_pdevicecontext;
+
+            m_osdata[data_render_target] = m_prendertarget;
+
+         });
 
       //return true;
 
@@ -1533,7 +1594,7 @@ namespace draw2d_direct2d
 
          //comptr < ID2D1PathGeometry1 > pgeometry;
 
-         //HRESULT hr = ::direct2d::direct2d()->d2d1_factory1()->CreatePathGeometry(&pgeometry);
+         //HRESULT hr = ::direct2d::factory()->CreatePathGeometry(&pgeometry);
 
          //if (FAILED(hr))
          //{
@@ -1668,7 +1729,7 @@ namespace draw2d_direct2d
 
       comptr<ID2D1PathGeometry> pgeometry;
 
-      HRESULT hr = ::direct2d::direct2d()->d2d1_factory1()->CreatePathGeometry(&pgeometry);
+      HRESULT hr = ::direct2d::factory()->CreatePathGeometry(&pgeometry);
 
       {
 
@@ -1720,7 +1781,7 @@ namespace draw2d_direct2d
 
       comptr<ID2D1PathGeometry> pgeometry;
 
-      HRESULT hr = ::direct2d::direct2d()->d2d1_factory1()->CreatePathGeometry(&pgeometry);
+      HRESULT hr = ::direct2d::factory()->CreatePathGeometry(&pgeometry);
 
       {
 
@@ -1768,7 +1829,7 @@ namespace draw2d_direct2d
 
       comptr<ID2D1PathGeometry> pgeometry;
 
-      HRESULT hr = ::direct2d::direct2d()->d2d1_factory1()->CreatePathGeometry(&pgeometry);
+      HRESULT hr = ::direct2d::factory()->CreatePathGeometry(&pgeometry);
 
       {
 
@@ -4450,7 +4511,7 @@ namespace draw2d_direct2d
 
    //   copy(r, rectangle);
 
-   //   ::direct2d::direct2d()->d2d1_factory1()->CreateRectangleGeometry(r, &pgeometry);
+   //   ::direct2d::factory()->CreateRectangleGeometry(r, &pgeometry);
 
    //   //return pgeometry;
 
@@ -4548,7 +4609,7 @@ namespace draw2d_direct2d
 
       comptr<ID2D1PathGeometry> ppathgeometry;
 
-      HRESULT hr = ::direct2d::direct2d()->d2d1_factory1()->CreatePathGeometry(&ppathgeometry);
+      HRESULT hr = ::direct2d::factory()->CreatePathGeometry(&ppathgeometry);
 
       {
 
@@ -5520,7 +5581,7 @@ namespace draw2d_direct2d
 
       unsigned int uLength = (unsigned int)text.m_wstr.length();
 
-      hr = ::direct2d::direct2d()->dwrite_factory()->CreateTextLayout(
+      hr = ::direct2d::dwrite_factory()->CreateTextLayout(
            text.m_wstr,                // The string to be laid out and formatted.
            uLength,   // The length of the string.
            pfont,    // The text format to apply to the string (contains font information, etc).
@@ -5889,6 +5950,26 @@ namespace draw2d_direct2d
 
       set_smooth_mode(::draw2d::e_smooth_mode_high);
 
+      if (m_egraphics == ::e_graphics_draw)
+      {
+
+         __defer_construct(m_pgpucontext);
+
+         auto pwindow = m_puserinteraction->window();
+
+         m_pgpucontext->initialize_gpu_context(
+            ::gpu::start_gpu_output_context_t
+            {
+               this,
+               m_papplication->get_gpu()->get_device(pwindow, pwindow->get_window_rectangle()),
+               ::gpu::e_output_gpu_buffer, 
+               pwindow->get_window_rectangle()
+            });
+
+         m_pgpucontext->make_current();
+
+      }
+
       //return true;
 
    }
@@ -6069,7 +6150,7 @@ namespace draw2d_direct2d
    //                                            D2D1_FEATURE_LEVEL_DEFAULT
    //                                            );
    //
-   //      HRESULT hr = ::direct2d::direct2d()->d2d1_factory1()->CreateDCRenderTarget(&props,&m_pdcrendertarget);
+   //      HRESULT hr = ::direct2d::factory()->CreateDCRenderTarget(&props,&m_pdcrendertarget);
    //
    //      if (FAILED(hr))
    //      {
@@ -6674,7 +6755,7 @@ namespace draw2d_direct2d
 
       //IDWriteTextFormat * pformat = textout.m_pfont->get_os_data < IDWriteTextFormat * > (this);
 
-      //IDWriteFactory * pfactory = ::direct2d::direct2d()->dwrite_factory();
+      //IDWriteFactory * pfactory = ::direct2d::dwrite_factory();
 
       //comptr<IDWriteTextLayout> playout;
 
@@ -6694,7 +6775,7 @@ namespace draw2d_direct2d
 
       //}
 
-      //CustomTextRenderer renderer(::direct2d::direct2d()->d2d1_factory1(),m_prendertarget,ppen->get_os_data < ID2D1Brush * >(this));
+      //CustomTextRenderer renderer(::direct2d::factory(),m_prendertarget,ppen->get_os_data < ID2D1Brush * >(this));
 
       //defer_text_primitive_blend();
 
@@ -6714,7 +6795,7 @@ namespace draw2d_direct2d
 
       //IDWriteTextFormat * pformat = textout.m_pfont->get_os_data < IDWriteTextFormat * >(this);
 
-      //IDWriteFactory * pfactory = ::direct2d::direct2d()->dwrite_factory();
+      //IDWriteFactory * pfactory = ::direct2d::dwrite_factory();
 
       //comptr<IDWriteTextLayout> playout;
 
@@ -6739,7 +6820,7 @@ namespace draw2d_direct2d
       //if (posbrush)
       //{
 
-      //   CustomTextRenderer renderer(::direct2d::direct2d()->d2d1_factory1(), m_prendertarget, nullptr, posbrush);
+      //   CustomTextRenderer renderer(::direct2d::factory(), m_prendertarget, nullptr, posbrush);
 
       //   defer_text_primitive_blend();
 
@@ -6761,7 +6842,7 @@ namespace draw2d_direct2d
 
       //IDWriteTextFormat* pformat = drawtext.m_pfont->get_os_data < IDWriteTextFormat* >(this);
 
-      //IDWriteFactory* pfactory = ::direct2d::direct2d()->dwrite_factory();
+      //IDWriteFactory* pfactory = ::direct2d::dwrite_factory();
 
       //IDWriteTextLayout* playout = nullptr;
 
@@ -6781,7 +6862,7 @@ namespace draw2d_direct2d
 
       //}
 
-      //CustomTextRenderer renderer(::direct2d::direct2d()->d2d1_factory1(), m_prendertarget, ppen->get_os_data < ID2D1Brush* >(this));
+      //CustomTextRenderer renderer(::direct2d::factory(), m_prendertarget, ppen->get_os_data < ID2D1Brush* >(this));
 
       //defer_text_primitive_blend();
 
@@ -6801,7 +6882,7 @@ namespace draw2d_direct2d
 
       //IDWriteTextFormat* pformat = drawtext.m_pfont->get_os_data < IDWriteTextFormat* >(this);
 
-      //IDWriteFactory* pfactory = ::direct2d::direct2d()->dwrite_factory();
+      //IDWriteFactory* pfactory = ::direct2d::dwrite_factory();
 
       //IDWriteTextLayout* playout = nullptr;
 
@@ -6826,7 +6907,7 @@ namespace draw2d_direct2d
       //if (posbrush)
       //{
 
-      //   CustomTextRenderer renderer(::direct2d::direct2d()->d2d1_factory1(), m_prendertarget, nullptr, posbrush);
+      //   CustomTextRenderer renderer(::direct2d::factory(), m_prendertarget, nullptr, posbrush);
 
       //   defer_text_primitive_blend();
 

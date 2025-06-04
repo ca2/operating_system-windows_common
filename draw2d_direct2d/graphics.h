@@ -30,6 +30,7 @@ namespace draw2d_direct2d
 
       int                                                m_iLayerCount;
 
+      comptr<ID2D1Device>                                m_pdevice;
       comptr<ID2D1DeviceContext>                         m_pdevicecontext; // 0
       comptr<ID2D1RenderTarget>                          m_prendertarget; // 1
       comptr<ID2D1BitmapRenderTarget>                    m_pbitmaprendertarget; // 2

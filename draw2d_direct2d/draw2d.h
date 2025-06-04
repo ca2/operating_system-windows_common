@@ -21,8 +21,10 @@ namespace draw2d_direct2d
 
       virtual string write_text_get_default_implementation_name() override;
 
-      void lock_device() override;
+      bool lock_device() override;
       void unlock_device() override;
+
+      void on_create_window(::windowing::window* pwindow) override;
 
 
    };

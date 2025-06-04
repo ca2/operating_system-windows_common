@@ -2392,29 +2392,62 @@ namespace gpu_directx
    {
 
       ::cast < ::windowing_win32::window > pwin32window = pwindow;
+
+      auto r = pwindow->get_window_rectangle();
+
       // Swap chain description
-      DXGI_SWAP_CHAIN_DESC scd = {};
-      scd.BufferDesc.Width = 800;
-      scd.BufferDesc.Height = 600;
-      scd.BufferDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
-      scd.BufferCount = 1;
-      scd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-      scd.OutputWindow = pwin32window->m_hwnd;
-      scd.SampleDesc.Count = 1;
-      scd.Windowed = TRUE;
-      scd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
+      DXGI_SWAP_CHAIN_DESC dxgiswapchaindesc = {};
+      dxgiswapchaindesc.BufferDesc.Width = r.width();
+      dxgiswapchaindesc.BufferDesc.Height = r.height();
+      dxgiswapchaindesc.BufferDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
+      dxgiswapchaindesc.BufferCount = 2;
+      dxgiswapchaindesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+      dxgiswapchaindesc.OutputWindow = pwin32window->m_hwnd;
+      dxgiswapchaindesc.SampleDesc.Count = 1;
+      dxgiswapchaindesc.Windowed = TRUE;
+      dxgiswapchaindesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL;
+      dxgiswapchaindesc.Flags = 0;
 
-      // Create D3D11 device and swap chain
-      ID3D11Device* device = nullptr;
-      ID3D11DeviceContext* context = nullptr;
-      IDXGISwapChain* swapChain = nullptr;
-      D3D_FEATURE_LEVEL featureLevel;
+      comptr<IDXGISwapChain> swapchain;
+      comptr<ID3D11Device> device;
 
+      comptr<ID3D11DeviceContext> context;
+     
       HRESULT hr = D3D11CreateDeviceAndSwapChain(
-         nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, 0, nullptr, 0,
-         D3D11_SDK_VERSION, &scd, &swapChain, &device, &featureLevel, &context
+         nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr,
+         D3D11_CREATE_DEVICE_BGRA_SUPPORT,
+         nullptr, 0,
+         D3D11_SDK_VERSION, 
+         &dxgiswapchaindesc,
+         &swapchain,
+         &device,
+         &m_featurelevel,
+         &context
       );
+
       assert(SUCCEEDED(hr));
+      ::defer_throw_hresult(hr);
+
+      ::defer_throw_hresult(swapchain.as(m_pdxgiswapchain));
+
+      // Get the Direct3D 11.1 API device and context interfaces.
+      ::defer_throw_hresult(device.as(m_pdevice));
+
+      ::defer_throw_hresult(device.as(m_pdevice1));
+
+      ::defer_throw_hresult(context.as(m_pdevicecontext));
+
+
+      // Get the underlying DXGI device of the Direct3D device.
+      ::defer_throw_hresult(m_pdevice.as(m_pdxgidevice));
+
+#if defined(_DEBUG)
+
+      ::directx::defer_dxgi_debug_initialize();
+
+#endif
+
+      
 
    }
 
@@ -2463,9 +2496,9 @@ namespace gpu_directx
          featureLevels,              // List of feature levels this app can support.
          ARRAYSIZE(featureLevels),
          D3D11_SDK_VERSION,          // Always set this to D3D11_SDK_VERSION for Metro style apps.
-         &device,                    // Returns the Direct3D device created.
+         &m_pdevice,                    // Returns the Direct3D device created.
          &m_featurelevel,            // Returns feature level of device created.
-         &context                    // Returns the device immediate context.
+         &m_pdevicecontext                    // Returns the device immediate context.
       );
 
       ::defer_throw_hresult(hr);
@@ -2479,7 +2512,7 @@ namespace gpu_directx
 
 
       // Get the underlying DXGI device of the Direct3D device.
-      ::defer_throw_hresult(device.as(m_pdxgidevice));
+      ::defer_throw_hresult(m_pdevice.as(m_pdxgidevice));
 
 #if defined(_DEBUG)
 

@@ -58,7 +58,7 @@ namespace direct2d
 
       comptr < ID2D1StrokeStyle1 > pstrokestyle;
 
-      HRESULT hr = ::direct2d::direct2d()->d2d1_factory1()->CreateStrokeStyle(&properties1, nullptr, 0, &pstrokestyle);
+      HRESULT hr = ::direct2d::factory()->CreateStrokeStyle(&properties1, nullptr, 0, &pstrokestyle);
 
       return pstrokestyle;
 

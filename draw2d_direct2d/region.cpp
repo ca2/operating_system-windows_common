@@ -188,7 +188,7 @@ namespace draw2d_direct2d
 
          ID2D1PathGeometry * ppathgeometry = nullptr;
 
-         HRESULT hr = ::direct2d::direct2d()->d2d1_factory1()->CreatePathGeometry(&ppathgeometry);
+         HRESULT hr = ::direct2d::factory()->CreatePathGeometry(&ppathgeometry);
 
          if(FAILED(hr))
             return nullptr;
@@ -237,7 +237,7 @@ namespace draw2d_direct2d
 
       auto prectanglegeometry = ::direct2d::geometry::create_rectangle(pitem->m_item);
 
-      //::direct2d::direct2d()->d2d1_factory1()->CreateRectangleGeometry(r, &pgeometry);
+      //::direct2d::factory()->CreateRectangleGeometry(r, &pgeometry);
 
       return prectanglegeometry;
 
@@ -261,7 +261,7 @@ namespace draw2d_direct2d
 
       //ID2D1EllipseGeometry * pgeometry = nullptr;
 
-      //::direct2d::direct2d()->d2d1_factory1()->CreateEllipseGeometry(ellipse, &pgeometry);
+      //::direct2d::factory()->CreateEllipseGeometry(ellipse, &pgeometry);
 
       auto pellipsegeometry = ::direct2d::geometry::create_ellipse(pitem->m_item);
 
@@ -357,7 +357,7 @@ namespace draw2d_direct2d
 
       comptr < ID2D1PathGeometry > ppathgeometry ;
 
-      HRESULT hr = ::direct2d::direct2d()->d2d1_factory1()->CreatePathGeometry(&ppathgeometry);
+      HRESULT hr = ::direct2d::factory()->CreatePathGeometry(&ppathgeometry);
 
       comptr < ID2D1GeometrySink > psink ;
 

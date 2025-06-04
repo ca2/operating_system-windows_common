@@ -385,7 +385,7 @@ namespace draw2d_direct2d
 
    internal_font::~internal_font()
    {
-      IDWriteFactory * pfactory = ::direct2d::direct2d()->dwrite_factory();
+      IDWriteFactory * pfactory = ::direct2d::dwrite_factory();
 
       pfactory->UnregisterFontFileLoader(m_pfontfileloader);
       pfactory->UnregisterFontCollectionLoader(m_pfontcollectionloader);
@@ -403,7 +403,7 @@ namespace draw2d_direct2d
 
       }
 
-      IDWriteFactory * pfactory = ::direct2d::direct2d()->dwrite_factory();
+      IDWriteFactory * pfactory = ::direct2d::dwrite_factory();
 
       //// Register custom loader
       m_pfontfileloader.m_p = new CustomFontFileLoader();
@@ -498,7 +498,7 @@ namespace draw2d_direct2d
 
       ::cast < ::draw2d_direct2d::font> pdraw2ddirect2dfont = pfont;
 
-      IDWriteFactory * pfactory = ::direct2d::direct2d()->dwrite_factory();
+      IDWriteFactory * pfactory = ::direct2d::dwrite_factory();
 
       ::wstring wstrFamilyName;
 

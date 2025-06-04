@@ -6,11 +6,9 @@
 #include "acme/graphics/write_text/font_weight.h"
 #include "acme/prototype/geometry2d/rectangle.h"
 #include "acme_windows_common/hresult_exception.h"
+#include "aura/windowing/window.h"
 
 
-
-#define d2d1_fax_options D2D1_FACTORY_OPTIONS // fax of merde
-#define d2d1_thread_model D2D1_FACTORY_TYPE_MULTI_THREADED // ???? muliple performance multi thread hidden option there exists cost uses?
 
 
 typedef HRESULT WINAPI FN_DXGIGetDebugInterface(REFIID riid, void ** ppDebug);
@@ -104,20 +102,41 @@ namespace direct2d
    void direct2d::initialize(::particle * pparticle)
    {
 
-      //::directx::defer_initialize(pparticle);
+      ::app_consumer<::aura::application>::initialize(pparticle);
+
+   }
+
+
+   comptr<ID2D1Device> direct2d::create_device(::windowing::window* pwindow, const ::int_rectangle& rectanglePlacement)
+   {
 
       ::cast < ::gpu_directx::approach > papproach = m_papplication->get_gpu();
 
-      ::cast < ::gpu_directx::device > pgpudevice = papproach->m_pgpudevice;
+      ::cast < ::gpu_directx::device > pgpudevice = papproach->get_device(pwindow, rectanglePlacement);
 
       auto& pdxgidevice = pgpudevice->m_pdxgidevice;
 
+      auto pfactory1 = d2d1_factory1();
+
+      if (!m_pd2dMultithread)
+      {
+
+         HRESULT hrMultithread = d2d1_factory1()->QueryInterface(IID_PPV_ARGS(&m_pd2dMultithread));
+
+         ::defer_throw_hresult(hrMultithread);
+
+      }
+
+      ::direct2d::lock lock;
+
+      comptr<ID2D1Device> pd2d1device;
+
       // Create the Direct2D device object and a corresponding context.
-      ::defer_throw_hresult(d2d1_factory1()->CreateDevice(pdxgidevice, &m_pd2device));
+      HRESULT hr = pfactory1->CreateDevice(pdxgidevice, &pd2d1device);
+      
+      ::defer_throw_hresult(hr);
 
-      d2d1_factory1()->QueryInterface(IID_PPV_ARGS(&m_d2dMultithread));
-
-      //return ::success;
+      return pd2d1device;
 
    }
 
@@ -151,7 +170,6 @@ namespace direct2d
    ID2D1Factory1 * direct2d::d2d1_factory1(bool bCreate)
    {
 
-
       if (m_pd2factory != nullptr || !bCreate)
       {
 
@@ -159,11 +177,17 @@ namespace direct2d
 
       }
 
-      d2d1_fax_options options;
+      D2D1_FACTORY_OPTIONS d2d1factoryoptions{};
 
-      memory_set(&options, 0, sizeof(options));
+#ifdef _DEBUG
+      d2d1factoryoptions.debugLevel = D2D1_DEBUG_LEVEL_INFORMATION;
+#endif
 
-      HRESULT hr = ::D2D1CreateFactory(d2d1_thread_model, __uuidof(ID2D1Factory1), &options, (void **) &m_pd2factory);
+      HRESULT hr = ::D2D1CreateFactory(
+         D2D1_FACTORY_TYPE_MULTI_THREADED,
+         __uuidof(ID2D1Factory1), 
+         &d2d1factoryoptions,
+         (void **) &m_pd2factory);
 
       if (FAILED(hr))
       {
@@ -178,13 +202,13 @@ namespace direct2d
 
    }
 
-   
-   ID2D1Device * direct2d::draw_get_d2d1_device()
-   {
+   //
+   //ID2D1Device * direct2d::draw_get_d2d1_device()
+   //{
 
-      return m_pd2device;
+   //   return m_pd2device;
 
-   }
+   //}
 
 
    comptr < ID2D1PathGeometry1 > direct2d::create_rectangle_path_geometry(const ::double_rectangle & rectangle)
@@ -225,7 +249,7 @@ namespace direct2d
 
 
 
-   CLASS_DECL_DIRECT2D void defer_initialize(::particle * pparticle)
+   CLASS_DECL_DIRECT2D void defer_initialize(::windowing::window* pwindow, const ::int_rectangle& rectanglePlacement)
    {
 
       if (::is_set(direct2d::s_pdirect2d))
@@ -249,7 +273,9 @@ namespace direct2d
 
       direct2d::s_pdirect2d = ___new class direct2d;
 
-      direct2d::s_pdirect2d->initialize(pparticle);
+      direct2d::s_pdirect2d->initialize(pwindow);
+
+      //direct2d::s_pdirect2d->initialize_direct2d(pwindow, rectanglePlacement);
 
    }
 

@@ -139,7 +139,7 @@ namespace draw2d_direct2d
 
          }
 
-         IDWriteFactory * pfactory = ::direct2d::direct2d()->dwrite_factory();
+         IDWriteFactory * pfactory = ::direct2d::dwrite_factory();
 
          if (!defer_load_internal_font(pgraphics))
          {

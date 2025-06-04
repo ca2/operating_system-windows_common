@@ -24,7 +24,7 @@ namespace direct2d
 
          copy(&r, &rectangle);
 
-         ::direct2d::direct2d()->d2d1_factory1()->CreateRectangleGeometry(r, &pgeometry);
+         ::direct2d::factory()->CreateRectangleGeometry(r, &pgeometry);
 
          return pgeometry;
 
@@ -46,7 +46,7 @@ namespace direct2d
          d2d1ellipse.radiusX = sizeRadius.cx();
          d2d1ellipse.radiusY = sizeRadius.cy();
 
-         ::direct2d::direct2d()->d2d1_factory1()->CreateEllipseGeometry(d2d1ellipse, &pgeometry);
+         ::direct2d::factory()->CreateEllipseGeometry(d2d1ellipse, &pgeometry);
 
          return pgeometry;
 
@@ -66,7 +66,7 @@ namespace direct2d
 
          comptr<ID2D1PathGeometry> ppathgeometry;
 
-         HRESULT hr = ::direct2d::direct2d()->d2d1_factory1()->CreatePathGeometry(&ppathgeometry);
+         HRESULT hr = ::direct2d::factory()->CreatePathGeometry(&ppathgeometry);
 
          {
 
@@ -92,7 +92,7 @@ namespace direct2d
 
          comptr<ID2D1PathGeometry> ppathgeometry;
 
-         HRESULT hr = ::direct2d::direct2d()->d2d1_factory1()->CreatePathGeometry(&ppathgeometry);
+         HRESULT hr = ::direct2d::factory()->CreatePathGeometry(&ppathgeometry);
 
          {
 

@@ -23,10 +23,9 @@ namespace direct2d
       geometry_sink_text_renderer   m_geometrysinktextrenderer;
 
 
-      comptr<ID2D1Device>           m_pd2device;
-      comptr<ID2D1DeviceContext>    m_pd2devicecontext;
+      //comptr<ID2D1DeviceContext>    m_pd2devicecontext;
 
-      comptr<ID2D1Multithread>      m_d2dMultithread;
+      comptr<ID2D1Multithread>      m_pd2dMultithread;
 
       //D3D_FEATURE_LEVEL             m_featurelevel;
 
@@ -39,12 +38,14 @@ namespace direct2d
 
       void initialize(::particle * pparticle) override;
 
+      virtual comptr<ID2D1Device> create_device(::windowing::window* pwindow, const ::int_rectangle& rectanglePlacement);
+
 
       IDWriteFactory * dwrite_factory(bool bCreate = true);
       ID2D1Factory1 * d2d1_factory1(bool bCreate = true);
 
 
-      ID2D1Device* draw_get_d2d1_device();
+      //ID2D1Device* draw_get_d2d1_device();
 
 
       comptr < ID2D1PathGeometry1 > create_rectangle_path_geometry(const ::double_rectangle & rectangle);
@@ -54,7 +55,8 @@ namespace direct2d
    };
 
 
-   inline direct2d* direct2d()
+
+   inline direct2d* get()
    {
 
       return direct2d::s_pdirect2d;
@@ -62,7 +64,73 @@ namespace direct2d
    }
 
 
-   CLASS_DECL_DIRECT2D void defer_initialize(::particle * pparticle);
+   inline ID2D1Factory1* factory()
+   {
+
+      return get()->d2d1_factory1();
+
+   }
+
+
+   inline IDWriteFactory* dwrite_factory()
+   {
+
+      return get()->dwrite_factory();
+
+   }
+
+
+   class CLASS_DECL_DIRECT2D lock
+   {
+   public:
+
+
+      bool m_bLocked = false;
+
+
+      lock()
+      {
+
+         auto pdirect2d = ::direct2d::direct2d::s_pdirect2d;
+
+         if (::is_null(pdirect2d))
+         {
+
+            return;
+
+         }
+
+         ID2D1Multithread* pmultithread = pdirect2d->m_pd2dMultithread.m_p;
+
+         if (::is_null(pmultithread))
+         {
+
+            return;
+
+         }
+
+         pmultithread->Enter();
+
+         m_bLocked = true;
+
+      }
+      ~lock()
+      {
+
+         if (m_bLocked)
+         {
+
+            ::direct2d::direct2d::s_pdirect2d->m_pd2dMultithread->Leave();
+
+         }
+
+      }
+
+
+   };
+
+
+   CLASS_DECL_DIRECT2D void defer_initialize(::windowing::window * pwindow, const ::int_rectangle & rectanglePlacement);
    CLASS_DECL_DIRECT2D void finalize();
 
 
