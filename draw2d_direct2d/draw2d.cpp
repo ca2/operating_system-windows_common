@@ -113,6 +113,21 @@ namespace draw2d_direct2d
    }
 
 
+   void draw2d::adjust_composited_window_styles(unsigned int& nExStyle, unsigned int& nStyle)
+   {
+
+      nExStyle |= WS_EX_LAYERED;
+
+      if (m_papplication->m_bUseSwapChainWindow)
+      {
+
+         nExStyle |= WS_EX_NOREDIRECTIONBITMAP;
+
+      }
+
+   }
+
+
 } // namespace draw2d_direct2d
 
 
