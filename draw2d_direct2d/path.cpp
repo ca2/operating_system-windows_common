@@ -256,7 +256,7 @@ namespace draw2d_direct2d
 
       }
 
-      ::direct2d::lock lock;
+      ::direct2d_lock lock;
 
       auto & renderer = ::direct2d::get()->m_geometrysinktextrenderer;
 

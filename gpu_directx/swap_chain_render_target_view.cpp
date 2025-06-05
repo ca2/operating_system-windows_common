@@ -3,6 +3,43 @@
 #include "physical_device.h"
 #include "renderer.h"
 
+#include <d3dcompiler.h>
+#pragma comment(lib, "d3dcompiler.lib")
+const char* fullscreen_vertex_shader = R"shader(// fullscreen_vs.hlsl
+      struct VSOut {
+         float4 pos : SV_POSITION;
+         float2 uv : TEXCOORD0;
+      };
+
+      VSOut main(uint vid : SV_VertexID) {
+         float2 verts[3] = {
+             float2(-1, -1),
+             float2(-1, +3),
+             float2(+3, -1)
+         };
+         float2 uvs[3] = {
+             float2(0, 1),
+             float2(0, -1),
+             float2(2, 1)
+         };
+
+         VSOut o;
+         o.pos = float4(verts[vid], 0, 1);
+         o.uv = 0.5 * (verts[vid] + 1.0);
+         return o;
+      }
+)shader";
+
+const char* fullscreen_pixel_shader = R"shader(// fullscreen_ps.hlsl
+Texture2D tex : register(t0);
+SamplerState samp : register(s0);
+
+float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
+    return tex.Sample(samp, uv);
+}
+)shader";
+
+
 namespace gpu_directx
 {
 
@@ -14,7 +51,7 @@ namespace gpu_directx
 	//}
 
 	swap_chain_render_target_view::swap_chain_render_target_view(renderer* pgpurenderer, const ::int_size & size)
-		: render_target_view(pgpurenderer, size)
+		: swap_chain_render_target_view(pgpurenderer, size, {})
 	{
 		//m_bNeedRebuild = false;
 	   //init();
@@ -23,6 +60,24 @@ namespace gpu_directx
 	swap_chain_render_target_view::swap_chain_render_target_view(renderer* pgpurenderer, const ::int_size & size, ::pointer<render_target_view> previous)
 		: render_target_view(pgpurenderer, size, previous)
 	{
+
+
+		D3D11_TEXTURE2D_DESC texDesc = {};
+		texDesc.Width = size.cx();
+		texDesc.Height = size.cy();
+		texDesc.MipLevels = 1;
+		texDesc.ArraySize = 1;
+		texDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
+		texDesc.SampleDesc.Count = 1;
+		texDesc.Usage = D3D11_USAGE_DEFAULT;
+		texDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
+		texDesc.MiscFlags = D3D11_RESOURCE_MISC_SHARED;
+
+		::cast < ::gpu_directx::context > pgpucontext = m_pgpucontext;
+
+		::cast < ::gpu_directx::device > pgpudevice = pgpucontext->m_pgpudevice;
+
+		pgpudevice->m_pdevice->CreateTexture2D(&texDesc, nullptr, &m_ptextureShared);
 		//m_bNeedRebuild = false;
 	   //init();
 	   // Cleans up old swap chain since it's no longer needed after resizing
@@ -34,6 +89,78 @@ namespace gpu_directx
 	{
 
 		m_pgpurenderer->restart_frame_counter();
+
+		::cast < ::gpu_directx::device > pgpudevice = m_pgpucontext->m_pgpudevice;
+
+		m_pdxgiswapchain = pgpudevice->m_pdxgiswapchain1;
+
+
+
+
+		//      ::cast < ::gpu_directx::renderer > pgpurenderer = pgpucontext->m_pgpurenderer;
+
+				//::cast < ::gpu_directx::swap_chain_render_target_view > pswapchainrendertargetview = pgpurenderer->m_prendertargetview;
+
+		HRESULT hr = pgpudevice->m_pdevice->CreateShaderResourceView(
+			m_ptextureShared, nullptr, &m_pshaderresourceviewShader);
+		if (FAILED(hr)) {
+			OutputDebugStringA("Failed to create SRV from shared D2D texture\n");
+			return;
+		}
+		comptr<ID3DBlob> vsBlob;
+		comptr<ID3DBlob> psBlob;
+		comptr<ID3DBlob> errorBlob;
+		// Vertex Shader
+		hr = D3DCompile(
+			fullscreen_vertex_shader, strlen(fullscreen_vertex_shader),
+			nullptr,                       // optional source name
+			nullptr,                       // macro definitions
+			nullptr,                       // include handler
+
+			"main", "vs_5_0",
+			0, 0,
+			&vsBlob, &errorBlob
+		);
+		if (FAILED(hr)) {
+			if (errorBlob) OutputDebugStringA((char*)errorBlob->GetBufferPointer());
+			return;
+		}
+
+		// Pixel Shader
+		hr = D3DCompile(
+			fullscreen_pixel_shader, strlen(fullscreen_vertex_shader),
+			nullptr,                       // optional source name
+			nullptr,                       // macro definitions
+			nullptr,                       // include handler
+
+			"main", "ps_5_0",
+			0, 0,
+			&psBlob, &errorBlob
+		);
+		if (FAILED(hr)) {
+			if (errorBlob) OutputDebugStringA((char*)errorBlob->GetBufferPointer());
+			return;
+		}
+
+		pgpudevice->m_pdevice->CreateVertexShader(
+			vsBlob->GetBufferPointer(),
+			vsBlob->GetBufferSize(),
+			nullptr,
+			&m_pvertexshaderFullscreen
+		);
+
+		pgpudevice->m_pdevice->CreatePixelShader(
+			psBlob->GetBufferPointer(),
+			psBlob->GetBufferSize(),
+			nullptr,
+			&m_ppixelshaderFullscreen
+		);
+
+		D3D11_SAMPLER_DESC sampDesc = {};
+		sampDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+		sampDesc.AddressU = sampDesc.AddressV = sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+
+		pgpudevice->m_pdevice->CreateSamplerState(&sampDesc, &m_psamplerstateLinear);
 
 		createRenderPassImpl();
 		createImageViews();
@@ -611,6 +738,43 @@ namespace gpu_directx
 	//		VK_IMAGE_TILING_OPTIMAL,
 	//		VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT);
 	//}
+
+
+	void swap_chain_render_target_view::endDraw()
+	{
+
+		::cast < ::gpu_directx::device > pgpudevice = m_pgpucontext->m_pgpudevice;
+
+		auto rectangle = m_pgpucontext->m_rectangle;
+
+		// 1. Set render target
+		pgpudevice->m_pdevicecontext->OMSetRenderTargets(1, pgpudevice->m_prendertargetviewBackBuffer.pp(), nullptr);
+
+		// 2. Set viewport
+		D3D11_VIEWPORT vp = {};
+		vp.TopLeftX = 0;
+		vp.TopLeftY = 0;
+		vp.Width = static_cast<float>(rectangle.width());
+		vp.Height = static_cast<float>(rectangle.height());
+		vp.MinDepth = 0.0f;
+		vp.MaxDepth = 1.0f;
+		pgpudevice->m_pdevicecontext->RSSetViewports(1, &vp);
+
+		// 3. Bind shaders
+		pgpudevice->m_pdevicecontext->VSSetShader(m_pvertexshaderFullscreen, nullptr, 0);
+		pgpudevice->m_pdevicecontext->PSSetShader(m_ppixelshaderFullscreen, nullptr, 0);
+
+		// 4. Bind SRV and sampler
+		pgpudevice->m_pdevicecontext->PSSetShaderResources(0, 1, m_pshaderresourceviewShader.pp());
+		pgpudevice->m_pdevicecontext->PSSetSamplers(0, 1, m_psamplerstateLinear.pp());
+
+		// 5. Draw fullscreen triangle (no vertex buffer needed)
+		pgpudevice->m_pdevicecontext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		pgpudevice->m_pdevicecontext->Draw(3, 0);
+
+		pgpudevice->m_pdxgiswapchain1->Present(1, 0);
+
+	}
 
 
 } // namespace gpu_directxs

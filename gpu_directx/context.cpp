@@ -7,6 +7,7 @@
 #include "program.h"
 #include "renderer.h"
 #include "shader.h"
+#include "swap_chain_render_target_view.h"
 #include "offscreen_render_target_view.h"
 #include "acme/platform/application.h"
 #include "aura/graphics/image/image.h"
@@ -384,6 +385,11 @@ namespace gpu_directx
    void context::swap_buffers()
    {
 
+      ::cast < gpu_directx::renderer > pgpurenderer = m_pgpurenderer;
+
+      ::cast < swap_chain_render_target_view > pswapchainrendertargetview = pgpurenderer->m_prendertargetview;
+
+      pswapchainrendertargetview->m_pdxgiswapchain->Present(1, 0);
 
    }
 

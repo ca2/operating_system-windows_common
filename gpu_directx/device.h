@@ -6,7 +6,7 @@
 #include "aura/graphics/gpu/device.h"
 #include "acme/prototype/prototype/memory.h"
 //#include "directx/directx.h"
-
+#include <dcomp.h>
 
 namespace gpu_directx
 {
@@ -22,12 +22,21 @@ namespace gpu_directx
       comptr<ID3D11Device>                            m_pdevice;
       comptr<ID3D11Device1>                           m_pdevice1;
       comptr<IDXGIDevice>                             m_pdxgidevice;
-      comptr<IDXGISwapChain>                          m_pdxgiswapchain;
+      comptr<IDXGIFactory2>                          m_pdxgifactory2;
+      comptr<IDXGISwapChain1>                          m_pdxgiswapchain1;
       comptr<ID3D11DeviceContext>                     m_pdevicecontext;
       ::pointer<::windowing::window>                  m_pimpl;
 
+      ::comptr<ID3D11Texture2D>                       m_ptextureBackBuffer;
+      ::comptr<ID3D11RenderTargetView>                m_prendertargetviewBackBuffer;
+
       D3D_FEATURE_LEVEL                               m_featurelevel;
 
+
+
+      comptr<IDCompositionDevice> m_pdcompositiondevice;
+      comptr<IDCompositionTarget> m_pdcompositiontarget;
+      comptr<IDCompositionVisual> m_pdcompositionvisual;
       //directx();
       //~directx() override;
 

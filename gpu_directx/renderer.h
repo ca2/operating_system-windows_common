@@ -150,6 +150,7 @@ namespace gpu_directx
       //}
 
       void sample();
+      void gpu_blend(::draw2d::graphics * pgraphics);
       //void resolve_color_and_alpha_accumulation_buffers();
       //void _resolve_color_and_alpha_accumulation_buffers();
       void swap_chain();

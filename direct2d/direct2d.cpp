@@ -88,7 +88,27 @@ namespace direct2d
 
    direct2d::direct2d()
    {
-      
+
+      if (s_pdirect2d)
+      {
+
+         throw ::exception(error_wrong_state);
+
+      }
+
+      s_pdirect2d = this;
+
+      d2d1_factory1(true);
+
+      if (!m_pd2d1multithread)
+      {
+
+         HRESULT hrMultithread = m_pd2d1factory->QueryInterface(IID_PPV_ARGS(&m_pd2d1multithread));
+
+         ::defer_throw_hresult(hrMultithread);
+
+      }
+
 
    }
 
@@ -116,23 +136,10 @@ namespace direct2d
 
       auto& pdxgidevice = pgpudevice->m_pdxgidevice;
 
-      auto pfactory1 = d2d1_factory1();
-
-      if (!m_pd2dMultithread)
-      {
-
-         HRESULT hrMultithread = d2d1_factory1()->QueryInterface(IID_PPV_ARGS(&m_pd2dMultithread));
-
-         ::defer_throw_hresult(hrMultithread);
-
-      }
-
-      ::direct2d::lock lock;
-
       comptr<ID2D1Device> pd2d1device;
 
       // Create the Direct2D device object and a corresponding context.
-      HRESULT hr = pfactory1->CreateDevice(pdxgidevice, &pd2d1device);
+      HRESULT hr = m_pd2d1factory->CreateDevice(pdxgidevice, &pd2d1device);
       
       ::defer_throw_hresult(hr);
 
@@ -170,10 +177,10 @@ namespace direct2d
    ID2D1Factory1 * direct2d::d2d1_factory1(bool bCreate)
    {
 
-      if (m_pd2factory != nullptr || !bCreate)
+      if (m_pd2d1factory != nullptr || !bCreate)
       {
 
-         return m_pd2factory;
+         return m_pd2d1factory;
 
       }
 
@@ -187,7 +194,7 @@ namespace direct2d
          D2D1_FACTORY_TYPE_MULTI_THREADED,
          __uuidof(ID2D1Factory1), 
          &d2d1factoryoptions,
-         (void **) &m_pd2factory);
+         (void **) &m_pd2d1factory);
 
       if (FAILED(hr))
       {
@@ -196,19 +203,78 @@ namespace direct2d
 
       }
 
-      m_geometrysinktextrenderer.m_pfactory = m_pd2factory;
+      m_geometrysinktextrenderer.m_pfactory = m_pd2d1factory;
 
-      return m_pd2factory;
+      return m_pd2d1factory;
 
    }
 
-   //
-   //ID2D1Device * direct2d::draw_get_d2d1_device()
-   //{
+   
+   ID2D1Device * direct2d::d2d1_device(::windowing::window* pwindow, const ::int_rectangle& rectanglePlacement)
+   {
 
-   //   return m_pd2device;
+      if (!m_pd2d1device)
+      {
 
-   //}
+         m_pd2d1device = create_device(pwindow, rectanglePlacement);
+
+      }
+
+      return m_pd2d1device;
+
+   }
+
+   
+   ID2D1DeviceContext* direct2d::default_d2d1_device_context(::windowing::window* pwindow, const ::int_rectangle& rectanglePlacement)
+   {
+
+      if (!m_pd2d1devicecontextDefault)
+      {
+
+         m_pd2d1devicecontextDefault = create_d2d1_device_context(pwindow, rectanglePlacement);
+
+      }
+
+      return m_pd2d1devicecontextDefault;
+
+   }
+
+
+   comptr<ID2D1DeviceContext> direct2d::create_d2d1_device_context(::windowing::window* pwindow, const ::int_rectangle& rectanglePlacement)
+   {
+
+      auto pd2d1device = d2d1_device(pwindow, rectanglePlacement);
+
+      comptr<ID2D1DeviceContext> pd2d1devicecontext;
+      
+      HRESULT hr = pd2d1device->CreateDeviceContext(
+         //D2D1_DEVICE_CONTEXT_OPTIONS_NONE,
+         D2D1_DEVICE_CONTEXT_OPTIONS_ENABLE_MULTITHREADED_OPTIMIZATIONS,
+         &pd2d1devicecontext
+      );
+
+      if (FAILED(hr))
+      {
+
+         warning() << "graphics::CreateCompatibleDC, CreateDeviceContext (1) " << hresult_text(hr);
+
+         //return false;
+
+         throw ::exception(error_failed);
+
+      }
+
+      return pd2d1devicecontext;
+
+   }
+
+
+   ID2D1DeviceContext* direct2d::default_d2d1_device_context()
+   {
+
+      return m_pd2d1devicecontextDefault;
+
+   }
 
 
    comptr < ID2D1PathGeometry1 > direct2d::create_rectangle_path_geometry(const ::double_rectangle & rectangle)
@@ -271,7 +337,7 @@ namespace direct2d
       //}
 
 
-      direct2d::s_pdirect2d = ___new class direct2d;
+      ___new class direct2d;
 
       direct2d::s_pdirect2d->initialize(pwindow);
 
@@ -302,3 +368,44 @@ CLASS_DECL_DIRECT2D DWRITE_FONT_WEIGHT dwrite_font_weight(const write_text::font
 }
 
 
+
+
+direct2d_lock::direct2d_lock()
+{
+
+   auto pdirect2d = ::direct2d::get();
+
+   if (::is_null(pdirect2d))
+   {
+
+      return;
+
+   }
+
+   auto pmultithread = pdirect2d->m_pd2d1multithread.m_p;
+
+   if (::is_null(pmultithread))
+   {
+
+      return;
+
+   }
+
+   pmultithread->Enter();
+
+   m_bLocked = true;
+
+}
+
+
+direct2d_lock::~direct2d_lock()
+{
+
+   if (m_bLocked)
+   {
+
+      ::direct2d::direct2d::s_pdirect2d->m_pd2d1multithread->Leave();
+
+   }
+
+}

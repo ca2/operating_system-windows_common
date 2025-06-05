@@ -60,6 +60,9 @@ namespace draw2d_direct2d
    class graphics;
 
 
+   class swap_chain_interop;
+
+
 
 } // namespace draw2d_direct2d
 

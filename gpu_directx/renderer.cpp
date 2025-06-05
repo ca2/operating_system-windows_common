@@ -1037,6 +1037,247 @@ namespace gpu_directx
 
    }
 
+   void renderer::gpu_blend(::draw2d::graphics * pgraphics)
+   {
+
+      //::cast < ::gpu_directx::offscreen_render_target_view > ptargetview = m_prendertargetview;
+
+      //__defer_construct(m_pgpucontext->m_pcpubuffer);
+
+      //m_pgpucontext->m_pcpubuffer->gpu_read();
+
+      ///auto& memory = m_pimagetarget->m_imagebuffer.m_memory;
+      //::cast< context > pgpucontext = m_pgpucontext;
+      //::cast< renderer > prenderer = pgpucontext->m_pgpurenderer;
+      //auto prendertargetview = prenderer->m_prendertargetview;
+      //::cast < offscreen_render_target_view > poffscreenrendertargetview = prendertargetview;
+      //::cast< device > pgpudevice = pgpucontext->m_pgpudevice;
+      //ID3D11Device* device = pgpudevice->m_pdevice;
+      //ID3D11DeviceContext* context = pgpucontext->m_pcontext;
+      //ID3D11Texture2D* offscreenTexture = poffscreenrendertargetview->m_ptextureOffscreen;
+      //if (!device || !context || !offscreenTexture)
+      //{
+      //   throw ::exception(error_wrong_state);
+      //}
+
+      //::cast < ::draw2d_direct2d::graphics > pgraphics2d = pgraphics;
+
+      ////D3D11_TEXTURE2D_DESC texDesc = {};
+      ////texDesc.Width = width;
+      ////texDesc.Height = height;
+      ////texDesc.MipLevels = 1;
+      ////texDesc.ArraySize = 1;
+      ////texDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
+      ////texDesc.SampleDesc.Count = 1;
+      ////texDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
+      ////texDesc.MiscFlags = D3D11_RESOURCE_MISC_SHARED;
+
+      //// ... Create texture using device->CreateTexture2D
+
+      //// 2. Wrap the texture in a DXGI surface
+      //ComPtr<IDXGISurface> dxgiSurface;
+      //texture->QueryInterface(IID_PPV_ARGS(&dxgiSurface));
+
+      //// 3. Create the Direct2D bitmap
+      //D2D1_BITMAP_PROPERTIES1 bitmapProps =
+      //   D2D1::BitmapProperties1(
+      //      D2D1_BITMAP_OPTIONS_NONE,
+      //      D2D1::PixelFormat(DXGI_FORMAT_B8G8R8A8_UNORM, D2D1_ALPHA_MODE_PREMULTIPLIED)
+      //   );
+
+      //ComPtr<ID2D1Bitmap1> bitmap;
+      //d2dDeviceContext->CreateBitmapFromDxgiSurface(
+      //   dxgiSurface.Get(),
+      //   &bitmapProps,
+      //   &bitmap
+      //);
+
+      //// 4. Draw into the D2D1RenderTarget
+      //d2dDeviceContext->BeginDraw();
+
+      //d2dDeviceContext->DrawBitmap(
+      //   bitmap.Get(),
+      //   D2D1::RectF(0, 0, width, height),
+      //   1.0f, // opacity
+      //   D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
+      //   nullptr // source rect (optional)
+      //);
+
+      //m_pcpubuffersampler->sample(offscreenTexture);
+
+      //auto callback = m_callbackImage32CpuBuffer;
+
+  //      if (callback)
+      //{
+
+      //   m_pcpubuffersampler->update(m_prendertargetview->getExtent());
+      //   /*
+      //      Copy framebuffer image to host visible image
+      //   */
+      //   /*const char* imagedata;*/
+      //   {
+
+      //      m_pcpubuffersampler->sample(m_prendertargetview->m_images[get_frame_index()]);
+
+      //      //// Create the linear tiled destination image to copy to and to read the memory from
+
+      //      //// Do the actual blit from the offscreen image to our host visible destination image
+      //      //VkCommandBufferAllocateInfo cmdBufAllocateInfo = initializers::commandBufferAllocateInfo(m_pgpucontext->getCommandPool(), VK_COMMAND_BUFFER_LEVEL_PRIMARY, 1);
+      //      //VkCommandBuffer copyCmd;
+      //      //VK_CHECK_RESULT(vkAllocateCommandBuffers(m_pgpucontext->logicalDevice(), &cmdBufAllocateInfo, &copyCmd));
+      //      //VkCommandBufferBeginInfo cmdBufInfo = initializers::commandBufferBeginInfo();
+      //      //VK_CHECK_RESULT(vkBeginCommandBuffer(copyCmd, &cmdBufInfo));
+
+      //      //// Transition destination image to transfer destination layout
+      //      //::graphics3d_directx::tools::insertImageMemoryBarrier(
+      //      //	copyCmd,
+      //      //	m_poffscreensampler->m_vkimage,
+      //      //	0,
+      //      //	VK_ACCESS_TRANSFER_WRITE_BIT,
+      //      //	VK_IMAGE_LAYOUT_UNDEFINED,
+      //      //	VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
+      //      //	VK_PIPELINE_STAGE_TRANSFER_BIT,
+      //      //	VK_PIPELINE_STAGE_TRANSFER_BIT,
+      //      //	VkImageSubresourceRange{ VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1 });
+
+      //      //// colorAttachment.image is already in VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL, and does not need to be transitioned
+
+      //      //VkImageCopy imageCopyRegion{};
+      //      //imageCopyRegion.srcSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+      //      //imageCopyRegion.srcSubresource.layerCount = 1;
+      //      //imageCopyRegion.dstSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+      //      //imageCopyRegion.dstSubresource.layerCount = 1;
+      //      //imageCopyRegion.extent.width = m_prendertargetview->width();
+      //      //imageCopyRegion.extent.height = m_prendertargetview->height();
+      //      //imageCopyRegion.extent.depth = 1;
+
+      //      //vkCmdCopyImage(
+      //      //	copyCmd,
+      //      //	//colorAttachment.image, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL,
+      //      //	m_prendertargetview->m_images[iIndex], VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL,
+      //      //	dstImage, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
+      //      //	1,
+      //      //	&imageCopyRegion);
+
+      //      //// Transition destination image to general layout, which is the required layout for mapping the image memory later on
+      //      //::graphics3d_directx::tools::insertImageMemoryBarrier(
+      //      //	copyCmd,
+      //      //	dstImage,
+      //      //	VK_ACCESS_TRANSFER_WRITE_BIT,
+      //      //	VK_ACCESS_MEMORY_READ_BIT,
+      //      //	VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
+      //      //	VK_IMAGE_LAYOUT_GENERAL,
+      //      //	VK_PIPELINE_STAGE_TRANSFER_BIT,
+      //      //	VK_PIPELINE_STAGE_TRANSFER_BIT,
+      //      //	VkImageSubresourceRange{ VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1 });
+
+      //      //VK_CHECK_RESULT(vkEndCommandBuffer(copyCmd));
+
+      //      //submitWork(copyCmd, queue);
+
+      //      //submitInfo.commandBufferCount = 1;
+      //      //submitInfo.pCommandBuffers = &copyCmd;
+      //      //VK_CHECK_RESULT(vkQueueSubmit(queue, 1, &submitInfo, VK_NULL_HANDLE));
+
+
+      //      //// Get layout of the image (including row pitch)
+      //      //VkImageSubresource subResource{};
+      //      //subResource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+      //      //VkSubresourceLayout subResourceLayout;
+
+      //      //vkGetImageSubresourceLayout(m_pgpucontext->logicalDevice(), dstImage, &subResource, &subResourceLayout);
+
+      //      //// Map image memory so we can start copying from it
+      //      //vkMapMemory(m_pgpucontext->logicalDevice(), dstImageMemory, 0, VK_WHOLE_SIZE, 0, (void**)&imagedata);
+      //      //imagedata += subResourceLayout.offset;
+
+      m_pcpubuffersampler->send_sample();
+
+      //      ///*
+      //      //	Save host visible framebuffer image to disk (ppm format)
+      //      //*/
+
+      //      ////::memory mem;
+
+      //      ////mem.set_size(m_width * m_height * 4);
+
+      //      ////::array<VkFormat> formatsBGR = { VK_FORMAT_B8G8R8A8_SRGB, VK_FORMAT_B8G8R8A8_UNORM, VK_FORMAT_B8G8R8A8_SNORM };
+      //      ////const bool colorSwizzle = (std::find(formatsBGR.begin(), formatsBGR.end(), VK_FORMAT_R8G8B8A8_UNORM) != formatsBGR.end());
+      //      //if (callback)
+      //      //{
+      //      //	callback((void*)imagedata, 
+      //      //		m_prendertargetview->width(),
+      //      //		m_prendertargetview->height(),
+      //      //		subResourceLayout.rowPitch);
+
+      //      //}
+
+      //      //// ppm binary pixel data
+      //      //for (int32_t y = 0; y < m_height; y++) {
+      //      //   unsigned int * row = (unsigned int *)imagedata;
+      //      //   for (int32_t x = 0; x < m_width; x++) {
+      //      //      //               if (colorSwizzle) {
+      //      //         file.write((char *)row + 2, 1);
+      //      //         file.write((char *)row + 1, 1);
+      //      //         file.write((char *)row, 1);
+      //      //      }
+      //      //      //else {
+      //      //      //   file.write((char *)row, 3);
+      //      //      //}
+      //      //      row++;
+      //      //   }
+      //      //   imagedata += subResourceLayout.rowPitch;
+      //      //}
+
+
+      //  //         callback
+
+      //  //#if defined (VK_USE_PLATFORM_ANDROID_KHR)
+      //  //         const char * filename = strcat(getenv("EXTERNAL_STORAGE"_ansi), "/headless.ppm"_ansi);
+      //  //#else
+      //  //         const char * filename = "headless.ppm"_ansi;
+      //  //#endif
+      //  //         std::ofstream file(filename, std::ios::out | std::ios::binary);
+      //  //
+      //  //         // ppm header
+      //  //         file << "P6\n"_ansi << m_width << "\n"_ansi << m_height << "\n"_ansi << 255 << "\n"_ansi;
+
+      //         //// If source is BGR (destination is always RGB) and we can't use blit (which does automatic conversion), we'hi have to manually swizzle color components
+      //         //// Check if source is BGR and needs swizzle
+      //         //::array<VkFormat> formatsBGR = { VK_FORMAT_B8G8R8A8_SRGB, VK_FORMAT_B8G8R8A8_UNORM, VK_FORMAT_B8G8R8A8_SNORM };
+      //         //const bool colorSwizzle = (std::find(formatsBGR.begin(), formatsBGR.end(), VK_FORMAT_R8G8B8A8_UNORM) != formatsBGR.end());
+
+      //         //// ppm binary pixel data
+      //         //for (int32_t y = 0; y < m_height; y++) {
+      //         //   unsigned int * row = (unsigned int *)imagedata;
+      //         //   for (int32_t x = 0; x < m_width; x++) {
+      //         //      if (colorSwizzle) {
+      //         //         file.write((char *)row + 2, 1);
+      //         //         file.write((char *)row + 1, 1);
+      //         //         file.write((char *)row, 1);
+      //         //      }
+      //         //      else {
+      //         //         file.write((char *)row, 3);
+      //         //      }
+      //         //      row++;
+      //         //   }
+      //         //   imagedata += subResourceLayout.rowPitch;
+      //         //}
+      //         //file.close();
+
+      //         //LOG("Framebuffer image saved to %s\n"_ansi, filename);
+
+      //         // Clean up resources
+      //   }
+
+
+      //}
+      //vkQueueWaitIdle(m_pgpucontext->graphicsQueue());
+
+
+   }
+
+
 
    //	void renderer::resolve_color_and_alpha_accumulation_buffers()
    //	{
@@ -3058,6 +3299,12 @@ namespace gpu_directx
          this->sample();
 
       }
+      //else if (eoutput == ::gpu::e_output_gpu_buffer)
+      //{
+
+      //   this->gpu_blend();
+
+      //}
 
       ////rrentImageIndex = m_prendertargetview->currentFrame;
       ////currentFrameIndex = (currentFrameIndex + 1) % ::gpu_directx::render_target_view::MAX_FRAMES_IN_FLIGHT;
@@ -3383,6 +3630,13 @@ namespace gpu_directx
    {
 
       ::cast < renderer > prenderer = pgpurendererSrc;
+
+      if (m_pgpucontext->m_eoutput == ::gpu::e_output_swap_chain)
+      {
+
+         m_pgpucontext->swap_buffers();
+
+      }
 
       //VkImage vkimage = prenderer->m_prendertargetview->m_images[prenderer->get_frame_index()];
 

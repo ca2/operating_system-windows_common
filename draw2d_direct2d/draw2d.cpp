@@ -75,7 +75,7 @@ namespace draw2d_direct2d
 
       }
 
-      auto pmultithread = pdirect2d->m_pd2dMultithread;
+      auto pmultithread = pdirect2d->m_pd2d1multithread.m_p;
 
       if (!pmultithread)
       {
@@ -94,23 +94,9 @@ namespace draw2d_direct2d
    void draw2d::unlock_device()
    {
       
-      auto pdirect2d = ::direct2d::get();
+      auto pdirect2d = ::direct2d::direct2d::s_pdirect2d;
 
-      if (!pdirect2d)
-      {
-
-         return;
-
-      }
-
-      auto pmultithread = pdirect2d->m_pd2dMultithread;
-
-      if (!pmultithread)
-      {
-
-         return;
-
-      }
+      auto pmultithread = pdirect2d->m_pd2d1multithread.m_p;
 
       pmultithread->Leave();
 

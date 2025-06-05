@@ -1,5 +1,5 @@
 // Created by camilo on 2014-12-30 02:08 <3ThomasBorregaardSorensen!!
-#include "framework.h"
+#pragma once
 
 
 namespace direct2d

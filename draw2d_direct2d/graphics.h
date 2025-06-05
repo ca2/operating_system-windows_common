@@ -10,11 +10,11 @@ namespace draw2d_direct2d
 
 
    class CLASS_DECL_DRAW2D_DIRECT2D graphics :
-      virtual public ::draw2d_gpu::graphics,
-      virtual public ::direct2d::graphics
+      virtual public ::draw2d_gpu::graphics
+      , virtual public ::direct2d::graphics
    {
    public:
-
+      int_array m_iaPushLayer;
 
       class state
       {
@@ -30,12 +30,15 @@ namespace draw2d_direct2d
 
       int                                                m_iLayerCount;
 
-      comptr<ID2D1Device>                                m_pdevice;
+      //comptr<ID2D1Device>                                m_pdevice;
       comptr<ID2D1DeviceContext>                         m_pdevicecontext; // 0
       comptr<ID2D1RenderTarget>                          m_prendertarget; // 1
       comptr<ID2D1BitmapRenderTarget>                    m_pbitmaprendertarget; // 2
       comptr<ID2D1DCRenderTarget>                        m_pdcrendertarget; // 3
       comptr<ID2D1DeviceContext1>                        m_pdevicecontext1; // 4
+
+      comptr<IDXGISurface>                               m_pdxgisurface;
+      comptr < ID2D1Bitmap>                              m_pd2d1bitmap;
 
       comptr<IDXGIAdapter>                               m_padapter;
       comptr<IDXGIFactory2>                              m_pfactory2;
@@ -44,7 +47,6 @@ namespace draw2d_direct2d
 
       ::array < state >                                  m_statea;
       state                                              m_state;
-
       bool                                               m_bSaveClip;
 
       int                                                m_iType;
@@ -74,7 +76,7 @@ namespace draw2d_direct2d
 
       
       void on_begin_draw() override;
-      void on_end_draw(oswindow wnd) override;
+      void on_end_draw() override;
 
       using ::draw2d::graphics::set;
       void set(::draw2d::bitmap* pbitmap) override;
@@ -128,6 +130,11 @@ namespace draw2d_direct2d
       //bool CreateIC(const ::string & lpszDriverName, const ::string & lpszDeviceName,
       //              const char * lpszOutput, const void * lpInitData) override;
       void CreateCompatibleDC(::draw2d::graphics * pgraphics) override;
+      void _create_memory_graphics(const ::int_size& size = {}) override;
+      void defer_set_size(const ::int_size& size = {}) override;
+
+
+      void create_end_draw() override;
 
       void DeleteDC() override;
 

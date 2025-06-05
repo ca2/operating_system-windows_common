@@ -13,9 +13,18 @@ namespace gpu_directx
    {
    public:
 
+      ::comptr<IDXGISwapChain> m_pdxgiswapchain;
+
+      ::comptr<ID3D11Texture2D> m_ptextureShared;
       //VkSwapchainKHR       m_vkswapchain;
       uint32_t             currentImageIndex;
       //::int_size m_size;
+
+      ::comptr<ID3D11VertexShader> m_pvertexshaderFullscreen;
+      ::comptr<ID3D11PixelShader> m_ppixelshaderFullscreen;
+      ::comptr<ID3D11SamplerState> m_psamplerstateLinear;
+      ::comptr<ID3D11ShaderResourceView> m_pshaderresourceviewShader;
+
 
       static constexpr int MAX_FRAMES_IN_FLIGHT = 2;
 
@@ -88,6 +97,8 @@ namespace gpu_directx
       //::array<VkFence> inFlightFences;
       //::array<VkFence> imagesInFlight;
       //size_t currentFrame = 0;
+
+      virtual void endDraw();
 
    };
 

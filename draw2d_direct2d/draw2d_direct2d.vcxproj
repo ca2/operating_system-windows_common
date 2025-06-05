@@ -707,6 +707,7 @@
     <ClInclude Include="pen.h" />
     <ClInclude Include="printer.h" />
     <ClInclude Include="region.h" />
+    <ClInclude Include="swap_chain_end_draw.h" />
     <ClInclude Include="_.h" />
     <ClInclude Include="_constant.h" />
     <ClInclude Include="_library.h" />
@@ -716,6 +717,7 @@
     <ClCompile Include="brush.cpp" />
     <ClCompile Include="draw2d.cpp" />
     <ClCompile Include="internal_font.cpp" />
+    <ClCompile Include="swap_chain_end_draw.cpp" />
     <ClCompile Include="_factory.cpp" />
     <ClCompile Include="font.cpp" />
     <ClCompile Include="framework.cpp">
