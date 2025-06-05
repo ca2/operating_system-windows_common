@@ -1,8 +1,0 @@
-LIBRARY "gpu_directx"
-
-
-EXPORTS
-gpu_directx_factory
-
-
-

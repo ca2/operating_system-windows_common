@@ -1,0 +1,8 @@
+LIBRARY "gpu_directx11"
+
+
+EXPORTS
+gpu_directx11_factory
+
+
+

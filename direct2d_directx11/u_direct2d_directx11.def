@@ -1,0 +1,8 @@
+LIBRARY  "direct2d_directx11"
+
+
+EXPORTS
+direct2d_factory_exchange
+
+
+
