@@ -42,7 +42,7 @@ BEGIN
         BLOCK "040904b0"
         BEGIN
 			VALUE "CompanyName", "operating_system-windows_common"
-			VALUE "FileDescription", "operating_system_windows_common_audio_mixer_xaudio"
+			VALUE "FileDescription", "operating_system_windows_common_directx"
             VALUE "FileVersion", "2025.0607.1524.36"
             VALUE "LegalCopyright", "Copyright (C) 2025-06-07-15-24-36"
             VALUE "ProductVersion", "2025.0607.1524.36"
