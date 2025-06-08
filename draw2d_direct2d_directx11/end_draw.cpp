@@ -88,6 +88,27 @@ namespace draw2d_direct2d_directx11
 
       // g_d2dDevice->CreateDeviceContext(D2D1_DEVICE_CONTEXT_OPTIONS_NONE, &g_d2dContext);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       ::cast < gpu_directx11::renderer > pgpurendererOutput = m_pgraphics->end_draw_renderer_output();
 
       ::cast < gpu_directx11::swap_chain_render_target_view > pswapchainrendertargetview = pgpurendererOutput->m_prendertargetview;
