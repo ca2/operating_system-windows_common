@@ -497,14 +497,6 @@ namespace gpu_directx11
 
 
 
-   //void context::make_current()
-   //{
-
-   //   return ::success_none;
-
-   //}
-
-
    //void context::destroy_offscreen_buffer()
    //{
 
@@ -1605,30 +1597,6 @@ namespace gpu_directx11
    {
 
       ::gpu::context::make_current();
-
-      //if (!is_current_task())
-      //{
-
-      //   ASSERT(FALSE);
-
-      //}
-
-      //::e_status estatus = ::success;
-
-      ////bool bMakeCurrentOk = wglMakeCurrent(m_hdc, m_hrc);
-
-      ////if (!bMakeCurrentOk)
-      ////{
-
-      ////   informationf("MS WGL - wglMakeCurrent failed");
-
-      ////   informationf("last-error code: %d\n", GetLastError());
-
-      ////   throw ::exception(error_failed);
-
-      ////}
-
-      ////return estatus;
 
       ::cast < ::gpu_directx11::renderer > prenderer = m_pgpurenderer;
 
