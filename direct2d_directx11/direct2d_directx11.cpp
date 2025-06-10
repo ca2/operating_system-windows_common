@@ -83,7 +83,7 @@ namespace direct2d_directx11
 {
 
 
-   class direct2d_directx11* direct2d_directx11::s_pdirect2d = nullptr;
+   ::pointer < class direct2d_directx11 > direct2d_directx11::s_pdirect2d;
 
 
    direct2d_directx11::direct2d_directx11()
@@ -337,9 +337,9 @@ namespace direct2d_directx11
       //}
 
 
-      ___new class direct2d_directx11;
+      pwindow->__defer_construct(direct2d_directx11::s_pdirect2d);
 
-      direct2d_directx11::s_pdirect2d->initialize(pwindow);
+      //direct2d_directx11::s_pdirect2d->initialize(pwindow);
 
       //direct2d_directx11::s_pdirect2d->initialize_direct2d(pwindow, rectanglePlacement);
 
@@ -349,7 +349,7 @@ namespace direct2d_directx11
    CLASS_DECL_DIRECT2D_DIRECTX11 void finalize()
    {
 
-      ::acme::del(direct2d_directx11::s_pdirect2d);
+      direct2d_directx11::s_pdirect2d.release();
 
       //::acme::del(g_pdxgidebug);
 

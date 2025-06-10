@@ -30,7 +30,7 @@ namespace direct2d_directx11
 
       //D3D_FEATURE_LEVEL             m_featurelevel;
 
-      static direct2d_directx11 *             s_pdirect2d;
+      static ::pointer < direct2d_directx11 >             s_pdirect2d;
 
 
       direct2d_directx11();
