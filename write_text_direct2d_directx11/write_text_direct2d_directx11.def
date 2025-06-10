@@ -1,5 +1,0 @@
-LIBRARY "write_text_direct2d_directx11"
-
-EXPORTS
-write_text_direct2d_directx11_factory_exchange
-
