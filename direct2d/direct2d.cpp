@@ -1,11 +1,11 @@
 #include "framework.h"
 #include "direct2d.h"
-//#include "directx/directx.h"
-#include "gpu_directx11/approach.h"
-#include "gpu_directx11/device.h"
+#include "swap_chain.h"
 #include "acme/graphics/write_text/font_weight.h"
 #include "acme/prototype/geometry2d/rectangle.h"
 #include "acme_windows_common/hresult_exception.h"
+#include "aura/graphics/gpu/approach.h"
+#include "aura/graphics/gpu/device.h"
 #include "aura/windowing/window.h"
 
 
@@ -130,11 +130,13 @@ namespace direct2d
    comptr<ID2D1Device> direct2d::create_device(::windowing::window* pwindow, const ::int_rectangle& rectanglePlacement)
    {
 
-      ::cast < ::gpu_directx11::approach > papproach = m_papplication->get_gpu();
+      ::cast < ::gpu::approach > papproach = m_papplication->get_gpu();
 
-      ::cast < ::gpu_directx11::device > pgpudevice = papproach->get_device(pwindow, rectanglePlacement);
+      ::cast < ::gpu::device > pgpudevice = papproach->get_device();
 
-      auto& pdxgidevice = pgpudevice->m_pdxgidevice;
+      ::cast < ::direct2d::swap_chain > pswapchain = pgpudevice->get_swap_chain();
+
+      auto pdxgidevice = pswapchain->_get_dxgi_device();
 
       comptr<ID2D1Device> pd2d1device;
 

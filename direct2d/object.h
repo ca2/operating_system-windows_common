@@ -18,7 +18,7 @@ namespace direct2d
 
 
       virtual comptr < ID2D1StrokeStyle1 > _create_stroke_style(
-         ::direct2d::graphics * pgraphics,
+         ::draw2d_gpu::graphics * pgraphics,
          ::draw2d::enum_line_cap elinecapBeg,
          ::draw2d::enum_line_cap elinecapEnd
          );

@@ -692,6 +692,8 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="aaa2_graphics.h" />
+    <ClInclude Include="swap_chain.h" />
     <ClInclude Include="direct2d.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="aaa_multithreading_lock.h" />
@@ -700,10 +702,20 @@
     <ClInclude Include="_.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="swap_chain.cpp" />
     <ClCompile Include="direct2d.cpp" />
     <ClCompile Include="geometry.cpp" />
     <ClCompile Include="geometry_sink_text_renderer.cpp" />
-    <ClCompile Include="graphics.cpp" />
+    <ClCompile Include="aaa_graphics.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="object.cpp" />
     <ClCompile Include="_factory.cpp" />
     <ClCompile Include="framework.cpp">
@@ -736,9 +748,6 @@
     </ProjectReference>
     <ProjectReference Include="..\acme_windows_common\acme_windows_common.vcxproj">
       <Project>{eb9dc9c0-0573-4da0-8700-4dbb371773f1}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\gpu_directx11\gpu_directx11.vcxproj">
-      <Project>{f693b649-3301-4d73-9469-f004ea94708d}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

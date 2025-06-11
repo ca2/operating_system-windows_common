@@ -382,16 +382,16 @@ namespace gpu_directx11
    }
 
 
-   void context::swap_buffers()
-   {
+   //void context::swap_buffers()
+   //{
 
-      ::cast < gpu_directx11::renderer > pgpurenderer = m_pgpurenderer;
+   //   ::cast < gpu_directx11::renderer > pgpurenderer = m_pgpurenderer;
 
-      ::cast < swap_chain_render_target_view > pswapchainrendertargetview = pgpurenderer->m_prendertargetview;
+   //   ::cast < swap_chain_render_target_view > pswapchainrendertargetview = pgpurenderer->m_prendertargetview;
 
-      pswapchainrendertargetview->m_pdxgiswapchain->Present(1, 0);
+   //   pswapchainrendertargetview->m_pdxgiswapchain->Present(1, 0);
 
-   }
+   //}
 
 
    //VkSampler context::_001VkSampler()

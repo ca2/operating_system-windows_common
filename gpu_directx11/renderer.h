@@ -213,7 +213,7 @@ namespace gpu_directx11
       void on_begin_render(::gpu::frame* pframeParam) override;
       void on_end_render(::gpu::frame* pframeParam) override;
       void endFrame() override;
-      void endDraw(::user::interaction * puserinteraction, ::gpu::renderer* pgpurendererSrc) override;
+      void endDraw(::draw2d_gpu::graphics * pgraphics, ::user::interaction * puserinteraction) override;
 
 
       //void _set_image(VkImage image, const ::int_rectangle& rectangle, bool bYSwap);
@@ -232,6 +232,7 @@ namespace gpu_directx11
 
       ::gpu::shader* get_image_set_shader();
 
+      //virtual void endDrawEndDraw();
 
 
    };

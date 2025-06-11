@@ -6,7 +6,8 @@
 #include "aura/graphics/gpu/device.h"
 #include "acme/prototype/prototype/memory.h"
 //#include "directx11/directx11.h"
-#include <dcomp.h>
+
+
 
 namespace gpu_directx11
 {
@@ -22,21 +23,16 @@ namespace gpu_directx11
       comptr<ID3D11Device>                            m_pdevice;
       comptr<ID3D11Device1>                           m_pdevice1;
       comptr<IDXGIDevice>                             m_pdxgidevice;
-      comptr<IDXGIFactory2>                          m_pdxgifactory2;
-      comptr<IDXGISwapChain1>                          m_pdxgiswapchain1;
+      comptr<IDXGIFactory2>                           m_pdxgifactory2;
+      //comptr<IDXGISwapChain1>                         m_pdxgiswapchain1;
       comptr<ID3D11DeviceContext>                     m_pdevicecontext;
       ::pointer<::windowing::window>                  m_pimpl;
 
-      ::comptr<ID3D11Texture2D>                       m_ptextureBackBuffer;
-      ::comptr<ID3D11RenderTargetView>                m_prendertargetviewBackBuffer;
 
       D3D_FEATURE_LEVEL                               m_featurelevel;
 
 
 
-      comptr<IDCompositionDevice> m_pdcompositiondevice;
-      comptr<IDCompositionTarget> m_pdcompositiontarget;
-      comptr<IDCompositionVisual> m_pdcompositionvisual;
       //directx11();
       //~directx11() override;
 
@@ -126,11 +122,12 @@ namespace gpu_directx11
       ~device() override;
 
 
-      virtual void initialize_swap_chain(::windowing::window* pwindow);
-      virtual void initialize_cpu_buffer(::windowing::window* pwindow);
+      //virtual void initialize_swap_chain(::windowing::window* pwindow);
+      virtual void initialize_cpu_buffer(const ::int_rectangle& rectanglePlacement);
 
-
-      void initialize_gpu_device(::gpu::approach* pgpuapproach, ::windowing::window *pwindow, const ::int_rectangle & rectanglePlacement, bool bAddSwapChainSupport) override;
+      virtual void _initialize_gpu_device(::gpu::approach* pgpuapproach);
+      void initialize_gpu_device_for_swap_chain(::gpu::approach* pgpuapproach, ::windowing::window *pwindow) override;
+      void initialize_gpu_device_for_off_screen(::gpu::approach* pgpuapproach, const ::int_rectangle& rectanglePlacement) override;
 
       //string _001GetIntroProjection() override;
       //string _001GetIntroFragment() override;

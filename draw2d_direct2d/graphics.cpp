@@ -1,7 +1,7 @@
 #include "framework.h"
 #include "graphics.h"
 #include "bitmap.h"
-#include "end_draw.h"
+//#include "end_draw.h"
 #include "path.h"
 #include "pen.h"
 #include "brush.h"
@@ -189,7 +189,7 @@ namespace draw2d_direct2d
 
       auto rectanglePlacement = pwindow->get_window_rectangle();
 
-      auto pdevice = m_papplication->get_gpu()->get_device(pwindow, rectanglePlacement);
+      auto pdevice = m_papplication->get_gpu()->get_device();
 
       if (__defer_construct(m_pgpucontext))
       {
@@ -6094,23 +6094,23 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::create_end_draw()
-   {
+   //void graphics::create_end_draw()
+   //{
 
-      if (m_penddraw)
-      {
+   //   if (m_penddraw)
+   //   {
 
-         return;
+   //      return;
 
-      }
+   //   }
 
-      m_penddraw = __allocate swap_chain_end_draw();
+   //   m_penddraw = __allocate swap_chain_end_draw();
 
-      m_penddraw->initialize(this);
+   //   m_penddraw->initialize(this);
 
-      m_penddraw->initialize_end_draw(this);
+   //   m_penddraw->initialize_end_draw(this);
 
-   }
+   //}
 
 
    void graphics::on_end_draw()
@@ -7091,9 +7091,9 @@ namespace draw2d_direct2d
    void graphics::debug()
    {
 
-#ifdef _DEBUG
-      directx11_debug();
-#endif
+//#ifdef _DEBUG
+//      directx11_debug();
+//#endif
 
    }
 

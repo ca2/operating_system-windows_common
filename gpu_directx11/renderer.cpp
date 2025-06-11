@@ -9,6 +9,7 @@
 #include "swap_chain_render_target_view.h"
 #include "initializers.h"
 #include "aura/graphics/gpu/cpu_buffer.h"
+#include "aura/graphics/gpu/swap_chain.h"
 #include "gpu_directx11/shader.h"
 #include "acme/parallelization/synchronous_lock.h"
 #include "acme/platform/application.h"
@@ -238,7 +239,7 @@ namespace gpu_directx11
       else if (eoutput == ::gpu::e_output_swap_chain)
       {
 
-         m_prendertargetview = __allocate swap_chain_render_target_view(this, size, m_prendertargetview);
+         //m_prendertargetview = __allocate swap_chain_render_target_view(this, size, m_prendertargetview);
          //m_prendererResolve.release();
 
       }
@@ -3626,15 +3627,24 @@ namespace gpu_directx11
    //}
 
 
-   void renderer::endDraw(::user::interaction* puserinteraction, ::gpu::renderer* pgpurendererSrc)
+   void renderer::endDraw(::draw2d_gpu::graphics * pgraphics, ::user::interaction* puserinteraction)
    {
 
-      ::cast < renderer > prenderer = pgpurendererSrc;
+      ::cast < renderer > prenderer = this;
 
       if (m_pgpucontext->m_eoutput == ::gpu::e_output_swap_chain)
       {
 
          m_pgpucontext->swap_buffers();
+
+      }
+      else if (m_pgpucontext->m_pgpudevice->m_edevicetarget == ::gpu::e_device_target_swap_chain)
+      {
+         
+         auto pswapchain = m_pgpucontext->m_pgpudevice->get_swap_chain();
+
+         pswapchain->endDraw(pgraphics, puserinteraction, this);
+         
 
       }
 
@@ -3688,6 +3698,20 @@ namespace gpu_directx11
       ////vkQueueWaitIdle(m_pgpucontext->presentQueue());
 
    }
+
+
+   //void renderer::endDrawEndDraw()
+   //{
+
+   //   ::cast < gpu_directx11::swap_chain_render_target_view > pswapchainrendertargetview = m_prendertargetview;
+
+   //   pswapchainrendertargetview->endDraw();
+
+   //   //pgpurendererOutput->endDrawEndDraw();
+
+
+
+   //}
 
 
 } // namespace gpu_directx11

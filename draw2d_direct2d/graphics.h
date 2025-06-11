@@ -2,7 +2,6 @@
 
 
 #include "aura/graphics/gpu/graphics.h"
-#include "direct2d/graphics.h"
 
 
 namespace draw2d_direct2d
@@ -11,7 +10,7 @@ namespace draw2d_direct2d
 
    class CLASS_DECL_DRAW2D_DIRECT2D graphics :
       virtual public ::draw2d_gpu::graphics
-      , virtual public ::direct2d::graphics
+      //, virtual public ::direct2d::graphics
    {
    public:
       int_array m_iaPushLayer;
@@ -134,7 +133,7 @@ namespace draw2d_direct2d
       void defer_set_size(const ::int_size& size = {}) override;
 
 
-      void create_end_draw() override;
+      //void create_connector() override;
 
       void DeleteDC() override;
 

@@ -2,8 +2,7 @@
 #pragma once
 
 
-#include "aura/_.h"
-#include "gpu_directx11/_.h"
+#include "aura_windows_common/_.h"
 
 
 #if defined(_direct2d_project)
@@ -12,6 +11,9 @@
 #define CLASS_DECL_DIRECT2D  CLASS_DECL_IMPORT
 #endif
 
+#undef USUAL_OPERATING_SYSTEM_SUPPRESSIONS
+#include "acme/_operating_system.h"
+#include "acme_windows_common/comptr.h"
 
 //#include <winapifamily.h>
 //#include <windows.h>
@@ -24,29 +26,6 @@
 
 #include <Dwrite.h>
 #include <Dwrite_1.h>
-
-
-
-interface IDWriteFactory;
-interface ID2D1Factory1;
-
-
-interface IDWriteFactory;
-interface ID2D1Factory1;
-interface ID3D11Device;
-interface ID3D11DeviceContext;
-interface ID3D11Device1;
-interface IDXGIDevice;
-
-
-//CLASS_DECL_AURA ID2D1Factory1 * get_d2d1_factory1(bool bCreate = true);
-//CLASS_DECL_AURA IDWriteFactory * global_draw_get_write_factory(bool bCreate = true);
-//CLASS_DECL_AURA ID3D11Device * global_draw_get_d3d11_device();
-//CLASS_DECL_AURA ID3D11Device1 * global_draw_get_d3d11_device1();
-//CLASS_DECL_AURA ID3D11DeviceContext * global_draw_get_d3d11_device_context(); // Immediate Device Context
-//CLASS_DECL_AURA ID3D11DeviceContext1 * global_draw_get_d3d11_device_context1(); // Immediate Device Context
-//CLASS_DECL_AURA IDXGIDevice * global_draw_get_dxgi_device();
-//CLASS_DECL_AURA ID2D1Device * global_draw_get_d2d1_device();
 
 
 CLASS_DECL_AURA float point_dpi(oswindow hwnd, float points);

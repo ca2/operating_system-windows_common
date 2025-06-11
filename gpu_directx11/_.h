@@ -49,7 +49,7 @@ namespace gpu_directx11
 
    class offscreen_render_target_view;
 
-   class swap_chain_render_target_view;
+   //class swap_chain_render_target_view;
 
 
 } // namespace gpu_directx11
