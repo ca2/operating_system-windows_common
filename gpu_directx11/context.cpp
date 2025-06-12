@@ -754,18 +754,8 @@ namespace gpu_directx11
    }
 
 
-
-
-
    void context::_create_context_directx11(const ::gpu::start_context_t& startcontext)
    {
-
-      //createInstance();
-      //setupDebugMessenger();
-      //createSurface();
-      //pickPhysicalDevice();
-      //createLogicalDevice();
-      //createCommandPool();
 
       ::cast < device > pgpudevice = m_pgpudevice;
 
@@ -776,79 +766,11 @@ namespace gpu_directx11
 
       }
 
+      auto& pdevicecontext = pgpudevice->m_pdevicecontext;
 
-      ::defer_throw_hresult(pgpudevice->m_pdevicecontext.as(m_pcontext));
+      ::defer_throw_hresult(pdevicecontext.as(m_pcontext));
 
-      ::defer_throw_hresult(pgpudevice->m_pdevicecontext.as(m_pcontext1));
-
-      if (m_eoutput == ::gpu::e_output_cpu_buffer)
-      {
-
-
-      }
-
-      //      auto pphysicaldevice = pgpudevice->m_pphysicaldevice;
-      //
-      //      assert(pphysicaldevice && pphysicaldevice->m_physicaldevice);
-      //      
-      //      m_pphysicaldevice = pphysicaldevice;
-      //
-      //      if (startcontext.m_eoutput == ::gpu::e_output_swap_chain)
-      //      {
-      //
-      //         m_pphysicaldevice->createWindowSurface(startcontext.m_pwindow);
-      //
-      //      }
-      //   
-      //      auto physicaldevice = pphysicaldevice->m_physicaldevice;
-      //
-      //      // Get list of supported extensions
-      //      uint32_t extCount = 0;
-      //      vkEnumerateDeviceExtensionProperties(physicaldevice, nullptr, &extCount, nullptr);
-      //      if (extCount > 0)
-      //      {
-      //         ::array<VkExtensionProperties> extensions(extCount);
-      //         if (vkEnumerateDeviceExtensionProperties(physicaldevice, nullptr, &extCount, extensions.data()) == VK_SUCCESS)
-      //         {
-      //            for (auto & ext : extensions)
-      //            {
-      //               m_straSupportedExtensions.add(ext.extensionName);
-      //            }
-      //         }
-      //      }
-      //
-      //      // Derived examples can enable extensions based on the list of supported extensions read from the physical device
-      //      //getEnabledExtensions();
-      //
-      //      bool useSwapChain = m_eoutput == ::gpu::e_output_swap_chain;
-      //
-      //      m_itaskGpu = ::current_itask();
-      //
-      //      VkPhysicalDeviceScalarBlockLayoutFeatures scalarBlockLayoutSupport = {
-      //.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SCALAR_BLOCK_LAYOUT_FEATURES,
-      //      .scalarBlockLayout = TRUE};
-      //      pgpuapproach->m_pDeviceCreatepNextChain = &scalarBlockLayoutSupport;
-      //      m_physicaldevicefeaturesCreate.logicOp = TRUE;
-      //
-      //      HRESULT result = createLogicalDevice(
-      //         m_physicaldevicefeaturesCreate,
-      //         pgpuapproach->m_pszaEnabledDeviceExtensions,
-      //         pgpuapproach->m_pDeviceCreatepNextChain,
-      //         useSwapChain);
-      //
-      //      if (result != VK_SUCCESS)
-      //      {
-      //
-      //         m_itaskGpu = {};
-      //
-      //         exitFatal("Could not create DirectX11 device: \n" + errorString(result) + " HRESULT=" + ::as_string(result), result);
-      //
-      //         throw ::exception(error_failed);
-      //
-      //      }
-
-
-            //device = directx11Device->logicalDevice;
+      ::defer_throw_hresult(pdevicecontext.as(m_pcontext1));
 
    }
 
@@ -856,427 +778,11 @@ namespace gpu_directx11
    void context::on_create_context(const ::gpu::start_context_t& startcontext)
    {
 
-      //m_itaskGpu = ::current_itask();
-
       m_pgpudevice = startcontext.m_pgpudevice;
-
-      //if (m_pgpudevice->m_queuefamilyindices.graphicsFamily >= 0)
-      //{
-
-      //   vkGetDeviceQueue(this->logicalDevice(), m_pgpudevice->m_queuefamilyindices.graphicsFamily, 0, &m_vkqueueGraphics);
-
-      //}
-
-      //if (m_pgpudevice->m_queuefamilyindices.presentFamily >= 0)
-      //{
-
-      //   vkGetDeviceQueue(this->logicalDevice(), m_pgpudevice->m_queuefamilyindices.presentFamily, 0, &m_vkqueuePresent);
-
-      //}
 
       _create_context_directx11(startcontext);
 
    }
-
-
-
-   //void context::endSingleTimeCommands(VkCommandBuffer commandBuffer)
-   //{
-
-   //   VkSubmitInfo submitInfo{};
-   //   submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
-   //   submitInfo.commandBufferCount = 1;
-   //   submitInfo.pCommandBuffers = &commandBuffer;
-
-   //   endSingleTimeCommands(commandBuffer,1, &submitInfo);
-
-   //}
-
-
-   //void context::endSingleTimeCommands(VkCommandBuffer commandBuffer, int iSubmitCount, VkSubmitInfo* psubmitinfo)
-   //{
-
-   //   vkEndCommandBuffer(commandBuffer);
-   //  
-   //   vkQueueSubmit(m_vkqueueGraphics, 1, psubmitinfo, VK_NULL_HANDLE);
-
-   //   vkQueueWaitIdle(m_vkqueueGraphics);
-
-   //   vkFreeCommandBuffers(this->logicalDevice(), m_pgpudevice->getCommandPool(), 1, &commandBuffer);
-
-   //}
-
-
-
-   //VkDevice context::logicalDevice() 
-   //{
-   //   
-   //   ::cast < device > pgpudevice = m_pgpudevice;
-
-   //   return pgpudevice->logicalDevice();
-
-   //}
-
-
-//   HRESULT context::createLogicalDevice(
-//   VkPhysicalDeviceFeatures enabledFeatures,
-//   ::array<const char *> enabledExtensions,
-//   void * pNextChain,
-//   bool useSwapChain,
-//   VkQueueFlags requestedQueueTypes)
-//   {
-//
-//      ::cast < approach > pgpuapproach = application()->get_gpu();
-//
-//      ::cast < physical_device > pphysicaldevice = pgpuapproach->m_pphysicaldevice;
-//
-//      // Desired queues need to be requested upon logical device creation
-//      // Due to differing queue family configurations of DirectX11 implementations this can be a bit tricky, especially if the application
-//      // requests different queue types
-//
-//      ::array<VkDeviceQueueCreateInfo> queueCreateInfos{};
-//
-//      // Get queue family indices for the requested queue family types
-//      // Note that the indices may overlap depending on the implementation
-//
-//      const float defaultQueuePriority(0.0f);
-//
-//      m_queuefamilyindices = pphysicaldevice->findQueueFamilies();
-//
-//      // Graphics queue
-//      if (requestedQueueTypes & VK_QUEUE_GRAPHICS_BIT
-//         && m_queuefamilyindices.graphicsFamilyHasValue)
-//      {
-//         //m_queuefamilyindices.graphics = pphysicaldevice->getQueueFamilyIndex(VK_QUEUE_GRAPHICS_BIT);
-//         VkDeviceQueueCreateInfo queueInfo{};
-//         queueInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-//         queueInfo.queueFamilyIndex = m_queuefamilyindices.graphicsFamily;
-//         queueInfo.queueCount = 1;
-//         queueInfo.pQueuePriorities = &defaultQueuePriority;
-//         queueCreateInfos.add(queueInfo);
-//      }
-//      else
-//      {
-//         m_queuefamilyindices.graphicsFamily = 0;
-//      }
-//
-//      // Dedicated compute queue
-//      if (requestedQueueTypes & VK_QUEUE_COMPUTE_BIT
-//         && m_queuefamilyindices.computeFamilyHasValue)
-//      {
-//         //m_queuefamilyindices.compute = pphysicaldevice->getQueueFamilyIndex(VK_QUEUE_COMPUTE_BIT);
-//         if (m_queuefamilyindices.computeFamily != m_queuefamilyindices.graphicsFamily)
-//         {
-//            // If compute family index differs, we need an additional queue create info for the compute queue
-//            VkDeviceQueueCreateInfo queueInfo{};
-//            queueInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-//            queueInfo.queueFamilyIndex = m_queuefamilyindices.computeFamily;
-//            queueInfo.queueCount = 1;
-//            queueInfo.pQueuePriorities = &defaultQueuePriority;
-//            queueCreateInfos.add(queueInfo);
-//         }
-//      }
-//      else
-//      {
-//         // Else we use the same queue
-//         m_queuefamilyindices.computeFamily = m_queuefamilyindices.graphicsFamily;
-//      }
-//
-//      // Dedicated transfer queue
-//      if (requestedQueueTypes & VK_QUEUE_TRANSFER_BIT
-//         && m_queuefamilyindices.transferFamilyHasValue)
-//      {
-//         //m_queuefamilyindices.transfer = pphysicaldevice->getQueueFamilyIndex(VK_QUEUE_TRANSFER_BIT);
-//         if ((m_queuefamilyindices.transferFamily != m_queuefamilyindices.graphicsFamily)
-//            && (m_queuefamilyindices.transferFamily != m_queuefamilyindices.computeFamily))
-//         {
-//            // If transfer family index differs, we need an additional queue create info for the transfer queue
-//            VkDeviceQueueCreateInfo queueInfo{};
-//            queueInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-//            queueInfo.queueFamilyIndex = m_queuefamilyindices.transferFamily;
-//            queueInfo.queueCount = 1;
-//            queueInfo.pQueuePriorities = &defaultQueuePriority;
-//            queueCreateInfos.add(queueInfo);
-//         }
-//      }
-//      else
-//      {
-//         // Else we use the same queue
-//         m_queuefamilyindices.transferFamily = m_queuefamilyindices.graphicsFamily;
-//      }
-//
-//      // Create the logical device representation
-//      ::array<const char *> deviceExtensions(enabledExtensions);
-//      if (useSwapChain)
-//      {
-//
-//         // If the device will be used for presenting to a display via a swapchain we need to request the swapchain extension
-//         deviceExtensions.add(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
-//
-//      }
-//
-//      VkDeviceCreateInfo deviceCreateInfo = {};
-//      deviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
-//      deviceCreateInfo.queueCreateInfoCount = static_cast<uint32_t>(queueCreateInfos.size());;
-//      deviceCreateInfo.pQueueCreateInfos = queueCreateInfos.data();
-//      deviceCreateInfo.pEnabledFeatures = &enabledFeatures;
-//
-//      // If a pNext(Chain) has been passed, we need to add it to the device creation info
-//      VkPhysicalDeviceFeatures2 physicalDeviceFeatures2{};
-//      if (pNextChain) {
-//         physicalDeviceFeatures2.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2;
-//         physicalDeviceFeatures2.features = enabledFeatures;
-//         physicalDeviceFeatures2.pNext = pNextChain;
-//         deviceCreateInfo.pEnabledFeatures = nullptr;
-//         deviceCreateInfo.pNext = &physicalDeviceFeatures2;
-//      }
-//
-//#if (defined(VK_USE_PLATFORM_IOS_MVK) || defined(VK_USE_PLATFORM_MACOS_MVK) || defined(VK_USE_PLATFORM_METAL_EXT)) && defined(VK_KHR_portability_subset)
-//      // SRS - When running on iOS/macOS with MoltenVK and VK_KHR_portability_subset is defined and supported by the device, enable the extension
-//      if (extensionSupported(VK_KHR_PORTABILITY_SUBSET_EXTENSION_NAME))
-//      {
-//         deviceExtensions.add(VK_KHR_PORTABILITY_SUBSET_EXTENSION_NAME);
-//      }
-//#endif
-//
-//      if (deviceExtensions.size() > 0)
-//      {
-//         for (const char * enabledExtension : deviceExtensions)
-//         {
-//            if (!isExtensionSupported(enabledExtension)) {
-//               information() << "Enabled device extension \"" << enabledExtension << "\" is not present at device level\n";
-//            }
-//         }
-//
-//         deviceCreateInfo.enabledExtensionCount = (uint32_t)deviceExtensions.size();
-//         deviceCreateInfo.ppEnabledExtensionNames = deviceExtensions.data();
-//      }
-//
-//      this->m_physicaldevicefeaturesEnabled = enabledFeatures;
-//
-//      auto physicaldevice = pphysicaldevice->m_physicaldevice;
-//
-//      HRESULT result = vkCreateDevice(physicaldevice, &deviceCreateInfo, nullptr, &this->logicalDevice());
-//      if (result != VK_SUCCESS)
-//      {
-//         return result;
-//      }
-//
-//      if (m_queuefamilyindices.graphicsFamily >= 0)
-//      {
-//         vkGetDeviceQueue(this->logicalDevice(), m_queuefamilyindices.graphicsFamily, 0, &m_vkqueueGraphics);
-//      }
-//      if (m_queuefamilyindices.presentFamily >= 0)
-//      {
-//         vkGetDeviceQueue(this->logicalDevice(), m_queuefamilyindices.presentFamily, 0, &m_vkqueuePresent);
-//      }
-//
-//
-//      // Create a default command pool for graphics command buffers
-//      m_vkcommandpool = createCommandPool(m_queuefamilyindices.graphicsFamily);
-//
-//      return result;
-//
-//   }
-//
-//
-//   /**
-//   * Create a command pool for allocation command buffers from
-//   *
-//   * @param queueFamilyIndex Family index of the queue to create the command pool for
-//   * @param createFlags (Optional) Command pool creation flags (Defaults to VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT)
-//   *
-//   * @note Command buffers allocated from the created pool can only be submitted to a queue with the same family index
-//   *
-//   * @return A handle to the created command buffer
-//   */
-//   VkCommandPool context::createCommandPool(uint32_t queueFamilyIndex, VkCommandPoolCreateFlags createFlags)
-//   {
-//      VkCommandPoolCreateInfo cmdPoolInfo = {};
-//      cmdPoolInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
-//      cmdPoolInfo.queueFamilyIndex = queueFamilyIndex;
-//      cmdPoolInfo.flags = createFlags;
-//      VkCommandPool cmdPool;
-//      VK_CHECK_RESULT(vkCreateCommandPool(this->logicalDevice(), &cmdPoolInfo, nullptr, &cmdPool));
-//      return cmdPool;
-//   }
-//
-//
-//   /**
-//   * Check if an extension is supported by the (physical device)
-//   *
-//   * @param extension Name of the extension to check
-//   *
-//   * @return True if the extension is supported (present in the list read at device creation time)
-//   */
-//   bool context::isExtensionSupported(const ::scoped_string & scopedstrExtension)
-//   {
-//
-//      return m_straSupportedExtensions.contains(scopedstrExtension);
-//
-//   }
-
-
-   //void context::_create_window_buffer()
-   //{
-
-   //   if (!m_hdc || !m_hrc)
-   //   {
-
-   //      auto psystem = system();
-
-   //      auto pgpu = application()->get_gpu();
-
-   //      ::pointer < ::directx11::directx11 > pdirectx11 = pgpu;
-
-   //      if (!pdirectx11->m_atomClass)
-   //      {
-
-   //         informationf("MS GDI - RegisterClass failed");
-
-   //         informationf("last-error code: %d\n", GetLastError());
-
-   //         throw ::exception(error_failed);
-
-   //      }
-
-   //      // create WGL context, make current
-
-   //      //xxxopengl>>>>directx11 PIXELFORMATDESCRIPTOR pixformat;
-
-   //      int chosenformat;
-
-   //      HDC hdc = GetDC(m_hwnd);
-
-   //      if (!hdc)
-   //      {
-
-   //         informationf("MS GDI - GetDC failed");
-
-   //         informationf("last-error code: %d\n", GetLastError());
-
-   //         throw ::exception(error_failed);
-
-   //      }
-
-   //      ////xxxopengl>>>>directx11  zero(pixformat);
-   //      //pixformat.nSize = sizeof(pixformat);
-   //      //pixformat.nVersion = 1;
-   //      //pixformat.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_DIRECTX11 | PFD_DOUBLEBUFFER;
-   //      //pixformat.iPixelType = PFD_TYPE_RGBA;
-   //      //pixformat.cColorBits = 32;
-   //      //pixformat.cRedShift = 16;
-   //      //pixformat.cGreenShift = 8;
-   //      //pixformat.cBlueShift = 0;
-   //      //pixformat.cAlphaShift = 24;
-   //      //pixformat.cAlphaBits = 8;
-   //      //pixformat.cDepthBits = 24;
-   //      //pixformat.cStencilBits = 8;
-
-   //      //xxxopengl>>>>directx11 chosenformat = ChoosePixelFormat(hdc, &pixformat);
-
-   //      //if (chosenformat == 0)
-   //      //{
-
-   //      //   informationf("MS GDI - ChoosePixelFormat failed");
-
-   //      //   informationf("last-error code: %d\n", GetLastError());
-
-   //      //   ReleaseDC(m_hwnd, hdc);
-
-   //      //   throw ::exception(error_failed);
-
-   //      //}
-
-   //      //bool spfok = SetPixelFormat(hdc, chosenformat, &pixformat);
-
-   //      //if (!spfok)
-   //      //{
-
-   //      //   informationf("MS GDI - SetPixelFormat failed");
-
-   //      //   informationf("last-error code: %d\n", GetLastError());
-
-   //      //   ReleaseDC(m_hwnd, hdc);
-
-   //      //   throw ::exception(error_failed);
-
-   //      //}
-
-   //      //HGLRC hglrc = wglCreateContext(hdc);
-
-   //      //if (!hglrc)
-   //      //{
-
-   //      //   informationf("MS WGL - wglCreateContext failed");
-
-   //      //   informationf("last-error code: %d\n", GetLastError());
-
-   //      //   ReleaseDC(m_hwnd, hdc);
-
-   //      //   throw ::exception(error_failed);
-
-   //      //}
-
-   //      //bool bMakeCurrentOk = wglMakeCurrent(hdc, hglrc);
-
-   //      //if (!bMakeCurrentOk)
-   //      //{
-
-   //      //   informationf("MS WGL - wglMakeCurrent failed");
-
-   //      //   informationf("last-error code: %d\n", GetLastError());
-
-   //      //   ReleaseDC(m_hwnd, hdc);
-
-   //      //   throw ::exception(error_failed);
-
-   //      //}
-
-
-   //      pdirectx11->defer_init_gpu_library();
-
-   //      //auto pszVersion = (const char *)glGetString(GL_VERSION);
-   //      ////::e_status estatus = 
-
-   //      //::string strVersion(pszVersion);
-
-   //      //if (strVersion.case_insensitive_contains("mesa"))
-   //      //{
-
-   //      //   m_bMesa = true;
-
-   //      //}
-
-   //      ////if (!estatus)
-   //      ////{
-
-   //      ////   ReleaseDC(window, hdc);
-
-   //      ////   return estatus;
-
-   //      ////}
-
-   //      m_hwnd = m_hwnd;
-   //      m_hdc = hdc;
-   //      //xxxopengl>>>>directx11 m_hrc = hglrc;
-
-   //   }
-
-   //   RECT rectClient;
-
-   //   ::GetClientRect(m_hwnd, &rectClient);
-
-   //   m_size = { rectClient.right - rectClient.left,
-   //      rectClient.bottom - rectClient.top };
-
-   //   m_itaskGpu = ::current_itask();
-
-   //   m_estatus = ::success;
-
-   //   set_ok_flag();
-   //   
-   //}
 
 
    void context::_create_window_context(::windowing::window* pwindowParam)
@@ -1665,16 +1171,13 @@ namespace gpu_directx11
 
             }
 
-
          }
 
       }
 
-
       if (!m_prasterizerstate)
       {
 
-         // 1. Define rasterizer state descriptor
          D3D11_RASTERIZER_DESC rasterizerDesc = {};
          rasterizerDesc.FillMode = D3D11_FILL_SOLID;
          rasterizerDesc.CullMode = D3D11_CULL_BACK;        // Cull back faces
@@ -1688,9 +1191,6 @@ namespace gpu_directx11
             // Handle error (e.g., log or exit)
             throw ::hresult_exception(hr);
          }
-
-         // 3. Set rasterizer state on the device context
-         
 
       }
 
@@ -2432,10 +1932,12 @@ namespace gpu_directx11
       {
 
          D3D11_MAPPED_SUBRESOURCE mapped;
+         
          m_pcontext->Map(m_pbufferGlobalUbo, 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
+         
          memcpy(mapped.pData, block.data(), block.size());
-         m_pcontext->Unmap(m_pbufferGlobalUbo, 0);
 
+         m_pcontext->Unmap(m_pbufferGlobalUbo, 0);
 
       }
 
@@ -2476,22 +1978,7 @@ namespace gpu_directx11
 
    }
 
-
-   //VkDescriptorSet context::getGlobalDescriptorSet(::gpu_directx11::renderer* prenderer)
-   //{
-
-   //   //if (m_globalDescriptorSets.is_empty())
-   //   //{
-
-
-   //   //}
-
-   //   return m_descriptorsetsGlobal[prenderer->get_frame_index()];
-
-   //}
-   //   
-
-
+   
    ID3D11DeviceContext* context::draw_get_d3d11_device_context()
    {
 

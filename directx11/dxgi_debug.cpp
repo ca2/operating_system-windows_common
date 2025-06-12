@@ -65,7 +65,7 @@ namespace directx11
    }
 
 
-   CLASS_DECL_GPU_DIRECTX11 void defer_dxgi_debug_initialize()
+   CLASS_DECL_DIRECTX11 void defer_dxgi_debug_initialize()
    {
 
       if (::is_set(dxgi_debug::s_pdxgidebug))
@@ -80,7 +80,7 @@ namespace directx11
    }
 
 
-   CLASS_DECL_GPU_DIRECTX11 void dxgi_debug_terminate()
+   CLASS_DECL_DIRECTX11 void dxgi_debug_terminate()
    {
 
       ::acme::del(dxgi_debug::s_pdxgidebug);
@@ -91,12 +91,6 @@ namespace directx11
 } // namespace directx11
 
 
-CLASS_DECL_GPU_DIRECTX11 void directx11_debug()
-{
-
-   ::directx11::dxgi_debug::s_pdxgidebug->debug();
-
-}
 //
 //
 //
@@ -109,6 +103,14 @@ CLASS_DECL_GPU_DIRECTX11 void directx11_debug()
 
 
 #endif
+
+
+CLASS_DECL_DIRECTX11 void directx11_debug()
+{
+
+   ::directx11::dxgi_debug::s_pdxgidebug->debug();
+
+}
 
 
 

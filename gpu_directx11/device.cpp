@@ -9,6 +9,7 @@
 #include "program.h"
 #include "renderer.h"
 #include "shader.h"
+#include "swap_chain.h"
 #include "acme/filesystem/filesystem/file_context.h"
 #include "acme/platform/application.h"
 #include "aura/graphics/image/image.h"
@@ -40,37 +41,17 @@ namespace gpu_directx11
 
    device::device()
    {
-      //m_vksampler001 = nullptr;
-      //m_bOffscreen = true;
-      //      m_emode = e_mode_none;
-            //m_itaskGpu = 0;
-            //m_iLastBitmap1Scan = -1;
-
-            //m_gluTextureBitmap1 = 0;
-            //m_VAO = 0;
-            //m_VBO = 0;
 
       m_bMesa = false;
 
-      //m_emode = e_mode_system;
-
       m_estatus = error_not_initialized;
-
-      //m_physicaldevicefeaturesCreate = {};
-      //m_physicaldevicefeaturesEnabled = {};
-      //m_vkdevice = VK_NULL_HANDLE;
-      //m_vkcommandpool = VK_NULL_HANDLE;
-
-      //m_vkqueuePresent = nullptr;
-      //m_vkqueueGraphics = nullptr;
-
-
 
    }
 
 
    device::~device()
    {
+
 #if defined(_DEBUG)
 
       ::directx11::dxgi_debug_terminate();
@@ -78,190 +59,6 @@ namespace gpu_directx11
 #endif
 
    }
-
-
-
-
-   //void device::initialize(::particle * pparticle)
-   //{
-
-   //   ::e_status estatus = ::object::initialize(pparticle);
-
-   //   if (!estatus)
-   //   {
-
-   //      return estatus;
-
-   //   }
-
-   //   return estatus;
-
-   //}
-
-
-//   void device::draw()
-//   {
-//
-//      ASSERT(m_itaskGpu == ::current_itask());
-//
-//      //      if (m_VAO != 0)
-//      //      {
-//      //
-//      //         //return ::success;
-//      //         return;
-//      //
-//      //      }
-//      //      //glGenBuffers(1, &VAO);
-//      ////      float vertices[] = {f
-//      //         // positions         // colors
-//      //  //        0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   // bottom right
-//      //    //     -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   // bottom left
-//      //      //    0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f    // top
-//      //      //};
-//      //      float vertices[] = {
-//      //         // first triangle
-//      //          1.f,  1.f, 0.0f,  // top right
-//      //          1.f, -1.f, 0.0f,  // bottom right
-//      //         -1.f,  1.f, 0.0f,  // top left
-//      //         // second triangle
-//      //          1.f, -1.f, 0.0f,  // bottom right
-//      //         -1.f, -1.f, 0.0f,  // bottom left
-//      //         -1.f,  1.f, 0.0f   // top left
-//      //      };
-//      //
-//      //#if defined(__APPLE__)
-//      //
-//      //      glGenVertexArrays(1, &m_VAO);
-//      //      glGenBuffers(1, &m_VBO);
-//      //      // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
-//      //      glBindVertexArray(m_VAO);
-//      //
-//      //      //#elif defined(__ANDROID__)
-//      //      //
-//      //      //      glGenVertexArrays(1, &m_VAO);
-//      //      //      glGenBuffers(1, &m_VBO);
-//      //      //      // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
-//      //      //      glBindVertexArray(m_VAO);
-//      //
-//      //#else
-//      //
-//      ////      glGenVertexArrays(1, &m_VAO);
-//      ////      glGenBuffers(1, &m_VBO);
-//      ////      // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
-//      ////      glBindVertexArray(m_VAO);
-//      ////
-//      //#endif
-//      ////
-//      ////      glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-//      ////      glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-//      ////
-//      ////      // position attribute
-//      ////      glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
-//      ////      glEnableVertexAttribArray(0);
-//      ////      // color attribute
-//      ////      //glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-//      ////      //glEnableVertexAttribArray(1);
-//      ////
-//      ////      //return ::success;
-//   }
-//
-//
-//   void device::start_drawing()
-//   {
-//
-//
-//      //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo_elements);
-////int iError16 = glGetError();
-//
-////int size = 0; 
-////glGetBufferParameteriv(GL_ELEMENT_ARRAY_BUFFER, GL_BUFFER_SIZE, &size);
-////int iError17 = glGetError();
-//
-////glDrawElements(GL_TRIANGLES, size / sizeof(GLushort), GL_UNSIGNED_SHORT, 0);
-////int iError18 = glGetError();
-//
-//
-//
-//
-//      //ASSERT(m_itaskGpu == ::current_itask());
-//
-//      ////      glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
-//
-//      //      // Clear the screen
-//      //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//
-//      ////glClear(GL_COLOR_BUFFER_BIT);
-//
-//      //if (m_pprogram && m_pprogram->m_pshader)
-//      //{
-//
-//      //   m_pprogram->m_pshader->use();
-//
-//      //}
-//      //// Use our shader
-//      ////glUseProgram(programID);
-//
-//      //// be sure to activate the shader
-//      ////glUseProgram(shaderProgram);
-//
-//      //// update the uniform color
-//      ////float timeValue = glfwGetTime();
-//      ////float greenValue = sin(timeValue) / 2.0f + 0.5f;
-//      ////int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
-//      ////glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
-//
-//      ////return ::success;
-//
-//   }
-//
-//
-//
-//   void device::global_transform()
-//   {
-//
-//
-//      //// Get a handle for our "MVP" uniform
-//      ////GLint MatrixID = glGetUniformLocation(programID, "MVP");
-//
-//      //if (m_iMatrixUniform >= 0)
-//      //{
-//
-//      //   // Compute the MVP matrix from keyboard and mouse input
-//      //   //computeMatricesFromInputs();
-//      //   ::glm::mat4 matrixProjection = (::glm::mat4 &)projection_matrix();
-//      //   ::glm::mat4 matrixView = (::glm::mat4 &)view_matrix();
-//      //   ::glm::mat4 matrixModel = glm::mat4(1.0);
-//      //   ::glm::mat4 matrixMVP = matrixProjection * matrixView * matrixModel;
-//
-//      //   // Send our transformation to the currently bound shader, 
-//      //   // in the "MVP" uniform
-//      //   //glUniformMatrix4fv(m_iMatrixUniform, 1, GL_FALSE, &matrixMVP[0][0]);
-//
-//      //}
-//
-//      ////glm::mat4 getViewMatrix() {
-//      ////   return ViewMatrix;
-//      ////}
-//      ////glm::mat4 getProjectionMatrix() {
-//      ////   return ProjectionMatrix;
-//      ////}
-//
-//
-//      ////// Initial position : on +Z
-//      ////glm::vec3 position = glm::vec3(0, 0, 5);
-//      ////// Initial horizontal angle : toward -Z
-//      ////float horizontalAngle = 3.14f;
-//      ////// Initial vertical angle : none
-//      ////float verticalAngle = 0.0f;
-//      ////// Initial Field of View
-//      ////float initialFoV = 45.0f;
-//
-//      ////float speed = 3.0f; // 3 units / second
-//      ////float mouseSpeed = 0.005f;
-//
-//
-//
-//   }
 
 
    void device::defer_shader_memory(::memory& memory, const ::file::path& pathShader)
@@ -279,436 +76,12 @@ namespace gpu_directx11
    }
 
 
-   //void device::render()
-   //{
-
-   //   ASSERT(m_itaskGpu == ::current_itask());
-
-   //   //      //#ifdef __APPLE__
-   //   //
-   //   //            //glBindVertexArrayAPPLE(m_VAO);
-   //   //
-   //   //      //#else
-   //   //
-   //   //      if (m_gluTextureBitmap1)
-   //   //      {
-   //   //
-   //   //         //glMatrixMode(GL_PROJECTION);
-   //   //         //glOrtho(0, 800, 0, 600, -1, 1);
-   //   //         // glMatrixMode(GL_MODELVIEW);
-   //   //
-   //   //         //clear and draw quad with texture (could be in display callback)
-   //   //         //glClear(GL_COLOR_BUFFER_BIT);
-   //   //         //glBindTexture(GL_TEXTURE_2D, m_gluTextureBitmap1);
-   //   //         ////glEnable(GL_TEXTURE_2D);
-   //   //         //glBegin(GL_QUADS);
-   //   //         //glTexCoord2i(0, 0); glVertex2f(-1.0, -1.0);
-   //   //         //glTexCoord2i(0, 1); glVertex2f(-1.0, 1.0);
-   //   //         //glTexCoord2i(1, 1); glVertex2f(1.0, 1.0);
-   //   //         //glTexCoord2i(1, 0); glVertex2f(1.0, -1.0);
-   //   //         //glEnd();
-   //   //         //glDisable(GL_TEXTURE_2D);
-   //   //         //glBindTexture(GL_TEXTURE_2D, 0);
-   //   //         //glFlush();
-   //   //
-   //   //         /*GLuint readFboId = 0;
-   //   //         glGenFramebuffers(1, &readFboId);
-   //   //         glBindFramebuffer(GL_READ_FRAMEBUFFER, readFboId);
-   //   //         glFramebufferTexture2D(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
-   //   //            GL_TEXTURE_2D, m_gluTextureBitmap1, 0);
-   //   //         glBlitFramebuffer(0, 0, m_sizeBitmap1.cx(), m_sizeBitmap1.cy(),
-   //   //            0, 0, m_size.cx(), m_size.cy(),
-   //   //            GL_COLOR_BUFFER_BIT, GL_LINEAR);
-   //   //         glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
-   //   //         glDeleteFramebuffers(1, &readFboId);*/
-   //   //      }
-   //   //      else
-   //   //      {
-   //   //
-   //   ////#ifdef __APPLE__
-   //   ////         glBindVertexArrayAPPLE(m_VAO);
-   //   ////#else
-   //   ////         glBindVertexArray(m_VAO);
-   //   ////#endif
-   //   ////
-   //   ////         glDrawArrays(GL_TRIANGLES, 0, 6);
-   //   //
-   //   //   }
-   //   //
-   //   //      //return ::success;
-
-   //}
-
-
-   //void device::set_bitmap_1(::image::image* pimage)
-   //{
-
-   //   ASSERT(m_itaskGpu == ::current_itask());
-
-   //   //      if (!m_gluTextureBitmap1)
-   //   //      {
-   //   //
-   //   ////         glGenTextures(1, &m_gluTextureBitmap1); // generate texture id for your texture (can skip this line)
-   //   ////         glEnable(GL_TEXTURE_2D);
-   //   ////         glBindTexture(GL_TEXTURE_2D, m_gluTextureBitmap1);
-   //   ////
-   //   ////         glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // set alignment of data in memory (a good thing to do before glTexImage)
-   //   ////
-   //   ////#if defined(__APPLE__) || defined(__ANDROID__)
-   //   ////         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-   //   ////         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE); // set clamp (GL_CLAMP_TO_EDGE would be better)
-   //   ////#else
-   //   ////         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-   //   ////         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP); // set clamp (GL_CLAMP_TO_EDGE would be better)
-   //   ////#endif
-   //   ////         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-   //   ////         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); // set linear filtering (so you can scale your image)
-   //   //
-   //   //      }
-   //   //
-   //   //      if (pimage->is_ok())
-   //   //      {
-   //   //
-   //   //         pimage->map();
-   //   //
-   //   //         //glBindTexture(GL_TEXTURE_2D, m_gluTextureBitmap1);
-   //   //
-   //   //         //if (m_iLastBitmap1Scan != pimage->m_iScan)
-   //   //         //{
-   //   //
-   //   //         //   m_iLastBitmap1Scan = pimage->m_iScan;
-   //   //
-   //   //         //   glPixelStorei(GL_UNPACK_ROW_LENGTH, pimage->m_iScan / 4);
-   //   //
-   //   //         //}
-   //   //
-   //   //         m_sizeBitmap1 = pimage->size();
-   //   //
-   //   //
-   //   //         m_memorySwap.set_size(m_sizeBitmap1.area() * 4);
-   //   //
-   //   //         //vertical_swap_copy_image32_swap_red_blue(
-   //   //            ((image32_t *)m_memorySwap.data())->vertical_swap_copy_swap_red_blue(
-   //   //            m_sizeBitmap1.cx(),
-   //   //            m_sizeBitmap1.cy(),
-   //   //            m_sizeBitmap1.cx() * 4,
-   //   //            pimage->get_data(),
-   //   //            pimage->m_iScan);
-   //   //
-   //   //         //glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
-   //   //         //   m_sizeBitmap1.cx(),
-   //   //         //   m_sizeBitmap1.cy(),
-   //   //         //   0, GL_RGBA, GL_UNSIGNED_BYTE,
-   //   //         //   m_memorySwap.data()); // upload image data to the textur
-   //   //
-   //   //
-   //   //
-   //   //
-   //   //
-   //   //      }
-
-   //}
-
-
-   //void device::swap_buffers()
-   //{
-
-
-   //}
-
-
-   //VkSampler device::_001VkSampler()
-   //{
-
-   //   if (!m_vksampler001)
-   //   {
-
-   //      VkSamplerCreateInfo samplerInfo = {
-   //.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO,
-   //.magFilter = VK_FILTER_LINEAR,
-   //.minFilter = VK_FILTER_LINEAR,
-   //   .mipmapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR,
-
-   //.addressModeU = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
-   //.addressModeV = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
-   //.addressModeW = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
-   //.mipLodBias = 0.0f,
-   //.anisotropyEnable = VK_FALSE,
-   //.maxAnisotropy = 1.0f,
-   //.compareEnable = VK_FALSE,
-   //.compareOp = VK_COMPARE_OP_ALWAYS,
-   //.minLod = 0.0f,
-   //.maxLod = 0.0f,
-   //   .borderColor = VK_BORDER_COLOR_INT_OPAQUE_BLACK,
-   //.unnormalizedCoordinates = VK_FALSE,
-
-   //      };
-
-
-   //      if (vkCreateSampler(this->logicalDevice(), &samplerInfo, NULL, &m_vksampler001) != VK_SUCCESS) {
-   //         // Handle error
-   //      }
-
-   //   }
-
-   //   return m_vksampler001;
-
-   //}
-
-
-
-
-
-   //void device::create_offscreen_buffer(const ::int_size& size)
-   //{
-
-   //   auto pgpu = application()->get_gpu();
-
-   //   if (::is_null(pgpu))
-   //   {
-
-   //      return ::error_failed;
-
-   //   }
-
-   //   ::e_status estatus = __øconstruct(m_pbuffer);
-
-   //   if (!estatus)
-   //   {
-
-   //      return false;
-
-   //   }
-
-   //   m_pbuffer->m_pimage = create_image(size);
-
-   //   if (!::is_ok(m_pbuffer->m_pimage))
-   //   {
-
-   //      return false;
-
-   //   }
-
-   //   estatus = _create_offscreen_buffer(size);
-
-   //   if(!estatus)
-   //   {
-
-   //      return estatus;
-
-   //   }
-
-   //   return ::success_none;
-
-   //}
-
-
-   //void device::_create_offscreen_buffer(const ::int_size& size)
-   //{
-
-   //   return ::success_none;
-
-   //}
-
-
-   //void device::resize_offscreen_buffer(const ::int_size& size)
-   //{
-
-   //   return ::success_none;
-
-   //}
-
-
-
-   //void device::make_current()
-   //{
-
-   //   return ::success_none;
-
-   //}
-
-
-   //void device::destroy_offscreen_buffer()
-   //{
-
-   //   return ::success_none;
-
-   //}
-
-
-   //string device::_001GetIntroProjection()
-   //{
-
-   //   string strVersion = get_shader_version_text();
-
-
-   //   string strProjection =
-   //      "layout(location = 0) in vec3 aPos;\n"
-   //      "out vec3 ourPosition;\n"
-   //      "\n"
-   //      "void main()\n"
-   //      "{\n"
-   //      "   gl_Position = vec4(aPos, 1.0);\n"
-   //      "   ourPosition = aPos;\n"
-   //      "}\n";
-
-   //   return strProjection;
-   //}
-
-
-   //string device::_001GetIntroFragment()
-   //{
-
-   //   string strVersion = get_shader_version_text();
-
-   //   string strFragment =
-   //      "uniform vec2 resolution;\n"
-   //      "uniform float time;\n"
-   //      "uniform vec2 mouse;\n"
-   //      "uniform sampler2D backbuffer;\n"
-   //      "\n"
-   //      "void main(void) {\n"
-   //      "float base_res = min(resolution.x(), resolution.y());\n"
-   //      "vec2 uv = (gl_FragCoord.xy * 2.0 - resolution.xy) / base_res;\n"
-   //      "\n"
-   //      //"gl_FragColor = vec4(uv, (uv.x() * uv.x()) / 2.0, ((uv.x() + (base_res - uv.y())) *(uv.x() + (base_res - uv.y()))) / 2.0);\n"
-   //      "float posx = max(0.f, uv.x());\n"
-   //      "float posy = max(0.f, uv.y());\n"
-   //      "gl_FragColor = vec4(uv, (posx * posx) / 4.0, ((posx + posy) * (posx + posy)) / 4.0);\n"
-   //      "}\n";
-
-   //   return strFragment;
-
-   //}
-
-   //   string device::load_fragment(const ::string & pszPath, enum_shader & eshader)
-   //   {
-   //
-   //      ::file::path path(pszPath);
-   //
-   //      auto & app = papp;
-   //
-   //      auto & file = app.file();
-   //
-   //      string strFragment = file.as_string(path);
-   //
-   //      string strExtension = path.extension();
-   //
-   //      string strVersion = get_shader_version_text();
-   //
-   //      if (strExtension.case_insensitive_begins("shadertoy"))
-   //      {
-   //
-   //         eshader = e_shader_shadertoy;
-   //
-   //         strFragment =
-   //            //"#" + strVersion + "\n"
-   //            //"\n"
-   //            //"precision highp float;\n"
-   //            "\n"
-   //            "uniform vec2 iResolution;\n"
-   //            "uniform float iTime;\n"
-   //            "uniform vec2 iMouse;\n"
-   //            "uniform sampler2D backbuffer;\n"
-   //            "\n"
-   //            "\n"
-   //            + strFragment;
-   //
-   //
-   //         strFragment +=
-   //            "\n\n"
-   //            "void main(void)\n"
-   //            "{\n"
-   //            "   mainImage(gl_FragColor, gl_FragCoord.xy);\n"
-   //            "}\n";
-   //
-   //      }
-   //      else
-   //      {
-   //
-   //         strFragment =
-   ////            "#" + strVersion + "\n"
-   ////            "\n"
-   //            + strFragment;
-   //
-   //         eshader = e_shader_neort;
-   //
-   //      }
-   //
-   //      return strFragment;
-   //
-   //   }
-
-
-      //string device::get_shader_version_text()
-      //{
-
-      //   return "version 330 core";
-
-      //}
-
-      //void device::translate_shader(string& strFragment)
-      //{
-
-      //   string_array stra;
-
-      //   stra.add_lines(strFragment);
-
-      //   auto pFind = stra.case_insensitive_find_first_begins("#version ");
-
-      //   if (::is_set(pFind))
-      //   {
-
-      //      stra[iFind] = get_shader_version_text();
-
-      //   }
-      //   else
-      //   {
-
-      //      stra.insert_at(0, get_shader_version_text());
-
-      //   }
-
-      //   _translate_shader(stra);
-
-      //   strFragment = stra.implode("\n");
-
-      //}
-
-
-      //void device::_translate_shader(string_array& stra)
-      //{
-
-      //}
-
-
-   //void device::set_matrix_uniform(const ::gpu::payload& uniformMatrix)
-   //{
-
-   //   //m_iMatrixUniform = uniformMatrix.m_iUniform;
-
-   //}
-
    ::pointer < ::gpu::device > allocate_system_context(::particle* pparticle)
    {
 
       return pparticle->__create_new <device>();
 
    }
-
-
-   //device::device()
-   //{
-
-
-
-   //}
-
-
-   //device::~device()
-   //{
-
-   //}
 
 
    bool device::is_mesa()
@@ -721,151 +94,73 @@ namespace gpu_directx11
 
    void device::_create_offscreen_window(const ::int_size& size)
    {
-      //if (::IsWindow(m_hwnd))
-      //{
-
-      //   if (!::SetWindowPos(m_hwnd,
-      //      nullptr, 0, 0,
-      //      size.cx()
-      //      , size.cy(), SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE
-      //      | SWP_NOCOPYBITS | SWP_NOSENDCHANGING
-      //      | SWP_NOREPOSITION | SWP_NOREDRAW))
-      //   {
-
-      //      information() << "SetWindowPos Failed";
-
-      //   }
-
-
-      //   //return m_hwnd;
-
-      //}
-      //else
-      //{
-
-      //   LPCTSTR lpClassName = L"draw2d_directx11_offscreen_buffer_window";
-      //   LPCTSTR lpWindowName = L"draw2d_directx11_offscreen_buffer_window";
-      //   //unsigned int dwStyle = WS_CAPTION | WS_POPUPWINDOW; // | WS_VISIBLE
-      //   unsigned int dwExStyle = 0;
-      //   unsigned int dwStyle = WS_OVERLAPPEDWINDOW;
-      //   dwStyle |= WS_POPUP;
-      //   //dwStyle |= WS_VISIBLE;
-      //   //dwStyle |= WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX;
-      //   dwStyle &= ~WS_CAPTION;
-      //   //dwStyle = 0;
-      //   dwStyle &= ~WS_THICKFRAME;
-      //   dwStyle &= ~WS_BORDER;
-      //   int x = 0;
-      //   int y = 0;
-      //   int nWidth = size.cx();
-      //   int nHeight = size.cy();
-      //   HWND hWndParent = nullptr;
-      //   HMENU hMenu = nullptr;
-      //   HINSTANCE hInstance = ::GetModuleHandleW(L"gpu_directx11.dll");
-      //   LPVOID lpParam = nullptr;
-
-      //   m_hwnd = CreateWindowExW(dwExStyle, lpClassName, lpWindowName, dwStyle, x, y, nWidth, nHeight, hWndParent, hMenu, hInstance, lpParam);
-
-      //   if (!m_hwnd)
-      //   {
-
-      //      informationf("MS GDI - CreateWindow failed");
-
-      //      informationf("last-error code: %d\n", GetLastError());
-
-      //      throw ::exception(error_failed);
-
-      //   }
-
-      //   //return m_hwnd;
-
-      //}
 
 
    }
 
 
-   void device::_initialize_gpu_device(::gpu::approach * pgpuapproachParam)
+   void device::initialize_swap_chain(::windowing::window * pwindow)
    {
 
-      ::cast < approach > pgpuapproach = pgpuapproachParam;
+      ::cast < ::windowing_win32::window > pwin32window = pwindow;
 
-      if (!pgpuapproach)
-      {
+      auto r = pwindow->get_window_rectangle();
 
-         throw ::exception(error_failed);
+      auto& pdevice = m_pdevice;
+      auto& pcontext = m_pdevicecontext;
+      auto& pdevice1 = m_pdevice1;
+      auto& pdxgidevice = m_pdxgidevice;
+      auto& pdxgifactory2 = m_pdxgifactory2;
 
-      }
+      ::cast < ::gpu_directx11::swap_chain > pswapchain = get_swap_chain();
 
-      m_pgpuapproach = pgpuapproach.m_p;
+      auto& pdxgiswapchain1 = pswapchain->m_pdxgiswapchain1;
 
-      auto pphysicaldevice = pgpuapproach->m_pphysicaldevice;
+      ::defer_throw_hresult(D3D11CreateDevice(nullptr,    // Adapter
+         D3D_DRIVER_TYPE_HARDWARE,
+         nullptr,    // Module
+         D3D11_CREATE_DEVICE_BGRA_SUPPORT,
+         nullptr, 0, // Highest available feature level
+         D3D11_SDK_VERSION,
+         &pdevice,
+         nullptr,    // Actual feature level
+         nullptr));  // Device context
+      ::defer_throw_hresult(pdevice.as(pdevice1));
+      ::defer_throw_hresult(pdevice.as(pdxgidevice));
 
-      //assert(pphysicaldevice && pphysicaldevice->m_physicaldevice);
+      ::defer_throw_hresult(CreateDXGIFactory2(
+         DXGI_CREATE_FACTORY_DEBUG,
+         __interface_of(pdxgifactory2)));
 
-      m_pphysicaldevice = pphysicaldevice;
+      DXGI_SWAP_CHAIN_DESC1 dxgiswapchaindesc1 = {};
+      dxgiswapchaindesc1.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
+      dxgiswapchaindesc1.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+      dxgiswapchaindesc1.SwapEffect = DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL;
+      dxgiswapchaindesc1.BufferCount = 2;
+      dxgiswapchaindesc1.SampleDesc.Count = 1;
+      dxgiswapchaindesc1.AlphaMode = DXGI_ALPHA_MODE_PREMULTIPLIED;
 
+      RECT rect = {};
+      GetWindowRect(pwin32window->m_hwnd, &rect);
+      dxgiswapchaindesc1.Width = rect.right - rect.left;
+      dxgiswapchaindesc1.Height = rect.bottom - rect.top;
 
+      HRESULT hrCreateSwapChainForComposition =
+         pdxgifactory2->CreateSwapChainForComposition(
+            pdxgidevice,
+            &dxgiswapchaindesc1,
+            nullptr, // Don’t restrict
+            &pdxgiswapchain1);
 
+      ::defer_throw_hresult(hrCreateSwapChainForComposition);
 
-      //if (startcontext.m_eoutput == ::gpu::e_output_swap_chain)
-      //{
+      pdevice->GetImmediateContext(&pcontext);
 
-      //   m_pphysicaldevice->createWindowSurface(startcontext.m_pwindow);
+#if defined(_DEBUG)
 
-      //}
+      ::directx11::defer_dxgi_debug_initialize();
 
-      //auto physicaldevice = pphysicaldevice->m_physicaldevice;
-
-      //// Get list of supported extensions
-      //uint32_t extCount = 0;
-      //vkEnumerateDeviceExtensionProperties(physicaldevice, nullptr, &extCount, nullptr);
-      //if (extCount > 0)
-      //{
-      //   ::array<VkExtensionProperties> extensions(extCount);
-      //   if (vkEnumerateDeviceExtensionProperties(physicaldevice, nullptr, &extCount, extensions.data()) == VK_SUCCESS)
-      //   {
-      //      for (auto& ext : extensions)
-      //      {
-      //         m_straSupportedExtensions.add(ext.extensionName);
-      //      }
-      //   }
-      //}
-
-      // Derived examples can enable extensions based on the list of supported extensions read from the physical device
-      //getEnabledExtensions();
-
-      //bool useSwapChain = m_eoutput == ::gpu::e_output_swap_chain;
-
-      //bool useSwapChain = bAddSwapChainSupport;
-
-      //m_itaskGpu = ::current_itask();
-//
-//      VkPhysicalDeviceScalarBlockLayoutFeatures scalarBlockLayoutSupport = {
-//.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SCALAR_BLOCK_LAYOUT_FEATURES,
-//      .scalarBlockLayout = TRUE };
-//      pgpuapproach->m_pDeviceCreatepNextChain = &scalarBlockLayoutSupport;
-//      m_physicaldevicefeaturesCreate.logicOp = TRUE;
-//      m_physicaldevicefeaturesCreate.independentBlend = TRUE;
-//      HRESULT result = createLogicalDevice(
-//         m_physicaldevicefeaturesCreate,
-//         pgpuapproach->m_pszaEnabledDeviceExtensions,
-//         pgpuapproach->m_pDeviceCreatepNextChain,
-//         useSwapChain);
-//
-//      if (result != VK_SUCCESS)
-//      {
-//
-//         //m_itaskGpu = {};
-//
-//         exitFatal("Could not create DirectX11 device: \n" + errorString(result) + " HRESULT=" + ::as_string(result), result);
-//
-//         throw ::exception(error_failed);
-//
-//      }
-//
-
-      //device = directx11Device->logicalDevice;
+#endif
 
    }
 
@@ -875,19 +170,11 @@ namespace gpu_directx11
 
       ::gpu::device::initialize_gpu_device_for_swap_chain(pgpuapproachParam, pwindow);
 
-      //initialize_swap_chain(pwindow);
+      initialize_swap_chain(pwindow);
 
-      _initialize_gpu_device(pgpuapproachParam);
-
-      /*if (m_papplication->m_bUseSwapChainWindow)
-      {
-
-         m_pphysicaldevice->createWindowSurface(pwindow);
-
-      }*/
+      m_pswapchain->initialize_gpu_swap_chain(this, pwindow);
 
    }
-
 
 
    void device::initialize_gpu_device_for_off_screen(::gpu::approach* pgpuapproachParam, const ::int_rectangle& rectanglePlacement)

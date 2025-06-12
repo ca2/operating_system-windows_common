@@ -15,68 +15,6 @@ typedef HRESULT WINAPI FN_DXGIGetDebugInterface(REFIID riid, void ** ppDebug);
 
 typedef FN_DXGIGetDebugInterface * PFN_DXGIGetDebugInterface;
 
-//class dxgidebug
-//{
-//public:
-//
-//   comptr<IDXGIDebug> d;
-//
-//   void init()
-//   {
-//
-//#ifdef UNIVERSAL_WINDOWS
-//      HRESULT hr = DXGIGetDebugInterface1(0, IID_IDXGIDebug1, &d);
-//#else
-//
-//      comptr<IDXGIInfoQueue> dxgiInfoQueue;
-//
-//      typedef HRESULT(WINAPI * LPDXGIGETDEBUGINTERFACE)(REFIID, void **);
-//
-//      HMODULE dxgidebug = LoadLibraryExW(L"dxgidebug.dll", nullptr, LOAD_LIBRARY_SEARCH_SYSTEM32);
-//      if (dxgidebug)
-//      {
-//         auto dxgiGetDebugInterface = reinterpret_cast<LPDXGIGETDEBUGINTERFACE>(
-//            reinterpret_cast<void *>(GetProcAddress(dxgidebug, "DXGIGetDebugInterface")));
-//         if (SUCCEEDED(dxgiGetDebugInterface(IID_IDXGIDebug, &d)))
-//         {
-//
-//         }
-//         //d.Attach(dxgiGetDebugInterface);
-//         //if (SUCCEEDED(dxgiGetDebugInterface(IID_PPV_ARGS(dxgiInfoQueue.GetAddressOf()))))
-//         //{
-//         // dxgiInfoQueue->SetBreakOnSeverity(DXGI_DEBUG_ALL, DXGI_INFO_QUEUE_MESSAGE_SEVERITY_ERROR, true);
-//         //dxgiInfoQueue->SetBreakOnSeverity(DXGI_DEBUG_ALL, DXGI_INFO_QUEUE_MESSAGE_SEVERITY_CORRUPTION, true);
-//         //}
-//      }
-//
-//#endif
-//
-//
-//   }
-//
-//   void debug()
-//   {
-//
-//      if (d.Get() != nullptr)
-//      {
-//
-//         ::output_debug_string("MY_DEBUG : IDXGIDebug::ReportLiveObjects");
-//
-//         d->ReportLiveObjects(DXGI_DEBUG_ALL, DXGI_DEBUG_RLO_ALL);
-//
-//      }
-//      else
-//      {
-//
-//         init();
-//
-//      }
-//
-//   }
-//
-//} *g_pdxgidebug;
-
-
 
 
 namespace direct2d
@@ -140,7 +78,6 @@ namespace direct2d
 
       comptr<ID2D1Device> pd2d1device;
 
-      // Create the Direct2D device object and a corresponding context.
       HRESULT hr = m_pd2d1factory->CreateDevice(pdxgidevice, &pd2d1device);
       
       ::defer_throw_hresult(hr);

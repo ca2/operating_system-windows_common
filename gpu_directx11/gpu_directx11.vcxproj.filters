@@ -92,9 +92,6 @@
     <ClInclude Include="aaa_accumulation_render_pass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="dxgi_debug.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="direct2d_draw2d_swap_chain.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -170,9 +167,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="aaa_accumulation_render_pass.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="dxgi_debug.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="direct2d_draw2d_swap_chain.cpp">

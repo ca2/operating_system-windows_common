@@ -9,7 +9,7 @@ namespace directx11
 {
 
 
-   class CLASS_DECL_GPU_DIRECTX11 dxgi_debug :
+   class CLASS_DECL_DIRECTX11 dxgi_debug :
       virtual public ::matter
    {
    public:

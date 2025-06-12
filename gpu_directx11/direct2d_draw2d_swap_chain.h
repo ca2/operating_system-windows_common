@@ -33,7 +33,6 @@ namespace gpu_directx11
 
       
       ::pointer < ::gpu_directx11::device > m_pgpudevice;
-      ::comptr<IDXGISwapChain1> m_pdxgiswapchain1;
       //::comptr<ID3D11Device> m_pd3d11device;
       //::comptr<ID3D11DeviceContext> m_pd3d11context;
       //::comptr <ID3D11Resource > m_presourceWrappedRTV;
@@ -59,10 +58,12 @@ namespace gpu_directx11
       direct2d_draw2d_swap_chain();
       ~direct2d_draw2d_swap_chain() override;
 
+      void initialize_gpu_swap_chain(::gpu::device* pgpudevice, ::windowing::window* pwindow) override;
 
       void initialize_direct2d_draw2d_gpu_swap_chain(::gpu::device* pgpudevice, ::windowing::window* pwindow) override;
 
-      virtual IDXGISurface* _get_dxgi_surface();
+      ID3D11Device* _get_d3d11_device() override;
+      virtual IDXGISurface* _get_dxgi_surface() override;
 
       void endDraw(::draw2d_gpu::graphics* pgraphics, ::user::interaction* puserinteraction, ::gpu::renderer* prendererSrc) override;
       void present();

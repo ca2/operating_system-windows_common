@@ -59,7 +59,7 @@
     <ClCompile Include="internal_font.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="end_draw.cpp">
+    <ClCompile Include="swap_chain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -118,7 +118,7 @@
     <ClInclude Include="internal_font.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="end_draw.h">
+    <ClInclude Include="swap_chain.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

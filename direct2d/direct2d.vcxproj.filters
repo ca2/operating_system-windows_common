@@ -32,10 +32,13 @@
     <ClCompile Include="object.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="graphics.cpp">
+    <ClCompile Include="geometry_sink_text_renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="geometry_sink_text_renderer.cpp">
+    <ClCompile Include="swap_chain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="aaa_graphics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,6 +59,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="geometry_sink_text_renderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="swap_chain.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="aaa2_graphics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

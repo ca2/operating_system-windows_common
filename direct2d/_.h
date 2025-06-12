@@ -3,7 +3,7 @@
 
 
 #include "aura_windows_common/_.h"
-
+#include "directx11/_.h"
 
 #if defined(_direct2d_project)
 #define CLASS_DECL_DIRECT2D  CLASS_DECL_EXPORT

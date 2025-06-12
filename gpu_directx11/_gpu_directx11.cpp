@@ -54,36 +54,6 @@
 namespace directx11
 {
 
-   bool errorModeSilent = false;
-   ::string resourcePath = "";
-
-   ::string errorString(HRESULT hr)
-   {
-      ::string str;
-
-      if (hr == S_OK)
-      {
-         str = "S_OK";
-      }
-      else if (hr == E_FAIL)
-      {
-         str = "E_FAILED";
-      }
-      else if (hr == E_NOINTERFACE)
-      {
-         str = "E_NOINTERFACE";
-      }
-      else if (SUCCEEDED(hr))
-      {
-         str.formatf("Succeeded HRESULT = 0x%08X", hr);
-      }
-      else
-      {
-         str.formatf("Failed HRESULT = 0x%08X", hr);
-      }
-      return str;
-
-   }
 //      switch (errorCode)
 //      {
 //#define STR(r) case VK_ ##r: return #r

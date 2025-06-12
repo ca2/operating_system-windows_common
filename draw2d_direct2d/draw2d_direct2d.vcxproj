@@ -761,6 +761,9 @@
     <ProjectReference Include="..\direct2d\direct2d.vcxproj">
       <Project>{2f21f158-1dd5-43f6-9fad-01fb77a81ec5}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\directx11\directx11.vcxproj">
+      <Project>{c4b37bd9-1ddb-4d98-9740-182ed114cb3a}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="deployment.rc" />

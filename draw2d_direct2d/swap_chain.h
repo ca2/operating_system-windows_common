@@ -14,26 +14,6 @@ namespace draw2d_direct2d
    {
    public:
 
-      D3D11_TEXTURE2D_DESC texDesc = {};
-      //::pointer < ::draw2d_gpu::graphics > m_pgraphics;
-      //::pointer < ::gpu::context > m_pgpucontext;
-
-      //::comptr<ID3D11Device> m_pd3d11device;
-      //::comptr<ID3D11DeviceContext> m_pd3d11context;
-
-
-      ////::comptr<ID2D1DeviceContext> m_pd2d1devicecontext;
-      //::comptr <IDXGIDevice> m_pdxgidevice;
-
-      //::comptr<ID2D1Device> m_pd2d1device;
-
-      ////::comptr<ID2D1DeviceContext> m_pd2d1context;
-
-      //::comptr<IDXGISurface> m_pdxgisurface;
-
-      ////::comptr<ID2D1Bitmap1> m_pd2d1bitmap;
-
-      ////::pointer < ::gpu_directx11::shader > m_pshader;
 
       swap_chain();
       ~swap_chain() override;

@@ -1,0 +1,569 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|ARM">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|ARM64">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="StaticRelease|ARM">
+      <Configuration>StaticRelease</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="StaticRelease|ARM64">
+      <Configuration>StaticRelease</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="StaticRelease|Win32">
+      <Configuration>StaticRelease</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="StaticRelease|x64">
+      <Configuration>StaticRelease</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="StaticDebug|ARM">
+      <Configuration>StaticDebug</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="StaticDebug|ARM64">
+      <Configuration>StaticDebug</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="StaticDebug|Win32">
+      <Configuration>StaticDebug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="StaticDebug|x64">
+      <Configuration>StaticDebug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM">
+      <Configuration>Release</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM64">
+      <Configuration>Release</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="aaa__library.h" />
+    <ClInclude Include="geometry.h" />
+    <ClInclude Include="geometry_sink_text_renderer.h" />
+    <ClInclude Include="graphics.h" />
+    <ClInclude Include="multithreading_lock.h" />
+    <ClInclude Include="directx11.h" />
+    <ClInclude Include="object.h" />
+    <ClInclude Include="_.h" />
+    <ClInclude Include="framework.h" />
+    <ClInclude Include="aaa_directx11.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="geometry.cpp" />
+    <ClCompile Include="geometry_sink_text_renderer.cpp" />
+    <ClCompile Include="graphics.cpp" />
+    <ClCompile Include="multithreading_lock.cpp" />
+    <ClCompile Include="directx11.cpp" />
+    <ClCompile Include="object.cpp" />
+    <ClCompile Include="_.cpp" />
+    <ClCompile Include="_universal_windows.cpp" />
+    <ClCompile Include="_factory.cpp" />
+    <ClCompile Include="framework.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticDebug|ARM'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticDebug|ARM64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticRelease|ARM'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticRelease|ARM64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="u_directx11.def" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\source\app\acme\u_acme.vcxproj">
+      <Project>{74a3ea71-9358-4441-a0cc-d5771df8dfbd}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\source\app\apex\u_apex.vcxproj">
+      <Project>{b86508de-6e32-42ac-b45c-08bf0932dcf8}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\source\app\aqua\u_aqua.vcxproj">
+      <Project>{d6fc3dc0-a19a-4f63-a3f1-3426fe53920b}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\source\app\aura\u_aura.vcxproj">
+      <Project>{b3b6a9d8-7776-434e-8e3b-d2696632df39}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\acme_windows_common\u_acme_windows_common.vcxproj">
+      <Project>{4a44d9ca-a46e-4bb3-8ad5-8bcace5228ce}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\directx\u_directx.vcxproj">
+      <Project>{41f27c23-968d-49a8-b050-e1643437b612}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{91608259-0B1F-4DEB-A867-873618075395}</ProjectGuid>
+    <Keyword>DynamicLibrary</Keyword>
+    <ProjectName>directx11</ProjectName>
+    <RootNamespace>app</RootNamespace>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
+    <AppContainerApplication>true</AppContainerApplication>
+    <ApplicationType>Windows Store</ApplicationType>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+    <WindowsTargetPlatformMinVersion>10.0.10240.0</WindowsTargetPlatformMinVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='StaticDebug|ARM'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='StaticDebug|ARM64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='StaticRelease|ARM'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='StaticRelease|ARM64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\operating_system\operating_system-universal_windows\Common.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\operating_system\operating_system-universal_windows\Common.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\operating_system\operating_system-universal_windows\Common.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\operating_system\operating_system-universal_windows\Common.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\operating_system\operating_system-universal_windows\Common.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='StaticDebug|ARM'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\operating_system\operating_system-universal_windows\Common.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\operating_system\operating_system-universal_windows\Common.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='StaticDebug|ARM64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\operating_system\operating_system-universal_windows\Common.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\operating_system\operating_system-universal_windows\Common.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='StaticRelease|ARM'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\operating_system\operating_system-universal_windows\Common.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\operating_system\operating_system-universal_windows\Common.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='StaticRelease|ARM64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\operating_system\operating_system-universal_windows\Common.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\operating_system\operating_system-universal_windows\Common.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\operating_system\operating_system-universal_windows\Common.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\operating_system\operating_system-universal_windows\Common.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\operating_system\operating_system-universal_windows\Common.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">
+    <GenerateManifest>false</GenerateManifest>
+    <IgnoreImportLibrary>false</IgnoreImportLibrary>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">
+    <GenerateManifest>false</GenerateManifest>
+    <IgnoreImportLibrary />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='StaticDebug|ARM'">
+    <GenerateManifest>false</GenerateManifest>
+    <IgnoreImportLibrary>false</IgnoreImportLibrary>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='StaticDebug|ARM64'">
+    <GenerateManifest>false</GenerateManifest>
+    <IgnoreImportLibrary />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='StaticRelease|ARM'">
+    <GenerateManifest>false</GenerateManifest>
+    <IgnoreImportLibrary />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='StaticRelease|ARM64'">
+    <GenerateManifest>false</GenerateManifest>
+    <IgnoreImportLibrary />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">
+    <GenerateManifest>false</GenerateManifest>
+    <IgnoreImportLibrary>false</IgnoreImportLibrary>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">
+    <GenerateManifest>false</GenerateManifest>
+    <IgnoreImportLibrary />
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/Zc:twoPhase- /bigobj -Zm512 /await</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <AdditionalDependencies>WindowsApp.lib;d2d1.lib;d3d11.lib;dxgi.lib;dwrite.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>
+      </ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/Zc:twoPhase- /bigobj -Zm512 /await</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)..\..\operating_system\storage-universal_windows\$(PlatformName)\$(Configuration)\third\library\;$(SolutionDir)..\..\operating_system\storage-universal_windows\$(PlatformName)\$(Configuration)\library\;$(SolutionDir)..\..\..\time-universal_windows\$(PlatformName)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>WindowsApp.lib;d2d1.lib;d3d11.lib;dxgi.lib;dwrite.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
+      <ModuleDefinitionFile>u_$(TargetName).def</ModuleDefinitionFile>
+      <ProgramDatabaseFile>$(OutDir)$(TargetName).pdb</ProgramDatabaseFile>
+      <ImportLibrary>$(OutDir)$(TargetName).lib</ImportLibrary>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/Zc:twoPhase- /bigobj -Zm512 /await</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <AdditionalDependencies>WindowsApp.lib;d2d1.lib;d3d11.lib;dxgi.lib;dwrite.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>
+      </ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/Zc:twoPhase- /bigobj -Zm512 /await</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)..\..\operating_system\storage-windows\$(PlatformName)\$(Configuration)\third\library\;$(SolutionDir)..\..\operating_system\storage-windows\$(PlatformName)\$(Configuration)\library\;$(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>WindowsApp.lib;d2d1.lib;d3d11.lib;dxgi.lib;dwrite.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>u_$(TargetName).def</ModuleDefinitionFile>
+      <ProgramDatabaseFile>$(TimeDir)$(PlatformName)\$(Configuration)\$(TargetName).pdb</ProgramDatabaseFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|arm'">
+    <ClCompile>
+      <AdditionalOptions>/Zc:twoPhase- /bigobj -Zm512 /await</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <AdditionalDependencies>WindowsApp.lib;d2d1.lib;d3d11.lib;dxgi.lib;dwrite.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>
+      </ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='StaticDebug|arm'">
+    <ClCompile>
+      <AdditionalOptions>/Zc:twoPhase- /bigobj -Zm512 /await</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)..\..\operating_system\storage-universal_windows\$(PlatformName)\$(Configuration)\third\library\;$(SolutionDir)..\..\operating_system\storage-universal_windows\$(PlatformName)\$(Configuration)\library\;$(SolutionDir)..\..\..\time-universal_windows\$(PlatformName)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>WindowsApp.lib;d2d1.lib;d3d11.lib;dxgi.lib;dwrite.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>u_$(TargetName).def</ModuleDefinitionFile>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(OutDir)$(TargetName).pdb</ProgramDatabaseFile>
+      <ImportLibrary>$(OutDir)$(TargetName).lib</ImportLibrary>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+    <ClCompile>
+      <AdditionalOptions>/bigobj -Zm512 /await</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <AdditionalDependencies>WindowsApp.lib;d2d1.lib;d3d11.lib;dxgi.lib;dwrite.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>
+      </ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='StaticDebug|ARM64'">
+    <ClCompile>
+      <AdditionalOptions>/bigobj -Zm512 /await</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)..\..\operating_system\storage-universal_windows\$(PlatformName)\$(Configuration)\third\library\;$(SolutionDir)..\..\operating_system\storage-universal_windows\$(PlatformName)\$(Configuration)\library\;$(SolutionDir)..\..\..\time-universal_windows\$(PlatformName)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>WindowsApp.lib;d2d1.lib;d3d11.lib;dxgi.lib;dwrite.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>u_$(TargetName).def</ModuleDefinitionFile>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(TimeDir)$(PlatformName)\$(Configuration)\$(TargetName).pdb</ProgramDatabaseFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|arm'">
+    <ClCompile>
+      <AdditionalOptions>/Zc:twoPhase- /bigobj -Zm512 /await</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <AdditionalDependencies>WindowsApp.lib;d2d1.lib;d3d11.lib;dxgi.lib;dwrite.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>
+      </ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='StaticRelease|arm'">
+    <ClCompile>
+      <AdditionalOptions>/Zc:twoPhase- /bigobj -Zm512 /await</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)..\..\operating_system\storage-windows\$(PlatformName)\$(Configuration)\third\library\;$(SolutionDir)..\..\operating_system\storage-windows\$(PlatformName)\$(Configuration)\library\;$(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>WindowsApp.lib;d2d1.lib;d3d11.lib;dxgi.lib;dwrite.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>u_$(TargetName).def</ModuleDefinitionFile>
+      <ProgramDatabaseFile>$(TimeDir)$(PlatformName)\$(Configuration)\$(TargetName).pdb</ProgramDatabaseFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+    <ClCompile>
+      <AdditionalOptions>/bigobj -Zm512 /await</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <AdditionalDependencies>WindowsApp.lib;d2d1.lib;d3d11.lib;dxgi.lib;dwrite.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>
+      </ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='StaticRelease|ARM64'">
+    <ClCompile>
+      <AdditionalOptions>/bigobj -Zm512 /await</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)..\..\operating_system\storage-windows\$(PlatformName)\$(Configuration)\third\library\;$(SolutionDir)..\..\operating_system\storage-windows\$(PlatformName)\$(Configuration)\library\;$(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>WindowsApp.lib;d2d1.lib;d3d11.lib;dxgi.lib;dwrite.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>u_$(TargetName).def</ModuleDefinitionFile>
+      <ProgramDatabaseFile>$(TimeDir)$(PlatformName)\$(Configuration)\$(TargetName).pdb</ProgramDatabaseFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalOptions>/Zc:twoPhase- /bigobj -Zm512 /await</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <AdditionalDependencies>WindowsApp.lib;d2d1.lib;d3d11.lib;dxgi.lib;dwrite.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>
+      </ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">
+    <ClCompile>
+      <AdditionalOptions>/Zc:twoPhase- /bigobj -Zm512 /await</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)..\..\operating_system\storage-universal_windows\$(PlatformName)\$(Configuration)\third\library\;$(SolutionDir)..\..\operating_system\storage-universal_windows\$(PlatformName)\$(Configuration)\library\;$(SolutionDir)..\..\..\time-universal_windows\$(PlatformName)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>WindowsApp.lib;d2d1.lib;d3d11.lib;dxgi.lib;dwrite.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>u_$(TargetName).def</ModuleDefinitionFile>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(OutDir)$(TargetName).pdb</ProgramDatabaseFile>
+      <ImportLibrary>$(OutDir)$(TargetName).lib</ImportLibrary>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalOptions>/Zc:twoPhase- /bigobj -Zm512 /await</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <AdditionalDependencies>WindowsApp.lib;d2d1.lib;d3d11.lib;dxgi.lib;dwrite.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>
+      </ModuleDefinitionFile>
+      <MapFileName>
+      </MapFileName>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">
+    <ClCompile>
+      <AdditionalOptions>/Zc:twoPhase- /bigobj -Zm512 /await</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)..\..\operating_system\storage-windows\$(PlatformName)\$(Configuration)\third\library\;$(SolutionDir)..\..\operating_system\storage-windows\$(PlatformName)\$(Configuration)\library\;$(SolutionDir)..\..\..\time\$(PlatformName)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>WindowsApp.lib;d2d1.lib;d3d11.lib;dxgi.lib;dwrite.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>u_$(TargetName).def</ModuleDefinitionFile>
+      <ProgramDatabaseFile>$(TimeDir)$(PlatformName)\$(Configuration)\$(TargetName).pdb</ProgramDatabaseFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

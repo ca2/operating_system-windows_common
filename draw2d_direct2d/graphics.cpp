@@ -1,7 +1,6 @@
 #include "framework.h"
 #include "graphics.h"
 #include "bitmap.h"
-//#include "end_draw.h"
 #include "path.h"
 #include "pen.h"
 #include "brush.h"
@@ -27,9 +26,6 @@
 #include "aura/graphics/image/context.h"
 #include "aura/graphics/image/drawing.h"
 #include "aura/graphics/image/frame_array.h"
-//#include "acme/prototype/geometry2d/_enhanced.h"
-//#include "acme/prototype/geometry2d/_collection_enhanced.h"
-//#include "acme/prototype/geometry2d/_defer_shape.h"
 #include "aura/platform/session.h"
 #include "aura/windowing/window.h"
 #include <math.h>
@@ -6129,8 +6125,6 @@ namespace draw2d_direct2d
       {
 
          m_prendertarget->EndDraw();
-
-         //m_pbitmaprendertarget->Flush();
 
       }
 

@@ -5,35 +5,16 @@
 #include "aura/windowing/window.h"
 #include "aura/graphics/gpu/context.h"
 #include "aura/graphics/gpu/renderer.h"
-//#include "aura/graphics/gpu/swap_chain_render_target_view.h"
 #include "aura/graphics/gpu/graphics.h"
-//#include "draw2d_direct2d/graphics.h"
 
 
 namespace direct2d
 {
 
 
-   //class CLASS_DECL_DRAW2D_DIRECT2D swap_chain :
-   //   virtual public ::particle
-   //{
-   //public:
-
-
-
-   //   ::comptr <IDXGIDevice> m_pdxgidevice;
-
-   //   ::comptr<ID2D1Device> m_pd2d1device;
-
-   //   ::comptr<ID2D1DeviceContext> m_pd2d1context;
-
-   //   ::comptr<IDXGISurface> m_pdxgisurface;
-
-   //   ::comptr<ID2D1Bitmap1> m_pd2d1bitmap;
-
-
    swap_chain::swap_chain()
    {
+
 
    }
 
@@ -48,123 +29,18 @@ namespace direct2d
    void swap_chain::initialize_gpu_swap_chain(::gpu::device * pdevice, ::windowing::window * pwindow)
    {
 
-      ::gpu::swap_chain::initialize_gpu_swap_chain(pdevice, pwindow);
-
-      //m_pgraphics = pgraphics;
-
-      //m_pgpucontext = pgraphics->m_pgpucontext;
-
-      //D3D11_TEXTURE2D_DESC desc = {};
-      //desc.Width = g_width;
-      //desc.Height = g_height;
-      //desc.MipLevels = 1;
-      //desc.ArraySize = 1;
-      //desc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
-      //desc.SampleDesc.Count = 1;
-      //desc.Usage = D3D11_USAGE_DEFAULT;
-      //desc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
-
-      //g_device->CreateTexture2D(&desc, nullptr, &g_d2dSharedTex);
-      //g_device->CreateShaderResourceView(g_d2dSharedTex.Get(), nullptr, &g_srv);
-
-      //ComPtr<IDXGIDevice> dxgiDevice;
-      //g_device.As(&dxgiDevice);
-
-      //D2D1_FACTORY_OPTIONS opts = {};
-      //D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, opts, &g_d2dFactory);
-      //g_d2dFactory->CreateDevice(dxgiDevice.Get(), &g_d2dDevice);
-
-      //comptr < ID2D1DeviceContext > pdevicecontextTemplate;
-
-      //HRESULT  hr = m_pgraphics->m_pdevice->CreateDeviceContext(
-      //   //D2D1_DEVICE_CONTEXT_OPTIONS_NONE,
-      //   D2D1_DEVICE_CONTEXT_OPTIONS_ENABLE_MULTITHREADED_OPTIMIZATIONS,
-      //   &m_pdevicecontext);
-
-      //if (FAILED(hr))
-      //{
-
-      //   throw ::hresult_exception(hr);
-
-      //}
-
-      // g_d2dDevice->CreateDeviceContext(D2D1_DEVICE_CONTEXT_OPTIONS_NONE, &g_d2dContext);
-
-
-      //::cast < gpu::renderer > pgpurendererOutput = m_pgraphics->end_draw_renderer_output();
-
-      ////::cast < gpu::swap_chain_render_target_view > pswapchainrendertargetview = pgpurendererOutput->m_prendertargetview;
-
-      //pswapchainrendertargetview->m_ptextureShared.as(m_pdxgisurface);
-
-      //D2D1_BITMAP_PROPERTIES1 bitmapProps = D2D1::BitmapProperties1(
-      //   D2D1_BITMAP_OPTIONS_TARGET | D2D1_BITMAP_OPTIONS_CANNOT_DRAW,
-      //   D2D1::PixelFormat(DXGI_FORMAT_B8G8R8A8_UNORM, D2D1_ALPHA_MODE_PREMULTIPLIED)
-      //);
-
-      //::cast < ::gpu_directx11::device > pgpudevice = m_pgpucontext->m_pgpudevice;
-
-      //m_pd2d1devicecontext = ::direct2d::get()->create_d2d1_device_context(nullptr, {});
-
-      //m_pd2d1devicecontext->CreateBitmapFromDxgiSurface(m_pdxgisurface, bitmapProps, &m_pd2d1bitmap);
-      //
-      //m_pd2d1devicecontext->SetTarget(m_pd2d1bitmap);
-
-      ////g_d2dContext->CreateBitmapFromDxgiSurface(dxgiSurface.Get(), &props, &g_d2dBitmap);
-      ////g_d2dContext->SetTarget(g_d2dBitmap.Get());
-
-      //m_pgpucontext = pgraphics->m_pgpucontext;
-      //
-      ////m_pgpucontext = pgpucontextParam;
-
-      ////::direct2d_lock lock;
-
-      ////auto pdirect2d = ::direct2d::get();
-
-      //////::user::interaction* puserinteraction = m_puserinteraction;
-
-      ////::user::interaction* puserinteraction = nullptr;
-
-      ////if (!puserinteraction)
-      ////{
-
-      ////   puserinteraction = dynamic_cast <::user::interaction*>(m_papplication->m_pacmeuserinteractionMain.m_p);
-
-      ////}
-
-      ////auto pwindow = puserinteraction->window();
-
-      ////auto rectanglePlacement = pwindow->get_window_rectangle();
-
-      ////m_pd2d1device = pdirect2d->d2d1_device(pwindow, rectanglePlacement);
-
-      ////comptr < ID2D1DeviceContext > pdevicecontextTemplate;
-
-      ////m_pd2d1device->CreateDeviceContext(D2D1_DEVICE_CONTEXT_OPTIONS_NONE, &m_pd2d1context);
-
-      ////ComPtr<IDXGISurface> dxgiSurface;
-      ////sharedTexture.As(&dxgiSurface);
-
-      ////D2D1_BITMAP_PROPERTIES1 bitmapProps = D2D1::BitmapProperties1(
-      ////   D2D1_BITMAP_OPTIONS_TARGET | D2D1_BITMAP_OPTIONS_CANNOT_DRAW,
-      ////   D2D1::PixelFormat(DXGI_FORMAT_B8G8R8A8_UNORM, D2D1_ALPHA_MODE_PREMULTIPLIED)
-      ////);
-
-      ////ComPtr<ID2D1Bitmap1> d2dBitmap;
-      ////d2dContext->CreateBitmapFromDxgiSurface(dxgiSurface.Get(), &bitmapProps, &d2dBitmap);
-
-      ////d2dContext->SetTarget(d2dBitmap.Get());
-      //            //ComPtr<ID2D1DeviceContext> d2dContext;
-      //      //d2dDevice->CreateDeviceContext(D2D1_DEVICE_CONTEXT_OPTIONS_NONE, &d2dContext);
-      //      //::cast < ::gpu_directx11::device > pgpudevice = m_pgpucontext->m_pgpudevice;
+      ::directx11::swap_chain::initialize_gpu_swap_chain(pdevice, pwindow);
 
    }
 
    
-   //void swap_chain::initialize_gpu_swap_chain_for_off_screen(::gpu::approach* papproach, const ::int_rectangle & rectanglePlacement)
-   //{
+   ID3D11Device* swap_chain::_get_d3d11_device()
+   {
 
-   //}
+      return m_pd3d11device;
+
+   }
+
 
 
    IDXGIDevice* swap_chain::_get_dxgi_device()
@@ -177,6 +53,31 @@ namespace direct2d
 
    IDXGISurface* swap_chain::_get_dxgi_surface()
    {
+
+      auto r = m_pwindow->get_window_rectangle();
+
+      if (texDesc.Width != r.width()
+         || texDesc.Height != r.height())
+      {
+
+
+         texDesc.Width = r.width();
+         texDesc.Height = r.height();
+         texDesc.MipLevels = 1;
+         texDesc.ArraySize = 1;
+         texDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
+         texDesc.SampleDesc.Count = 1;
+         texDesc.Usage = D3D11_USAGE_DEFAULT;
+         texDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
+         texDesc.MiscFlags = D3D11_RESOURCE_MISC_SHARED;
+
+         m_pd3d11device->CreateTexture2D(&texDesc, nullptr, &m_ptextureShared);
+
+         m_ptextureShared.as(m_pdxgisurface_2);
+
+      }
+
+
 
       return m_pdxgisurface_2;
 
@@ -364,6 +265,45 @@ namespace direct2d
 //      //::cast < gpu_directx11::swap_chain_render_target_view > pswapchainrendertargetview = pgpurendererOutput->m_prendertargetview;
 //
 //      //pswapchainrendertargetview->endDraw();
+
+   }
+
+
+   void swap_chain::present()
+   {
+
+      m_pd3d11context->OMSetRenderTargets(1, m_prendertargetviewBackBuffer.pp(), nullptr);
+
+      // 2. Set viewport
+      D3D11_VIEWPORT vp = {};
+      vp.TopLeftX = 0;
+      vp.TopLeftY = 0;
+      vp.Width = static_cast<float>(texDesc.Width);
+      vp.Height = static_cast<float>(texDesc.Height);
+      vp.MinDepth = 0.0f;
+      vp.MaxDepth = 1.0f;
+      m_pd3d11context->RSSetViewports(1, &vp);
+
+      if (!m_pvertexshaderFullscreen
+         || !m_ppixelshaderFullscreen
+         || !m_pshaderresourceviewShader
+         || !m_psamplerstateLinear)
+      {
+
+         _update_swap_chain();
+
+      }
+
+      m_pd3d11context->VSSetShader(m_pvertexshaderFullscreen, nullptr, 0);
+      m_pd3d11context->PSSetShader(m_ppixelshaderFullscreen, nullptr, 0);
+
+      m_pd3d11context->PSSetShaderResources(0, 1, m_pshaderresourceviewShader.pp());
+      m_pd3d11context->PSSetSamplers(0, 1, m_psamplerstateLinear.pp());
+
+      m_pd3d11context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+      m_pd3d11context->Draw(3, 0);
+
+      m_pdxgiswapchain1->Present(1, 0);
 
    }
 

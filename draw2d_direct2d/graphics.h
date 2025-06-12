@@ -2,6 +2,7 @@
 
 
 #include "aura/graphics/gpu/graphics.h"
+#include <dxgi1_2.h>
 
 
 namespace draw2d_direct2d
