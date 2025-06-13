@@ -1,8 +1,8 @@
 // Created by camilo on 2025-05-21 04:47 <3ThomasBorregaardSorensen!!
 #include "framework.h"
 #include "initializers.h"
-#include "aura/graphics/gpu/properties.h"
-#include "aura/graphics/gpu/types.h"
+#include "bred/gpu/properties.h"
+#include "bred/gpu/types.h"
 /*
  * Assorted commonly used DirectX11 helper functions
  *

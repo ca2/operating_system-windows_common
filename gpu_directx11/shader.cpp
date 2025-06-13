@@ -7,7 +7,7 @@
 #include "descriptors.h"
 #include "renderer.h"
 #include "offscreen_render_target_view.h"
-#include "aura/graphics/gpu/types.h"
+#include "bred/gpu/types.h"
 #include "acme_windows_common/hresult_exception.h"
 #include <d3dcompiler.h>
 //#include "aura/user/user/graphics3d.h"
@@ -316,7 +316,7 @@ namespace gpu_directx11
       if (prenderer)
       {
 
-         auto pgpurendertargetview = prenderer->m_prendertargetview;
+         ::cast < render_target_view > pgpurendertargetview = prenderer->m_pgpurendertarget;
 
          if (pgpurendertargetview)
          {
@@ -400,7 +400,7 @@ namespace gpu_directx11
       if (prenderer)
       {
 
-         auto pgpurendertargetview = prenderer->m_prendertargetview;
+         ::cast < render_target_view > pgpurendertargetview = prenderer->m_pgpurendertarget;
 
          if (pgpurendertargetview)
          {

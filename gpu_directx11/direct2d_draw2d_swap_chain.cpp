@@ -7,7 +7,7 @@
 #include "gpu_directx11/context.h"
 #include "gpu_directx11/renderer.h"
 #include "gpu_directx11/swap_chain_render_target_view.h"
-#include "aura/graphics/gpu/graphics.h"
+#include "bred/gpu/graphics.h"
 #include "windowing_win32/window.h"
 
 
@@ -54,6 +54,18 @@ namespace gpu_directx11
 
       ::defer_throw_hresult(hrD3d11DeviceContext);
 
+      HRESULT hrGetBuffer = m_pdxgiswapchain1->GetBuffer(
+         0, __interface_of(m_ptextureBackBuffer));
+
+      ::defer_throw_hresult(hrGetBuffer);
+
+      auto pd3d11device = _get_d3d11_device();
+
+      HRESULT hrCreateRenderTargetView = pd3d11device->CreateRenderTargetView(
+         m_ptextureBackBuffer, nullptr, &m_prendertargetviewBackBuffer);
+
+      ::defer_throw_hresult(hrCreateRenderTargetView);
+
       ::draw2d_direct2d::swap_chain::initialize_gpu_swap_chain(pgpudevice, pwindow);
 
       ::gpu_directx11::swap_chain::initialize_gpu_swap_chain(pgpudevice, pwindow);
@@ -61,12 +73,12 @@ namespace gpu_directx11
    }
       
 
-   void direct2d_draw2d_swap_chain::initialize_direct2d_draw2d_gpu_swap_chain(::gpu::device* pgpudevice, ::windowing::window* pwindow)
-   {
+   //void direct2d_draw2d_swap_chain::initialize_direct2d_draw2d_gpu_swap_chain(::gpu::device* pgpudevice, ::windowing::window* pwindow)
+   //{
 
-      ::draw2d_direct2d::swap_chain::initialize_direct2d_draw2d_gpu_swap_chain(pgpudevice, pwindow);
+   //   ::draw2d_direct2d::swap_chain::initialize_direct2d_draw2d_gpu_swap_chain(pgpudevice, pwindow);
 
-   }
+   //}
 
 
    void direct2d_draw2d_swap_chain::endDraw(::draw2d_gpu::graphics* pgraphics, ::user::interaction* puserinteraction, ::gpu::renderer* prendererSrc)

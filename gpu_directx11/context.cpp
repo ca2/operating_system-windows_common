@@ -11,7 +11,7 @@
 #include "offscreen_render_target_view.h"
 #include "acme/platform/application.h"
 #include "aura/graphics/image/image.h"
-#include "aura/graphics/gpu/types.h"
+#include "bred/gpu/types.h"
 #include "gpu_directx11/descriptors.h"
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
 #define GLM_FORCE_LEFT_HANDED
@@ -1109,7 +1109,7 @@ namespace gpu_directx11
       if (prenderer)
       {
 
-         auto pgpurendertargetview = prenderer->m_prendertargetview;
+         ::cast < render_target_view > pgpurendertargetview = prenderer->m_pgpurendertarget;
 
          if (pgpurendertargetview)
          {

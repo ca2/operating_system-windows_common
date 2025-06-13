@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "aura/graphics/gpu/graphics.h"
+#include "bred/gpu/graphics.h"
 #include <dxgi1_2.h>
 
 
@@ -27,12 +27,13 @@ namespace draw2d_direct2d
 
       };
 
+      ::pointer < ::particle > m_pSwapChainForBlitting;
 
       int                                                m_iLayerCount;
 
       //comptr<ID2D1Device>                                m_pdevice;
       comptr<ID2D1DeviceContext>                         m_pdevicecontext; // 0
-      comptr<ID2D1RenderTarget>                          m_prendertarget; // 1
+      comptr<ID2D1RenderTarget>                          m_pd2d1rendertarget; // 1
       comptr<ID2D1BitmapRenderTarget>                    m_pbitmaprendertarget; // 2
       comptr<ID2D1DCRenderTarget>                        m_pdcrendertarget; // 3
       comptr<ID2D1DeviceContext1>                        m_pdevicecontext1; // 4
@@ -133,7 +134,7 @@ namespace draw2d_direct2d
       void _create_memory_graphics(const ::int_size& size = {}) override;
       void defer_set_size(const ::int_size& size = {}) override;
 
-
+      void create_offscreen_graphics_for_swap_chain_blitting(const ::int_size& size) override;
       //void create_connector() override;
 
       void DeleteDC() override;
@@ -587,6 +588,9 @@ namespace draw2d_direct2d
 
       virtual void attach(void * pdata) override;
       virtual void * detach() override;
+
+
+      virtual void __attach(ID2D1DeviceContext* pdevicecontext);
 
 #ifdef WINDOWS_DESKTOP
       //virtual bool attach_hdc(HDC hdc) override;

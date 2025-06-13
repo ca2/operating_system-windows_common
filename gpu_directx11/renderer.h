@@ -6,7 +6,7 @@
 //#include "offscreen.h"
 //#include "swapchain.h"
 #include "render_target_view.h"
-#include "aura/graphics/gpu/renderer.h"
+#include "bred/gpu/renderer.h"
 
 
 constexpr unsigned int FRAME_OVERLAP = 2;
@@ -36,11 +36,6 @@ namespace gpu_directx11
       struct CLASS_DECL_GPU_DIRECTX11 cpu_buffer_sampler :
          virtual public ::particle
       {
-
-
-         //VkExtent2D			      m_vkextent2d;
-         //VkDeviceMemory		      m_vkdevicememory;
-         //VkImage				      m_vkimage;
 
 
          ::pointer < context >   m_pgpucontext;
@@ -92,7 +87,7 @@ namespace gpu_directx11
       ::pointer < cpu_buffer_sampler >	               m_pcpubuffersampler;
       //::pointer<swap_chain_render_target_view>			m_pvkcswapchain;
       //::pointer<offscreen_render_target_view>			m_pvkcoffscreen;
-      ::pointer<render_target_view>			            m_prendertargetview;
+      //::pointer<render_target_view>			            m_prendertargetview;
       //::pointer<renderer>			                     m_prendererResolve;
       //::pointer<::gpu::shader>                        m_pshaderResolve;
       //::pointer<model>                                m_pmodelResolve;
@@ -161,7 +156,9 @@ namespace gpu_directx11
          //if (m_bOffScreen)
          {
 
-            return m_prendertargetview->extentAspectRatio();
+            ::cast < render_target_view > prendertargetview = m_pgpurendertarget;
+
+            return prendertargetview->extentAspectRatio();
 
          }
          //else

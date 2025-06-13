@@ -2,7 +2,7 @@
 #pragma once
 
 
-#include "aura/graphics/gpu/swap_chain.h"
+#include "bred/gpu/swap_chain.h"
 #include <dcomp.h>
 
 
@@ -52,6 +52,11 @@ namespace directx11
 
 
       virtual void _update_swap_chain();
+
+
+      virtual ::string _fullscreen_vertex_shader_hlsl();
+      virtual ::string _fullscreen_pixel_shader_hlsl();
+
 
       
       virtual ID3D11Device* _get_d3d11_device();

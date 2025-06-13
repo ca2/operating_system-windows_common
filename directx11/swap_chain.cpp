@@ -3,9 +3,9 @@
 #include "swap_chain.h"
 #include "directx11.h"
 #include "aura/windowing/window.h"
-#include "aura/graphics/gpu/context.h"
-#include "aura/graphics/gpu/renderer.h"
-#include "aura/graphics/gpu/graphics.h"
+#include "bred/gpu/context.h"
+#include "bred/gpu/renderer.h"
+#include "bred/gpu/graphics.h"
 #include "windowing_win32/_.h"
 #include "acme_windows_common/hresult_exception.h"
 #include "windowing_win32/window.h"
@@ -33,8 +33,9 @@ const char* fullscreen_vertex_shader = R"hlsl(// fullscreen_vs.hlsl
          };
 
          VSOut o;
-         o.pos = float4(verts[vid], 0, 1);
-         o.uv = 0.5 * (verts[vid] + 1.0);
+o.pos = float4(verts[vid], 0, 1);
+float2 uv = 0.5 * (verts[vid] + 1.0);
+o.uv = float2(uv.x, 1.0 - uv.y); // Flip Y
          return o;
       }
 )hlsl";
@@ -120,11 +121,17 @@ namespace directx11
 
       ::gpu::swap_chain::initialize_gpu_swap_chain(pdevice, pwindow);
 
-      m_pdxgiswapchain1->GetBuffer(0, __interface_of(m_ptextureBackBuffer));
+      //HRESULT hrGetBuffer = m_pdxgiswapchain1->GetBuffer(
+      //   0, __interface_of(m_ptextureBackBuffer));
 
-      auto pd3d11device = _get_d3d11_device();
+      //::defer_throw_hresult(hrGetBuffer);
 
-      pd3d11device->CreateRenderTargetView(m_ptextureBackBuffer, nullptr, &m_prendertargetviewBackBuffer);
+      //auto pd3d11device = _get_d3d11_device();
+
+      //HRESULT hrCreateRenderTargetView = pd3d11device->CreateRenderTargetView(
+      //   m_ptextureBackBuffer, nullptr, &m_prendertargetviewBackBuffer);
+
+      //::defer_throw_hresult(hrCreateRenderTargetView);
 
       _initialize_direct_composition(pdevice, pwindow);
 
@@ -158,7 +165,23 @@ namespace directx11
 
    }
 
+
+   ::string swap_chain::_fullscreen_vertex_shader_hlsl()
+   {
+
+      return fullscreen_vertex_shader;
+
+   }
+
    
+   ::string swap_chain::_fullscreen_pixel_shader_hlsl()
+   {
+
+      return fullscreen_pixel_shader;
+
+   }
+
+
    void swap_chain::_update_swap_chain()
    {
 
@@ -167,9 +190,11 @@ namespace directx11
       comptr<ID3DBlob> vsBlob;
       comptr<ID3DBlob> psBlob;
       comptr<ID3DBlob> errorBlob;
+
+      ::string strVertexShader(_fullscreen_vertex_shader_hlsl());
       
       HRESULT hr = D3DCompile(
-         fullscreen_vertex_shader, strlen(fullscreen_vertex_shader),
+         strVertexShader.c_str(), strVertexShader.size(),
          nullptr,                       // optional source name
          nullptr,                       // macro definitions
          nullptr,                       // include handler
@@ -193,8 +218,10 @@ namespace directx11
 
       }
 
+      ::string strPixelShader(_fullscreen_pixel_shader_hlsl());
+
       hr = D3DCompile(
-         fullscreen_pixel_shader, strlen(fullscreen_vertex_shader),
+         strPixelShader.c_str(), strPixelShader.size(),
          nullptr,                       // optional source name
          nullptr,                       // macro definitions
          nullptr,                       // include handler

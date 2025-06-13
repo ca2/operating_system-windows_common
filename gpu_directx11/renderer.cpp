@@ -7,8 +7,8 @@
 #include "physical_device.h"
 #include "swap_chain_render_target_view.h"
 #include "initializers.h"
-#include "aura/graphics/gpu/cpu_buffer.h"
-#include "aura/graphics/gpu/swap_chain.h"
+#include "bred/gpu/cpu_buffer.h"
+#include "bred/gpu/swap_chain.h"
 #include "gpu_directx11/shader.h"
 #include "acme/parallelization/synchronous_lock.h"
 #include "acme/platform/application.h"
@@ -225,13 +225,13 @@ namespace gpu_directx11
          || eoutput == ::gpu::e_output_gpu_buffer)
       {
 
-         auto poffscreenrendertargetview = __allocate offscreen_render_target_view(this, size, m_prendertargetview);
+         auto poffscreenrendertargetview = __allocate offscreen_render_target_view(this, size, m_pgpurendertarget);
 //#ifdef WINDOWS_DESKTOP
 //         poffscreenrendertargetview->m_formatImage = VK_FORMAT_B8G8R8A8_UNORM;
 //#else
 //         poffscreenrendertargetview->m_formatImage = VK_FORMAT_R8G8B8A8_UNORM;
 //#endif
-         m_prendertargetview = poffscreenrendertargetview;
+         m_pgpurendertarget = poffscreenrendertargetview;
 //         //m_prendererResolve.release();
 //
       }
@@ -296,10 +296,10 @@ namespace gpu_directx11
 //
 //      }
 //
-      if (!m_prendertargetview->has_ok_flag() && m_sizeRenderer.area() > 0)
+      if (!m_pgpurendertarget->has_ok_flag() && m_sizeRenderer.area() > 0)
       {
 
-         m_prendertargetview->init();
+         m_pgpurendertarget->init();
 
       }
 
@@ -369,7 +369,9 @@ namespace gpu_directx11
       //if (m_bOffScreen)
       {
 
-         auto result = m_prendertargetview->acquireNextImage();
+         ::cast < render_target_view > pgpurendertargetview = m_pgpurendertarget;
+
+         auto result = pgpurendertargetview->acquireNextImage();
 
          //if (result == VK_ERROR_OUT_OF_DATE_KHR
          //   || m_prendertargetview->m_bNeedRebuild)
@@ -851,7 +853,7 @@ namespace gpu_directx11
       ///auto& memory = m_pimagetarget->m_imagebuffer.m_memory;
       ::cast< context > pgpucontext = m_pgpucontext;
       ::cast< renderer > prenderer = pgpucontext->m_pgpurenderer;
-      auto prendertargetview = prenderer->m_prendertargetview;
+      ::cast < render_target_view > prendertargetview = prenderer->m_pgpurendertarget;
       ::cast < offscreen_render_target_view > poffscreenrendertargetview = prendertargetview;
       ::cast< device > pgpudevice = pgpucontext->m_pgpudevice;
       ID3D11Device* device = pgpudevice->m_pdevice;
@@ -1796,7 +1798,9 @@ namespace gpu_directx11
          colorClear.f32_green() * .5f, 
          colorClear.f32_blue() * .5f, .5f };
 
-      pcontext->m_pcontext->ClearRenderTargetView(m_prendertargetview->m_prendertargetview, clear);
+      ::cast < render_target_view > pgpurendertargetview = m_pgpurendertarget;
+
+      pcontext->m_pcontext->ClearRenderTargetView(pgpurendertargetview->m_prendertargetview, clear);
 
       on_happening(e_happening_begin_render);
 

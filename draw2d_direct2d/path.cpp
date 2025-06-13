@@ -265,7 +265,7 @@ namespace draw2d_direct2d
       FLOAT dpix = 0.f;
       FLOAT dpiy = 0.f;
 
-      pgraphics->m_prendertarget->GetDpi(&dpix, &dpiy);
+      pgraphics->m_pd2d1rendertarget->GetDpi(&dpix, &dpiy);
 
       if (dpix <= 0)
       {

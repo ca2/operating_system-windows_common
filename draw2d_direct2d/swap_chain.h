@@ -22,7 +22,7 @@ namespace draw2d_direct2d
       void initialize_gpu_swap_chain(::gpu::device* pdevice, ::windowing::window* pwindow) override;
 
 
-      virtual void initialize_direct2d_draw2d_gpu_swap_chain(::gpu::device* pdevice, ::windowing::window* pwindow);
+      //virtual void initialize_direct2d_draw2d_gpu_swap_chain(::gpu::device* pdevice, ::windowing::window* pwindow);
 
       IDXGIDevice * _get_dxgi_device() override;
 

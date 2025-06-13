@@ -88,7 +88,7 @@ namespace draw2d_direct2d
 
          copy(color, m_color);
 
-         pgraphics->m_prendertarget->CreateSolidColorBrush(color, &m_pbrush);
+         pgraphics->m_pd2d1rendertarget->CreateSolidColorBrush(color, &m_pbrush);
 
          if(m_pbrush != nullptr)
          {

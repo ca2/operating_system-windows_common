@@ -7,7 +7,7 @@
 #include "gpu_directx11/context.h"
 #include "gpu_directx11/renderer.h"
 #include "gpu_directx11/swap_chain_render_target_view.h"
-#include "aura/graphics/gpu/graphics.h"
+#include "bred/gpu/graphics.h"
 #include "direct2d/graphics.h"
 
 namespace draw2d_direct2d

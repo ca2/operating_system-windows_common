@@ -2,6 +2,7 @@
 #pragma once
 
 
+#include "bred/gpu/render_target.h"
 #include "context.h"
 
 //// directx11 headers
@@ -14,7 +15,7 @@ namespace gpu_directx11
 
 
    class CLASS_DECL_GPU_DIRECTX11 render_target_view :
-      virtual public ::particle
+      virtual public ::gpu::render_target
    {
    public:
 

@@ -20,9 +20,9 @@
 #include "aura/graphics/draw2d/lock.h"
 #include "aura/graphics/draw2d/region.h"
 #include "aura/graphics/draw2d/device_lock.h"
-#include "aura/graphics/gpu/approach.h"
-#include "aura/graphics/gpu/context.h"
-#include "aura/graphics/gpu/types.h"
+#include "bred/gpu/approach.h"
+#include "bred/gpu/context.h"
+#include "bred/gpu/types.h"
 #include "aura/graphics/image/context.h"
 #include "aura/graphics/image/drawing.h"
 #include "aura/graphics/image/frame_array.h"
@@ -156,8 +156,11 @@ namespace draw2d_direct2d
                {
          });*/
    }
-   void graphics::_create_memory_graphics(const ::int_size & size)
+
+
+   void graphics::create_offscreen_graphics_for_swap_chain_blitting(const ::int_size& size)
    {
+
 
       //::draw2d::lock draw2dlock;
 
@@ -170,7 +173,71 @@ namespace draw2d_direct2d
 
       }
 
+      ::user::interaction* puserinteraction = m_puserinteraction;
 
+      if (::is_null(puserinteraction))
+      {
+
+         puserinteraction = dynamic_cast <::user::interaction*>(m_papplication->m_pacmeuserinteractionMain.m_p);
+
+      }
+
+      auto pwindow = puserinteraction->window();
+
+      auto rectanglePlacement = pwindow->get_window_rectangle();
+
+      auto pdevice = m_papplication->get_gpu()->get_device();
+
+      if (__defer_construct(m_pgpucontext))
+      {
+
+         m_pgpucontext->start_gpu_context(
+            ::gpu::start_gpu_output_context_t
+            {
+               this,
+               pdevice,
+               ::gpu::e_output_gpu_buffer,
+               rectanglePlacement
+            });
+
+      }
+
+      m_pgpucontext->_send([this, size]()
+         {
+
+            m_pgpucontext->create_offscreen_graphics_for_swap_chain_blitting(this, size);
+
+         });
+
+   }
+
+
+
+   void graphics::_create_memory_graphics(const ::int_size & size)
+   {
+
+      if (m_pgpucontext)
+      {
+
+         if (m_pgpucontext->m_rectangle.size() == size)
+         {
+
+            return;
+
+         }
+
+      }
+
+      //::draw2d::lock draw2dlock;
+
+      // ::draw2d::device_lock devicelock(this);
+
+      if (m_iType != 0)
+      {
+
+         destroy();
+
+      }
 
       ::user::interaction* puserinteraction = m_puserinteraction;
 
@@ -348,7 +415,7 @@ namespace draw2d_direct2d
 
             }
 
-            hr = m_pbitmaprendertarget.as(m_prendertarget);
+            hr = m_pbitmaprendertarget.as(m_pd2d1rendertarget);
 
             if (FAILED(hr))
             {
@@ -366,7 +433,7 @@ namespace draw2d_direct2d
             if (FAILED(hr))
             {
 
-               m_prendertarget = nullptr;
+               m_pd2d1rendertarget = nullptr;
 
                m_pbitmaprendertarget = nullptr;
 
@@ -395,7 +462,7 @@ namespace draw2d_direct2d
 
             m_osdata[data_device_context] = m_pdevicecontext;
 
-            m_osdata[data_render_target] = m_prendertarget;
+            m_osdata[data_render_target] = m_pd2d1rendertarget;
 
          });
 
@@ -796,7 +863,7 @@ namespace draw2d_direct2d
       }
 
 
-      //if(m_prendertarget == nullptr)
+      //if(m_pd2d1rendertarget == nullptr)
       //{
 
         // CreateCompatibleDC(nullptr);
@@ -850,7 +917,7 @@ namespace draw2d_direct2d
 
       //   pixelformat.format = DXGI_FORMAT_B8G8R8A8_UNORM;
 
-      //   auto & prendertarget = m_prendertarget;
+      //   auto & prendertarget = m_pd2d1rendertarget;
 
       //   HRESULT hr = prendertarget->CreateCompatibleRenderTarget(nullptr, &sizeu, &pixelformat, D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS_NONE, &m_pbitmaprendertarget);
 
@@ -861,7 +928,7 @@ namespace draw2d_direct2d
 
       //   }
 
-      //   if (FAILED(m_pbitmaprendertarget.as(m_prendertarget)))
+      //   if (FAILED(m_pbitmaprendertarget.as(m_pd2d1rendertarget)))
       //   {
 
       //      m_pbitmaprendertarget = nullptr;
@@ -875,7 +942,7 @@ namespace draw2d_direct2d
 
       //      m_pbitmaprendertarget = nullptr;
 
-      //      m_prendertarget = nullptr;
+      //      m_pd2d1rendertarget = nullptr;
 
       //      return false;
 
@@ -904,7 +971,7 @@ namespace draw2d_direct2d
 
       //   m_osdata[0] = m_pdevicecontext;
 
-      //   m_osdata[1] = m_prendertarget;
+      //   m_osdata[1] = m_pd2d1rendertarget;
 
       //   //D2D1_POINT_2U p;
 
@@ -1002,7 +1069,7 @@ namespace draw2d_direct2d
 
       D2D1::Matrix3x2F m;
 
-      m_prendertarget->GetTransform(&m);
+      m_pd2d1rendertarget->GetTransform(&m);
 
       matrix = ::geometry2d::matrix();
 
@@ -1021,7 +1088,7 @@ namespace draw2d_direct2d
    void graphics::_set(const ::geometry2d::matrix & matrix)
    {
 
-      if (!m_prendertarget)
+      if (!m_pd2d1rendertarget)
       {
 
          throw ::exception(error_null_pointer);
@@ -1037,7 +1104,7 @@ namespace draw2d_direct2d
       m._31 = (FLOAT)matrix.c1;
       m._32 = (FLOAT)matrix.c2;
 
-      m_prendertarget->SetTransform(&m);
+      m_pd2d1rendertarget->SetTransform(&m);
 
       //return true;
 
@@ -1354,7 +1421,7 @@ namespace draw2d_direct2d
    void graphics::frame_rectangle(const ::double_rectangle & rectangleParam, ::draw2d::brush * pbrush)
    {
 
-      if (m_prendertarget == nullptr)
+      if (m_pd2d1rendertarget == nullptr)
       {
 
          throw ::exception(error_null_pointer);
@@ -1365,7 +1432,7 @@ namespace draw2d_direct2d
 
       copy(&rectangle, &rectangleParam);
 
-      m_prendertarget->DrawRectangle(rectangle, pbrush->get_os_data < ID2D1Brush * >(this));
+      m_pd2d1rendertarget->DrawRectangle(rectangle, pbrush->get_os_data < ID2D1Brush * >(this));
 
    }
 
@@ -1420,7 +1487,7 @@ namespace draw2d_direct2d
 //         if(picon == nullptr)
 //            return false;
 //
-//         if(m_prendertarget == nullptr)
+//         if(m_pd2d1rendertarget == nullptr)
 //            return false;
 //
 //         bool bOk = false;
@@ -1467,7 +1534,7 @@ namespace draw2d_direct2d
 //               //rectangle.right()  = rectangle.left()    + cx;
 //               //rectangle.bottom() = rectangle.top()     + cy;
 //
-//               m_prendertarget->DrawBitmap((ID2D1Bitmap *) b->get_os_data(), rectangle);
+//               m_pd2d1rendertarget->DrawBitmap((ID2D1Bitmap *) b->get_os_data(), rectangle);
 //
 //            }
 //            catch(...)
@@ -1961,7 +2028,7 @@ namespace draw2d_direct2d
 
       defer_primitive_blend();
 
-      m_prendertarget->DrawRectangle(&rectangle, ppen2->get_os_data < ID2D1Brush * >(this), (FLOAT)ppen->m_dWidth);
+      m_pd2d1rendertarget->DrawRectangle(&rectangle, ppen2->get_os_data < ID2D1Brush * >(this), (FLOAT)ppen->m_dWidth);
 
       //return true;
 
@@ -2002,7 +2069,7 @@ namespace draw2d_direct2d
 
       defer_primitive_blend();
 
-      m_prendertarget->FillRectangle(rectangle, pbrush2->get_os_data < ID2D1Brush * >(this));
+      m_pd2d1rendertarget->FillRectangle(rectangle, pbrush2->get_os_data < ID2D1Brush * >(this));
 
       //return true;
 
@@ -2038,7 +2105,7 @@ namespace draw2d_direct2d
 
          defer_primitive_blend();
 
-         m_prendertarget->FillRoundedRectangle(rectangle, pd2d1brush);
+         m_pd2d1rendertarget->FillRoundedRectangle(rectangle, pd2d1brush);
 
       }
 
@@ -2065,7 +2132,7 @@ namespace draw2d_direct2d
 
          defer_primitive_blend();
 
-         m_prendertarget->DrawRoundedRectangle(rectangle, pd2d1brush, (FLOAT)ppen->m_dWidth);
+         m_pd2d1rendertarget->DrawRoundedRectangle(rectangle, pd2d1brush, (FLOAT)ppen->m_dWidth);
 
       }
 
@@ -2396,10 +2463,10 @@ namespace draw2d_direct2d
 
          auto pd2d1bitmap = (ID2D1Bitmap*)pimage->get_bitmap()->get_os_data();
 
-         if (m_prendertarget != nullptr)
+         if (m_pd2d1rendertarget != nullptr)
          {
 
-            m_prendertarget->DrawBitmap(pd2d1bitmap, &rectangleTarget, 1.0, m_bitmapinterpolationmode, &rectangleSource);
+            m_pd2d1rendertarget->DrawBitmap(pd2d1bitmap, &rectangleTarget, 1.0, m_bitmapinterpolationmode, &rectangleSource);
 
          }
          else
@@ -2683,13 +2750,13 @@ namespace draw2d_direct2d
       //   if (esmoothmode != ::draw2d::e_smooth_mode_none)
       //   {
 
-      //      m_prendertarget->SetAntialiasMode(D2D1_ANTIALIAS_MODE_ALIASED);
+      //      m_pd2d1rendertarget->SetAntialiasMode(D2D1_ANTIALIAS_MODE_ALIASED);
 
       //   }
       //   else
       //   {
 
-      //      m_prendertarget->SetAntialiasMode(D2D1_ANTIALIAS_MODE_NONE);
+      //      m_pd2d1rendertarget->SetAntialiasMode(D2D1_ANTIALIAS_MODE_NONE);
 
       //   }
 
@@ -3235,7 +3302,7 @@ namespace draw2d_direct2d
 
       throw ::exception(todo);
 
-      //return m_prendertarget->FillPath(direct2d_brush(), m_ppath) == Gdiplus::Status::Ok;
+      //return m_pd2d1rendertarget->FillPath(direct2d_brush(), m_ppath) == Gdiplus::Status::Ok;
 
       //return false;
 
@@ -3299,9 +3366,9 @@ namespace draw2d_direct2d
 
       throw ::exception(todo);
 
-      //bool bOk1 = m_prendertarget->FillPath(direct2d_brush(), m_ppathPaint) == Gdiplus::Status::Ok;
+      //bool bOk1 = m_pd2d1rendertarget->FillPath(direct2d_brush(), m_ppathPaint) == Gdiplus::Status::Ok;
 
-      //bool bOk2 = m_prendertarget->DrawPath(direct2d_pen(), m_ppathPaint) == Gdiplus::Status::Ok;
+      //bool bOk2 = m_pd2d1rendertarget->DrawPath(direct2d_pen(), m_ppathPaint) == Gdiplus::Status::Ok;
 
       //return bOk1 && bOk2;
 
@@ -3315,7 +3382,7 @@ namespace draw2d_direct2d
 
       throw ::exception(todo);
 
-      //      return m_prendertarget->DrawPath(direct2d_pen(), m_ppathPaint) == Gdiplus::Status::Ok;
+      //      return m_pd2d1rendertarget->DrawPath(direct2d_pen(), m_ppathPaint) == Gdiplus::Status::Ok;
 
             //return false;
 
@@ -3398,7 +3465,7 @@ namespace draw2d_direct2d
 
    //   ////m_pgraphcis->EnumerateMetafile(pMeta, rectangle, metaCallback, PMETAHEADER);
 
-   //   //bool bOk = m_prendertarget->DrawImage(pMeta, rectangle) == Gdiplus::Status::Ok;
+   //   //bool bOk = m_pd2d1rendertarget->DrawImage(pMeta, rectangle) == Gdiplus::Status::Ok;
 
    //   //delete pMeta;
 
@@ -3441,7 +3508,7 @@ namespace draw2d_direct2d
 
    //         Gdiplus::RectF dstRect((Gdiplus::REAL) xDest, (Gdiplus::REAL) yDest, (Gdiplus::REAL) nDestWidth, (Gdiplus::REAL) nDestHeight);
 
-   //         m_prendertarget->DrawImage((Gdiplus::Bitmap *) pgraphicsSrc->get_current_bitmap()->get_os_data(), dstRect,
+   //         m_pd2d1rendertarget->DrawImage((Gdiplus::Bitmap *) pgraphicsSrc->get_current_bitmap()->get_os_data(), dstRect,
    //            (Gdiplus::REAL) xSrc, (Gdiplus::REAL) ySrc, (Gdiplus::REAL) nSrcWidth, (Gdiplus::REAL) nSrcHeight, Gdiplus::UnitPixel, &attributes);*/
 
    //   try
@@ -3503,7 +3570,7 @@ namespace draw2d_direct2d
    //      else
    //      {
 
-   //         m_prendertarget->DrawBitmap((ID2D1Bitmap*)pgraphicsSrc->get_current_bitmap()->get_os_data(), rDst, (float)dRate, m_bitmapinterpolationmode, rSrc);
+   //         m_pd2d1rendertarget->DrawBitmap((ID2D1Bitmap*)pgraphicsSrc->get_current_bitmap()->get_os_data(), rDst, (float)dRate, m_bitmapinterpolationmode, rSrc);
 
    //      }
 
@@ -3514,7 +3581,7 @@ namespace draw2d_direct2d
    //      //m_pdevicecontext->DrawImage(pimage, pointDst, rectangleSource, m_interpolationmode, ecomposite);
 
 
-   //      //hr = m_prendertarget->Flush();
+   //      //hr = m_pd2d1rendertarget->Flush();
    //      //flush();
 
    //      if(SUCCEEDED(hr))
@@ -4040,7 +4107,7 @@ namespace draw2d_direct2d
    int graphics::save_graphics_context()
    {
 
-      m_prendertarget->GetTransform(&m_state.m_m);
+      m_pd2d1rendertarget->GetTransform(&m_state.m_m);
 
       ::collection::count iSaveDC = m_statea.get_size();
 
@@ -4050,7 +4117,7 @@ namespace draw2d_direct2d
 
       //m_pstate->m_layerparameters = D2D1::LayerParameters();
 
-      //m_prendertarget->PushLayer(m_pstate->m_layerparameters, nullptr);
+      //m_pd2d1rendertarget->PushLayer(m_pstate->m_layerparameters, nullptr);
 
       return (int)iSaveDC;
 
@@ -4086,7 +4153,7 @@ namespace draw2d_direct2d
       //   for (::collection::index iItem = state->m_maRegion.get_upper_bound(); iItem >= 0; iItem--)
       //   {
 
-      //      m_prendertarget->PopLayer();
+      //      m_pd2d1rendertarget->PopLayer();
 
       //   }
 
@@ -4108,7 +4175,7 @@ namespace draw2d_direct2d
 
       }
 
-      m_prendertarget->SetTransform(&m_state.m_m);
+      m_pd2d1rendertarget->SetTransform(&m_state.m_m);
 
       m_statea.set_size(iSavedContext);
 
@@ -4343,7 +4410,7 @@ namespace draw2d_direct2d
       //   for (::collection::index iItem = state->m_maRegion.get_upper_bound(); iItem >= 0; iItem--)
       //   {
 
-      //      m_prendertarget->PopLayer();
+      //      m_pd2d1rendertarget->PopLayer();
 
       //   }
 
@@ -4361,7 +4428,7 @@ namespace draw2d_direct2d
       //   for (::collection::index iItem = pstate->m_maRegion.get_upper_bound(); iItem >= 0; iItem--)
       //   {
 
-      //      m_prendertarget->PopLayer();
+      //      m_pd2d1rendertarget->PopLayer();
 
       //   }
 
@@ -4392,7 +4459,7 @@ namespace draw2d_direct2d
    {
 
       D2D1_MATRIX_3X2_F transform;
-      m_prendertarget->GetTransform(&transform);
+      m_pd2d1rendertarget->GetTransform(&transform);
       bool isAxisAligned = IsAxisAligned(transform);
 
       D2D1_RECT_F clipRect;
@@ -4402,7 +4469,7 @@ namespace draw2d_direct2d
          m_iaPushLayer.add(1);
 
 
-         m_prendertarget->PushAxisAlignedClip(clipRect, D2D1_ANTIALIAS_MODE_PER_PRIMITIVE);
+         m_pd2d1rendertarget->PushAxisAlignedClip(clipRect, D2D1_ANTIALIAS_MODE_PER_PRIMITIVE);
       }
       else
       {
@@ -4410,7 +4477,7 @@ namespace draw2d_direct2d
             D2D1::InfiniteRect(),
             pgeometry);
 
-         m_prendertarget->PushLayer(layerparameters, nullptr);
+         m_pd2d1rendertarget->PushLayer(layerparameters, nullptr);
 
          m_iaPushLayer.add(0);
 
@@ -4435,13 +4502,13 @@ namespace draw2d_direct2d
 
       if (iPop == 1)
       {
-         m_prendertarget->PopAxisAlignedClip();
+         m_pd2d1rendertarget->PopAxisAlignedClip();
          
       }
       else
       {
 
-         m_prendertarget->PopLayer();
+         m_pd2d1rendertarget->PopLayer();
       }
 
       m_iLayerCount--;
@@ -4525,7 +4592,7 @@ namespace draw2d_direct2d
 
    //      D2D1::Matrix3x2F m = {};
 
-   //      m_prendertarget->GetTransform(&m);
+   //      m_pd2d1rendertarget->GetTransform(&m);
 
    //      m_pstate->m_sparegionClip.add(pregion);
 
@@ -4537,7 +4604,7 @@ namespace draw2d_direct2d
    //         D2D1::InfiniteRect(),
    //         pgeometry);
 
-   //      m_prendertarget->PushLayer(layerparameters, nullptr);
+   //      m_pd2d1rendertarget->PushLayer(layerparameters, nullptr);
 
    //   }
 
@@ -4602,7 +4669,7 @@ namespace draw2d_direct2d
 
    //   //D2D1::Matrix3x2F m = {};
 
-   //   //m_prendertarget->GetTransform(&m);
+   //   //m_pd2d1rendertarget->GetTransform(&m);
 
    //   //m_pstate->m_sparegionClip.add(pregion);
 
@@ -4644,7 +4711,7 @@ namespace draw2d_direct2d
 
    ////      D2D1::Matrix3x2F m = {};
 
-   ////      m_prendertarget->GetTransform(&m);
+   ////      m_pd2d1rendertarget->GetTransform(&m);
 
    ////      m_pstate->m_sparegionClip.add(pregion);
 
@@ -4652,7 +4719,7 @@ namespace draw2d_direct2d
 
    ////      ID2D1Geometry* pgeometry = (ID2D1Geometry*)pregion->get_os_data(this);
 
-   ////      m_prendertarget->PushLayer(D2D1::LayerParameters(D2D1::InfiniteRect(), pgeometry), nullptr);
+   ////      m_pd2d1rendertarget->PushLayer(D2D1::LayerParameters(D2D1::InfiniteRect(), pgeometry), nullptr);
 
    ////   }
 
@@ -4686,7 +4753,7 @@ namespace draw2d_direct2d
 
    //      //D2D1::Matrix3x2F m = {};
 
-   //      //m_prendertarget->GetTransform(&m);
+   //      //m_pd2d1rendertarget->GetTransform(&m);
 
    //      //m_pstate->m_sparegionClip.add(pregion);
 
@@ -4696,7 +4763,7 @@ namespace draw2d_direct2d
 
    //      auto pgeometry = ::direct2d::geometry::create_ellipse(ellipse);
 
-   //      //m_prendertarget->PushLayer(D2D1::LayerParameters(D2D1::InfiniteRect(), pgeometry), nullptr);
+   //      //m_pd2d1rendertarget->PushLayer(D2D1::LayerParameters(D2D1::InfiniteRect(), pgeometry), nullptr);
 
    //      _push_layer(pgeometry);
 
@@ -4781,7 +4848,7 @@ namespace draw2d_direct2d
 
    //      D2D1::Matrix3x2F m = {};
 
-   //      m_prendertarget->GetTransform(&m);
+   //      m_pd2d1rendertarget->GetTransform(&m);
 
    //      m_pstate->m_sparegionClip.add(pregion);
 
@@ -4789,7 +4856,7 @@ namespace draw2d_direct2d
 
    //      ID2D1Geometry* pgeometry = (ID2D1Geometry*)pregion->get_os_data(this);
 
-   //      m_prendertarget->PushLayer(D2D1::LayerParameters(D2D1::InfiniteRect(), pgeometry), nullptr);
+   //      m_pd2d1rendertarget->PushLayer(D2D1::LayerParameters(D2D1::InfiniteRect(), pgeometry), nullptr);
 
    //   }
 
@@ -4823,7 +4890,7 @@ namespace draw2d_direct2d
 
    //      //D2D1::Matrix3x2F m = {};
 
-   //      //m_prendertarget->GetTransform(&m);
+   //      //m_pd2d1rendertarget->GetTransform(&m);
 
    //      //m_pstate->m_sparegionClip.add(pregion);
 
@@ -4835,7 +4902,7 @@ namespace draw2d_direct2d
 
    //      _push_layer(pgeometry);
 
-   //      //m_prendertarget->PushLayer(D2D1::LayerParameters(D2D1::InfiniteRect(), pgeometry), nullptr);
+   //      //m_pd2d1rendertarget->PushLayer(D2D1::LayerParameters(D2D1::InfiniteRect(), pgeometry), nullptr);
 
    //   }
 
@@ -4858,12 +4925,12 @@ namespace draw2d_direct2d
 
       auto layerparameters = D2D1::LayerParameters(rf);
 
-      //m_prendertarget->PushLayer(layerparameters, nullptr);
+      //m_pd2d1rendertarget->PushLayer(layerparameters, nullptr);
 
       m_iaPushLayer.add(1);
 
 
-      m_prendertarget->PushAxisAlignedClip(rf, D2D1_ANTIALIAS_MODE_PER_PRIMITIVE);
+      m_pd2d1rendertarget->PushAxisAlignedClip(rf, D2D1_ANTIALIAS_MODE_PER_PRIMITIVE);
 
 
       m_iLayerCount++;
@@ -4879,7 +4946,7 @@ namespace draw2d_direct2d
 
    //      D2D1::Matrix3x2F m;
 
-   //      m_prendertarget->GetTransform(&m);
+   //      m_pd2d1rendertarget->GetTransform(&m);
 
    //      m_pstate->m_sparegionClip.add(pregion);
 
@@ -4887,7 +4954,7 @@ namespace draw2d_direct2d
 
    //      auto pgeometry = pregion->get_os_data < ID2D1Geometry * >(this);
 
-   //      m_prendertarget->PushLayer(D2D1::LayerParameters(D2D1::InfiniteRect(),pgeometry),nullptr);
+   //      m_pd2d1rendertarget->PushLayer(D2D1::LayerParameters(D2D1::InfiniteRect(),pgeometry),nullptr);
 
    //   }
 
@@ -4898,11 +4965,11 @@ namespace draw2d_direct2d
 
    //   //if(pregion == nullptr)
    //   //{
-   //   //   m_prendertarget->ResetClip();
+   //   //   m_pd2d1rendertarget->ResetClip();
    //   //}
    //   //else
    //   //{
-   //   //   m_prendertarget->SetClip((Gdiplus::Region *) pregion->get_os_data());
+   //   //   m_pd2d1rendertarget->SetClip((Gdiplus::Region *) pregion->get_os_data());
    //   //}
 
    //   //return 0;
@@ -4938,7 +5005,7 @@ namespace draw2d_direct2d
 
    //      D2D1::Matrix3x2F m;
 
-   //      m_prendertarget->GetTransform(&m);
+   //      m_pd2d1rendertarget->GetTransform(&m);
 
    //      m_pstate->m_sparegionClip.add(regionExclude);
 
@@ -4946,7 +5013,7 @@ namespace draw2d_direct2d
 
    //      auto pgeometry = regionExclude->get_os_data < ID2D1Geometry * >(this);
 
-   //      m_prendertarget->PushLayer(D2D1::LayerParameters(D2D1::InfiniteRect(), pgeometry), nullptr);
+   //      m_pd2d1rendertarget->PushLayer(D2D1::LayerParameters(D2D1::InfiniteRect(), pgeometry), nullptr);
 
    //   }
 
@@ -5049,7 +5116,7 @@ namespace draw2d_direct2d
       try
       {
 
-         if (m_prendertarget == nullptr)
+         if (m_pd2d1rendertarget == nullptr)
          {
 
             return;
@@ -5062,25 +5129,25 @@ namespace draw2d_direct2d
          {
          case ::write_text::e_rendering_anti_alias:
 
-            m_prendertarget->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_GRAYSCALE);
+            m_pd2d1rendertarget->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_GRAYSCALE);
 
             break;
 
          case ::write_text::e_rendering_anti_alias_grid_fit:
 
-            m_prendertarget->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_GRAYSCALE);
+            m_pd2d1rendertarget->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_GRAYSCALE);
 
             break;
 
          case ::write_text::e_rendering_single_bit_per_pixel:
 
-            m_prendertarget->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_GRAYSCALE);
+            m_pd2d1rendertarget->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_GRAYSCALE);
 
             break;
 
          case ::write_text::e_rendering_clear_type_grid_fit:
 
-            m_prendertarget->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_CLEARTYPE);
+            m_pd2d1rendertarget->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_CLEARTYPE);
 
             break;
 
@@ -5498,14 +5565,14 @@ namespace draw2d_direct2d
 
          D2D1_RECT_F float_rectangle = D2D1::RectF((FLOAT)rectangle.left(), (FLOAT)rectangle.top(), (FLOAT)rectangle.right(), (FLOAT)rectangle.bottom());
 
-         m_prendertarget->DrawText(text.m_wstr, (unsigned int)text.m_wstr.length(), pfont, &float_rectangle, pbrush);
+         m_pd2d1rendertarget->DrawText(text.m_wstr, (unsigned int)text.m_wstr.length(), pfont, &float_rectangle, pbrush);
 
       }
       else
       {
          D2D1::Matrix3x2F m;
 
-         m_prendertarget->GetTransform(&m);
+         m_pd2d1rendertarget->GetTransform(&m);
 
          D2D1::Matrix3x2F mOriginal(m);
 
@@ -5515,11 +5582,11 @@ namespace draw2d_direct2d
 
          m = m * D2D1::Matrix3x2F::Scale((FLOAT)m_pfont->m_dFontWidth, 1.f);
 
-         m_prendertarget->SetTransform(&m);
+         m_pd2d1rendertarget->SetTransform(&m);
 
-         m_prendertarget->DrawText(text.m_wstr, (unsigned int)text.m_wstr.length(), pfont, &float_rectangle, pbrush);
+         m_pd2d1rendertarget->DrawText(text.m_wstr, (unsigned int)text.m_wstr.length(), pfont, &float_rectangle, pbrush);
 
-         m_prendertarget->SetTransform(&mOriginal);
+         m_pd2d1rendertarget->SetTransform(&mOriginal);
 
       }
 
@@ -5773,7 +5840,7 @@ namespace draw2d_direct2d
 
       comptr< ID2D1SolidColorBrush> psolidbrush;
 
-      m_prendertarget->CreateSolidColorBrush(d2d1color, &psolidbrush);
+      m_pd2d1rendertarget->CreateSolidColorBrush(d2d1color, &psolidbrush);
 
       D2D1_RECT_F rectangle;
 
@@ -5915,7 +5982,7 @@ namespace draw2d_direct2d
       if (m_pfont->m_dFontWidth != 1.0)
       {
 
-         m_prendertarget->GetTransform(&mOriginal);
+         m_pd2d1rendertarget->GetTransform(&mOriginal);
 
          m = mOriginal;
 
@@ -5937,7 +6004,7 @@ namespace draw2d_direct2d
       if (m_pfont->m_dFontWidth != 1.0)
       {
 
-         m_prendertarget->SetTransform(&m);
+         m_pd2d1rendertarget->SetTransform(&m);
 
       }
 
@@ -5952,14 +6019,14 @@ namespace draw2d_direct2d
       if (lpcwsz != nullptr && uiLen > 0)
       {
 
-         m_prendertarget->DrawText(lpcwsz, (int)uiLen, pfont, &float_rectangle, pbrush);
+         m_pd2d1rendertarget->DrawText(lpcwsz, (int)uiLen, pfont, &float_rectangle, pbrush);
 
       }
 
       if (m_pfont->m_dFontWidth != 1.0)
       {
 
-         m_prendertarget->SetTransform(mOriginal);
+         m_pd2d1rendertarget->SetTransform(mOriginal);
 
       }
 
@@ -5996,7 +6063,7 @@ namespace draw2d_direct2d
 
       defer_primitive_blend();
 
-      m_prendertarget->DrawLine(p1, p2, pbrush, (FLOAT)(dynamic_cast <::draw2d_direct2d::pen *> (m_ppen.m_p))->m_dWidth);
+      m_pd2d1rendertarget->DrawLine(p1, p2, pbrush, (FLOAT)(dynamic_cast <::draw2d_direct2d::pen *> (m_ppen.m_p))->m_dWidth);
 
       m_point.x() = x2;
 
@@ -6035,7 +6102,7 @@ namespace draw2d_direct2d
 
       FLOAT fWidth = (FLOAT)(dynamic_cast <::draw2d_direct2d::pen *> (m_ppen.m_p))->m_dWidth;
 
-      m_prendertarget->DrawLine(p1, p2, pbrush, fWidth);
+      m_pd2d1rendertarget->DrawLine(p1, p2, pbrush, fWidth);
 
       m_point.x() = x;
 
@@ -6059,33 +6126,14 @@ namespace draw2d_direct2d
 
       ::draw2d_gpu::graphics::on_begin_draw();
 
-
-
       if (m_egraphics == ::e_graphics_draw)
       {
 
-         m_prendertarget->BeginDraw();
+         m_pgpucontext->start_composition();
+
+         m_pd2d1rendertarget->BeginDraw();
 
       }
-
-      //   __defer_construct(m_pgpucontext);
-
-      //   auto pwindow = m_puserinteraction->window();
-
-      //   m_pgpucontext->initialize_gpu_context(
-      //      ::gpu::start_gpu_output_context_t
-      //      {
-      //         this,
-      //         m_papplication->get_gpu()->get_device(pwindow, pwindow->get_window_rectangle()),
-      //         ::gpu::e_output_gpu_buffer, 
-      //         pwindow->get_window_rectangle()
-      //      });
-
-      //   m_pgpucontext->make_current();
-
-      //}
-
-      ////return true;
 
    }
 
@@ -6124,7 +6172,7 @@ namespace draw2d_direct2d
       if (m_egraphics == ::e_graphics_draw)
       {
 
-         m_prendertarget->EndDraw();
+         m_pd2d1rendertarget->EndDraw();
 
       }
 
@@ -6174,6 +6222,53 @@ namespace draw2d_direct2d
    //}
 
 
+   void graphics::__attach(ID2D1DeviceContext* pdevicecontext)
+   {
+
+      m_pdevicecontext = pdevicecontext;
+
+      HRESULT hr = m_pdevicecontext.as(m_pdevicecontext1);
+
+      if (FAILED(hr))
+      {
+
+         m_pdevicecontext = nullptr;
+
+         m_pdevicecontext1 = nullptr;
+
+         throw ::exception(error_null_pointer);
+
+      }
+
+      hr = m_pdevicecontext.as(m_pd2d1rendertarget);
+
+      if (FAILED(hr))
+      {
+
+         m_pdevicecontext = nullptr;
+
+         m_pdevicecontext1 = nullptr;
+
+         m_pd2d1rendertarget = nullptr;
+
+         throw ::exception(error_null_pointer);
+
+      }
+
+      hr = m_pd2d1rendertarget.as(m_pbitmaprendertarget);
+
+      if (FAILED(hr))
+      {
+         m_pbitmaprendertarget = nullptr;
+      }
+
+      m_osdata[data_device_context] = m_pdevicecontext;
+
+      m_osdata[data_render_target] = m_pd2d1rendertarget;
+
+   }
+
+
    void graphics::attach(void * pdata)
    {
 
@@ -6184,10 +6279,10 @@ namespace draw2d_direct2d
 
       }
 
-      if (m_prendertarget != nullptr)
+      if (m_pd2d1rendertarget != nullptr)
       {
 
-         m_prendertarget = nullptr;
+         m_pd2d1rendertarget = nullptr;
 
       }
 
@@ -6213,7 +6308,7 @@ namespace draw2d_direct2d
 
       }
 
-      hr = m_pdevicecontext.as(m_prendertarget);
+      hr = m_pdevicecontext.as(m_pd2d1rendertarget);
 
       if (FAILED(hr))
       {
@@ -6222,13 +6317,13 @@ namespace draw2d_direct2d
 
          m_pdevicecontext1 = nullptr;
 
-         m_prendertarget = nullptr;
+         m_pd2d1rendertarget = nullptr;
 
          throw ::exception(error_null_pointer);
 
       }
 
-      hr = m_prendertarget.as(m_pbitmaprendertarget);
+      hr = m_pd2d1rendertarget.as(m_pbitmaprendertarget);
 
       if (FAILED(hr))
       {
@@ -6237,7 +6332,7 @@ namespace draw2d_direct2d
 
       m_osdata[data_device_context] = m_pdevicecontext;
 
-      m_osdata[data_render_target] = m_prendertarget;
+      m_osdata[data_render_target] = m_pd2d1rendertarget;
 
       //return true;
 
@@ -6247,7 +6342,7 @@ namespace draw2d_direct2d
    void * graphics::detach()
    {
 
-      m_prendertarget = nullptr;
+      m_pd2d1rendertarget = nullptr;
 
       m_pbitmaprendertarget = nullptr;
 
@@ -6302,7 +6397,7 @@ namespace draw2d_direct2d
    //
    //      hr = m_pdcrendertarget->BindDC(hdc, rectangleX);
    //
-   //      m_pdcrendertarget.As(&m_prendertarget);
+   //      m_pdcrendertarget.As(&m_pd2d1rendertarget);
    //
    //      m_hdcAttach = hdc;
    //
@@ -6370,7 +6465,7 @@ namespace draw2d_direct2d
 
       m_ppathgeometryClip = nullptr;
 
-      m_prendertarget = nullptr;
+      m_pd2d1rendertarget = nullptr;
 
       m_pdevicecontext = nullptr;
 
@@ -6411,7 +6506,7 @@ namespace draw2d_direct2d
 
       ::ID2D1StrokeStyle1 * pstrokestyle = ppen->get_os_data < ID2D1StrokeStyle1 * >(this, 1);
 
-      m_prendertarget->DrawGeometry(pgeometry, pbrush, (FLOAT)ppen->m_dWidth, pstrokestyle);
+      m_pd2d1rendertarget->DrawGeometry(pgeometry, pbrush, (FLOAT)ppen->m_dWidth, pstrokestyle);
 
       return true;
 
@@ -6424,7 +6519,7 @@ namespace draw2d_direct2d
       if (pbrush->m_ebrush == ::draw2d::e_brush_box_gradient)
       {
 
-         layer layerShape(m_prendertarget, pgeometry);
+         layer layerShape(m_pd2d1rendertarget, pgeometry);
 
          double radius = pbrush->m_dRadius;
 
@@ -6455,11 +6550,11 @@ namespace draw2d_direct2d
 
          {
 
-            //layer layerShape(m_prendertarget, pgeometry);
+            //layer layerShape(m_pd2d1rendertarget, pgeometry);
 
             auto pbrush = _create_simple_radial_gradient(cornerBrush, pstopcollection);
 
-            m_prendertarget->FillRectangle(
+            m_pd2d1rendertarget->FillRectangle(
                { (FLOAT)cornerClip.left(), (FLOAT)cornerClip.top(),
                (FLOAT)cornerClip.right(), (FLOAT)cornerClip.bottom() },
                pbrush);
@@ -6472,11 +6567,11 @@ namespace draw2d_direct2d
 
          {
 
-            //layer layerShape(m_prendertarget, pgeometry);
+            //layer layerShape(m_pd2d1rendertarget, pgeometry);
 
             auto pbrush = _create_simple_radial_gradient(cornerBrush, pstopcollection);
 
-            m_prendertarget->FillRectangle(
+            m_pd2d1rendertarget->FillRectangle(
                { (FLOAT)cornerClip.left(), (FLOAT)cornerClip.top(),
                (FLOAT)cornerClip.right(), (FLOAT)cornerClip.bottom() },
                pbrush);
@@ -6489,11 +6584,11 @@ namespace draw2d_direct2d
 
          {
 
-            //layer layerShape(m_prendertarget, pgeometry);
+            //layer layerShape(m_pd2d1rendertarget, pgeometry);
 
             auto pbrush = _create_simple_radial_gradient(cornerBrush, pstopcollection);
 
-            m_prendertarget->FillRectangle(
+            m_pd2d1rendertarget->FillRectangle(
                { (FLOAT)cornerClip.left(), (FLOAT)cornerClip.top(),
                (FLOAT)cornerClip.right(), (FLOAT)cornerClip.bottom() },
                pbrush);
@@ -6506,11 +6601,11 @@ namespace draw2d_direct2d
 
          {
 
-            //layer layerShape(m_prendertarget, pgeometry);
+            //layer layerShape(m_pd2d1rendertarget, pgeometry);
 
             auto pbrush = _create_simple_radial_gradient(cornerBrush, pstopcollection);
 
-            m_prendertarget->FillRectangle(
+            m_pd2d1rendertarget->FillRectangle(
                { (FLOAT)cornerClip.left(), (FLOAT)cornerClip.top(),
                (FLOAT)cornerClip.right(), (FLOAT)cornerClip.bottom() },
                pbrush);
@@ -6524,11 +6619,11 @@ namespace draw2d_direct2d
 
          {
 
-            //layer layerShape(m_prendertarget, pgeometry);
+            //layer layerShape(m_pd2d1rendertarget, pgeometry);
 
             auto pd2d1brush = _create_solid_brush(pbrush->m_color1);
 
-            m_prendertarget->FillRectangle(
+            m_pd2d1rendertarget->FillRectangle(
                { (FLOAT)inner.left(), (FLOAT)inner.top(),
                (FLOAT)inner.right(), (FLOAT)inner.bottom() },
                pd2d1brush);
@@ -6545,7 +6640,7 @@ namespace draw2d_direct2d
 
                auto pbrush = _create_simple_linear_gradient(side.bottom_left(), side.top_left(), pstopcollection);
 
-               m_prendertarget->FillRectangle(
+               m_pd2d1rendertarget->FillRectangle(
                   { (FLOAT)side.left(), (FLOAT)side.top(),
                   (FLOAT)side.right(), (FLOAT)side.bottom() },
                   pbrush);
@@ -6558,7 +6653,7 @@ namespace draw2d_direct2d
 
                auto pbrush = _create_simple_linear_gradient(side.top_left(), side.bottom_left(), pstopcollection);
 
-               m_prendertarget->FillRectangle(
+               m_pd2d1rendertarget->FillRectangle(
                   { (FLOAT)side.left(), (FLOAT)side.top(),
                   (FLOAT)side.right(), (FLOAT)side.bottom() },
                   pbrush);
@@ -6578,7 +6673,7 @@ namespace draw2d_direct2d
 
                auto pbrush = _create_simple_linear_gradient(side.top_right(), side.top_left(), pstopcollection);
 
-               m_prendertarget->FillRectangle(
+               m_pd2d1rendertarget->FillRectangle(
                   { (FLOAT)side.left(), (FLOAT)side.top(),
                   (FLOAT)side.right(), (FLOAT)side.bottom() },
                   pbrush);
@@ -6591,7 +6686,7 @@ namespace draw2d_direct2d
 
                auto pbrush = _create_simple_linear_gradient(side.top_left(), side.top_right(), pstopcollection);
 
-               m_prendertarget->FillRectangle(
+               m_pd2d1rendertarget->FillRectangle(
                   { (FLOAT)side.left(), (FLOAT)side.top(),
                   (FLOAT)side.right(), (FLOAT)side.bottom() },
                   pbrush);
@@ -6612,7 +6707,7 @@ namespace draw2d_direct2d
 
       }
 
-      m_prendertarget->FillGeometry(pgeometry, pd2d1brush);
+      m_pd2d1rendertarget->FillGeometry(pgeometry, pd2d1brush);
 
       return true;
 
@@ -6837,7 +6932,7 @@ namespace draw2d_direct2d
 
          fill(pgeometry, pbrush);
 
-         //m_prendertarget->FillGeometry(pgeometry, pbrush);
+         //m_pd2d1rendertarget->FillGeometry(pgeometry, pbrush);
 
       }
 
@@ -6916,7 +7011,7 @@ namespace draw2d_direct2d
 
       //}
 
-      //CustomTextRenderer renderer(::direct2d::factory(),m_prendertarget,ppen->get_os_data < ID2D1Brush * >(this));
+      //CustomTextRenderer renderer(::direct2d::factory(),m_pd2d1rendertarget,ppen->get_os_data < ID2D1Brush * >(this));
 
       //defer_text_primitive_blend();
 
@@ -6961,7 +7056,7 @@ namespace draw2d_direct2d
       //if (posbrush)
       //{
 
-      //   CustomTextRenderer renderer(::direct2d::factory(), m_prendertarget, nullptr, posbrush);
+      //   CustomTextRenderer renderer(::direct2d::factory(), m_pd2d1rendertarget, nullptr, posbrush);
 
       //   defer_text_primitive_blend();
 
@@ -7003,7 +7098,7 @@ namespace draw2d_direct2d
 
       //}
 
-      //CustomTextRenderer renderer(::direct2d::factory(), m_prendertarget, ppen->get_os_data < ID2D1Brush* >(this));
+      //CustomTextRenderer renderer(::direct2d::factory(), m_pd2d1rendertarget, ppen->get_os_data < ID2D1Brush* >(this));
 
       //defer_text_primitive_blend();
 
@@ -7048,7 +7143,7 @@ namespace draw2d_direct2d
       //if (posbrush)
       //{
 
-      //   CustomTextRenderer renderer(::direct2d::factory(), m_prendertarget, nullptr, posbrush);
+      //   CustomTextRenderer renderer(::direct2d::factory(), m_pd2d1rendertarget, nullptr, posbrush);
 
       //   defer_text_primitive_blend();
 
@@ -7075,7 +7170,7 @@ namespace draw2d_direct2d
 
       }
 
-      HRESULT hr = m_prendertarget->Flush();
+      HRESULT hr = m_pd2d1rendertarget->Flush();
 
       //return SUCCEEDED(hr);
 
@@ -7115,7 +7210,7 @@ namespace draw2d_direct2d
 
       copy(d2d1color, color);
 
-      HRESULT hr = m_prendertarget->CreateSolidColorBrush(d2d1color, &pbrush);
+      HRESULT hr = m_pd2d1rendertarget->CreateSolidColorBrush(d2d1color, &pbrush);
 
       if (FAILED(hr))
       {
@@ -7140,7 +7235,7 @@ namespace draw2d_direct2d
       double radiusx = r.width() / 2.0;
       double radiusy = r.height() / 2.0;
 
-      HRESULT hr = m_prendertarget->CreateRadialGradientBrush(
+      HRESULT hr = m_pd2d1rendertarget->CreateRadialGradientBrush(
          D2D1::RadialGradientBrushProperties(
             D2D1::Point2F((FLOAT)(centerx), (FLOAT)(centery)),
             D2D1::Point2F((FLOAT)(offsetx), (FLOAT)(offsety)),
@@ -7180,7 +7275,7 @@ namespace draw2d_direct2d
       brushproperties.opacity = 1.0f;
       brushproperties.transform = D2D1::IdentityMatrix();
 
-      HRESULT hr = m_prendertarget->CreateLinearGradientBrush(&prop, &brushproperties, pstopcollection, &pbrush);
+      HRESULT hr = m_pd2d1rendertarget->CreateLinearGradientBrush(&prop, &brushproperties, pstopcollection, &pbrush);
 
       if (FAILED(hr))
       {
@@ -7212,7 +7307,7 @@ namespace draw2d_direct2d
 
       // Create the ID2D1GradientStopCollection from a previously
       // declared array of D2D1_GRADIENT_STOP structs.
-      HRESULT hr = m_prendertarget->CreateGradientStopCollection(
+      HRESULT hr = m_pd2d1rendertarget->CreateGradientStopCollection(
          gradientstops,
          2,
          D2D1_GAMMA_2_2,

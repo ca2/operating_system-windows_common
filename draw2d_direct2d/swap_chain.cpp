@@ -4,35 +4,16 @@
 #include "swap_chain.h"
 #include "direct2d/direct2d.h"
 #include "aura/windowing/window.h"
-#include "aura/graphics/gpu/context.h"
-#include "aura/graphics/gpu/device.h"
-#include "aura/graphics/gpu/renderer.h"
-//#include "aura/graphics/gpu/swap_chain_render_target_view.h"
-///#include "aura/graphics/gpu/graphics.h"
+#include "bred/gpu/context.h"
+#include "bred/gpu/device.h"
+#include "bred/gpu/renderer.h"
+//#include "bred/gpu/swap_chain_render_target_view.h"
+///#include "bred/gpu/graphics.h"
 //#include "draw2d_direct2d/graphics.h"
 
 
 namespace draw2d_direct2d
 {
-
-
-   //class CLASS_DECL_DRAW2D_DIRECT2D swap_chain :
-   //   virtual public ::particle
-   //{
-   //public:
-
-
-
-   //   ::comptr <IDXGIDevice> m_pdxgidevice;
-
-   //   ::comptr<ID2D1Device> m_pd2d1device;
-
-   //   ::comptr<ID2D1DeviceContext> m_pd2d1context;
-
-   //   ::comptr<IDXGISurface> m_pdxgisurface;
-
-   //   ::comptr<ID2D1Bitmap1> m_pd2d1bitmap;
-
 
    swap_chain::swap_chain()
    {
@@ -60,8 +41,6 @@ namespace draw2d_direct2d
 
       ::direct2d::swap_chain::initialize_gpu_swap_chain(pgpudevice, pwindow);
 
-      initialize_direct2d_draw2d_gpu_swap_chain(pgpudevice, pwindow);
-     
       D2D1_BITMAP_PROPERTIES1 bitmapProps = D2D1::BitmapProperties1(
          D2D1_BITMAP_OPTIONS_TARGET | D2D1_BITMAP_OPTIONS_CANNOT_DRAW,
          D2D1::PixelFormat(DXGI_FORMAT_B8G8R8A8_UNORM, D2D1_ALPHA_MODE_PREMULTIPLIED)
@@ -78,11 +57,11 @@ namespace draw2d_direct2d
    }
 
 
-   void swap_chain::initialize_direct2d_draw2d_gpu_swap_chain(::gpu::device* pdevice, ::windowing::window* pwindow)
-   {
+   //void swap_chain::initialize_direct2d_draw2d_gpu_swap_chain(::gpu::device* pdevice, ::windowing::window* pwindow)
+   //{
 
 
-   }
+   //}
 
 
    void swap_chain::endDraw(::draw2d_gpu::graphics* pgraphics, ::user::interaction* puserinteraction, ::gpu::renderer* prendererSrc)
@@ -100,17 +79,14 @@ namespace draw2d_direct2d
 
       D2D1_RECT_F rectfDib1;
 
-      // Save original transform
       D2D1_MATRIX_3X2_F originalTransform;
       m_pd2d1devicecontext->GetTransform(&originalTransform);
 
-      // Flip vertically: scale Y by -1 and translate down
       D2D1_MATRIX_3X2_F flipY =
          D2D1::Matrix3x2F::Scale(1.0f, -1.0f) *
          D2D1::Matrix3x2F::Translation(0.0f, m_pgpudevice->current_context()->m_rectangle.height());
 
       m_pd2d1devicecontext->SetTransform(flipY * originalTransform);
-
 
       rectfDib1.left = 0;
       rectfDib1.top = 0;
@@ -123,6 +99,7 @@ namespace draw2d_direct2d
       comptr< ID2D1SolidColorBrush> pd2d1solidcolorbrush1;
 
       m_pd2d1devicecontext->CreateSolidColorBrush(color, &pd2d1solidcolorbrush1);
+
       D2D1_RECT_F r1;
 
       r1.left = 500;
@@ -130,7 +107,7 @@ namespace draw2d_direct2d
       r1.right = 600;
       r1.bottom = 400;
 
-      //m_pd2d1devicecontext->FillRectangle(r1, pd2d1solidcolorbrush1);
+      m_pd2d1devicecontext->FillRectangle(r1, pd2d1solidcolorbrush1);
 
       if (1)
       {
@@ -144,31 +121,13 @@ namespace draw2d_direct2d
 
       }
 
-      // Restore transform
       m_pd2d1devicecontext->SetTransform(originalTransform);
-      //D2D1_RECT_F r2;
-
-      //r2.left = 100;
-      //r2.top = 100;
-      //r2.right = 200;
-      //r2.bottom = 500;
-
-      //comptr< ID2D1SolidColorBrush> pd2d1solidcolorbrush;
-
-      //D2D1_COLOR_F color1;
-
-      //copy(color1, ::rgba(0.5, 0.75, 0.90, 0.5));
-
-      //m_pd2d1devicecontext->CreateSolidColorBrush(color1, &pd2d1solidcolorbrush);
-
-      //m_pd2d1devicecontext->DrawRectangle(r2, pd2d1solidcolorbrush);
-
-
+      
       m_pd2d1devicecontext->EndDraw();
 
       pgraphicsDirect2d->m_pdevicecontext->SetTarget(pd2d1bitmap);
 
-      m_pd3d11context->Flush(); // Ensure rendering is completed
+      m_pd3d11context->Flush();
 
       present();
 

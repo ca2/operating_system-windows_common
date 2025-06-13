@@ -4,7 +4,7 @@
 
 
 
-#include "aura/graphics/gpu/shader.h"
+#include "bred/gpu/shader.h"
 
 
 namespace gpu_directx11
@@ -96,7 +96,7 @@ namespace gpu_directx11
 //#pragma once
 //
 //
-//#include "aura/graphics/gpu/shader.h"
+//#include "bred/gpu/shader.h"
 //
 //
 //namespace gpu_directx11

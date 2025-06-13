@@ -3,9 +3,9 @@
 #include "swap_chain.h"
 #include "direct2d.h"
 #include "aura/windowing/window.h"
-#include "aura/graphics/gpu/context.h"
-#include "aura/graphics/gpu/renderer.h"
-#include "aura/graphics/gpu/graphics.h"
+#include "bred/gpu/context.h"
+#include "bred/gpu/renderer.h"
+#include "bred/gpu/graphics.h"
 
 
 namespace direct2d
@@ -82,6 +82,15 @@ namespace direct2d
       return m_pdxgisurface_2;
 
    }
+
+   
+   ID2D1Device* swap_chain::_get_d2d1_device()
+   {
+
+      return ::direct2d::get()->d2d1_device(m_pwindow, m_pwindow->get_window_rectangle());
+
+   }
+
 
 
    void swap_chain::endDraw(::draw2d_gpu::graphics * pgraphics, ::user::interaction* puserinteraction, ::gpu::renderer* prendererSrc)

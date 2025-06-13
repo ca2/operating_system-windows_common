@@ -37,7 +37,7 @@ namespace draw2d_direct2d
 
       auto pgraphics = __graphics(pgraphicsParam);
 
-      if (pgraphics->m_prendertarget == nullptr)
+      if (pgraphics->m_pd2d1rendertarget == nullptr)
       {
 
          throw ::exception(error_null_pointer);
@@ -54,7 +54,7 @@ namespace draw2d_direct2d
 
             copy(color, m_color);
 
-            pgraphics->m_prendertarget->CreateSolidColorBrush(color, &m_psolidbrush);
+            pgraphics->m_pd2d1rendertarget->CreateSolidColorBrush(color, &m_psolidbrush);
 
             if(m_psolidbrush != nullptr)
             {
@@ -100,14 +100,14 @@ namespace draw2d_direct2d
 
             // Create the ID2D1GradientStopCollection from a previously
             // declared array of D2D1_GRADIENT_STOP structs.
-            HRESULT hr = pgraphics->m_prendertarget->CreateGradientStopCollection(gradientstops, 2, D2D1_GAMMA_2_2, D2D1_EXTEND_MODE_CLAMP, &pstopcollection);
+            HRESULT hr = pgraphics->m_pd2d1rendertarget->CreateGradientStopCollection(gradientstops, 2, D2D1_GAMMA_2_2, D2D1_EXTEND_MODE_CLAMP, &pstopcollection);
 
             D2D1_BRUSH_PROPERTIES brushproperties = {};
 
             brushproperties.opacity = 1.0f;
             brushproperties.transform =  D2D1::IdentityMatrix();
 
-            hr = pgraphics->m_prendertarget->CreateLinearGradientBrush(&prop, &brushproperties, pstopcollection, &m_plineargradientbrush);
+            hr = pgraphics->m_pd2d1rendertarget->CreateLinearGradientBrush(&prop, &brushproperties, pstopcollection, &m_plineargradientbrush);
 
             if(m_plineargradientbrush != nullptr)
             {
@@ -143,7 +143,7 @@ namespace draw2d_direct2d
 
             // Create the ID2D1GradientStopCollection from a previously
             // declared array of D2D1_GRADIENT_STOP structs.
-            HRESULT hr = pgraphics->m_prendertarget->CreateGradientStopCollection(
+            HRESULT hr = pgraphics->m_pd2d1rendertarget->CreateGradientStopCollection(
                          gradientstops,
                          2,
                          D2D1_GAMMA_2_2,
@@ -163,7 +163,7 @@ namespace draw2d_direct2d
                double radiusx = m_size.cx();
                double radiusy = m_size.cy();
 
-               hr = pgraphics->m_prendertarget->CreateRadialGradientBrush(
+               hr = pgraphics->m_pd2d1rendertarget->CreateRadialGradientBrush(
                     D2D1::RadialGradientBrushProperties(
                     D2D1::Point2F((FLOAT) (centerx), (FLOAT)(centery)),
                     D2D1::Point2F((FLOAT)(offsetx), (FLOAT)(offsety)),
