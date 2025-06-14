@@ -7,6 +7,7 @@
 #include "program.h"
 #include "renderer.h"
 #include "shader.h"
+#include "texture.h"
 #include "swap_chain_render_target_view.h"
 #include "offscreen_render_target_view.h"
 #include "acme/platform/application.h"
@@ -1048,7 +1049,7 @@ namespace gpu_directx11
    void context::resize_cpu_buffer(const ::int_size& sizeParam)
    {
 
-      if (m_papplication->m_bUseSwapChainWindow)
+      if (m_papplication->m_gpu.m_bUseSwapChainWindow)
       {
 
          return;
@@ -1104,22 +1105,24 @@ namespace gpu_directx11
 
       ::gpu::context::make_current();
 
-      ::cast < ::gpu_directx11::renderer > prenderer = m_pgpurenderer;
+      ::cast < ::gpu_directx11::renderer > prendererOutput = m_pgpurendererOutput2;
 
-      if (prenderer)
+      if (prendererOutput)
       {
 
-         ::cast < render_target_view > pgpurendertargetview = prenderer->m_pgpurendertarget;
+
+
+         ::cast < render_target_view > pgpurendertargetview = prendererOutput->m_pgpurendertarget;
 
          if (pgpurendertargetview)
          {
 
-            auto prendertargetview = pgpurendertargetview->m_prendertargetview;
+            ::cast < texture > ptexture = pgpurendertargetview->current_texture();
 
-            if (prendertargetview)
+            if (ptexture)
             {
 
-               m_pcontext->OMSetRenderTargets(1, prendertargetview.pp(), nullptr);
+               m_pcontext->OMSetRenderTargets(1, ptexture->m_prendertargetview.pp(), nullptr);
 
                D3D11_VIEWPORT vp = {};
                vp.TopLeftX = 0;
@@ -1149,7 +1152,7 @@ namespace gpu_directx11
 
                m_pcontext->OMSetDepthStencilState(pdepthstencilstate, 0);
 
-               m_pcontext->OMSetRenderTargets(1, prendertargetview.pp(), pdepthstencilview);
+               m_pcontext->OMSetRenderTargets(1, ptexture->m_prendertargetview.pp(), pdepthstencilview);
 
                m_pcontext->ClearDepthStencilView(pdepthstencilview, D3D11_CLEAR_DEPTH, 1.0f, 0);
 
@@ -1914,7 +1917,7 @@ namespace gpu_directx11
    void context::update_global_ubo(const ::block& block)
    {
 
-      auto iFrameIndex = m_pgpurenderer->get_frame_index();
+      auto iFrameIndex = m_pgpurendererEngine->get_frame_index();
 
       //m_uboBuffers[iFrameIndex]->writeToBuffer(block.data());
 

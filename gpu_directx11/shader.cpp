@@ -6,11 +6,12 @@
 #include "context.h"
 #include "descriptors.h"
 #include "renderer.h"
+#include "texture.h"
 #include "offscreen_render_target_view.h"
 #include "bred/gpu/types.h"
 #include "acme_windows_common/hresult_exception.h"
 #include <d3dcompiler.h>
-//#include "aura/user/user/graphics3d.h"
+//#include "bred/user/user/graphics3d.h"
 
 
 
@@ -321,12 +322,14 @@ namespace gpu_directx11
          if (pgpurendertargetview)
          {
 
-            ::cast < offscreen_render_target_view > poffscreenrendertargetview = pgpurendertargetview;
+            ::cast < texture > ptexture = pgpurendertargetview->current_texture();
 
-            if (poffscreenrendertargetview)
+//            ::cast < offscreen_render_target_view > poffscreenrendertargetview = pgpurendertargetview;
+
+            if (ptexture)
             {
 
-               auto pshaderresourceview = poffscreenrendertargetview->m_pshaderresourceview;
+               auto pshaderresourceview = ptexture->m_pshaderresourceview;
 
                if (pshaderresourceview)
                {
@@ -338,7 +341,6 @@ namespace gpu_directx11
             }
 
          }
-
 
       }
 
@@ -405,17 +407,20 @@ namespace gpu_directx11
          if (pgpurendertargetview)
          {
 
-            ::cast < offscreen_render_target_view > poffscreenrendertargetview = pgpurendertargetview;
+            ::cast < texture > ptexture = pgpurendertargetview->current_texture();
 
-            if (poffscreenrendertargetview)
+            //::cast < offscreen_render_target_view > poffscreenrendertargetview = pgpurendertargetview;
+
+            if (ptexture)
             {
 
-               auto pshaderresourceview = poffscreenrendertargetview->m_pshaderresourceview;
+               auto pshaderresourceview = ptexture->m_pshaderresourceview;
 
                if (pshaderresourceview)
                {
 
                   ID3D11ShaderResourceView* nullSRV[1] = { nullptr };
+
                   pgpucontext->m_pcontext->PSSetShaderResources(0, 1, nullSRV);
 
                }
@@ -423,7 +428,6 @@ namespace gpu_directx11
             }
 
          }
-
 
       }
 
@@ -445,7 +449,7 @@ namespace gpu_directx11
       //      m_properties.size(),
       //      m_properties.data());
 
-      if (m_properties.size() <= 0)
+      if (m_propertiesPush.size() <= 0)
       {
 
          return;
@@ -456,7 +460,7 @@ namespace gpu_directx11
 
       ::cast <device> pgpudevice = pgpucontext->m_pgpudevice;
 
-      auto iSetSize = m_properties.size();
+      auto iSetSize = m_propertiesPush.size();
 
       if (iSetSize != m_iSizePushConstants || !m_pbufferPushConstants)
       {
@@ -464,7 +468,7 @@ namespace gpu_directx11
          m_pbufferPushConstants.Release();
 
          D3D11_BUFFER_DESC cbDesc = {};
-         cbDesc.ByteWidth = (m_properties.size() + 15) & ~15;
+         cbDesc.ByteWidth = (m_propertiesPush.size() + 15) & ~15;
          cbDesc.Usage = D3D11_USAGE_DYNAMIC;
          cbDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
          cbDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
@@ -480,7 +484,7 @@ namespace gpu_directx11
 
          }
 
-         m_iSizePushConstants = m_properties.size();
+         m_iSizePushConstants = m_propertiesPush.size();
 
 
 
@@ -498,7 +502,7 @@ namespace gpu_directx11
 
       }
       
-      memcpy(mapped.pData, m_properties.data(), m_properties.size());
+      memcpy(mapped.pData, m_propertiesPush.data(), m_propertiesPush.size());
       pgpucontext->m_pcontext->Unmap(m_pbufferPushConstants, 0);
 
 

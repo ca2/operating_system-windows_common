@@ -58,6 +58,8 @@ namespace direct2d
 
       comptr < ID2D1PathGeometry1 > create_rectangle_path_geometry(const ::double_rectangle & rectangle);
 
+      
+      
 
 
    };

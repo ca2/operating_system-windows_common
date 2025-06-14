@@ -79,6 +79,10 @@ namespace draw2d_direct2d
       void on_begin_draw() override;
       void on_end_draw() override;
 
+
+      ::int_rectangle end_gpu_layer() override;
+
+
       using ::draw2d::graphics::set;
       void set(::draw2d::bitmap* pbitmap) override;
 

@@ -12,11 +12,6 @@
 #include "acme/platform/application.h"
 
 
-//#if defined(FREEBSD) || defined(OPENBSD)
-//#include <string.h>
-//#endif
-using namespace directx11;
-
 namespace gpu_directx11
 {
 
@@ -57,22 +52,8 @@ namespace gpu_directx11
 
 #endif
 
-      //m_vkinstance = VK_NULL_HANDLE;
-      ////m_physicaldevice = VK_NULL_HANDLE;
-      ////m_physicaldeviceproperties = {};
-      ////m_physicaldevicefeatures = {};
-      ////m_physicaldevicememoryproperties = {};
-      ////m_physicaldevicefeaturesEnabled = {};
-      //m_vkdevice = VK_NULL_HANDLE;
-      //m_vkqueue = VK_NULL_HANDLE;
-      //m_formatDepth = VK_FORMAT_UNDEFINED;
-      //m_vkcommandpool = VK_NULL_HANDLE;
-      //m_pipelinestageflagsSubmit = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
-      //m_submitinfo = {};
-      //m_vkrendertargetview = VK_NULL_HANDLE;
+
       m_uCurrentBuffer = 0;
-      //m_descriptorpool = {};
-      //m_vkpipelinecache = {};
       m_bRequiresStencil = false;
 
    }
@@ -101,9 +82,22 @@ namespace gpu_directx11
    void approach::initialize(::particle* pparticle)
    {
 
-      //::e_status estatus =
-
       ::object::initialize(pparticle);
+
+      if (m_papplication->m_gpu.m_bUseSwapChainWindow)
+      {
+
+         m_papplication->m_gpu.m_eoutputDraw2d = ::gpu::e_output_gpu_buffer;
+         m_papplication->m_gpu.m_eoutputEngine = ::gpu::e_output_gpu_buffer;
+
+      }
+      else
+      {
+
+         m_papplication->m_gpu.m_eoutputDraw2d = ::gpu::e_output_cpu_buffer;
+         m_papplication->m_gpu.m_eoutputEngine = ::gpu::e_output_cpu_buffer;
+
+      }
 
    }
 
@@ -121,7 +115,7 @@ namespace gpu_directx11
       // Create the instance
       HRESULT result = createInstance();
       if (FAILED(result)) {
-         auto str = "Could not create DirectX11 instance : \n" + errorString(result);
+         auto str = "Could not create DirectX11 instance : \n" + ::directx11::errorString(result);
          throw ::exception(error_failed);
       }
 

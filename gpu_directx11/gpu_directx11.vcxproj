@@ -710,6 +710,7 @@
     <ClInclude Include="shader.h" />
     <ClInclude Include="swap_chain.h" />
     <ClInclude Include="swap_chain_render_target_view.h" />
+    <ClInclude Include="texture.h" />
     <ClInclude Include="_.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="_gpu_directx11.h" />
@@ -761,6 +762,7 @@
     <ClCompile Include="render_target_view.cpp" />
     <ClCompile Include="swap_chain.cpp" />
     <ClCompile Include="swap_chain_render_target_view.cpp" />
+    <ClCompile Include="texture.cpp" />
     <ClCompile Include="_factory.cpp" />
     <ClCompile Include="framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -938,6 +940,15 @@ application_build_helper --binary-to-unsigned-int "$(ProjectDir)/shader/%(Filena
     </ProjectReference>
     <ProjectReference Include="..\..\..\source\app\aura\aura.vcxproj">
       <Project>{e000ffaf-392f-4e32-bf51-fd7ed638991f}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\source\app\axis\axis.vcxproj">
+      <Project>{a2cbd4ed-ed0f-482b-9b16-f48f21c32835}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\source\app\base\base.vcxproj">
+      <Project>{a216abd4-26c4-4746-96b3-9d30ed28cf92}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\source\app\bred\bred.vcxproj">
+      <Project>{dfbf067f-aff9-4bd6-a5e1-72af984d1476}</Project>
     </ProjectReference>
     <ProjectReference Include="..\acme_windows_common\acme_windows_common.vcxproj">
       <Project>{eb9dc9c0-0573-4da0-8700-4dbb371773f1}</Project>

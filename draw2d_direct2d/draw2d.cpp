@@ -118,7 +118,7 @@ namespace draw2d_direct2d
 
       nExStyle |= WS_EX_LAYERED;
 
-      if (m_papplication->m_bUseSwapChainWindow)
+      if (m_papplication->m_gpu.m_bUseSwapChainWindow)
       {
 
          nExStyle |= WS_EX_NOREDIRECTIONBITMAP;

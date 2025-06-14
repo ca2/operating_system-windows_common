@@ -19,19 +19,18 @@ namespace gpu_directx11
    {
    public:
 
-      comptr<ID3D11RenderTargetView>      m_prendertargetview;
       comptr<ID3D11Texture2D> m_ptextureDepthStencil;
       comptr<ID3D11DepthStencilView>m_pdepthstencilview;
       comptr <ID3D11DepthStencilState>m_pdepthstencilstate;
 
       //VkFormat m_formatImage;
       //VkFormat m_formatDepth;
-      ::int_size m_size;
+      //::int_size m_size;
 
       //::array<VkFramebuffer> m_framebuffers;
       //VkRenderPass m_vkrendertargetview;
 
-      ::pointer < renderer >  m_pgpurenderer;
+      ///::pointer < renderer >  m_pgpurenderer;
 
       //::array < VkSemaphore> m_semaphoreaSignalOnSubmit;
       //::array < VkSemaphore> m_semaphoreaWaitToSubmit;
@@ -41,7 +40,7 @@ namespace gpu_directx11
       //::array<VkImage> m_images;
       //::array<VkImageView> m_imageviews;
 
-      context* m_pgpucontext;
+      //context* m_pgpucontext;
       //VkExtent2D windowExtent;
 
       //VkSwapchainKHR swapChain;
@@ -54,17 +53,16 @@ namespace gpu_directx11
       //::array<VkFence>     imagesInFlight;
       bool                 m_bNeedRebuild;
 
-      static constexpr int MAX_FRAMES_IN_FLIGHT = 2;
-
-      //render_target_view();
-      render_target_view(renderer* prenderer, const ::int_size & size);
-      render_target_view(renderer* prenderer, const ::int_size& size, ::pointer <render_target_view>previous);
+      render_target_view();
+      //render_target_view(renderer* prenderer, const ::int_size & size);
+      //render_target_view(renderer* prenderer, const ::int_size& size, ::pointer <render_target_view>previous);
       ~render_target_view();
 
       virtual void on_before_begin_render(frame* pframe);
 
       //VkFramebuffer getFrameBuffer(int index) { return m_framebuffers[index]; }
       //VkFramebuffer getCurrentFrameBuffer() { return m_framebuffers[get_image_index()]; }
+      void initialize_render_target(::gpu::renderer* prenderer, const ::int_size& size, ::pointer <::gpu::render_target>previous) override;
       virtual int get_image_index() const;
       //VkRenderPass getRenderPass() { return m_vkrendertargetview; }
       //VkImageView getImageView(int index) { return m_imageviews[index]; }

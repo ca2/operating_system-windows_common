@@ -68,9 +68,9 @@ namespace direct2d
    comptr<ID2D1Device> direct2d::create_device(::windowing::window* pwindow, const ::int_rectangle& rectanglePlacement)
    {
 
-      ::cast < ::gpu::approach > papproach = m_papplication->get_gpu();
+      ::cast < ::gpu::approach > pgpuapproach = m_papplication->get_gpu_approach();
 
-      ::cast < ::gpu::device > pgpudevice = papproach->get_device();
+      ::cast < ::gpu::device > pgpudevice = pgpuapproach->get_gpu_device();
 
       ::cast < ::direct2d::swap_chain > pswapchain = pgpudevice->get_swap_chain();
 

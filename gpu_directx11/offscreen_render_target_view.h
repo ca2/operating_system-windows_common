@@ -15,14 +15,16 @@ namespace gpu_directx11
 	{
 	public:
 
-		comptr<ID3D11Texture2D> m_ptextureOffscreen;
-		comptr< ID3D11SamplerState> m_psamplerstate;
-		comptr<ID3D11ShaderResourceView>m_pshaderresourceview;
-		static constexpr int MAX_FRAMES_IN_FLIGHT = 2;
+		//comptr<ID3D11Texture2D> m_ptextureOffscreen;
+		//comptr< ID3D11SamplerState> m_psamplerstate;
+		//comptr<ID3D11ShaderResourceView>m_pshaderresourceview;
+		//static constexpr int MAX_FRAMES_IN_FLIGHT = 2;
 
+
+		offscreen_render_target_view();
 		//offscreen_render_target_view();
-		offscreen_render_target_view(renderer* pgpurenderer, const ::int_size & size);
-		offscreen_render_target_view(renderer * pgpurenderer, const ::int_size& size, ::pointer <render_target_view>previous);
+		//offscreen_render_target_view(renderer* pgpurenderer, const ::int_size & size);
+		//offscreen_render_target_view(renderer * pgpurenderer, const ::int_size& size, ::pointer <render_target_view>previous);
 		~offscreen_render_target_view();
 
 
@@ -39,6 +41,10 @@ namespace gpu_directx11
 		//	return static_cast<float>(m_extent.width) / static_cast<float>(m_extent.height);
 		//}
 //		VkFormat findDepthFormat();
+
+
+		void initialize_render_target(::gpu::renderer* pgpurenderer, const ::int_size& size, ::pointer <::gpu::render_target> previous) override;
+
 
 		HRESULT acquireNextImage() override;
 		//HRESULT submitCommandBuffers(const VkCommandBuffer* buffers);

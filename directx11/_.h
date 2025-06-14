@@ -3,6 +3,7 @@
 
 
 #include "aura_windows_common/_.h"
+#include "bred/_.h"
 
 
 #if defined(_directx11_project)

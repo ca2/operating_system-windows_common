@@ -26,16 +26,25 @@
     <ClCompile Include="directx11.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="geometry.cpp">
+    <ClCompile Include="dxgi_debug.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="object.cpp">
+    <ClCompile Include="swap_chain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="graphics.cpp">
+    <ClCompile Include="aaa_geometry.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="geometry_sink_text_renderer.cpp">
+    <ClCompile Include="aaa_geometry_sink_text_renderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="aaa_graphics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="aaa_object2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="_directx11.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -52,10 +61,25 @@
     <ClInclude Include="aaa_multithreading_lock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="geometry.h">
+    <ClInclude Include="aaa2_graphics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="geometry_sink_text_renderer.h">
+    <ClInclude Include="aaa_object2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dxgi_debug.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="swap_chain.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="aaa_geometry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="aaa_geometry_sink_text_renderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="_directx11.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

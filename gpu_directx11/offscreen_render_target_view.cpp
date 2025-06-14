@@ -5,92 +5,49 @@
 #include "physical_device.h"
 #include "renderer.h"
 
+
 using namespace directx11;
-
-
-#define VK_CHECK(x) do { HRESULT err = x; if (err) { warning() << "Detected DirectX11 error: " <<  (int)  err; abort(); } } while (0)
 
 
 namespace gpu_directx11
 {
 
 
-   //offscreen_render_target_view::offscreen_render_target_view()
+   offscreen_render_target_view::offscreen_render_target_view()
+   {
+
+
+   }
+
+   //offscreen_render_target_view::offscreen_render_target_view(renderer* pgpurenderer, const ::int_size & size)
+   //   : render_target_view(pgpurenderer, size)
    //{
-
-
+   //   clear_flag(e_flag_success);
    //}
 
 
+   //offscreen_render_target_view::offscreen_render_target_view(renderer* pgpurenderer, const ::int_size& size, ::pointer <render_target_view>previous)
+   //   : render_target_view(pgpurenderer, size, previous)
+   //{
+   //   clear_flag(e_flag_success);
+   //}
 
-   offscreen_render_target_view::offscreen_render_target_view(renderer* pgpurenderer, const ::int_size & size)
-      : render_target_view(pgpurenderer, size)
+
+   void offscreen_render_target_view::initialize_render_target(::gpu::renderer* pgpurenderer, const ::int_size& size, ::pointer <::gpu::render_target>previous)
    {
-      clear_flag(e_flag_success);
-   }
 
+      ::gpu::render_target::initialize_render_target(pgpurenderer, size, previous);
 
-   offscreen_render_target_view::offscreen_render_target_view(renderer* pgpurenderer, const ::int_size& size, ::pointer <render_target_view>previous)
-      : render_target_view(pgpurenderer, size, previous)
-   {
-      clear_flag(e_flag_success);
    }
 
 
    void offscreen_render_target_view::init()
    {
+      
       set_ok_flag();
-
 
       m_pgpurenderer->restart_frame_counter();
 
-
-      // 1. Create offscreen render target texture
-      D3D11_TEXTURE2D_DESC texDesc = {};
-      texDesc.Width = m_size.cx();
-      texDesc.Height = m_size.cy();
-      texDesc.MipLevels = 1;
-      texDesc.ArraySize = 1;
-      texDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
-      texDesc.SampleDesc.Count = 1;
-      texDesc.Usage = D3D11_USAGE_DEFAULT;
-      texDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
-
-      
-      ::cast < ::gpu_directx11::device > pgpudevice = m_pgpucontext->m_pgpudevice;
-
-      auto pdevice = pgpudevice->m_pdevice;
-
-      HRESULT hrCreateTexture = pdevice->CreateTexture2D(&texDesc, nullptr, &m_ptextureOffscreen);
-
-      if (FAILED(hrCreateTexture))
-      {
-
-         throw ::hresult_exception(hrCreateTexture, "Failed to create offscreen texture");
-         
-      }
-
-      HRESULT hrCreateRenderTargetView = pdevice->CreateRenderTargetView(m_ptextureOffscreen, nullptr, &m_prendertargetview);
-
-      if (FAILED(hrCreateRenderTargetView))
-      {
-
-         throw ::hresult_exception(hrCreateRenderTargetView, "Failed to create offscreen render target view");
-
-      }
-      
-      HRESULT hrCreateShaderResourceView = pdevice->CreateShaderResourceView(m_ptextureOffscreen, nullptr, &m_pshaderresourceview);
-      
-      if (FAILED(hrCreateShaderResourceView))
-      {
-
-         throw ::hresult_exception(hrCreateShaderResourceView, "Failed to create offscreen shader resource view");
-
-      }
-      D3D11_SAMPLER_DESC samp = {};
-      samp.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-      samp.AddressU = samp.AddressV = samp.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
-      pdevice->CreateSamplerState(&samp, &m_psamplerstate);
 
       createRenderPassImpl();
       createImageViews();
@@ -390,7 +347,7 @@ namespace gpu_directx11
       //m_extent.width = windowExtent.width;
       //m_extent.height = windowExtent.height;
 
-      ::cast < context > pgpucontext = m_pgpucontext;
+      ::cast < context > pgpucontext = m_pgpurenderer->m_pgpucontext;
 
       ////// Find a suitable depth format
       //VkFormat fbDepthFormat;

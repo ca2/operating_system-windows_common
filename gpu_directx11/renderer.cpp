@@ -16,7 +16,7 @@
 #include "aura/user/user/interaction.h"
 #include "aura/windowing/window.h"
 //#include "tools.h"
-//#include "aura/user/user/graphics3d.h"
+//#include "bred/user/user/graphics3d.h"
 
 //#include <array>
 //#include <cassert>
@@ -126,17 +126,17 @@ namespace gpu_directx11
    }
 
 
-   int renderer::get_frame_index() const
-   {
+   //int renderer::get_frame_index() const
+   //{
 
-      assert(m_iFrameSerial2 >= 0
-         && m_iCurrentFrame2 >= 0
-         && m_estate != e_state_initial
-         && "Cannot get frame index when frame not in progress");
+   //   assert(m_iFrameSerial2 >= 0
+   //      && m_iCurrentFrame2 >= 0
+   //      && m_estate != e_state_initial
+   //      && "Cannot get frame index when frame not in progress");
 
-      return (int)m_iCurrentFrame2;
+   //   return (int)m_iCurrentFrame2;
 
-   }
+   //}
 
 
    void renderer::on_new_frame()
@@ -151,24 +151,24 @@ namespace gpu_directx11
    }
 
 
-   void renderer::restart_frame_counter()
-   {
+   //void renderer::restart_frame_counter()
+   //{
 
-      m_iCurrentFrame2 = -1;
-      m_iFrameSerial2 = -1;
+   //   m_iCurrentFrame2 = -1;
+   //   m_iFrameSerial2 = -1;
 
-      on_happening(e_happening_reset_frame_counter);
+   //   on_happening(e_happening_reset_frame_counter);
 
-   }
+   //}
 
 
 
-   int renderer::get_frame_count() const
-   {
+   //int renderer::get_frame_count() const
+   //{
 
-      return ::gpu_directx11::render_target_view::MAX_FRAMES_IN_FLIGHT;
+   //   return ::gpu_directx11::render_target_view::MAX_FRAMES_IN_FLIGHT;
 
-   }
+   //}
 
 
    void renderer::on_context_resize()
@@ -221,11 +221,15 @@ namespace gpu_directx11
 
       auto eoutput = m_eoutput;
 
+      auto prendertargetOld = m_pgpurendertarget;
+
       if (eoutput == ::gpu::e_output_cpu_buffer
          || eoutput == ::gpu::e_output_gpu_buffer)
       {
 
-         auto poffscreenrendertargetview = __allocate offscreen_render_target_view(this, size, m_pgpurendertarget);
+         //auto poffscreenrendertargetview = __allocate offscreen_render_target_view(this, size, m_pgpurendertarget);
+         auto poffscreenrendertargetview = __allocate offscreen_render_target_view();
+
 //#ifdef WINDOWS_DESKTOP
 //         poffscreenrendertargetview->m_formatImage = VK_FORMAT_B8G8R8A8_UNORM;
 //#else
@@ -298,6 +302,8 @@ namespace gpu_directx11
 //
       if (!m_pgpurendertarget->has_ok_flag() && m_sizeRenderer.area() > 0)
       {
+
+         m_pgpurendertarget->initialize_render_target(this, size, prendertargetOld);
 
          m_pgpurendertarget->init();
 
@@ -841,7 +847,7 @@ namespace gpu_directx11
    }
 
 
-   void renderer::sample()
+   void renderer::do_sampling_to_cpu()
    {
 
       //::cast < ::gpu_directx11::offscreen_render_target_view > ptargetview = m_prendertargetview;
@@ -852,7 +858,7 @@ namespace gpu_directx11
 
       ///auto& memory = m_pimagetarget->m_imagebuffer.m_memory;
       ::cast< context > pgpucontext = m_pgpucontext;
-      ::cast< renderer > prenderer = pgpucontext->m_pgpurenderer;
+      ::cast< renderer > prenderer = this;
       ::cast < render_target_view > prendertargetview = prenderer->m_pgpurendertarget;
       ::cast < offscreen_render_target_view > poffscreenrendertargetview = prendertargetview;
       ::cast< device > pgpudevice = pgpucontext->m_pgpudevice;
@@ -1615,6 +1621,26 @@ namespace gpu_directx11
    }
 
 
+   float renderer::getAspectRatio() const
+   {
+
+      //if (m_bOffScreen)
+      {
+
+         ::cast < render_target_view > prendertargetview = m_pgpurendertarget;
+
+         return prendertargetview->extentAspectRatio();
+
+      }
+      //else
+      //{
+
+      //	return m_pvkcswapchain->extentAspectRatio();
+
+      //}
+
+   }
+
 
    void renderer::on_end_draw()
    {
@@ -1650,10 +1676,13 @@ namespace gpu_directx11
 
       if (m_pgpucontext->m_eoutput == ::gpu::e_output_cpu_buffer)
       {
-         sample();
+         
+         do_sampling_to_cpu();
+
       }
       else if (m_pgpucontext->m_eoutput == ::gpu::e_output_swap_chain)
       {
+
          swap_chain();
 
 
@@ -1852,7 +1881,7 @@ namespace gpu_directx11
       else if (eoutput == ::gpu::e_output_cpu_buffer)
       {
 
-         this->sample();
+         this->do_sampling_to_cpu();
 
       }
 

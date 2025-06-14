@@ -110,8 +110,8 @@ namespace gpu_directx11
 
       ::procedure_array m_procedureaAfterEndRender;
 
-      ::collection::index m_iCurrentFrame2 = -1;
-      ::collection::index m_iFrameSerial2 = -1;
+      //::collection::index m_iCurrentFrame2 = -1;
+      //::collection::index m_iFrameSerial2 = -1;
 
       ::int_size m_sizeRenderer;
 
@@ -120,19 +120,14 @@ namespace gpu_directx11
       ~renderer();
 
 
-      virtual void restart_frame_counter();
+      //virtual void restart_frame_counter();
       void on_new_frame() override;
       void initialize_renderer(::gpu::context* pgpucontext, ::gpu::enum_output eoutput, ::gpu::enum_scene escene) override;
 
       //int width()  override;
       //int height() override;
 
-      bool is_starting_frame()const
-      {
 
-         return m_iFrameSerial2 == m_iCurrentFrame2;
-
-      }
 
       //VkRenderPass getRenderPass() const
       //{
@@ -144,32 +139,14 @@ namespace gpu_directx11
 
       //}
 
-      void sample();
+      void do_sampling_to_cpu();
       void gpu_blend(::draw2d::graphics * pgraphics);
       //void resolve_color_and_alpha_accumulation_buffers();
       //void _resolve_color_and_alpha_accumulation_buffers();
       void swap_chain();
 
-      float getAspectRatio() const
-      {
-
-         //if (m_bOffScreen)
-         {
-
-            ::cast < render_target_view > prendertargetview = m_pgpurendertarget;
-
-            return prendertargetview->extentAspectRatio();
-
-         }
-         //else
-         //{
-
-         //	return m_pvkcswapchain->extentAspectRatio();
-
-         //}
-
-      }
-
+      float getAspectRatio() const;
+    
 
       bool isFrameInProgress() const { return isFrameStarted; }
 
@@ -179,8 +156,8 @@ namespace gpu_directx11
       //   return commandBuffers[get_frame_index()];
       //}
 
-      int get_frame_index() const override;
-      int get_frame_count() const override;
+      //int get_frame_index() const override;
+      //int get_frame_count() const override;
 
       void defer_update_renderer() override;
 

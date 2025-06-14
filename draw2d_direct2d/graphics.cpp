@@ -20,14 +20,16 @@
 #include "aura/graphics/draw2d/lock.h"
 #include "aura/graphics/draw2d/region.h"
 #include "aura/graphics/draw2d/device_lock.h"
-#include "bred/gpu/approach.h"
-#include "bred/gpu/context.h"
-#include "bred/gpu/types.h"
 #include "aura/graphics/image/context.h"
 #include "aura/graphics/image/drawing.h"
 #include "aura/graphics/image/frame_array.h"
 #include "aura/platform/session.h"
 #include "aura/windowing/window.h"
+#include "bred/gpu/approach.h"
+#include "bred/gpu/context.h"
+#include "bred/gpu/device.h"
+#include "bred/gpu/renderer.h"
+#include "bred/gpu/types.h"
 #include <math.h>
 
 
@@ -186,26 +188,18 @@ namespace draw2d_direct2d
 
       auto rectanglePlacement = pwindow->get_window_rectangle();
 
-      auto pdevice = m_papplication->get_gpu()->get_device();
+      auto pgpuapproach = m_papplication->get_gpu_approach();
 
-      if (__defer_construct(m_pgpucontext))
-      {
+      auto pgpudevice = pgpuapproach->get_gpu_device();
 
-         m_pgpucontext->start_gpu_context(
-            ::gpu::start_gpu_output_context_t
-            {
-               this,
-               pdevice,
-               ::gpu::e_output_gpu_buffer,
-               rectanglePlacement
-            });
+      auto pgpucontext = pgpudevice->get_main_context();
 
-      }
+      m_pgpurendererDraw2d = pgpucontext->draw2d_renderer();
 
-      m_pgpucontext->_send([this, size]()
+      m_pgpurendererDraw2d->_send([this, pgpucontext, size]()
          {
 
-            m_pgpucontext->create_offscreen_graphics_for_swap_chain_blitting(this, size);
+            pgpucontext->create_offscreen_graphics_for_swap_chain_blitting(this, size);
 
          });
 
@@ -216,10 +210,10 @@ namespace draw2d_direct2d
    void graphics::_create_memory_graphics(const ::int_size & size)
    {
 
-      if (m_pgpucontext)
+      if (m_pgpurendererDraw2d)
       {
 
-         if (m_pgpucontext->m_rectangle.size() == size)
+         if (m_pgpurendererDraw2d->m_pgpucontext->m_rectangle.size() == size)
          {
 
             return;
@@ -252,23 +246,27 @@ namespace draw2d_direct2d
 
       auto rectanglePlacement = pwindow->get_window_rectangle();
 
-      auto pdevice = m_papplication->get_gpu()->get_device();
+      auto pgpuapproach = m_papplication->get_gpu_approach();
 
-      if (__defer_construct(m_pgpucontext))
-      {
+      auto pgpudevice = pgpuapproach->get_gpu_device();
 
-         m_pgpucontext->start_gpu_context(
-            ::gpu::start_gpu_output_context_t
-            {
-               this,
-               pdevice,
-               ::gpu::e_output_gpu_buffer,
-               rectanglePlacement
-            });
+      auto pgpucontext = pgpudevice->get_main_context();
 
-      }
+      //m_pgpurendererDraw2d = pgpucontext->get_output_renderer();
+      //{
 
-      m_pgpucontext->_send([this, size]()
+      //   m_pgpucontext->start_gpu_context(
+      //      ::gpu::start_gpu_output_context_t
+      //      {
+      //         this,
+      //         pdevice,
+      //         ::gpu::e_output_gpu_buffer,
+      //         rectanglePlacement
+      //      });
+
+      //}
+
+      pgpucontext->_send([this, size]()
          {
 
             /*::direct2d::direct2d() = __allocate ::draw2d_direct2d::plugin();
@@ -1257,7 +1255,8 @@ namespace draw2d_direct2d
    void graphics::paint_region(::draw2d::region * pregion)
    {
 
-      throw ::exception(todo);
+      warning() << "look! this is a warning! paint_region isn't yet implemented here in draw2d_direct2d";
+      //throw ::exception(todo);
       //ASSERT(get_handle1() != nullptr);
 
       //return ::PaintRgn(get_handle1(), (HRGN)pRgn->get_os_data())  != false;
@@ -6129,7 +6128,11 @@ namespace draw2d_direct2d
       if (m_egraphics == ::e_graphics_draw)
       {
 
-         m_pgpucontext->start_composition();
+         //auto rectangleHost = m_puserinteraction->raw_rectangle();
+
+         //m_pgpurendererDraw2d->m_pgpucontext->m_pgpudevice->start_stacking_layers();
+
+         //m_pgpurendererDraw2d->start_layer(rectangleHost);
 
          m_pd2d1rendertarget->BeginDraw();
 
@@ -6177,6 +6180,18 @@ namespace draw2d_direct2d
       }
 
       ::draw2d_gpu::graphics::on_end_draw();
+
+   }
+
+
+   ::int_rectangle graphics::end_gpu_layer()
+   {
+
+      auto rectangle = ::draw2d_gpu::graphics::end_gpu_layer();
+
+      m_pdevicecontext->Clear();
+
+      return rectangle;
 
    }
 

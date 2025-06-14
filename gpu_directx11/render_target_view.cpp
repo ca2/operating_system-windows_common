@@ -19,35 +19,35 @@ namespace gpu_directx11
 {
 
    
-   //render_target_view::render_target_view()
+   render_target_view::render_target_view()
+   {
+
+
+   }
+
+
+   ////render_target_view::render_target_view()
+   //render_target_view::render_target_view(renderer* pgpurenderer, const ::int_size & size):
+   //    m_pgpurenderer(pgpurenderer), m_size(size)
    //{
-
-
+   //    //m_bNeedRebuild = false;
+   //   //m_pgpucontext = pgpurenderer->m_pgpucontext;
+   //   //init();
+   //   //m_prendertargetviewOld = nullptr;
    //}
 
-
-   //render_target_view::render_target_view()
-   render_target_view::render_target_view(renderer* pgpurenderer, const ::int_size & size):
-       m_pgpurenderer(pgpurenderer), m_size(size)
-   {
-       //m_bNeedRebuild = false;
-      //m_pgpucontext = pgpurenderer->m_pgpucontext;
-      //init();
-      //m_prendertargetviewOld = nullptr;
-   }
-
    
-   render_target_view::render_target_view(renderer * pgpurenderer, const ::int_size & size, ::pointer<render_target_view> previous):
-      m_pgpurenderer(pgpurenderer),
-      m_size(size),
-      m_prendertargetviewOld( previous)
-   {
-       m_bNeedRebuild = false;
-      m_pgpucontext = pgpurenderer->m_pgpucontext;
-      //init();
-      // Cleans up old swap chain since it's no longer needed after resizing
-      //m_prendertargetviewOld = nullptr;
-   }
+   //render_target_view::render_target_view(renderer * pgpurenderer, const ::int_size & size, ::pointer<render_target_view> previous):
+   //   m_pgpurenderer(pgpurenderer),
+   //   m_size(size),
+   //   m_prendertargetviewOld( previous)
+   //{
+   //    m_bNeedRebuild = false;
+   //   m_pgpucontext = pgpurenderer->m_pgpucontext;
+   //   //init();
+   //   // Cleans up old swap chain since it's no longer needed after resizing
+   //   //m_prendertargetviewOld = nullptr;
+   //}
    
    
 
@@ -109,6 +109,14 @@ namespace gpu_directx11
    }
 
 
+   void render_target_view::initialize_render_target(::gpu::renderer* pgpurenderer, const ::int_size& size, ::pointer <::gpu::render_target>previous)
+   {
+
+      ::gpu::render_target::initialize_render_target(pgpurenderer, size, previous);
+
+   }
+
+
    int render_target_view::get_image_index() const
    {
       
@@ -117,7 +125,6 @@ namespace gpu_directx11
    }
 
 
-   
    HRESULT render_target_view::acquireNextImage() 
    {
 
@@ -416,7 +423,7 @@ namespace gpu_directx11
       depthDesc.SampleDesc.Count = 1;
       depthDesc.Usage = D3D11_USAGE_DEFAULT;
       depthDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
-      ::cast < ::gpu_directx11::device > pgpudevice = m_pgpucontext->m_pgpudevice;
+      ::cast < ::gpu_directx11::device > pgpudevice = m_pgpurenderer->m_pgpucontext->m_pgpudevice;
 
       auto pdevice = pgpudevice->m_pdevice;
 
