@@ -153,9 +153,9 @@ namespace gpu_directx11
 
 
 
-      virtual void _create_context_directx11(const ::gpu::start_context_t& startcontext);
+      virtual void _create_context_directx11(::gpu::device* pgpudevice, const ::gpu::enum_output& eoutput, ::windowing::window* pwindow, const ::int_size& size);
 
-      void on_create_context(const ::gpu::start_context_t & startcontext) override;
+      void on_create_context(::gpu::device* pgpudevice, const ::gpu::enum_output& eoutput, ::windowing::window* pwindow, const ::int_size& size) override;
 
 
       //VkDevice logicalDevice();

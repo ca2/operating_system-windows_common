@@ -48,6 +48,7 @@ namespace gpu_directx11
 
       m_pgpurenderer->restart_frame_counter();
 
+      ::gpu::render_target::init();
 
       createRenderPassImpl();
       createImageViews();

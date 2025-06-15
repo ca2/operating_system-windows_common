@@ -3,6 +3,7 @@
 #include "descriptors.h"
 #include "frame.h"
 #include "renderer.h"
+#include "texture.h"
 #include "offscreen_render_target_view.h"
 #include "physical_device.h"
 #include "swap_chain_render_target_view.h"
@@ -142,11 +143,7 @@ namespace gpu_directx11
    void renderer::on_new_frame()
    {
 
-      m_iFrameSerial2++;
-
-      m_iCurrentFrame2 = (m_iCurrentFrame2 + 1) % render_target_view::MAX_FRAMES_IN_FLIGHT;
-
-      on_happening(e_happening_new_frame);
+      ::gpu::renderer::on_new_frame();
 
    }
 
@@ -864,10 +861,13 @@ namespace gpu_directx11
       ::cast< device > pgpudevice = pgpucontext->m_pgpudevice;
       ID3D11Device* device = pgpudevice->m_pdevice;
       ID3D11DeviceContext* context = pgpucontext->m_pcontext;
-      ID3D11Texture2D* offscreenTexture = poffscreenrendertargetview->m_ptextureOffscreen;
+      ::cast < ::gpu_directx11::texture > ptexture = poffscreenrendertargetview->current_texture();
+      ID3D11Texture2D* offscreenTexture = ptexture->m_ptextureOffscreen;
       if (!device || !context || !offscreenTexture)
       {
+         
          throw ::exception(error_wrong_state);
+
       }
 
 
@@ -1809,7 +1809,98 @@ namespace gpu_directx11
    void renderer::_on_begin_render()
    {
 
-      
+      ::cast < ::gpu_directx11::context > pgpucontext = m_pgpucontext;
+
+      auto pcontext = pgpucontext->m_pcontext;
+
+      ::cast < render_target_view > pgpurendertargetview = m_pgpurendertarget;
+
+      auto size = pgpucontext->m_rectangle.size();
+
+      if (pgpurendertargetview)
+      {
+
+         ::cast < texture > ptexture = pgpurendertargetview->current_texture();
+
+         if (ptexture)
+         {
+
+            pcontext->OMSetRenderTargets(1, ptexture->m_prendertargetview.pp(), nullptr);
+
+            D3D11_VIEWPORT vp = {};
+            vp.TopLeftX = 0;
+            vp.TopLeftY = 0;
+            vp.Width = static_cast<float>(size.width());
+            vp.Height = static_cast<float>(size.height());
+            vp.MinDepth = 0.0f;
+            vp.MaxDepth = 1.0f;
+
+            pcontext->RSSetViewports(1, &vp);
+
+         }
+
+         auto pdepthstencilstate = pgpurendertargetview->m_pdepthstencilstate;
+
+         if (pdepthstencilstate)
+         {
+
+            auto pdepthstencilview = pgpurendertargetview->m_pdepthstencilview;
+
+            if (!pdepthstencilview)
+            {
+
+               throw ::exception(error_wrong_state);
+
+            }
+
+            pcontext->OMSetDepthStencilState(pdepthstencilstate, 0);
+
+            pcontext->OMSetRenderTargets(1, ptexture->m_prendertargetview.pp(), pdepthstencilview);
+
+            pcontext->ClearDepthStencilView(pdepthstencilview, D3D11_CLEAR_DEPTH, 1.0f, 0);
+
+         }
+
+         //::cast < offscreen_render_target_view > poffscreenrendertargetview = pgpurendertargetview;
+
+         //if (poffscreenrendertargetview)
+         {
+
+            auto psamplerstate = ptexture->m_psamplerstate;
+
+            if (psamplerstate)
+            {
+
+               pcontext->PSSetSamplers(0, 1, psamplerstate.pp());
+
+            }
+
+         }
+
+      }
+
+      if (!pgpucontext->m_prasterizerstate)
+      {
+
+         D3D11_RASTERIZER_DESC rasterizerDesc = {};
+         rasterizerDesc.FillMode = D3D11_FILL_SOLID;
+         rasterizerDesc.CullMode = D3D11_CULL_BACK;        // Cull back faces
+         rasterizerDesc.FrontCounterClockwise = false; // Treat CCW as front-facing
+         rasterizerDesc.DepthClipEnable = TRUE;
+
+         // 2. Create rasterizer state object
+         //ID3D11RasterizerState* pRasterizerState = nullptr;
+         HRESULT hr = pgpucontext->m_pgpudevice->m_pdevice->CreateRasterizerState(&rasterizerDesc,
+            &pgpucontext->m_prasterizerstate);
+         if (FAILED(hr)) {
+            // Handle error (e.g., log or exit)
+            throw ::hresult_exception(hr);
+         }
+
+      }
+
+      pgpucontext->m_pcontext->RSSetState(pgpucontext->m_prasterizerstate);
+
    }
 
 
@@ -1829,7 +1920,9 @@ namespace gpu_directx11
 
       ::cast < render_target_view > pgpurendertargetview = m_pgpurendertarget;
 
-      pcontext->m_pcontext->ClearRenderTargetView(pgpurendertargetview->m_prendertargetview, clear);
+      ::cast < texture > ptexture = pgpurendertargetview->current_texture();
+
+      pcontext->m_pcontext->ClearRenderTargetView(ptexture->m_prendertargetview, clear);
 
       on_happening(e_happening_begin_render);
 

@@ -192,14 +192,12 @@ namespace draw2d_direct2d
 
       auto pgpudevice = pgpuapproach->get_gpu_device();
 
-      auto pgpucontext = pgpudevice->get_main_context();
+      m_pgpucontextDraw2d = pgpudevice->create_draw2d_context(::gpu::e_output_gpu_buffer, size);
 
-      m_pgpurendererDraw2d = pgpucontext->draw2d_renderer();
-
-      m_pgpurendererDraw2d->_send([this, pgpucontext, size]()
+      m_pgpucontextDraw2d->_send([this, size]()
          {
 
-            pgpucontext->create_offscreen_graphics_for_swap_chain_blitting(this, size);
+            m_pgpucontextDraw2d->create_offscreen_graphics_for_swap_chain_blitting(this, size);
 
          });
 
@@ -210,10 +208,10 @@ namespace draw2d_direct2d
    void graphics::_create_memory_graphics(const ::int_size & size)
    {
 
-      if (m_pgpurendererDraw2d)
+      if (m_pgpucontextDraw2d)
       {
 
-         if (m_pgpurendererDraw2d->m_pgpucontext->m_rectangle.size() == size)
+         if (m_pgpucontextDraw2d->m_rectangle.size() == size)
          {
 
             return;
@@ -252,7 +250,7 @@ namespace draw2d_direct2d
 
       auto pgpucontext = pgpudevice->get_main_context();
 
-      //m_pgpurendererDraw2d = pgpucontext->get_output_renderer();
+      //m_pgpucontextDraw2d->m_pgpurendererOutput2 = pgpucontext->get_output_renderer();
       //{
 
       //   m_pgpucontext->start_gpu_context(
@@ -6130,9 +6128,9 @@ namespace draw2d_direct2d
 
          //auto rectangleHost = m_puserinteraction->raw_rectangle();
 
-         //m_pgpurendererDraw2d->m_pgpucontext->m_pgpudevice->start_stacking_layers();
+         //m_pgpucontextDraw2d->m_pgpudevice->start_stacking_layers();
 
-         //m_pgpurendererDraw2d->start_layer(rectangleHost);
+         //m_pgpucontextDraw2d->m_pgpurendererOutput2->start_layer(rectangleHost);
 
          m_pd2d1rendertarget->BeginDraw();
 

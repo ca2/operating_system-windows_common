@@ -755,10 +755,10 @@ namespace gpu_directx11
    }
 
 
-   void context::_create_context_directx11(const ::gpu::start_context_t& startcontext)
+   void context::_create_context_directx11(::gpu::device* pgpudeviceParam, const ::gpu::enum_output& eoutput, ::windowing::window* pwindow, const ::int_size& size)
    {
 
-      ::cast < device > pgpudevice = m_pgpudevice;
+      ::cast < device > pgpudevice = pgpudeviceParam;
 
       if (!pgpudevice)
       {
@@ -776,12 +776,12 @@ namespace gpu_directx11
    }
 
 
-   void context::on_create_context(const ::gpu::start_context_t& startcontext)
+   void context::on_create_context(::gpu::device* pgpudevice, const ::gpu::enum_output& eoutput, ::windowing::window* pwindow, const ::int_size& size)
    {
 
-      m_pgpudevice = startcontext.m_pgpudevice;
+      m_pgpudevice = pgpudevice;
 
-      _create_context_directx11(startcontext);
+      _create_context_directx11(pgpudevice, eoutput, pwindow, size);
 
    }
 
@@ -1104,100 +1104,6 @@ namespace gpu_directx11
    {
 
       ::gpu::context::make_current();
-
-      ::cast < ::gpu_directx11::renderer > prendererOutput = m_pgpurendererOutput2;
-
-      if (prendererOutput)
-      {
-
-
-
-         ::cast < render_target_view > pgpurendertargetview = prendererOutput->m_pgpurendertarget;
-
-         if (pgpurendertargetview)
-         {
-
-            ::cast < texture > ptexture = pgpurendertargetview->current_texture();
-
-            if (ptexture)
-            {
-
-               m_pcontext->OMSetRenderTargets(1, ptexture->m_prendertargetview.pp(), nullptr);
-
-               D3D11_VIEWPORT vp = {};
-               vp.TopLeftX = 0;
-               vp.TopLeftY = 0;
-               vp.Width = static_cast<float>(m_rectangle.width());
-               vp.Height = static_cast<float>(m_rectangle.height());
-               vp.MinDepth = 0.0f;
-               vp.MaxDepth = 1.0f;
-
-               m_pcontext->RSSetViewports(1, &vp);
-
-            }
-
-            auto pdepthstencilstate = pgpurendertargetview->m_pdepthstencilstate;
-
-            if (pdepthstencilstate)
-            {
-
-               auto pdepthstencilview = pgpurendertargetview->m_pdepthstencilview;
-
-               if (!pdepthstencilview)
-               {
-
-                  throw ::exception(error_wrong_state);
-
-               }
-
-               m_pcontext->OMSetDepthStencilState(pdepthstencilstate, 0);
-
-               m_pcontext->OMSetRenderTargets(1, ptexture->m_prendertargetview.pp(), pdepthstencilview);
-
-               m_pcontext->ClearDepthStencilView(pdepthstencilview, D3D11_CLEAR_DEPTH, 1.0f, 0);
-
-            }
-
-            ::cast < offscreen_render_target_view > poffscreenrendertargetview = pgpurendertargetview;
-
-            if (poffscreenrendertargetview)
-            {
-
-               auto psamplerstate = poffscreenrendertargetview->m_psamplerstate;
-
-               if (psamplerstate)
-               {
-
-                  m_pcontext->PSSetSamplers(0, 1, psamplerstate.pp());
-
-               }
-
-            }
-
-         }
-
-      }
-
-      if (!m_prasterizerstate)
-      {
-
-         D3D11_RASTERIZER_DESC rasterizerDesc = {};
-         rasterizerDesc.FillMode = D3D11_FILL_SOLID;
-         rasterizerDesc.CullMode = D3D11_CULL_BACK;        // Cull back faces
-         rasterizerDesc.FrontCounterClockwise = false; // Treat CCW as front-facing
-         rasterizerDesc.DepthClipEnable = TRUE;
-
-         // 2. Create rasterizer state object
-         //ID3D11RasterizerState* pRasterizerState = nullptr;
-         HRESULT hr = m_pgpudevice->m_pdevice->CreateRasterizerState(&rasterizerDesc, &m_prasterizerstate);
-         if (FAILED(hr)) {
-            // Handle error (e.g., log or exit)
-            throw ::hresult_exception(hr);
-         }
-
-      }
-
-      m_pcontext->RSSetState(m_prasterizerstate);
 
    }
 
@@ -1917,7 +1823,7 @@ namespace gpu_directx11
    void context::update_global_ubo(const ::block& block)
    {
 
-      auto iFrameIndex = m_pgpurendererEngine->get_frame_index();
+      auto iFrameIndex = m_pgpurendererOutput2->get_frame_index();
 
       //m_uboBuffers[iFrameIndex]->writeToBuffer(block.data());
 

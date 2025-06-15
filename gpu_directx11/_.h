@@ -52,6 +52,8 @@ namespace gpu_directx11
 
    //class swap_chain_render_target_view;
 
+   class texture;
+
 
 } // namespace gpu_directx11
 
