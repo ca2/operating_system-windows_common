@@ -295,7 +295,7 @@ namespace gpu_directx11
    }
 
 
-   void shader::bind()
+   void shader::bind(::gpu::texture * pgputexture)
    {
 
       ::cast <context> pgpucontext = m_pgpurenderer->m_pgpucontext;

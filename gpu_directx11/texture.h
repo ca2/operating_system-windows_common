@@ -69,13 +69,13 @@ namespace gpu_directx11
       ~texture() override;
 
 
-      void initialize_gpu_texture(::gpu::renderer* prenderer, const ::int_size & size);
+      void initialize_gpu_texture(::gpu::renderer* prenderer, const ::int_rectangle & rectangleTarget) override;
 
       //void _new_state(ID3D12GraphicsCommandList* pcommandlist, D3D12_RESOURCE_STATES estate);
 
       //class d3d11* d3d11();
 
-      void blend(::gpu::texture* ptexture, const ::int_rectangle& rectangleTarget) override;
+      void blend(::gpu::texture* ptexture) override;
 
    };
 

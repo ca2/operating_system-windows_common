@@ -22,15 +22,15 @@ namespace gpu_directx11
    }
 
 
-   void texture::initialize_gpu_texture(::gpu::renderer* prenderer, const ::int_size& size) //, bool bCreateRenderTargetView, bool bCreateShaderResourceView)
+   void texture::initialize_gpu_texture(::gpu::renderer* prenderer, const ::int_rectangle& rectangleTarget) //, bool bCreateRenderTargetView, bool bCreateShaderResourceView)
    {
 
-      ::gpu::texture::initialize_gpu_texture(prenderer, size);
+      ::gpu::texture::initialize_gpu_texture(prenderer, rectangleTarget);
 
       // 1. Create offscreen render target texture
       D3D11_TEXTURE2D_DESC texDesc = {};
-      texDesc.Width = m_size.cx();
-      texDesc.Height = m_size.cy();
+      texDesc.Width = rectangleTarget.width();
+      texDesc.Height = rectangleTarget.height();
       texDesc.MipLevels = 1;
       texDesc.ArraySize = 1;
       texDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
@@ -163,7 +163,7 @@ namespace gpu_directx11
    //}
 
 
-   void texture::blend(::gpu::texture* ptexture, const ::int_rectangle& rectangleTarget)
+   void texture::blend(::gpu::texture* ptexture)
    {
 
       
