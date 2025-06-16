@@ -248,7 +248,11 @@ namespace draw2d_direct2d
 
       auto pgpudevice = pgpuapproach->get_gpu_device();
 
-      auto pgpucontext = pgpudevice->get_main_context();
+      m_pgpucontextDraw2d = pgpudevice->create_draw2d_context(
+         ::gpu::e_output_gpu_buffer,
+         size);
+
+      //auto pgpucontext = pgpudevice->get_main_context();
 
       //m_pgpucontextDraw2d->m_pgpurendererOutput2 = pgpucontext->get_output_renderer();
       //{
@@ -264,7 +268,7 @@ namespace draw2d_direct2d
 
       //}
 
-      pgpucontext->_send([this, size]()
+      m_pgpucontextDraw2d->_send([this, size]()
          {
 
             /*::direct2d::direct2d() = __allocate ::draw2d_direct2d::plugin();

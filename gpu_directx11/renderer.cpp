@@ -88,14 +88,14 @@ namespace gpu_directx11
    //}
 
 
-   void renderer::initialize_renderer(::gpu::context* pgpucontext, ::gpu::enum_output eoutput, ::gpu::enum_scene escene)
+   void renderer::initialize_renderer(::gpu::context* pgpucontext)
    {
 
-      ::gpu::renderer::initialize_renderer(pgpucontext, eoutput, escene);
+      ::gpu::renderer::initialize_renderer(pgpucontext);
 
       m_pgpucontext = pgpucontext;
 
-      if (eoutput == ::gpu::e_output_cpu_buffer)
+      if (m_pgpucontext->m_eoutput == ::gpu::e_output_cpu_buffer)
       {
 
          //m_pimpact = pgpucontext->m_pimpact;
@@ -216,7 +216,7 @@ namespace gpu_directx11
 
       m_sizeRenderer = size;
 
-      auto eoutput = m_eoutput;
+      auto eoutput = m_pgpucontext->m_eoutput;
 
       auto prendertargetOld = m_pgpurendertarget;
 
