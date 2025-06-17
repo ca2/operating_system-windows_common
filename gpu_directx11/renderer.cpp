@@ -323,6 +323,16 @@ namespace gpu_directx11
    }
 
 
+   ::pointer < ::gpu::render_target > renderer::allocate_offscreen_render_target()
+   {
+
+      auto poffscreenrendertargetview = __allocate offscreen_render_target_view();
+
+      return poffscreenrendertargetview;
+
+   }
+
+
    void renderer::createCommandBuffers()
    {
 

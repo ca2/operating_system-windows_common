@@ -208,6 +208,8 @@ namespace gpu_directx11
 
       //virtual void endDrawEndDraw();
 
+      virtual ::pointer < ::gpu::render_target > allocate_offscreen_render_target();
+
 
    };
 
