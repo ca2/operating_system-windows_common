@@ -412,7 +412,7 @@ namespace gpu_directx11
       //{
 
 
-      //	auto result = m_pvkcswapchain->acquireNextImage(&currentImageIndex);
+      //	auto result = m_pvkcswapchain->acquireNextImage(&m_uCurrentSwapChainImage);
 
       //	if (result == VK_ERROR_OUT_OF_DATE_KHR) {
       //		recreateRenderPass();
@@ -1662,7 +1662,7 @@ namespace gpu_directx11
       //   if (vkEndCommandBuffer(commandBuffer) != VK_SUCCESS) {
       //      throw ::exception(error_failed, "failed to record command buffer!");
       //   }
-      //   auto result = m_prendertargetview->submitCommandBuffers(&commandBuffer, &currentImageIndex);
+      //   auto result = m_prendertargetview->submitCommandBuffers(&commandBuffer, &m_uCurrentSwapChainImage);
       //   //if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR ||
       //   //	vkcWindow.wasWindowResized()) 
       //   //{
@@ -1700,7 +1700,7 @@ namespace gpu_directx11
       //	if (vkEndCommandBuffer(commandBuffer) != VK_SUCCESS) {
       //		throw ::exception(error_failed, "failed to record command buffer!");
       //	}
-      //	auto result = m_pvkcswapchain->submitCommandBuffers(&commandBuffer, &currentImageIndex);
+      //	auto result = m_pvkcswapchain->submitCommandBuffers(&commandBuffer, &m_uCurrentSwapChainImage);
       //	//if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR ||
       //	//	vkcWindow.wasWindowResized()) 
       //	//{
