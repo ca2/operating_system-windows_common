@@ -41,14 +41,10 @@ namespace gpu_directx11
    }
 
 
-   void offscreen_render_target_view::init()
+   void offscreen_render_target_view::on_init()
    {
       
-      set_ok_flag();
-
       m_pgpurenderer->restart_frame_counter();
-
-      ::gpu::render_target::init();
 
       createRenderPassImpl();
       createImageViews();

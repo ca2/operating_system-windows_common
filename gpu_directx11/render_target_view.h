@@ -90,7 +90,7 @@ namespace gpu_directx11
       //}
 
 
-      virtual void init();
+      void on_init() override;
       virtual void createRenderPassImpl();
       virtual void createImageViews();
       virtual void createDepthResources();

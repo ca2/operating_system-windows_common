@@ -192,12 +192,14 @@ namespace draw2d_direct2d
 
       auto pgpudevice = pgpuapproach->get_gpu_device();
 
-      m_pgpucontextDraw2d = pgpudevice->create_draw2d_context(::gpu::e_output_gpu_buffer, size);
+      m_pgpucontext = pgpudevice->create_draw2d_context(::gpu::e_output_gpu_buffer, size);
 
-      m_pgpucontextDraw2d->_send([this, size]()
+      m_pgpucontext->m_pgpucompositor = this;
+
+      m_pgpucontext->_send([this, size]()
          {
 
-            m_pgpucontextDraw2d->create_offscreen_graphics_for_swap_chain_blitting(this, size);
+            m_pgpucontext->create_offscreen_graphics_for_swap_chain_blitting(this, size);
 
          });
 
@@ -208,10 +210,10 @@ namespace draw2d_direct2d
    void graphics::_create_memory_graphics(const ::int_size & size)
    {
 
-      if (m_pgpucontextDraw2d)
+      if (m_pgpucontext)
       {
 
-         if (m_pgpucontextDraw2d->m_rectangle.size() == size)
+         if (m_pgpucontext->m_rectangle.size() == size)
          {
 
             return;
@@ -248,10 +250,11 @@ namespace draw2d_direct2d
 
       auto pgpudevice = pgpuapproach->get_gpu_device();
 
-      m_pgpucontextDraw2d = pgpudevice->create_draw2d_context(
+      m_pgpucontext = pgpudevice->create_draw2d_context(
          ::gpu::e_output_gpu_buffer,
          size);
 
+      m_pgpucontext->m_pgpucompositor = this;
       //auto pgpucontext = pgpudevice->get_main_context();
 
       //m_pgpucontextDraw2d->m_pgpurendererOutput2 = pgpucontext->get_output_renderer();
@@ -268,7 +271,7 @@ namespace draw2d_direct2d
 
       //}
 
-      m_pgpucontextDraw2d->_send([this, size]()
+      m_pgpucontext->_send([this, size]()
          {
 
             /*::direct2d::direct2d() = __allocate ::draw2d_direct2d::plugin();
@@ -6186,14 +6189,22 @@ namespace draw2d_direct2d
    }
 
 
-   ::int_rectangle graphics::end_gpu_layer()
+   void graphics::start_gpu_layer()
    {
 
-      auto rectangle = ::draw2d_gpu::graphics::end_gpu_layer();
+      ::draw2d_gpu::graphics::start_gpu_layer();
+      //m_pgpucontextDraw2d->m_pgpudevice->start_stacking_layers();
+      //m_pgpucontextDraw2d->m_pgpurendererOutput2->start_layer(m_puserinteraction->raw_rectangle());
 
       m_pdevicecontext->Clear();
 
-      return rectangle;
+   }
+
+
+   void graphics::end_gpu_layer()
+   {
+
+      ::draw2d_gpu::graphics::end_gpu_layer();
 
    }
 

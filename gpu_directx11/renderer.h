@@ -9,7 +9,7 @@
 #include "bred/gpu/renderer.h"
 
 
-constexpr unsigned int FRAME_OVERLAP = 2;
+//constexpr unsigned int FRAME_OVERLAP = 2;
 
 
 namespace gpu_directx11
@@ -83,7 +83,7 @@ namespace gpu_directx11
       //map < VkImage, ::pointer < descriptor > >       m_imagedescriptor;
       //map < VkImage, ::pointer < model > >       m_imagemodel;
       //::pointer < ::user::graphics3d >	m_pimpact;
-      ::pointer < context >				               m_pgpucontext;
+      //::pointer < context >				               m_pgpucontext;
       ::pointer < cpu_buffer_sampler >	               m_pcpubuffersampler;
       //::pointer<swap_chain_render_target_view>			m_pvkcswapchain;
       //::pointer<offscreen_render_target_view>			m_pvkcoffscreen;
@@ -113,7 +113,7 @@ namespace gpu_directx11
       //::collection::index m_iCurrentFrame2 = -1;
       //::collection::index m_iFrameSerial2 = -1;
 
-      ::int_size m_sizeRenderer;
+      //::int_size m_sizeRenderer;
 
 
       renderer();
@@ -159,7 +159,8 @@ namespace gpu_directx11
       //int get_frame_index() const override;
       //int get_frame_count() const override;
 
-      void defer_update_renderer() override;
+      //void defer_update_renderer() override;
+      void on_defer_update_renderer_allocate_render_target(::gpu::enum_output eoutput, const ::int_size& size, ::gpu::render_target* previous) override;
 
       //::pointer < ::graphics3d::frame> beginFrame() override;
       //void endFrame() override;

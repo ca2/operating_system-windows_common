@@ -3,16 +3,6 @@
 #include "physical_device.h"
 #include "render_target_view.h"
 #include "renderer.h"
-//// std
-//#include <array>
-//#include <cstdlib>
-//#include <cstring>
-//#include <iostream>
-//#include <limits>
-//#include <set>
-//#include <stdexcept>
-//#undef min
-//#undef max
 
 
 namespace gpu_directx11
@@ -26,79 +16,25 @@ namespace gpu_directx11
    }
 
 
-   ////render_target_view::render_target_view()
-   //render_target_view::render_target_view(renderer* pgpurenderer, const ::int_size & size):
-   //    m_pgpurenderer(pgpurenderer), m_size(size)
-   //{
-   //    //m_bNeedRebuild = false;
-   //   //m_pgpucontext = pgpurenderer->m_pgpucontext;
-   //   //init();
-   //   //m_prendertargetviewOld = nullptr;
-   //}
-
-   
-   //render_target_view::render_target_view(renderer * pgpurenderer, const ::int_size & size, ::pointer<render_target_view> previous):
-   //   m_pgpurenderer(pgpurenderer),
-   //   m_size(size),
-   //   m_prendertargetviewOld( previous)
-   //{
-   //    m_bNeedRebuild = false;
-   //   m_pgpucontext = pgpurenderer->m_pgpucontext;
-   //   //init();
-   //   // Cleans up old swap chain since it's no longer needed after resizing
-   //   //m_prendertargetviewOld = nullptr;
-   //}
-   
-   
-
-   
-   void render_target_view::init() 
+   render_target_view::~render_target_view()
    {
+      
+
+   }
+
+
+   void render_target_view::on_init()
+   {
+
       createRenderPassImpl();
       createImageViews();
       createRenderPass();
       createDepthResources();
       createFramebuffers();
       createSyncObjects();
-      // Cleans up old swap chain since it's no longer needed after resizing
+
       m_prendertargetviewOld = nullptr;
 
-   }
-
-
-   render_target_view::~render_target_view()
-   {
-      //for (auto imageView : m_imageviews) 
-      //{
-      //   vkDestroyImageView(m_pgpucontext->logicalDevice(), imageView, nullptr);
-      //}
-      //m_imageviews.clear();
-
-      //if (swapChain != nullptr) {
-      //   vkDestroySwapchainKHR(m_pgpucontext->logicalDevice(), swapChain, nullptr);
-      //   swapChain = nullptr;
-      //}
-
-      //for (int i = 0; i < depthImages.size(); i++) 
-      //{
-      //   vkDestroyImageView(m_pgpucontext->logicalDevice(), depthImageViews[i], nullptr);
-      //   vkDestroyImage(m_pgpucontext->logicalDevice(), depthImages[i], nullptr);
-      //   vkFreeMemory(m_pgpucontext->logicalDevice(), depthImageMemorys[i], nullptr);
-      //}
-
-      //for (auto framebuffer : m_framebuffers)
-      //{
-      //   vkDestroyFramebuffer(m_pgpucontext->logicalDevice(), framebuffer, nullptr);
-      //}
-
-      //vkDestroyRenderPass(m_pgpucontext->logicalDevice(), m_vkrendertargetview, nullptr);
-
-      //// cleanup synchronization objects
-      //for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++)
-      //{
-      //   vkDestroySemaphore(m_pgpucontext->logicalDevice(), renderFinishedSemaphores[i], nullptr);
-      //   vkDestroySemaphore(m_pgpucontext->logicalDevice(), imageAvailableSemaphores[i], nullptr);
-      //}
    }
 
 

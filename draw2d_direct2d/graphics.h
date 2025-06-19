@@ -80,7 +80,8 @@ namespace draw2d_direct2d
       void on_end_draw() override;
 
 
-      ::int_rectangle end_gpu_layer() override;
+      void start_gpu_layer() override;
+      void end_gpu_layer() override;
 
 
       using ::draw2d::graphics::set;

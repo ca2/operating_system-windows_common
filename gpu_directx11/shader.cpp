@@ -403,7 +403,7 @@ namespace gpu_directx11
       if (m_ppixelshader)
       {
 
-         pgpucontext->m_pcontext->PSSetShader(m_ppixelshader, nullptr, 0);
+         pgpucontext->m_pcontext->PSSetShader(nullptr, nullptr, 0);
 
       }
 
