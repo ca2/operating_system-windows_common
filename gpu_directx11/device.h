@@ -5,8 +5,8 @@
 
 #include "bred/gpu/device.h"
 #include "acme/prototype/prototype/memory.h"
+#include "acme_windows_common/dxgi_device_source.h"
 //#include "directx11/directx11.h"
-
 
 
 namespace gpu_directx11
@@ -14,8 +14,8 @@ namespace gpu_directx11
 
 
    class CLASS_DECL_GPU_DIRECTX11 device :
-      virtual public ::gpu::device//,
-      //virtual public ::directx11::directx11
+      virtual public ::gpu::device,
+      virtual public ::dxgi_device_source
    {
    public:
 
@@ -124,7 +124,9 @@ namespace gpu_directx11
 
       virtual void initialize_cpu_buffer(const ::int_rectangle& rectanglePlacement);
 
-      virtual void initialize_swap_chain(::windowing::window * pwindow);
+      virtual void initialize_d3d11_device();
+
+      //svirtual void initialize_swap_chain(::windowing::window * pwindow);
 
       void initialize_gpu_device_for_swap_chain(::gpu::approach* pgpuapproach, ::windowing::window *pwindow) override;
       void initialize_gpu_device_for_off_screen(::gpu::approach* pgpuapproach, const ::int_rectangle& rectanglePlacement) override;
@@ -280,7 +282,7 @@ namespace gpu_directx11
 
       ID3D11Device* draw_get_d3d11_device();
       ID3D11Device1* draw_get_d3d11_device1();
-      IDXGIDevice* draw_get_dxgi_device();
+      IDXGIDevice* _get_dxgi_device() override;
 
       int get_type_size(::gpu::enum_type etype) override;
       void set_mat4(void* p, const ::glm::mat4& mat4) override;

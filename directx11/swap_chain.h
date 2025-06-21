@@ -16,42 +16,42 @@ namespace directx11
    public:
 
 
-      D3D11_TEXTURE2D_DESC texDesc = {};
+      //D3D11_TEXTURE2D_DESC texDesc = {};
 
       ::comptr<IDXGIDevice>               m_pdxgidevice_2;
-      ::comptr<IDXGISurface>              m_pdxgisurface_2;
+      //::comptr<IDXGISurface>              m_pdxgisurface_2;
 
       ::comptr<IDXGISwapChain1> m_pdxgiswapchain1;
 
 
 
-      ::comptr<ID3D11Texture2D> m_ptextureShared;
+      //::comptr<ID3D11Texture2D> m_ptextureShared;
 
       comptr<IDCompositionDevice> m_pdcompositiondevice;
       comptr<IDCompositionTarget> m_pdcompositiontarget;
       comptr<IDCompositionVisual> m_pdcompositionvisual;
 
-      ::comptr<ID3D11Texture2D>                       m_ptextureBackBuffer;
-      ::comptr<ID3D11RenderTargetView>                m_prendertargetviewBackBuffer;
+      //::comptr<ID3D11Texture2D>                       m_ptextureBackBuffer;
+      //::comptr<ID3D11RenderTargetView>                m_prendertargetviewBackBuffer;
 
-      ::comptr<ID3D11VertexShader> m_pvertexshaderFullscreen;
-      ::comptr<ID3D11PixelShader> m_ppixelshaderFullscreen;
+      //::comptr<ID3D11VertexShader> m_pvertexshaderFullscreen;
+      //::comptr<ID3D11PixelShader> m_ppixelshaderFullscreen;
 
-      ::comptr<ID3D11ShaderResourceView> m_pshaderresourceviewShader;
-      ::comptr<ID3D11SamplerState> m_psamplerstateLinear;
+      //::comptr<ID3D11ShaderResourceView> m_pshaderresourceviewShader;
+      //::comptr<ID3D11SamplerState> m_psamplerstateLinear;
 
 
       swap_chain();
       ~swap_chain() override;
 
 
-      void initialize_gpu_swap_chain(::gpu::device* pdevice, ::windowing::window* pwindow) override;
+      void initialize_swap_chain_window(::gpu::device* pgpudevice, ::windowing::window* pwindow) override;
 
 
-      virtual void _initialize_direct_composition(::gpu::device* pdevice, ::windowing::window* pwindow);
+      void initialize_gpu_swap_chain(::gpu::renderer * pgpurenderer) override;
 
 
-      virtual void _update_swap_chain();
+      //virtual void _update_swap_chain();
 
 
       virtual ::string _fullscreen_vertex_shader_hlsl();
@@ -63,7 +63,7 @@ namespace directx11
 
       virtual IDXGIDevice* _get_dxgi_device();
 
-      virtual IDXGISurface* _get_dxgi_surface();
+      virtual comptr < IDXGISurface> _create_dxgi_surface(const ::int_size & size);
 
 
    };

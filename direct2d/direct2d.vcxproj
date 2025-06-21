@@ -693,7 +693,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="aaa2_graphics.h" />
-    <ClInclude Include="swap_chain.h" />
     <ClInclude Include="direct2d.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="aaa_multithreading_lock.h" />
@@ -702,7 +701,6 @@
     <ClInclude Include="_.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="swap_chain.cpp" />
     <ClCompile Include="direct2d.cpp" />
     <ClCompile Include="geometry.cpp" />
     <ClCompile Include="geometry_sink_text_renderer.cpp" />

@@ -1,12 +1,16 @@
 #include "framework.h"
 #include "direct2d.h"
-#include "swap_chain.h"
+//#include "swap_chain.h"
+#include "acme/exception/interface_only.h"
 #include "acme/graphics/write_text/font_weight.h"
 #include "acme/prototype/geometry2d/rectangle.h"
+#include "acme_windows_common/dxgi_device_source.h"
 #include "acme_windows_common/hresult_exception.h"
 #include "bred/gpu/approach.h"
 #include "bred/gpu/device.h"
 #include "aura/windowing/window.h"
+#include "directx11/directx11.h"
+#include "gpu_directx11/swap_chain.h"
 
 
 
@@ -65,16 +69,27 @@ namespace direct2d
    }
 
 
-   comptr<ID2D1Device> direct2d::create_device(::windowing::window* pwindow, const ::int_rectangle& rectanglePlacement)
+   comptr<ID2D1Device> direct2d::create_d2d1_device()
    {
 
       ::cast < ::gpu::approach > pgpuapproach = m_papplication->get_gpu_approach();
 
       ::cast < ::gpu::device > pgpudevice = pgpuapproach->get_gpu_device();
 
-      ::cast < ::direct2d::swap_chain > pswapchain = pgpudevice->get_swap_chain();
+      //if (m_papplication->m_gpu.m_bUseSwapChainWindow)
+      //{
 
-      auto pdxgidevice = pswapchain->_get_dxgi_device();
+      //   ::cast < ::gpu_directx11::swap_chain > pswapchain = pgpudevice->get_swap_chain();
+
+      //   pdxgidevice = pswapchain->_get_dxgi_device();
+
+      //}
+      //else
+      //{
+
+      ::cast < ::dxgi_device_source > pdxgidevicesource = pgpudevice;
+
+      auto pdxgidevice = pdxgidevicesource->_get_dxgi_device();
 
       comptr<ID2D1Device> pd2d1device;
 
@@ -149,13 +164,13 @@ namespace direct2d
    }
 
    
-   ID2D1Device * direct2d::d2d1_device(::windowing::window* pwindow, const ::int_rectangle& rectanglePlacement)
+   ID2D1Device * direct2d::d2d1_device()
    {
 
       if (!m_pd2d1device)
       {
 
-         m_pd2d1device = create_device(pwindow, rectanglePlacement);
+         m_pd2d1device = create_d2d1_device();
 
       }
 
@@ -164,13 +179,13 @@ namespace direct2d
    }
 
    
-   ID2D1DeviceContext* direct2d::default_d2d1_device_context(::windowing::window* pwindow, const ::int_rectangle& rectanglePlacement)
+   ID2D1DeviceContext* direct2d::default_d2d1_device_context()
    {
 
       if (!m_pd2d1devicecontextDefault)
       {
 
-         m_pd2d1devicecontextDefault = create_d2d1_device_context(pwindow, rectanglePlacement);
+         m_pd2d1devicecontextDefault = create_d2d1_device_context();
 
       }
 
@@ -179,10 +194,10 @@ namespace direct2d
    }
 
 
-   comptr<ID2D1DeviceContext> direct2d::create_d2d1_device_context(::windowing::window* pwindow, const ::int_rectangle& rectanglePlacement)
+   comptr<ID2D1DeviceContext> direct2d::create_d2d1_device_context()
    {
 
-      auto pd2d1device = d2d1_device(pwindow, rectanglePlacement);
+      auto pd2d1device = d2d1_device();
 
       comptr<ID2D1DeviceContext> pd2d1devicecontext;
       
@@ -208,12 +223,12 @@ namespace direct2d
    }
 
 
-   ID2D1DeviceContext* direct2d::default_d2d1_device_context()
-   {
+   //ID2D1DeviceContext* direct2d::default_d2d1_device_context()
+   //{
 
-      return m_pd2d1devicecontextDefault;
+   //   return m_pd2d1devicecontextDefault;
 
-   }
+   //}
 
 
    comptr < ID2D1PathGeometry1 > direct2d::create_rectangle_path_geometry(const ::double_rectangle & rectangle)
@@ -293,6 +308,7 @@ namespace direct2d
       //::acme::del(g_pdxgidebug);
 
    }
+
 
 
 } // namespace draw2d_direct2d

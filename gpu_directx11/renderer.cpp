@@ -9,6 +9,7 @@
 #include "swap_chain_render_target_view.h"
 #include "initializers.h"
 #include "bred/gpu/cpu_buffer.h"
+#include "bred/gpu/render_state.h"
 #include "bred/gpu/swap_chain.h"
 #include "gpu_directx11/shader.h"
 #include "acme/parallelization/synchronous_lock.h"
@@ -88,10 +89,10 @@ namespace gpu_directx11
    //}
 
 
-   void renderer::initialize_renderer(::gpu::context* pgpucontext)
+   void renderer::initialize_gpu_renderer(::gpu::context* pgpucontext)
    {
 
-      ::gpu::renderer::initialize_renderer(pgpucontext);
+      ::gpu::renderer::initialize_gpu_renderer(pgpucontext);
 
       m_pgpucontext = pgpucontext;
 
@@ -199,230 +200,107 @@ namespace gpu_directx11
    }
 
 
-   void renderer::on_defer_update_renderer_allocate_render_target(::gpu::enum_output eoutput, const ::int_size& size, ::gpu::render_target* previous)
-   {
+   //void renderer::on_defer_update_renderer_allocate_render_target(::gpu::enum_output eoutput, const ::int_size& size, ::gpu::render_target* previous)
+   //{
 
-      //auto eoutput = m_pgpucontext->m_eoutput;
+   //   //auto eoutput = m_pgpucontext->m_eoutput;
 
-      auto prendertargetOld = m_pgpurendertarget;
+   //   auto prendertargetOld = m_pgpurendertarget;
 
-      if (eoutput == ::gpu::e_output_cpu_buffer
-         || eoutput == ::gpu::e_output_gpu_buffer)
-      {
-
-         //auto poffscreenrendertargetview = __allocate offscreen_render_target_view(this, size, m_pgpurendertarget);
-         auto poffscreenrendertargetview = __allocate offscreen_render_target_view();
-
-         //#ifdef WINDOWS_DESKTOP
-         //         poffscreenrendertargetview->m_formatImage = VK_FORMAT_B8G8R8A8_UNORM;
-         //#else
-         //         poffscreenrendertargetview->m_formatImage = VK_FORMAT_R8G8B8A8_UNORM;
-         //#endif
-         m_pgpurendertarget = poffscreenrendertargetview;
-         //         //m_prendererResolve.release();
-         //
-      }
-      else if (eoutput == ::gpu::e_output_swap_chain)
-      {
-
-         //m_prendertargetview = __allocate swap_chain_render_target_view(this, size, m_prendertargetview);
-         //m_prendererResolve.release();
-
-      }
-      //      else if (eoutput == ::gpu::e_output_gpu_buffer)
-      //      {
-      //
-      //         auto poffscreenrendertargetview = __allocate offscreen_render_target_view(this, m_extentRenderer, m_prendertargetview);
-      //#ifdef WINDOWS_DESKTOP
-      //         poffscreenrendertargetview->m_formatImage = VK_FORMAT_B8G8R8A8_UNORM;
-      //#else
-      //         poffscreenrendertargetview->m_formatImage = VK_FORMAT_R8G8B8A8_UNORM;
-      //#endif
-      //         m_prendertargetview = poffscreenrendertargetview;
-      //         //m_prendererResolve;
-      //
-      //      }
-      //      else if (eoutput == ::gpu::e_output_color_and_alpha_accumulation_buffers)
-      //      {
-      //
-      //         auto paccumulationrendertargetview = __allocate accumulation_render_target_view(this, m_extentRenderer, m_prendertargetview);
-      //         paccumulationrendertargetview->m_formatImage = VK_FORMAT_R32G32B32A32_SFLOAT;
-      //         paccumulationrendertargetview->m_formatAlphaAccumulation = VK_FORMAT_R32_SFLOAT;
-      //         m_prendertargetview = paccumulationrendertargetview;
-      //
-      //         //__construct_new(m_prendererResolve);
-      //
-      //         //m_prendererResolve->initialize_renderer(m_pgpucontext, ::gpu::e_output_resolve_color_and_alpha_accumulation_buffers);
-      //
-      //         //m_prendererResolve->set_placement(m_pgpucontext->rectangle);
-      //         //
-      //         //            auto poffscreenrendertargetview = __allocate offscreen_render_target_view(m_pgpucontext, m_extentRenderer, m_prendertargetviewResolve);
-      //         //#ifdef WINDOWS_DESKTOP
-      //         //            poffscreenrendertargetview->m_formatImage = VK_FORMAT_B8G8R8A8_UNORM;
-      //         //#else
-      //         //            poffscreenrendertargetview->m_formatImage = VK_FORMAT_R8G8B8A8_UNORM;
-      //         //#endif
-      //         //            m_prendertargetviewResolve = poffscreenrendertargetview;
-      //      }
-      //      else if (eoutput == ::gpu::e_output_resolve_color_and_alpha_accumulation_buffers)
-      //      {
-      //
-      //         auto poffscreenrendertargetview = __allocate offscreen_render_target_view(this, m_extentRenderer, m_prendertargetview);
-      //#ifdef WINDOWS_DESKTOP
-      //         poffscreenrendertargetview->m_formatImage = VK_FORMAT_B8G8R8A8_UNORM;
-      //#else
-      //         poffscreenrendertargetview->m_formatImage = VK_FORMAT_R8G8B8A8_UNORM;
-      //#endif
-      //         m_prendertargetview = poffscreenrendertargetview;
-      //
-      //      }
-      //      else
-      //      {
-      //
-      //         throw ::exception(error_wrong_state, "Unexpected gpu e_output");
-      //
-      //      }
-      //
-   //   if (!m_pgpurendertarget->has_ok_flag() && m_sizeRenderer.area() > 0)
+   //   if (eoutput == ::gpu::e_output_cpu_buffer
+   //      || eoutput == ::gpu::e_output_gpu_buffer)
    //   {
-   //
-   //      m_pgpurendertarget->initialize_render_target(this, size, prendertargetOld);
-   //
-   //      m_pgpurendertarget->init();
-   //
+
+   //      //auto poffscreenrendertargetview = __allocate offscreen_render_target_view(this, size, m_pgpurendertarget);
+   //      auto poffscreenrendertargetview = __allocate offscreen_render_target_view();
+
+   //      //#ifdef WINDOWS_DESKTOP
+   //      //         poffscreenrendertargetview->m_formatImage = VK_FORMAT_B8G8R8A8_UNORM;
+   //      //#else
+   //      //         poffscreenrendertargetview->m_formatImage = VK_FORMAT_R8G8B8A8_UNORM;
+   //      //#endif
+   //      m_pgpurendertarget = poffscreenrendertargetview;
+   //      //         //m_prendererResolve.release();
+   //      //
    //   }
-   //
+   //   else if (eoutput == ::gpu::e_output_swap_chain)
+   //   {
+
+   //      auto pswapchain = m_pgpucontext->m_pgpudevice->get_swap_chain();
+
+   //      m_pgpurendertarget = pswapchain;
+
+   //      //m_prendertargetview = __allocate swap_chain_render_target_view(this, size, m_prendertargetview);
+   //      //m_prendererResolve.release();
+
+   //   }
+   //   //      else if (eoutput == ::gpu::e_output_gpu_buffer)
+   //   //      {
+   //   //
+   //   //         auto poffscreenrendertargetview = __allocate offscreen_render_target_view(this, m_extentRenderer, m_prendertargetview);
+   //   //#ifdef WINDOWS_DESKTOP
+   //   //         poffscreenrendertargetview->m_formatImage = VK_FORMAT_B8G8R8A8_UNORM;
+   //   //#else
+   //   //         poffscreenrendertargetview->m_formatImage = VK_FORMAT_R8G8B8A8_UNORM;
+   //   //#endif
+   //   //         m_prendertargetview = poffscreenrendertargetview;
+   //   //         //m_prendererResolve;
+   //   //
+   //   //      }
+   //   //      else if (eoutput == ::gpu::e_output_color_and_alpha_accumulation_buffers)
+   //   //      {
+   //   //
+   //   //         auto paccumulationrendertargetview = __allocate accumulation_render_target_view(this, m_extentRenderer, m_prendertargetview);
+   //   //         paccumulationrendertargetview->m_formatImage = VK_FORMAT_R32G32B32A32_SFLOAT;
+   //   //         paccumulationrendertargetview->m_formatAlphaAccumulation = VK_FORMAT_R32_SFLOAT;
+   //   //         m_prendertargetview = paccumulationrendertargetview;
+   //   //
+   //   //         //__construct_new(m_prendererResolve);
+   //   //
+   //   //         //m_prendererResolve->initialize_renderer(m_pgpucontext, ::gpu::e_output_resolve_color_and_alpha_accumulation_buffers);
+   //   //
+   //   //         //m_prendererResolve->set_placement(m_pgpucontext->rectangle);
+   //   //         //
+   //   //         //            auto poffscreenrendertargetview = __allocate offscreen_render_target_view(m_pgpucontext, m_extentRenderer, m_prendertargetviewResolve);
+   //   //         //#ifdef WINDOWS_DESKTOP
+   //   //         //            poffscreenrendertargetview->m_formatImage = VK_FORMAT_B8G8R8A8_UNORM;
+   //   //         //#else
+   //   //         //            poffscreenrendertargetview->m_formatImage = VK_FORMAT_R8G8B8A8_UNORM;
+   //   //         //#endif
+   //   //         //            m_prendertargetviewResolve = poffscreenrendertargetview;
+   //   //      }
+   //   //      else if (eoutput == ::gpu::e_output_resolve_color_and_alpha_accumulation_buffers)
+   //   //      {
+   //   //
+   //   //         auto poffscreenrendertargetview = __allocate offscreen_render_target_view(this, m_extentRenderer, m_prendertargetview);
+   //   //#ifdef WINDOWS_DESKTOP
+   //   //         poffscreenrendertargetview->m_formatImage = VK_FORMAT_B8G8R8A8_UNORM;
+   //   //#else
+   //   //         poffscreenrendertargetview->m_formatImage = VK_FORMAT_R8G8B8A8_UNORM;
+   //   //#endif
+   //   //         m_prendertargetview = poffscreenrendertargetview;
+   //   //
+   //   //      }
+   //   //      else
+   //   //      {
+   //   //
+   //   //         throw ::exception(error_wrong_state, "Unexpected gpu e_output");
+   //   //
+   //   //      }
+   //   //
+   ////   if (!m_pgpurendertarget->has_ok_flag() && m_sizeRenderer.area() > 0)
+   ////   {
+   ////
+   ////      m_pgpurendertarget->initialize_render_target(this, size, prendertargetOld);
+   ////
+   ////      m_pgpurendertarget->init();
+   ////
+   ////   }
+   ////
+   ////}
+   ////
+
    //}
-   //
-
-   }
-
-
-//   void renderer::defer_update_renderer()
-//   {
-//
-//      auto rectangleContext = m_pgpucontext->rectangle();
-//
-//      auto sizeContext = rectangleContext.size();
-//
-//      if (m_sizeRenderer == sizeContext)
-//      {
-//
-//         return;
-//
-//      }
-//
-//      m_bNeedToRecreateSwapChain = true;
-//
-//      auto size = m_pgpucontext->rectangle().size();
-//
-//      m_sizeRenderer = size;
-//
-//      auto eoutput = m_pgpucontext->m_eoutput;
-//
-//      auto prendertargetOld = m_pgpurendertarget;
-//
-//      if (eoutput == ::gpu::e_output_cpu_buffer
-//         || eoutput == ::gpu::e_output_gpu_buffer)
-//      {
-//
-//         //auto poffscreenrendertargetview = __allocate offscreen_render_target_view(this, size, m_pgpurendertarget);
-//         auto poffscreenrendertargetview = __allocate offscreen_render_target_view();
-//
-////#ifdef WINDOWS_DESKTOP
-////         poffscreenrendertargetview->m_formatImage = VK_FORMAT_B8G8R8A8_UNORM;
-////#else
-////         poffscreenrendertargetview->m_formatImage = VK_FORMAT_R8G8B8A8_UNORM;
-////#endif
-//         m_pgpurendertarget = poffscreenrendertargetview;
-////         //m_prendererResolve.release();
-////
-//      }
-//      else if (eoutput == ::gpu::e_output_swap_chain)
-//      {
-//
-//         //m_prendertargetview = __allocate swap_chain_render_target_view(this, size, m_prendertargetview);
-//         //m_prendererResolve.release();
-//
-//      }
-////      else if (eoutput == ::gpu::e_output_gpu_buffer)
-////      {
-////
-////         auto poffscreenrendertargetview = __allocate offscreen_render_target_view(this, m_extentRenderer, m_prendertargetview);
-////#ifdef WINDOWS_DESKTOP
-////         poffscreenrendertargetview->m_formatImage = VK_FORMAT_B8G8R8A8_UNORM;
-////#else
-////         poffscreenrendertargetview->m_formatImage = VK_FORMAT_R8G8B8A8_UNORM;
-////#endif
-////         m_prendertargetview = poffscreenrendertargetview;
-////         //m_prendererResolve;
-////
-////      }
-////      else if (eoutput == ::gpu::e_output_color_and_alpha_accumulation_buffers)
-////      {
-////
-////         auto paccumulationrendertargetview = __allocate accumulation_render_target_view(this, m_extentRenderer, m_prendertargetview);
-////         paccumulationrendertargetview->m_formatImage = VK_FORMAT_R32G32B32A32_SFLOAT;
-////         paccumulationrendertargetview->m_formatAlphaAccumulation = VK_FORMAT_R32_SFLOAT;
-////         m_prendertargetview = paccumulationrendertargetview;
-////
-////         //__construct_new(m_prendererResolve);
-////
-////         //m_prendererResolve->initialize_renderer(m_pgpucontext, ::gpu::e_output_resolve_color_and_alpha_accumulation_buffers);
-////
-////         //m_prendererResolve->set_placement(m_pgpucontext->rectangle);
-////         //
-////         //            auto poffscreenrendertargetview = __allocate offscreen_render_target_view(m_pgpucontext, m_extentRenderer, m_prendertargetviewResolve);
-////         //#ifdef WINDOWS_DESKTOP
-////         //            poffscreenrendertargetview->m_formatImage = VK_FORMAT_B8G8R8A8_UNORM;
-////         //#else
-////         //            poffscreenrendertargetview->m_formatImage = VK_FORMAT_R8G8B8A8_UNORM;
-////         //#endif
-////         //            m_prendertargetviewResolve = poffscreenrendertargetview;
-////      }
-////      else if (eoutput == ::gpu::e_output_resolve_color_and_alpha_accumulation_buffers)
-////      {
-////
-////         auto poffscreenrendertargetview = __allocate offscreen_render_target_view(this, m_extentRenderer, m_prendertargetview);
-////#ifdef WINDOWS_DESKTOP
-////         poffscreenrendertargetview->m_formatImage = VK_FORMAT_B8G8R8A8_UNORM;
-////#else
-////         poffscreenrendertargetview->m_formatImage = VK_FORMAT_R8G8B8A8_UNORM;
-////#endif
-////         m_prendertargetview = poffscreenrendertargetview;
-////
-////      }
-////      else
-////      {
-////
-////         throw ::exception(error_wrong_state, "Unexpected gpu e_output");
-////
-////      }
-////
-//      if (!m_pgpurendertarget->has_ok_flag() && m_sizeRenderer.area() > 0)
-//      {
-//
-//         m_pgpurendertarget->initialize_render_target(this, size, prendertargetOld);
-//
-//         m_pgpurendertarget->init();
-//
-//      }
-//
-//      //if (m_prendererResolve)
-//      //{
-//
-//      //	if (m_prendererResolve->m_prendertargetview->m_images.is_empty())
-//      //	{
-//
-//      //		m_prendererResolve->defer_update_render_target_view();
-//
-//      //	}
-//
-//      //}
-//
-//      m_bNeedToRecreateSwapChain = false;
-//
-//   }
 
 
    ::pointer < ::gpu::render_target > renderer::allocate_offscreen_render_target()
@@ -548,7 +426,8 @@ namespace gpu_directx11
 
       //}
 
-      _on_begin_render();
+      throw todo;
+      //_on_begin_render();
 
    }
 
@@ -693,140 +572,60 @@ namespace gpu_directx11
    }
 
 
-   void renderer::cpu_buffer_sampler::sample(ID3D11Texture2D * ptexture)
+   void renderer::cpu_buffer_sampler::sample(ID3D11Texture2D * ptextureSource)
    {
 
-      D3D11_TEXTURE2D_DESC desc;
+      D3D11_TEXTURE2D_DESC texture2ddescSource;
 
-      ptexture->GetDesc(&desc);
+      ptextureSource->GetDesc(&texture2ddescSource);
 
       ::cast < ::gpu_directx11::context > pcontext = m_pgpucontext;
 
-      if (desc.Width != m_size.width() || desc.Height != m_size.height())
+      if (!m_ptextureStaging
+         || texture2ddescSource.Width != m_sizeStaging.width()
+         || texture2ddescSource.Height != m_sizeStaging.height())
       {
 
          m_ptextureStaging.Release();
 
-         //m_pimagetarget->m_imagebuffer.set_storing_fla
-         //if (outWidth) *outWidth = desc.Width;
-         //if (outHeight) *outHeight = desc.Height;
+         if (texture2ddescSource.Format != DXGI_FORMAT_B8G8R8A8_UNORM)
+         {
 
-         if (desc.Format != DXGI_FORMAT_B8G8R8A8_UNORM) {
-            printf("Unsupported format for readback.\n");
+            warning() << "Unsupported format for readback.";
+
             throw ::exception(error_wrong_state);
+
          }
 
-         D3D11_TEXTURE2D_DESC stagingDesc = desc;
-         stagingDesc.BindFlags = 0;
-         stagingDesc.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
-         stagingDesc.Usage = D3D11_USAGE_STAGING;
-         stagingDesc.MiscFlags = 0;
+         D3D11_TEXTURE2D_DESC texture2ddescStaging = texture2ddescSource;
+         texture2ddescStaging.BindFlags = 0;
+         texture2ddescStaging.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
+         texture2ddescStaging.Usage = D3D11_USAGE_STAGING;
+         texture2ddescStaging.MiscFlags = 0;
 
          ::cast < ::gpu_directx11::device > pdevice = pcontext->m_pgpudevice;
 
-         if (FAILED(pdevice->m_pdevice->CreateTexture2D(&stagingDesc, NULL, &m_ptextureStaging)))
+         if (FAILED(pdevice->m_pdevice->CreateTexture2D(
+            &texture2ddescStaging, NULL, &m_ptextureStaging)))
          {
-            printf("Failed to create staging texture.\n");
+            
+            warning() << "Failed to create staging texture.";
+
             throw ::exception(error_wrong_state);
+
          }
 
-         m_size.cx() = desc.Width;
-         m_size.cy() = desc.Height;
+         m_sizeStaging.cx() = texture2ddescSource.Width;
 
+         m_sizeStaging.cy() = texture2ddescSource.Height;
 
       }
 
       pcontext->m_pcontext->Flush();
 
-      pcontext->m_pcontext->CopyResource((ID3D11Resource*)m_ptextureStaging, (ID3D11Resource*)ptexture);
-
-
-      //stagingTexture->lpVtbl->Release(stagingTexture);
-
-      //return rgbaData;
-
-  //    if (!m_vkimage || !m_vkdevicememory)
-  //    {
-
-  //       return;
-
-  //    }
-
-
-  //    // Create the linear tiled destination image to copy to and to read the memory from
-
-  //// Do the actual blit from the offscreen image to our host visible destination image
-  //    VkCommandBufferAllocateInfo cmdBufAllocateInfo = initializers::commandBufferAllocateInfo(m_pgpucontext->m_pgpudevice->getCommandPool(), VK_COMMAND_BUFFER_LEVEL_PRIMARY, 1);
-  //    VkCommandBuffer copyCmd;
-  //    VK_CHECK_RESULT(vkAllocateCommandBuffers(m_pgpucontext->logicalDevice(), &cmdBufAllocateInfo, &copyCmd));
-  //    VkCommandBufferBeginInfo cmdBufInfo = initializers::commandBufferBeginInfo();
-  //    VK_CHECK_RESULT(vkBeginCommandBuffer(copyCmd, &cmdBufInfo));
-
-  //    // Transition source image to transfer destination layout
-  //    insertImageMemoryBarrier(
-  //       copyCmd,
-  //       vkimage,
-  //       0,
-  //       VK_ACCESS_TRANSFER_WRITE_BIT,
-  //       VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
-  //       VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL,
-  //       VK_PIPELINE_STAGE_TRANSFER_BIT,
-  //       VK_PIPELINE_STAGE_TRANSFER_BIT,
-  //       VkImageSubresourceRange{ VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1 });
-
-  //    // Transition destination image to transfer destination layout
-  //    insertImageMemoryBarrier(
-  //       copyCmd,
-  //       m_vkimage,
-  //       0,
-  //       VK_ACCESS_TRANSFER_WRITE_BIT,
-  //       VK_IMAGE_LAYOUT_UNDEFINED,
-  //       VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
-  //       VK_PIPELINE_STAGE_TRANSFER_BIT,
-  //       VK_PIPELINE_STAGE_TRANSFER_BIT,
-  //       VkImageSubresourceRange{ VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1 });
-
-  //    // colorAttachment.image is already in VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL, and does not need to be transitioned
-
-  //    VkImageCopy imageCopyRegion{};
-  //    imageCopyRegion.srcSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-  //    imageCopyRegion.srcSubresource.layerCount = 1;
-  //    imageCopyRegion.dstSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-  //    imageCopyRegion.dstSubresource.layerCount = 1;
-  //    imageCopyRegion.extent.width = m_vkextent2d.width;
-  //    imageCopyRegion.extent.height = m_vkextent2d.height;
-  //    imageCopyRegion.extent.depth = 1;
-
-  //    vkCmdCopyImage(
-  //       copyCmd,
-  //       //colorAttachment.image, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL,
-  //       vkimage, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL,
-  //       m_vkimage, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
-  //       1,
-  //       &imageCopyRegion);
-
-  //    // Transition destination image to general layout, which is the required layout for mapping the image memory later on
-  //    insertImageMemoryBarrier(
-  //       copyCmd,
-  //       m_vkimage,
-  //       VK_ACCESS_TRANSFER_WRITE_BIT,
-  //       VK_ACCESS_MEMORY_READ_BIT,
-  //       VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
-  //       VK_IMAGE_LAYOUT_GENERAL,
-  //       VK_PIPELINE_STAGE_TRANSFER_BIT,
-  //       VK_PIPELINE_STAGE_TRANSFER_BIT,
-  //       VkImageSubresourceRange{ VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1 });
-
-  //    VK_CHECK_RESULT(vkEndCommandBuffer(copyCmd));
-
-  //    ::cast < offscreen_render_target_view > ppass = m_prenderer->m_prendertargetview;
-
-  //    ppass->submitSamplingWork(copyCmd);
-
-  //    vkQueueWaitIdle(m_pgpucontext->graphicsQueue());
-
-  //    vkFreeCommandBuffers(m_pgpucontext->logicalDevice(), m_pgpucontext->m_pgpudevice->getCommandPool(), 1, &copyCmd);
-
+      pcontext->m_pcontext->CopyResource(
+         (ID3D11Resource*)m_ptextureStaging, 
+         (ID3D11Resource*)ptextureSource);
 
    }
 
@@ -838,10 +637,6 @@ namespace gpu_directx11
 
       ::cast < ::gpu_directx11::context > pcontext = m_pgpucontext;
 
-      D3D11_TEXTURE2D_DESC desc;
-
-      m_ptextureStaging->GetDesc(&desc);
-
       if (FAILED(pcontext->m_pcontext->Map((ID3D11Resource*)m_ptextureStaging, 0, D3D11_MAP_READ, 0, &mapped)))
       {
          
@@ -851,20 +646,14 @@ namespace gpu_directx11
 
       }
 
+      D3D11_TEXTURE2D_DESC desc;
+
+      m_ptextureStaging->GetDesc(&desc);
+
       int width = desc.Width;
       int height = desc.Height;
       UINT rowPitch = mapped.RowPitch;
       auto data = mapped.pData;
-
-      //m_pimagetarget->m_pimage->create({ width, height });
-
-      // Allocate RGBA buffer (contiguous memory)
-      //auto lock = m_pimagetarget->no_padded_lock(::image::e_copy_disposition_none);
-
-      //if (!lock.data()) {
-      //   context->Unmap((ID3D11Resource*)stagingTexture, 0);
-      //   throw ::exception(error_wrong_state);
-      //}
 
       auto pgpucontext = m_pgpucontext;
 
@@ -875,83 +664,9 @@ namespace gpu_directx11
          width,
          height,
          (int)rowPitch,
-         //false);
          false);
 
-      //// Copy row by row
-      //for (UINT y = 0; y < height; ++y) {
-      //   memcpy(lock.data() + y * width, (unsigned char*)mapped.pData + y * rowPitch, width * 4);
-      //}
-
       pcontext->m_pcontext->Unmap((ID3D11Resource*)m_ptextureStaging, 0);
-   //   if (!m_vkimage || !m_vkdevicememory)
-   //   {
-
-   //      return;
-
-   //   }
-
-   //   //auto pimpact = m_pgpucontext->m_pimpact;
-
-   //   //auto callback = pimpact->m_callbackImage32CpuBuffer;
-
-   //   //auto callback = m_prenderer->m_callbackImage32CpuBuffer;
-
-   //   // Get layout of the image (including row pitch)
-   //   VkImageSubresource subResource{};
-   //   subResource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-   //   VkSubresourceLayout subResourceLayout;
-
-   //   vkGetImageSubresourceLayout(m_pgpucontext->logicalDevice(), m_vkimage, &subResource, &subResourceLayout);
-
-   //   const char* imagedata = nullptr;
-   //   // Map image memory so we can start copying from it
-   //   vkMapMemory(m_pgpucontext->logicalDevice(), m_vkdevicememory, 0, VK_WHOLE_SIZE, 0, (void**)&imagedata);
-   //   imagedata += subResourceLayout.offset;
-
-   //   /*
-   //      Save host visible framebuffer image to disk (ppm format)
-   //   */
-
-   //   //::memory mem;
-
-   //   //mem.set_size(m_width * m_height * 4);
-
-   //   //::array<VkFormat> formatsBGR = { VK_FORMAT_B8G8R8A8_SRGB, VK_FORMAT_B8G8R8A8_UNORM, VK_FORMAT_B8G8R8A8_SNORM };
-   //   //const bool colorSwizzle = (std::find(formatsBGR.begin(), formatsBGR.end(), VK_FORMAT_R8G8B8A8_UNORM) != formatsBGR.end());
-   //   //{
-
-      //auto pgpucontext = m_pgpucontext;
-
-      //auto pcpubuffer = pgpucontext->m_pcpubuffer;
-
-      //pcpubuffer->set_pixels(
-      //   imagedata,
-      //   m_vkextent2d.width,
-      //   m_vkextent2d.height,
-      //   (int)subResourceLayout.rowPitch);
-
-   //   //_synchronous_lock synchronouslock(m_pgpucontext->m_pmutexOffscreen);
-   //   //   m_pgpucontext->m_sizeOffscreen.cx() = m_vkextent2d.width;
-   //   //m_pgpucontext->m_sizeOffscreen.cy() = m_vkextent2d.height;
-   //   //m_pgpucontext->m_iScanOffscreen = subResourceLayout.rowPitch;
-   //   //auto area = m_pgpucontext->m_iScanOffscreen * m_pgpucontext->m_sizeOffscreen.cy();
-   //   //m_pgpucontext->m_memoryOffscreen.set_size(area);
-   //   //m_pgpucontext->m_memoryOffscreen.assign(imagedata, area);
-   //   //callback((void *)imagedata,
-   //     // m_vkextent2d.width,
-   //      //m_vkextent2d.height,
-   //      //subResourceLayout.rowPitch);
-
-   ////}
-   ////else
-   ////{
-
-
-   ////}
-
-
-   //   vkUnmapMemory(m_pgpucontext->logicalDevice(), m_vkdevicememory);
 
    }
 
@@ -959,22 +674,24 @@ namespace gpu_directx11
    void renderer::do_sampling_to_cpu()
    {
 
-      //::cast < ::gpu_directx11::offscreen_render_target_view > ptargetview = m_prendertargetview;
-
-      //__defer_construct(m_pgpucontext->m_pcpubuffer);
-
-      //m_pgpucontext->m_pcpubuffer->gpu_read();
-
-      ///auto& memory = m_pimagetarget->m_imagebuffer.m_memory;
       ::cast< context > pgpucontext = m_pgpucontext;
+
       ::cast< renderer > prenderer = this;
+
       ::cast < render_target_view > prendertargetview = prenderer->m_pgpurendertarget;
+
       ::cast < offscreen_render_target_view > poffscreenrendertargetview = prendertargetview;
+
       ::cast< device > pgpudevice = pgpucontext->m_pgpudevice;
+
       ID3D11Device* device = pgpudevice->m_pdevice;
+
       ID3D11DeviceContext* context = pgpucontext->m_pcontext;
+
       ::cast < ::gpu_directx11::texture > ptexture = poffscreenrendertargetview->current_texture();
+
       ID3D11Texture2D* offscreenTexture = ptexture->m_ptextureOffscreen;
+
       if (!device || !context || !offscreenTexture)
       {
          
@@ -982,752 +699,24 @@ namespace gpu_directx11
 
       }
 
-
       m_pcpubuffersampler->sample(offscreenTexture);
 
-      //auto callback = m_callbackImage32CpuBuffer;
-
-  //      if (callback)
-      //{
-
-      //   m_pcpubuffersampler->update(m_prendertargetview->getExtent());
-      //   /*
-      //      Copy framebuffer image to host visible image
-      //   */
-      //   /*const char* imagedata;*/
-      //   {
-
-      //      m_pcpubuffersampler->sample(m_prendertargetview->m_images[get_frame_index()]);
-
-      //      //// Create the linear tiled destination image to copy to and to read the memory from
-
-      //      //// Do the actual blit from the offscreen image to our host visible destination image
-      //      //VkCommandBufferAllocateInfo cmdBufAllocateInfo = initializers::commandBufferAllocateInfo(m_pgpucontext->getCommandPool(), VK_COMMAND_BUFFER_LEVEL_PRIMARY, 1);
-      //      //VkCommandBuffer copyCmd;
-      //      //VK_CHECK_RESULT(vkAllocateCommandBuffers(m_pgpucontext->logicalDevice(), &cmdBufAllocateInfo, &copyCmd));
-      //      //VkCommandBufferBeginInfo cmdBufInfo = initializers::commandBufferBeginInfo();
-      //      //VK_CHECK_RESULT(vkBeginCommandBuffer(copyCmd, &cmdBufInfo));
-
-      //      //// Transition destination image to transfer destination layout
-      //      //::graphics3d_directx11::tools::insertImageMemoryBarrier(
-      //      //	copyCmd,
-      //      //	m_poffscreensampler->m_vkimage,
-      //      //	0,
-      //      //	VK_ACCESS_TRANSFER_WRITE_BIT,
-      //      //	VK_IMAGE_LAYOUT_UNDEFINED,
-      //      //	VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
-      //      //	VK_PIPELINE_STAGE_TRANSFER_BIT,
-      //      //	VK_PIPELINE_STAGE_TRANSFER_BIT,
-      //      //	VkImageSubresourceRange{ VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1 });
-
-      //      //// colorAttachment.image is already in VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL, and does not need to be transitioned
-
-      //      //VkImageCopy imageCopyRegion{};
-      //      //imageCopyRegion.srcSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-      //      //imageCopyRegion.srcSubresource.layerCount = 1;
-      //      //imageCopyRegion.dstSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-      //      //imageCopyRegion.dstSubresource.layerCount = 1;
-      //      //imageCopyRegion.extent.width = m_prendertargetview->width();
-      //      //imageCopyRegion.extent.height = m_prendertargetview->height();
-      //      //imageCopyRegion.extent.depth = 1;
-
-      //      //vkCmdCopyImage(
-      //      //	copyCmd,
-      //      //	//colorAttachment.image, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL,
-      //      //	m_prendertargetview->m_images[iIndex], VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL,
-      //      //	dstImage, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
-      //      //	1,
-      //      //	&imageCopyRegion);
-
-      //      //// Transition destination image to general layout, which is the required layout for mapping the image memory later on
-      //      //::graphics3d_directx11::tools::insertImageMemoryBarrier(
-      //      //	copyCmd,
-      //      //	dstImage,
-      //      //	VK_ACCESS_TRANSFER_WRITE_BIT,
-      //      //	VK_ACCESS_MEMORY_READ_BIT,
-      //      //	VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
-      //      //	VK_IMAGE_LAYOUT_GENERAL,
-      //      //	VK_PIPELINE_STAGE_TRANSFER_BIT,
-      //      //	VK_PIPELINE_STAGE_TRANSFER_BIT,
-      //      //	VkImageSubresourceRange{ VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1 });
-
-      //      //VK_CHECK_RESULT(vkEndCommandBuffer(copyCmd));
-
-      //      //submitWork(copyCmd, queue);
-
-      //      //submitInfo.commandBufferCount = 1;
-      //      //submitInfo.pCommandBuffers = &copyCmd;
-      //      //VK_CHECK_RESULT(vkQueueSubmit(queue, 1, &submitInfo, VK_NULL_HANDLE));
-
-
-      //      //// Get layout of the image (including row pitch)
-      //      //VkImageSubresource subResource{};
-      //      //subResource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-      //      //VkSubresourceLayout subResourceLayout;
-
-      //      //vkGetImageSubresourceLayout(m_pgpucontext->logicalDevice(), dstImage, &subResource, &subResourceLayout);
-
-      //      //// Map image memory so we can start copying from it
-      //      //vkMapMemory(m_pgpucontext->logicalDevice(), dstImageMemory, 0, VK_WHOLE_SIZE, 0, (void**)&imagedata);
-      //      //imagedata += subResourceLayout.offset;
-
-            m_pcpubuffersampler->send_sample();
-
-      //      ///*
-      //      //	Save host visible framebuffer image to disk (ppm format)
-      //      //*/
-
-      //      ////::memory mem;
-
-      //      ////mem.set_size(m_width * m_height * 4);
-
-      //      ////::array<VkFormat> formatsBGR = { VK_FORMAT_B8G8R8A8_SRGB, VK_FORMAT_B8G8R8A8_UNORM, VK_FORMAT_B8G8R8A8_SNORM };
-      //      ////const bool colorSwizzle = (std::find(formatsBGR.begin(), formatsBGR.end(), VK_FORMAT_R8G8B8A8_UNORM) != formatsBGR.end());
-      //      //if (callback)
-      //      //{
-      //      //	callback((void*)imagedata, 
-      //      //		m_prendertargetview->width(),
-      //      //		m_prendertargetview->height(),
-      //      //		subResourceLayout.rowPitch);
-
-      //      //}
-
-      //      //// ppm binary pixel data
-      //      //for (int32_t y = 0; y < m_height; y++) {
-      //      //   unsigned int * row = (unsigned int *)imagedata;
-      //      //   for (int32_t x = 0; x < m_width; x++) {
-      //      //      //               if (colorSwizzle) {
-      //      //         file.write((char *)row + 2, 1);
-      //      //         file.write((char *)row + 1, 1);
-      //      //         file.write((char *)row, 1);
-      //      //      }
-      //      //      //else {
-      //      //      //   file.write((char *)row, 3);
-      //      //      //}
-      //      //      row++;
-      //      //   }
-      //      //   imagedata += subResourceLayout.rowPitch;
-      //      //}
-
-
-      //  //         callback
-
-      //  //#if defined (VK_USE_PLATFORM_ANDROID_KHR)
-      //  //         const char * filename = strcat(getenv("EXTERNAL_STORAGE"_ansi), "/headless.ppm"_ansi);
-      //  //#else
-      //  //         const char * filename = "headless.ppm"_ansi;
-      //  //#endif
-      //  //         std::ofstream file(filename, std::ios::out | std::ios::binary);
-      //  //
-      //  //         // ppm header
-      //  //         file << "P6\n"_ansi << m_width << "\n"_ansi << m_height << "\n"_ansi << 255 << "\n"_ansi;
-
-      //         //// If source is BGR (destination is always RGB) and we can't use blit (which does automatic conversion), we'hi have to manually swizzle color components
-      //         //// Check if source is BGR and needs swizzle
-      //         //::array<VkFormat> formatsBGR = { VK_FORMAT_B8G8R8A8_SRGB, VK_FORMAT_B8G8R8A8_UNORM, VK_FORMAT_B8G8R8A8_SNORM };
-      //         //const bool colorSwizzle = (std::find(formatsBGR.begin(), formatsBGR.end(), VK_FORMAT_R8G8B8A8_UNORM) != formatsBGR.end());
-
-      //         //// ppm binary pixel data
-      //         //for (int32_t y = 0; y < m_height; y++) {
-      //         //   unsigned int * row = (unsigned int *)imagedata;
-      //         //   for (int32_t x = 0; x < m_width; x++) {
-      //         //      if (colorSwizzle) {
-      //         //         file.write((char *)row + 2, 1);
-      //         //         file.write((char *)row + 1, 1);
-      //         //         file.write((char *)row, 1);
-      //         //      }
-      //         //      else {
-      //         //         file.write((char *)row, 3);
-      //         //      }
-      //         //      row++;
-      //         //   }
-      //         //   imagedata += subResourceLayout.rowPitch;
-      //         //}
-      //         //file.close();
-
-      //         //LOG("Framebuffer image saved to %s\n"_ansi, filename);
-
-      //         // Clean up resources
-      //   }
-
-
-      //}
-      //vkQueueWaitIdle(m_pgpucontext->graphicsQueue());
+      m_pcpubuffersampler->send_sample();
 
 
    }
+
 
    void renderer::gpu_blend(::draw2d::graphics * pgraphics)
    {
 
-      //::cast < ::gpu_directx11::offscreen_render_target_view > ptargetview = m_prendertargetview;
-
-      //__defer_construct(m_pgpucontext->m_pcpubuffer);
-
-      //m_pgpucontext->m_pcpubuffer->gpu_read();
-
-      ///auto& memory = m_pimagetarget->m_imagebuffer.m_memory;
-      //::cast< context > pgpucontext = m_pgpucontext;
-      //::cast< renderer > prenderer = pgpucontext->m_pgpurenderer;
-      //auto prendertargetview = prenderer->m_prendertargetview;
-      //::cast < offscreen_render_target_view > poffscreenrendertargetview = prendertargetview;
-      //::cast< device > pgpudevice = pgpucontext->m_pgpudevice;
-      //ID3D11Device* device = pgpudevice->m_pdevice;
-      //ID3D11DeviceContext* context = pgpucontext->m_pcontext;
-      //ID3D11Texture2D* offscreenTexture = poffscreenrendertargetview->m_ptextureOffscreen;
-      //if (!device || !context || !offscreenTexture)
-      //{
-      //   throw ::exception(error_wrong_state);
-      //}
-
-      //::cast < ::draw2d_direct2d::graphics > pgraphics2d = pgraphics;
-
-      ////D3D11_TEXTURE2D_DESC texDesc = {};
-      ////texDesc.Width = width;
-      ////texDesc.Height = height;
-      ////texDesc.MipLevels = 1;
-      ////texDesc.ArraySize = 1;
-      ////texDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
-      ////texDesc.SampleDesc.Count = 1;
-      ////texDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
-      ////texDesc.MiscFlags = D3D11_RESOURCE_MISC_SHARED;
-
-      //// ... Create texture using device->CreateTexture2D
-
-      //// 2. Wrap the texture in a DXGI surface
-      //ComPtr<IDXGISurface> dxgiSurface;
-      //texture->QueryInterface(IID_PPV_ARGS(&dxgiSurface));
-
-      //// 3. Create the Direct2D bitmap
-      //D2D1_BITMAP_PROPERTIES1 bitmapProps =
-      //   D2D1::BitmapProperties1(
-      //      D2D1_BITMAP_OPTIONS_NONE,
-      //      D2D1::PixelFormat(DXGI_FORMAT_B8G8R8A8_UNORM, D2D1_ALPHA_MODE_PREMULTIPLIED)
-      //   );
-
-      //ComPtr<ID2D1Bitmap1> bitmap;
-      //d2dDeviceContext->CreateBitmapFromDxgiSurface(
-      //   dxgiSurface.Get(),
-      //   &bitmapProps,
-      //   &bitmap
-      //);
-
-      //// 4. Draw into the D2D1RenderTarget
-      //d2dDeviceContext->BeginDraw();
-
-      //d2dDeviceContext->DrawBitmap(
-      //   bitmap.Get(),
-      //   D2D1::RectF(0, 0, width, height),
-      //   1.0f, // opacity
-      //   D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
-      //   nullptr // source rect (optional)
-      //);
-
-      //m_pcpubuffersampler->sample(offscreenTexture);
-
-      //auto callback = m_callbackImage32CpuBuffer;
-
-  //      if (callback)
-      //{
-
-      //   m_pcpubuffersampler->update(m_prendertargetview->getExtent());
-      //   /*
-      //      Copy framebuffer image to host visible image
-      //   */
-      //   /*const char* imagedata;*/
-      //   {
-
-      //      m_pcpubuffersampler->sample(m_prendertargetview->m_images[get_frame_index()]);
-
-      //      //// Create the linear tiled destination image to copy to and to read the memory from
-
-      //      //// Do the actual blit from the offscreen image to our host visible destination image
-      //      //VkCommandBufferAllocateInfo cmdBufAllocateInfo = initializers::commandBufferAllocateInfo(m_pgpucontext->getCommandPool(), VK_COMMAND_BUFFER_LEVEL_PRIMARY, 1);
-      //      //VkCommandBuffer copyCmd;
-      //      //VK_CHECK_RESULT(vkAllocateCommandBuffers(m_pgpucontext->logicalDevice(), &cmdBufAllocateInfo, &copyCmd));
-      //      //VkCommandBufferBeginInfo cmdBufInfo = initializers::commandBufferBeginInfo();
-      //      //VK_CHECK_RESULT(vkBeginCommandBuffer(copyCmd, &cmdBufInfo));
-
-      //      //// Transition destination image to transfer destination layout
-      //      //::graphics3d_directx11::tools::insertImageMemoryBarrier(
-      //      //	copyCmd,
-      //      //	m_poffscreensampler->m_vkimage,
-      //      //	0,
-      //      //	VK_ACCESS_TRANSFER_WRITE_BIT,
-      //      //	VK_IMAGE_LAYOUT_UNDEFINED,
-      //      //	VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
-      //      //	VK_PIPELINE_STAGE_TRANSFER_BIT,
-      //      //	VK_PIPELINE_STAGE_TRANSFER_BIT,
-      //      //	VkImageSubresourceRange{ VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1 });
-
-      //      //// colorAttachment.image is already in VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL, and does not need to be transitioned
-
-      //      //VkImageCopy imageCopyRegion{};
-      //      //imageCopyRegion.srcSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-      //      //imageCopyRegion.srcSubresource.layerCount = 1;
-      //      //imageCopyRegion.dstSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-      //      //imageCopyRegion.dstSubresource.layerCount = 1;
-      //      //imageCopyRegion.extent.width = m_prendertargetview->width();
-      //      //imageCopyRegion.extent.height = m_prendertargetview->height();
-      //      //imageCopyRegion.extent.depth = 1;
-
-      //      //vkCmdCopyImage(
-      //      //	copyCmd,
-      //      //	//colorAttachment.image, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL,
-      //      //	m_prendertargetview->m_images[iIndex], VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL,
-      //      //	dstImage, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
-      //      //	1,
-      //      //	&imageCopyRegion);
-
-      //      //// Transition destination image to general layout, which is the required layout for mapping the image memory later on
-      //      //::graphics3d_directx11::tools::insertImageMemoryBarrier(
-      //      //	copyCmd,
-      //      //	dstImage,
-      //      //	VK_ACCESS_TRANSFER_WRITE_BIT,
-      //      //	VK_ACCESS_MEMORY_READ_BIT,
-      //      //	VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
-      //      //	VK_IMAGE_LAYOUT_GENERAL,
-      //      //	VK_PIPELINE_STAGE_TRANSFER_BIT,
-      //      //	VK_PIPELINE_STAGE_TRANSFER_BIT,
-      //      //	VkImageSubresourceRange{ VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1 });
-
-      //      //VK_CHECK_RESULT(vkEndCommandBuffer(copyCmd));
-
-      //      //submitWork(copyCmd, queue);
-
-      //      //submitInfo.commandBufferCount = 1;
-      //      //submitInfo.pCommandBuffers = &copyCmd;
-      //      //VK_CHECK_RESULT(vkQueueSubmit(queue, 1, &submitInfo, VK_NULL_HANDLE));
-
-
-      //      //// Get layout of the image (including row pitch)
-      //      //VkImageSubresource subResource{};
-      //      //subResource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-      //      //VkSubresourceLayout subResourceLayout;
-
-      //      //vkGetImageSubresourceLayout(m_pgpucontext->logicalDevice(), dstImage, &subResource, &subResourceLayout);
-
-      //      //// Map image memory so we can start copying from it
-      //      //vkMapMemory(m_pgpucontext->logicalDevice(), dstImageMemory, 0, VK_WHOLE_SIZE, 0, (void**)&imagedata);
-      //      //imagedata += subResourceLayout.offset;
-
       m_pcpubuffersampler->send_sample();
-
-      //      ///*
-      //      //	Save host visible framebuffer image to disk (ppm format)
-      //      //*/
-
-      //      ////::memory mem;
-
-      //      ////mem.set_size(m_width * m_height * 4);
-
-      //      ////::array<VkFormat> formatsBGR = { VK_FORMAT_B8G8R8A8_SRGB, VK_FORMAT_B8G8R8A8_UNORM, VK_FORMAT_B8G8R8A8_SNORM };
-      //      ////const bool colorSwizzle = (std::find(formatsBGR.begin(), formatsBGR.end(), VK_FORMAT_R8G8B8A8_UNORM) != formatsBGR.end());
-      //      //if (callback)
-      //      //{
-      //      //	callback((void*)imagedata, 
-      //      //		m_prendertargetview->width(),
-      //      //		m_prendertargetview->height(),
-      //      //		subResourceLayout.rowPitch);
-
-      //      //}
-
-      //      //// ppm binary pixel data
-      //      //for (int32_t y = 0; y < m_height; y++) {
-      //      //   unsigned int * row = (unsigned int *)imagedata;
-      //      //   for (int32_t x = 0; x < m_width; x++) {
-      //      //      //               if (colorSwizzle) {
-      //      //         file.write((char *)row + 2, 1);
-      //      //         file.write((char *)row + 1, 1);
-      //      //         file.write((char *)row, 1);
-      //      //      }
-      //      //      //else {
-      //      //      //   file.write((char *)row, 3);
-      //      //      //}
-      //      //      row++;
-      //      //   }
-      //      //   imagedata += subResourceLayout.rowPitch;
-      //      //}
-
-
-      //  //         callback
-
-      //  //#if defined (VK_USE_PLATFORM_ANDROID_KHR)
-      //  //         const char * filename = strcat(getenv("EXTERNAL_STORAGE"_ansi), "/headless.ppm"_ansi);
-      //  //#else
-      //  //         const char * filename = "headless.ppm"_ansi;
-      //  //#endif
-      //  //         std::ofstream file(filename, std::ios::out | std::ios::binary);
-      //  //
-      //  //         // ppm header
-      //  //         file << "P6\n"_ansi << m_width << "\n"_ansi << m_height << "\n"_ansi << 255 << "\n"_ansi;
-
-      //         //// If source is BGR (destination is always RGB) and we can't use blit (which does automatic conversion), we'hi have to manually swizzle color components
-      //         //// Check if source is BGR and needs swizzle
-      //         //::array<VkFormat> formatsBGR = { VK_FORMAT_B8G8R8A8_SRGB, VK_FORMAT_B8G8R8A8_UNORM, VK_FORMAT_B8G8R8A8_SNORM };
-      //         //const bool colorSwizzle = (std::find(formatsBGR.begin(), formatsBGR.end(), VK_FORMAT_R8G8B8A8_UNORM) != formatsBGR.end());
-
-      //         //// ppm binary pixel data
-      //         //for (int32_t y = 0; y < m_height; y++) {
-      //         //   unsigned int * row = (unsigned int *)imagedata;
-      //         //   for (int32_t x = 0; x < m_width; x++) {
-      //         //      if (colorSwizzle) {
-      //         //         file.write((char *)row + 2, 1);
-      //         //         file.write((char *)row + 1, 1);
-      //         //         file.write((char *)row, 1);
-      //         //      }
-      //         //      else {
-      //         //         file.write((char *)row, 3);
-      //         //      }
-      //         //      row++;
-      //         //   }
-      //         //   imagedata += subResourceLayout.rowPitch;
-      //         //}
-      //         //file.close();
-
-      //         //LOG("Framebuffer image saved to %s\n"_ansi, filename);
-
-      //         // Clean up resources
-      //   }
-
-
-      //}
-      //vkQueueWaitIdle(m_pgpucontext->graphicsQueue());
-
 
    }
 
 
-
-   //	void renderer::resolve_color_and_alpha_accumulation_buffers()
-   //	{
-   //
-   //		auto cmdBuffer = m_pgpucontext->beginSingleTimeCommands();
-   //
-   //		::cast < accumulation_render_target_view > ppass = m_prendertargetview;
-   //
-   //		auto iPassCurrentFrame = get_frame_index();
-   //
-   //		auto image = ppass->m_images[iPassCurrentFrame];
-   //
-   //		insertImageMemoryBarrier(cmdBuffer,
-   //			image,
-   //			0,
-   //			VK_ACCESS_TRANSFER_WRITE_BIT,
-   //			VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
-   //			VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL,
-   //			VK_PIPELINE_STAGE_TRANSFER_BIT,
-   //			VK_PIPELINE_STAGE_TRANSFER_BIT,
-   //			VkImageSubresourceRange{ VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1 });
-   //
-   //		auto imageAlphaAccumulation = ppass->m_imagesAlphaAccumulation[iPassCurrentFrame];
-   //
-   //		insertImageMemoryBarrier(cmdBuffer,
-   //			imageAlphaAccumulation,
-   //			0,
-   //			VK_ACCESS_TRANSFER_WRITE_BIT,
-   //			VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
-   //			VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL,
-   //			VK_PIPELINE_STAGE_TRANSFER_BIT,
-   //			VK_PIPELINE_STAGE_TRANSFER_BIT,
-   //			VkImageSubresourceRange{ VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1 });
-   //
-   //
-   //		VkSubmitInfo submitInfo{};
-   //		submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
-   //		submitInfo.commandBufferCount = 1;
-   //		submitInfo.pCommandBuffers = &cmdBuffer;
-   //		::array<VkSemaphore> waitSemaphores;
-   //		::array<VkPipelineStageFlags> waitStages;
-   //		waitStages.add(VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT);
-   //		waitSemaphores.add(m_prendertargetview->renderFinishedSemaphores[iPassCurrentFrame]);
-   //		submitInfo.waitSemaphoreCount = waitSemaphores.size();
-   //		submitInfo.pWaitSemaphores = waitSemaphores.data();
-   //		submitInfo.pWaitDstStageMask = waitStages.data();
-   //		m_pgpucontext->endSingleTimeCommands(cmdBuffer, 1, &submitInfo);
-   //
-   //		//m_prendererResolve->m_prendertargetview->m_semaphoreaWaitToSubmit.add(
-   //		//   m_prendertargetview->renderFinishedSemaphores[iPassCurrentFrame]
-   //		//);
-   ////
-   //		//m_prendererResolve->_resolve_color_and_alpha_accumulation_buffers();
-   //
-   //	}
-
-
-      //void renderer::_resolve_color_and_alpha_accumulation_buffers()
-      //{
-
-      //	on_new_frame();
-
-      //	auto cmdBuffer = m_pgpucontext->beginSingleTimeCommands();
-
-      //	auto iFrameIndex1 = get_frame_index();
-
-      //	VkImage image1 = m_prendertargetview->m_images[iFrameIndex1];
-
-      //	if (is_starting_frame())
-      //	{
-
-      //		insertImageMemoryBarrier(cmdBuffer,
-      //			image1,
-      //			0,
-      //			VK_ACCESS_TRANSFER_WRITE_BIT,
-      //			VK_IMAGE_LAYOUT_UNDEFINED,
-      //			VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
-      //			VK_PIPELINE_STAGE_TRANSFER_BIT,
-      //			VK_PIPELINE_STAGE_TRANSFER_BIT,
-      //			VkImageSubresourceRange{ VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1 });
-      //	}
-      //	else
-      //	{
-
-      //		insertImageMemoryBarrier(cmdBuffer,
-      //			image1,
-      //			0,
-      //			VK_ACCESS_TRANSFER_WRITE_BIT,
-      //			VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL,
-      //			VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
-      //			VK_PIPELINE_STAGE_TRANSFER_BIT,
-      //			VK_PIPELINE_STAGE_TRANSFER_BIT,
-      //			VkImageSubresourceRange{ VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1 });
-      //	}
-
-      //	m_pgpucontext->endSingleTimeCommands(cmdBuffer);
-
-      //	auto pframe = beginFrame();
-
-      //	on_begin_render(pframe);
-
-      //	// Resolve (Color and Alpha Accumulation Buffers) descriptors
-      //	if (!m_psetdescriptorlayoutResolve)
-      //	{
-
-      //		m_psetdescriptorlayoutResolve = ::gpu_directx11::set_descriptor_layout::Builder(m_pgpucontext)
-      //			.addBinding(0, VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, VK_SHADER_STAGE_FRAGMENT_BIT)
-      //			.addBinding(1, VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, VK_SHADER_STAGE_FRAGMENT_BIT)
-      //			.build();
-
-      //		int iFrameCount = get_frame_count();
-
-      //		auto pdescriptorpoolbuilder = __allocate::gpu_directx11::descriptor_pool::Builder();
-
-      //		pdescriptorpoolbuilder->initialize_builder(m_pgpucontext);
-      //		pdescriptorpoolbuilder->setMaxSets(iFrameCount * 10);
-      //		pdescriptorpoolbuilder->addPoolSize(VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, iFrameCount * 10);
-
-      //		m_pdescriptorpoolResolve = pdescriptorpoolbuilder->build();
-
-      //	}
-
-      //	if (!m_pshaderResolve)
-      //	{
-
-      //		auto pshadervertexinput = __allocate  shader_vertex_input();
-
-      //		pshadervertexinput->m_bindings.add(
-      //			{
-      //			   .binding = 0,
-      //			   .stride = sizeof(float) * 4,
-      //			   .inputRate = VK_VERTEX_INPUT_RATE_VERTEX,
-      //			});
-
-      //		pshadervertexinput->m_attribs.add({ .location = 0, .binding = 0, .format = VK_FORMAT_R32G32_SFLOAT, .offset = 0 });
-      //		pshadervertexinput->m_attribs.add({ .location = 1, .binding = 0, .format = VK_FORMAT_R32G32_SFLOAT, .offset = sizeof(float) * 2 });
-
-      //		auto pshaderResolve = __create_new<::gpu_directx11::shader>();
-
-      //		m_pshaderResolve = pshaderResolve;
-
-      //		pshaderResolve->m_bDisableDepthTest = true;
-
-      //		//VkDescriptorSetLayoutBinding samplerLayoutBinding = {
-      //		//   .binding = 0,
-      //		//   .descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER,
-      //		//   .descriptorCount = 1,
-      //		//   .stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT,
-      //		//   .pImmutableSamplers = NULL,
-      //		//};
-
-      //		//VkDescriptorSetLayoutCreateInfo layoutInfo =
-      //		//{
-      //		//   .sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO,
-      //		//   .bindingCount = 1,
-      //		//   .pBindings = &samplerLayoutBinding,
-      //		//};
-
-      //		//VkDescriptorSetLayout descriptorSetLayout;
-      //		//if (vkCreateDescriptorSetLayout(device, &layoutInfo, NULL, &descriptorSetLayout) != VK_SUCCESS) 
-      //		//{
-      //		//   // Handle error
-      //		//}
-
-      //		::cast < device > pgpudevice = m_pgpucontext->m_pgpudevice;
-
-      //		pshaderResolve->initialize_shader_with_block(
-      //			this,
-      //			as_memory_block(g_uaImageBlendVertexShader),
-      //			as_memory_block(g_uaResolveFragmentShader),
-      //			{ ::gpu::shader::e_descriptor_set_slot_local },
-      //			m_psetdescriptorlayoutResolve,
-      //			pshadervertexinput);
-
-      //	}
-
-      //	auto pshader = m_pshaderResolve;
-
-      //	pshader->bind();
-
-      //	auto& pdescriptor = m_pdescriptorResolve;
-
-      //	if (__defer_construct_new(pdescriptor))
-      //	{
-
-      //		pdescriptor->m_descriptorsets.set_size(get_frame_count());
-
-      //		::cast < device > pgpudevice = m_pgpucontext->m_pgpudevice;
-
-      //		::cast < renderer > pgpurendererParent = m_pgpucontext->m_pgpurenderer;
-
-      //		::cast < accumulation_render_target_view > paccumulationrendertargetview = pgpurendererParent->m_prendertargetview;
-
-      //		for (int i = 0; i < get_frame_count(); i++)
-      //		{
-      //			VkDescriptorImageInfo imageinfo;
-
-      //			imageinfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-      //			imageinfo.imageView = paccumulationrendertargetview->m_imageviews[i];
-      //			imageinfo.sampler = m_pgpucontext->_001VkSampler();
-
-      //			VkDescriptorImageInfo imageinfo2;
-
-      //			imageinfo2.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-      //			imageinfo2.imageView = paccumulationrendertargetview->m_imageviewsAlphaAccumulation[i];
-      //			imageinfo2.sampler = m_pgpucontext->_001VkSampler();
-
-      //			auto& playout = m_psetdescriptorlayoutResolve;
-
-      //			auto& ppool = m_pdescriptorpoolResolve;
-
-      //			descriptor_writer(*playout, *ppool)
-      //				.writeImage(0, &imageinfo)
-      //				.writeImage(1, &imageinfo2)
-      //				.build(pdescriptor->m_descriptorsets[i]);
-
-      //		}
-
-      //		auto descriptorSetLayout = m_psetdescriptorlayoutResolve->getDescriptorSetLayout();
-
-      //		VkPipelineLayoutCreateInfo pipelineLayoutInfo = {
-      //   .sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO,
-      //   .setLayoutCount = 1,
-      //   .pSetLayouts = &descriptorSetLayout,
-      //		};
-
-      //		//VkPipelineLayout pipelineLayout;
-      //		if (vkCreatePipelineLayout(m_pgpucontext->logicalDevice(), &pipelineLayoutInfo, NULL, &pdescriptor->m_vkpipelinelayout) != VK_SUCCESS) {
-      //			// Handle error
-      //		}
-
-      //	}
-
-      //	auto commandBuffer = getCurrentCommandBuffer();
-
-      //	//auto commandBuffer = this->getCurrentCommandBuffer();
-
-      //	// Bind pipeline and descriptor sets
-      // //      vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline);
-      //   //    vkCmdBindDescriptorSets(commandBuffer, ...);
-      //	vkCmdBindDescriptorSets(
-      //		commandBuffer,
-      //		VK_PIPELINE_BIND_POINT_GRAPHICS,   // Bind point
-      //		pdescriptor->m_vkpipelinelayout,                     // Layout used when pipeline was created
-      //		0,                                  // First set (set = 0)
-      //		1,                                  // Descriptor set count
-      //		&pdescriptor->m_descriptorsets[get_frame_index()],                     // Pointer to descriptor set
-      //		0,                                  // Dynamic offset count
-      //		NULL                                // Dynamic offsets
-      //	);
-
-
-      //	auto& pmodel = m_pmodelResolve;
-
-      //	if (__defer_construct_new(pmodel))
-      //	{
-
-      //		create_quad_buffers(m_pgpucontext->logicalDevice(),
-      //			m_pgpucontext->m_pgpudevice->m_pphysicaldevice->m_physicaldevice,
-      //			&pmodel->m_vertexBuffer,
-      //			&pmodel->m_vertexMemory,
-      //			&pmodel->m_indexBuffer,
-      //			&pmodel->m_indexMemory);
-
-      //	}
-
-
-
-      //	VkDeviceSize offsets[] = { 0 };
-      //	vkCmdBindVertexBuffers(commandBuffer, 0, 1, &pmodel->m_vertexBuffer, offsets);
-      //	vkCmdBindIndexBuffer(commandBuffer, pmodel->m_indexBuffer, 0, VK_INDEX_TYPE_UINT16);
-      //	auto rectangle = m_rectangle;
-      //	VkViewport vp = {
-      //	   (float)rectangle.left(),
-      //	   (float)rectangle.top(),
-      //	   (float)rectangle.width(),
-      //	   (float)rectangle.height(),
-      //	   0.0f, 1.0f };
-      //	VkRect2D sc = {
-      //	   {
-      //	   (float)rectangle.left(),
-      //	   (float)rectangle.top(),
-      //	   },
-      //	   {
-      //				   (float)rectangle.width(),
-      //	   (float)rectangle.height(),
-
-
-      //	}
-      //	};
-      //	vkCmdSetViewport(commandBuffer, 0, 1, &vp);
-      //	vkCmdSetScissor(commandBuffer, 0, 1, &sc);
-
-      //	vkCmdDrawIndexed(commandBuffer, 6, 1, 0, 0, 0);
-      //	// Draw full-screen quad
-      //	//vkCmdDraw(commandBuffer, 6, 1, 0, 0); // assuming full-screen triangle/quad
-
-      //	pshader->unbind();
-
-      //	on_end_render(pframe);
-
-      //	endFrame();
-
-      //}
-
-
    void renderer::swap_chain()
    {
-
-
-
-      //assert(isFrameStarted && "Can't call endFrame while frame is not in progress");
-      //auto commandBuffer = getCurrentCommandBuffer();
-      //if (vkEndCommandBuffer(commandBuffer) != VK_SUCCESS) {
-      //   throw ::exception(error_failed, "failed to record command buffer!");
-      //}
-      //auto result = m_prendertargetview->submitCommandBuffers(&commandBuffer);
-      //if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR ||
-      //   m_bNeedToRecreateSwapChain)
-      //{
-      //   m_bNeedToRecreateSwapChain = false;
-      //   defer_update_render_target_view();
-      //}
-      //else if (result != VK_SUCCESS)
-      //{
-      //   throw ::exception(error_failed, "failed to present swap chain image!");
-      //}
-
-
-      //vkQueueWaitIdle(m_pgpucontext->graphicsQueue());
 
 
    }
@@ -1756,7 +745,10 @@ namespace gpu_directx11
 
    void renderer::on_end_draw()
    {
-      _on_end_render();
+
+      throw todo;
+
+      //_on_end_render();
 
       for (auto& procedure : m_procedureaAfterEndRender)
       {
@@ -1918,7 +910,7 @@ namespace gpu_directx11
    }
 
 
-   void renderer::_on_begin_render()
+   void renderer::_on_begin_render(::gpu::frame * pframe)
    {
 
       ::cast < ::gpu_directx11::context > pgpucontext = m_pgpucontext;
@@ -1934,10 +926,42 @@ namespace gpu_directx11
 
          ::cast < texture > ptexture = pgpurendertargetview->current_texture();
 
+         ::comptr < ID3D11RenderTargetView > prendertargetview;
+
+         ::comptr < ID3D11DepthStencilView > pdepthstencilview;
+
+         ::comptr < ID3D11DepthStencilState > pdepthstencilstate;
+
          if (ptexture)
          {
 
-            pcontext->OMSetRenderTargets(1, ptexture->m_prendertargetview.pp(), nullptr);
+            prendertargetview = ptexture->m_prendertargetview;
+
+         }
+
+         pdepthstencilstate = pgpurendertargetview->m_pdepthstencilstate;
+
+         pdepthstencilview = pgpurendertargetview->m_pdepthstencilview;
+
+         if (prendertargetview)
+         {
+
+            if (pdepthstencilstate && pdepthstencilview)
+            { 
+
+               pcontext->OMSetDepthStencilState(pdepthstencilstate, 0);
+
+               pcontext->OMSetRenderTargets(1, ptexture->m_prendertargetview.pp(), pdepthstencilview);
+
+               pcontext->ClearDepthStencilView(pdepthstencilview, D3D11_CLEAR_DEPTH, 1.0f, 0);
+
+            }
+            else
+            {
+
+               pcontext->OMSetRenderTargets(1, ptexture->m_prendertargetview.pp(), nullptr);
+
+            }
 
             D3D11_VIEWPORT vp = {};
             vp.TopLeftX = 0;
@@ -1951,43 +975,22 @@ namespace gpu_directx11
 
          }
 
-         auto pdepthstencilstate = pgpurendertargetview->m_pdepthstencilstate;
 
-         if (pdepthstencilstate)
-         {
+         ////::cast < offscreen_render_target_view > poffscreenrendertargetview = pgpurendertargetview;
 
-            auto pdepthstencilview = pgpurendertargetview->m_pdepthstencilview;
+         ////if (poffscreenrendertargetview)
+         //{
 
-            if (!pdepthstencilview)
-            {
+         //   auto psamplerstate = ptexture->m_psamplerstate;
 
-               throw ::exception(error_wrong_state);
+         //   if (psamplerstate)
+         //   {
 
-            }
+         //      pcontext->PSSetSamplers(0, 1, psamplerstate.pp());
 
-            pcontext->OMSetDepthStencilState(pdepthstencilstate, 0);
+         //   }
 
-            pcontext->OMSetRenderTargets(1, ptexture->m_prendertargetview.pp(), pdepthstencilview);
-
-            pcontext->ClearDepthStencilView(pdepthstencilview, D3D11_CLEAR_DEPTH, 1.0f, 0);
-
-         }
-
-         //::cast < offscreen_render_target_view > poffscreenrendertargetview = pgpurendertargetview;
-
-         //if (poffscreenrendertargetview)
-         {
-
-            auto psamplerstate = ptexture->m_psamplerstate;
-
-            if (psamplerstate)
-            {
-
-               pcontext->PSSetSamplers(0, 1, psamplerstate.pp());
-
-            }
-
-         }
+         //}
 
       }
 
@@ -2000,56 +1003,70 @@ namespace gpu_directx11
          rasterizerDesc.FrontCounterClockwise = false; // Treat CCW as front-facing
          rasterizerDesc.DepthClipEnable = TRUE;
 
-         // 2. Create rasterizer state object
-         //ID3D11RasterizerState* pRasterizerState = nullptr;
-         HRESULT hr = pgpucontext->m_pgpudevice->m_pdevice->CreateRasterizerState(&rasterizerDesc,
+         HRESULT hr = pgpucontext->m_pgpudevice->m_pdevice->CreateRasterizerState(
+            &rasterizerDesc,
             &pgpucontext->m_prasterizerstate);
-         if (FAILED(hr)) {
-            // Handle error (e.g., log or exit)
-            throw ::hresult_exception(hr);
-         }
+
+         ::defer_throw_hresult(hr);
 
       }
 
       pgpucontext->m_pcontext->RSSetState(pgpucontext->m_prasterizerstate);
 
-   }
-
-
-   void renderer::on_begin_render(::gpu::frame* pframeParam)
-   {
-
-      ::cast < ::gpu_directx11::context > pcontext = m_pgpucontext;
+      //::cast < ::gpu_directx11::context > pcontext = m_pgpucontext;
 
       m_hlsClear.m_dH = fmod(m_hlsClear.m_dH + 0.0001, 1.0);
 
       ::color::color colorClear = m_hlsClear;
-      
-      float clear[4] = { 
-         colorClear.f32_red() * .5f, 
-         colorClear.f32_green() * .5f, 
+
+      float clear[4] = {
+         colorClear.f32_red() * .5f,
+         colorClear.f32_green() * .5f,
          colorClear.f32_blue() * .5f, .5f };
 
-      ::cast < render_target_view > pgpurendertargetview = m_pgpurendertarget;
+      //::cast < render_target_view > pgpurendertargetview = m_pgpurendertarget;
 
       ::cast < texture > ptexture = pgpurendertargetview->current_texture();
 
-      pcontext->m_pcontext->ClearRenderTargetView(ptexture->m_prendertargetview, clear);
-
-      on_happening(e_happening_begin_render);
+      pgpucontext->m_pcontext->ClearRenderTargetView(ptexture->m_prendertargetview, clear);
 
    }
 
 
-   void renderer::on_end_render(::gpu::frame* pframeParam)
-   {
+   //void renderer::on_begin_render(::gpu::frame* pframeParam)
+   //{
 
-      on_happening(e_happening_end_render);
+   //   ::cast < ::gpu_directx11::context > pcontext = m_pgpucontext;
 
-   }
+   //   m_hlsClear.m_dH = fmod(m_hlsClear.m_dH + 0.0001, 1.0);
+
+   //   ::color::color colorClear = m_hlsClear;
+   //   
+   //   float clear[4] = { 
+   //      colorClear.f32_red() * .5f, 
+   //      colorClear.f32_green() * .5f, 
+   //      colorClear.f32_blue() * .5f, .5f };
+
+   //   ::cast < render_target_view > pgpurendertargetview = m_pgpurendertarget;
+
+   //   ::cast < texture > ptexture = pgpurendertargetview->current_texture();
+
+   //   pcontext->m_pcontext->ClearRenderTargetView(ptexture->m_prendertargetview, clear);
+
+   //   on_happening(e_happening_begin_render);
+
+   //}
 
 
-   void renderer::_on_end_render()
+   //void renderer::on_end_render(::gpu::frame* pframeParam)
+   //{
+
+   //   on_happening(e_happening_end_render);
+
+   //}
+
+
+   void renderer::_on_end_render(::gpu::frame * pframe)
    {
 
       
@@ -2061,11 +1078,11 @@ namespace gpu_directx11
 
       assert(!isFrameStarted && "Can't call beginFrame while already in progress");
 
-      __defer_construct(m_pframe);
+      __defer_construct(m_pgpurendertarget->m_pframe);
       
-      on_happening(e_happening_begin_frame);
+      m_prenderstate->on_happening(::gpu::e_happening_begin_frame);
 
-      return m_pframe;
+      return m_pgpurendertarget->m_pframe;
 
    }
 
@@ -2073,22 +1090,33 @@ namespace gpu_directx11
    void renderer::endFrame()
    {
 
-      on_happening(e_happening_end_frame);
+      m_prenderstate->on_happening(::gpu::e_happening_end_frame);
 
       auto eoutput = m_pgpucontext->m_eoutput;
 
-      if (eoutput == ::gpu::e_output_swap_chain)
-      {
+      //if (eoutput == ::gpu::e_output_swap_chain)
+      //{
 
-         m_pgpucontext->swap_buffers();
+      //   m_pgpucontext->swap_buffers();
 
-      }
-      else if (eoutput == ::gpu::e_output_cpu_buffer)
+      //}
+      //else 
+         if (eoutput == ::gpu::e_output_cpu_buffer)
       {
 
          this->do_sampling_to_cpu();
 
       }
+
+   }
+
+
+   void renderer::copy(::gpu::texture* pgputextureTarget, ::gpu::texture* pgputextureSource)
+   {
+
+      ::cast < context > pgpucontext = m_pgpucontext;
+
+      pgpucontext->copy(pgputextureTarget, pgputextureSource);
 
    }
 
@@ -2112,20 +1140,21 @@ namespace gpu_directx11
 
       ::cast < renderer > prenderer = this;
 
-      if (m_pgpucontext->m_eoutput == ::gpu::e_output_swap_chain)
-      {
+      //if (m_pgpucontext->m_eoutput == ::gpu::e_output_swap_chain)
+      //{
 
-         m_pgpucontext->swap_buffers();
+      //   m_pgpucontext->swap_buffers();
 
-      }
-      else if (m_pgpucontext->m_pgpudevice->m_edevicetarget == ::gpu::e_device_target_swap_chain)
+      //}
+      //else 
+       /*  if (m_pgpucontext->m_pgpudevice->m_edevicetarget == ::gpu::e_device_target_swap_chain)
       {
          
          auto pswapchain = m_pgpucontext->m_pgpudevice->get_swap_chain();
 
          pswapchain->endDraw(pgraphics, puserinteraction, this);
 
-      }
+      }*/
 
    }
 

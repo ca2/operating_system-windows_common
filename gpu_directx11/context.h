@@ -104,6 +104,13 @@ namespace gpu_directx11
       ::pointer_array<::gpu_directx11::buffer>							m_uboBuffers;
       ::pointer <::gpu_directx11::descriptor_pool>                m_pdescriptorpoolGlobal;
 
+      ::pointer <::gpu_directx11::shader>                m_pshaderBlend3;
+      ::pointer <::gpu_directx11::shader>                m_pshaderCopyUsingShader;
+
+      ::comptr <ID3D11Buffer >                           m_pd3d11bufferVertexCopyUsingShader;
+
+      int m_iVertexBufferSizeCopyUsingShader;
+
       context();
       ~context() override;
 
@@ -118,6 +125,12 @@ namespace gpu_directx11
 
       void set_bitmap_1(::image::image *pimage) override;
 
+      
+      void copy(::gpu::texture* pgputextureTarget, ::gpu::texture* pgputextureSource) override;
+
+      virtual void copy_using_shader(::gpu::texture* pgputextureTarget, ::gpu::texture* pgputextureSource);
+
+      void merge_layers(::gpu::texture* ptextureTarget, ::pointer_array < ::gpu::layer >* playera) override;
       //void swap_buffers() override;
 
       //VkSampler _001VkSampler();
@@ -151,6 +164,7 @@ namespace gpu_directx11
       void set_matrix_uniform(const ::gpu::payload & uniformMatrix) override;
 
 
+      bool create_offscreen_graphics_for_swap_chain_blitting(::draw2d_gpu::graphics* pgraphics, const ::int_size& size) override;
 
 
       virtual void _create_context_directx11(::gpu::device* pgpudevice, const ::gpu::enum_output& eoutput, ::windowing::window* pwindow, const ::int_size& size);

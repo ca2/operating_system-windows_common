@@ -4,6 +4,7 @@
 #include "bred/_.h"
 #include "acme/_win32_gdi.h"
 #include "direct2d/_.h"
+#include "gpu_directx11/_.h"
 #include "acme_windows_common/_.h"
 #include "acme_windows_common/hresult_exception.h"
 

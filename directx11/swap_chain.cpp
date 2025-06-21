@@ -83,18 +83,18 @@ namespace directx11
    }
 
 
-   IDXGISurface* swap_chain::_get_dxgi_surface()
+   ::comptr < IDXGISurface> swap_chain::_create_dxgi_surface(const ::int_size& size)
    {
+      ::comptr < IDXGISurface> pdxgisurface;
+      //auto r = m_pwindow->get_window_rectangle();
 
-      auto r = m_pwindow->get_window_rectangle();
+      //if (texDesc.Width != r.width()
+      //   || texDesc.Height != r.height())
+      //{
 
-      if (texDesc.Width != r.width()
-         || texDesc.Height != r.height())
-      {
-
-
-         texDesc.Width = r.width();
-         texDesc.Height = r.height();
+         D3D11_TEXTURE2D_DESC texDesc = {};
+         texDesc.Width = size.width();
+         texDesc.Height = size.height();
          texDesc.MipLevels = 1;
          texDesc.ArraySize = 1;
          texDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
@@ -105,21 +105,23 @@ namespace directx11
 
          auto pd3d11device = _get_d3d11_device();
 
-         pd3d11device->CreateTexture2D(&texDesc, nullptr, &m_ptextureShared);
+         ::comptr <ID3D11Texture2D> ptextureShared;
 
-         m_ptextureShared.as(m_pdxgisurface_2);
+         pd3d11device->CreateTexture2D(&texDesc, nullptr, &ptextureShared);
 
-      }
+         ptextureShared.as(pdxgisurface);
 
-      return m_pdxgisurface_2;
+      //}
+
+      return pdxgisurface;
 
    }
 
 
-   void swap_chain::initialize_gpu_swap_chain(::gpu::device* pdevice, ::windowing::window* pwindow)
+   void swap_chain::initialize_gpu_swap_chain(::gpu::renderer* pgpurenderer)
    {
 
-      ::gpu::swap_chain::initialize_gpu_swap_chain(pdevice, pwindow);
+      ::gpu::swap_chain::initialize_gpu_swap_chain(pgpurenderer);
 
       //HRESULT hrGetBuffer = m_pdxgiswapchain1->GetBuffer(
       //   0, __interface_of(m_ptextureBackBuffer));
@@ -133,13 +135,15 @@ namespace directx11
 
       //::defer_throw_hresult(hrCreateRenderTargetView);
 
-      _initialize_direct_composition(pdevice, pwindow);
+      //_initialize_direct_composition(pwindow);
 
    }
 
 
-   void swap_chain::_initialize_direct_composition(::gpu::device* pdevice, ::windowing::window* pwindow)
+   void swap_chain::initialize_swap_chain_window(::gpu::device * pgpudevice, ::windowing::window* pwindow)
    {
+
+      ::gpu::swap_chain::initialize_swap_chain_window(pgpudevice, pwindow);
 
       ::cast < ::windowing_win32::window > pwin32window = pwindow;
 
@@ -182,101 +186,101 @@ namespace directx11
    }
 
 
-   void swap_chain::_update_swap_chain()
-   {
+   //void swap_chain::_update_swap_chain()
+   //{
 
-      ID3D11Device* pdevice = _get_d3d11_device();
+   //   ID3D11Device* pdevice = _get_d3d11_device();
 
-      comptr<ID3DBlob> vsBlob;
-      comptr<ID3DBlob> psBlob;
-      comptr<ID3DBlob> errorBlob;
+   //   comptr<ID3DBlob> vsBlob;
+   //   comptr<ID3DBlob> psBlob;
+   //   comptr<ID3DBlob> errorBlob;
 
-      ::string strVertexShader(_fullscreen_vertex_shader_hlsl());
-      
-      HRESULT hr = D3DCompile(
-         strVertexShader.c_str(), strVertexShader.size(),
-         nullptr,                       // optional source name
-         nullptr,                       // macro definitions
-         nullptr,                       // include handler
+   //   ::string strVertexShader(_fullscreen_vertex_shader_hlsl());
+   //   
+   //   HRESULT hr = D3DCompile(
+   //      strVertexShader.c_str(), strVertexShader.size(),
+   //      nullptr,                       // optional source name
+   //      nullptr,                       // macro definitions
+   //      nullptr,                       // include handler
 
-         "main", "vs_5_0",
-         0, 0,
-         &vsBlob, &errorBlob
-      );
+   //      "main", "vs_5_0",
+   //      0, 0,
+   //      &vsBlob, &errorBlob
+   //   );
 
-      if (FAILED(hr)) 
-      {
+   //   if (FAILED(hr)) 
+   //   {
 
-         if (errorBlob)
-         {
+   //      if (errorBlob)
+   //      {
 
-            OutputDebugStringA((char*)errorBlob->GetBufferPointer());
+   //         OutputDebugStringA((char*)errorBlob->GetBufferPointer());
 
-         }
+   //      }
 
-         return;
+   //      return;
 
-      }
+   //   }
 
-      ::string strPixelShader(_fullscreen_pixel_shader_hlsl());
+   //   ::string strPixelShader(_fullscreen_pixel_shader_hlsl());
 
-      hr = D3DCompile(
-         strPixelShader.c_str(), strPixelShader.size(),
-         nullptr,                       // optional source name
-         nullptr,                       // macro definitions
-         nullptr,                       // include handler
-         "main", "ps_5_0",
-         0, 0,
-         &psBlob, &errorBlob
-      );
+   //   hr = D3DCompile(
+   //      strPixelShader.c_str(), strPixelShader.size(),
+   //      nullptr,                       // optional source name
+   //      nullptr,                       // macro definitions
+   //      nullptr,                       // include handler
+   //      "main", "ps_5_0",
+   //      0, 0,
+   //      &psBlob, &errorBlob
+   //   );
 
-      if (FAILED(hr)) 
-      {
+   //   if (FAILED(hr)) 
+   //   {
 
-         if (errorBlob)
-         {
+   //      if (errorBlob)
+   //      {
 
-            OutputDebugStringA((char*)errorBlob->GetBufferPointer());
+   //         OutputDebugStringA((char*)errorBlob->GetBufferPointer());
 
-         }
+   //      }
 
-         return;
+   //      return;
 
-      }
+   //   }
 
-      pdevice->CreateVertexShader(
-         vsBlob->GetBufferPointer(),
-         vsBlob->GetBufferSize(),
-         nullptr,
-         &m_pvertexshaderFullscreen
-      );
+   //   pdevice->CreateVertexShader(
+   //      vsBlob->GetBufferPointer(),
+   //      vsBlob->GetBufferSize(),
+   //      nullptr,
+   //      &m_pvertexshaderFullscreen
+   //   );
 
-      pdevice->CreatePixelShader(
-         psBlob->GetBufferPointer(),
-         psBlob->GetBufferSize(),
-         nullptr,
-         &m_ppixelshaderFullscreen
-      );
+   //   pdevice->CreatePixelShader(
+   //      psBlob->GetBufferPointer(),
+   //      psBlob->GetBufferSize(),
+   //      nullptr,
+   //      &m_ppixelshaderFullscreen
+   //   );
 
-      hr = pdevice->CreateShaderResourceView(
-         m_ptextureShared, nullptr, &m_pshaderresourceviewShader);
+   //   hr = pdevice->CreateShaderResourceView(
+   //      m_ptextureShared, nullptr, &m_pshaderresourceviewShader);
 
-      if (FAILED(hr)) 
-      {
+   //   if (FAILED(hr)) 
+   //   {
 
-         OutputDebugStringA("Failed to create SRV from shared D2D texture\n");
-         
-         return;
+   //      OutputDebugStringA("Failed to create SRV from shared D2D texture\n");
+   //      
+   //      return;
 
-      }
+   //   }
 
-      D3D11_SAMPLER_DESC sampDesc = {};
-      sampDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-      sampDesc.AddressU = sampDesc.AddressV = sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+   //   D3D11_SAMPLER_DESC sampDesc = {};
+   //   sampDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+   //   sampDesc.AddressU = sampDesc.AddressV = sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
 
-      pdevice->CreateSamplerState(&sampDesc, &m_psamplerstateLinear);
+   //   pdevice->CreateSamplerState(&sampDesc, &m_psamplerstateLinear);
 
-   }
+   //}
 
 
 } // namespace directx11

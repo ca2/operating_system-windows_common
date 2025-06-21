@@ -86,6 +86,9 @@
     <ClInclude Include="file_context.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="dxgi_device_source.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="framework.cpp">
@@ -137,6 +140,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="file_context.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dxgi_device_source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

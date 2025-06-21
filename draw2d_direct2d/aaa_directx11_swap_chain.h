@@ -2,19 +2,22 @@
 #pragma once
 
 
-#include "direct2d/_.h"
-#include "direct2d/swap_chain.h"
-#include "draw2d_direct2d/_.h"
-#include "draw2d_direct2d/swap_chain.h"
-#include "device.h"
-#include "swap_chain.h"
+//#include "direct2d/_.h"
+//#include "direct2d/swap_chain.h"
+//#include "draw2d_direct2d/_.h"
+#include "windowing_win32/_.h"
+//#include "draw2d_direct2d/swap_chain.h"
+#include "gpu_directx11/_.h"
+//#include "gpu_directx11/device.h"
+#include "gpu_directx11/swap_chain.h"
+//#include "swap_chain.h"
 
 
-namespace gpu_directx11
+namespace draw2d_direct2d
 {
 
 
-   class CLASS_DECL_GPU_DIRECTX11 direct2d_draw2d_swap_chain :
+   class CLASS_DECL_DRAW2D_DIRECT2D directx11_swap_chain :
       virtual public ::draw2d_direct2d::swap_chain,
       virtual public ::gpu_directx11::swap_chain
    {
@@ -55,15 +58,15 @@ namespace gpu_directx11
       //::pointer < ::gpu_directx12::shader > m_pshader;
 
 
-      direct2d_draw2d_swap_chain();
-      ~direct2d_draw2d_swap_chain() override;
+      directx11_swap_chain();
+      ~directx11_swap_chain() override;
 
       void initialize_gpu_swap_chain(::gpu::device* pgpudevice, ::windowing::window* pwindow) override;
 
       //void initialize_direct2d_draw2d_gpu_swap_chain(::gpu::device* pgpudevice, ::windowing::window* pwindow) override;
 
       ID3D11Device* _get_d3d11_device() override;
-      virtual IDXGISurface* _get_dxgi_surface() override;
+      //::comptr < IDXGISurface > _create_dxgi_surface() override;
 
       void endDraw(::draw2d_gpu::graphics* pgraphics, ::user::interaction* puserinteraction, ::gpu::renderer* prendererSrc) override;
       void present();
@@ -71,6 +74,9 @@ namespace gpu_directx11
    };
 
 
-} // namespace gpu_directx12
+} // namespace draw2d_direct2d
+
+
+
 
 

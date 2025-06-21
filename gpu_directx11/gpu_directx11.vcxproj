@@ -697,7 +697,6 @@
     <ClInclude Include="debug.h" />
     <ClInclude Include="descriptors.h" />
     <ClInclude Include="device.h" />
-    <ClInclude Include="direct2d_draw2d_swap_chain.h" />
     <ClInclude Include="frame.h" />
     <ClInclude Include="initializers.h" />
     <ClInclude Include="object.h" />
@@ -753,7 +752,6 @@
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="descriptors.cpp" />
     <ClCompile Include="device.cpp" />
-    <ClCompile Include="direct2d_draw2d_swap_chain.cpp" />
     <ClCompile Include="object.cpp" />
     <ClCompile Include="offscreen_render_target_view.cpp" />
     <ClCompile Include="operating_system\windows.cpp" />
@@ -953,14 +951,8 @@ application_build_helper --binary-to-unsigned-int "$(ProjectDir)/shader/%(Filena
     <ProjectReference Include="..\acme_windows_common\acme_windows_common.vcxproj">
       <Project>{eb9dc9c0-0573-4da0-8700-4dbb371773f1}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\direct2d\direct2d.vcxproj">
-      <Project>{2f21f158-1dd5-43f6-9fad-01fb77a81ec5}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\directx11\directx11.vcxproj">
       <Project>{c4b37bd9-1ddb-4d98-9740-182ed114cb3a}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\draw2d_direct2d\draw2d_direct2d.vcxproj">
-      <Project>{85683956-09f7-4be0-ab37-5a0165168749}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

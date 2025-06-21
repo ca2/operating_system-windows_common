@@ -152,6 +152,10 @@ namespace draw2d_direct2d
       unsigned int GetBoundsRect(::double_rectangle * rectangleBounds, unsigned int flags) override;
 //      bool ResetDC(const DEVMODE* lpDevMode) override;
 
+
+      void gpu_layer_on_after_begin_render() override;
+      void gpu_layer_on_before_end_render() override;
+
       // Drawing-Tool Functions
       ::double_point GetBrushOrg() override;
       ::double_point SetBrushOrg(double x, double y) override;

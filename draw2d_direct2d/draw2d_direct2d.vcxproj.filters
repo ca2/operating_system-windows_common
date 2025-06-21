@@ -59,7 +59,10 @@
     <ClCompile Include="internal_font.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="swap_chain.cpp">
+    <ClCompile Include="aaa_swap_chain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="aaa_directx11_swap_chain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -118,7 +121,10 @@
     <ClInclude Include="internal_font.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="swap_chain.h">
+    <ClInclude Include="aaa_swap_chain.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="aaa_directx11_swap_chain.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

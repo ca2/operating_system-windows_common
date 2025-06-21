@@ -77,6 +77,7 @@ namespace gpu_directx11
       void on_initialize_shader() override;
       void draw() override;
 
+      void bind(::gpu::texture* pgputextureTarget) override;
       void bind(::gpu::texture* pgputextureTarget, ::gpu::texture* pgputextureSource) override;
       void bind() override;
       void unbind() override;

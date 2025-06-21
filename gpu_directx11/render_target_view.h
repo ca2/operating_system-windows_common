@@ -63,15 +63,15 @@ namespace gpu_directx11
       //VkFramebuffer getFrameBuffer(int index) { return m_framebuffers[index]; }
       //VkFramebuffer getCurrentFrameBuffer() { return m_framebuffers[get_image_index()]; }
       void initialize_render_target(::gpu::renderer* prenderer, const ::int_size& size, ::pointer <::gpu::render_target>previous) override;
-      virtual int get_image_index() const;
+      //virtual int get_image_index() const;
       //VkRenderPass getRenderPass() { return m_vkrendertargetview; }
       //VkImageView getImageView(int index) { return m_imageviews[index]; }
       //size_t imageCount() { return m_images.size(); }
-      size_t imageCount() { return 0; }
+      int imageCount() { return 0; }
       //VkFormat getImageFormat() { return m_formatImage; }
       //VkExtent2D getExtent() { return m_extent; }
-      uint32_t width() { return 16; }
-      uint32_t height() { return 9; }
+      int width() { return 16; }
+      int height() { return 9; }
 
       float extentAspectRatio() {
          return (float) width() / (float) height();

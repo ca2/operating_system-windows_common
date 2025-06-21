@@ -694,6 +694,7 @@
   <ItemGroup>
     <ClInclude Include="bitmap.h" />
     <ClInclude Include="brush.h" />
+    <ClInclude Include="aaa_directx11_swap_chain.h" />
     <ClInclude Include="draw2d.h" />
     <ClInclude Include="factory_exchange.h" />
     <ClInclude Include="font.h" />
@@ -707,7 +708,7 @@
     <ClInclude Include="pen.h" />
     <ClInclude Include="printer.h" />
     <ClInclude Include="region.h" />
-    <ClInclude Include="swap_chain.h" />
+    <ClInclude Include="aaa_swap_chain.h" />
     <ClInclude Include="_.h" />
     <ClInclude Include="_constant.h" />
     <ClInclude Include="_library.h" />
@@ -715,9 +716,10 @@
   <ItemGroup>
     <ClCompile Include="bitmap.cpp" />
     <ClCompile Include="brush.cpp" />
+    <ClCompile Include="aaa_directx11_swap_chain.cpp" />
     <ClCompile Include="draw2d.cpp" />
     <ClCompile Include="internal_font.cpp" />
-    <ClCompile Include="swap_chain.cpp" />
+    <ClCompile Include="aaa_swap_chain.cpp" />
     <ClCompile Include="_factory.cpp" />
     <ClCompile Include="font.cpp" />
     <ClCompile Include="framework.cpp">
@@ -772,6 +774,9 @@
     </ProjectReference>
     <ProjectReference Include="..\directx11\directx11.vcxproj">
       <Project>{c4b37bd9-1ddb-4d98-9740-182ed114cb3a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\gpu_directx11\gpu_directx11.vcxproj">
+      <Project>{f693b649-3301-4d73-9469-f004ea94708d}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

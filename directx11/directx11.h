@@ -30,6 +30,9 @@ namespace directx11
 
       //D3D_FEATURE_LEVEL             m_featurelevel;
 
+      ::comptr<IDXGIDevice>               m_pdxgidevice_2;
+
+
       static ::pointer < directx11 >             s_pdirectx11;
 
 
@@ -58,12 +61,11 @@ namespace directx11
 
       //comptr < ID2D1PathGeometry1 > create_rectangle_path_geometry(const ::double_rectangle & rectangle);
 
-      //virtual IDXGISurface* _get_dxgi_surface();
+      virtual IDXGIDevice * _get_dxgi_device();
 
 
 
    };
-
 
 
    inline directx11* get()

@@ -38,10 +38,11 @@ namespace gpu_directx11
       {
 
 
-         ::pointer < context >   m_pgpucontext;
-         ::pointer < renderer >  m_prenderer;
-         comptr<ID3D11Texture2D>       m_ptextureStaging;
-         ::int_size              m_size;
+         ::pointer < context >      m_pgpucontext;
+         ::pointer < renderer >     m_prenderer;
+         comptr<ID3D11Texture2D>    m_ptextureStaging;
+         ::int_size                 m_sizeStaging;
+
 
          cpu_buffer_sampler();
          ~cpu_buffer_sampler();
@@ -53,7 +54,7 @@ namespace gpu_directx11
          //void update(VkExtent2D vkextent2d);
          void destroy();
 
-         void sample(ID3D11Texture2D* ptexture);
+         void sample(ID3D11Texture2D* ptextureSource);
 
          void send_sample();
 
@@ -122,7 +123,7 @@ namespace gpu_directx11
 
       //virtual void restart_frame_counter();
       void on_new_frame() override;
-      void initialize_renderer(::gpu::context* pgpucontext) override;
+      void initialize_gpu_renderer(::gpu::context* pgpucontext) override;
 
       //int width()  override;
       //int height() override;
@@ -160,7 +161,7 @@ namespace gpu_directx11
       //int get_frame_count() const override;
 
       //void defer_update_renderer() override;
-      void on_defer_update_renderer_allocate_render_target(::gpu::enum_output eoutput, const ::int_size& size, ::gpu::render_target* previous) override;
+      //void on_defer_update_renderer_allocate_render_target(::gpu::enum_output eoutput, const ::int_size& size, ::gpu::render_target* previous) override;
 
       //::pointer < ::graphics3d::frame> beginFrame() override;
       //void endFrame() override;
@@ -170,8 +171,8 @@ namespace gpu_directx11
       void on_context_resize() override;
 
       void on_begin_draw() override;
-      virtual void _on_begin_render();
-      virtual void _on_end_render();
+      void _on_begin_render(::gpu::frame * pframe) override;
+      void _on_end_render(::gpu::frame * pframe) override;
       void on_end_draw() override;
 
    //public:
@@ -185,11 +186,13 @@ namespace gpu_directx11
       //void prepareOffScreen();
 
       ::pointer < ::gpu::frame > beginFrame() override;
-      void on_begin_render(::gpu::frame* pframeParam) override;
-      void on_end_render(::gpu::frame* pframeParam) override;
+      //void _on_begin_render(::gpu::frame* pframeParam) override;
+      //void _on_end_render(::gpu::frame* pframeParam) override;
       void endFrame() override;
       void endDraw(::draw2d_gpu::graphics * pgraphics, ::user::interaction * puserinteraction) override;
 
+
+      void copy(::gpu::texture* pgputextureTarget, ::gpu::texture* pgputextureSource) override;
 
       //void _set_image(VkImage image, const ::int_rectangle& rectangle, bool bYSwap);
 

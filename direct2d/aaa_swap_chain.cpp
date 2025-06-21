@@ -51,37 +51,37 @@ namespace direct2d
    }
 
 
-   IDXGISurface* swap_chain::_get_dxgi_surface()
-   {
+   //IDXGISurface* swap_chain::_get_dxgi_surface()
+   //{
 
-      auto r = m_pwindow->get_window_rectangle();
+   //   auto r = m_pwindow->get_window_rectangle();
 
-      if (texDesc.Width != r.width()
-         || texDesc.Height != r.height())
-      {
-
-
-         texDesc.Width = r.width();
-         texDesc.Height = r.height();
-         texDesc.MipLevels = 1;
-         texDesc.ArraySize = 1;
-         texDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
-         texDesc.SampleDesc.Count = 1;
-         texDesc.Usage = D3D11_USAGE_DEFAULT;
-         texDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
-         texDesc.MiscFlags = D3D11_RESOURCE_MISC_SHARED;
-
-         m_pd3d11device->CreateTexture2D(&texDesc, nullptr, &m_ptextureShared);
-
-         m_ptextureShared.as(m_pdxgisurface_2);
-
-      }
+   //   if (texDesc.Width != r.width()
+   //      || texDesc.Height != r.height())
+   //   {
 
 
+   //      texDesc.Width = r.width();
+   //      texDesc.Height = r.height();
+   //      texDesc.MipLevels = 1;
+   //      texDesc.ArraySize = 1;
+   //      texDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
+   //      texDesc.SampleDesc.Count = 1;
+   //      texDesc.Usage = D3D11_USAGE_DEFAULT;
+   //      texDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
+   //      texDesc.MiscFlags = D3D11_RESOURCE_MISC_SHARED;
 
-      return m_pdxgisurface_2;
+   //      m_pd3d11device->CreateTexture2D(&texDesc, nullptr, &m_ptextureShared);
 
-   }
+   //      m_ptextureShared.as(m_pdxgisurface_2);
+
+   //   }
+
+
+
+   //   return m_pdxgisurface_2;
+
+   //}
 
    
    ID2D1Device* swap_chain::_get_d2d1_device()
@@ -278,43 +278,43 @@ namespace direct2d
    }
 
 
-   void swap_chain::present()
-   {
+   //void swap_chain::present()
+   //{
 
-      m_pd3d11context->OMSetRenderTargets(1, m_prendertargetviewBackBuffer.pp(), nullptr);
+   //   m_pd3d11context->OMSetRenderTargets(1, m_prendertargetviewBackBuffer.pp(), nullptr);
 
-      // 2. Set viewport
-      D3D11_VIEWPORT vp = {};
-      vp.TopLeftX = 0;
-      vp.TopLeftY = 0;
-      vp.Width = static_cast<float>(texDesc.Width);
-      vp.Height = static_cast<float>(texDesc.Height);
-      vp.MinDepth = 0.0f;
-      vp.MaxDepth = 1.0f;
-      m_pd3d11context->RSSetViewports(1, &vp);
+   //   // 2. Set viewport
+   //   D3D11_VIEWPORT vp = {};
+   //   vp.TopLeftX = 0;
+   //   vp.TopLeftY = 0;
+   //   vp.Width = static_cast<float>(texDesc.Width);
+   //   vp.Height = static_cast<float>(texDesc.Height);
+   //   vp.MinDepth = 0.0f;
+   //   vp.MaxDepth = 1.0f;
+   //   m_pd3d11context->RSSetViewports(1, &vp);
 
-      if (!m_pvertexshaderFullscreen
-         || !m_ppixelshaderFullscreen
-         || !m_pshaderresourceviewShader
-         || !m_psamplerstateLinear)
-      {
+   //   if (!m_pvertexshaderFullscreen
+   //      || !m_ppixelshaderFullscreen
+   //      || !m_pshaderresourceviewShader
+   //      || !m_psamplerstateLinear)
+   //   {
 
-         _update_swap_chain();
+   //      _update_swap_chain();
 
-      }
+   //   }
 
-      m_pd3d11context->VSSetShader(m_pvertexshaderFullscreen, nullptr, 0);
-      m_pd3d11context->PSSetShader(m_ppixelshaderFullscreen, nullptr, 0);
+   //   m_pd3d11context->VSSetShader(m_pvertexshaderFullscreen, nullptr, 0);
+   //   m_pd3d11context->PSSetShader(m_ppixelshaderFullscreen, nullptr, 0);
 
-      m_pd3d11context->PSSetShaderResources(0, 1, m_pshaderresourceviewShader.pp());
-      m_pd3d11context->PSSetSamplers(0, 1, m_psamplerstateLinear.pp());
+   //   m_pd3d11context->PSSetShaderResources(0, 1, m_pshaderresourceviewShader.pp());
+   //   m_pd3d11context->PSSetSamplers(0, 1, m_psamplerstateLinear.pp());
 
-      m_pd3d11context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-      m_pd3d11context->Draw(3, 0);
+   //   m_pd3d11context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+   //   m_pd3d11context->Draw(3, 0);
 
-      m_pdxgiswapchain1->Present(1, 0);
+   //   m_pdxgiswapchain1->Present(1, 0);
 
-   }
+   //}
 
 
 } // namespace direct2d

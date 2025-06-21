@@ -40,18 +40,18 @@ namespace direct2d
       void initialize(::particle * pparticle) override;
 
    protected:
-      virtual comptr<ID2D1Device> create_device(::windowing::window* pwindow, const ::int_rectangle& rectanglePlacement);
+      virtual comptr<ID2D1Device> create_d2d1_device();
    public:
 
       IDWriteFactory * dwrite_factory(bool bCreate = true);
       ID2D1Factory1 * d2d1_factory1(bool bCreate = true);
 
 
-      ID2D1Device* d2d1_device(::windowing::window* pwindow, const ::int_rectangle& rectanglePlacement);
+      ID2D1Device* d2d1_device();
 
-      comptr<ID2D1DeviceContext> create_d2d1_device_context(::windowing::window* pwindow, const ::int_rectangle& rectanglePlacement);
+      comptr<ID2D1DeviceContext> create_d2d1_device_context();
 
-      ID2D1DeviceContext * default_d2d1_device_context(::windowing::window* pwindow, const ::int_rectangle& rectanglePlacement);
+      ID2D1DeviceContext * _default_d2d1_device_context();
 
       ID2D1DeviceContext* default_d2d1_device_context();
 

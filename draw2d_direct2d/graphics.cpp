@@ -164,37 +164,37 @@ namespace draw2d_direct2d
    {
 
 
-      //::draw2d::lock draw2dlock;
+      ////::draw2d::lock draw2dlock;
 
-      // ::draw2d::device_lock devicelock(this);
+      //// ::draw2d::device_lock devicelock(this);
 
-      if (m_iType != 0)
-      {
+      //if (m_iType != 0)
+      //{
 
-         destroy();
+      //   destroy();
 
-      }
+      //}
 
-      ::user::interaction* puserinteraction = m_puserinteraction;
+      //::user::interaction* puserinteraction = m_puserinteraction;
 
-      if (::is_null(puserinteraction))
-      {
+      //if (::is_null(puserinteraction))
+      //{
 
-         puserinteraction = dynamic_cast <::user::interaction*>(m_papplication->m_pacmeuserinteractionMain.m_p);
+      //   puserinteraction = dynamic_cast <::user::interaction*>(m_papplication->m_pacmeuserinteractionMain.m_p);
 
-      }
+      //}
 
-      auto pwindow = puserinteraction->window();
+      //auto pwindow = puserinteraction->window();
 
-      auto rectanglePlacement = pwindow->get_window_rectangle();
+      //auto rectanglePlacement = pwindow->get_window_rectangle();
 
-      auto pgpuapproach = m_papplication->get_gpu_approach();
+      //auto pgpuapproach = m_papplication->get_gpu_approach();
 
-      auto pgpudevice = pgpuapproach->get_gpu_device();
+      //auto pgpudevice = pgpuapproach->get_gpu_device();
 
-      m_pgpucontext = pgpudevice->create_draw2d_context(::gpu::e_output_gpu_buffer, size);
+      //m_pgpucontext = pgpudevice->create_draw2d_context(::gpu::e_output_gpu_buffer, size);
 
-      m_pgpucontext->m_pgpucompositor = this;
+      _create_memory_graphics(size);
 
       m_pgpucontext->_send([this, size]()
          {
@@ -257,7 +257,7 @@ namespace draw2d_direct2d
       m_pgpucontext->m_pgpucompositor = this;
       //auto pgpucontext = pgpudevice->get_main_context();
 
-      //m_pgpucontextDraw2d->m_pgpurendererOutput2 = pgpucontext->get_output_renderer();
+      //m_pgpucontextDraw2d->m_pgpurenderer = pgpucontext->get_output_renderer();
       //{
 
       //   m_pgpucontext->start_gpu_context(
@@ -297,7 +297,7 @@ namespace draw2d_direct2d
 
             auto pdirect2d = ::direct2d::get();
 
-            auto pdevicecontextDefault = pdirect2d->default_d2d1_device_context(pwindow, rectanglePlacement);
+            auto pdevicecontextDefault = pdirect2d->default_d2d1_device_context();
 
             //comptr < ID2D1DeviceContext > pdevicecontextTemplate;
 
@@ -463,9 +463,14 @@ namespace draw2d_direct2d
 
             m_iType = 3;
 
-            m_osdata[data_device_context] = m_pdevicecontext;
 
-            m_osdata[data_render_target] = m_pd2d1rendertarget;
+            void* pDataDeviceContext = m_pdevicecontext.m_p;
+            m_osdata[data_device_context] = pDataDeviceContext;
+
+            void* pDataRenderTarget = m_pd2d1rendertarget.m_p;
+            m_osdata[data_render_target] = pDataRenderTarget;
+
+            set_ok_flag();
 
          });
 
@@ -480,6 +485,26 @@ namespace draw2d_direct2d
    //   throw ::exception(todo);
 
    //}
+
+
+   void graphics::gpu_layer_on_after_begin_render()
+   {
+
+      m_pdevicecontext->BeginDraw();
+
+      m_pdevicecontext->Clear();
+
+   }
+
+
+   void graphics::gpu_layer_on_before_end_render()
+   {
+
+      m_pdevicecontext->EndDraw();
+
+      //m_pdevicecontext->Clear();
+
+   }
 
 
    double_point graphics::GetBrushOrg()
@@ -6130,18 +6155,18 @@ namespace draw2d_direct2d
 
       ::draw2d_gpu::graphics::on_begin_draw();
 
-      if (m_egraphics == ::e_graphics_draw)
-      {
+      //if (m_egraphics == ::e_graphics_draw)
+      //{
 
-         //auto rectangleHost = m_puserinteraction->raw_rectangle();
+      //   //auto rectangleHost = m_puserinteraction->raw_rectangle();
 
-         //m_pgpucontextDraw2d->m_pgpudevice->start_stacking_layers();
+      //   //m_pgpucontextDraw2d->m_pgpudevice->start_stacking_layers();
 
-         //m_pgpucontextDraw2d->m_pgpurendererOutput2->start_layer(rectangleHost);
+      //   //m_pgpucontextDraw2d->m_pgpurenderer->start_layer(rectangleHost);
 
-         m_pd2d1rendertarget->BeginDraw();
+      //   m_pd2d1rendertarget->BeginDraw();
 
-      }
+      //}
 
    }
 
@@ -6177,12 +6202,12 @@ namespace draw2d_direct2d
 
       }
 
-      if (m_egraphics == ::e_graphics_draw)
-      {
+      //if (m_egraphics == ::e_graphics_draw)
+      //{
 
-         m_pd2d1rendertarget->EndDraw();
+      //   m_pd2d1rendertarget->EndDraw();
 
-      }
+      //}
 
       ::draw2d_gpu::graphics::on_end_draw();
 
@@ -6194,9 +6219,9 @@ namespace draw2d_direct2d
 
       ::draw2d_gpu::graphics::start_gpu_layer();
       //m_pgpucontextDraw2d->m_pgpudevice->start_stacking_layers();
-      //m_pgpucontextDraw2d->m_pgpurendererOutput2->start_layer(m_puserinteraction->raw_rectangle());
+      //m_pgpucontextDraw2d->m_pgpurenderer->start_layer(m_puserinteraction->raw_rectangle());
 
-      m_pdevicecontext->Clear();
+      
 
    }
 

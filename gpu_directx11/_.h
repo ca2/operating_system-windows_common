@@ -54,6 +54,8 @@ namespace gpu_directx11
 
    class texture;
 
+   class shader;
+
 
 } // namespace gpu_directx11
 

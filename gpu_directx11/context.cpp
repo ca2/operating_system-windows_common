@@ -8,10 +8,15 @@
 #include "renderer.h"
 #include "shader.h"
 #include "texture.h"
+#include "swap_chain.h"
 #include "swap_chain_render_target_view.h"
+
 #include "offscreen_render_target_view.h"
 #include "acme/platform/application.h"
 #include "aura/graphics/image/image.h"
+#include "aura/user/user/interaction.h"
+#include "bred/gpu/graphics.h"
+#include "bred/gpu/layer.h"
 #include "bred/gpu/types.h"
 #include "gpu_directx11/descriptors.h"
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
@@ -66,25 +71,6 @@ namespace gpu_directx11
    {
 
    }
-
-
-
-
-   //void context::initialize(::particle * pparticle)
-   //{
-
-   //   ::e_status estatus = ::object::initialize(pparticle);
-
-   //   if (!estatus)
-   //   {
-
-   //      return estatus;
-
-   //   }
-
-   //   return estatus;
-
-   //}
 
 
    void context::draw()
@@ -1011,6 +997,267 @@ namespace gpu_directx11
    }
 
 
+   void context::copy(::gpu::texture* pgputextureTarget, ::gpu::texture* pgputextureSource)
+   {
+
+      ::cast < texture > ptextureDst = pgputextureTarget;
+
+      if (ptextureDst->m_prendertargetview)
+      {
+
+         copy_using_shader(pgputextureTarget, pgputextureSource);
+
+      }
+      else
+      {
+
+         ::cast < texture > ptextureSrc = pgputextureSource;
+
+         m_pcontext->CopyResource(
+            ptextureDst->m_ptextureOffscreen,
+            ptextureSrc->m_ptextureOffscreen);
+
+      }
+
+   }
+
+
+   BEGIN_GPU_PROPERTIES(copy_using_shader_input_layout)
+      GPU_PROPERTY("position", ::gpu::e_type_seq2)
+      GPU_PROPERTY("uv", ::gpu::e_type_seq2)
+   END_GPU_PROPERTIES()
+
+
+   void context::copy_using_shader(::gpu::texture* pgputextureTarget, ::gpu::texture* pgputextureSource)
+   {
+
+      if (!m_pshaderCopyUsingShader)
+      {
+
+         const char* copy_using_shader_vertex_shader = R"hlsl(
+      // FullscreenQuadVS.hlsl
+      struct VS_IN {
+         float2 pos : POSITION;
+         float2 uv : TEXCOORD;
+      };
+
+      struct VS_OUT {
+         float4 pos : SV_POSITION;
+         float2 uv : TEXCOORD;
+      };
+
+      VS_OUT main(VS_IN input) {
+         VS_OUT output;
+         output.pos = float4(input.pos, 0.0, 1.0);
+         output.uv = input.uv;
+         return output;
+      }
+
+)hlsl";
+
+
+
+         const char* copy_using_shader_pixel_shader = R"hlsl(
+      // CopyTexturePS.hlsl
+Texture2D sourceTexture : register(t0);
+SamplerState samp : register(s0);
+
+float4 main(float2 uv : TEXCOORD) : SV_TARGET {
+    return sourceTexture.Sample(samp, uv);
+}
+
+)hlsl";
+
+         __defer_construct_new(m_pshaderCopyUsingShader);
+
+         m_pshaderCopyUsingShader->initialize_shader_with_block(
+            m_pgpurenderer,
+            ::as_block(copy_using_shader_vertex_shader),
+            ::as_block(copy_using_shader_pixel_shader),
+            {},
+            {},
+            {},
+            {},
+            copy_using_shader_input_layout_properties()
+
+         );
+
+
+         ::cast < device > pgpudevice = m_pgpudevice;
+
+         struct Vertex {
+            float x, y;   // Position
+            float u, v;   // Texture coordinates
+         };
+
+         Vertex vertices[] = {
+            //   x     y     u     v
+            { -1.0f, -1.0f, 0.0f, 1.0f }, // bottom-left
+            {  1.0f, -1.0f, 1.0f, 1.0f }, // bottom-right
+            { -1.0f,  1.0f, 0.0f, 0.0f }, // top-left
+            {  1.0f,  1.0f, 1.0f, 0.0f }  // top-right
+         };
+
+         m_iVertexBufferSizeCopyUsingShader = sizeof(vertices);
+         D3D11_BUFFER_DESC bufferdesc = {};
+         bufferdesc.Usage = D3D11_USAGE_DEFAULT;
+         bufferdesc.ByteWidth = m_iVertexBufferSizeCopyUsingShader;
+         bufferdesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+         bufferdesc.CPUAccessFlags = 0;
+
+         D3D11_SUBRESOURCE_DATA subresourceddata = {};
+         subresourceddata.pSysMem = vertices;
+
+         HRESULT hr = pgpudevice->m_pdevice->CreateBuffer(
+            &bufferdesc,
+            &subresourceddata,
+            &m_pd3d11bufferVertexCopyUsingShader);
+
+
+         ::defer_throw_hresult(hr);
+
+      }
+
+      ::cast <texture > ptextureDst = pgputextureTarget;
+      float clearColor[4] = { 0, 0, 0, 0 }; // Clear to transparent
+      m_pcontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor);
+
+      m_pshaderCopyUsingShader->bind(pgputextureTarget, pgputextureSource);
+
+      UINT stride = m_iVertexBufferSizeCopyUsingShader;
+      UINT offset = 0;
+      ID3D11Buffer* buffera[] = { m_pd3d11bufferVertexCopyUsingShader };
+
+      m_pcontext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+      m_pcontext->IASetVertexBuffers(0, 1, buffera, &stride, &offset);
+      //for (auto player : *playera)
+      //{
+      //   //            player->
+      //   ::cast <texture > ptexture = player->texture();
+      //   ID3D11SamplerState* samplerstatea[] =
+      //   { ptexture->m_psamplerstate };
+      //   ID3D11ShaderResourceView* sharedresourceviewa[] =
+      //   { ptexture->m_pshaderresourceview };
+      //   m_pcontext->PSSetSamplers(0, 1, samplerstatea);
+      //   m_pcontext->PSSetShaderResources(0, 1, sharedresourceviewa);
+
+      //ID3D11RenderTargetView* rendertargetview[] = { ptextureDst->m_prendertargetview };
+
+      //m_p(1, rendertargetview, nullptr);
+
+      //m_pcontext->OMSetBlendState(g_blendState, nullptr, 0xffffffff);
+      //g_context->VSSetShader(g_vs, nullptr, 0);
+      //g_context->PSSetShader(g_ps, nullptr, 0);
+      //g_context->PSSetSamplers(0, 1, &g_sampler);
+
+      m_pcontext->Draw(4, 0); // Fullscreen triangle
+      m_pshaderCopyUsingShader->unbind();
+
+
+      float clearColor2[4] = { 0.95f * 0.5f, 0.75f * 0.5f, 0.95f * 0.5f, 0.5f }; // Clear to transparent
+      m_pcontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor2);
+
+
+   }
+
+
+
+   void context::merge_layers(::gpu::texture* ptextureTarget, ::pointer_array < ::gpu::layer >* playera)
+   {
+
+      if (!m_pshaderBlend3)
+      {
+
+         const char* full_screen_triangle_vertex_shader = R"hlsl(
+// vertex.hlsl
+struct VSOut {
+    float4 pos : SV_POSITION;
+    float2 uv  : TEXCOORD0;
+};
+
+VSOut main(uint id : SV_VertexID)
+{
+    float2 verts[3] = {
+        float2(-1, -1),
+        float2(-1,  3),
+        float2( 3, -1)
+    };
+
+    float2 uv[3] = {
+        float2(0, 1),
+        float2(0, -1),
+        float2(2, 1)
+    };
+
+    VSOut o;
+    o.pos = float4(verts[id], 0, 1);
+    o.uv  = uv[id];
+    return o;
+}
+)hlsl";
+
+         const char* full_screen_triangle_fragment_shader = R"hlsl(  
+// pixel.hlsl
+Texture2D tex : register(t0);
+SamplerState samp : register(s0);
+
+float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_TARGET
+{
+    return tex.Sample(samp, uv); // Assumes premultiplied alpha
+}
+)hlsl";
+
+         __defer_construct_new(m_pshaderBlend3);
+
+         m_pshaderBlend3->initialize_shader_with_block(
+            m_pgpurenderer,
+            ::as_block(full_screen_triangle_vertex_shader),
+            ::as_block(full_screen_triangle_fragment_shader)
+         );
+
+      }
+
+
+      ::cast <texture > ptextureDst = ptextureTarget;
+      float clearColor[4] = { 0.5f * 0.5f, 0.75f * 0.5f, 0.95f * 0.5f, 0.5f }; // Clear to transparent
+      m_pcontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor);
+
+      m_pshaderBlend3->bind(ptextureTarget);
+
+      //ID3D11RenderTargetView* rendertargetview[] = { ptextureDst->m_prendertargetview };
+
+      //m_p(1, rendertargetview, nullptr);
+
+      //m_pcontext->OMSetBlendState(g_blendState, nullptr, 0xffffffff);
+      //g_context->VSSetShader(g_vs, nullptr, 0);
+      //g_context->PSSetShader(g_ps, nullptr, 0);
+      //g_context->PSSetSamplers(0, 1, &g_sampler);
+
+      for (auto player : *playera)
+      {
+         //            player->
+         ::cast <texture > ptexture = player->texture();
+         ID3D11SamplerState* samplerstatea[] =
+         { ptexture->m_psamplerstate };
+         ID3D11ShaderResourceView* sharedresourceviewa[] =
+         { ptexture->m_pshaderresourceview };
+         m_pcontext->PSSetSamplers(0, 1, samplerstatea);
+         m_pcontext->PSSetShaderResources(0, 1, sharedresourceviewa);
+         m_pcontext->Draw(3, 0); // Fullscreen triangle
+      }
+      //}
+
+      m_pshaderBlend3->unbind();
+
+      //::cast <texture > ptextureDst = ptextureTarget;
+      float clearColor2[4] = { 0.95f * 0.5f, 0.75f * 0.5f, 0.95f * 0.5f, 0.5f }; // Clear to transparent
+      m_pcontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor2);
+
+
+   }
+
+
+
    void context::_create_cpu_buffer(const ::int_size& size)
    {
 
@@ -1823,7 +2070,7 @@ namespace gpu_directx11
    void context::update_global_ubo(const ::block& block)
    {
 
-      auto iFrameIndex = m_pgpurendererOutput2->get_frame_index();
+      auto iFrameIndex = m_pgpurenderer->m_pgpurendertarget->get_frame_index();
 
       //m_uboBuffers[iFrameIndex]->writeToBuffer(block.data());
 
@@ -1841,9 +2088,9 @@ namespace gpu_directx11
       {
 
          D3D11_MAPPED_SUBRESOURCE mapped;
-         
+
          m_pcontext->Map(m_pbufferGlobalUbo, 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
-         
+
          memcpy(mapped.pData, block.data(), block.size());
 
          m_pcontext->Unmap(m_pbufferGlobalUbo, 0);
@@ -1887,7 +2134,7 @@ namespace gpu_directx11
 
    }
 
-   
+
    ID3D11DeviceContext* context::draw_get_d3d11_device_context()
    {
 
@@ -1900,6 +2147,23 @@ namespace gpu_directx11
    {
 
       return m_pcontext1;
+
+   }
+
+
+   bool context::create_offscreen_graphics_for_swap_chain_blitting(::draw2d_gpu::graphics* pgraphics, const ::int_size& size)
+   {
+
+      ::cast < swap_chain > pswapchain = m_pgpudevice->get_swap_chain();
+
+      if (!pswapchain->m_bSwapChainInitialized)
+      {
+
+         pswapchain->initialize_gpu_swap_chain(m_pgpurenderer);
+
+      }
+
+      return true;
 
    }
 

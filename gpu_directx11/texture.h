@@ -65,17 +65,26 @@ namespace gpu_directx11
 
       //::pointer < d3d11 > m_pd3d11;
 
+      //bool m_bCreateRenderTargetView;
+      bool m_bShaderResourceView;
+
       texture();
       ~texture() override;
 
 
       void initialize_gpu_texture(::gpu::renderer* prenderer, const ::int_rectangle & rectangleTarget) override;
+      virtual void _initialize_gpu_texture(::gpu::renderer* prenderer, IDXGISwapChain1 * pdxgiswapchain);
+
+
+      virtual void create_render_target_view();
+      virtual void create_shader_resource_view();
 
       //void _new_state(ID3D12GraphicsCommandList* pcommandlist, D3D12_RESOURCE_STATES estate);
 
       //class d3d11* d3d11();
 
       void blend(::gpu::texture* ptexture) override;
+
 
    };
 

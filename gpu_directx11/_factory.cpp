@@ -1,12 +1,14 @@
 #include "framework.h"
 #include "approach.h"
 #include "cpu_buffer.h"
-#include "direct2d_draw2d_swap_chain.h"
+//#include "direct2d_draw2d_swap_chain.h"
 #include "frame.h"
 #include "object.h"
+#include "offscreen_render_target_view.h"
 #include "program.h"
 #include "renderer.h"
 #include "shader.h"
+#include "swap_chain.h"
 #include "texture.h"
 
 //BEGIN_FACTORY(gpu_directx11)
@@ -33,7 +35,8 @@ __FACTORY_EXPORT void gpu_directx11_factory(::factory::factory * pfactory)
 
    pfactory->add_factory_item < ::gpu_directx11::device, ::gpu::device >();
 
-   pfactory->add_factory_item < ::gpu_directx11::direct2d_draw2d_swap_chain, ::gpu::swap_chain >();
+   pfactory->add_factory_item < ::gpu_directx11::offscreen_render_target_view, ::gpu::render_target >();
+   pfactory->add_factory_item < ::gpu_directx11::swap_chain, ::gpu::swap_chain >();
 
 }
 

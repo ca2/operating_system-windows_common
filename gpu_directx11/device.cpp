@@ -99,22 +99,8 @@ namespace gpu_directx11
    }
 
 
-   void device::initialize_swap_chain(::windowing::window * pwindow)
+   void device::initialize_d3d11_device()
    {
-
-      ::cast < ::windowing_win32::window > pwin32window = pwindow;
-
-      auto r = pwindow->get_window_rectangle();
-
-      auto& pdevice = m_pdevice;
-      auto& pcontext = m_pdevicecontext;
-      auto& pdevice1 = m_pdevice1;
-      auto& pdxgidevice = m_pdxgidevice;
-      auto& pdxgifactory2 = m_pdxgifactory2;
-
-      ::cast < ::gpu_directx11::swap_chain > pswapchain = get_swap_chain();
-
-      auto& pdxgiswapchain1 = pswapchain->m_pdxgiswapchain1;
 
       ::defer_throw_hresult(D3D11CreateDevice(nullptr,    // Adapter
          D3D_DRIVER_TYPE_HARDWARE,
@@ -122,39 +108,15 @@ namespace gpu_directx11
          D3D11_CREATE_DEVICE_BGRA_SUPPORT,
          nullptr, 0, // Highest available feature level
          D3D11_SDK_VERSION,
-         &pdevice,
+         &m_pdevice,
          nullptr,    // Actual feature level
          nullptr));  // Device context
-      ::defer_throw_hresult(pdevice.as(pdevice1));
-      ::defer_throw_hresult(pdevice.as(pdxgidevice));
 
-      ::defer_throw_hresult(CreateDXGIFactory2(
-         DXGI_CREATE_FACTORY_DEBUG,
-         __interface_of(pdxgifactory2)));
+      ::defer_throw_hresult(m_pdevice.as(m_pdevice1));
 
-      DXGI_SWAP_CHAIN_DESC1 dxgiswapchaindesc1 = {};
-      dxgiswapchaindesc1.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
-      dxgiswapchaindesc1.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-      dxgiswapchaindesc1.SwapEffect = DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL;
-      dxgiswapchaindesc1.BufferCount = 2;
-      dxgiswapchaindesc1.SampleDesc.Count = 1;
-      dxgiswapchaindesc1.AlphaMode = DXGI_ALPHA_MODE_PREMULTIPLIED;
+      ::defer_throw_hresult(m_pdevice.as(m_pdxgidevice));
 
-      RECT rect = {};
-      GetWindowRect(pwin32window->m_hwnd, &rect);
-      dxgiswapchaindesc1.Width = rect.right - rect.left;
-      dxgiswapchaindesc1.Height = rect.bottom - rect.top;
-
-      HRESULT hrCreateSwapChainForComposition =
-         pdxgifactory2->CreateSwapChainForComposition(
-            pdxgidevice,
-            &dxgiswapchaindesc1,
-            nullptr, // Don’t restrict
-            &pdxgiswapchain1);
-
-      ::defer_throw_hresult(hrCreateSwapChainForComposition);
-
-      pdevice->GetImmediateContext(&pcontext);
+      m_pdevice->GetImmediateContext(&m_pdevicecontext);
 
 #if defined(_DEBUG)
 
@@ -165,14 +127,14 @@ namespace gpu_directx11
    }
 
 
+
+
    void device::initialize_gpu_device_for_swap_chain(::gpu::approach* pgpuapproachParam, ::windowing::window * pwindow)
    {
 
       ::gpu::device::initialize_gpu_device_for_swap_chain(pgpuapproachParam, pwindow);
 
-      initialize_swap_chain(pwindow);
-
-      m_pswapchain->initialize_gpu_swap_chain(this, pwindow);
+      initialize_d3d11_device();
 
    }
 
@@ -1988,7 +1950,7 @@ namespace gpu_directx11
 
 
 
-   IDXGIDevice* device::draw_get_dxgi_device()
+   IDXGIDevice* device::_get_dxgi_device()
    {
 
       return m_pdxgidevice;
@@ -2035,6 +1997,10 @@ namespace gpu_directx11
       case ::gpu::e_type_float: return sizeof(float);
       case ::gpu::e_type_seq4: return sizeof(::glm::vec4);
       case ::gpu::e_type_mat4: return sizeof(::glm::mat4);
+      case ::gpu::e_type_seq3: return sizeof(::glm::vec3);
+      case ::gpu::e_type_mat3: return sizeof(::glm::mat3);
+      case ::gpu::e_type_seq2: return sizeof(::glm::vec2);
+      case ::gpu::e_type_mat2: return sizeof(::glm::mat2);
       default:
          throw ::exception(error_wrong_state);
 
