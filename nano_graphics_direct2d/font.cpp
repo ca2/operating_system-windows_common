@@ -46,7 +46,7 @@ namespace universal_windows
 
                ::cast < ::universal_windows::nano::graphics::device > pdevice = pnanodevice;
 
-               IDWriteFactory * pfactory = ::direct2d::dwrite_factory();
+               IDWriteFactory * pfactory = m_pdirect2d->dwrite_factory();
 
                DWRITE_FONT_STYLE style;
 

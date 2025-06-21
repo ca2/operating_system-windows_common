@@ -698,6 +698,7 @@
     <ClInclude Include="aaa_multithreading_lock.h" />
     <ClInclude Include="geometry.h" />
     <ClInclude Include="geometry_sink_text_renderer.h" />
+    <ClInclude Include="object.h" />
     <ClInclude Include="_.h" />
   </ItemGroup>
   <ItemGroup>

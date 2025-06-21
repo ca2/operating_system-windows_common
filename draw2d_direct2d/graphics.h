@@ -2,6 +2,7 @@
 
 
 #include "bred/gpu/graphics.h"
+#include "direct2d/object.h"
 #include <dxgi1_2.h>
 
 
@@ -10,8 +11,8 @@ namespace draw2d_direct2d
 
 
    class CLASS_DECL_DRAW2D_DIRECT2D graphics :
-      virtual public ::draw2d_gpu::graphics
-      //, virtual public ::direct2d::graphics
+      virtual public ::draw2d_gpu::graphics,
+      virtual public ::direct2d::object
    {
    public:
       int_array m_iaPushLayer;
@@ -39,7 +40,7 @@ namespace draw2d_direct2d
       comptr<ID2D1DeviceContext1>                        m_pdevicecontext1; // 4
 
       comptr<IDXGISurface>                               m_pdxgisurface;
-      comptr < ID2D1Bitmap>                              m_pd2d1bitmap;
+      comptr < ID2D1Bitmap1>                              m_pd2d1bitmap;
 
       comptr<IDXGIAdapter>                               m_padapter;
       comptr<IDXGIFactory2>                              m_pfactory2;
@@ -67,6 +68,12 @@ namespace draw2d_direct2d
 
       graphics();
       ~graphics() override;
+
+
+
+      void gpu_layer_on_after_begin_render() override;
+      void gpu_layer_on_before_end_render() override;
+
 
 
       bool TextOutAlphaBlend(double x, double y, const ::scoped_string & scopedstr) override;
@@ -139,7 +146,8 @@ namespace draw2d_direct2d
       void _create_memory_graphics(const ::int_size& size = {}) override;
       void defer_set_size(const ::int_size& size = {}) override;
 
-      void create_offscreen_graphics_for_swap_chain_blitting(const ::int_size& size) override;
+      //void create_offscreen_graphics_for_swap_chain_blitting(const ::int_size& size) override;
+      void create_for_window_draw2d(::user::interaction* puserinteraction, const ::int_size & size) override;
       //void create_connector() override;
 
       void DeleteDC() override;
@@ -153,8 +161,8 @@ namespace draw2d_direct2d
 //      bool ResetDC(const DEVMODE* lpDevMode) override;
 
 
-      void gpu_layer_on_after_begin_render() override;
-      void gpu_layer_on_before_end_render() override;
+      //void gpu_layer_on_after_begin_render() override;
+      //void gpu_layer_on_before_end_render() override;
 
       // Drawing-Tool Functions
       ::double_point GetBrushOrg() override;
@@ -599,7 +607,9 @@ namespace draw2d_direct2d
       virtual void * detach() override;
 
 
-      virtual void __attach(ID2D1DeviceContext* pdevicecontext);
+      //virtual void __attach(ID2D1DeviceContext* pdevicecontext);
+
+      virtual void __bind(IDXGISurface* pdxgisurface);
 
 #ifdef WINDOWS_DESKTOP
       //virtual bool attach_hdc(HDC hdc) override;

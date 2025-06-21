@@ -1061,12 +1061,15 @@ namespace gpu_directx11
 
       m_hlsClear.m_dH = fmod(m_hlsClear.m_dH + 0.0001, 1.0);
 
-      ::color::color colorClear = m_hlsClear;
+      //::color::color colorClear = m_hlsClear;
+
+      ::color::color colorClear(::color::transparent);
 
       float clear[4] = {
-         colorClear.f32_red() * .5f,
-         colorClear.f32_green() * .5f,
-         colorClear.f32_blue() * .5f, .5f };
+         colorClear.f32_red() * colorClear.f32_opacity(),
+         colorClear.f32_green() * colorClear.f32_opacity(),
+         colorClear.f32_blue() * colorClear.f32_opacity(),
+         colorClear.f32_opacity()};
 
       //::cast < render_target_view > pgpurendertargetview = m_pgpurendertarget;
 

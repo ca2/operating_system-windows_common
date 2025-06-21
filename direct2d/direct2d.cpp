@@ -25,20 +25,20 @@ namespace direct2d
 {
 
 
-   ::pointer < class direct2d > direct2d::s_pdirect2d;
+//   ::pointer < class direct2d > direct2d::s_pdirect2d;
 
 
    direct2d::direct2d()
    {
 
-      if (s_pdirect2d)
-      {
+      //if (s_pdirect2d)
+      //{
 
-         throw ::exception(error_wrong_state);
+      //   throw ::exception(error_wrong_state);
 
-      }
+      //}
 
-      s_pdirect2d = this;
+      //s_pdirect2d = this;
 
       d2d1_factory1(true);
 
@@ -61,10 +61,12 @@ namespace direct2d
    }
 
 
-   void direct2d::initialize(::particle * pparticle)
+   void direct2d::initialize_direct2d(::dxgi_device_source * pdxgidevicesource)
    {
 
-      ::app_consumer<::aura::application>::initialize(pparticle);
+      ::app_consumer<::aura::application>::initialize(pdxgidevicesource);
+
+      m_pdxgidevicesource = pdxgidevicesource;
 
    }
 
@@ -72,9 +74,9 @@ namespace direct2d
    comptr<ID2D1Device> direct2d::create_d2d1_device()
    {
 
-      ::cast < ::gpu::approach > pgpuapproach = m_papplication->get_gpu_approach();
+      /*::cast < ::gpu::approach > pgpuapproach = m_papplication->get_gpu_approach();
 
-      ::cast < ::gpu::device > pgpudevice = pgpuapproach->get_gpu_device();
+      ::cast < ::gpu::device > pgpudevice = pgpuapproach->get_gpu_device();*/
 
       //if (m_papplication->m_gpu.m_bUseSwapChainWindow)
       //{
@@ -87,9 +89,9 @@ namespace direct2d
       //else
       //{
 
-      ::cast < ::dxgi_device_source > pdxgidevicesource = pgpudevice;
+//      ::cast < ::dxgi_device_source > pdxgidevicesource = m_ppgpudevice;
 
-      auto pdxgidevice = pdxgidevicesource->_get_dxgi_device();
+      auto pdxgidevice = m_pdxgidevicesource->_get_dxgi_device();
 
       comptr<ID2D1Device> pd2d1device;
 
@@ -269,43 +271,71 @@ namespace direct2d
 
 
 
-   CLASS_DECL_DIRECT2D void defer_initialize(::windowing::window* pwindow, const ::int_rectangle& rectanglePlacement)
+   //CLASS_DECL_DIRECT2D void defer_initialize(::windowing::window* pwindow, const ::int_rectangle& rectanglePlacement)
+   //{
+
+   //   if (::is_set(direct2d::s_pdirect2d))
+   //   {
+
+   //      return;
+
+   //   }
+
+   //   //if (g_pdxgidebug == nullptr)
+   //   //{
+
+   //   //   g_pdxgidebug = ___new dxgidebug;
+
+   //   //   //g_pdirect2dplugin = ___new plugin;
+
+   //   //   //g_pdirect2dplugin->initialize();
+
+   //   //}
+
+
+   //   pwindow->__defer_construct(direct2d::s_pdirect2d);
+
+   //   //direct2d::s_pdirect2d->initialize(pwindow);
+
+   //   //direct2d::s_pdirect2d->initialize_direct2d(pwindow, rectanglePlacement);
+
+   //}
+
+
+   //CLASS_DECL_DIRECT2D void finalize()
+   //{
+
+   //   direct2d::s_pdirect2d.release();
+
+   //   //::acme::del(g_pdxgidebug);
+
+   //}
+
+
+
+   CLASS_DECL_DIRECT2D direct2d* from_gpu_device(::gpu::device* pgpudevice)
    {
 
-      if (::is_set(direct2d::s_pdirect2d))
+      ::cast < direct2d > pdirect2d = pgpudevice->payload("direct2d").get_subparticle();
+
+      if (!pdirect2d)
       {
 
-         return;
+         ::pointer < direct2d > pdirect2dNew;
+
+         pgpudevice->__construct_new(pdirect2dNew);
+
+         ::cast < ::dxgi_device_source > pdxgidevicesource = pgpudevice;
+
+         pdirect2dNew->initialize_direct2d(pdxgidevicesource);
+
+         pgpudevice->payload("direct2d") = pdirect2dNew;
+         
+         pdirect2d = pgpudevice->payload("direct2d").get_subparticle();
 
       }
 
-      //if (g_pdxgidebug == nullptr)
-      //{
-
-      //   g_pdxgidebug = ___new dxgidebug;
-
-      //   //g_pdirect2dplugin = ___new plugin;
-
-      //   //g_pdirect2dplugin->initialize();
-
-      //}
-
-
-      pwindow->__defer_construct(direct2d::s_pdirect2d);
-
-      //direct2d::s_pdirect2d->initialize(pwindow);
-
-      //direct2d::s_pdirect2d->initialize_direct2d(pwindow, rectanglePlacement);
-
-   }
-
-
-   CLASS_DECL_DIRECT2D void finalize()
-   {
-
-      direct2d::s_pdirect2d.release();
-
-      //::acme::del(g_pdxgidebug);
+      return pdirect2d;
 
    }
 
@@ -325,13 +355,15 @@ CLASS_DECL_DIRECT2D DWRITE_FONT_WEIGHT dwrite_font_weight(const write_text::font
 
 
 
-direct2d_lock::direct2d_lock()
+direct2d_lock::direct2d_lock(::direct2d::direct2d* pdirect2d)
 {
 
-   auto pdirect2d = ::direct2d::get();
+   m_pdirect2d = pdirect2d;
 
-   if (::is_null(pdirect2d))
+   if (::is_null(m_pdirect2d))
    {
+
+      m_bLocked = false;
 
       return;
 
@@ -341,6 +373,8 @@ direct2d_lock::direct2d_lock()
 
    if (::is_null(pmultithread))
    {
+
+      m_bLocked = false;
 
       return;
 
@@ -359,7 +393,7 @@ direct2d_lock::~direct2d_lock()
    if (m_bLocked)
    {
 
-      ::direct2d::direct2d::s_pdirect2d->m_pd2d1multithread->Leave();
+      m_pdirect2d->m_pd2d1multithread->Leave();
 
    }
 

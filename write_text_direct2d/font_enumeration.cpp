@@ -32,7 +32,7 @@ namespace write_text_direct2d
 
       ::comptr<IDWriteFontCollection> pFontCollection;
 
-      HRESULT hr = ::direct2d::dwrite_factory()->GetSystemFontCollection(&pFontCollection);
+      HRESULT hr = m_pdirect2d->dwrite_factory()->GetSystemFontCollection(&pFontCollection);
 
       unsigned int familyCount = 0;
 

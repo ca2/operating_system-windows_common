@@ -3,6 +3,7 @@
 
 
 #include "aura/graphics/write_text/font_enumeration.h"
+#include "direct2d/object.h"
 
 
 namespace write_text_direct2d
@@ -10,7 +11,8 @@ namespace write_text_direct2d
 
 
    class CLASS_DECL_WRITE_TEXT_DIRECT2D font_enumeration :
-      virtual public ::write_text::font_enumeration
+      virtual public ::write_text::font_enumeration,
+      virtual public ::direct2d::object
    {
    public:
 

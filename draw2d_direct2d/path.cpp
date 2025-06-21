@@ -234,7 +234,7 @@ namespace draw2d_direct2d
 
       IDWriteTextFormat * pformat = pfont->get_os_data < IDWriteTextFormat * >(pgraphics);
 
-      IDWriteFactory * pfactory = ::direct2d::dwrite_factory();
+      IDWriteFactory * pfactory = m_pdirect2d->dwrite_factory();
 
       comptr<IDWriteTextLayout> playout;
 
@@ -256,9 +256,9 @@ namespace draw2d_direct2d
 
       }
 
-      ::direct2d_lock lock;
+      ::direct2d_lock lock(m_pdirect2d);
 
-      auto & renderer = ::direct2d::get()->m_geometrysinktextrenderer;
+      auto & renderer = m_pdirect2d->m_geometrysinktextrenderer;
 
       renderer.m_pgeometrysink = m_psink;
 
@@ -460,7 +460,7 @@ namespace draw2d_direct2d
 
          }
 
-         hr = ::direct2d::factory()->CreatePathGeometry(&m_ppathHollow);
+         hr = m_pdirect2d->d2d1_factory1()->CreatePathGeometry(&m_ppathHollow);
 
          m_ppath = m_ppathHollow;
 
@@ -477,7 +477,7 @@ namespace draw2d_direct2d
 
          }
 
-         hr = ::direct2d::factory()->CreatePathGeometry(&m_ppathFilled);
+         hr = m_pdirect2d->d2d1_factory1()->CreatePathGeometry(&m_ppathFilled);
          
          m_ppath = m_ppathFilled;
 
@@ -875,7 +875,7 @@ namespace draw2d_direct2d
 
       //IDWriteTextFormat * pformat = textout.m_pfont->get_os_data < IDWriteTextFormat * >(pgraphicsParam);
 
-      //IDWriteFactory * pfactory = ::direct2d::dwrite_factory();
+      //IDWriteFactory * pfactory = m_pdirect2d->dwrite_factory();
 
       //comptr<IDWriteTextLayout> playout;
 
@@ -906,7 +906,7 @@ namespace draw2d_direct2d
 
       ////}
 
-      ////CustomTextRenderer renderer(::direct2d::factory(), m_psink);
+      ////CustomTextRenderer renderer(m_pdirect2d->d2d1_factory1(), m_psink);
 
       ////defer_text_primitive_blend();
 

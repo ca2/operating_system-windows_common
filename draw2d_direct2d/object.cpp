@@ -1,4 +1,5 @@
 #include "framework.h"
+#include "graphics.h"
 #include "object.h"
 
 
@@ -19,6 +20,16 @@ namespace draw2d_direct2d
    object::~object()
    {
       //delete_object();
+   }
+
+
+   void object::initialize_draw2d_direct2d_object(::draw2d_direct2d::graphics* pgraphics)
+   {
+
+      initialize(pgraphics);
+
+      initialize_direct2d_object(pgraphics->m_pdirect2d);
+
    }
 
    int object::get_object(int nCount, LPVOID lpObject) const
@@ -108,6 +119,24 @@ namespace draw2d_direct2d
    //   }
    //   return ::draw2d::object::get_os_data_ex(i);
    //}
+
+
+   void object::defer_update(::draw2d::graphics* pgraphics, char i) const
+   {
+
+      if (!m_pdirect2d)
+      {
+
+         ::cast < graphics> pdirect2dgraphics = pgraphics;
+
+         ((object*)this)->initialize_draw2d_direct2d_object(pdirect2dgraphics);
+
+      }
+
+      ::draw2d::object::defer_update(pgraphics, i);
+
+   }
+
 
 } // namespace draw2d_direct2d
 

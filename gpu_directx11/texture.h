@@ -39,6 +39,9 @@ namespace gpu_directx11
       //::comptr<ID3D12DescriptorHeap>   m_pheapShaderResourceView;
       //D3D12_CPU_DESCRIPTOR_HANDLE      m_handleShaderResourceView;
 
+      D3D11_TEXTURE2D_DESC m_texture2ddesc;
+
+
       comptr<ID3D11RenderTargetView>      m_prendertargetview;
       comptr<ID3D11Texture2D> m_ptextureOffscreen;
       comptr< ID3D11SamplerState> m_psamplerstate;

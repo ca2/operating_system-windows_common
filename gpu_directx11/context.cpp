@@ -1251,7 +1251,9 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_TARGET
       m_pshaderBlend3->bind(ptextureTarget);
 
       ::cast <texture > ptextureDst = ptextureTarget;
-      float clearColor[4] = { 0.95f * 0.5f, 0.95f * 0.5f, 0.25f * 0.5f, 0.5f }; // Clear to transparent
+      //float clearColor[4] = { 0.95f * 0.5f, 0.95f * 0.5f, 0.25f * 0.5f, 0.5f }; // Clear to transparent
+      //m_pcontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor);
+      float clearColor[4] = { 0.f, 0.f, 0.f, 0.f }; // Clear to transparent
       m_pcontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor);
 
 

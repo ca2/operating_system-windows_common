@@ -16,8 +16,13 @@ namespace draw2d_direct2d
    public:
 
 
+      ::pointer < ::draw2d_direct2d::graphics > m_pgraphics;
+
       object();
       ~object() override;
+
+
+      void initialize_draw2d_direct2d_object(::draw2d_direct2d::graphics* pgraphics);
 
 
       int get_object(int nCount, LPVOID lpObject) const;
@@ -37,6 +42,9 @@ namespace draw2d_direct2d
          return (::draw2d_direct2d::draw2d * ) system()->draw2d()->m_pimpl;
 
       }
+
+
+      void defer_update(::draw2d::graphics* pgraphics, char i) const override;
 
 
    };

@@ -27,24 +27,41 @@ namespace gpu_directx11
    void texture::initialize_gpu_texture(::gpu::renderer* prenderer, const ::int_rectangle& rectangleTarget) //, bool bCreateRenderTargetView, bool bCreateShaderResourceView)
    {
 
+      if (m_rectangleTarget == rectangleTarget
+         && m_pgpurenderer == prenderer)
+      {
+
+         return;
+
+      }
+
+      auto sizeCurrent = m_rectangleTarget.size();
+
       ::gpu::texture::initialize_gpu_texture(prenderer, rectangleTarget);
 
+      if (sizeCurrent == m_rectangleTarget.size())
+      {
+
+         return;
+
+      }
+
+      m_texture2ddesc = {};
       // 1. Create offscreen render target texture
-      D3D11_TEXTURE2D_DESC texDesc = {};
-      texDesc.Width = rectangleTarget.width();
-      texDesc.Height = rectangleTarget.height();
-      texDesc.MipLevels = 1;
-      texDesc.ArraySize = 1;
-      texDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
-      texDesc.SampleDesc.Count = 1;
-      texDesc.Usage = D3D11_USAGE_DEFAULT;
-      texDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
+      m_texture2ddesc.Width = m_rectangleTarget.width();
+      m_texture2ddesc.Height = m_rectangleTarget.height();
+      m_texture2ddesc.MipLevels = 1;
+      m_texture2ddesc.ArraySize = 1;
+      m_texture2ddesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
+      m_texture2ddesc.SampleDesc.Count = 1;
+      m_texture2ddesc.Usage = D3D11_USAGE_DEFAULT;
+      m_texture2ddesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
 
       ::cast < ::gpu_directx11::device > pgpudevice = m_pgpurenderer->m_pgpucontext->m_pgpudevice;
 
       auto pdevice = pgpudevice->m_pdevice;
 
-      HRESULT hrCreateTexture = pdevice->CreateTexture2D(&texDesc, nullptr, &m_ptextureOffscreen);
+      HRESULT hrCreateTexture = pdevice->CreateTexture2D(&m_texture2ddesc, nullptr, &m_ptextureOffscreen);
 
       if (FAILED(hrCreateTexture))
       {

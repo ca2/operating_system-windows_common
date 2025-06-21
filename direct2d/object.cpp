@@ -18,6 +18,16 @@ namespace direct2d
 
    }
 
+
+   void object::initialize_direct2d_object(::direct2d::direct2d* pdirect2d)
+   {
+
+      initialize(pdirect2d);
+
+      m_pdirect2d = pdirect2d;
+
+   }
+
    comptr < ID2D1StrokeStyle1 > object::_create_stroke_style(
       ::draw2d_gpu::graphics * pgraphics,
                ::draw2d::enum_line_cap elinecapBeg,
@@ -58,7 +68,7 @@ namespace direct2d
 
       comptr < ID2D1StrokeStyle1 > pstrokestyle;
 
-      HRESULT hr = ::direct2d::factory()->CreateStrokeStyle(&properties1, nullptr, 0, &pstrokestyle);
+      HRESULT hr = m_pdirect2d->d2d1_factory1()->CreateStrokeStyle(&properties1, nullptr, 0, &pstrokestyle);
 
       return pstrokestyle;
 

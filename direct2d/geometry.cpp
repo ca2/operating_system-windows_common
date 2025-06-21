@@ -15,7 +15,7 @@ namespace direct2d
    {
 
 
-      comptr<ID2D1RectangleGeometry> create_rectangle(const ::float_rectangle & rectangle)
+      comptr<ID2D1RectangleGeometry> create_rectangle(::direct2d::direct2d * pdirect2d, const ::float_rectangle & rectangle)
       {
 
          comptr<ID2D1RectangleGeometry> pgeometry;
@@ -24,14 +24,14 @@ namespace direct2d
 
          copy(&r, &rectangle);
 
-         ::direct2d::factory()->CreateRectangleGeometry(r, &pgeometry);
+         pdirect2d->d2d1_factory1()->CreateRectangleGeometry(r, &pgeometry);
 
          return pgeometry;
 
       }
 
 
-      comptr<ID2D1EllipseGeometry> create_ellipse(const ::float_ellipse & ellipse)
+      comptr<ID2D1EllipseGeometry> create_ellipse(::direct2d::direct2d* pdirect2d, const ::float_ellipse & ellipse)
       {
 
          D2D1_ELLIPSE d2d1ellipse;
@@ -46,7 +46,7 @@ namespace direct2d
          d2d1ellipse.radiusX = sizeRadius.cx();
          d2d1ellipse.radiusY = sizeRadius.cy();
 
-         ::direct2d::factory()->CreateEllipseGeometry(d2d1ellipse, &pgeometry);
+         pdirect2d->d2d1_factory1()->CreateEllipseGeometry(d2d1ellipse, &pgeometry);
 
          return pgeometry;
 
@@ -54,7 +54,7 @@ namespace direct2d
       }
 
 
-      comptr<ID2D1PathGeometry> create_polygon(const ::double_polygon & polygon, bool bFilled)
+      comptr<ID2D1PathGeometry> create_polygon(::direct2d::direct2d* pdirect2d, const ::double_polygon & polygon, bool bFilled)
       {
 
          if (polygon.size() <= 2)
@@ -66,7 +66,7 @@ namespace direct2d
 
          comptr<ID2D1PathGeometry> ppathgeometry;
 
-         HRESULT hr = ::direct2d::factory()->CreatePathGeometry(&ppathgeometry);
+         HRESULT hr = pdirect2d->d2d1_factory1()->CreatePathGeometry(&ppathgeometry);
 
          {
 
@@ -87,12 +87,12 @@ namespace direct2d
       }
 
 
-      comptr<ID2D1PathGeometry> create_poly_polygon(const ::double_poly_polygon & polypolygon, bool bFilled)
+      comptr<ID2D1PathGeometry> create_poly_polygon(::direct2d::direct2d* pdirect2d, const ::double_poly_polygon & polypolygon, bool bFilled)
       {
 
          comptr<ID2D1PathGeometry> ppathgeometry;
 
-         HRESULT hr = ::direct2d::factory()->CreatePathGeometry(&ppathgeometry);
+         HRESULT hr = pdirect2d->d2d1_factory1()->CreatePathGeometry(&ppathgeometry);
 
          {
 

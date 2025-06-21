@@ -29,13 +29,6 @@ namespace draw2d_direct2d
    }
 
 
-   //void font::dump(dump_context & dumpcontext) const
-   //{
-
-   //   ::draw2d::object::dump(dumpcontext);
-
-   //}
-
    DWRITE_FONT_STYLE font::_dwrite_font_style()
    {
 
@@ -139,7 +132,7 @@ namespace draw2d_direct2d
 
          }
 
-         IDWriteFactory * pfactory = ::direct2d::dwrite_factory();
+         IDWriteFactory * pfactory = m_pdirect2d->dwrite_factory();
 
          if (!defer_load_internal_font(pgraphics))
          {

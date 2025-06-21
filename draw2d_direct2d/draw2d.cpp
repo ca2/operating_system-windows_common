@@ -19,7 +19,7 @@ namespace draw2d_direct2d
    draw2d::~draw2d()
    {
 
-      ::direct2d::finalize();
+      //::direct2d::finalize();
 
    }
 
@@ -66,7 +66,7 @@ namespace draw2d_direct2d
    bool draw2d::lock_device()
    {
 
-      auto pdirect2d = ::direct2d::get();
+      auto pdirect2d = m_pdirect2d;
 
       if (!pdirect2d)
       {
@@ -94,7 +94,7 @@ namespace draw2d_direct2d
    void draw2d::unlock_device()
    {
       
-      auto pdirect2d = ::direct2d::direct2d::s_pdirect2d;
+      auto pdirect2d = m_pdirect2d;
 
       auto pmultithread = pdirect2d->m_pd2d1multithread.m_p;
 
@@ -108,9 +108,9 @@ namespace draw2d_direct2d
 
       ::draw2d_gpu::draw2d::on_create_window(pwindow);
 
-      auto rectangleWindow = pwindow->get_window_rectangle();
+      ///auto rectangleWindow = pwindow->get_window_rectangle();
       
-      ::direct2d::defer_initialize(pwindow, rectangleWindow);
+      //::direct2d::defer_initialize(pwindow, rectangleWindow);
 
    }
 

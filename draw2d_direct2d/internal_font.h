@@ -14,7 +14,8 @@ namespace draw2d_direct2d
 
 
    class internal_font :
-      virtual public ::write_text::internal_font
+      virtual public ::write_text::internal_font,
+      virtual public ::direct2d::object
    {
    public:
 
