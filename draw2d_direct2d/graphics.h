@@ -2,6 +2,7 @@
 
 
 #include "bred/gpu/graphics.h"
+#include "acme_windows_common/dxgi_surface_bindable.h"
 #include "direct2d/object.h"
 #include <dxgi1_2.h>
 
@@ -12,7 +13,8 @@ namespace draw2d_direct2d
 
    class CLASS_DECL_DRAW2D_DIRECT2D graphics :
       virtual public ::draw2d_gpu::graphics,
-      virtual public ::direct2d::object
+      virtual public ::direct2d::object,
+      virtual public ::dxgi_surface_bindable
    {
    public:
       int_array m_iaPushLayer;
@@ -29,6 +31,7 @@ namespace draw2d_direct2d
       };
 
       ::pointer < ::particle > m_pSwapChainForBlitting;
+      ::array < ::comptr < IDXGISurface > > m_dxgisurfaceaBound;
 
       int                                                m_iLayerCount;
 
@@ -41,6 +44,8 @@ namespace draw2d_direct2d
 
       comptr<IDXGISurface>                               m_pdxgisurface;
       comptr < ID2D1Bitmap1>                              m_pd2d1bitmap;
+
+      ::array <comptr < ID2D1Bitmap1>   >           m_d2d1bitmapa;
 
       comptr<IDXGIAdapter>                               m_padapter;
       comptr<IDXGIFactory2>                              m_pfactory2;
@@ -609,7 +614,7 @@ namespace draw2d_direct2d
 
       //virtual void __attach(ID2D1DeviceContext* pdevicecontext);
 
-      virtual void __bind(IDXGISurface* pdxgisurface);
+      void _bind(int iIndex, IDXGISurface* pdxgisurface) override;
 
 #ifdef WINDOWS_DESKTOP
       //virtual bool attach_hdc(HDC hdc) override;

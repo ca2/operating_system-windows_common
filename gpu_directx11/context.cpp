@@ -23,6 +23,7 @@
 #define GLM_FORCE_LEFT_HANDED
 #include <glm/mat4x4.hpp>
 #include "initializers.h"
+#include "acme_windows_common/dxgi_surface_bindable.h"
 
 
 using namespace directx11;
@@ -768,6 +769,20 @@ namespace gpu_directx11
       m_pgpudevice = pgpudevice;
 
       _create_context_directx11(pgpudevice, eoutput, pwindow, size);
+
+   }
+
+
+   void context::__bind_draw2d_compositor(::gpu::compositor* pgpucompositor)
+   {
+
+      ::cast < ::dxgi_surface_bindable > pdxgisurfacebindable = pgpucompositor;
+
+      ::cast < texture > ptexture = m_pgpurenderer->m_pgpurendertarget->current_texture();
+      pdxgisurfacebindable->_bind(
+         m_pgpurenderer->m_pgpurendertarget->get_frame_index(),
+         ptexture->__get_dxgi_surface()
+      );
 
    }
 

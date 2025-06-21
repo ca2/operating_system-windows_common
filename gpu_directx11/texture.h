@@ -53,6 +53,9 @@ namespace gpu_directx11
       comptr <ID3D11DepthStencilState>m_pdepthstencilstate;
 
 
+      comptr < IDXGISurface > m_pdxgisurface;
+
+
       //class d3d11 :
       //   virtual public ::particle
       //{
@@ -96,6 +99,9 @@ namespace gpu_directx11
       //class d3d11* d3d11();
 
       void blend(::gpu::texture* ptexture) override;
+
+
+      virtual IDXGISurface* __get_dxgi_surface();
 
 
    };

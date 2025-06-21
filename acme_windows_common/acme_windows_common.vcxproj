@@ -1845,6 +1845,7 @@
   <ItemGroup>
     <ClInclude Include="directory_system.h" />
     <ClInclude Include="dxgi_device_source.h" />
+    <ClInclude Include="dxgi_surface_bindable.h" />
     <ClInclude Include="file_system.h" />
     <ClInclude Include="path_system.h" />
     <ClInclude Include="bstring.h" />
@@ -1872,6 +1873,7 @@
   <ItemGroup>
     <ClCompile Include="directory_system.cpp" />
     <ClCompile Include="dxgi_device_source.cpp" />
+    <ClCompile Include="dxgi_surface_bindable.cpp" />
     <ClCompile Include="file_system.cpp" />
     <ClCompile Include="path_system.cpp" />
     <ClCompile Include="bstring.cpp" />

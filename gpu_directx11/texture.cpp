@@ -475,6 +475,26 @@ namespace gpu_directx11
    }
 
 
+   IDXGISurface* texture::__get_dxgi_surface()
+   {
+
+      if (m_pdxgisurface)
+      {
+
+         return m_pdxgisurface;
+
+      }
+
+      auto hr = m_ptextureOffscreen.as(m_pdxgisurface);
+
+      ::defer_throw_hresult(hr);
+
+      return m_pdxgisurface;
+
+   }
+
+
+
 } // namespace gpu_directx11
 
 

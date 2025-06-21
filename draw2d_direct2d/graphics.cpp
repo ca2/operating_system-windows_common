@@ -6297,8 +6297,53 @@ namespace draw2d_direct2d
    
 
    //void graphics::__attach(ID2D1DeviceContext* pdevicecontext)
-   void graphics::__bind(IDXGISurface * pdxgisurface)
+   void graphics::_bind(int iIndex, IDXGISurface * pdxgisurface)
    {
+
+      if (::is_null(pdxgisurface))
+      {
+
+         throw ::exception(error_null_pointer);
+
+      }
+      if (iIndex < 0 || iIndex >= 16)
+      {
+
+         throw ::exception(error_bad_argument, "what?!");
+
+      }
+
+      auto& pdxgisurfaceBound = m_dxgisurfaceaBound.element_at_grow(iIndex);
+
+      auto& pd2d1bitmap = m_d2d1bitmapa.element_at_grow(iIndex);
+
+      if (pdxgisurfaceBound != pdxgisurface)
+      {
+
+         pd2d1bitmap.Release();
+
+      }
+
+      if (pd2d1bitmap)
+      {
+
+         auto size = pd2d1bitmap->GetSize();
+
+         DXGI_SURFACE_DESC desc{};
+
+         HRESULT hrDxgiSurfaceGetDesc = pdxgisurface->GetDesc(&desc);
+
+         ::defer_throw_hresult(hrDxgiSurfaceGetDesc);
+
+         if (size.width == desc.Width
+            && size.height == desc.Height)
+         {
+
+            return;
+
+         }
+
+      }
 
       //IDXGISurface* dxgiSurface = nullptr;
       //auto hr = texture->QueryInterface(__uuidof(IDXGISurface), (void**)&dxgiSurface);
@@ -6309,18 +6354,17 @@ namespace draw2d_direct2d
       //IDXGIDevice* dxgiDevice = nullptr;
 //      d3d11Device->QueryInterface(__uuidof(IDXGIDevice), (void**)&dxgiDevice);
 
-
       auto pd2d1device = m_pdirect2d->d2d1_device();
 
       /*ID2D1Device* d2dDevice = nullptr;
       m_pdirect2d->d2d1_factory1()->CreateDevice(pdxgidevice, &d2dDevice);*/
 
       //ID2D1DeviceContext* d2dContext = nullptr;
-      pd2d1device->CreateDeviceContext(D2D1_DEVICE_CONTEXT_OPTIONS_NONE, 
-         &m_pdevicecontext);
+
+      //pd2d1device->CreateDeviceContext(D2D1_DEVICE_CONTEXT_OPTIONS_NONE, 
+        // &m_pdevicecontext);
 
       //m_pdevicecontext = pdevicecontext;
-
 
       D2D1_BITMAP_PROPERTIES1 bitmapProps = {
     { DXGI_FORMAT_B8G8R8A8_UNORM, D2D1_ALPHA_MODE_PREMULTIPLIED },
@@ -6332,7 +6376,7 @@ namespace draw2d_direct2d
       m_pdevicecontext1->CreateBitmapFromDxgiSurface(
          pdxgisurface, 
          &bitmapProps, 
-         &m_pd2d1bitmap);
+         &pd2d1bitmap);
 
       HRESULT hr = m_pdevicecontext.as(m_pdevicecontext1);
 
@@ -6366,12 +6410,18 @@ namespace draw2d_direct2d
 
       if (FAILED(hr))
       {
+         
          m_pbitmaprendertarget = nullptr;
+
       }
 
       m_osdata[data_device_context] = m_pdevicecontext;
 
       m_osdata[data_render_target] = m_pd2d1rendertarget;
+
+      pdxgisurfaceBound = pdxgisurface;
+
+      m_pd2d1bitmap = pd2d1bitmap;
 
    }
 

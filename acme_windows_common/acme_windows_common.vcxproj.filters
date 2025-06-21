@@ -89,6 +89,9 @@
     <ClInclude Include="dxgi_device_source.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="dxgi_surface_bindable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="framework.cpp">
@@ -143,6 +146,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="dxgi_device_source.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dxgi_surface_bindable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
