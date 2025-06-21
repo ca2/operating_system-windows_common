@@ -1213,12 +1213,13 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_TARGET
          m_pshaderBlend3->initialize_shader_with_block(
             m_pgpurenderer,
             ::as_block(full_screen_triangle_vertex_shader),
-            ::as_block(full_screen_triangle_fragment_shader),
-            {},
-            {},
-            {},
-            {},
-            copy_using_shader_input_layout_properties()
+            ::as_block(full_screen_triangle_fragment_shader)
+            //,
+            //{},
+            //{},
+            //{},
+            //{},
+            //copy_using_shader_input_layout_properties()
          );
 
       }
@@ -1250,8 +1251,8 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_TARGET
       m_pshaderBlend3->bind(ptextureTarget);
 
       ::cast <texture > ptextureDst = ptextureTarget;
-      //float clearColor[4] = { 0.5f * 0.5f, 0.75f * 0.5f, 0.95f * 0.5f, 0.5f }; // Clear to transparent
-      //m_pcontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor);
+      float clearColor[4] = { 0.95f * 0.5f, 0.95f * 0.5f, 0.25f * 0.5f, 0.5f }; // Clear to transparent
+      m_pcontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor);
 
 
       {
@@ -1273,12 +1274,15 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_TARGET
 
       for (auto player : *playera)
       {
-         //            player->
+         
          ::cast <texture > ptexture = player->texture();
-         ID3D11SamplerState* samplerstatea[] =
-         { ptexture->m_psamplerstate };
-         ID3D11ShaderResourceView* sharedresourceviewa[] =
-         { ptexture->m_pshaderresourceview };
+
+         m_pshaderBlend3->bind_source(ptexture);
+
+         //ID3D11SamplerState* samplerstatea[] =
+         //{ ptexture->m_psamplerstate };
+         //ID3D11ShaderResourceView* sharedresourceviewa[] =
+         //{ ptexture->m_pshaderresourceview };
          D3D11_VIEWPORT vp = {};
          vp.TopLeftX = ptexture->m_rectangleTarget.left();
          vp.TopLeftY = ptexture->m_rectangleTarget.top();
@@ -1288,9 +1292,12 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_TARGET
          vp.MaxDepth = 1.0f;
          m_pcontext->RSSetViewports(1, &vp);
 
-         m_pcontext->PSSetSamplers(0, 1, samplerstatea);
-         m_pcontext->PSSetShaderResources(0, 1, sharedresourceviewa);
+         //m_pcontext->PSSetSamplers(0, 1, samplerstatea);
+         //m_pcontext->PSSetShaderResources(0, 1, sharedresourceviewa);
+
+         m_pcontext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
          m_pcontext->Draw(3, 0); // Fullscreen triangle
+
       }
       //}
 

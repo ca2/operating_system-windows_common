@@ -171,13 +171,14 @@ namespace gpu_directx11
          ::defer_throw_hresult(hr);
 
       }
-       
       
       {
-            float blendFactor[4] = { 0, 0, 0, 0 }; // Not used
-            UINT sampleMask = 0xFFFFFFFF;
-            pgpucontext->m_pcontext->OMSetBlendState(m_pblendstateDisabled, blendFactor, sampleMask);
-         }
+
+         float blendFactor[4] = { 0, 0, 0, 0 }; // Not used
+         UINT sampleMask = 0xFFFFFFFF;
+         pgpucontext->m_pcontext->OMSetBlendState(m_pblendstateDisabled, blendFactor, sampleMask);
+
+      }
       
       //if (!m_prendertargetviewSwapChain)
       //{

@@ -185,6 +185,8 @@ namespace gpu_directx11
 
       //void prepareOffScreen();
 
+      void on_end_layer(::gpu::layer * player) override;
+
       ::pointer < ::gpu::frame > beginFrame() override;
       //void _on_begin_render(::gpu::frame* pframeParam) override;
       //void _on_end_render(::gpu::frame* pframeParam) override;

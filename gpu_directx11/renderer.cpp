@@ -1117,6 +1117,14 @@ namespace gpu_directx11
    }
 
 
+   void renderer::on_end_layer(::gpu::layer* player)
+   {
+
+      ::gpu::renderer::on_end_layer(player);
+
+   }
+
+
    ::pointer < ::gpu::frame > renderer::beginFrame()
    {
 

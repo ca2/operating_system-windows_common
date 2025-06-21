@@ -448,6 +448,17 @@ namespace gpu_directx11
 
       }
 
+      bind_source(pgputextureSource);
+
+   }
+
+
+   void shader::bind_source( ::gpu::texture* pgputextureSource)
+   {
+
+      ::cast <context> pgpucontext = m_pgpurenderer->m_pgpucontext;
+
+      ::cast <device> pgpudevice = pgpucontext->m_pgpudevice;
 
       if (pgputextureSource)
       {

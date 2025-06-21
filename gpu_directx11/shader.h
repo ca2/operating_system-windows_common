@@ -79,6 +79,7 @@ namespace gpu_directx11
 
       void bind(::gpu::texture* pgputextureTarget) override;
       void bind(::gpu::texture* pgputextureTarget, ::gpu::texture* pgputextureSource) override;
+      void bind_source(::gpu::texture* pgputextureSource);
       void bind() override;
       void unbind() override;
       

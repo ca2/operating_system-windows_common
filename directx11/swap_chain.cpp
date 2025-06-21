@@ -85,6 +85,7 @@ namespace directx11
 
    ::comptr < IDXGISurface> swap_chain::_create_dxgi_surface(const ::int_size& size)
    {
+
       ::comptr < IDXGISurface> pdxgisurface;
       //auto r = m_pwindow->get_window_rectangle();
 
@@ -92,24 +93,24 @@ namespace directx11
       //   || texDesc.Height != r.height())
       //{
 
-         D3D11_TEXTURE2D_DESC texDesc = {};
-         texDesc.Width = size.width();
-         texDesc.Height = size.height();
-         texDesc.MipLevels = 1;
-         texDesc.ArraySize = 1;
-         texDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
-         texDesc.SampleDesc.Count = 1;
-         texDesc.Usage = D3D11_USAGE_DEFAULT;
-         texDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
-         texDesc.MiscFlags = D3D11_RESOURCE_MISC_SHARED;
+      D3D11_TEXTURE2D_DESC texDesc = {};
+      texDesc.Width = size.width();
+      texDesc.Height = size.height();
+      texDesc.MipLevels = 1;
+      texDesc.ArraySize = 1;
+      texDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
+      texDesc.SampleDesc.Count = 1;
+      texDesc.Usage = D3D11_USAGE_DEFAULT;
+      texDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
+      texDesc.MiscFlags = D3D11_RESOURCE_MISC_SHARED;
 
-         auto pd3d11device = _get_d3d11_device();
+      auto pd3d11device = _get_d3d11_device();
 
-         ::comptr <ID3D11Texture2D> ptextureShared;
+      ::comptr <ID3D11Texture2D> ptextureShared;
 
-         pd3d11device->CreateTexture2D(&texDesc, nullptr, &ptextureShared);
+      pd3d11device->CreateTexture2D(&texDesc, nullptr, &ptextureShared);
 
-         ptextureShared.as(pdxgisurface);
+      ptextureShared.as(pdxgisurface);
 
       //}
 
@@ -140,7 +141,7 @@ namespace directx11
    }
 
 
-   void swap_chain::initialize_swap_chain_window(::gpu::device * pgpudevice, ::windowing::window* pwindow)
+   void swap_chain::initialize_swap_chain_window(::gpu::device* pgpudevice, ::windowing::window* pwindow)
    {
 
       ::gpu::swap_chain::initialize_swap_chain_window(pgpudevice, pwindow);
@@ -177,7 +178,7 @@ namespace directx11
 
    }
 
-   
+
    ::string swap_chain::_fullscreen_pixel_shader_hlsl()
    {
 
