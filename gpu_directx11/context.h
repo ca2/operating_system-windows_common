@@ -105,8 +105,9 @@ namespace gpu_directx11
       ::pointer <::gpu_directx11::descriptor_pool>                m_pdescriptorpoolGlobal;
 
       ::pointer <::gpu_directx11::shader>                m_pshaderBlend3;
-      ::pointer <::gpu_directx11::shader>                m_pshaderCopyUsingShader;
+      ::comptr < ID3D11BlendState >                      m_pd3d11blendstateBlend3;
 
+      ::pointer <::gpu_directx11::shader>                m_pshaderCopyUsingShader;
       ::comptr <ID3D11Buffer >                           m_pd3d11bufferVertexCopyUsingShader;
 
       int m_iVertexBufferSizeCopyUsingShader;

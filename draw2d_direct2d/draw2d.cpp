@@ -106,6 +106,8 @@ namespace draw2d_direct2d
    void draw2d::on_create_window(::windowing::window* pwindow)
    {
 
+      ::draw2d_gpu::draw2d::on_create_window(pwindow);
+
       auto rectangleWindow = pwindow->get_window_rectangle();
       
       ::direct2d::defer_initialize(pwindow, rectangleWindow);

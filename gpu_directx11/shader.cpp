@@ -435,10 +435,16 @@ namespace gpu_directx11
 
          ::cast < texture > ptextureDst = pgputextureTarget;
 
+         ID3D11RenderTargetView* rendertargetviewa[] =
+         {
+            ptextureDst->m_prendertargetview
+         };
+
+         ID3D11DepthStencilView* pdepthstencilview = ptextureDst->m_pdepthstencilview;
          pgpucontext->m_pcontext->OMSetRenderTargets(
             1,
-            ptextureDst->m_prendertargetview.pp(), 
-            ptextureDst->m_pdepthstencilview);
+            rendertargetviewa, 
+            pdepthstencilview);
 
       }
 
@@ -463,6 +469,15 @@ namespace gpu_directx11
             pgpucontext->m_pcontext->PSSetShaderResources(0, 1, pshaderresourceview.pp());
 
          }
+
+         if (ptextureSrc->m_psamplerstate)
+         {
+
+            pgpucontext->m_pcontext->PSSetSamplers(
+               0, 1, ptextureSrc->m_psamplerstate.pp());
+
+         }
+
 
       }
 

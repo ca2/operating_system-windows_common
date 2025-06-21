@@ -55,12 +55,23 @@ namespace gpu_directx11
 
       if (m_bRenderTarget)
       {
+         
          create_render_target_view();
+
       }
 
       if (m_bShaderResourceView)
       {
+         
          create_shader_resource_view();
+
+      }
+
+      if (m_bDepthStencil)
+      {
+
+         create_depth_resources();
+
       }
 
       //HRESULT hrCreateRenderTargetView = pdevice->CreateRenderTargetView(m_ptextureOffscreen, nullptr, &m_prendertargetview);
@@ -177,12 +188,6 @@ namespace gpu_directx11
       //   throw ::hresult_exception(hrCreateShaderResourceView, "Failed to create offscreen shader resource view");
 
       //}
-      D3D11_SAMPLER_DESC samp = {};
-      samp.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-      samp.AddressU = samp.AddressV = samp.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
-      pdevice->CreateSamplerState(&samp, &m_psamplerstate);
-
-      new_texture.set_new_texture();
 
       //if (bCreateRenderTargetView)
       //{
@@ -266,6 +271,14 @@ namespace gpu_directx11
          throw ::hresult_exception(hrCreateShaderResourceView, "Failed to create offscreen shader resource view");
 
       }
+
+      D3D11_SAMPLER_DESC samp = {};
+      samp.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+      samp.AddressU = samp.AddressV = samp.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+      pgpudevice->m_pdevice->CreateSamplerState(&samp, &m_psamplerstate);
+
+      new_texture.set_new_texture();
+
 
    }
 

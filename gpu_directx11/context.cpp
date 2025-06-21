@@ -1118,11 +1118,12 @@ float4 main(float2 uv : TEXCOORD) : SV_TARGET {
 
       }
 
+
+      m_pshaderCopyUsingShader->bind(pgputextureTarget, pgputextureSource);
+
       ::cast <texture > ptextureDst = pgputextureTarget;
       float clearColor[4] = { 0, 0, 0, 0 }; // Clear to transparent
       m_pcontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor);
-
-      m_pshaderCopyUsingShader->bind(pgputextureTarget, pgputextureSource);
 
       UINT stride = m_iVertexBufferSizeCopyUsingShader;
       UINT offset = 0;
@@ -1212,17 +1213,54 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_TARGET
          m_pshaderBlend3->initialize_shader_with_block(
             m_pgpurenderer,
             ::as_block(full_screen_triangle_vertex_shader),
-            ::as_block(full_screen_triangle_fragment_shader)
+            ::as_block(full_screen_triangle_fragment_shader),
+            {},
+            {},
+            {},
+            {},
+            copy_using_shader_input_layout_properties()
          );
 
       }
 
 
-      ::cast <texture > ptextureDst = ptextureTarget;
-      float clearColor[4] = { 0.5f * 0.5f, 0.75f * 0.5f, 0.95f * 0.5f, 0.5f }; // Clear to transparent
-      m_pcontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor);
+      if (!m_pd3d11blendstateBlend3)
+      {
+
+         D3D11_BLEND_DESC blendDesc = { 0 };
+         blendDesc.RenderTarget[0].BlendEnable = TRUE;
+         blendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_ONE;              // Premultiplied alpha
+         blendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;   // Use inverse of alpha
+         blendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+
+         blendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;         // Alpha blending (optional)
+         blendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_INV_SRC_ALPHA;
+         blendDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+
+         blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+         ::cast < ::gpu_directx11::device > pgpudevice = m_pgpudevice;
+
+         HRESULT hr = pgpudevice->m_pdevice->CreateBlendState(&blendDesc, &m_pd3d11blendstateBlend3);
+         ::defer_throw_hresult(hr);
+
+      }
+
 
       m_pshaderBlend3->bind(ptextureTarget);
+
+      ::cast <texture > ptextureDst = ptextureTarget;
+      //float clearColor[4] = { 0.5f * 0.5f, 0.75f * 0.5f, 0.95f * 0.5f, 0.5f }; // Clear to transparent
+      //m_pcontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor);
+
+
+      {
+         float blendFactor[4] = { 0, 0, 0, 0 }; // Ignored with this blend mode
+         UINT sampleMask = 0xFFFFFFFF;
+         m_pcontext->OMSetBlendState(m_pd3d11blendstateBlend3, blendFactor, sampleMask);
+      }
+
+
 
       //ID3D11RenderTargetView* rendertargetview[] = { ptextureDst->m_prendertargetview };
 
@@ -1241,6 +1279,15 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_TARGET
          { ptexture->m_psamplerstate };
          ID3D11ShaderResourceView* sharedresourceviewa[] =
          { ptexture->m_pshaderresourceview };
+         D3D11_VIEWPORT vp = {};
+         vp.TopLeftX = ptexture->m_rectangleTarget.left();
+         vp.TopLeftY = ptexture->m_rectangleTarget.top();
+         vp.Width = static_cast<float>(ptexture->m_rectangleTarget.width());
+         vp.Height = static_cast<float>(ptexture->m_rectangleTarget.height());
+         vp.MinDepth = 0.0f;
+         vp.MaxDepth = 1.0f;
+         m_pcontext->RSSetViewports(1, &vp);
+
          m_pcontext->PSSetSamplers(0, 1, samplerstatea);
          m_pcontext->PSSetShaderResources(0, 1, sharedresourceviewa);
          m_pcontext->Draw(3, 0); // Fullscreen triangle
@@ -1250,8 +1297,8 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_TARGET
       m_pshaderBlend3->unbind();
 
       //::cast <texture > ptextureDst = ptextureTarget;
-      float clearColor2[4] = { 0.95f * 0.5f, 0.75f * 0.5f, 0.95f * 0.5f, 0.5f }; // Clear to transparent
-      m_pcontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor2);
+      //float clearColor2[4] = { 0.95f * 0.5f, 0.75f * 0.5f, 0.95f * 0.5f, 0.5f }; // Clear to transparent
+      //m_pcontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor2);
 
 
    }
