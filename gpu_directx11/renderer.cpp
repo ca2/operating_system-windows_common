@@ -659,6 +659,12 @@ namespace gpu_directx11
 
       auto pcpubuffer = pgpucontext->m_pcpubuffer;
 
+      /*memory m;
+
+      m.set_size(height * rowPitch);
+
+      m.set(255);*/
+
       pcpubuffer->set_pixels(
          data,
          width,
@@ -934,6 +940,37 @@ namespace gpu_directx11
 
          if (ptexture)
          {
+
+            if (m_pgpucontext->m_escene == ::gpu::e_scene_2d)
+            {
+
+               if (!ptexture->m_prendertargetview)
+               {
+
+                  ptexture->create_render_target_view();
+
+               }
+
+            }
+            else if(m_pgpucontext->m_escene == ::gpu::e_scene_3d)
+            {
+
+               if (!ptexture->m_prendertargetview)
+               {
+
+                  ptexture->create_render_target_view();
+
+
+               }
+
+               if (!ptexture->m_pshaderresourceview)
+               {
+
+                  ptexture->create_shader_resource_view();
+
+               }
+
+            }
 
             prendertargetview = ptexture->m_prendertargetview;
 
