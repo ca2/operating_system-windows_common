@@ -58,7 +58,7 @@ namespace gpu_directx11
 		void on_init() override;
 		void createRenderPassImpl();
 		void createImageViews();
-		void createDepthResources();
+		//void createDepthResources();
 		void createRenderPass();
 		void createFramebuffers();
 		void createSyncObjects();

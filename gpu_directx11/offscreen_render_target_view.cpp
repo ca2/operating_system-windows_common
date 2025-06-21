@@ -43,7 +43,7 @@ namespace gpu_directx11
       createRenderPassImpl();
       createImageViews();
       createRenderPass();
-      createDepthResources();
+      //createDepthResources();
       createFramebuffers();
       createSyncObjects();
 
@@ -96,12 +96,12 @@ namespace gpu_directx11
    }
 
 
-   void offscreen_render_target_view::createDepthResources()
-   {
+   //void offscreen_render_target_view::createDepthResources()
+   //{
 
-      render_target_view::createDepthResources();
+   //   render_target_view::createDepthResources();
 
-   }
+   //}
 
 
    void offscreen_render_target_view::createSyncObjects()

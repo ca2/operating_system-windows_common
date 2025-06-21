@@ -970,15 +970,22 @@ namespace gpu_directx11
 
                }
 
+               if (!ptexture->m_pdepthstencilview)
+               {
+
+                  ptexture->create_depth_resources();
+
+               }
+
+               pdepthstencilstate = ptexture->m_pdepthstencilstate;
+
+               pdepthstencilview = ptexture->m_pdepthstencilview;
+
             }
 
             prendertargetview = ptexture->m_prendertargetview;
 
          }
-
-         pdepthstencilstate = pgpurendertargetview->m_pdepthstencilstate;
-
-         pdepthstencilview = pgpurendertargetview->m_pdepthstencilview;
 
          if (prendertargetview)
          {

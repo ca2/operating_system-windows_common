@@ -44,6 +44,12 @@ namespace gpu_directx11
       comptr< ID3D11SamplerState> m_psamplerstate;
       comptr<ID3D11ShaderResourceView>m_pshaderresourceview;
 
+
+      comptr<ID3D11Texture2D> m_ptextureDepthStencil;
+      comptr<ID3D11DepthStencilView>m_pdepthstencilview;
+      comptr <ID3D11DepthStencilState>m_pdepthstencilstate;
+
+
       //class d3d11 :
       //   virtual public ::particle
       //{
@@ -78,6 +84,9 @@ namespace gpu_directx11
 
       virtual void create_render_target_view();
       virtual void create_shader_resource_view();
+
+
+      virtual void create_depth_resources();
 
       //void _new_state(ID3D12GraphicsCommandList* pcommandlist, D3D12_RESOURCE_STATES estate);
 

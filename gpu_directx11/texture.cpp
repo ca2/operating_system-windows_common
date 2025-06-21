@@ -53,15 +53,15 @@ namespace gpu_directx11
 
       }
 
-      if(m_bRenderTarget)
+      if (m_bRenderTarget)
       {
          create_render_target_view();
       }
 
-      if( m_bShaderResourceView)
+      if (m_bShaderResourceView)
       {
          create_shader_resource_view();
-      }  
+      }
 
       //HRESULT hrCreateRenderTargetView = pdevice->CreateRenderTargetView(m_ptextureOffscreen, nullptr, &m_prendertargetview);
 
@@ -259,15 +259,144 @@ namespace gpu_directx11
       ::cast < ::gpu_directx11::device > pgpudevice = m_pgpurenderer->m_pgpucontext->m_pgpudevice;
 
       HRESULT hrCreateShaderResourceView = pgpudevice->m_pdevice->CreateShaderResourceView(m_ptextureOffscreen, nullptr, &m_pshaderresourceview);
-      
+
       if (FAILED(hrCreateShaderResourceView))
       {
-         
+
          throw ::hresult_exception(hrCreateShaderResourceView, "Failed to create offscreen shader resource view");
 
       }
 
    }
+
+
+   void texture::create_depth_resources()
+   {
+
+      auto size = m_rectangleTarget.size();
+
+      D3D11_TEXTURE2D_DESC depthDesc = {};
+      depthDesc.Width = size.cx();
+      depthDesc.Height = size.cy();
+      depthDesc.MipLevels = 1;
+      depthDesc.ArraySize = 1;
+      int MorePrecisionNoStencil = 1;
+      if (MorePrecisionNoStencil)
+      {
+         depthDesc.Format = DXGI_FORMAT_D32_FLOAT;
+      }
+      else
+      {
+         depthDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+      }
+      depthDesc.SampleDesc.Count = 1;
+      depthDesc.Usage = D3D11_USAGE_DEFAULT;
+      depthDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+      ::cast < ::gpu_directx11::device > pgpudevice = m_pgpurenderer->m_pgpucontext->m_pgpudevice;
+
+      auto pdevice = pgpudevice->m_pdevice;
+
+      HRESULT hrCreateTexture = pdevice->CreateTexture2D(&depthDesc, nullptr, &m_ptextureDepthStencil);
+
+      if (FAILED(hrCreateTexture))
+      {
+
+         throw ::hresult_exception(hrCreateTexture);
+
+      }
+      D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
+
+      if (MorePrecisionNoStencil)
+      {
+
+         dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;
+         dsvDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+      }
+      HRESULT hrCreateDepthStencilView = pdevice->CreateDepthStencilView(
+         m_ptextureDepthStencil,
+         MorePrecisionNoStencil ? &dsvDesc : nullptr, &m_pdepthstencilview);
+
+      if (FAILED(hrCreateDepthStencilView))
+      {
+
+         throw ::hresult_exception(hrCreateDepthStencilView);
+
+      }
+
+      //ID3D11DepthStencilState* depthStencilState = nullptr;
+
+      D3D11_DEPTH_STENCIL_DESC dsDesc = {};
+      dsDesc.DepthEnable = TRUE;
+      dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+      dsDesc.DepthFunc = D3D11_COMPARISON_LESS;
+
+      HRESULT hrCreateDepthStencilState = pdevice->CreateDepthStencilState(&dsDesc, &m_pdepthstencilstate);
+
+      if (FAILED(hrCreateDepthStencilState))
+      {
+
+         throw ::hresult_exception(hrCreateDepthStencilState);
+
+      }
+
+
+
+      //VkFormat depthFormat = findDepthFormat();
+
+      //m_formatDepth = depthFormat;
+
+      //VkExtent2D extent = getExtent();
+
+      //depthImages.resize(imageCount());
+      //depthImageMemorys.resize(imageCount());
+      //depthImageViews.resize(imageCount());
+
+      //for (int i = 0; i < depthImages.size(); i++) 
+      //{
+
+      //   VkImageCreateInfo imageInfo{};
+      //   imageInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
+      //   imageInfo.imageType = VK_IMAGE_TYPE_2D;
+      //   imageInfo.extent.width = extent.width;
+      //   imageInfo.extent.height = extent.height;
+      //   imageInfo.extent.depth = 1;
+      //   imageInfo.mipLevels = 1;
+      //   imageInfo.arrayLayers = 1;
+      //   imageInfo.format = depthFormat;
+      //   imageInfo.tiling = VK_IMAGE_TILING_OPTIMAL;
+      //   imageInfo.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+      //   imageInfo.usage = VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT;
+      //   imageInfo.samples = VK_SAMPLE_COUNT_1_BIT;
+      //   imageInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+      //   imageInfo.flags = 0;
+
+      //   m_pgpucontext->createImageWithInfo(
+      //      imageInfo,
+      //      VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
+      //      depthImages[i],
+      //      depthImageMemorys[i]);
+
+      //   VkImageViewCreateInfo viewInfo{};
+      //   viewInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
+      //   viewInfo.image = depthImages[i];
+      //   viewInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
+      //   viewInfo.format = depthFormat;
+      //   viewInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_DEPTH_BIT;
+      //   viewInfo.subresourceRange.baseMipLevel = 0;
+      //   viewInfo.subresourceRange.levelCount = 1;
+      //   viewInfo.subresourceRange.baseArrayLayer = 0;
+      //   viewInfo.subresourceRange.layerCount = 1;
+
+      //   if (vkCreateImageView(m_pgpucontext->logicalDevice(), &viewInfo, nullptr, &depthImageViews[i]) != VK_SUCCESS) 
+      //   {
+      //      throw ::exception(error_failed,"failed to create texture image view!");
+      //   }
+
+      //}
+
+
+   }
+
 
 
    //void texture::_new_state(ID3D12GraphicsCommandList* pcommandlist, D3D12_RESOURCE_STATES estateNew)
@@ -311,7 +440,7 @@ namespace gpu_directx11
    void texture::blend(::gpu::texture* ptexture)
    {
 
-      
+
 
    }
 

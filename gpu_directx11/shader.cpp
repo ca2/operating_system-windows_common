@@ -132,6 +132,18 @@ namespace gpu_directx11
          return "POSITION";
 
       }
+      else if (scopedstr.case_insensitive_equals("color"))
+      {
+
+         return "COLOR";
+
+      }
+      else if (scopedstr.case_insensitive_equals("normal"))
+      {
+
+         return "NORMAL";
+
+      }
       else if (scopedstr.case_insensitive_equals("uv"))
       {
 
@@ -155,6 +167,8 @@ namespace gpu_directx11
       {
       case ::gpu::e_type_seq2:
          return DXGI_FORMAT_R32G32_FLOAT;
+      case ::gpu::e_type_seq3:
+         return DXGI_FORMAT_R32G32B32_FLOAT;
       default:
          throw ::exception(error_not_implemented, "please implement this missing implementation");
       }
@@ -421,9 +435,10 @@ namespace gpu_directx11
 
          ::cast < texture > ptextureDst = pgputextureTarget;
 
-         //            ::cast < offscreen_render_target_view > poffscreenrendertargetview = pgpurendertargetview;
-
-         pgpucontext->m_pcontext->OMSetRenderTargets(1, ptextureDst->m_prendertargetview.pp(), nullptr);
+         pgpucontext->m_pcontext->OMSetRenderTargets(
+            1,
+            ptextureDst->m_prendertargetview.pp(), 
+            ptextureDst->m_pdepthstencilview);
 
       }
 

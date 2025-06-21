@@ -19,9 +19,6 @@ namespace gpu_directx11
    {
    public:
 
-      comptr<ID3D11Texture2D> m_ptextureDepthStencil;
-      comptr<ID3D11DepthStencilView>m_pdepthstencilview;
-      comptr <ID3D11DepthStencilState>m_pdepthstencilstate;
 
       //VkFormat m_formatImage;
       //VkFormat m_formatDepth;
@@ -93,7 +90,7 @@ namespace gpu_directx11
       void on_init() override;
       virtual void createRenderPassImpl();
       virtual void createImageViews();
-      virtual void createDepthResources();
+      //virtual void createDepthResources();
       virtual void createRenderPass();
       virtual void createFramebuffers();
       virtual void createSyncObjects();
