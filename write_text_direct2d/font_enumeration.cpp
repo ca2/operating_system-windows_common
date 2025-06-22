@@ -3,6 +3,7 @@
 #include "font_enumeration.h"
 #include "direct2d/direct2d.h"
 #include "aura/graphics/write_text/font_enumeration_item.h"
+#include "bred/gpu/approach.h"
 #include <dwrite.h>
 
 
@@ -19,6 +20,24 @@ namespace write_text_direct2d
 
    font_enumeration::~font_enumeration()
    {
+
+   }
+
+
+   void font_enumeration::on_initialize_particle()
+   {
+
+      ::write_text::font_enumeration::on_initialize_particle();
+
+      ::direct2d::object::on_initialize_particle();
+
+      auto papproach = m_papplication->get_gpu_approach();
+
+      auto pdevice = papproach->get_gpu_device();
+
+      auto pdirect2d = ::direct2d::from_gpu_device(pdevice);
+
+      initialize_direct2d_object(pdirect2d);
 
    }
 

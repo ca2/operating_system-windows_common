@@ -18,6 +18,7 @@ namespace draw2d_direct2d
    {
    public:
       int_array m_iaPushLayer;
+      int_array m_iaPushLayerCount;
 
       class state
       {
@@ -90,6 +91,9 @@ namespace draw2d_direct2d
       
       void on_begin_draw() override;
       void on_end_draw() override;
+
+
+      void just_after_new_frame() override;
 
 
       void start_gpu_layer() override;
@@ -290,6 +294,7 @@ namespace draw2d_direct2d
 
 
       virtual void _push_layer(ID2D1Geometry * pgeometry);
+      virtual void _push_layer(const ::int_rectangle_array & rectanglea);
       virtual void _pop_layer();
       virtual void _pop_all_layers();
 
@@ -615,6 +620,8 @@ namespace draw2d_direct2d
       //virtual void __attach(ID2D1DeviceContext* pdevicecontext);
 
       void _bind(int iIndex, IDXGISurface* pdxgisurface) override;
+
+      virtual void __attach(ID2D1Bitmap1* pd2d1bitmap);
 
 #ifdef WINDOWS_DESKTOP
       //virtual bool attach_hdc(HDC hdc) override;

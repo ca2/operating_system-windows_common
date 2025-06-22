@@ -21,6 +21,9 @@ namespace write_text_direct2d
       ~font_enumeration() override;
 
 
+      void on_initialize_particle() override;
+
+
       void on_enumerate_fonts() override;
 
 

@@ -778,11 +778,13 @@ namespace gpu_directx11
 
       ::cast < ::dxgi_surface_bindable > pdxgisurfacebindable = pgpucompositor;
 
-      ::cast < texture > ptexture = m_pgpurenderer->m_pgpurendertarget->current_texture();
-      pdxgisurfacebindable->_bind(
-         m_pgpurenderer->m_pgpurendertarget->get_frame_index(),
-         ptexture->__get_dxgi_surface()
-      );
+      ::cast < texture > ptexture = get_gpu_renderer()->m_pgpurendertarget->current_texture();
+
+      auto iFrameIndex = m_pgpurenderer->m_pgpurendertarget->get_frame_index();
+
+      auto pdxgisurface = ptexture->__get_dxgi_surface();
+
+      pdxgisurfacebindable->_bind(iFrameIndex, pdxgisurface);
 
    }
 

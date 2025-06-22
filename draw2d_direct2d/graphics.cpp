@@ -195,14 +195,14 @@ namespace draw2d_direct2d
 
       //m_pgpucontext = pgpudevice->create_draw2d_context(::gpu::e_output_gpu_buffer, size);
 
-      _create_memory_graphics(size);
+      /*_create_memory_graphics(size);
 
       m_pgpucontext->_send([this, size]()
          {
 
             m_pgpucontext->create_offscreen_graphics_for_swap_chain_blitting(this, size);
 
-         });
+         });*/
 
    }
 
@@ -496,6 +496,10 @@ namespace draw2d_direct2d
    void graphics::gpu_layer_on_after_begin_render()
    {
 
+      m_pdirect2d->m_pd2d1multithread->Enter();
+
+      bind_draw2d_compositor();
+
       m_pdevicecontext->BeginDraw();
 
       m_pdevicecontext->Clear();
@@ -509,6 +513,8 @@ namespace draw2d_direct2d
       m_pdevicecontext->EndDraw();
 
       //m_pdevicecontext->Clear();
+
+      m_pdirect2d->m_pd2d1multithread->Leave();
 
    }
 
@@ -2490,9 +2496,15 @@ namespace draw2d_direct2d
 
          pimage->unmap();
 
-         HRESULT hrFlush = ((ID2D1DeviceContext *)pimage->g()->get_os_data())->Flush();
+         ::cast < graphics > pgraphicsImage = pimage->g();
 
-         HRESULT hrEndDraw = ((ID2D1DeviceContext *)pimage->g()->get_os_data())->EndDraw();
+         auto pd2d1contextImage = pgraphicsImage->m_pdevicecontext;
+
+         ::direct2d_lock direct2dlock(::direct2d::from_gpu_device(m_pgpucontext->m_pgpudevice));
+
+         HRESULT hrFlush = pd2d1contextImage->Flush();
+
+         HRESULT hrEndDraw = pd2d1contextImage->EndDraw();
 
          defer_primitive_blend();
 
@@ -4476,38 +4488,87 @@ namespace draw2d_direct2d
       //return ::success;
 
    }
+
+
    bool IsAxisAlignedRectGeometry(ID2D1Geometry* geometry, D2D1_RECT_F* outRect = nullptr)
    {
+      
       comptr<ID2D1RectangleGeometry> rectGeom;
+
       if (SUCCEEDED(geometry->QueryInterface(IID_PPV_ARGS(&rectGeom))))
       {
-         if (outRect) rectGeom->GetRect(outRect);
+
+         if (outRect)
+         {
+
+            rectGeom->GetRect(outRect);
+
+         }
+         
          return true;
+
       }
+      
       return false;
+
    }
+
+
    bool IsAxisAligned(const D2D1_MATRIX_3X2_F& m)
    {
+      
       return (m._21 == 0.0f && m._12 == 0.0f);
+
    }
+
+
+   void graphics::_push_layer(const ::int_rectangle_array& rectanglea)
+   {
+
+      m_iaPushLayer.add(1);
+
+      m_iaPushLayerCount.add(rectanglea.size());
+
+      for (int i = 0; i < rectanglea.size(); i++)
+      {
+
+         auto r = rectanglea[i];
+
+         D2D1_RECT_F clipRect{r.left(), r.top(), r.right(), r.bottom()};
+
+         m_pd2d1rendertarget->PushAxisAlignedClip(clipRect, D2D1_ANTIALIAS_MODE_PER_PRIMITIVE);
+
+      }
+
+      m_iLayerCount++;
+
+   }
+
+
    void graphics::_push_layer(ID2D1Geometry * pgeometry)
    {
 
       D2D1_MATRIX_3X2_F transform;
+      
       m_pd2d1rendertarget->GetTransform(&transform);
+
       bool isAxisAligned = IsAxisAligned(transform);
 
       D2D1_RECT_F clipRect;
+
       if (isAxisAligned && IsAxisAlignedRectGeometry(pgeometry, &clipRect))
       {
 
          m_iaPushLayer.add(1);
 
+         m_iaPushLayerCount.add(1);
 
          m_pd2d1rendertarget->PushAxisAlignedClip(clipRect, D2D1_ANTIALIAS_MODE_PER_PRIMITIVE);
+
       }
       else
       {
+
          auto layerparameters = D2D1::LayerParameters(
             D2D1::InfiniteRect(),
             pgeometry);
@@ -4515,6 +4576,8 @@ namespace draw2d_direct2d
          m_pd2d1rendertarget->PushLayer(layerparameters, nullptr);
 
          m_iaPushLayer.add(0);
+
+         m_iaPushLayerCount.add(1);
 
 
       }
@@ -4535,9 +4598,16 @@ namespace draw2d_direct2d
 
       int iPop = m_iaPushLayer.pop();
 
+      int iCount = m_iaPushLayerCount.pop();
+
       if (iPop == 1)
       {
-         m_pd2d1rendertarget->PopAxisAlignedClip();
+
+         for (int i = 0; i < iCount; i++)
+         {
+            m_pd2d1rendertarget->PopAxisAlignedClip();
+
+         }
          
       }
       else
@@ -4809,13 +4879,22 @@ namespace draw2d_direct2d
 
    //}
 
-   void graphics::intersect_clip(const ::draw2d::clip_group & clipgroup)
+   void graphics::intersect_clip(const ::draw2d::clip_group& clipgroup)
    {
 
       comptr<ID2D1PathGeometry> ppathgeometry;
 
       HRESULT hr = m_pdirect2d->d2d1_factory1()->CreatePathGeometry(&ppathgeometry);
 
+      ::int_rectangle_array rectanglea;
+
+      if (clipgroup.is_rectangle_only(rectanglea))
+      {
+
+         _push_layer(rectanglea);
+
+      }
+      else
       {
 
          comptr<ID2D1GeometrySink> pgeometrysink;
@@ -4824,7 +4903,7 @@ namespace draw2d_direct2d
 
          pgeometrysink->SetFillMode(D2D1_FILL_MODE_WINDING);
 
-         for (auto & pclipitem : clipgroup)
+         for (auto& pclipitem : clipgroup)
          {
 
             _add_clip_item(pgeometrysink, pclipitem);
@@ -4833,9 +4912,9 @@ namespace draw2d_direct2d
 
          pgeometrysink->Close();
 
-      }
+         _push_layer(ppathgeometry);
 
-      _push_layer(ppathgeometry);
+      }
 
    }
 
@@ -4963,7 +5042,7 @@ namespace draw2d_direct2d
       //m_pd2d1rendertarget->PushLayer(layerparameters, nullptr);
 
       m_iaPushLayer.add(1);
-
+      m_iaPushLayerCount.add(1);
 
       m_pd2d1rendertarget->PushAxisAlignedClip(rf, D2D1_ANTIALIAS_MODE_PER_PRIMITIVE);
 
@@ -6220,6 +6299,14 @@ namespace draw2d_direct2d
    }
 
 
+   void graphics::just_after_new_frame()
+   {
+
+      ::draw2d_gpu::graphics::just_after_new_frame();
+
+   }
+
+
    void graphics::start_gpu_layer()
    {
 
@@ -6339,6 +6426,8 @@ namespace draw2d_direct2d
             && size.height == desc.Height)
          {
 
+            __attach(pd2d1bitmap);
+
             return;
 
          }
@@ -6378,50 +6467,17 @@ namespace draw2d_direct2d
          &bitmapProps, 
          &pd2d1bitmap);
 
-      HRESULT hr = m_pdevicecontext.as(m_pdevicecontext1);
-
-      if (FAILED(hr))
-      {
-
-         m_pdevicecontext = nullptr;
-
-         m_pdevicecontext1 = nullptr;
-
-         throw ::exception(error_null_pointer);
-
-      }
-
-      hr = m_pdevicecontext.as(m_pd2d1rendertarget);
-
-      if (FAILED(hr))
-      {
-
-         m_pdevicecontext = nullptr;
-
-         m_pdevicecontext1 = nullptr;
-
-         m_pd2d1rendertarget = nullptr;
-
-         throw ::exception(error_null_pointer);
-
-      }
-
-      hr = m_pd2d1rendertarget.as(m_pbitmaprendertarget);
-
-      if (FAILED(hr))
-      {
-         
-         m_pbitmaprendertarget = nullptr;
-
-      }
-
-      m_osdata[data_device_context] = m_pdevicecontext;
-
-      m_osdata[data_render_target] = m_pd2d1rendertarget;
-
       pdxgisurfaceBound = pdxgisurface;
 
-      m_pd2d1bitmap = pd2d1bitmap;
+      __attach(pd2d1bitmap);
+
+   }
+
+
+   void graphics::__attach(ID2D1Bitmap1* pd2d1bitmap)
+   {
+
+      m_pdevicecontext->SetTarget(pd2d1bitmap);
 
    }
 
