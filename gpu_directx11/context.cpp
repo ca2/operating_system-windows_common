@@ -1404,7 +1404,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_TARGET
 
       //#endif
 
-            make_current();
+            //make_current();
 
             //glViewport(0, 0, size.cx(), size.cy());
             //glMatrixMode(GL_PROJECTION);
@@ -1420,12 +1420,12 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_TARGET
    }
 
 
-   void context::make_current()
-   {
+   //void context::make_current()
+   //{
 
-      ::gpu::context::make_current();
+   //   ::gpu::context::make_current();
 
-   }
+   //}
 
 
    void context::destroy_cpu_buffer()

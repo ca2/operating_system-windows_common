@@ -198,7 +198,7 @@ namespace gpu_directx11
       void resize_cpu_buffer(const ::int_size & size) override;
       void destroy_cpu_buffer() override;
 
-      void make_current() override;
+      //void make_current() override;
 
       bool is_mesa() override;
 
