@@ -1156,7 +1156,7 @@ namespace gpu_directx11
 
       //}
       //else 
-         if (eoutput == ::gpu::e_output_cpu_buffer)
+      if (eoutput == ::gpu::e_output_cpu_buffer)
       {
 
          this->do_sampling_to_cpu();

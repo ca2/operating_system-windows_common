@@ -66,6 +66,9 @@ namespace directx11
       virtual comptr < IDXGISurface> _create_dxgi_surface(const ::int_size & size);
 
 
+
+
+
    };
 
 
