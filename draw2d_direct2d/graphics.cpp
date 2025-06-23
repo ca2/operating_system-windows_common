@@ -514,6 +514,8 @@ namespace draw2d_direct2d
 
       //m_pdevicecontext->Clear();
 
+      soft_unbind_draw2d_compositor();
+
       m_pdirect2d->m_pd2d1multithread->Leave();
 
    }
