@@ -74,9 +74,11 @@ namespace gpu_directx11
       if (!pdx11gpudevice->m_pdxgifactory2)
       {
 
-         ::defer_throw_hresult(CreateDXGIFactory2(
+         HRESULT hr = CreateDXGIFactory2(
             DXGI_CREATE_FACTORY_DEBUG,
-            __interface_of(pdx11gpudevice->m_pdxgifactory2)));
+            __interface_of(pdx11gpudevice->m_pdxgifactory2));
+
+         ::defer_throw_hresult(hr);
 
       }
 
