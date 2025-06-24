@@ -71,7 +71,7 @@ namespace direct2d
    }
 
 
-   comptr<ID2D1Device> direct2d::create_d2d1_device()
+   comptr<ID2D1Device> direct2d::create_d2d1_device(::dxgi_device_source* pdxgidevicesource)
    {
 
       /*::cast < ::gpu::approach > pgpuapproach = m_papplication->get_gpu_approach();
@@ -91,7 +91,7 @@ namespace direct2d
 
 //      ::cast < ::dxgi_device_source > pdxgidevicesource = m_ppgpudevice;
 
-      auto pdxgidevice = m_pdxgidevicesource->_get_dxgi_device();
+      auto pdxgidevice = pdxgidevicesource->_get_dxgi_device();
 
       comptr<ID2D1Device> pd2d1device;
 
@@ -166,13 +166,13 @@ namespace direct2d
    }
 
    
-   ID2D1Device * direct2d::d2d1_device()
+   ID2D1Device * direct2d::d2d1_device(::dxgi_device_source* pdxgidevicesource)
    {
 
       if (!m_pd2d1device)
       {
 
-         m_pd2d1device = create_d2d1_device();
+         m_pd2d1device = create_d2d1_device(pdxgidevicesource);
 
       }
 
@@ -181,13 +181,13 @@ namespace direct2d
    }
 
    
-   ID2D1DeviceContext* direct2d::default_d2d1_device_context()
+   ID2D1DeviceContext* direct2d::default_d2d1_device_context(::dxgi_device_source* pdxgidevicesource)
    {
 
       if (!m_pd2d1devicecontextDefault)
       {
 
-         m_pd2d1devicecontextDefault = create_d2d1_device_context();
+         m_pd2d1devicecontextDefault = create_d2d1_device_context(pdxgidevicesource);
 
       }
 
@@ -196,10 +196,10 @@ namespace direct2d
    }
 
 
-   comptr<ID2D1DeviceContext> direct2d::create_d2d1_device_context()
+   comptr<ID2D1DeviceContext> direct2d::create_d2d1_device_context(::dxgi_device_source* pdxgidevicesource)
    {
 
-      auto pd2d1device = d2d1_device();
+      auto pd2d1device = d2d1_device(pdxgidevicesource);
 
       comptr<ID2D1DeviceContext> pd2d1devicecontext;
       

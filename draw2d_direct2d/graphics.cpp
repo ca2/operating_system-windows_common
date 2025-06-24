@@ -31,6 +31,7 @@
 #include "bred/gpu/renderer.h"
 #include "bred/gpu/types.h"
 #include <math.h>
+#include "acme_windows_common/dxgi_device_source.h"
 
 
 void dpi_initialize(ID2D1Factory * pFactory);
@@ -303,7 +304,9 @@ namespace draw2d_direct2d
 
             ::direct2d_lock lock(pdirect2d);
 
-            auto pdevicecontextDefault = pdirect2d->default_d2d1_device_context();
+            ::cast < ::dxgi_device_source > pdxgidevicesource = m_pgpucontext;
+
+            auto pdevicecontextDefault = pdirect2d->default_d2d1_device_context(pdxgidevicesource);
 
             //comptr < ID2D1DeviceContext > pdevicecontextTemplate;
 
@@ -495,7 +498,7 @@ namespace draw2d_direct2d
 
    void graphics::gpu_layer_on_after_begin_render()
    {
-
+      m_bInLayer = true;
       m_pdirect2d->m_pd2d1multithread->Enter();
 
       bind_draw2d_compositor();
@@ -517,7 +520,7 @@ namespace draw2d_direct2d
       soft_unbind_draw2d_compositor();
 
       m_pdirect2d->m_pd2d1multithread->Leave();
-
+      m_bInLayer = false;
    }
 
 
@@ -5328,6 +5331,35 @@ namespace draw2d_direct2d
    }
 
 
+   void graphics::on_start_layer()
+   {
+
+      if (m_pdevicecontext && m_bInLayer)
+      {
+
+         m_pdevicecontext->BeginDraw();
+
+         m_pdevicecontext->Clear();
+
+      }
+
+   }
+
+
+   void graphics::on_end_layer()
+   {
+
+      if (m_pdevicecontext)
+      {
+
+         m_pdevicecontext->Flush();
+
+         m_pdevicecontext->EndDraw();
+
+      }
+
+   }
+
    //void graphics::arc_to(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4)
    //{
 
@@ -6445,7 +6477,9 @@ namespace draw2d_direct2d
       //IDXGIDevice* dxgiDevice = nullptr;
 //      d3d11Device->QueryInterface(__uuidof(IDXGIDevice), (void**)&dxgiDevice);
 
-      auto pd2d1device = m_pdirect2d->d2d1_device();
+      ::cast < ::dxgi_device_source > pdxgidevicesource = m_pgpucontext;
+
+      auto pd2d1device = m_pdirect2d->d2d1_device(pdxgidevicesource);
 
       /*ID2D1Device* d2dDevice = nullptr;
       m_pdirect2d->d2d1_factory1()->CreateDevice(pdxgidevice, &d2dDevice);*/

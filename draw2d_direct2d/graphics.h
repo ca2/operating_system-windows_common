@@ -19,7 +19,6 @@ namespace draw2d_direct2d
    public:
       int_array m_iaPushLayer;
       int_array m_iaPushLayerCount;
-
       class state
       {
       public:
@@ -140,6 +139,8 @@ namespace draw2d_direct2d
       unsigned int GetLayout() override;
       unsigned int SetLayout(unsigned int dwLayout) override;
 
+      void on_start_layer() override;
+      void on_end_layer() override;
 
       //virtual bool save_clip() override;
       //virtual bool restore_clip() override;
