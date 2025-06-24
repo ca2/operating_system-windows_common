@@ -45,7 +45,7 @@ namespace directx11
       ~swap_chain() override;
 
 
-      void initialize_swap_chain_window(::gpu::device* pgpudevice, ::windowing::window* pwindow) override;
+      void initialize_swap_chain_window(::gpu::context* pgpucontext, ::windowing::window* pwindow) override;
 
 
       void initialize_gpu_swap_chain(::gpu::renderer * pgpurenderer) override;

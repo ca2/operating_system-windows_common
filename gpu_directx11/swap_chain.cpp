@@ -60,12 +60,14 @@ namespace gpu_directx11
    }
 
 
-   void swap_chain::initialize_swap_chain_window(::gpu::device * pgpudevice, ::windowing::window* pwindow)
+   void swap_chain::initialize_swap_chain_window(::gpu::context * pgpucontext, ::windowing::window* pwindow)
    {
 
-      ::gpu::swap_chain::initialize_swap_chain_window(pgpudevice, pwindow);
+      ::gpu::swap_chain::initialize_swap_chain_window(pgpucontext, pwindow);
 
-      ::cast < ::gpu_directx11::device > pdx11gpudevice = pgpudevice;
+      ::cast < ::gpu_directx11::context > pdx11gpucontext = pgpucontext;
+
+      ::cast < ::gpu_directx11::device > pdx11gpudevice = pgpucontext->m_pgpudevice;
 
       ::cast < ::windowing_win32::window > pwin32window = pwindow;
 
@@ -107,7 +109,7 @@ namespace gpu_directx11
       ///m_pswapchain->initialize_gpu_swap_chain(this, pwindow);
 
 
-      ::directx11::swap_chain::initialize_swap_chain_window(pgpudevice, pwindow);
+      ::directx11::swap_chain::initialize_swap_chain_window(pgpucontext, pwindow);
 
    }
 

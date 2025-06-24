@@ -141,10 +141,10 @@ namespace directx11
    }
 
 
-   void swap_chain::initialize_swap_chain_window(::gpu::device* pgpudevice, ::windowing::window* pwindow)
+   void swap_chain::initialize_swap_chain_window(::gpu::context* pgpucontext, ::windowing::window* pwindow)
    {
 
-      ::gpu::swap_chain::initialize_swap_chain_window(pgpudevice, pwindow);
+      ::gpu::swap_chain::initialize_swap_chain_window(pgpucontext, pwindow);
 
       ::cast < ::windowing_win32::window > pwin32window = pwindow;
 
