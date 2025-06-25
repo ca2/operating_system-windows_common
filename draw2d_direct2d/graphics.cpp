@@ -165,6 +165,37 @@ namespace draw2d_direct2d
    {
 
       ::draw2d_gpu::graphics::create_for_window_draw2d(puserinteraction, size);
+      auto pgpuapproach = m_papplication->get_gpu_approach();
+
+      auto pgpudevice = pgpuapproach->get_gpu_device();
+
+      m_pdirect2d = ::direct2d::from_gpu_device(pgpudevice);
+
+      m_pgpucontext = pgpudevice->main_draw2d_context();
+
+      m_pgpucontext->m_pgpucompositor = this;
+
+      ::cast < ::dxgi_device_source > pdxgidevicesource = m_pgpucontext;
+
+      m_pdevicecontext = m_pdirect2d->default_d2d1_device_context(pdxgidevicesource);
+
+      m_pdevicecontext.as(m_pdevicecontext1);
+
+      m_pdevicecontext.as(m_pd2d1rendertarget);
+
+      //// for now create a "fake" memory graphics
+
+      //create_memory_graphics({ 1920,1080 });
+      
+      //m_pgpucontext->m_iOverrideFrame = 0;
+      //
+      //bind_draw2d_compositor();
+
+      //m_pgpucontext->m_iOverrideFrame = -1;
+
+      set_ok_flag();
+
+      //m_osdata[0] = (void*)1;
 
       ////::draw2d::lock draw2dlock;
 
@@ -498,14 +529,16 @@ namespace draw2d_direct2d
 
    void graphics::gpu_layer_on_after_begin_render()
    {
-      m_bInLayer = true;
-      m_pdirect2d->m_pd2d1multithread->Enter();
+      
+      ////m_bInLayer = true;
+      //
+      //m_pdirect2d->m_pd2d1multithread->Enter();
 
-      bind_draw2d_compositor();
+      //bind_draw2d_compositor();
 
-      m_pdevicecontext->BeginDraw();
+      //m_pdevicecontext->BeginDraw();
 
-      m_pdevicecontext->Clear();
+      //m_pdevicecontext->Clear();
 
    }
 
@@ -513,14 +546,16 @@ namespace draw2d_direct2d
    void graphics::gpu_layer_on_before_end_render()
    {
 
-      m_pdevicecontext->EndDraw();
+      //m_pdevicecontext->EndDraw();
 
-      //m_pdevicecontext->Clear();
+      ////m_pdevicecontext->Clear();
 
-      soft_unbind_draw2d_compositor();
+      //soft_unbind_draw2d_compositor();
 
-      m_pdirect2d->m_pd2d1multithread->Leave();
-      m_bInLayer = false;
+      //m_pdirect2d->m_pd2d1multithread->Leave();
+
+      ////m_bInLayer = false;
+
    }
 
 
@@ -5334,8 +5369,11 @@ namespace draw2d_direct2d
    void graphics::on_start_layer()
    {
 
-      if (m_pdevicecontext && m_bInLayer)
+      //if (m_pdevicecontext && m_bInLayer)
+      //if (m_pdevicecontext)
       {
+
+         m_pdirect2d->m_pd2d1multithread->Enter();
 
          m_pdevicecontext->BeginDraw();
 
@@ -5349,12 +5387,16 @@ namespace draw2d_direct2d
    void graphics::on_end_layer()
    {
 
-      if (m_pdevicecontext)
+      //if (m_pdevicecontext)
       {
 
          m_pdevicecontext->Flush();
 
          m_pdevicecontext->EndDraw();
+
+         m_pdirect2d->m_pd2d1multithread->Leave();
+
+
 
       }
 
