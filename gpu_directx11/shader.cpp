@@ -5,6 +5,7 @@
 #include "shader.h"
 #include "context.h"
 #include "descriptors.h"
+#include "lock.h"
 #include "renderer.h"
 #include "texture.h"
 #include "offscreen_render_target_view.h"
@@ -413,6 +414,8 @@ namespace gpu_directx11
 
       ::cast <context> pgpucontext = m_pgpurenderer->m_pgpucontext;
 
+      directx11_lock directx11_lock(pgpucontext);
+
       ::cast <device> pgpudevice = pgpucontext->m_pgpudevice;
 
       if (m_pinputlayout)
@@ -457,6 +460,8 @@ namespace gpu_directx11
    {
 
       ::cast <context> pgpucontext = m_pgpurenderer->m_pgpucontext;
+
+      directx11_lock directx11_lock(pgpucontext);
 
       ::cast <device> pgpudevice = pgpucontext->m_pgpudevice;
 
@@ -532,6 +537,8 @@ namespace gpu_directx11
    {
 
       ::cast <context> pgpucontext = m_pgpurenderer->m_pgpucontext;
+
+      directx11_lock directx11_lock(pgpucontext);
 
       ::cast <device> pgpudevice = pgpucontext->m_pgpudevice;
 

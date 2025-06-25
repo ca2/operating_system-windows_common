@@ -74,6 +74,8 @@ namespace direct2d
    comptr<ID2D1Device> direct2d::create_d2d1_device(::dxgi_device_source* pdxgidevicesource)
    {
 
+      direct2d_lock direct2dlock(this);
+
       /*::cast < ::gpu::approach > pgpuapproach = m_papplication->get_gpu_approach();
 
       ::cast < ::gpu::device > pgpudevice = pgpuapproach->get_gpu_device();*/

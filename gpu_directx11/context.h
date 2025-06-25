@@ -11,7 +11,8 @@ namespace gpu_directx11
 
 
    class CLASS_DECL_GPU_DIRECTX11 context :
-      virtual public ::gpu::context
+      virtual public ::gpu::context,
+      virtual public ::dxgi_device_source
    {
    public:
 
@@ -21,6 +22,11 @@ namespace gpu_directx11
       comptr<ID3D11DeviceContext1>        m_pcontext1;
 
       comptr < ID3D11RasterizerState> m_prasterizerstate;
+      ::comptr < ID3D11RasterizerState > m_prasterizerstateMergeLayers;
+
+      ::comptr<ID3D10Multithread> m_pmultithread;
+
+
       //itask									m_itaskGpu;
       //VkSampler m_vksampler001;
 
@@ -116,6 +122,10 @@ namespace gpu_directx11
       ~context() override;
 
 
+      virtual void _directx11_lock();
+      virtual void _directx11_unlock();
+      IDXGIDevice* _get_dxgi_device() override;
+
       string _001GetIntroProjection() override;
       string _001GetIntroFragment() override;
 
@@ -132,6 +142,11 @@ namespace gpu_directx11
       virtual void copy_using_shader(::gpu::texture* pgputextureTarget, ::gpu::texture* pgputextureSource);
 
       void merge_layers(::gpu::texture* ptextureTarget, ::pointer_array < ::gpu::layer >* playera) override;
+
+
+      void on_start_layer(::gpu::layer* player) override;
+      void on_end_layer(::gpu::layer* player) override;
+
       //void swap_buffers() override;
 
       //VkSampler _001VkSampler();

@@ -14,8 +14,7 @@ namespace gpu_directx11
 
 
    class CLASS_DECL_GPU_DIRECTX11 device :
-      virtual public ::gpu::device,
-      virtual public ::dxgi_device_source
+      virtual public ::gpu::device
    {
    public:
 
@@ -282,7 +281,7 @@ namespace gpu_directx11
 
       ID3D11Device* draw_get_d3d11_device();
       ID3D11Device1* draw_get_d3d11_device1();
-      IDXGIDevice* _get_dxgi_device() override;
+      virtual IDXGIDevice* _get_dxgi_device();
 
       int get_type_size(::gpu::enum_type etype) override;
       void set_mat4(void* p, const ::glm::mat4& mat4) override;

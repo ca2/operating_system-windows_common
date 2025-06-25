@@ -1,5 +1,6 @@
 // Created by camilo on 2025-06-10 18:26 <3ThomasBorregaardSørensen!!
 #include "framework.h"
+#include "lock.h"
 #include "renderer.h"
 #include "shader.h"
 #include "swap_chain.h"
@@ -141,6 +142,8 @@ namespace gpu_directx11
 
       ::cast < ::gpu_directx11::context > pgpucontext = pgpurenderer->m_pgpucontext;
 
+      directx11_lock directx11_lock(pgpucontext);
+
       m_size = pgpucontext->m_rectangle.size();
 
       if (!m_ptextureSwapChain)
@@ -244,6 +247,14 @@ namespace gpu_directx11
       //FLOAT colorRGBA2[] = { 0.5f * 0.5f,0.75f * 0.5f, 0.95f * 0.5f, 0.5f };
 
       //pgpucontext->m_pcontext->ClearRenderTargetView(m_ptextureSwapChain->m_prendertargetview, colorRGBA2);
+
+      
+
+   }
+
+
+   void swap_chain::swap_buffers()
+   {
 
       m_pdxgiswapchain1->Present(1, 0);
 

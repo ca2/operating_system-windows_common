@@ -2,6 +2,7 @@
 #include "approach.h"
 #include "descriptors.h"
 #include "frame.h"
+#include "lock.h"
 #include "renderer.h"
 #include "texture.h"
 #include "offscreen_render_target_view.h"
@@ -581,6 +582,8 @@ namespace gpu_directx11
 
       ::cast < ::gpu_directx11::context > pcontext = m_pgpucontext;
 
+      directx11_lock directx11_lock(m_pgpucontext);
+
       if (!m_ptextureStaging
          || texture2ddescSource.Width != m_sizeStaging.width()
          || texture2ddescSource.Height != m_sizeStaging.height())
@@ -637,6 +640,8 @@ namespace gpu_directx11
 
       ::cast < ::gpu_directx11::context > pcontext = m_pgpucontext;
 
+      directx11_lock directx11_lock(m_pgpucontext);
+
       if (FAILED(pcontext->m_pcontext->Map((ID3D11Resource*)m_ptextureStaging, 0, D3D11_MAP_READ, 0, &mapped)))
       {
          
@@ -681,6 +686,8 @@ namespace gpu_directx11
    {
 
       ::cast< context > pgpucontext = m_pgpucontext;
+
+      directx11_lock directx11_lock(m_pgpucontext);
 
       ::cast< renderer > prenderer = this;
 
@@ -921,6 +928,8 @@ namespace gpu_directx11
 
       ::cast < ::gpu_directx11::context > pgpucontext = m_pgpucontext;
 
+      directx11_lock directx11_lock(m_pgpucontext);
+
       auto pcontext = pgpucontext->m_pcontext;
 
       ::cast < render_target_view > pgpurendertargetview = m_pgpurendertarget;
@@ -1149,14 +1158,13 @@ namespace gpu_directx11
 
       auto eoutput = m_pgpucontext->m_eoutput;
 
-      //if (eoutput == ::gpu::e_output_swap_chain)
-      //{
+      if (eoutput == ::gpu::e_output_swap_chain)
+      {
 
-      //   m_pgpucontext->swap_buffers();
+         m_pgpucontext->get_swap_chain()->swap_buffers();
 
-      //}
-      //else 
-      if (eoutput == ::gpu::e_output_cpu_buffer)
+      } 
+      else if (eoutput == ::gpu::e_output_cpu_buffer)
       {
 
          this->do_sampling_to_cpu();

@@ -29,6 +29,7 @@
 #include "bred/gpu/context.h"
 #include "bred/gpu/device.h"
 #include "bred/gpu/renderer.h"
+#include "bred/gpu/swap_chain.h"
 #include "bred/gpu/types.h"
 #include <math.h>
 #include "acme_windows_common/dxgi_device_source.h"
@@ -165,6 +166,7 @@ namespace draw2d_direct2d
    {
 
       ::draw2d_gpu::graphics::create_for_window_draw2d(puserinteraction, size);
+
       auto pgpuapproach = m_papplication->get_gpu_approach();
 
       auto pgpudevice = pgpuapproach->get_gpu_device();
@@ -182,6 +184,22 @@ namespace draw2d_direct2d
       m_pdevicecontext.as(m_pdevicecontext1);
 
       m_pdevicecontext.as(m_pd2d1rendertarget);
+
+      if (m_papplication->m_gpu.m_bUseSwapChainWindow)
+      {
+
+         auto pcontextMain = pgpudevice->main_context();
+
+         auto pswapchain = pcontextMain->get_swap_chain();
+
+         if (!pswapchain->m_bSwapChainInitialized)
+         {
+
+            pswapchain->initialize_swap_chain_window(pcontextMain, puserinteraction->window());
+
+         }
+
+      }
 
       //// for now create a "fake" memory graphics
 

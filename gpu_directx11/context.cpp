@@ -3,6 +3,7 @@
 #include "buffer.h"
 #include "context.h"
 #include "device.h"
+#include "lock.h"
 #include "physical_device.h"
 #include "program.h"
 #include "renderer.h"
@@ -70,6 +71,37 @@ namespace gpu_directx11
 
    context::~context()
    {
+
+   }
+
+
+   void context::_directx11_lock()
+   {
+
+      if (!m_pmultithread)
+      {
+
+         m_pcontext->QueryInterface(__interface_of(m_pmultithread));
+
+      }
+
+      m_pmultithread->Enter();
+
+   }
+
+
+   void context::_directx11_unlock()
+   {
+
+      m_pmultithread->Leave();
+
+   }
+   IDXGIDevice* context::_get_dxgi_device()
+   {
+
+      ::cast < device > pdevice = m_pgpudevice;
+
+      return pdevice->_get_dxgi_device();
 
    }
 
@@ -1017,6 +1049,8 @@ namespace gpu_directx11
    void context::copy(::gpu::texture* pgputextureTarget, ::gpu::texture* pgputextureSource)
    {
 
+      directx11_lock directx11_lock(this);
+
       ::cast < texture > ptextureDst = pgputextureTarget;
 
       if (ptextureDst->m_prendertargetview)
@@ -1047,6 +1081,8 @@ namespace gpu_directx11
 
    void context::copy_using_shader(::gpu::texture* pgputextureTarget, ::gpu::texture* pgputextureSource)
    {
+
+      directx11_lock directx11_lock(this);
 
       if (!m_pshaderCopyUsingShader)
       {
@@ -1183,6 +1219,8 @@ float4 main(float2 uv : TEXCOORD) : SV_TARGET {
    void context::merge_layers(::gpu::texture* ptextureTarget, ::pointer_array < ::gpu::layer >* playera)
    {
 
+      directx11_lock directx11_lock(this);
+
       if (!m_pshaderBlend3)
       {
 
@@ -1267,11 +1305,6 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_TARGET
 
       m_pshaderBlend3->bind(ptextureTarget);
 
-      ::cast <texture > ptextureDst = ptextureTarget;
-      //float clearColor[4] = { 0.95f * 0.5f, 0.95f * 0.5f, 0.25f * 0.5f, 0.5f }; // Clear to transparent
-      //m_pcontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor);
-      float clearColor[4] = { 0.f, 0.f, 0.f, 0.f }; // Clear to transparent
-      m_pcontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor);
 
 
       {
@@ -1280,6 +1313,37 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_TARGET
          m_pcontext->OMSetBlendState(m_pd3d11blendstateBlend3, blendFactor, sampleMask);
       }
 
+
+      if(!m_prasterizerstateMergeLayers)
+      {
+
+         D3D11_RASTERIZER_DESC rasterDesc = {};
+         rasterDesc.FillMode = D3D11_FILL_SOLID;
+         rasterDesc.CullMode = D3D11_CULL_BACK;
+         rasterDesc.ScissorEnable = TRUE;
+
+         ::cast < ::gpu_directx11::device > pgpudevice = m_pgpudevice;
+
+         pgpudevice->m_pdevice->CreateRasterizerState(&rasterDesc, &m_prasterizerstateMergeLayers);
+
+      }
+
+      m_pcontext->RSSetState(m_prasterizerstateMergeLayers);
+
+      D3D11_RECT rectScissor;
+      rectScissor.left = 0;
+      rectScissor.top = 0;
+      rectScissor.right = 400;
+      rectScissor.bottom = 300;
+
+      m_pcontext->RSSetScissorRects(1, &rectScissor);
+
+
+      ::cast <texture > ptextureDst = ptextureTarget;
+      float clearColor[4] = { 0.95f * 0.5f, 0.95f * 0.5f, 0.25f * 0.5f, 0.5f }; // Clear to transparent
+      m_pcontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor);
+      //float clearColor[4] = { 0.f, 0.f, 0.f, 0.f }; // Clear to transparent
+      //m_pcontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor);
 
 
       //ID3D11RenderTargetView* rendertargetview[] = { ptextureDst->m_prendertargetview };
@@ -1311,6 +1375,14 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_TARGET
          vp.MaxDepth = 1.0f;
          m_pcontext->RSSetViewports(1, &vp);
 
+         D3D11_RECT rectScissor;
+         rectScissor.left = 0;
+         rectScissor.top = 0;
+         rectScissor.right = 400;
+         rectScissor.bottom = 300;
+
+         m_pcontext->RSSetScissorRects(1, &rectScissor);
+
          //m_pcontext->PSSetSamplers(0, 1, samplerstatea);
          //m_pcontext->PSSetShaderResources(0, 1, sharedresourceviewa);
 
@@ -1322,12 +1394,116 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_TARGET
 
       m_pshaderBlend3->unbind();
 
-      //::cast <texture > ptextureDst = ptextureTarget;
-      //float clearColor2[4] = { 0.95f * 0.5f, 0.75f * 0.5f, 0.95f * 0.5f, 0.5f }; // Clear to transparent
-      //m_pcontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor2);
 
+      bool bClearAtEndDebug = true;
+
+      if (bClearAtEndDebug)
+      {
+
+         D3D11_VIEWPORT vp = {};
+         vp.TopLeftX = 0;
+         vp.TopLeftY = 0;
+         vp.Width = static_cast<float>(m_rectangle.width());
+         vp.Height = static_cast<float>(m_rectangle.height());
+         vp.MinDepth = 0.0f;
+         vp.MaxDepth = 1.0f;
+         m_pcontext->RSSetViewports(1, &vp);
+
+         D3D11_RECT rectScissor;
+         rectScissor.left = 0;
+         rectScissor.top = 0;
+         rectScissor.right = m_rectangle.width();
+         rectScissor.bottom = m_rectangle.height();
+
+         m_pcontext->RSSetScissorRects(1, &rectScissor);
+
+         //::cast <texture > ptextureDst = ptextureTarget;
+         float clearColor2[4] = { 0.95f * 0.5f, 0.75f * 0.5f, 0.95f * 0.5f, 0.5f }; // Clear to transparent
+         m_pcontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor2);
+
+      }
 
    }
+
+   void context::on_start_layer(::gpu::layer* player)
+   {
+
+      if (m_pgpucompositor && m_etype == e_type_draw2d)
+      {
+
+         //::cast < device > pdevice = m_pgpudevice;
+         //::cast < renderer > prenderer = m_pgpurenderer;
+         //::cast < texture > ptexture = m_pgpurenderer->m_pgpurendertarget->current_texture();
+
+         //_get_dxgi_device();
+
+         ////ptexture->_new_state(prenderer->getCurrentCommandBuffer2()->m_pcommandlist, D3D12_RESOURCE_STATE_RENDER_TARGET);
+
+         //// 4. Release wrapped resource to allow access from D3D12
+
+         //d3d11on12()->m_pd3d11on12->AcquireWrappedResources(
+         //   d3d11on12()->m_d3d11wrappedresources, 1);
+
+         //m_iResourceWrappingCount++;
+
+         //ASSERT(m_iResourceWrappingCount == 1);
+         //
+         ////::cast < ::dxgi_surface_bindable > pdxgisurfacebindable = m_pgpucompositor;
+
+         ////::cast < texture > ptexture = m_pgpurenderer->m_pgpurendertarget->current_texture();
+
+         ////auto& pdxgisurface = ptexture->d3d11()->dxgiSurface;
+
+         ////::defer_throw_hresult(ptexture->d3d11()->wrappedResource.as(pdxgisurface)); // Get IDXGISurface
+
+         ////int iFrameIndex = m_pgpurenderer->m_pgpurendertarget->get_frame_index();
+
+         ////pdxgisurfacebindable->_bind(iFrameIndex, pdxgisurface);
+
+         __bind_draw2d_compositor(m_pgpucompositor);
+
+         m_pgpucompositor->on_start_layer();
+
+      }
+
+   }
+
+
+   void context::on_end_layer(::gpu::layer* player)
+   {
+
+      if (m_pgpucompositor)
+      {
+
+         m_pgpucompositor->on_end_layer();
+
+         __soft_unbind_draw2d_compositor(m_pgpucompositor);
+
+         //::cast < device > pdevice = m_pgpudevice;
+
+         //if (m_etype == e_type_draw2d)
+         //{
+
+         //   d3d11on12()->m_pd3d11context->Flush(); // ✅ Ensures D3D11 commands are issued
+
+         //   // 4. Release wrapped resource to allow access from D3D12
+         //   d3d11on12()->m_pd3d11on12->ReleaseWrappedResources(
+         //      d3d11on12()->m_d3d11wrappedresources, 1);
+
+         //   m_iResourceWrappingCount--;
+
+         //   ASSERT(m_iResourceWrappingCount == 0);
+
+         //   ::cast < texture > ptexture = get_gpu_renderer()->m_pgpurendertarget->current_texture();
+
+         //   //ptexture->m_estate = D3D12_RESOURCE_STATE_COPY_SOURCE;
+
+         //}
+
+      }
+
+   }
+
 
 
 
@@ -2142,6 +2318,8 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_TARGET
 
    void context::update_global_ubo(const ::block& block)
    {
+
+      directx11_lock directx11_lock(this);
 
       auto iFrameIndex = m_pgpurenderer->m_pgpurendertarget->get_frame_index();
 

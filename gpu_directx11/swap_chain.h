@@ -34,7 +34,7 @@ namespace gpu_directx11
 
       void present(::gpu::texture * pgputexture) override;
 
-
+      void swap_buffers() override;
       //::gpu::texture* current_texture() override;
 
 
