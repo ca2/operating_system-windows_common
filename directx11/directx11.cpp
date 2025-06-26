@@ -13,20 +13,20 @@ namespace directx11
 {
 
 
-   ::pointer < class directx11 > directx11::s_pdirectx11;
+   //::pointer < class directx11 > directx11::s_pdirectx11;
 
 
    directx11::directx11()
    {
 
-      if (s_pdirectx11)
+  /*    if (s_pdirectx11)
       {
 
          throw ::exception(error_wrong_state);
 
       }
 
-      s_pdirectx11 = this;
+      s_pdirectx11 = this;*/
 
    }
 
@@ -46,27 +46,27 @@ namespace directx11
    }
 
 
-   CLASS_DECL_DIRECTX11 void defer_initialize(::windowing::window* pwindow, const ::int_rectangle& rectanglePlacement)
-   {
+   //CLASS_DECL_DIRECTX11 void defer_initialize(::windowing::window* pwindow, const ::int_rectangle& rectanglePlacement)
+   //{
 
-      if (::is_set(directx11::s_pdirectx11))
-      {
+   //   //if (::is_set(directx11::s_pdirectx11))
+   //   //{
 
-         return;
+   //   //   return;
 
-      }
+   //   //}
 
-      pwindow->__defer_construct(directx11::s_pdirectx11);
+   //   pwindow->__defer_construct(directx11::s_pdirectx11);
 
-   }
+   //}
 
 
-   CLASS_DECL_DIRECTX11 void finalize()
-   {
+   //CLASS_DECL_DIRECTX11 void finalize()
+   //{
 
-      directx11::s_pdirectx11.release();
+   //   directx11::s_pdirectx11.release();
 
-   }
+   //}
 
 
 
@@ -113,6 +113,25 @@ namespace directx11
    }
 
 
+   CLASS_DECL_DIRECTX11 directx11* from_gpu_device(::gpu::device* pgpudevice)
+   {
+
+      ::cast < directx11 > pdirectx11 = pgpudevice->payload("directx11").as_subparticle();
+
+      if (!pdirectx11)
+      {
+
+         pdirectx11 = pgpudevice->__create_new < directx11>();
+
+         pgpudevice->payload("directx11") = pdirectx11;
+
+         pdirectx11.m_p = dynamic_cast < directx11 * > (pgpudevice->payload("directx11").as_subparticle());
+
+      }
+
+      return pdirectx11;
+
+   }
 
 
 } // namespace draw2d_directx11

@@ -2,7 +2,6 @@
 #include "approach.h"
 #include "descriptors.h"
 #include "frame.h"
-#include "lock.h"
 #include "renderer.h"
 #include "texture.h"
 #include "offscreen_render_target_view.h"
@@ -10,6 +9,7 @@
 #include "swap_chain_render_target_view.h"
 #include "initializers.h"
 #include "bred/gpu/cpu_buffer.h"
+#include "bred/gpu/lock.h"
 #include "bred/gpu/render_state.h"
 #include "bred/gpu/swap_chain.h"
 #include "gpu_directx11/shader.h"
@@ -582,7 +582,7 @@ namespace gpu_directx11
 
       ::cast < ::gpu_directx11::context > pcontext = m_pgpucontext;
 
-      directx11_lock directx11_lock(m_pgpucontext);
+      ::gpu::context_lock context_lock(m_pgpucontext);
 
       if (!m_ptextureStaging
          || texture2ddescSource.Width != m_sizeStaging.width()
@@ -640,7 +640,7 @@ namespace gpu_directx11
 
       ::cast < ::gpu_directx11::context > pcontext = m_pgpucontext;
 
-      directx11_lock directx11_lock(m_pgpucontext);
+      ::gpu::context_lock context_lock(m_pgpucontext);
 
       if (FAILED(pcontext->m_pcontext->Map((ID3D11Resource*)m_ptextureStaging, 0, D3D11_MAP_READ, 0, &mapped)))
       {
@@ -687,7 +687,7 @@ namespace gpu_directx11
 
       ::cast< context > pgpucontext = m_pgpucontext;
 
-      directx11_lock directx11_lock(m_pgpucontext);
+      ::gpu::context_lock context_lock(m_pgpucontext);
 
       ::cast< renderer > prenderer = this;
 
@@ -928,7 +928,7 @@ namespace gpu_directx11
 
       ::cast < ::gpu_directx11::context > pgpucontext = m_pgpucontext;
 
-      directx11_lock directx11_lock(m_pgpucontext);
+      ::gpu::context_lock context_lock(m_pgpucontext);
 
       auto pcontext = pgpucontext->m_pcontext;
 

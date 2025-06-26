@@ -5,10 +5,11 @@
 #include "shader.h"
 #include "context.h"
 #include "descriptors.h"
-#include "lock.h"
+//#include "lock.h"
 #include "renderer.h"
 #include "texture.h"
 #include "offscreen_render_target_view.h"
+#include "bred/gpu/lock.h"
 #include "bred/gpu/types.h"
 #include "acme_windows_common/hresult_exception.h"
 #include <d3dcompiler.h>
@@ -170,6 +171,8 @@ namespace gpu_directx11
          return DXGI_FORMAT_R32G32_FLOAT;
       case ::gpu::e_type_seq3:
          return DXGI_FORMAT_R32G32B32_FLOAT;
+      case ::gpu::e_type_seq4:
+         return DXGI_FORMAT_R32G32B32A32_FLOAT;
       default:
          throw ::exception(error_not_implemented, "please implement this missing implementation");
       }
@@ -424,7 +427,7 @@ namespace gpu_directx11
 
       ::cast <context> pgpucontext = m_pgpurenderer->m_pgpucontext;
 
-      directx11_lock directx11_lock(pgpucontext);
+      ::gpu::context_lock context_lock(pgpucontext);
 
       ::cast <device> pgpudevice = pgpucontext->m_pgpudevice;
 
@@ -481,7 +484,7 @@ namespace gpu_directx11
 
       ::cast <context> pgpucontext = m_pgpurenderer->m_pgpucontext;
 
-      directx11_lock directx11_lock(pgpucontext);
+      ::gpu::context_lock context_lock(pgpucontext);
 
       ::cast <device> pgpudevice = pgpucontext->m_pgpudevice;
 
@@ -513,6 +516,13 @@ namespace gpu_directx11
 
          ::cast < texture > ptextureDst = pgputextureTarget;
 
+         if (!ptextureDst->m_prendertargetview)
+         {
+
+            ptextureDst->create_render_target_view();
+
+         }
+
          ID3D11RenderTargetView* rendertargetviewa[] =
          {
             ptextureDst->m_prendertargetview
@@ -534,7 +544,7 @@ namespace gpu_directx11
 
       ::cast <context> pgpucontext = m_pgpurenderer->m_pgpucontext;
 
-      directx11_lock directx11_lock(pgpucontext);
+      ::gpu::context_lock context_lock(pgpucontext);
 
       ::cast <device> pgpudevice = pgpucontext->m_pgpudevice;
 
@@ -569,7 +579,7 @@ namespace gpu_directx11
 
       ::cast <context> pgpucontext = m_pgpurenderer->m_pgpucontext;
 
-      directx11_lock directx11_lock(pgpucontext);
+      ::gpu::context_lock context_lock(pgpucontext);
 
       ::cast <device> pgpudevice = pgpucontext->m_pgpudevice;
 

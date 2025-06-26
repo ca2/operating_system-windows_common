@@ -22,6 +22,7 @@ namespace directx11
       //::comptr<IDXGISurface>              m_pdxgisurface_2;
 
       ::comptr<IDXGISwapChain1> m_pdxgiswapchain1;
+      //::comptr<IDXGISwapChain> m_pdxgiswapchain;
 
 
 

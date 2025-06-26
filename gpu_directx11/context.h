@@ -127,8 +127,8 @@ namespace gpu_directx11
       virtual ID3D11DepthStencilState* depth_stencil_state_disabled();
 
 
-      virtual void _directx11_lock();
-      virtual void _directx11_unlock();
+      void _context_lock() override;
+      void _context_unlock() override;
       IDXGIDevice* _get_dxgi_device() override;
 
       string _001GetIntroProjection() override;

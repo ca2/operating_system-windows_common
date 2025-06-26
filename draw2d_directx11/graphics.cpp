@@ -28,10 +28,15 @@
 #include "bred/gpu/approach.h"
 #include "bred/gpu/context.h"
 #include "bred/gpu/device.h"
+#include "bred/gpu/lock.h"
 #include "bred/gpu/renderer.h"
 #include "bred/gpu/swap_chain.h"
 #include "bred/gpu/types.h"
-#include "gpu_directx11/lock.h"
+#include "gpu_directx11/context.h"
+#include "gpu_directx11/device.h"
+#include "gpu_directx11/renderer.h"
+#include "gpu_directx11/shader.h"
+#include "gpu_directx11/texture.h"
 #include <math.h>
 #include "acme_windows_common/dxgi_device_source.h"
 
@@ -308,7 +313,7 @@ namespace draw2d_directx11
 
       {
 
-         ::gpu_directx11::directx11_lock directx11_lock(m_pgpucontext);
+         ::gpu::context_lock context_lock(m_pgpucontext);
 
          m_pgpucontext->m_pgpucompositor = this;
 
@@ -337,7 +342,7 @@ namespace draw2d_directx11
       m_pgpucontext->_send([this, size]()
          {
 
-            ::gpu_directx11::directx11_lock directx11_lock(m_pgpucontext);
+            ::gpu::context_lock context_lock(m_pgpucontext);
             /*::directx11::directx11() = __allocate ::draw2d_directx11::plugin();
 
             ::directx11::get()->initialize();*/
@@ -1193,7 +1198,7 @@ namespace draw2d_directx11
 
    void graphics::_set(const ::geometry2d::matrix & matrix)
    {
-
+      ::draw2d_gpu::graphics::_set(matrix);
       //if (!m_pd2d1rendertarget)
       //{
 
@@ -2142,6 +2147,64 @@ namespace draw2d_directx11
    }
 
 
+   BEGIN_GPU_PROPERTIES(fill_rectangle_shader)
+      GPU_PROPERTY("position", ::gpu::e_type_seq2)
+      GPU_PROPERTY("color", ::gpu::e_type_seq4)
+      END_GPU_PROPERTIES()
+
+      struct fill_rectangle_Vertex
+   {
+      float x, y;       // NDC position
+      float r, g, b, a; // Vertex color
+   };
+      ::comptr<ID3D11Buffer> CreateRectangleVertexBuffer(
+         ID3D11Device* device,
+         float leftPx, float topPx, float rightPx, float bottomPx,
+         float viewportWidth, float viewportHeight,
+         float red, float green, float blue, float alpha  )
+   {
+      // Convert to NDC
+      auto pxToNDC_X = [viewportWidth](float x) {
+         return (2.0f * x / viewportWidth) - 1.0f;
+         };
+      auto pxToNDC_Y = [viewportHeight](float y) {
+         return 1.0f - (2.0f * y / viewportHeight);
+         };
+
+      float l = pxToNDC_X(leftPx);
+      float t = pxToNDC_Y(topPx);
+      float r = pxToNDC_X(rightPx);
+      float b = pxToNDC_Y(bottomPx);
+
+      fill_rectangle_Vertex vertices[] = {
+          { l, b, red, green, blue, alpha }, // bottom-left
+          { l, t, red, green, blue, alpha }, // top-left
+          { r, b, red, green, blue, alpha }, // bottom-right
+
+          { r, b, red, green, blue, alpha }, // bottom-right
+          { l, t, red, green, blue, alpha }, // top-left
+          { r, t, red, green, blue, alpha }, // top-right
+      };
+
+      ::comptr<ID3D11Buffer> vb ;
+
+      D3D11_BUFFER_DESC bd = {};
+      bd.Usage = D3D11_USAGE_DEFAULT;
+      bd.ByteWidth = sizeof(vertices);
+      bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+      bd.CPUAccessFlags = 0;
+
+      D3D11_SUBRESOURCE_DATA initData = {};
+      initData.pSysMem = vertices;
+
+      HRESULT hr = device->CreateBuffer(&bd, &initData, &vb);
+      if (FAILED(hr)) {
+         return nullptr;
+      }
+
+      return vb;
+   }
+
    void graphics::fill_rectangle(const ::double_rectangle & rectangleParam, ::draw2d::brush * pbrush)
    {
 
@@ -2167,6 +2230,12 @@ namespace draw2d_directx11
          return;
 
       }
+
+
+      ::color::color color = pbrush->m_color;
+
+
+      fill_rectangle(rectangleParam, color);
 
       //D2D1_RECT_F rectangle;
 
@@ -4222,19 +4291,17 @@ namespace draw2d_directx11
 
       //m_pd2d1rendertarget->GetTransform(&m_state.m_m);
 
-      //::collection::count iSaveDC = m_statea.get_size();
+      ::collection::count iSaveDC = m_statea.get_size();
 
-      //m_statea.add(m_state);
+      m_statea.add(m_state);
 
-      //m_state.m_iLayerIndex = m_iLayerCount;
+      m_state.m_iLayerIndex = m_iLayerCount;
 
       ////m_pstate->m_layerparameters = D2D1::LayerParameters();
 
       ////m_pd2d1rendertarget->PushLayer(m_pstate->m_layerparameters, nullptr);
 
-      //return (int)iSaveDC;
-
-      return 0;
+      return (int)iSaveDC;
 
    }
 
@@ -5109,8 +5176,8 @@ namespace draw2d_directx11
 
       ////m_pd2d1rendertarget->PushLayer(layerparameters, nullptr);
 
-      //m_iaPushLayer.add(1);
-      //m_iaPushLayerCount.add(1);
+      m_iaPushLayer.add(1);
+      m_iaPushLayerCount.add(1);
 
       //m_pd2d1rendertarget->PushAxisAlignedClip(rf, D2D1_ANTIALIAS_MODE_PER_PRIMITIVE);
 
@@ -5406,6 +5473,26 @@ namespace draw2d_directx11
          //m_pdevicecontext->BeginDraw();
 
          //m_pdevicecontext->Clear();
+
+         ::cast < ::gpu_directx11::context > pcontext = m_pgpucontext;
+
+         pcontext->m_pcontext->OMSetDepthStencilState(
+            pcontext->depth_stencil_state_disabled(), 0);
+
+         ::cast < ::gpu_directx11::renderer > prenderer = pcontext->m_pgpurenderer;
+
+         ::cast < ::gpu_directx11::texture > ptexture = prenderer->m_pgpurendertarget->current_texture();
+
+         if (!ptexture->m_prendertargetview)
+         {
+
+            ptexture->create_render_target_view();
+
+         }
+         float clearColor[4] = { 0, 0, 0, 0 }; // Clear to transparent
+         pcontext->m_pcontext->ClearRenderTargetView(ptexture->m_prendertargetview,
+            clearColor
+            );
 
       }
 
@@ -6045,6 +6132,85 @@ namespace draw2d_directx11
    void graphics::fill_rectangle(const ::double_rectangle & rectangleParam, const ::color::color & color)
    {
 
+      if (!m_pshaderFillSolidRectangle)
+      {
+
+
+         __defer_construct_new(m_pshaderFillSolidRectangle);
+
+         const char* pszVert = R"hlsl(
+struct VSIn {
+    float2 pos : POSITION;
+    float4 color : COLOR;
+};
+
+struct VSOut {
+    float4 pos : SV_POSITION;
+    float4 color : COLOR;
+};
+
+VSOut main(VSIn input) {
+    VSOut o;
+    o.pos = float4(input.pos, 0.0f, 1.0f);
+    o.color = input.color;
+    return o;
+}
+)hlsl";
+
+         const char* pszFrag = R"hlsl(
+         float4 main(float4 pos : SV_POSITION, float4 color : COLOR) : SV_Target
+         {
+             return color;
+         }
+)hlsl";
+
+         m_pshaderFillSolidRectangle->initialize_shader_with_block(
+            m_pgpucontext->m_pgpurenderer,
+            ::as_block(pszVert),
+            ::as_block(pszFrag),
+            {}, {}, {}, {},
+            fill_rectangle_shader_properties()
+
+         );
+
+         //fill_rectangle_shader
+
+      }
+
+      m_pshaderFillSolidRectangle->bind();
+
+      auto r = rectangleParam;
+
+      m_m1.transform(r.top_left());
+      m_m1.transform(r.bottom_right());
+
+      ::cast < ::gpu_directx11::context > pcontext = m_pgpucontext;
+      ::cast < ::gpu_directx11::device > pdevice = m_pgpucontext->m_pgpudevice;
+      auto pbuffer = CreateRectangleVertexBuffer(
+         pdevice->m_pdevice,
+         r.left(),
+         r.top(),
+         r.right(),
+         r.bottom(),  // rectangle in pixels (left, top, right, bottom)
+         pcontext->m_rectangle.width(),
+         pcontext->m_rectangle.height(),            // viewport size in pixels (width, height)
+         color.f32_red() * color.f32_opacity(),
+         color.f32_green() * color.f32_opacity(),
+         color.f32_blue() * color.f32_opacity(),
+         color.f32_opacity()); // color RGBA
+      UINT stride = sizeof(fill_rectangle_Vertex);
+      UINT offset = 0;
+      ID3D11Buffer* buffera[] = { pbuffer };
+
+
+      pcontext->m_pcontext->IASetVertexBuffers(0, 1, buffera, &stride, &offset);
+      pcontext->m_pcontext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+      pcontext->m_pcontext->Draw(6, 0);
+
+
+      m_pshaderFillSolidRectangle->unbind();
+
+
       //if (!m_pdevicecontext)
       //{
 
@@ -6413,6 +6579,14 @@ namespace draw2d_directx11
    }
 
 
+   void graphics::_bind(int iIndex, IDXGISurface* psurface)
+   {
+
+
+
+   }
+
+
    void graphics::start_gpu_layer()
    {
 
@@ -6440,6 +6614,79 @@ namespace draw2d_directx11
       {
 
          ::draw2d::graphics::set_alpha_mode(ealphamode);
+
+
+         if (ealphamode == ::draw2d::e_alpha_mode_blend)
+         {
+
+            if (!m_pblendstateAlphaMode)
+            {
+
+               D3D11_BLEND_DESC blendDesc = { 0 };
+               blendDesc.RenderTarget[0].BlendEnable = TRUE;
+               blendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_ONE;              // Premultiplied alpha
+               blendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;   // Use inverse of alpha
+               blendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+
+               blendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;         // Alpha blending (optional)
+               blendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_INV_SRC_ALPHA;
+               blendDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+
+               blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+               ::cast < ::gpu_directx11::device > pgpudevice = m_pgpucontext->m_pgpudevice;
+
+               HRESULT hr = pgpudevice->m_pdevice->CreateBlendState(
+                  &blendDesc,
+                  &m_pblendstateAlphaMode);
+               ::defer_throw_hresult(hr);
+
+            }
+
+            ::cast < ::gpu_directx11::context > pcontext = m_pgpucontext;
+
+            {
+
+               float blendFactor[4] = { 0, 0, 0, 0 }; // Ignored with this blend mode
+               UINT sampleMask = 0xFFFFFFFF;
+
+               pcontext->m_pcontext->OMSetBlendState(m_pblendstateAlphaMode,
+                  blendFactor, sampleMask);
+
+            }
+
+
+         }
+         else if (ealphamode == ::draw2d::e_alpha_mode_set)
+         {
+            if (!m_pblendstateSetMode)
+            {
+
+               D3D11_BLEND_DESC blendDesc = { };
+               blendDesc.RenderTarget[0].BlendEnable = FALSE; // 🚫 no blending
+               blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+               ::cast < ::gpu_directx11::device > pgpudevice = m_pgpucontext->m_pgpudevice;
+
+               HRESULT hr = pgpudevice->m_pdevice->CreateBlendState(
+                  &blendDesc,
+                  &m_pblendstateSetMode);
+               ::defer_throw_hresult(hr);
+
+            }
+
+            ::cast < ::gpu_directx11::context > pcontext = m_pgpucontext;
+
+            {
+
+               UINT sampleMask = 0xFFFFFFFF;
+
+               pcontext->m_pcontext->OMSetBlendState(m_pblendstateSetMode,
+                  nullptr, sampleMask);
+
+            }
+
+         }
 
       }
 

@@ -1,0 +1,8 @@
+LIBRARY  "write_text_directx11"
+
+
+EXPORTS
+write_text_directx11_factory_exchange
+
+
+

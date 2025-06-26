@@ -1,14 +1,15 @@
 // Created by camilo on 2025-06-10 18:26 <3ThomasBorregaardSørensen!!
 #include "framework.h"
-#include "lock.h"
+//#include "lock.h"
 #include "renderer.h"
 #include "shader.h"
 #include "swap_chain.h"
 #include "texture.h"
 #include "windowing_win32/window.h"
+#include "bred/gpu/lock.h"
 
 
-
+CLASS_DECL_DIRECTX11 bool IsRenderDocAttached();
 
 namespace gpu_directx11
 {
@@ -51,29 +52,94 @@ namespace gpu_directx11
 
       }
 
-      DXGI_SWAP_CHAIN_DESC1 dxgiswapchaindesc1 = {};
-      dxgiswapchaindesc1.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
-      dxgiswapchaindesc1.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-      dxgiswapchaindesc1.SwapEffect = DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL;
-      dxgiswapchaindesc1.BufferCount = 2;
-      dxgiswapchaindesc1.SampleDesc.Count = 1;
-      dxgiswapchaindesc1.AlphaMode = DXGI_ALPHA_MODE_PREMULTIPLIED;
-
-      RECT rect = {};
-      GetWindowRect(pwin32window->m_hwnd, &rect);
-      dxgiswapchaindesc1.Width = rect.right - rect.left;
-      dxgiswapchaindesc1.Height = rect.bottom - rect.top;
-
       m_pdxgidevice_2 = pdx11gpudevice->_get_dxgi_device();
 
-      HRESULT hrCreateSwapChainForComposition =
-         pdx11gpudevice->m_pdxgifactory2->CreateSwapChainForComposition(
+
+      if (IsRenderDocAttached())
+      {
+
+         //ComPtr<IDXGIDevice> dxgiDevice;
+         //device->QueryInterface(&dxgiDevice);
+
+         //ComPtr<IDXGIAdapter> adapter;
+         //dxgiDevice->GetAdapter(&adapter);
+
+         //ComPtr<IDXGIFactory> dxgiFactory;
+         //adapter->GetParent(__uuidof(IDXGIFactory), (void**)&dxgiFactory);
+
+
+         ::comptr<IDXGIAdapter> adapter;
+         m_pdxgidevice_2->GetAdapter(&adapter);
+
+         ::comptr<IDXGIFactory> dxgiFactory;
+         adapter->GetParent(__uuidof(IDXGIFactory), (void**)&dxgiFactory);
+
+
+         //DXGI_SWAP_CHAIN_DESC sd = {};
+         //sd.BufferCount = 1;
+         RECT rect = {};
+         GetWindowRect(pwin32window->m_hwnd, &rect);
+         //sd.BufferDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
+         //sd.BufferDesc.RefreshRate.Numerator = 60;
+         //sd.BufferDesc.RefreshRate.Denominator = 1;
+         //sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+         //sd.OutputWindow = ;
+         // Create a DXGI_SWAP_CHAIN_DESC1
+         DXGI_SWAP_CHAIN_DESC1 desc = {};
+         desc.Width = rect.right - rect.left;
+         desc.Height = rect.bottom - rect.top;
+         desc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
+         desc.Stereo = FALSE;
+         desc.SampleDesc.Count = 1;
+         desc.SampleDesc.Quality = 0;
+         desc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+         desc.BufferCount = 2; // or more (2 is typical)
+         desc.Scaling = DXGI_SCALING_STRETCH;
+         desc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
+         desc.AlphaMode = DXGI_ALPHA_MODE_IGNORE;
+         desc.Flags = 0; // Do NOT use DXGI_SWAP_CHAIN_FLAG_ALLOW_TEARING if avoiding DComp
+
+         // Create the swap chain for an HWND
+         //ComPtr<IDXGISwapChain1> swapChain1;
+         HRESULT hrCreateSwapChainForHwnd = pdx11gpudevice->m_pdxgifactory2->CreateSwapChainForHwnd(
             m_pdxgidevice_2,
-            &dxgiswapchaindesc1,
-            nullptr, // Don’t restrict
+            pwin32window->m_hwnd,
+            &desc,
+            nullptr,       // No fullscreen desc
+            nullptr,       // No output restriction
             &m_pdxgiswapchain1);
 
-      ::defer_throw_hresult(hrCreateSwapChainForComposition);
+         ::defer_throw_hresult(hrCreateSwapChainForHwnd);
+
+      }
+      else
+      {
+
+         DXGI_SWAP_CHAIN_DESC1 dxgiswapchaindesc1 = {};
+         dxgiswapchaindesc1.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
+         dxgiswapchaindesc1.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+         dxgiswapchaindesc1.SwapEffect = DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL;
+         dxgiswapchaindesc1.BufferCount = 2;
+         dxgiswapchaindesc1.SampleDesc.Count = 1;
+         dxgiswapchaindesc1.AlphaMode = DXGI_ALPHA_MODE_PREMULTIPLIED;
+
+         RECT rect = {};
+         GetWindowRect(pwin32window->m_hwnd, &rect);
+         dxgiswapchaindesc1.Width = rect.right - rect.left;
+         dxgiswapchaindesc1.Height = rect.bottom - rect.top;
+
+
+
+         HRESULT hrCreateSwapChainForComposition =
+            pdx11gpudevice->m_pdxgifactory2->CreateSwapChainForComposition(
+               m_pdxgidevice_2,
+               &dxgiswapchaindesc1,
+               nullptr, // Don’t restrict
+               &m_pdxgiswapchain1);
+
+         ::defer_throw_hresult(hrCreateSwapChainForComposition);
+
+      }
 
       ///m_pswapchain->initialize_gpu_swap_chain(this, pwindow);
 
@@ -108,7 +174,7 @@ namespace gpu_directx11
 
       ::cast < ::gpu_directx11::context > pgpucontext = pgpurenderer->m_pgpucontext;
 
-      directx11_lock directx11_lock(pgpucontext);
+      ::gpu::context_lock context_lock(pgpucontext);
 
       ID3D11RenderTargetView* nullRTV[1] = { nullptr };
 
@@ -211,14 +277,15 @@ Texture2D tex : register(t0);
 SamplerState samp : register(s0);
 
 float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
-if(uv.x<0.5)
-{
-    return tex.Sample(samp, uv);
-}
-else
-{
-return float4(0.5*0.5, 0.90*0.5, 0.98*0.5, 0.5);
-}
+   return tex.Sample(samp, uv);
+//if(uv.x<0.5)
+//{
+//    return tex.Sample(samp, uv);
+//}
+//else
+//{
+//return float4(0.5*0.5, 0.90*0.5, 0.98*0.5, 0.5);
+//}
 }
 )hlsl";
 
@@ -273,15 +340,15 @@ return float4(0.5*0.5, 0.90*0.5, 0.98*0.5, 0.5);
 
       //pgpucontext->m_pcontext->ClearRenderTargetView(m_ptextureSwapChain->m_prendertargetview, colorRGBA2);
 
-      D3D11_RECT rect = {};
-      rect.left = 100;
-      rect.top = 100;
-      rect.right = 200;
-      rect.bottom = 200;
+      //D3D11_RECT rect = {};
+      //rect.left = 100;
+      //rect.top = 100;
+      //rect.right = 200;
+      //rect.bottom = 200;
 
-      float clearColor[4] = { 0.5f * 0.5f,0.75f * 0.5f, 0.95f * 0.5f, 0.5f }; 
+      //float clearColor[4] = { 0.5f * 0.5f,0.75f * 0.5f, 0.95f * 0.5f, 0.5f }; 
 
-      pgpucontext->m_pcontext1->ClearView(m_ptextureSwapChain->m_prendertargetview, clearColor, &rect, 1);
+      //pgpucontext->m_pcontext1->ClearView(m_ptextureSwapChain->m_prendertargetview, clearColor, &rect, 1);
 
 
       {

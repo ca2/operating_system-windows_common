@@ -30,10 +30,16 @@ namespace draw2d_directx11
 
       };
 
+
+      ::pointer < ::gpu_directx11::shader > m_pshaderFillSolidRectangle;
+
       ::pointer < ::particle > m_pSwapChainForBlitting;
       //::array < ::comptr < IDXGISurface > > m_dxgisurfaceaBound;
 
       int                                                m_iLayerCount;
+
+      ::comptr < ID3D11BlendState > m_pblendstateAlphaMode;
+      ::comptr < ID3D11BlendState > m_pblendstateSetMode;
 
       //comptr<ID2D1Device>                                m_pdevice;
       //comptr<ID2D1DeviceContext>                         m_pdevicecontext; // 0
@@ -93,6 +99,9 @@ namespace draw2d_directx11
 
 
       void just_after_new_frame() override;
+
+
+      void _bind(int iIndex, IDXGISurface* psurface) override;
 
 
       void start_gpu_layer() override;

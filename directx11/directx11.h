@@ -33,7 +33,7 @@ namespace directx11
       ::comptr<IDXGIDevice>               m_pdxgidevice_2;
 
 
-      static ::pointer < directx11 >             s_pdirectx11;
+      ///static ::pointer < directx11 >             s_pdirectx11;
 
 
       directx11();
@@ -68,12 +68,7 @@ namespace directx11
    };
 
 
-   inline directx11* get()
-   {
-
-      return directx11::s_pdirectx11;
-
-   }
+   CLASS_DECL_DIRECTX11 directx11* from_gpu_device(::gpu::device* pgpudevice);
 
 
    //inline ID2D1Factory1* factory()

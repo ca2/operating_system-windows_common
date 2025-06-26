@@ -13,6 +13,10 @@
 #include <d3dcompiler.h>
 #pragma comment(lib, "d3dcompiler.lib")
 
+CLASS_DECL_DIRECTX11 bool IsRenderDocAttached()
+{
+   return GetModuleHandleA("renderdoc.dll") != nullptr;
+}
 
 const char* fullscreen_vertex_shader = R"hlsl(// fullscreen_vs.hlsl
       struct VSOut {
@@ -146,6 +150,13 @@ namespace directx11
 
       ::gpu::swap_chain::initialize_swap_chain_window(pgpucontext, pwindow);
 
+      if (IsRenderDocAttached())
+      {
+
+         return;
+
+      }
+
       ::cast < ::windowing_win32::window > pwin32window = pwindow;
 
       auto& pdcompositiondevice = m_pdcompositiondevice;
@@ -154,10 +165,11 @@ namespace directx11
 
       auto pdxgidevice = _get_dxgi_device();
 
-      ::defer_throw_hresult(DCompositionCreateDevice(
+      HRESULT hrDCompositionCreateDevice = DCompositionCreateDevice(
          pdxgidevice,
-         __interface_of(pdcompositiondevice)));
+         __interface_of(pdcompositiondevice));
 
+      ::defer_throw_hresult(hrDCompositionCreateDevice);
 
       ::defer_throw_hresult(pdcompositiondevice->CreateTargetForHwnd(pwin32window->m_hwnd,
          true,

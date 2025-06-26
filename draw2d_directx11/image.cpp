@@ -114,12 +114,12 @@ namespace draw2d_directx11
 
       //}
 
-      if (pbitmap->m_osdata[0] == nullptr)
-      {
+      //if (pbitmap->m_osdata[0] == nullptr)
+      //{
 
-         return;
+      //   return;
 
-      }
+      //}
 
       //auto estatus = 
       

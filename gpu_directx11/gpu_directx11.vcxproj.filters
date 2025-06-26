@@ -95,7 +95,7 @@
     <ClInclude Include="texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="lock.h">
+    <ClInclude Include="aaa_lock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -181,7 +181,7 @@
     <ClCompile Include="texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="lock.cpp">
+    <ClCompile Include="aaa_lock.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

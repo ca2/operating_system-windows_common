@@ -28,10 +28,10 @@
 #include "bred/gpu/approach.h"
 #include "bred/gpu/context.h"
 #include "bred/gpu/device.h"
+#include "bred/gpu/lock.h"
 #include "bred/gpu/renderer.h"
 #include "bred/gpu/swap_chain.h"
 #include "bred/gpu/types.h"
-#include "gpu_directx11/lock.h"
 #include <math.h>
 #include "acme_windows_common/dxgi_device_source.h"
 
@@ -308,7 +308,7 @@ namespace draw2d_direct2d
 
       {
 
-         ::gpu_directx11::directx11_lock directx11_lock(m_pgpucontext);
+         ::gpu::context_lock context_lock(m_pgpucontext);
 
          m_pgpucontext->m_pgpucompositor = this;
 
@@ -337,7 +337,7 @@ namespace draw2d_direct2d
       m_pgpucontext->_send([this, size]()
          {
 
-            ::gpu_directx11::directx11_lock directx11_lock(m_pgpucontext);
+            ::gpu::context_lock context_lock(m_pgpucontext);
             /*::direct2d::direct2d() = __allocate ::draw2d_direct2d::plugin();
 
             ::direct2d::get()->initialize();*/

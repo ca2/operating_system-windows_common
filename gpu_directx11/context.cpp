@@ -3,7 +3,7 @@
 #include "buffer.h"
 #include "context.h"
 #include "device.h"
-#include "lock.h"
+//#include "lock.h"
 #include "physical_device.h"
 #include "program.h"
 #include "renderer.h"
@@ -18,6 +18,7 @@
 #include "aura/user/user/interaction.h"
 #include "bred/gpu/graphics.h"
 #include "bred/gpu/layer.h"
+#include "bred/gpu/lock.h"
 #include "bred/gpu/types.h"
 #include "gpu_directx11/descriptors.h"
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
@@ -75,7 +76,7 @@ namespace gpu_directx11
    }
 
 
-   void context::_directx11_lock()
+   void context::_context_lock()
    {
 
       if (!m_pmultithread)
@@ -90,12 +91,14 @@ namespace gpu_directx11
    }
 
 
-   void context::_directx11_unlock()
+   void context::_context_unlock()
    {
 
       m_pmultithread->Leave();
 
    }
+
+
    IDXGIDevice* context::_get_dxgi_device()
    {
 
@@ -1049,7 +1052,7 @@ namespace gpu_directx11
    void context::copy(::gpu::texture* pgputextureTarget, ::gpu::texture* pgputextureSource)
    {
 
-      directx11_lock directx11_lock(this);
+      ::gpu::context_lock context_lock(this);
 
       ::cast < texture > ptextureDst = pgputextureTarget;
 
@@ -1082,7 +1085,7 @@ namespace gpu_directx11
    void context::copy_using_shader(::gpu::texture* pgputextureTarget, ::gpu::texture* pgputextureSource)
    {
 
-      directx11_lock directx11_lock(this);
+      ::gpu::context_lock context_lock(this);
 
       if (!m_pshaderCopyUsingShader)
       {
@@ -1219,7 +1222,7 @@ float4 main(float2 uv : TEXCOORD) : SV_TARGET {
    void context::merge_layers(::gpu::texture* ptextureTarget, ::pointer_array < ::gpu::layer >* playera)
    {
 
-      directx11_lock directx11_lock(this);
+      ::gpu::context_lock context_lock(this);
 
       if (!m_pshaderBlend3)
       {
@@ -1259,14 +1262,16 @@ SamplerState samp : register(s0);
 
 float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_TARGET
 {
-if(uv.y<0.5)
-{
     return tex.Sample(samp, uv); // Assumes premultiplied alpha
-}
-else
-{
-return float4(0.8*0.5,0.8*0.5,0.4*0.5,0.5);
-}
+//return float4(0, 1, 0, 1); // Green
+//if(uv.y<0.5)
+//{
+//    return tex.Sample(samp, uv); // Assumes premultiplied alpha
+//}
+//else
+//{
+//return float4(0.8*0.5,0.8*0.5,0.4*0.5,0.5);
+//}
 }
 )hlsl";
 
@@ -1338,7 +1343,8 @@ return float4(0.8*0.5,0.8*0.5,0.4*0.5,0.5);
 
 
       ::cast <texture > ptextureDst = ptextureTarget;
-      float clearColor[4] = { 0.95f * 0.5f, 0.95f * 0.5f, 0.25f * 0.5f, 0.5f }; // Clear to transparent
+      //float clearColor[4] = { 0.95f * 0.5f, 0.95f * 0.5f, 0.25f * 0.5f, 0.5f }; // Translucent Yellow
+      float clearColor[4] = { 0.f, 0.f, 0.f, 0.f }; // Clear to transparent
       m_pcontext->ClearRenderTargetView(
          ptextureDst->m_prendertargetview, clearColor);
 
@@ -1416,8 +1422,8 @@ return float4(0.8*0.5,0.8*0.5,0.4*0.5,0.5);
          D3D11_RECT rectScissor;
          rectScissor.left = ptexture->m_rectangleTarget.left();
          rectScissor.top = ptexture->m_rectangleTarget.top();
-         rectScissor.right = ptexture->m_rectangleTarget.width();
-         rectScissor.bottom = ptexture->m_rectangleTarget.height();
+         rectScissor.right = ptexture->m_rectangleTarget.right();
+         rectScissor.bottom = ptexture->m_rectangleTarget.bottom();
 
          m_pcontext->RSSetScissorRects(1, &rectScissor);
 
@@ -1460,19 +1466,19 @@ return float4(0.8*0.5,0.8*0.5,0.4*0.5,0.5);
 
       //}
 
-      {
+      //{
 
-         D3D11_RECT rect = {};
-         rect.left = 200;
-         rect.top = 100;
-         rect.right = 300;
-         rect.bottom = 200;
+      //   D3D11_RECT rect = {};
+      //   rect.left = 200;
+      //   rect.top = 100;
+      //   rect.right = 300;
+      //   rect.bottom = 200;
 
-         float clearColor[4] = { 0.95f * 0.5f, 0.75f * 0.5f, 0.95f * 0.5f, 0.5f };
+      //   float clearColor[4] = { 0.95f * 0.5f, 0.75f * 0.5f, 0.95f * 0.5f, 0.5f };
 
-         m_pcontext1->ClearView(ptextureDst->m_prendertargetview, clearColor, &rect, 1);
+      //   m_pcontext1->ClearView(ptextureDst->m_prendertargetview, clearColor, &rect, 1);
 
-      }
+      //}
 
       {
 
@@ -2409,7 +2415,7 @@ return float4(0.8*0.5,0.8*0.5,0.4*0.5,0.5);
    void context::update_global_ubo(const ::block& block)
    {
 
-      directx11_lock directx11_lock(this);
+      ::gpu::context_lock context_lock(this);
 
       auto iFrameIndex = m_pgpurenderer->m_pgpurendertarget->get_frame_index();
 
