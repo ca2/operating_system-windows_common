@@ -5,8 +5,8 @@
 #include "pen.h"
 #include "brush.h"
 #include "region.h"
-#include "direct2d/direct2d.h"
-#include "direct2d/geometry.h"
+#include "directx11/directx11.h"
+//#include "directx11/geometry.h"
 #include "CustomRenderer.h"
 #include "acme/exception/not_implemented.h"
 #include "acme/parallelization/synchronous_lock.h"
@@ -36,11 +36,11 @@
 #include "acme_windows_common/dxgi_device_source.h"
 
 
-void dpi_initialize(ID2D1Factory * pFactory);
+//void dpi_initialize(ID2D1Factory * pFactory);
 
 
-#define d2d1_fax_options D2D1_FACTORY_OPTIONS // fax of merde
-#define multi_threaded D2D1_FACTORY_TYPE_MULTI_THREADED // ???? muliple performance multi thread hidden option there exists cost uses?
+//#define d2d1_fax_options D2D1_FACTORY_OPTIONS // fax of merde
+//#define multi_threaded D2D1_FACTORY_TYPE_MULTI_THREADED // ???? muliple performance multi thread hidden option there exists cost uses?
 
 
 //#if defined(WINDOWS_DESKTOP
@@ -50,7 +50,7 @@ void dpi_initialize(ID2D1Factory * pFactory);
 //#endif
 
 
-namespace draw2d_direct2d
+namespace draw2d_directx11
 {
 
 
@@ -85,9 +85,9 @@ namespace draw2d_direct2d
 
       m_iType = 0;
 
-      m_interpolationmode = D2D1_INTERPOLATION_MODE_HIGH_QUALITY_CUBIC;
+      //m_interpolationmode = D2D1_INTERPOLATION_MODE_HIGH_QUALITY_CUBIC;
 
-      m_bitmapinterpolationmode = D2D1_BITMAP_INTERPOLATION_MODE_LINEAR;
+      //m_bitmapinterpolationmode = D2D1_BITMAP_INTERPOLATION_MODE_LINEAR;
 
    }
 
@@ -172,7 +172,7 @@ namespace draw2d_direct2d
 
       auto pgpudevice = pgpuapproach->get_gpu_device();
 
-      m_pdirect2d = ::direct2d::from_gpu_device(pgpudevice);
+      //m_pdirectx11 = ::directx11::from_gpu_device(pgpudevice);
 
       m_pgpucontext = pgpudevice->main_draw2d_context();
 
@@ -180,11 +180,11 @@ namespace draw2d_direct2d
 
       ::cast < ::dxgi_device_source > pdxgidevicesource = m_pgpucontext;
 
-      m_pdevicecontext = m_pdirect2d->default_d2d1_device_context(pdxgidevicesource);
+      //m_pdevicecontext = m_pdirectx11->default_d2d1_device_context(pdxgidevicesource);
 
-      m_pdevicecontext.as(m_pdevicecontext1);
+      //m_pdevicecontext.as(m_pdevicecontext1);
 
-      m_pdevicecontext.as(m_pd2d1rendertarget);
+      //m_pdevicecontext.as(m_pd2d1rendertarget);
 
       if (m_papplication->m_gpu.m_bUseSwapChainWindow)
       {
@@ -312,9 +312,9 @@ namespace draw2d_direct2d
 
          m_pgpucontext->m_pgpucompositor = this;
 
-         auto pdirect2d = ::direct2d::from_gpu_device(m_pgpucontext->m_pgpudevice);
+         //auto pdirectx11 = ::directx11::from_gpu_device(m_pgpucontext->m_pgpudevice);
 
-         initialize_direct2d_object(pdirect2d);
+         //initialize_directx11_object(pdirectx11);
 
       }
 
@@ -338,203 +338,203 @@ namespace draw2d_direct2d
          {
 
             ::gpu_directx11::directx11_lock directx11_lock(m_pgpucontext);
-            /*::direct2d::direct2d() = __allocate ::draw2d_direct2d::plugin();
+            /*::directx11::directx11() = __allocate ::draw2d_directx11::plugin();
 
-            ::direct2d::get()->initialize();*/
+            ::directx11::get()->initialize();*/
 
-            HRESULT hr;
+            //HRESULT hr;
 
-            ::user::interaction* puserinteraction = m_puserinteraction;
+            //::user::interaction* puserinteraction = m_puserinteraction;
 
-            if (!puserinteraction)
-            {
-
-               puserinteraction = dynamic_cast <::user::interaction*>(m_papplication->m_pacmeuserinteractionMain.m_p);
-
-            }
-
-            auto pwindow = puserinteraction->window();
-
-            auto rectanglePlacement = pwindow->get_window_rectangle();
-
-            auto pdirect2d = m_pdirect2d;
-
-            ::direct2d_lock lock(pdirect2d);
-
-            ::cast < ::dxgi_device_source > pdxgidevicesource = m_pgpucontext;
-
-            auto pdevicecontextDefault = pdirect2d->default_d2d1_device_context(pdxgidevicesource);
-
-            //comptr < ID2D1DeviceContext > pdevicecontextTemplate;
-
-            //hr = m_pdevice->CreateDeviceContext(
-            //   //D2D1_DEVICE_CONTEXT_OPTIONS_NONE,
-            //   D2D1_DEVICE_CONTEXT_OPTIONS_ENABLE_MULTITHREADED_OPTIMIZATIONS,
-            //   &pdevicecontextTemplate);
-
-            //if (FAILED(hr))
+            //if (!puserinteraction)
             //{
 
-            //   warning() << "graphics::CreateCompatibleDC, CreateDeviceContext (1) " << hresult_text(hr);
+            //   puserinteraction = dynamic_cast <::user::interaction*>(m_papplication->m_pacmeuserinteractionMain.m_p);
 
-            //   //return false;
+            //}
+
+            //auto pwindow = puserinteraction->window();
+
+            //auto rectanglePlacement = pwindow->get_window_rectangle();
+
+            //auto pdirectx11 = m_pdirectx11;
+
+            ////::directx11_lock lock(pdirectx11);
+
+            //::cast < ::dxgi_device_source > pdxgidevicesource = m_pgpucontext;
+
+            ////auto pdevicecontextDefault = pdirectx11->default_d2d1_device_context(pdxgidevicesource);
+
+            ////comptr < ID2D1DeviceContext > pdevicecontextTemplate;
+
+            ////hr = m_pdevice->CreateDeviceContext(
+            ////   //D2D1_DEVICE_CONTEXT_OPTIONS_NONE,
+            ////   D2D1_DEVICE_CONTEXT_OPTIONS_ENABLE_MULTITHREADED_OPTIMIZATIONS,
+            ////   &pdevicecontextTemplate);
+
+            ////if (FAILED(hr))
+            ////{
+
+            ////   warning() << "graphics::CreateCompatibleDC, CreateDeviceContext (1) " << hresult_text(hr);
+
+            ////   //return false;
+
+            ////   throw ::exception(error_failed);
+
+            ////}
+
+            //auto psession = session();
+
+            //auto paurasession = psession;
+
+            //auto puser = paurasession->user();
+
+            //auto pwindowing = system()->windowing();
+
+            //auto pdisplay = pwindowing->display();
+
+            //auto dpi = pdisplay->get_dpi();
+
+            //if (dpi <= 0.0)
+            //{
+
+            //   ASSERT(false);
 
             //   throw ::exception(error_failed);
 
             //}
 
-            auto psession = session();
+            ////pdevicecontextDefault->SetDpi(dpi, dpi);
 
-            auto paurasession = psession;
+            ////comptr < ID2D1RenderTarget > prendertargetTemplate;
 
-            auto puser = paurasession->user();
+            ////hr = pdevicecontextDefault->QueryInterface(IID_ID2D1RenderTarget, (void**)&prendertargetTemplate);
 
-            auto pwindowing = system()->windowing();
+            ////if (FAILED(hr))
+            ////{
 
-            auto pdisplay = pwindowing->display();
+            ////   warning() << "graphics::CreateCompatibleDC, QueryInterface (2) " << hresult_text(hr);
 
-            auto dpi = pdisplay->get_dpi();
+            ////   throw ::exception(error_failed);
 
-            if (dpi <= 0.0)
-            {
+            ////}
 
-               ASSERT(false);
+            ////D2D1_SIZE_U sizeu = D2D1::SizeU(size.cx(), size.cy());
 
-               throw ::exception(error_failed);
+            ////if (sizeu.width <= 0)
+            ////{
 
-            }
+            ////   sizeu.width = 800;
 
-            pdevicecontextDefault->SetDpi(dpi, dpi);
+            ////}
 
-            //comptr < ID2D1RenderTarget > prendertargetTemplate;
+            ////if (sizeu.width <= 0)
+            ////{
 
-            //hr = pdevicecontextDefault->QueryInterface(IID_ID2D1RenderTarget, (void**)&prendertargetTemplate);
+            ////   sizeu.width = 600;
 
-            //if (FAILED(hr))
-            //{
+            ////}
 
-            //   warning() << "graphics::CreateCompatibleDC, QueryInterface (2) " << hresult_text(hr);
+            ////D2D1_PIXEL_FORMAT pixelformat;
 
-            //   throw ::exception(error_failed);
+            ////pixelformat.alphaMode = D2D1_ALPHA_MODE_PREMULTIPLIED;
 
-            //}
+            ////pixelformat.format = DXGI_FORMAT_B8G8R8A8_UNORM;
+            ////if (m_pbitmaprendertarget)
+            ////{
 
-            D2D1_SIZE_U sizeu = D2D1::SizeU(size.cx(), size.cy());
+            ////   ID2D1Bitmap* pbitmap;
 
-            if (sizeu.width <= 0)
-            {
 
-               sizeu.width = 800;
 
-            }
+            ////   hr = m_pbitmaprendertarget->GetBitmap(&pbitmap);
+            ////   if (SUCCEEDED(hr) &&
 
-            if (sizeu.width <= 0)
-            {
+            ////      pbitmap)
+            ////   {
 
-               sizeu.width = 600;
 
-            }
+            ////      auto s = pbitmap->GetSize();
 
-            D2D1_PIXEL_FORMAT pixelformat;
+            ////      if (s.width == size.width()
+            ////         && s.height == size.height())
+            ////      {
 
-            pixelformat.alphaMode = D2D1_ALPHA_MODE_PREMULTIPLIED;
+            ////         return;
 
-            pixelformat.format = DXGI_FORMAT_B8G8R8A8_UNORM;
-            if (m_pbitmaprendertarget)
-            {
+            ////      }
 
-               ID2D1Bitmap* pbitmap;
+            ////   }
 
+            ////}
 
+            ////hr = pdevicecontextDefault->CreateCompatibleRenderTarget(
+            ////   nullptr,
+            ////   &sizeu,
+            ////   &pixelformat,
+            ////   D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS_NONE,
+            ////   &m_pbitmaprendertarget);
 
-               hr = m_pbitmaprendertarget->GetBitmap(&pbitmap);
-               if (SUCCEEDED(hr) &&
+            ////if (FAILED(hr))
+            ////{
 
-                  pbitmap)
-               {
+            ////   warning() << "graphics::CreateCompatibleDC, CreateCompatibleRenderTarget (3) " << hresult_text(hr);
 
+            ////   throw ::exception(error_failed);
 
-                  auto s = pbitmap->GetSize();
+            ////}
 
-                  if (s.width == size.width()
-                     && s.height == size.height())
-                  {
+            ////hr = m_pbitmaprendertarget.as(m_pd2d1rendertarget);
 
-                     return;
+            ////if (FAILED(hr))
+            ////{
 
-                  }
+            ////   m_pbitmaprendertarget = nullptr;
 
-               }
+            ////   throw ::exception(error_failed);
 
-            }
+            ////}
 
-            hr = pdevicecontextDefault->CreateCompatibleRenderTarget(
-               nullptr,
-               &sizeu,
-               &pixelformat,
-               D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS_NONE,
-               &m_pbitmaprendertarget);
+            ////hr = m_pbitmaprendertarget.as(m_pdevicecontext);
 
-            if (FAILED(hr))
-            {
+            ////m_pdevicecontext.as(m_pdevicecontext1);
 
-               warning() << "graphics::CreateCompatibleDC, CreateCompatibleRenderTarget (3) " << hresult_text(hr);
+            ////if (FAILED(hr))
+            ////{
 
-               throw ::exception(error_failed);
+            ////   m_pd2d1rendertarget = nullptr;
 
-            }
+            ////   m_pbitmaprendertarget = nullptr;
 
-            hr = m_pbitmaprendertarget.as(m_pd2d1rendertarget);
+            ////   throw ::exception(error_failed);
 
-            if (FAILED(hr))
-            {
+            ////}
 
-               m_pbitmaprendertarget = nullptr;
+            ////__defer_construct(m_pbitmap);
 
-               throw ::exception(error_failed);
+            ////ID2D1Bitmap* pbitmap;
 
-            }
+            ////hr = m_pbitmaprendertarget->GetBitmap(&pbitmap);
 
-            hr = m_pbitmaprendertarget.as(m_pdevicecontext);
+            ////if (FAILED(hr))
+            ////{
 
-            m_pdevicecontext.as(m_pdevicecontext1);
+            ////   m_pbitmaprendertarget = nullptr;
 
-            if (FAILED(hr))
-            {
+            ////   throw ::exception(error_failed);
 
-               m_pd2d1rendertarget = nullptr;
+            ////}
 
-               m_pbitmaprendertarget = nullptr;
+            ////m_pbitmap->attach(pbitmap);
 
-               throw ::exception(error_failed);
+            ////m_iType = 3;
 
-            }
 
-            __defer_construct(m_pbitmap);
+            ////void* pDataDeviceContext = m_pdevicecontext.m_p;
+            ////m_osdata[data_device_context] = pDataDeviceContext;
 
-            ID2D1Bitmap* pbitmap;
-
-            hr = m_pbitmaprendertarget->GetBitmap(&pbitmap);
-
-            if (FAILED(hr))
-            {
-
-               m_pbitmaprendertarget = nullptr;
-
-               throw ::exception(error_failed);
-
-            }
-
-            m_pbitmap->attach(pbitmap);
-
-            m_iType = 3;
-
-
-            void* pDataDeviceContext = m_pdevicecontext.m_p;
-            m_osdata[data_device_context] = pDataDeviceContext;
-
-            void* pDataRenderTarget = m_pd2d1rendertarget.m_p;
-            m_osdata[data_render_target] = pDataRenderTarget;
+            ////void* pDataRenderTarget = m_pd2d1rendertarget.m_p;
+            ////m_osdata[data_render_target] = pDataRenderTarget;
 
             set_ok_flag();
 
@@ -558,7 +558,7 @@ namespace draw2d_direct2d
       
       ////m_bInLayer = true;
       //
-      //m_pdirect2d->m_pd2d1multithread->Enter();
+      //m_pdirectx11->m_pd2d1multithread->Enter();
 
       //bind_draw2d_compositor();
 
@@ -578,7 +578,7 @@ namespace draw2d_direct2d
 
       //soft_unbind_draw2d_compositor();
 
-      //m_pdirect2d->m_pd2d1multithread->Leave();
+      //m_pdirectx11->m_pd2d1multithread->Leave();
 
       ////m_bInLayer = false;
 
@@ -710,9 +710,9 @@ namespace draw2d_direct2d
 
       //      }
 
-      //      ::pointer<::draw2d_direct2d::graphics>pgraphicsDib1 = pimage1->get_graphics();
+      //      ::pointer<::draw2d_directx11::graphics>pgraphicsDib1 = pimage1->get_graphics();
 
-      //      ::pointer<::draw2d_direct2d::graphics>pgraphicsDib2 = pimage2->get_graphics();
+      //      ::pointer<::draw2d_directx11::graphics>pgraphicsDib2 = pimage2->get_graphics();
 
       //      HRESULT hr = ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->EndDraw();
 
@@ -860,92 +860,92 @@ namespace draw2d_direct2d
 
       }
 
-      ASSERT(m_pimageAlphaBlend->is_ok());
+      //ASSERT(m_pimageAlphaBlend->is_ok());
 
-      // "Reference" implementation for TextOutAlphaBlend
+      //// "Reference" implementation for TextOutAlphaBlend
 
-      auto size = get_text_extent(scopedstr);
+      //auto size = get_text_extent(scopedstr);
 
-      ::double_rectangle rectangleAlphaBlend(m_pointAlphaBlend, m_pimageAlphaBlend->size());
+      //::double_rectangle rectangleAlphaBlend(m_pointAlphaBlend, m_pimageAlphaBlend->size());
 
-      ::double_point point(x, y);
+      //::double_point point(x, y);
 
-      ::double_rectangle rectangleText(point, size);
+      //::double_rectangle rectangleText(point, size);
 
-      ::double_rectangle rectangleIntersect;
+      //::double_rectangle rectangleIntersect;
 
-      if (rectangleIntersect.intersect(rectangleAlphaBlend, rectangleText))
-      {
+      //if (rectangleIntersect.intersect(rectangleAlphaBlend, rectangleText))
+      //{
 
-         //::draw2d::lock draw2dlock;
+      //   //::draw2d::lock draw2dlock;
 
-         // ::draw2d::device_lock devicelock(this);
+      //   // ::draw2d::device_lock devicelock(this);
 
-         auto pimage1 = image()->create_image(size);
+      //   auto pimage1 = image()->create_image(size);
 
-         ::double_rectangle rectangleDib1(::double_point(), size);
+      //   ::double_rectangle rectangleDib1(::double_point(), size);
 
-         pimage1->get_graphics()->set(get_current_font());
+      //   pimage1->get_graphics()->set(get_current_font());
 
-         pimage1->get_graphics()->set(get_current_brush());
+      //   pimage1->get_graphics()->set(get_current_brush());
 
-         pimage1->get_graphics()->set_alpha_mode(::draw2d::e_alpha_mode_set);
+      //   pimage1->get_graphics()->set_alpha_mode(::draw2d::e_alpha_mode_set);
 
-         pimage1->get_graphics()->fill_rectangle(rectangleDib1, argb(0, 0, 0, 0));
+      //   pimage1->get_graphics()->fill_rectangle(rectangleDib1, argb(0, 0, 0, 0));
 
-         pimage1->get_graphics()->text_out(0, 0, scopedstr);
+      //   pimage1->get_graphics()->text_out(0, 0, scopedstr);
 
-         auto pimage2 = image()->create_image(size);
+      //   auto pimage2 = image()->create_image(size);
 
-         pimage2->get_graphics()->set_alpha_mode(::draw2d::e_alpha_mode_set);
+      //   pimage2->get_graphics()->set_alpha_mode(::draw2d::e_alpha_mode_set);
 
-         pimage2->get_graphics()->fill_rectangle(rectangleDib1, argb(255, 0, 0, 0));
+      //   pimage2->get_graphics()->fill_rectangle(rectangleDib1, argb(255, 0, 0, 0));
 
-         pimage2->_draw_raw(rectangleIntersect.size(), m_pimageAlphaBlend, ::double_point(point - m_pointAlphaBlend));
+      //   pimage2->_draw_raw(rectangleIntersect.size(), m_pimageAlphaBlend, ::double_point(point - m_pointAlphaBlend));
 
-         ::pointer<::draw2d_direct2d::graphics>pgraphicsDib1 = pimage1->get_graphics();
+      //   ::pointer<::draw2d_directx11::graphics>pgraphicsDib1 = pimage1->get_graphics();
 
-         ::pointer<::draw2d_direct2d::graphics>pgraphicsDib2 = pimage2->get_graphics();
+      //   ::pointer<::draw2d_directx11::graphics>pgraphicsDib2 = pimage2->get_graphics();
 
-         pimage2->unmap();
+      //   pimage2->unmap();
 
-         HRESULT hrFlush = ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->Flush();
+      //   HRESULT hrFlush = ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->Flush();
 
-         HRESULT hrEndDraw = ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->EndDraw();
+      //   HRESULT hrEndDraw = ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->EndDraw();
 
-         D2D1_RECT_F rectfDib1;
+      //   D2D1_RECT_F rectfDib1;
 
-         copy(&rectfDib1, &rectangleDib1);
+      //   copy(&rectfDib1, &rectangleDib1);
 
-         pgraphicsDib1->m_pdevicecontext->DrawImage(
-         (ID2D1Bitmap *)pgraphicsDib2->get_current_bitmap()->m_osdata[0],
-         D2D1::Point2F(0.f, 0.f),
-         rectfDib1,
-         D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR,
-         D2D1_COMPOSITE_MODE_DESTINATION_IN);
+      //   pgraphicsDib1->m_pdevicecontext->DrawImage(
+      //   (ID2D1Bitmap *)pgraphicsDib2->get_current_bitmap()->m_osdata[0],
+      //   D2D1::Point2F(0.f, 0.f),
+      //   rectfDib1,
+      //   D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR,
+      //   D2D1_COMPOSITE_MODE_DESTINATION_IN);
 
-         if (SUCCEEDED(hrEndDraw))
-         {
+      //   if (SUCCEEDED(hrEndDraw))
+      //   {
 
-            ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->BeginDraw();
+      //      ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->BeginDraw();
 
-         }
+      //   }
 
-         set_alpha_mode(::draw2d::e_alpha_mode_blend);
+      //   set_alpha_mode(::draw2d::e_alpha_mode_blend);
 
-         ::image::image_source imagesource(pimage1);
+      //   ::image::image_source imagesource(pimage1);
 
-         ::double_rectangle rectangleTarget(::double_point(x, y), pimage1->size());
+      //   ::double_rectangle rectangleTarget(::double_point(x, y), pimage1->size());
 
-         ::image::image_drawing_options imagedrawingoptions(rectangleTarget);
+      //   ::image::image_drawing_options imagedrawingoptions(rectangleTarget);
 
-         ::image::image_drawing imagedrawing(imagedrawingoptions, imagesource);
+      //   ::image::image_drawing imagedrawing(imagedrawingoptions, imagesource);
 
-         draw(imagedrawing);
+      //   draw(imagedrawing);
 
-         return true;
+      //   return true;
 
-      }
+      //}
 
       return false;
 
@@ -959,7 +959,7 @@ namespace draw2d_direct2d
 
       // ::draw2d::device_lock devicelock(this);
 
-      ::pointer<::draw2d_direct2d::bitmap>pbitmap = pbitmapParam;
+      ::pointer<::draw2d_directx11::bitmap>pbitmap = pbitmapParam;
 
       if (::is_null(pbitmapParam))
       {
@@ -1003,11 +1003,11 @@ namespace draw2d_direct2d
 
          //}
 
-         //::pointer<::draw2d_direct2d::graphics>pgraphicsMap = m_pgraphicsMap;
+         //::pointer<::draw2d_directx11::graphics>pgraphicsMap = m_pgraphicsMap;
 
-         //::pointer<::draw2d_direct2d::graphics>pgraphics = m_pgraphics;
+         //::pointer<::draw2d_directx11::graphics>pgraphics = m_pgraphics;
 
-         //::pointer<::draw2d_direct2d::bitmap>pbitmap = m_pbitmap;
+         //::pointer<::draw2d_directx11::bitmap>pbitmap = m_pbitmap;
 
       //   m_pbitmaprendertarget = nullptr;
 
@@ -1095,7 +1095,7 @@ namespace draw2d_direct2d
 
       ////}
 
-      m_pdevicecontext->SetTarget(pbitmap->m_pbitmap);
+      //m_pdevicecontext->SetTarget(pbitmap->m_pbitmap);
 
       m_pbitmap = pbitmap;
 
@@ -1173,18 +1173,18 @@ namespace draw2d_direct2d
    void graphics::_get(::geometry2d::matrix & matrix)
    {
 
-      D2D1::Matrix3x2F m;
+      //D2D1::Matrix3x2F m;
 
-      m_pd2d1rendertarget->GetTransform(&m);
+      //m_pd2d1rendertarget->GetTransform(&m);
 
-      matrix = ::geometry2d::matrix();
+      //matrix = ::geometry2d::matrix();
 
-      matrix.a1 = m._11;
-      matrix.a2 = m._12;
-      matrix.b1 = m._21;
-      matrix.b2 = m._22;
-      matrix.c1 = m._31;
-      matrix.c2 = m._32;
+      //matrix.a1 = m._11;
+      //matrix.a2 = m._12;
+      //matrix.b1 = m._21;
+      //matrix.b2 = m._22;
+      //matrix.c1 = m._31;
+      //matrix.c2 = m._32;
 
       //return true;
 
@@ -1194,23 +1194,23 @@ namespace draw2d_direct2d
    void graphics::_set(const ::geometry2d::matrix & matrix)
    {
 
-      if (!m_pd2d1rendertarget)
-      {
+      //if (!m_pd2d1rendertarget)
+      //{
 
-         throw ::exception(error_null_pointer);
+      //   throw ::exception(error_null_pointer);
 
-      }
+      //}
 
-      D2D1::Matrix3x2F m;
+      //D2D1::Matrix3x2F m;
 
-      m._11 = (FLOAT)matrix.a1;
-      m._12 = (FLOAT)matrix.a2;
-      m._21 = (FLOAT)matrix.b1;
-      m._22 = (FLOAT)matrix.b2;
-      m._31 = (FLOAT)matrix.c1;
-      m._32 = (FLOAT)matrix.c2;
+      //m._11 = (FLOAT)matrix.a1;
+      //m._12 = (FLOAT)matrix.a2;
+      //m._21 = (FLOAT)matrix.b1;
+      //m._22 = (FLOAT)matrix.b2;
+      //m._31 = (FLOAT)matrix.c1;
+      //m._32 = (FLOAT)matrix.c2;
 
-      m_pd2d1rendertarget->SetTransform(&m);
+      //m_pd2d1rendertarget->SetTransform(&m);
 
       //return true;
 
@@ -1363,7 +1363,7 @@ namespace draw2d_direct2d
    void graphics::paint_region(::draw2d::region * pregion)
    {
 
-      warning() << "look! this is a warning! paint_region isn't yet implemented here in draw2d_direct2d";
+      warning() << "look! this is a warning! paint_region isn't yet implemented here in draw2d_directx11";
       //throw ::exception(todo);
       //ASSERT(get_handle1() != nullptr);
 
@@ -1528,18 +1528,18 @@ namespace draw2d_direct2d
    void graphics::frame_rectangle(const ::double_rectangle & rectangleParam, ::draw2d::brush * pbrush)
    {
 
-      if (m_pd2d1rendertarget == nullptr)
-      {
+      //if (m_pd2d1rendertarget == nullptr)
+      //{
 
-         throw ::exception(error_null_pointer);
+      //   throw ::exception(error_null_pointer);
 
-      }
+      //}
 
-      D2D1_RECT_F rectangle;
+      //D2D1_RECT_F rectangle;
 
-      copy(&rectangle, &rectangleParam);
+      //copy(&rectangle, &rectangleParam);
 
-      m_pd2d1rendertarget->DrawRectangle(rectangle, pbrush->get_os_data < ID2D1Brush * >(this));
+      //m_pd2d1rendertarget->DrawRectangle(rectangle, pbrush->get_os_data < ID2D1Brush * >(this));
 
    }
 
@@ -1827,7 +1827,7 @@ namespace draw2d_direct2d
 
          //comptr < ID2D1PathGeometry1 > pgeometry;
 
-         //HRESULT hr = m_pdirect2d->d2d1_factory1()->CreatePathGeometry(&pgeometry);
+         //HRESULT hr = m_pdirectx11->d2d1_factory1()->CreatePathGeometry(&pgeometry);
 
          //if (FAILED(hr))
          //{
@@ -1862,27 +1862,27 @@ namespace draw2d_direct2d
 
       }
 
-      auto pbrush = m_pbrush->get_os_data < ID2D1Brush * >(this);
+      //auto pbrush = m_pbrush->get_os_data < ID2D1Brush * >(this);
 
-      if (!pbrush)
-      {
+      //if (!pbrush)
+      //{
 
-         //return false;
+      //   //return false;
 
-         throw ::exception(error_null_pointer);
+      //   throw ::exception(error_null_pointer);
 
-      }
+      //}
 
-      D2D1_ELLIPSE ellipse;
+      //D2D1_ELLIPSE ellipse;
 
-      ellipse.point.x = (float)(rectangle.right() + rectangle.left()) / 2.f;
-      ellipse.point.y = (float)(rectangle.bottom() + rectangle.top()) / 2.f;
-      ellipse.radiusX = (float)(rectangle.right() - rectangle.left()) / 2.f;
-      ellipse.radiusY = (float)(rectangle.bottom() - rectangle.top()) / 2.f;
+      //ellipse.point.x = (float)(rectangle.right() + rectangle.left()) / 2.f;
+      //ellipse.point.y = (float)(rectangle.bottom() + rectangle.top()) / 2.f;
+      //ellipse.radiusX = (float)(rectangle.right() - rectangle.left()) / 2.f;
+      //ellipse.radiusY = (float)(rectangle.bottom() - rectangle.top()) / 2.f;
 
-      defer_primitive_blend();
+      //defer_primitive_blend();
 
-      m_pdevicecontext->FillEllipse(&ellipse, pbrush);
+      //m_pdevicecontext->FillEllipse(&ellipse, pbrush);
 
       //return true;
 
@@ -1901,27 +1901,27 @@ namespace draw2d_direct2d
 
       }
 
-      auto pbrush = m_ppen->get_os_data < ID2D1Brush * >(this);
+      //auto pbrush = m_ppen->get_os_data < ID2D1Brush * >(this);
 
-      if (!pbrush)
-      {
+      //if (!pbrush)
+      //{
 
-         //return false;
+      //   //return false;
 
-         throw ::exception(error_null_pointer);
+      //   throw ::exception(error_null_pointer);
 
-      }
+      //}
 
-      D2D1_ELLIPSE ellipse;
+      //D2D1_ELLIPSE ellipse;
 
-      ellipse.point.x = (float)(rectangle.right() + rectangle.left()) / 2.f;
-      ellipse.point.y = (float)(rectangle.bottom() + rectangle.top()) / 2.f;
-      ellipse.radiusX = (float)(rectangle.right() - rectangle.left()) / 2.f;
-      ellipse.radiusY = (float)(rectangle.bottom() - rectangle.top()) / 2.f;
+      //ellipse.point.x = (float)(rectangle.right() + rectangle.left()) / 2.f;
+      //ellipse.point.y = (float)(rectangle.bottom() + rectangle.top()) / 2.f;
+      //ellipse.radiusX = (float)(rectangle.right() - rectangle.left()) / 2.f;
+      //ellipse.radiusY = (float)(rectangle.bottom() - rectangle.top()) / 2.f;
 
-      defer_primitive_blend();
+      //defer_primitive_blend();
 
-      m_pdevicecontext->DrawEllipse(&ellipse, pbrush, (FLOAT)m_ppen->m_dWidth);
+      //m_pdevicecontext->DrawEllipse(&ellipse, pbrush, (FLOAT)m_ppen->m_dWidth);
 
       //return true;
 
@@ -1960,40 +1960,40 @@ namespace draw2d_direct2d
 
       }
 
-      comptr<ID2D1PathGeometry> pgeometry;
+      //comptr<ID2D1PathGeometry> pgeometry;
 
-      HRESULT hr = m_pdirect2d->d2d1_factory1()->CreatePathGeometry(&pgeometry);
+      //HRESULT hr = m_pdirectx11->d2d1_factory1()->CreatePathGeometry(&pgeometry);
 
-      {
+      //{
 
-         comptr<ID2D1GeometrySink> psink;
+      //   comptr<ID2D1GeometrySink> psink;
 
-         pgeometry->Open(&psink);
+      //   pgeometry->Open(&psink);
 
-         psink->SetFillMode(D2D1_FILL_MODE_WINDING);
+      //   psink->SetFillMode(D2D1_FILL_MODE_WINDING);
 
-         psink->BeginFigure(D2D1::Point2F((FLOAT)ppoints->x(), (FLOAT)ppoints->y()), D2D1_FIGURE_BEGIN_FILLED);
+      //   psink->BeginFigure(D2D1::Point2F((FLOAT)ppoints->x(), (FLOAT)ppoints->y()), D2D1_FIGURE_BEGIN_FILLED);
 
-         for (::collection::index i = 1; i < count; i++)
-         {
+      //   for (::collection::index i = 1; i < count; i++)
+      //   {
 
-            psink->AddLine({ (FLOAT)ppoints[i].x(), (FLOAT)ppoints[i].y() });
+      //      psink->AddLine({ (FLOAT)ppoints[i].x(), (FLOAT)ppoints[i].y() });
 
-         }
+      //   }
 
-         psink->EndFigure(D2D1_FIGURE_END_CLOSED);
+      //   psink->EndFigure(D2D1_FIGURE_END_CLOSED);
 
-         psink->Close();
+      //   psink->Close();
 
-      }
+      //}
 
-      //bool bOk = 
+      ////bool bOk = 
 
-      fill(pgeometry, m_pbrush);
+      //fill(pgeometry, m_pbrush);
 
-      //bOk = bOk && 
+      ////bOk = bOk && 
 
-      draw(pgeometry, m_ppen);
+      //draw(pgeometry, m_ppen);
 
       //return bOk;
 
@@ -2012,36 +2012,36 @@ namespace draw2d_direct2d
 
       }
 
-      comptr<ID2D1PathGeometry> pgeometry;
+      //comptr<ID2D1PathGeometry> pgeometry;
 
-      HRESULT hr = m_pdirect2d->d2d1_factory1()->CreatePathGeometry(&pgeometry);
+      //HRESULT hr = m_pdirectx11->d2d1_factory1()->CreatePathGeometry(&pgeometry);
 
-      {
+      //{
 
-         comptr<ID2D1GeometrySink> psink;
+      //   comptr<ID2D1GeometrySink> psink;
 
-         pgeometry->Open(&psink);
+      //   pgeometry->Open(&psink);
 
-         psink->SetFillMode(D2D1_FILL_MODE_WINDING);
+      //   psink->SetFillMode(D2D1_FILL_MODE_WINDING);
 
-         psink->BeginFigure(D2D1::Point2F((FLOAT)ppoints->x(), (FLOAT)ppoints->y()), D2D1_FIGURE_BEGIN_FILLED);
+      //   psink->BeginFigure(D2D1::Point2F((FLOAT)ppoints->x(), (FLOAT)ppoints->y()), D2D1_FIGURE_BEGIN_FILLED);
 
-         for (::collection::index i = 1; i < count; i++)
-         {
+      //   for (::collection::index i = 1; i < count; i++)
+      //   {
 
-            psink->AddLine({ (FLOAT)ppoints[i].x(), (FLOAT)ppoints[i].y() });
+      //      psink->AddLine({ (FLOAT)ppoints[i].x(), (FLOAT)ppoints[i].y() });
 
-         }
+      //   }
 
-         psink->EndFigure(D2D1_FIGURE_END_CLOSED);
+      //   psink->EndFigure(D2D1_FIGURE_END_CLOSED);
 
-         psink->Close();
+      //   psink->Close();
 
-      }
+      //}
 
-      //bool bOk = 
+      ////bool bOk = 
 
-      draw(pgeometry, m_ppen);
+      //draw(pgeometry, m_ppen);
 
       //return bOk;
 
@@ -2060,36 +2060,36 @@ namespace draw2d_direct2d
 
       }
 
-      comptr<ID2D1PathGeometry> pgeometry;
+      //comptr<ID2D1PathGeometry> pgeometry;
 
-      HRESULT hr = m_pdirect2d->d2d1_factory1()->CreatePathGeometry(&pgeometry);
+      //HRESULT hr = m_pdirectx11->d2d1_factory1()->CreatePathGeometry(&pgeometry);
 
-      {
+      //{
 
-         comptr<ID2D1GeometrySink> psink;
+      //   comptr<ID2D1GeometrySink> psink;
 
-         pgeometry->Open(&psink);
+      //   pgeometry->Open(&psink);
 
-         psink->SetFillMode(D2D1_FILL_MODE_WINDING);
+      //   psink->SetFillMode(D2D1_FILL_MODE_WINDING);
 
-         psink->BeginFigure(D2D1::Point2F((FLOAT)ppoints->x(), (FLOAT)ppoints->y()), D2D1_FIGURE_BEGIN_FILLED);
+      //   psink->BeginFigure(D2D1::Point2F((FLOAT)ppoints->x(), (FLOAT)ppoints->y()), D2D1_FIGURE_BEGIN_FILLED);
 
-         for (::collection::index i = 1; i < count; i++)
-         {
+      //   for (::collection::index i = 1; i < count; i++)
+      //   {
 
-            psink->AddLine({ (FLOAT)ppoints[i].x(), (FLOAT)ppoints[i].y() });
+      //      psink->AddLine({ (FLOAT)ppoints[i].x(), (FLOAT)ppoints[i].y() });
 
-         }
+      //   }
 
-         psink->EndFigure(D2D1_FIGURE_END_CLOSED);
+      //   psink->EndFigure(D2D1_FIGURE_END_CLOSED);
 
-         psink->Close();
+      //   psink->Close();
 
-      }
+      //}
 
-      //bool bOk = 
+      ////bool bOk = 
 
-      fill(pgeometry, m_pbrush);
+      //fill(pgeometry, m_pbrush);
 
       //return bOk;
 
@@ -2127,15 +2127,15 @@ namespace draw2d_direct2d
 
       }
 
-      D2D1_RECT_F rectangle;
+      //D2D1_RECT_F rectangle;
 
-      copy(&rectangle, &rectangleParam);
+      //copy(&rectangle, &rectangleParam);
 
-      ::draw2d_direct2d::pen * ppen2 = dynamic_cast <::draw2d_direct2d::pen *> (ppen);
+      //::draw2d_directx11::pen * ppen2 = dynamic_cast <::draw2d_directx11::pen *> (ppen);
 
-      defer_primitive_blend();
+      //defer_primitive_blend();
 
-      m_pd2d1rendertarget->DrawRectangle(&rectangle, ppen2->get_os_data < ID2D1Brush * >(this), (FLOAT)ppen->m_dWidth);
+      //m_pd2d1rendertarget->DrawRectangle(&rectangle, ppen2->get_os_data < ID2D1Brush * >(this), (FLOAT)ppen->m_dWidth);
 
       //return true;
 
@@ -2168,15 +2168,15 @@ namespace draw2d_direct2d
 
       }
 
-      D2D1_RECT_F rectangle;
+      //D2D1_RECT_F rectangle;
 
-      copy(&rectangle, &rectangleParam);
+      //copy(&rectangle, &rectangleParam);
 
-      ::draw2d_direct2d::brush * pbrush2 = dynamic_cast <::draw2d_direct2d::brush *> (pbrush);
+      //::draw2d_directx11::brush * pbrush2 = dynamic_cast <::draw2d_directx11::brush *> (pbrush);
 
-      defer_primitive_blend();
+      //defer_primitive_blend();
 
-      m_pd2d1rendertarget->FillRectangle(rectangle, pbrush2->get_os_data < ID2D1Brush * >(this));
+      //m_pd2d1rendertarget->FillRectangle(rectangle, pbrush2->get_os_data < ID2D1Brush * >(this));
 
       //return true;
 
@@ -2198,21 +2198,21 @@ namespace draw2d_direct2d
       if (m_pbrush.is_set() && m_pbrush->m_ebrush != ::draw2d::e_brush_null)
       {
 
-         D2D1_ROUNDED_RECT rectangle;
+         //D2D1_ROUNDED_RECT rectangle;
 
-         copy(&rectangle.rect, &rectangleParam);
+         //copy(&rectangle.rect, &rectangleParam);
 
-         rectangle.radiusX = (FLOAT)dRadius;
+         //rectangle.radiusX = (FLOAT)dRadius;
 
-         rectangle.radiusY = (FLOAT)dRadius;
+         //rectangle.radiusY = (FLOAT)dRadius;
 
-         auto pbrush = m_pbrush.cast <::draw2d_direct2d::brush >();
+         //auto pbrush = m_pbrush.cast <::draw2d_directx11::brush >();
 
-         ID2D1Brush * pd2d1brush = pbrush->get_os_data < ID2D1Brush * >(this);
+         //ID2D1Brush * pd2d1brush = pbrush->get_os_data < ID2D1Brush * >(this);
 
-         defer_primitive_blend();
+         //defer_primitive_blend();
 
-         m_pd2d1rendertarget->FillRoundedRectangle(rectangle, pd2d1brush);
+         //m_pd2d1rendertarget->FillRoundedRectangle(rectangle, pd2d1brush);
 
       }
 
@@ -2225,7 +2225,7 @@ namespace draw2d_direct2d
       if (m_ppen.is_set() && m_ppen->m_epen != ::draw2d::e_pen_null)
       {
 
-         D2D1_ROUNDED_RECT rectangle;
+         /*D2D1_ROUNDED_RECT rectangle;
 
          copy(&rectangle.rect, &rectangleParam);
 
@@ -2233,13 +2233,13 @@ namespace draw2d_direct2d
 
          rectangle.radiusY = (FLOAT)dRadius;
 
-         auto ppen = m_ppen.cast <::draw2d_direct2d::pen >();
+         auto ppen = m_ppen.cast <::draw2d_directx11::pen >();
 
          ID2D1Brush * pd2d1brush = ppen->get_os_data < ID2D1Brush * >(this);
 
          defer_primitive_blend();
 
-         m_pd2d1rendertarget->DrawRoundedRectangle(rectangle, pd2d1brush, (FLOAT)ppen->m_dWidth);
+         m_pd2d1rendertarget->DrawRoundedRectangle(rectangle, pd2d1brush, (FLOAT)ppen->m_dWidth);*/
 
       }
 
@@ -2323,125 +2323,125 @@ namespace draw2d_direct2d
       if (get_current_bitmap())
       {
 
-         auto pd2d1bitmap = get_current_bitmap()->get_os_data < ID2D1Bitmap * >();
+         //auto pd2d1bitmap = get_current_bitmap()->get_os_data < ID2D1Bitmap * >();
 
-         if (::is_set(pd2d1bitmap))
-         {
+         //if (::is_set(pd2d1bitmap))
+         //{
 
-            D2D1_SIZE_U sz = pd2d1bitmap->GetPixelSize();
+         //   D2D1_SIZE_U sz = pd2d1bitmap->GetPixelSize();
 
-            if (nWidth + x + get_origin().x() > sz.width)
-            {
+         //   if (nWidth + x + get_origin().x() > sz.width)
+         //   {
 
-               nWidth = sz.width - x - get_origin().x();
+         //      nWidth = sz.width - x - get_origin().x();
 
-            }
+         //   }
 
-            if (nHeight + y + get_origin().y() > sz.height)
-            {
+         //   if (nHeight + y + get_origin().y() > sz.height)
+         //   {
 
-               nHeight = sz.height - y - get_origin().y();
+         //      nHeight = sz.height - y - get_origin().y();
 
-            }
+         //   }
 
-         }
-
-      }
-
-      {
-
-         D2D1_SIZE_U sz = ((ID2D1Bitmap *)pimage->get_bitmap()->get_os_data())->GetPixelSize();
-
-         if (nWidth + xSrc > sz.width)
-         {
-
-            nWidth = sz.width - xSrc;
-
-         }
-
-         if (nHeight + ySrc > sz.height)
-         {
-
-            nHeight = sz.height - ySrc;
-
-         }
+         //}
 
       }
 
       {
 
-         D2D1_RECT_F rectangleTarget = D2D1::RectF((float)x, (float)y, (float)(x + nWidth), (float)(y + nHeight));
+         //D2D1_SIZE_U sz = ((ID2D1Bitmap *)pimage->get_bitmap()->get_os_data())->GetPixelSize();
 
-         D2D1_RECT_F rectangleSource = D2D1::RectF((float)xSrc, (float)ySrc, (float)(xSrc + nWidth), (float)(ySrc + nHeight));
+         //if (nWidth + xSrc > sz.width)
+         //{
 
-         auto pd2d1bitmap = ((ID2D1Bitmap *)pimage->get_bitmap()->get_os_data());
+         //   nWidth = sz.width - xSrc;
 
-         int cx = pd2d1bitmap->GetPixelSize().width;
+         //}
 
-         int cy = pd2d1bitmap->GetPixelSize().height;
+         //if (nHeight + ySrc > sz.height)
+         //{
 
-         pimage->unmap();
+         //   nHeight = sz.height - ySrc;
 
-         HRESULT hrFlush = ((ID2D1DeviceContext *)pimage->g()->get_os_data())->Flush();
+         //}
 
-         HRESULT hrEndDraw = ((ID2D1DeviceContext *)pimage->g()->get_os_data())->EndDraw();
+      }
 
-         defer_primitive_blend();
+      {
 
-         if (imagedrawingoptions.is_identity())
-         {
+         //D2D1_RECT_F rectangleTarget = D2D1::RectF((float)x, (float)y, (float)(x + nWidth), (float)(y + nHeight));
 
-            m_pdevicecontext->DrawBitmap(pd2d1bitmap, rectangleTarget, (FLOAT)imagedrawingoptions.opacity().f32_opacity(), D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR, rectangleSource);
+         //D2D1_RECT_F rectangleSource = D2D1::RectF((float)xSrc, (float)ySrc, (float)(xSrc + nWidth), (float)(ySrc + nHeight));
 
-         }
-         else
-         {
+         //auto pd2d1bitmap = ((ID2D1Bitmap *)pimage->get_bitmap()->get_os_data());
 
-            comptr<ID2D1Effect> colorMatrixEffect;
-            HRESULT hr = m_pdevicecontext->CreateEffect(CLSID_D2D1ColorMatrix, &colorMatrixEffect);
+         //int cx = pd2d1bitmap->GetPixelSize().width;
 
-            defer_throw_hresult(hr);
+         //int cy = pd2d1bitmap->GetPixelSize().height;
 
-            colorMatrixEffect->SetInput(0, pd2d1bitmap);
-            D2D1_MATRIX_5X4_F matrix =
-               D2D1::Matrix5x4F(
-                  (FLOAT)imagedrawingoptions.matrix().a1,
-                  (FLOAT)imagedrawingoptions.matrix().a2,
-                  (FLOAT)imagedrawingoptions.matrix().a3,
-                  (FLOAT)imagedrawingoptions.matrix().a4,
-                  (FLOAT)imagedrawingoptions.matrix().b1,
-                  (FLOAT)imagedrawingoptions.matrix().b2,
-                  (FLOAT)imagedrawingoptions.matrix().b3,
-                  (FLOAT)imagedrawingoptions.matrix().b4,
-                  (FLOAT)imagedrawingoptions.matrix().c1,
-                  (FLOAT)imagedrawingoptions.matrix().c2,
-                  (FLOAT)imagedrawingoptions.matrix().c3,
-                  (FLOAT)imagedrawingoptions.matrix().c4,
-                  (FLOAT)imagedrawingoptions.matrix().d1,
-                  (FLOAT)imagedrawingoptions.matrix().d2,
-                  (FLOAT)imagedrawingoptions.matrix().d3,
-                  (FLOAT)imagedrawingoptions.matrix().d4,
-                  (FLOAT)imagedrawingoptions.matrix().e1,
-                  (FLOAT)imagedrawingoptions.matrix().e2,
-                  (FLOAT)imagedrawingoptions.matrix().e3,
-                  (FLOAT)imagedrawingoptions.matrix().e4);
-            colorMatrixEffect->SetValue(D2D1_COLORMATRIX_PROP_COLOR_MATRIX, matrix);
-            D2D1_POINT_2F pointTarget;
-            pointTarget.x = rectangleTarget.left;
-            pointTarget.y = rectangleTarget.top;
-            //m_pdevicecontext->BeginDraw();
-            m_pdevicecontext->DrawImage(colorMatrixEffect, &pointTarget, &rectangleSource, D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR);
-            //m_pdevicecontext->EndDraw();
+         //pimage->unmap();
 
-         }
+         //HRESULT hrFlush = ((ID2D1DeviceContext *)pimage->g()->get_os_data())->Flush();
+
+         //HRESULT hrEndDraw = ((ID2D1DeviceContext *)pimage->g()->get_os_data())->EndDraw();
+
+         //defer_primitive_blend();
+
+         //if (imagedrawingoptions.is_identity())
+         //{
+
+         //   m_pdevicecontext->DrawBitmap(pd2d1bitmap, rectangleTarget, (FLOAT)imagedrawingoptions.opacity().f32_opacity(), D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR, rectangleSource);
+
+         //}
+         //else
+         //{
+
+         //   comptr<ID2D1Effect> colorMatrixEffect;
+         //   HRESULT hr = m_pdevicecontext->CreateEffect(CLSID_D2D1ColorMatrix, &colorMatrixEffect);
+
+         //   defer_throw_hresult(hr);
+
+         //   colorMatrixEffect->SetInput(0, pd2d1bitmap);
+         //   D2D1_MATRIX_5X4_F matrix =
+         //      D2D1::Matrix5x4F(
+         //         (FLOAT)imagedrawingoptions.matrix().a1,
+         //         (FLOAT)imagedrawingoptions.matrix().a2,
+         //         (FLOAT)imagedrawingoptions.matrix().a3,
+         //         (FLOAT)imagedrawingoptions.matrix().a4,
+         //         (FLOAT)imagedrawingoptions.matrix().b1,
+         //         (FLOAT)imagedrawingoptions.matrix().b2,
+         //         (FLOAT)imagedrawingoptions.matrix().b3,
+         //         (FLOAT)imagedrawingoptions.matrix().b4,
+         //         (FLOAT)imagedrawingoptions.matrix().c1,
+         //         (FLOAT)imagedrawingoptions.matrix().c2,
+         //         (FLOAT)imagedrawingoptions.matrix().c3,
+         //         (FLOAT)imagedrawingoptions.matrix().c4,
+         //         (FLOAT)imagedrawingoptions.matrix().d1,
+         //         (FLOAT)imagedrawingoptions.matrix().d2,
+         //         (FLOAT)imagedrawingoptions.matrix().d3,
+         //         (FLOAT)imagedrawingoptions.matrix().d4,
+         //         (FLOAT)imagedrawingoptions.matrix().e1,
+         //         (FLOAT)imagedrawingoptions.matrix().e2,
+         //         (FLOAT)imagedrawingoptions.matrix().e3,
+         //         (FLOAT)imagedrawingoptions.matrix().e4);
+         //   colorMatrixEffect->SetValue(D2D1_COLORMATRIX_PROP_COLOR_MATRIX, matrix);
+         //   D2D1_POINT_2F pointTarget;
+         //   pointTarget.x = rectangleTarget.left;
+         //   pointTarget.y = rectangleTarget.top;
+         //   //m_pdevicecontext->BeginDraw();
+         //   m_pdevicecontext->DrawImage(colorMatrixEffect, &pointTarget, &rectangleSource, D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR);
+         //   //m_pdevicecontext->EndDraw();
+
+         //}
 
 
-         if (SUCCEEDED(hrEndDraw))
-         {
+         //if (SUCCEEDED(hrEndDraw))
+         //{
 
-            ((ID2D1DeviceContext *)pimage->g()->get_os_data())->BeginDraw();
+         //   ((ID2D1DeviceContext *)pimage->g()->get_os_data())->BeginDraw();
 
-         }
+         //}
 
       }
 
@@ -2556,45 +2556,45 @@ namespace draw2d_direct2d
 
       {
 
-         D2D1_RECT_F rectangleTarget = D2D1::RectF((float)xDst, (float)yDst, (float)(xDst + nDstWidth), (float)(yDst + nDstHeight));
+         //D2D1_RECT_F rectangleTarget = D2D1::RectF((float)xDst, (float)yDst, (float)(xDst + nDstWidth), (float)(yDst + nDstHeight));
 
-         D2D1_RECT_F rectangleSource = D2D1::RectF((float)xSrc, (float)ySrc, (float)(xSrc + nSrcWidth), (float)(ySrc + nSrcHeight));
+         //D2D1_RECT_F rectangleSource = D2D1::RectF((float)xSrc, (float)ySrc, (float)(xSrc + nSrcWidth), (float)(ySrc + nSrcHeight));
 
-         pimage->unmap();
+         //pimage->unmap();
 
-         ::cast < graphics > pgraphicsImage = pimage->g();
+         //::cast < graphics > pgraphicsImage = pimage->g();
 
-         auto pd2d1contextImage = pgraphicsImage->m_pdevicecontext;
+         //auto pd2d1contextImage = pgraphicsImage->m_pdevicecontext;
 
-         ::direct2d_lock direct2dlock(::direct2d::from_gpu_device(m_pgpucontext->m_pgpudevice));
+         //::directx11_lock directx11lock(::directx11::from_gpu_device(m_pgpucontext->m_pgpudevice));
 
-         HRESULT hrFlush = pd2d1contextImage->Flush();
+         //HRESULT hrFlush = pd2d1contextImage->Flush();
 
-         HRESULT hrEndDraw = pd2d1contextImage->EndDraw();
+         //HRESULT hrEndDraw = pd2d1contextImage->EndDraw();
 
-         defer_primitive_blend();
+         //defer_primitive_blend();
 
-         auto pd2d1bitmap = (ID2D1Bitmap*)pimage->get_bitmap()->get_os_data();
+         //auto pd2d1bitmap = (ID2D1Bitmap*)pimage->get_bitmap()->get_os_data();
 
-         if (m_pd2d1rendertarget != nullptr)
-         {
+         //if (m_pd2d1rendertarget != nullptr)
+         //{
 
-            m_pd2d1rendertarget->DrawBitmap(pd2d1bitmap, &rectangleTarget, 1.0, m_bitmapinterpolationmode, &rectangleSource);
+         //   m_pd2d1rendertarget->DrawBitmap(pd2d1bitmap, &rectangleTarget, 1.0, m_bitmapinterpolationmode, &rectangleSource);
 
-         }
-         else
-         {
+         //}
+         //else
+         //{
 
-            m_pdevicecontext->DrawBitmap(pd2d1bitmap, rectangleTarget, 1.0, m_interpolationmode, rectangleSource);
+         //   m_pdevicecontext->DrawBitmap(pd2d1bitmap, rectangleTarget, 1.0, m_interpolationmode, rectangleSource);
 
-         }
+         //}
 
-         if (SUCCEEDED(hrEndDraw))
-         {
+         //if (SUCCEEDED(hrEndDraw))
+         //{
 
-            ((ID2D1DeviceContext *)pimage->g()->get_os_data())->BeginDraw();
+         //   ((ID2D1DeviceContext *)pimage->g()->get_os_data())->BeginDraw();
 
-         }
+         //}
 
       }
 
@@ -2602,7 +2602,7 @@ namespace draw2d_direct2d
       //else
       //{
 
-      //   output_debug_string("direct2d graphics::StretchBltRaw hr failed");
+      //   output_debug_string("directx11 graphics::StretchBltRaw hr failed");
 
       //}
 
@@ -3415,7 +3415,7 @@ namespace draw2d_direct2d
 
       throw ::exception(todo);
 
-      //return m_pd2d1rendertarget->FillPath(direct2d_brush(), m_ppath) == Gdiplus::Status::Ok;
+      //return m_pd2d1rendertarget->FillPath(directx11_brush(), m_ppath) == Gdiplus::Status::Ok;
 
       //return false;
 
@@ -3479,9 +3479,9 @@ namespace draw2d_direct2d
 
       throw ::exception(todo);
 
-      //bool bOk1 = m_pd2d1rendertarget->FillPath(direct2d_brush(), m_ppathPaint) == Gdiplus::Status::Ok;
+      //bool bOk1 = m_pd2d1rendertarget->FillPath(directx11_brush(), m_ppathPaint) == Gdiplus::Status::Ok;
 
-      //bool bOk2 = m_pd2d1rendertarget->DrawPath(direct2d_pen(), m_ppathPaint) == Gdiplus::Status::Ok;
+      //bool bOk2 = m_pd2d1rendertarget->DrawPath(directx11_pen(), m_ppathPaint) == Gdiplus::Status::Ok;
 
       //return bOk1 && bOk2;
 
@@ -3495,7 +3495,7 @@ namespace draw2d_direct2d
 
       throw ::exception(todo);
 
-      //      return m_pd2d1rendertarget->DrawPath(direct2d_pen(), m_ppathPaint) == Gdiplus::Status::Ok;
+      //      return m_pd2d1rendertarget->DrawPath(directx11_pen(), m_ppathPaint) == Gdiplus::Status::Ok;
 
             //return false;
 
@@ -3508,7 +3508,7 @@ namespace draw2d_direct2d
       throw ::exception(todo);
 
 
-      //      return m_ppath->Widen(direct2d_pen()) == Gdiplus::Status::Ok;
+      //      return m_ppath->Widen(directx11_pen()) == Gdiplus::Status::Ok;
 
             //return false;
 
@@ -3668,7 +3668,7 @@ namespace draw2d_direct2d
    //      D2D1_RECT_F rSrc = D2D1::RectF((float)rectangleSource.left(), (float)rectangleSource.top(), (float) rectangleSource.right(), (float) rectangleSource.bottom());
 
 
-   //      //dynamic_cast <::draw2d_direct2d::graphics *> (pgraphicsSrc)->SaveClip();
+   //      //dynamic_cast <::draw2d_directx11::graphics *> (pgraphicsSrc)->SaveClip();
 
    //      HRESULT hr = ((ID2D1DeviceContext *) pgraphicsSrc->get_os_data())->EndDraw();
 
@@ -3702,7 +3702,7 @@ namespace draw2d_direct2d
 
    //         ((ID2D1DeviceContext *)pgraphicsSrc->get_os_data())->BeginDraw();
 
-   //         //dynamic_cast <::draw2d_direct2d::graphics *> (pgraphicsSrc)->RestoreClip();
+   //         //dynamic_cast <::draw2d_directx11::graphics *> (pgraphicsSrc)->RestoreClip();
 
    //      }
 
@@ -4220,19 +4220,21 @@ namespace draw2d_direct2d
    int graphics::save_graphics_context()
    {
 
-      m_pd2d1rendertarget->GetTransform(&m_state.m_m);
+      //m_pd2d1rendertarget->GetTransform(&m_state.m_m);
 
-      ::collection::count iSaveDC = m_statea.get_size();
+      //::collection::count iSaveDC = m_statea.get_size();
 
-      m_statea.add(m_state);
+      //m_statea.add(m_state);
 
-      m_state.m_iLayerIndex = m_iLayerCount;
+      //m_state.m_iLayerIndex = m_iLayerCount;
 
-      //m_pstate->m_layerparameters = D2D1::LayerParameters();
+      ////m_pstate->m_layerparameters = D2D1::LayerParameters();
 
-      //m_pd2d1rendertarget->PushLayer(m_pstate->m_layerparameters, nullptr);
+      ////m_pd2d1rendertarget->PushLayer(m_pstate->m_layerparameters, nullptr);
 
-      return (int)iSaveDC;
+      //return (int)iSaveDC;
+
+      return 0;
 
    }
 
@@ -4288,7 +4290,7 @@ namespace draw2d_direct2d
 
       }
 
-      m_pd2d1rendertarget->SetTransform(&m_state.m_m);
+      //m_pd2d1rendertarget->SetTransform(&m_state.m_m);
 
       m_statea.set_size(iSavedContext);
 
@@ -4320,28 +4322,28 @@ namespace draw2d_direct2d
 
    void graphics::set_interpolation_mode(::draw2d::enum_interpolation_mode einterpolationmode)
    {
-      if (einterpolationmode == ::draw2d::e_interpolation_mode_nearest_neighbor)
-      {
-         m_bitmapinterpolationmode = D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR;
-         m_interpolationmode = D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR;;
-      }
-      else if (einterpolationmode == ::draw2d::e_interpolation_mode_high_quality_bicubic)
-      {
-         m_bitmapinterpolationmode = D2D1_BITMAP_INTERPOLATION_MODE_LINEAR;
-         m_interpolationmode = D2D1_INTERPOLATION_MODE_HIGH_QUALITY_CUBIC;
-      }
-      else
-      {
-         m_bitmapinterpolationmode = D2D1_BITMAP_INTERPOLATION_MODE_LINEAR;
-         m_interpolationmode = D2D1_INTERPOLATION_MODE_LINEAR;
-      }
-      //return 1;
-      /*double dRetVal = 0;
-      if(get_handle1() != nullptr && get_handle1() != get_handle2())
-      nRetVal = ::set_interpolation_mode(get_handle1(), nStretchMode);
-      if(get_handle2() != nullptr)
-      nRetVal = ::set_interpolation_mode(get_handle2(), nStretchMode);
-      return nRetVal;*/
+      //if (einterpolationmode == ::draw2d::e_interpolation_mode_nearest_neighbor)
+      //{
+      //   m_bitmapinterpolationmode = D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR;
+      //   m_interpolationmode = D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR;;
+      //}
+      //else if (einterpolationmode == ::draw2d::e_interpolation_mode_high_quality_bicubic)
+      //{
+      //   m_bitmapinterpolationmode = D2D1_BITMAP_INTERPOLATION_MODE_LINEAR;
+      //   m_interpolationmode = D2D1_INTERPOLATION_MODE_HIGH_QUALITY_CUBIC;
+      //}
+      //else
+      //{
+      //   m_bitmapinterpolationmode = D2D1_BITMAP_INTERPOLATION_MODE_LINEAR;
+      //   m_interpolationmode = D2D1_INTERPOLATION_MODE_LINEAR;
+      //}
+      ////return 1;
+      ///*double dRetVal = 0;
+      //if(get_handle1() != nullptr && get_handle1() != get_handle2())
+      //nRetVal = ::set_interpolation_mode(get_handle1(), nStretchMode);
+      //if(get_handle2() != nullptr)
+      //nRetVal = ::set_interpolation_mode(get_handle2(), nStretchMode);
+      //return nRetVal;*/
    }
 
 
@@ -4556,36 +4558,36 @@ namespace draw2d_direct2d
    }
 
 
-   bool IsAxisAlignedRectGeometry(ID2D1Geometry* geometry, D2D1_RECT_F* outRect = nullptr)
-   {
-      
-      comptr<ID2D1RectangleGeometry> rectGeom;
+   //bool IsAxisAlignedRectGeometry(ID2D1Geometry* geometry, D2D1_RECT_F* outRect = nullptr)
+   //{
+   //   
+   //   comptr<ID2D1RectangleGeometry> rectGeom;
 
-      if (SUCCEEDED(geometry->QueryInterface(IID_PPV_ARGS(&rectGeom))))
-      {
+   //   if (SUCCEEDED(geometry->QueryInterface(IID_PPV_ARGS(&rectGeom))))
+   //   {
 
-         if (outRect)
-         {
+   //      if (outRect)
+   //      {
 
-            rectGeom->GetRect(outRect);
+   //         rectGeom->GetRect(outRect);
 
-         }
-         
-         return true;
+   //      }
+   //      
+   //      return true;
 
-      }
-      
-      return false;
+   //   }
+   //   
+   //   return false;
 
-   }
+   //}
 
 
-   bool IsAxisAligned(const D2D1_MATRIX_3X2_F& m)
-   {
-      
-      return (m._21 == 0.0f && m._12 == 0.0f);
+   //bool IsAxisAligned(const D2D1_MATRIX_3X2_F& m)
+   //{
+   //   
+   //   return (m._21 == 0.0f && m._12 == 0.0f);
 
-   }
+   //}
 
 
    void graphics::_push_layer(const ::int_rectangle_array& rectanglea)
@@ -4593,16 +4595,16 @@ namespace draw2d_direct2d
 
       m_iaPushLayer.add(1);
 
-      m_iaPushLayerCount.add(rectanglea.size());
+      m_iaPushLayerCount.add((int) rectanglea.size());
 
       for (int i = 0; i < rectanglea.size(); i++)
       {
 
          auto r = rectanglea[i];
 
-         D2D1_RECT_F clipRect{r.left(), r.top(), r.right(), r.bottom()};
+         //D2D1_RECT_F clipRect{r.left(), r.top(), r.right(), r.bottom()};
 
-         m_pd2d1rendertarget->PushAxisAlignedClip(clipRect, D2D1_ANTIALIAS_MODE_PER_PRIMITIVE);
+         //m_pd2d1rendertarget->PushAxisAlignedClip(clipRect, D2D1_ANTIALIAS_MODE_PER_PRIMITIVE);
 
       }
 
@@ -4611,45 +4613,45 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::_push_layer(ID2D1Geometry * pgeometry)
-   {
+   //void graphics::_push_layer(ID2D1Geometry * pgeometry)
+   //{
 
-      D2D1_MATRIX_3X2_F transform;
-      
-      m_pd2d1rendertarget->GetTransform(&transform);
+   //   D2D1_MATRIX_3X2_F transform;
+   //   
+   //   m_pd2d1rendertarget->GetTransform(&transform);
 
-      bool isAxisAligned = IsAxisAligned(transform);
+   //   bool isAxisAligned = IsAxisAligned(transform);
 
-      D2D1_RECT_F clipRect;
+   //   D2D1_RECT_F clipRect;
 
-      if (isAxisAligned && IsAxisAlignedRectGeometry(pgeometry, &clipRect))
-      {
+   //   if (isAxisAligned && IsAxisAlignedRectGeometry(pgeometry, &clipRect))
+   //   {
 
-         m_iaPushLayer.add(1);
+   //      m_iaPushLayer.add(1);
 
-         m_iaPushLayerCount.add(1);
+   //      m_iaPushLayerCount.add(1);
 
-         m_pd2d1rendertarget->PushAxisAlignedClip(clipRect, D2D1_ANTIALIAS_MODE_PER_PRIMITIVE);
+   //      m_pd2d1rendertarget->PushAxisAlignedClip(clipRect, D2D1_ANTIALIAS_MODE_PER_PRIMITIVE);
 
-      }
-      else
-      {
+   //   }
+   //   else
+   //   {
 
-         auto layerparameters = D2D1::LayerParameters(
-            D2D1::InfiniteRect(),
-            pgeometry);
+   //      auto layerparameters = D2D1::LayerParameters(
+   //         D2D1::InfiniteRect(),
+   //         pgeometry);
 
-         m_pd2d1rendertarget->PushLayer(layerparameters, nullptr);
+   //      m_pd2d1rendertarget->PushLayer(layerparameters, nullptr);
 
-         m_iaPushLayer.add(0);
+   //      m_iaPushLayer.add(0);
 
-         m_iaPushLayerCount.add(1);
+   //      m_iaPushLayerCount.add(1);
 
 
-      }
-      m_iLayerCount++;
+   //   }
+   //   m_iLayerCount++;
 
-   }
+   //}
 
 
    void graphics::_pop_layer()
@@ -4671,7 +4673,7 @@ namespace draw2d_direct2d
 
          for (int i = 0; i < iCount; i++)
          {
-            m_pd2d1rendertarget->PopAxisAlignedClip();
+            // m_pd2d1rendertarget->PopAxisAlignedClip();
 
          }
          
@@ -4679,7 +4681,7 @@ namespace draw2d_direct2d
       else
       {
 
-         m_pd2d1rendertarget->PopLayer();
+         //m_pd2d1rendertarget->PopLayer();
       }
 
       m_iLayerCount--;
@@ -4852,7 +4854,7 @@ namespace draw2d_direct2d
 
    //   copy(r, rectangle);
 
-   //   m_pdirect2d->d2d1_factory1()->CreateRectangleGeometry(r, &pgeometry);
+   //   m_pdirectx11->d2d1_factory1()->CreateRectangleGeometry(r, &pgeometry);
 
    //   //return pgeometry;
 
@@ -4932,7 +4934,7 @@ namespace draw2d_direct2d
 
    //      //ID2D1Geometry* pgeometry = (ID2D1Geometry*)shaperegion.holdee()->get_os_data(this);
 
-   //      auto pgeometry = ::direct2d::geometry::create_ellipse(ellipse);
+   //      auto pgeometry = ::directx11::geometry::create_ellipse(ellipse);
 
    //      //m_pd2d1rendertarget->PushLayer(D2D1::LayerParameters(D2D1::InfiniteRect(), pgeometry), nullptr);
 
@@ -4948,39 +4950,39 @@ namespace draw2d_direct2d
    void graphics::intersect_clip(const ::draw2d::clip_group& clipgroup)
    {
 
-      comptr<ID2D1PathGeometry> ppathgeometry;
+      //comptr<ID2D1PathGeometry> ppathgeometry;
 
-      HRESULT hr = m_pdirect2d->d2d1_factory1()->CreatePathGeometry(&ppathgeometry);
+      //HRESULT hr = m_pdirectx11->d2d1_factory1()->CreatePathGeometry(&ppathgeometry);
 
-      ::int_rectangle_array rectanglea;
+      //::int_rectangle_array rectanglea;
 
-      if (clipgroup.is_rectangle_only(rectanglea))
-      {
+      //if (clipgroup.is_rectangle_only(rectanglea))
+      //{
 
-         _push_layer(rectanglea);
+      //   _push_layer(rectanglea);
 
-      }
-      else
-      {
+      //}
+      //else
+      //{
 
-         comptr<ID2D1GeometrySink> pgeometrysink;
+      //   comptr<ID2D1GeometrySink> pgeometrysink;
 
-         ppathgeometry->Open(&pgeometrysink);
+      //   ppathgeometry->Open(&pgeometrysink);
 
-         pgeometrysink->SetFillMode(D2D1_FILL_MODE_WINDING);
+      //   pgeometrysink->SetFillMode(D2D1_FILL_MODE_WINDING);
 
-         for (auto& pclipitem : clipgroup)
-         {
+      //   for (auto& pclipitem : clipgroup)
+      //   {
 
-            _add_clip_item(pgeometrysink, pclipitem);
+      //      _add_clip_item(pgeometrysink, pclipitem);
 
-         }
+      //   }
 
-         pgeometrysink->Close();
+      //   pgeometrysink->Close();
 
-         _push_layer(ppathgeometry);
+      //   _push_layer(ppathgeometry);
 
-      }
+      //}
 
    }
 
@@ -4993,25 +4995,25 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::_add_clip_item(ID2D1GeometrySink * pgeometrysink, ::draw2d::clip_item * pclipitem)
-   {
+   //void graphics::_add_clip_item(ID2D1GeometrySink * pgeometrysink, ::draw2d::clip_item * pclipitem)
+   //{
 
-      switch (pclipitem->clip_item_type())
-      {
-      case ::draw2d::e_clip_item_rectangle:
-         ::direct2d::geometry::add_rectangle(pgeometrysink, dynamic_cast<::draw2d::clip_rectangle *>(pclipitem)->m_item);
-         break;
-      case ::draw2d::e_clip_item_ellipse:
-         ::direct2d::geometry::add_ellipse(pgeometrysink, dynamic_cast<::draw2d::clip_ellipse *>(pclipitem)->m_item);
-         break;
-      case ::draw2d::e_clip_item_polygon:
-         ::direct2d::geometry::add_polygon(pgeometrysink, dynamic_cast<::draw2d::clip_polygon *>(pclipitem)->m_item);
-         break;
-      default:
-         break;
-      };
+   //   switch (pclipitem->clip_item_type())
+   //   {
+   //   case ::draw2d::e_clip_item_rectangle:
+   //      ::directx11::geometry::add_rectangle(pgeometrysink, dynamic_cast<::draw2d::clip_rectangle *>(pclipitem)->m_item);
+   //      break;
+   //   case ::draw2d::e_clip_item_ellipse:
+   //      ::directx11::geometry::add_ellipse(pgeometrysink, dynamic_cast<::draw2d::clip_ellipse *>(pclipitem)->m_item);
+   //      break;
+   //   case ::draw2d::e_clip_item_polygon:
+   //      ::directx11::geometry::add_polygon(pgeometrysink, dynamic_cast<::draw2d::clip_polygon *>(pclipitem)->m_item);
+   //      break;
+   //   default:
+   //      break;
+   //   };
 
-   }
+   //}
 
 
 
@@ -5076,9 +5078,9 @@ namespace draw2d_direct2d
 
    //      //m_pstate->m_maRegion.add(m);
 
-   //      //auto pellipsegeometry = ::direct2d::geometry::;
+   //      //auto pellipsegeometry = ::directx11::geometry::;
 
-   //      auto pgeometry = ::direct2d::geometry::create_polygon(polygon);
+   //      auto pgeometry = ::directx11::geometry::create_polygon(polygon);
 
    //      _push_layer(pgeometry);
 
@@ -5099,18 +5101,18 @@ namespace draw2d_direct2d
 
       auto r = rectangle;
 
-      D2D1_RECT_F rf;
+      //D2D1_RECT_F rf;
 
-      copy(&rf, &r);
+      //copy(&rf, &r);
 
-      auto layerparameters = D2D1::LayerParameters(rf);
+      //auto layerparameters = D2D1::LayerParameters(rf);
 
-      //m_pd2d1rendertarget->PushLayer(layerparameters, nullptr);
+      ////m_pd2d1rendertarget->PushLayer(layerparameters, nullptr);
 
-      m_iaPushLayer.add(1);
-      m_iaPushLayerCount.add(1);
+      //m_iaPushLayer.add(1);
+      //m_iaPushLayerCount.add(1);
 
-      m_pd2d1rendertarget->PushAxisAlignedClip(rf, D2D1_ANTIALIAS_MODE_PER_PRIMITIVE);
+      //m_pd2d1rendertarget->PushAxisAlignedClip(rf, D2D1_ANTIALIAS_MODE_PER_PRIMITIVE);
 
 
       m_iLayerCount++;
@@ -5275,13 +5277,13 @@ namespace draw2d_direct2d
          if (m_ealphamodeDevice == ::draw2d::e_alpha_mode_blend)
          {
 
-            m_pdevicecontext->SetPrimitiveBlend(D2D1_PRIMITIVE_BLEND_SOURCE_OVER);
+            //m_pdevicecontext->SetPrimitiveBlend(D2D1_PRIMITIVE_BLEND_SOURCE_OVER);
 
          }
          else if (m_ealphamodeDevice == ::draw2d::e_alpha_mode_set)
          {
 
-            m_pdevicecontext->SetPrimitiveBlend(D2D1_PRIMITIVE_BLEND_COPY);
+            //m_pdevicecontext->SetPrimitiveBlend(D2D1_PRIMITIVE_BLEND_COPY);
 
          }
 
@@ -5296,42 +5298,42 @@ namespace draw2d_direct2d
       try
       {
 
-         if (m_pd2d1rendertarget == nullptr)
-         {
+         //if (m_pd2d1rendertarget == nullptr)
+         //{
 
-            return;
+         //   return;
 
-         }
+         //}
 
-         m_etextrenderinghintDevice = m_ewritetextrendering;
+         //m_etextrenderinghintDevice = m_ewritetextrendering;
 
-         switch (m_etextrenderinghintDevice)
-         {
-         case ::write_text::e_rendering_anti_alias:
+         //switch (m_etextrenderinghintDevice)
+         //{
+         //case ::write_text::e_rendering_anti_alias:
 
-            m_pd2d1rendertarget->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_GRAYSCALE);
+         //   m_pd2d1rendertarget->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_GRAYSCALE);
 
-            break;
+         //   break;
 
-         case ::write_text::e_rendering_anti_alias_grid_fit:
+         //case ::write_text::e_rendering_anti_alias_grid_fit:
 
-            m_pd2d1rendertarget->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_GRAYSCALE);
+         //   m_pd2d1rendertarget->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_GRAYSCALE);
 
-            break;
+         //   break;
 
-         case ::write_text::e_rendering_single_bit_per_pixel:
+         //case ::write_text::e_rendering_single_bit_per_pixel:
 
-            m_pd2d1rendertarget->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_GRAYSCALE);
+         //   m_pd2d1rendertarget->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_GRAYSCALE);
 
-            break;
+         //   break;
 
-         case ::write_text::e_rendering_clear_type_grid_fit:
+         //case ::write_text::e_rendering_clear_type_grid_fit:
 
-            m_pd2d1rendertarget->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_CLEARTYPE);
+         //   m_pd2d1rendertarget->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_CLEARTYPE);
 
-            break;
+         //   break;
 
-         }
+         //}
 
       }
       catch (...)
@@ -5350,7 +5352,7 @@ namespace draw2d_direct2d
 
          m_ealphamodeDevice = m_ealphamode;
 
-         m_pdevicecontext->SetPrimitiveBlend(D2D1_PRIMITIVE_BLEND_SOURCE_OVER);
+         //m_pdevicecontext->SetPrimitiveBlend(D2D1_PRIMITIVE_BLEND_SOURCE_OVER);
 
       }
 
@@ -5399,11 +5401,11 @@ namespace draw2d_direct2d
       //if (m_pdevicecontext)
       {
 
-         m_pdirect2d->m_pd2d1multithread->Enter();
+         //m_pdirectx11->m_pd2d1multithread->Enter();
 
-         m_pdevicecontext->BeginDraw();
+         //m_pdevicecontext->BeginDraw();
 
-         m_pdevicecontext->Clear();
+         //m_pdevicecontext->Clear();
 
       }
 
@@ -5416,11 +5418,11 @@ namespace draw2d_direct2d
       //if (m_pdevicecontext)
       {
 
-         m_pdevicecontext->Flush();
+         //m_pdevicecontext->Flush();
 
-         m_pdevicecontext->EndDraw();
+         //m_pdevicecontext->EndDraw();
 
-         m_pdirect2d->m_pd2d1multithread->Leave();
+//         m_pdirectx11->m_pd2d1multithread->Leave();
 
 
 
@@ -5508,43 +5510,43 @@ namespace draw2d_direct2d
       {
          // these records have effects different for each graphics derived class
       case META_SETMAPMODE:
-         //(dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->SetMapMode((int)(short)pMetaRec->rdParm[0]);
+         //(dynamic_cast<::draw2d_directx11::graphics * >(pgraphics))->SetMapMode((int)(short)pMetaRec->rdParm[0]);
          break;
       case META_SETWINDOWEXT:
-         (dynamic_cast<::draw2d_direct2d::graphics *>(pgraphics))->set_window_ext(
+         (dynamic_cast<::draw2d_directx11::graphics *>(pgraphics))->set_window_ext(
          (int)(short)pMetaRec->rdParm[1], (int)(short)pMetaRec->rdParm[0]);
          break;
       case META_SETWINDOWORG:
-         (dynamic_cast<::draw2d_direct2d::graphics *>(pgraphics))->SetWindowOrg(
+         (dynamic_cast<::draw2d_directx11::graphics *>(pgraphics))->SetWindowOrg(
          (int)(short)pMetaRec->rdParm[1], (int)(short)pMetaRec->rdParm[0]);
          break;
       case META_SETVIEWPORTEXT:
-         (dynamic_cast<::draw2d_direct2d::graphics *>(pgraphics))->set_extents(
+         (dynamic_cast<::draw2d_directx11::graphics *>(pgraphics))->set_extents(
          (int)(short)pMetaRec->rdParm[1], (int)(short)pMetaRec->rdParm[0]);
          break;
       case META_SETVIEWPORTORG:
-         (dynamic_cast<::draw2d_direct2d::graphics *>(pgraphics))->set_origin(
+         (dynamic_cast<::draw2d_directx11::graphics *>(pgraphics))->set_origin(
          (int)(short)pMetaRec->rdParm[1], (int)(short)pMetaRec->rdParm[0]);
          break;
       case META_SCALEWINDOWEXT:
-         (dynamic_cast<::draw2d_direct2d::graphics *>(pgraphics))->scale_window_ext(
+         (dynamic_cast<::draw2d_directx11::graphics *>(pgraphics))->scale_window_ext(
          (int)(short)pMetaRec->rdParm[3], (int)(short)pMetaRec->rdParm[2],
          (int)(short)pMetaRec->rdParm[1], (int)(short)pMetaRec->rdParm[0]);
          break;
       case META_SCALEVIEWPORTEXT:
-         (dynamic_cast<::draw2d_direct2d::graphics *>(pgraphics))->scale_extents(
+         (dynamic_cast<::draw2d_directx11::graphics *>(pgraphics))->scale_extents(
          (int)(short)pMetaRec->rdParm[3], (int)(short)pMetaRec->rdParm[2],
          (int)(short)pMetaRec->rdParm[1], (int)(short)pMetaRec->rdParm[0]);
          break;
       case META_OFFSETVIEWPORTORG:
-         (dynamic_cast<::draw2d_direct2d::graphics *>(pgraphics))->offset_origin(
+         (dynamic_cast<::draw2d_directx11::graphics *>(pgraphics))->offset_origin(
          (int)(short)pMetaRec->rdParm[1], (int)(short)pMetaRec->rdParm[0]);
          break;
       case META_SAVEDC:
-         (dynamic_cast<::draw2d_direct2d::graphics *>(pgraphics))->save_graphics_context();
+         (dynamic_cast<::draw2d_directx11::graphics *>(pgraphics))->save_graphics_context();
          break;
       case META_RESTOREDC:
-         (dynamic_cast<::draw2d_direct2d::graphics *>(pgraphics))->restore_graphics_context((int)(short)pMetaRec->rdParm[0]);
+         (dynamic_cast<::draw2d_directx11::graphics *>(pgraphics))->restore_graphics_context((int)(short)pMetaRec->rdParm[0]);
          break;
       case META_SETBKCOLOR:
       {
@@ -5553,7 +5555,7 @@ namespace draw2d_direct2d
 
          pbrush->create_solid(*(UNALIGNED::color::color *)&pMetaRec->rdParm[0]);
 
-         (dynamic_cast<::draw2d_direct2d::graphics *>(pgraphics))->set(pbrush);
+         (dynamic_cast<::draw2d_directx11::graphics *>(pgraphics))->set(pbrush);
 
       }
       break;
@@ -5561,7 +5563,7 @@ namespace draw2d_direct2d
       {
          auto pbrush = pgraphics->__øcreate < ::draw2d::brush >();
          pbrush->create_solid(*(UNALIGNED::color::color *)&pMetaRec->rdParm[0]);
-         (dynamic_cast<::draw2d_direct2d::graphics *>(pgraphics))->set(pbrush);
+         (dynamic_cast<::draw2d_directx11::graphics *>(pgraphics))->set(pbrush);
       }
       break;
 
@@ -5574,27 +5576,27 @@ namespace draw2d_direct2d
          {
             // object type is unknown, determine if it is a font
             HFONT hStockFont = (HFONT)::GetStockObject(SYSTEM_FONT);
-            //HFONT hFontOld = (HFONT)::SelectObject((dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->get_handle1(), hStockFont);
-            //HGDIOBJ hObjOld = ::SelectObject((dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->get_handle1(), hObject);
+            //HFONT hFontOld = (HFONT)::SelectObject((dynamic_cast<::draw2d_directx11::graphics * >(pgraphics))->get_handle1(), hStockFont);
+            //HGDIOBJ hObjOld = ::SelectObject((dynamic_cast<::draw2d_directx11::graphics * >(pgraphics))->get_handle1(), hObject);
             //if (hObjOld == hStockFont)
             //{
             //   // got the stock object back, so must be selecting a font
             //   throw ::not_implemented();
-            //   //                  (dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->SelectObject(::draw2d_direct2d::font::from_handle_dup(pgraphics->get_application(), (HFONT)hObject));
+            //   //                  (dynamic_cast<::draw2d_directx11::graphics * >(pgraphics))->SelectObject(::draw2d_directx11::font::from_handle_dup(pgraphics->get_application(), (HFONT)hObject));
             //   break;  // don't play the default record
             //}
             //else
             //{
             //   // didn't get the stock object back, so restore everything
-            //   ::SelectObject((dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->get_handle1(), hFontOld);
-            //   ::SelectObject((dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->get_handle1(), hObjOld);
+            //   ::SelectObject((dynamic_cast<::draw2d_directx11::graphics * >(pgraphics))->get_handle1(), hFontOld);
+            //   ::SelectObject((dynamic_cast<::draw2d_directx11::graphics * >(pgraphics))->get_handle1(), hObjOld);
             //}
             // and fall through to PlayMetaFileRecord...
          }
          else if (nObjType == OBJ_FONT)
          {
             // play back as graphics::SelectObject(::write_text::font*)
-            //               (dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->SelectObject(::draw2d_direct2d::font::from_handle_dup(pgraphics->get_application(), (HFONT)hObject));
+            //               (dynamic_cast<::draw2d_directx11::graphics * >(pgraphics))->SelectObject(::draw2d_directx11::font::from_handle_dup(pgraphics->get_application(), (HFONT)hObject));
             throw ::not_implemented();
             break;  // don't play the default record
          }
@@ -5699,114 +5701,114 @@ namespace draw2d_direct2d
 
       }
 
-      ID2D1Brush * pbrush = m_pbrush->get_os_data < ID2D1Brush * >(this);
+      //ID2D1Brush * pbrush = m_pbrush->get_os_data < ID2D1Brush * >(this);
 
-      if (::is_null(pbrush))
-      {
+      //if (::is_null(pbrush))
+      //{
 
-         //return false;
+      //   //return false;
 
-         throw ::exception(error_null_pointer);
+      //   throw ::exception(error_null_pointer);
 
-      }
+      //}
 
-      IDWriteTextFormat * pfont = m_pfont->get_os_data < IDWriteTextFormat * >(this);
+      //IDWriteTextFormat * pfont = m_pfont->get_os_data < IDWriteTextFormat * >(this);
 
-      if (::is_null(pfont))
-      {
+      //if (::is_null(pfont))
+      //{
 
-         //return false;
+      //   //return false;
 
-         throw ::exception(error_null_pointer);
+      //   throw ::exception(error_null_pointer);
 
-      }
+      //}
 
-      if (ealign & e_align_right)
-      {
+      //if (ealign & e_align_right)
+      //{
 
-         pfont->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_TRAILING);
+      //   pfont->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_TRAILING);
 
-      }
-      else if (ealign & e_align_horizontal_center)
-      {
+      //}
+      //else if (ealign & e_align_horizontal_center)
+      //{
 
-         pfont->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
+      //   pfont->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
 
-      }
-      else
-      {
+      //}
+      //else
+      //{
 
-         pfont->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
+      //   pfont->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
 
-      }
+      //}
 
-      if (ealign & e_align_bottom)
-      {
+      //if (ealign & e_align_bottom)
+      //{
 
-         pfont->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_FAR);
+      //   pfont->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_FAR);
 
-      }
-      else if (ealign & e_align_vertical_center)
-      {
+      //}
+      //else if (ealign & e_align_vertical_center)
+      //{
 
-         pfont->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
+      //   pfont->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
 
-      }
-      else
-      {
+      //}
+      //else
+      //{
 
-         pfont->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
+      //   pfont->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
 
-      }
+      //}
 
-      synchronous_lock synchronouslock(this->synchronization());
+      //synchronous_lock synchronouslock(this->synchronization());
 
-      synchronous_lock synchronouslockFontTextMap(system()->draw2d()->write_text()->m_pparticleFontTextMapSynchronization);
+      //synchronous_lock synchronouslockFontTextMap(system()->draw2d()->write_text()->m_pparticleFontTextMapSynchronization);
 
-      auto & text = m_pfont->m_mapFontText[str];
+      //auto & text = m_pfont->m_mapFontText[str];
 
-      if (text.m_wstr.is_empty())
-      {
+      //if (text.m_wstr.is_empty())
+      //{
 
-         text.m_wstr = str;
+      //   text.m_wstr = str;
 
-      }
+      //}
 
-      defer_text_primitive_blend();
+      //defer_text_primitive_blend();
 
-      defer_text_rendering_hint();
+      //defer_text_rendering_hint();
 
-      if (m_pfont->m_dFontWidth == 1.0)
-      {
+      //if (m_pfont->m_dFontWidth == 1.0)
+      //{
 
-         D2D1_RECT_F float_rectangle = D2D1::RectF((FLOAT)rectangle.left(), (FLOAT)rectangle.top(), (FLOAT)rectangle.right(), (FLOAT)rectangle.bottom());
+      //   D2D1_RECT_F float_rectangle = D2D1::RectF((FLOAT)rectangle.left(), (FLOAT)rectangle.top(), (FLOAT)rectangle.right(), (FLOAT)rectangle.bottom());
 
-         m_pd2d1rendertarget->DrawText(text.m_wstr, (unsigned int)text.m_wstr.length(), pfont, &float_rectangle, pbrush);
+      //   m_pd2d1rendertarget->DrawText(text.m_wstr, (unsigned int)text.m_wstr.length(), pfont, &float_rectangle, pbrush);
 
-      }
-      else
-      {
-         D2D1::Matrix3x2F m;
+      //}
+      //else
+      //{
+      //   D2D1::Matrix3x2F m;
 
-         m_pd2d1rendertarget->GetTransform(&m);
+      //   m_pd2d1rendertarget->GetTransform(&m);
 
-         D2D1::Matrix3x2F mOriginal(m);
+      //   D2D1::Matrix3x2F mOriginal(m);
 
-         D2D1_RECT_F float_rectangle = D2D1::RectF((FLOAT)0, (FLOAT)0, (FLOAT)width(rectangle), (FLOAT)height(rectangle));
+      //   D2D1_RECT_F float_rectangle = D2D1::RectF((FLOAT)0, (FLOAT)0, (FLOAT)width(rectangle), (FLOAT)height(rectangle));
 
-         m = m * D2D1::Matrix3x2F::Translation((FLOAT)rectangle.left(), (FLOAT)rectangle.top());
+      //   m = m * D2D1::Matrix3x2F::Translation((FLOAT)rectangle.left(), (FLOAT)rectangle.top());
 
-         m = m * D2D1::Matrix3x2F::Scale((FLOAT)m_pfont->m_dFontWidth, 1.f);
+      //   m = m * D2D1::Matrix3x2F::Scale((FLOAT)m_pfont->m_dFontWidth, 1.f);
 
-         m_pd2d1rendertarget->SetTransform(&m);
+      //   m_pd2d1rendertarget->SetTransform(&m);
 
-         m_pd2d1rendertarget->DrawText(text.m_wstr, (unsigned int)text.m_wstr.length(), pfont, &float_rectangle, pbrush);
+      //   m_pd2d1rendertarget->DrawText(text.m_wstr, (unsigned int)text.m_wstr.length(), pfont, &float_rectangle, pbrush);
 
-         m_pd2d1rendertarget->SetTransform(&mOriginal);
+      //   m_pd2d1rendertarget->SetTransform(&mOriginal);
 
-      }
+      //}
 
-      //return 1;
+      ////return 1;
 
    }
 
@@ -5933,81 +5935,83 @@ namespace draw2d_direct2d
 
       }
 
-      auto pfont = m_pfont->get_os_data < IDWriteTextFormat * >(this);
+      //auto pfont = m_pfont->get_os_data < IDWriteTextFormat * >(this);
 
-      if (pfont == nullptr)
-      {
+      //if (pfont == nullptr)
+      //{
 
-         //return false;
-         throw ::exception(error_null_pointer);
+      //   //return false;
+      //   throw ::exception(error_null_pointer);
 
-      }
+      //}
 
-      synchronous_lock synchronouslock(this->synchronization());
+      //synchronous_lock synchronouslock(this->synchronization());
 
-      synchronous_lock synchronouslockFontTextMap(system()->draw2d()->write_text()->m_pparticleFontTextMapSynchronization);
+      //synchronous_lock synchronouslockFontTextMap(system()->draw2d()->write_text()->m_pparticleFontTextMapSynchronization);
 
-      auto & text = m_pfont->m_mapFontText[range];
+      //auto & text = m_pfont->m_mapFontText[range];
 
-      if (text.m_bSize)
-      {
+      //if (text.m_bSize)
+      //{
 
-         return text.m_size;
+      //   return text.m_size;
 
-      }
+      //}
 
-      if (text.m_wstr.is_empty())
-      {
+      //if (text.m_wstr.is_empty())
+      //{
 
-         text.m_wstr = range;
+      //   text.m_wstr = range;
 
-      }
+      //}
 
-      ::double_size size;
+      //::double_size size;
 
-      comptr<IDWriteTextLayout> playout1;
+      //comptr<IDWriteTextLayout> playout1;
 
-      HRESULT hr;
+      //HRESULT hr;
 
-      comptr<IDWriteTextLayout> playout;
+      //comptr<IDWriteTextLayout> playout;
 
-      unsigned int uLength = (unsigned int)text.m_wstr.length();
+      //unsigned int uLength = (unsigned int)text.m_wstr.length();
 
-      hr = m_pdirect2d->dwrite_factory()->CreateTextLayout(
-           text.m_wstr,                // The string to be laid out and formatted.
-           uLength,   // The length of the string.
-           pfont,    // The text format to apply to the string (contains font information, etc).
-           1024.f * 1024.f,               // The width of the on_layout box.
-           1024.f * 1024.f,        // The height of the on_layout box.
-           &playout  // The IDWriteTextLayout interface pointer.
-      );
+      //hr = m_pdirectx11->dwrite_factory()->CreateTextLayout(
+      //     text.m_wstr,                // The string to be laid out and formatted.
+      //     uLength,   // The length of the string.
+      //     pfont,    // The text format to apply to the string (contains font information, etc).
+      //     1024.f * 1024.f,               // The width of the on_layout box.
+      //     1024.f * 1024.f,        // The height of the on_layout box.
+      //     &playout  // The IDWriteTextLayout interface pointer.
+      //);
 
-      if (playout == nullptr || FAILED(hr))
-      {
+      //if (playout == nullptr || FAILED(hr))
+      //{
 
-         size.cx() = 0;
+      //   size.cx() = 0;
 
-         size.cy() = 0;
+      //   size.cy() = 0;
 
-         //return false;
+      //   //return false;
 
-         throw ::exception(error_null_pointer);
+      //   throw ::exception(error_null_pointer);
 
-      }
+      //}
 
-      DWRITE_TEXT_METRICS m;
+      //DWRITE_TEXT_METRICS m;
 
-      playout->GetMetrics(&m);
+      //playout->GetMetrics(&m);
 
-      size.cx() = (double)(m.widthIncludingTrailingWhitespace * m_pfont->m_dFontWidth);
+      //size.cx() = (double)(m.widthIncludingTrailingWhitespace * m_pfont->m_dFontWidth);
 
-      size.cy() = m.height;
+      //size.cy() = m.height;
 
-      text.m_size = size;
+      //text.m_size = size;
 
-      text.m_bSize = true;
+      //text.m_bSize = true;
 
-      return size;
+      //return size;
+
+      return {};
 
    }
 
@@ -6041,30 +6045,30 @@ namespace draw2d_direct2d
    void graphics::fill_rectangle(const ::double_rectangle & rectangleParam, const ::color::color & color)
    {
 
-      if (!m_pdevicecontext)
-      {
+      //if (!m_pdevicecontext)
+      //{
 
-         //return false;
+      //   //return false;
 
-         throw ::exception(error_null_pointer);
+      //   throw ::exception(error_null_pointer);
 
-      }
+      //}
 
-      D2D1_COLOR_F d2d1color;
+      //D2D1_COLOR_F d2d1color;
 
-      copy(d2d1color, color);
+      //copy(d2d1color, color);
 
-      comptr< ID2D1SolidColorBrush> psolidbrush;
+      //comptr< ID2D1SolidColorBrush> psolidbrush;
 
-      m_pd2d1rendertarget->CreateSolidColorBrush(d2d1color, &psolidbrush);
+      //m_pd2d1rendertarget->CreateSolidColorBrush(d2d1color, &psolidbrush);
 
-      D2D1_RECT_F rectangle;
+      //D2D1_RECT_F rectangle;
 
-      copy(&rectangle, &rectangleParam);
+      //copy(&rectangle, &rectangleParam);
 
-      defer_primitive_blend();
+      //defer_primitive_blend();
 
-      m_pdevicecontext->FillRectangle(&rectangle, psolidbrush);
+      //m_pdevicecontext->FillRectangle(&rectangle, psolidbrush);
 
    }
 
@@ -6106,147 +6110,147 @@ namespace draw2d_direct2d
 
       }
 
-      IDWriteTextFormat * pfont = m_pfont->get_os_data < IDWriteTextFormat * >(this);
+      //IDWriteTextFormat * pfont = m_pfont->get_os_data < IDWriteTextFormat * >(this);
 
-      if (pfont == nullptr)
-      {
+      //if (pfont == nullptr)
+      //{
 
-         //return false;
+      //   //return false;
 
-         throw ::exception(error_null_pointer);
+      //   throw ::exception(error_null_pointer);
 
-      }
+      //}
 
-      if (m_pbrush.is_null())
-      {
+      //if (m_pbrush.is_null())
+      //{
 
-         throw ::exception(error_null_pointer);
+      //   throw ::exception(error_null_pointer);
 
-      }
+      //}
 
-      ID2D1Brush * pbrush = m_pbrush->get_os_data < ID2D1Brush * >(this);
+      //ID2D1Brush * pbrush = m_pbrush->get_os_data < ID2D1Brush * >(this);
 
-      if (::is_null(pbrush))
-      {
+      //if (::is_null(pbrush))
+      //{
 
-         throw ::exception(error_null_pointer);
+      //   throw ::exception(error_null_pointer);
 
-      }
+      //}
 
-      synchronous_lock synchronouslock(this->synchronization());
+      //synchronous_lock synchronouslock(this->synchronization());
 
-      D2D1::Matrix3x2F m;
+      //D2D1::Matrix3x2F m;
 
-      D2D1::Matrix3x2F mOriginal;
+      //D2D1::Matrix3x2F mOriginal;
 
-      synchronous_lock synchronouslockFontTextMap(system()->draw2d()->write_text()->m_pparticleFontTextMapSynchronization);
+      //synchronous_lock synchronouslockFontTextMap(system()->draw2d()->write_text()->m_pparticleFontTextMapSynchronization);
 
-      auto & text = m_pfont->m_mapFontText[scopedstr];
+      //auto & text = m_pfont->m_mapFontText[scopedstr];
 
-      ::double_size sizeText;
+      //::double_size sizeText;
 
-      if (text.m_bSize)
-      {
+      //if (text.m_bSize)
+      //{
 
-         sizeText = text.m_size;
+      //   sizeText = text.m_size;
 
-      }
-      else
-      {
+      //}
+      //else
+      //{
 
-         sizeText = get_text_extent(scopedstr);
+      //   sizeText = get_text_extent(scopedstr);
 
-      }
+      //}
 
-      D2D1_RECT_F float_rectangle = D2D1::RectF((FLOAT)0, (FLOAT)0, (FLOAT)(0 + sizeText.cx() * 2), (FLOAT)(0 + sizeText.cy() * 2));
+      //D2D1_RECT_F float_rectangle = D2D1::RectF((FLOAT)0, (FLOAT)0, (FLOAT)(0 + sizeText.cx() * 2), (FLOAT)(0 + sizeText.cy() * 2));
 
-      HRESULT  hr = pfont->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
+      //HRESULT  hr = pfont->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
 
-      if (FAILED(hr))
-      {
+      //if (FAILED(hr))
+      //{
 
-         warning() << "text_out, SetTextAlignment" << hresult_text(hr);
+      //   warning() << "text_out, SetTextAlignment" << hresult_text(hr);
 
-      }
+      //}
 
-      hr = pfont->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
+      //hr = pfont->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
 
-      if (FAILED(hr))
-      {
+      //if (FAILED(hr))
+      //{
 
-         warning() << "text_out, SetTextAlignment" << hresult_text(hr);
+      //   warning() << "text_out, SetTextAlignment" << hresult_text(hr);
 
-      }
+      //}
 
-      DWRITE_TRIMMING trim;
+      //DWRITE_TRIMMING trim;
 
-      zero(trim);
+      //zero(trim);
 
-      trim.granularity = DWRITE_TRIMMING_GRANULARITY_NONE;
+      //trim.granularity = DWRITE_TRIMMING_GRANULARITY_NONE;
 
-      hr = pfont->SetTrimming(&trim, nullptr);
+      //hr = pfont->SetTrimming(&trim, nullptr);
 
-      if (FAILED(hr))
-      {
+      //if (FAILED(hr))
+      //{
 
-         warning() << "text_out, SetTextAlignment" << hresult_text(hr);
+      //   warning() << "text_out, SetTextAlignment" << hresult_text(hr);
 
-      }
+      //}
 
-      hr = pfont->SetWordWrapping(DWRITE_WORD_WRAPPING_NO_WRAP);
+      //hr = pfont->SetWordWrapping(DWRITE_WORD_WRAPPING_NO_WRAP);
 
-      if (m_pfont->m_dFontWidth != 1.0)
-      {
+      //if (m_pfont->m_dFontWidth != 1.0)
+      //{
 
-         m_pd2d1rendertarget->GetTransform(&mOriginal);
+      //   m_pd2d1rendertarget->GetTransform(&mOriginal);
 
-         m = mOriginal;
+      //   m = mOriginal;
 
-         m._11 *= (FLOAT)m_pfont->m_dFontWidth;
-         m._31 += (FLOAT)x;
-         m._32 += (FLOAT)y;
+      //   m._11 *= (FLOAT)m_pfont->m_dFontWidth;
+      //   m._31 += (FLOAT)x;
+      //   m._32 += (FLOAT)y;
 
-      }
-      else
-      {
+      //}
+      //else
+      //{
 
-         float_rectangle.left += (FLOAT)x;
-         float_rectangle.top += (FLOAT)y;
-         float_rectangle.right += (FLOAT)x;
-         float_rectangle.bottom += (FLOAT)y;
+      //   float_rectangle.left += (FLOAT)x;
+      //   float_rectangle.top += (FLOAT)y;
+      //   float_rectangle.right += (FLOAT)x;
+      //   float_rectangle.bottom += (FLOAT)y;
 
-      }
+      //}
 
-      if (m_pfont->m_dFontWidth != 1.0)
-      {
+      //if (m_pfont->m_dFontWidth != 1.0)
+      //{
 
-         m_pd2d1rendertarget->SetTransform(&m);
+      //   m_pd2d1rendertarget->SetTransform(&m);
 
-      }
+      //}
 
-      const ::wide_character * lpcwsz = text.m_wstr;
+      //const ::wide_character * lpcwsz = text.m_wstr;
 
-      character_count uiLen = text.m_wstr.length();
+      //character_count uiLen = text.m_wstr.length();
 
-      defer_text_primitive_blend();
+      //defer_text_primitive_blend();
 
-      defer_text_rendering_hint();
+      //defer_text_rendering_hint();
 
-      if (lpcwsz != nullptr && uiLen > 0)
-      {
+      //if (lpcwsz != nullptr && uiLen > 0)
+      //{
 
-         m_pd2d1rendertarget->DrawText(lpcwsz, (int)uiLen, pfont, &float_rectangle, pbrush);
+      //   m_pd2d1rendertarget->DrawText(lpcwsz, (int)uiLen, pfont, &float_rectangle, pbrush);
 
-      }
+      //}
 
-      if (m_pfont->m_dFontWidth != 1.0)
-      {
+      //if (m_pfont->m_dFontWidth != 1.0)
+      //{
 
-         m_pd2d1rendertarget->SetTransform(mOriginal);
+      //   m_pd2d1rendertarget->SetTransform(mOriginal);
 
-      }
+      //}
 
-      //return true;
+      ////return true;
 
    }
 
@@ -6254,36 +6258,36 @@ namespace draw2d_direct2d
    void graphics::draw_line(double x1, double y1, double x2, double y2, ::draw2d::pen * ppen)
    {
 
-      D2D1_POINT_2F p1;
+      //D2D1_POINT_2F p1;
 
-      p1.x = (FLOAT)x1;
+      //p1.x = (FLOAT)x1;
 
-      p1.y = (FLOAT)y1;
+      //p1.y = (FLOAT)y1;
 
-      D2D1_POINT_2F p2;
+      //D2D1_POINT_2F p2;
 
-      p2.x = (FLOAT)x2;
+      //p2.x = (FLOAT)x2;
 
-      p2.y = (FLOAT)y2;
+      //p2.y = (FLOAT)y2;
 
-      ID2D1Brush * pbrush = m_ppen->get_os_data < ID2D1Brush * >(this);
+      //ID2D1Brush * pbrush = m_ppen->get_os_data < ID2D1Brush * >(this);
 
-      if (pbrush == nullptr)
-      {
+      //if (pbrush == nullptr)
+      //{
 
-         //return false;
+      //   //return false;
 
-         throw ::exception(error_null_pointer);
+      //   throw ::exception(error_null_pointer);
 
-      }
+      //}
 
-      defer_primitive_blend();
+      //defer_primitive_blend();
 
-      m_pd2d1rendertarget->DrawLine(p1, p2, pbrush, (FLOAT)(dynamic_cast <::draw2d_direct2d::pen *> (m_ppen.m_p))->m_dWidth);
+      //m_pd2d1rendertarget->DrawLine(p1, p2, pbrush, (FLOAT)(dynamic_cast <::draw2d_directx11::pen *> (m_ppen.m_p))->m_dWidth);
 
-      m_point.x() = x2;
+      //m_point.x() = x2;
 
-      m_point.y() = y2;
+      //m_point.y() = y2;
 
       //return true;
 
@@ -6293,38 +6297,38 @@ namespace draw2d_direct2d
    void graphics::line_to(double x, double y)
    {
 
-      D2D1_POINT_2F p1;
+      //D2D1_POINT_2F p1;
 
-      copy(p1, m_point);
+      //copy(p1, m_point);
 
-      D2D1_POINT_2F p2;
+      //D2D1_POINT_2F p2;
 
-      p2.x = (FLOAT)x;
+      //p2.x = (FLOAT)x;
 
-      p2.y = (FLOAT)y;
+      //p2.y = (FLOAT)y;
 
-      ID2D1Brush * pbrush = m_ppen->get_os_data < ID2D1Brush * >(this);
+      //ID2D1Brush * pbrush = m_ppen->get_os_data < ID2D1Brush * >(this);
 
-      if (pbrush == nullptr)
-      {
+      //if (pbrush == nullptr)
+      //{
 
-         //return false;
+      //   //return false;
 
-         throw ::exception(error_null_pointer);
+      //   throw ::exception(error_null_pointer);
 
-      }
+      //}
 
-      defer_primitive_blend();
+      //defer_primitive_blend();
 
-      FLOAT fWidth = (FLOAT)(dynamic_cast <::draw2d_direct2d::pen *> (m_ppen.m_p))->m_dWidth;
+      //FLOAT fWidth = (FLOAT)(dynamic_cast <::draw2d_directx11::pen *> (m_ppen.m_p))->m_dWidth;
 
-      m_pd2d1rendertarget->DrawLine(p1, p2, pbrush, fWidth);
+      //m_pd2d1rendertarget->DrawLine(p1, p2, pbrush, fWidth);
 
-      m_point.x() = x;
+      //m_point.x() = x;
 
-      m_point.y() = y;
+      //m_point.y() = y;
 
-      //return true;
+      ////return true;
 
    }
 
@@ -6486,172 +6490,172 @@ namespace draw2d_direct2d
    
 
    //void graphics::__attach(ID2D1DeviceContext* pdevicecontext)
-   void graphics::_bind(int iIndex, IDXGISurface * pdxgisurface)
-   {
-
-      if (::is_null(pdxgisurface))
-      {
-
-         throw ::exception(error_null_pointer);
-
-      }
-      if (iIndex < 0 || iIndex >= 16)
-      {
-
-         throw ::exception(error_bad_argument, "what?!");
-
-      }
-
-      auto& pdxgisurfaceBound = m_dxgisurfaceaBound.element_at_grow(iIndex);
-
-      auto& pd2d1bitmap = m_d2d1bitmapa.element_at_grow(iIndex);
-
-      if (pdxgisurfaceBound != pdxgisurface)
-      {
-
-         pd2d1bitmap.Release();
-
-      }
-
-      if (pd2d1bitmap)
-      {
-
-         auto size = pd2d1bitmap->GetSize();
-
-         DXGI_SURFACE_DESC desc{};
-
-         HRESULT hrDxgiSurfaceGetDesc = pdxgisurface->GetDesc(&desc);
-
-         ::defer_throw_hresult(hrDxgiSurfaceGetDesc);
-
-         if (size.width == desc.Width
-            && size.height == desc.Height)
-         {
-
-            __attach(pd2d1bitmap);
-
-            return;
-
-         }
-
-      }
-
-      //IDXGISurface* dxgiSurface = nullptr;
-      //auto hr = texture->QueryInterface(__uuidof(IDXGISurface), (void**)&dxgiSurface);
-
-      //ID2D1Factory1* d2dFactory = nullptr;
-      //D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &d2dFactory);
-
-      //IDXGIDevice* dxgiDevice = nullptr;
-//      d3d11Device->QueryInterface(__uuidof(IDXGIDevice), (void**)&dxgiDevice);
-
-      ::cast < ::dxgi_device_source > pdxgidevicesource = m_pgpucontext;
-
-      auto pd2d1device = m_pdirect2d->d2d1_device(pdxgidevicesource);
-
-      /*ID2D1Device* d2dDevice = nullptr;
-      m_pdirect2d->d2d1_factory1()->CreateDevice(pdxgidevice, &d2dDevice);*/
-
-      //ID2D1DeviceContext* d2dContext = nullptr;
-
-      //pd2d1device->CreateDeviceContext(D2D1_DEVICE_CONTEXT_OPTIONS_NONE, 
-        // &m_pdevicecontext);
-
-      //m_pdevicecontext = pdevicecontext;
-
-      D2D1_BITMAP_PROPERTIES1 bitmapProps = {
-    { DXGI_FORMAT_B8G8R8A8_UNORM, D2D1_ALPHA_MODE_PREMULTIPLIED },
-    96.0f, 96.0f,
-    D2D1_BITMAP_OPTIONS_TARGET | D2D1_BITMAP_OPTIONS_CANNOT_DRAW,
-    nullptr
-      };
-
-      m_pdevicecontext1->CreateBitmapFromDxgiSurface(
-         pdxgisurface, 
-         &bitmapProps, 
-         &pd2d1bitmap);
-
-      pdxgisurfaceBound = pdxgisurface;
-
-      __attach(pd2d1bitmap);
-
-   }
-
-
-   void graphics::__attach(ID2D1Bitmap1* pd2d1bitmap)
-   {
-
-      m_pdevicecontext->SetTarget(pd2d1bitmap);
-
-   }
+//   void graphics::_bind(int iIndex, IDXGISurface * pdxgisurface)
+//   {
+//
+//      if (::is_null(pdxgisurface))
+//      {
+//
+//         throw ::exception(error_null_pointer);
+//
+//      }
+//      if (iIndex < 0 || iIndex >= 16)
+//      {
+//
+//         throw ::exception(error_bad_argument, "what?!");
+//
+//      }
+//
+//      auto& pdxgisurfaceBound = m_dxgisurfaceaBound.element_at_grow(iIndex);
+//
+//      auto& pd2d1bitmap = m_d2d1bitmapa.element_at_grow(iIndex);
+//
+//      if (pdxgisurfaceBound != pdxgisurface)
+//      {
+//
+//         pd2d1bitmap.Release();
+//
+//      }
+//
+//      if (pd2d1bitmap)
+//      {
+//
+//         auto size = pd2d1bitmap->GetSize();
+//
+//         DXGI_SURFACE_DESC desc{};
+//
+//         HRESULT hrDxgiSurfaceGetDesc = pdxgisurface->GetDesc(&desc);
+//
+//         ::defer_throw_hresult(hrDxgiSurfaceGetDesc);
+//
+//         if (size.width == desc.Width
+//            && size.height == desc.Height)
+//         {
+//
+//            __attach(pd2d1bitmap);
+//
+//            return;
+//
+//         }
+//
+//      }
+//
+//      //IDXGISurface* dxgiSurface = nullptr;
+//      //auto hr = texture->QueryInterface(__uuidof(IDXGISurface), (void**)&dxgiSurface);
+//
+//      //ID2D1Factory1* d2dFactory = nullptr;
+//      //D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &d2dFactory);
+//
+//      //IDXGIDevice* dxgiDevice = nullptr;
+////      d3d11Device->QueryInterface(__uuidof(IDXGIDevice), (void**)&dxgiDevice);
+//
+//      ::cast < ::dxgi_device_source > pdxgidevicesource = m_pgpucontext;
+//
+//      auto pd2d1device = m_pdirectx11->d2d1_device(pdxgidevicesource);
+//
+//      /*ID2D1Device* d2dDevice = nullptr;
+//      m_pdirectx11->d2d1_factory1()->CreateDevice(pdxgidevice, &d2dDevice);*/
+//
+//      //ID2D1DeviceContext* d2dContext = nullptr;
+//
+//      //pd2d1device->CreateDeviceContext(D2D1_DEVICE_CONTEXT_OPTIONS_NONE, 
+//        // &m_pdevicecontext);
+//
+//      //m_pdevicecontext = pdevicecontext;
+//
+//      D2D1_BITMAP_PROPERTIES1 bitmapProps = {
+//    { DXGI_FORMAT_B8G8R8A8_UNORM, D2D1_ALPHA_MODE_PREMULTIPLIED },
+//    96.0f, 96.0f,
+//    D2D1_BITMAP_OPTIONS_TARGET | D2D1_BITMAP_OPTIONS_CANNOT_DRAW,
+//    nullptr
+//      };
+//
+//      m_pdevicecontext1->CreateBitmapFromDxgiSurface(
+//         pdxgisurface, 
+//         &bitmapProps, 
+//         &pd2d1bitmap);
+//
+//      pdxgisurfaceBound = pdxgisurface;
+//
+//      __attach(pd2d1bitmap);
+//
+//   }
+//
+//
+//   void graphics::__attach(ID2D1Bitmap1* pd2d1bitmap)
+//   {
+//
+//      m_pdevicecontext->SetTarget(pd2d1bitmap);
+//
+//   }
 
 
    void graphics::attach(void * pdata)
    {
 
-      if (m_pdevicecontext != nullptr)
-      {
+      //if (m_pdevicecontext != nullptr)
+      //{
 
-         m_pdevicecontext = nullptr;
+      //   m_pdevicecontext = nullptr;
 
-      }
+      //}
 
-      if (m_pd2d1rendertarget != nullptr)
-      {
+      //if (m_pd2d1rendertarget != nullptr)
+      //{
 
-         m_pd2d1rendertarget = nullptr;
+      //   m_pd2d1rendertarget = nullptr;
 
-      }
+      //}
 
-      if (m_pbitmaprendertarget != nullptr)
-      {
+      //if (m_pbitmaprendertarget != nullptr)
+      //{
 
-         m_pbitmaprendertarget = nullptr;
+      //   m_pbitmaprendertarget = nullptr;
 
-      }
+      //}
 
-      m_pdevicecontext = (ID2D1DeviceContext *)pdata;
+      //m_pdevicecontext = (ID2D1DeviceContext *)pdata;
 
-      HRESULT hr = m_pdevicecontext.as(m_pdevicecontext1);
+      //HRESULT hr = m_pdevicecontext.as(m_pdevicecontext1);
 
-      if (FAILED(hr))
-      {
+      //if (FAILED(hr))
+      //{
 
-         m_pdevicecontext = nullptr;
+      //   m_pdevicecontext = nullptr;
 
-         m_pdevicecontext1 = nullptr;
+      //   m_pdevicecontext1 = nullptr;
 
-         throw ::exception(error_null_pointer);
+      //   throw ::exception(error_null_pointer);
 
-      }
+      //}
 
-      hr = m_pdevicecontext.as(m_pd2d1rendertarget);
+      //hr = m_pdevicecontext.as(m_pd2d1rendertarget);
 
-      if (FAILED(hr))
-      {
+      //if (FAILED(hr))
+      //{
 
-         m_pdevicecontext = nullptr;
+      //   m_pdevicecontext = nullptr;
 
-         m_pdevicecontext1 = nullptr;
+      //   m_pdevicecontext1 = nullptr;
 
-         m_pd2d1rendertarget = nullptr;
+      //   m_pd2d1rendertarget = nullptr;
 
-         throw ::exception(error_null_pointer);
+      //   throw ::exception(error_null_pointer);
 
-      }
+      //}
 
-      hr = m_pd2d1rendertarget.as(m_pbitmaprendertarget);
+      //hr = m_pd2d1rendertarget.as(m_pbitmaprendertarget);
 
-      if (FAILED(hr))
-      {
-         m_pbitmaprendertarget = nullptr;
-      }
+      //if (FAILED(hr))
+      //{
+      //   m_pbitmaprendertarget = nullptr;
+      //}
 
-      m_osdata[data_device_context] = m_pdevicecontext;
+      //m_osdata[data_device_context] = m_pdevicecontext;
 
-      m_osdata[data_render_target] = m_pd2d1rendertarget;
+      //m_osdata[data_render_target] = m_pd2d1rendertarget;
 
-      //return true;
+      ////return true;
 
    }
 
@@ -6659,15 +6663,17 @@ namespace draw2d_direct2d
    void * graphics::detach()
    {
 
-      m_pd2d1rendertarget = nullptr;
+      //m_pd2d1rendertarget = nullptr;
 
-      m_pbitmaprendertarget = nullptr;
+      //m_pbitmaprendertarget = nullptr;
 
-      m_osdata[data_device_context] = nullptr;
+      //m_osdata[data_device_context] = nullptr;
 
-      m_osdata[data_render_target] = nullptr;
+      //m_osdata[data_render_target] = nullptr;
 
-      return m_pdevicecontext.detach();
+      //return m_pdevicecontext.detach();
+
+      return {};
 
    }
 
@@ -6703,7 +6709,7 @@ namespace draw2d_direct2d
    //                                            D2D1_FEATURE_LEVEL_DEFAULT
    //                                            );
    //
-   //      HRESULT hr = m_pdirect2d->d2d1_factory1()->CreateDCRenderTarget(&props,&m_pdcrendertarget);
+   //      HRESULT hr = m_pdirectx11->d2d1_factory1()->CreateDCRenderTarget(&props,&m_pdcrendertarget);
    //
    //      if (FAILED(hr))
    //      {
@@ -6780,13 +6786,13 @@ namespace draw2d_direct2d
 
       _pop_all_layers();
 
-      m_ppathgeometryClip = nullptr;
+      //m_ppathgeometryClip = nullptr;
 
-      m_pd2d1rendertarget = nullptr;
+      //m_pd2d1rendertarget = nullptr;
 
-      m_pdevicecontext = nullptr;
+      //m_pdevicecontext = nullptr;
 
-      m_pbitmaprendertarget = nullptr;
+      //m_pbitmaprendertarget = nullptr;
 
       ::draw2d::graphics::destroy_os_data();
 
@@ -6809,264 +6815,264 @@ namespace draw2d_direct2d
    }
 
 
-   bool graphics::draw(ID2D1PathGeometry * pgeometry, ::draw2d::pen * ppen)
-   {
+   //bool graphics::draw(ID2D1PathGeometry * pgeometry, ::draw2d::pen * ppen)
+   //{
 
-      ::ID2D1Brush * pbrush = ppen->get_os_data < ID2D1Brush * >(this);
+   //   ::ID2D1Brush * pbrush = ppen->get_os_data < ID2D1Brush * >(this);
 
-      if (pbrush == nullptr)
-      {
+   //   if (pbrush == nullptr)
+   //   {
 
-         return false;
+   //      return false;
 
-      }
+   //   }
 
-      ::ID2D1StrokeStyle1 * pstrokestyle = ppen->get_os_data < ID2D1StrokeStyle1 * >(this, 1);
+   //   ::ID2D1StrokeStyle1 * pstrokestyle = ppen->get_os_data < ID2D1StrokeStyle1 * >(this, 1);
 
-      m_pd2d1rendertarget->DrawGeometry(pgeometry, pbrush, (FLOAT)ppen->m_dWidth, pstrokestyle);
+   //   m_pd2d1rendertarget->DrawGeometry(pgeometry, pbrush, (FLOAT)ppen->m_dWidth, pstrokestyle);
 
-      return true;
+   //   return true;
 
-   }
+   //}
 
 
-   bool graphics::fill(ID2D1PathGeometry * pgeometry, ::draw2d::brush * pbrush)
-   {
+   //bool graphics::fill(ID2D1PathGeometry * pgeometry, ::draw2d::brush * pbrush)
+   //{
 
-      if (pbrush->m_ebrush == ::draw2d::e_brush_box_gradient)
-      {
+   //   if (pbrush->m_ebrush == ::draw2d::e_brush_box_gradient)
+   //   {
 
-         layer layerShape(m_pd2d1rendertarget, pgeometry);
+   //      layer layerShape(m_pd2d1rendertarget, pgeometry);
 
-         double radius = pbrush->m_dRadius;
+   //      double radius = pbrush->m_dRadius;
 
-         double radius2 = radius * 2.0;
+   //      double radius2 = radius * 2.0;
 
-         auto w = pbrush->m_size.cx();
+   //      auto w = pbrush->m_size.cx();
 
-         auto h = pbrush->m_size.cy();
+   //      auto h = pbrush->m_size.cy();
 
-         if (radius2 > w || radius2 > h)
-         {
+   //      if (radius2 > w || radius2 > h)
+   //      {
 
-            return false;
+   //         return false;
 
-         }
+   //      }
 
-         ::double_rectangle outer(pbrush->m_point, pbrush->m_size);
+   //      ::double_rectangle outer(pbrush->m_point, pbrush->m_size);
 
-         ::double_rectangle inner(outer);
+   //      ::double_rectangle inner(outer);
 
-         inner.deflate(radius);
+   //      inner.deflate(radius);
 
-         ::double_rectangle cornerClip(pbrush->m_point, ::double_size(radius, radius));
+   //      ::double_rectangle cornerClip(pbrush->m_point, ::double_size(radius, radius));
 
-         ::double_rectangle cornerBrush(pbrush->m_point, ::double_size(radius * 2.0, radius * 2.0));
+   //      ::double_rectangle cornerBrush(pbrush->m_point, ::double_size(radius * 2.0, radius * 2.0));
 
-         auto pstopcollection = _create_simple_full_range_flat_gradient_stop_collection(pbrush->m_color1, pbrush->m_color2);
+   //      auto pstopcollection = _create_simple_full_range_flat_gradient_stop_collection(pbrush->m_color1, pbrush->m_color2);
 
-         {
+   //      {
 
-            //layer layerShape(m_pd2d1rendertarget, pgeometry);
+   //         //layer layerShape(m_pd2d1rendertarget, pgeometry);
 
-            auto pbrush = _create_simple_radial_gradient(cornerBrush, pstopcollection);
+   //         auto pbrush = _create_simple_radial_gradient(cornerBrush, pstopcollection);
 
-            m_pd2d1rendertarget->FillRectangle(
-               { (FLOAT)cornerClip.left(), (FLOAT)cornerClip.top(),
-               (FLOAT)cornerClip.right(), (FLOAT)cornerClip.bottom() },
-               pbrush);
+   //         m_pd2d1rendertarget->FillRectangle(
+   //            { (FLOAT)cornerClip.left(), (FLOAT)cornerClip.top(),
+   //            (FLOAT)cornerClip.right(), (FLOAT)cornerClip.bottom() },
+   //            pbrush);
 
-         }
+   //      }
 
-         cornerClip.Align(e_align_top_right, outer);
+   //      cornerClip.Align(e_align_top_right, outer);
 
-         cornerBrush.Align(e_align_top_right, outer);
+   //      cornerBrush.Align(e_align_top_right, outer);
 
-         {
+   //      {
 
-            //layer layerShape(m_pd2d1rendertarget, pgeometry);
+   //         //layer layerShape(m_pd2d1rendertarget, pgeometry);
 
-            auto pbrush = _create_simple_radial_gradient(cornerBrush, pstopcollection);
+   //         auto pbrush = _create_simple_radial_gradient(cornerBrush, pstopcollection);
 
-            m_pd2d1rendertarget->FillRectangle(
-               { (FLOAT)cornerClip.left(), (FLOAT)cornerClip.top(),
-               (FLOAT)cornerClip.right(), (FLOAT)cornerClip.bottom() },
-               pbrush);
+   //         m_pd2d1rendertarget->FillRectangle(
+   //            { (FLOAT)cornerClip.left(), (FLOAT)cornerClip.top(),
+   //            (FLOAT)cornerClip.right(), (FLOAT)cornerClip.bottom() },
+   //            pbrush);
 
-         }
+   //      }
 
-         cornerClip.Align(e_align_bottom_right, outer);
+   //      cornerClip.Align(e_align_bottom_right, outer);
 
-         cornerBrush.Align(e_align_bottom_right, outer);
+   //      cornerBrush.Align(e_align_bottom_right, outer);
 
-         {
+   //      {
 
-            //layer layerShape(m_pd2d1rendertarget, pgeometry);
+   //         //layer layerShape(m_pd2d1rendertarget, pgeometry);
 
-            auto pbrush = _create_simple_radial_gradient(cornerBrush, pstopcollection);
+   //         auto pbrush = _create_simple_radial_gradient(cornerBrush, pstopcollection);
 
-            m_pd2d1rendertarget->FillRectangle(
-               { (FLOAT)cornerClip.left(), (FLOAT)cornerClip.top(),
-               (FLOAT)cornerClip.right(), (FLOAT)cornerClip.bottom() },
-               pbrush);
+   //         m_pd2d1rendertarget->FillRectangle(
+   //            { (FLOAT)cornerClip.left(), (FLOAT)cornerClip.top(),
+   //            (FLOAT)cornerClip.right(), (FLOAT)cornerClip.bottom() },
+   //            pbrush);
 
-         }
+   //      }
 
-         cornerClip.Align(e_align_bottom_left, outer);
+   //      cornerClip.Align(e_align_bottom_left, outer);
 
-         cornerBrush.Align(e_align_bottom_left, outer);
+   //      cornerBrush.Align(e_align_bottom_left, outer);
 
-         {
+   //      {
 
-            //layer layerShape(m_pd2d1rendertarget, pgeometry);
+   //         //layer layerShape(m_pd2d1rendertarget, pgeometry);
 
-            auto pbrush = _create_simple_radial_gradient(cornerBrush, pstopcollection);
+   //         auto pbrush = _create_simple_radial_gradient(cornerBrush, pstopcollection);
 
-            m_pd2d1rendertarget->FillRectangle(
-               { (FLOAT)cornerClip.left(), (FLOAT)cornerClip.top(),
-               (FLOAT)cornerClip.right(), (FLOAT)cornerClip.bottom() },
-               pbrush);
+   //         m_pd2d1rendertarget->FillRectangle(
+   //            { (FLOAT)cornerClip.left(), (FLOAT)cornerClip.top(),
+   //            (FLOAT)cornerClip.right(), (FLOAT)cornerClip.bottom() },
+   //            pbrush);
 
-         }
+   //      }
 
 
-         cornerClip.Align(e_align_top_right, outer);
+   //      cornerClip.Align(e_align_top_right, outer);
 
-         cornerBrush.Align(e_align_top_right, outer);
+   //      cornerBrush.Align(e_align_top_right, outer);
 
-         {
+   //      {
 
-            //layer layerShape(m_pd2d1rendertarget, pgeometry);
+   //         //layer layerShape(m_pd2d1rendertarget, pgeometry);
 
-            auto pd2d1brush = _create_solid_brush(pbrush->m_color1);
+   //         auto pd2d1brush = _create_solid_brush(pbrush->m_color1);
 
-            m_pd2d1rendertarget->FillRectangle(
-               { (FLOAT)inner.left(), (FLOAT)inner.top(),
-               (FLOAT)inner.right(), (FLOAT)inner.bottom() },
-               pd2d1brush);
+   //         m_pd2d1rendertarget->FillRectangle(
+   //            { (FLOAT)inner.left(), (FLOAT)inner.top(),
+   //            (FLOAT)inner.right(), (FLOAT)inner.bottom() },
+   //            pd2d1brush);
 
-         }
+   //      }
 
-         {
+   //      {
 
-            ::double_rectangle side(0, 0, inner.width(), radius);
+   //         ::double_rectangle side(0, 0, inner.width(), radius);
 
-            side.Align(e_align_top_center, outer);
+   //         side.Align(e_align_top_center, outer);
 
-            {
+   //         {
 
-               auto pbrush = _create_simple_linear_gradient(side.bottom_left(), side.top_left(), pstopcollection);
+   //            auto pbrush = _create_simple_linear_gradient(side.bottom_left(), side.top_left(), pstopcollection);
 
-               m_pd2d1rendertarget->FillRectangle(
-                  { (FLOAT)side.left(), (FLOAT)side.top(),
-                  (FLOAT)side.right(), (FLOAT)side.bottom() },
-                  pbrush);
+   //            m_pd2d1rendertarget->FillRectangle(
+   //               { (FLOAT)side.left(), (FLOAT)side.top(),
+   //               (FLOAT)side.right(), (FLOAT)side.bottom() },
+   //               pbrush);
 
-            }
+   //         }
 
-            side.Align(e_align_bottom_center, outer);
+   //         side.Align(e_align_bottom_center, outer);
 
-            {
+   //         {
 
-               auto pbrush = _create_simple_linear_gradient(side.top_left(), side.bottom_left(), pstopcollection);
+   //            auto pbrush = _create_simple_linear_gradient(side.top_left(), side.bottom_left(), pstopcollection);
 
-               m_pd2d1rendertarget->FillRectangle(
-                  { (FLOAT)side.left(), (FLOAT)side.top(),
-                  (FLOAT)side.right(), (FLOAT)side.bottom() },
-                  pbrush);
+   //            m_pd2d1rendertarget->FillRectangle(
+   //               { (FLOAT)side.left(), (FLOAT)side.top(),
+   //               (FLOAT)side.right(), (FLOAT)side.bottom() },
+   //               pbrush);
 
-            }
+   //         }
 
-         }
+   //      }
 
 
-         {
+   //      {
 
-            ::double_rectangle side(0, 0, radius, inner.height());
+   //         ::double_rectangle side(0, 0, radius, inner.height());
 
-            side.Align(e_align_left_center, outer);
+   //         side.Align(e_align_left_center, outer);
 
-            {
+   //         {
 
-               auto pbrush = _create_simple_linear_gradient(side.top_right(), side.top_left(), pstopcollection);
+   //            auto pbrush = _create_simple_linear_gradient(side.top_right(), side.top_left(), pstopcollection);
 
-               m_pd2d1rendertarget->FillRectangle(
-                  { (FLOAT)side.left(), (FLOAT)side.top(),
-                  (FLOAT)side.right(), (FLOAT)side.bottom() },
-                  pbrush);
+   //            m_pd2d1rendertarget->FillRectangle(
+   //               { (FLOAT)side.left(), (FLOAT)side.top(),
+   //               (FLOAT)side.right(), (FLOAT)side.bottom() },
+   //               pbrush);
 
-            }
+   //         }
 
-            side.Align(e_align_right_center, outer);
+   //         side.Align(e_align_right_center, outer);
 
-            {
+   //         {
 
-               auto pbrush = _create_simple_linear_gradient(side.top_left(), side.top_right(), pstopcollection);
+   //            auto pbrush = _create_simple_linear_gradient(side.top_left(), side.top_right(), pstopcollection);
 
-               m_pd2d1rendertarget->FillRectangle(
-                  { (FLOAT)side.left(), (FLOAT)side.top(),
-                  (FLOAT)side.right(), (FLOAT)side.bottom() },
-                  pbrush);
+   //            m_pd2d1rendertarget->FillRectangle(
+   //               { (FLOAT)side.left(), (FLOAT)side.top(),
+   //               (FLOAT)side.right(), (FLOAT)side.bottom() },
+   //               pbrush);
 
-            }
+   //         }
 
-         }
-         return true;
+   //      }
+   //      return true;
 
-      }
+   //   }
 
-      ::ID2D1Brush * pd2d1brush = pbrush->get_os_data < ID2D1Brush * >(this);
+   //   ::ID2D1Brush * pd2d1brush = pbrush->get_os_data < ID2D1Brush * >(this);
 
-      if (pd2d1brush == nullptr)
-      {
+   //   if (pd2d1brush == nullptr)
+   //   {
 
-         return false;
+   //      return false;
 
-      }
+   //   }
 
-      m_pd2d1rendertarget->FillGeometry(pgeometry, pd2d1brush);
+   //   m_pd2d1rendertarget->FillGeometry(pgeometry, pd2d1brush);
 
-      return true;
+   //   return true;
 
-   }
+   //}
 
 
-   bool graphics::draw(ID2D1GeometryRealization * prealization, ::draw2d::pen * ppen)
-   {
+   //bool graphics::draw(ID2D1GeometryRealization * prealization, ::draw2d::pen * ppen)
+   //{
 
-      ::ID2D1Brush * pbrush = ppen->get_os_data < ID2D1Brush * >(this);
+   //   ::ID2D1Brush * pbrush = ppen->get_os_data < ID2D1Brush * >(this);
 
-      if (pbrush == nullptr)
-      {
+   //   if (pbrush == nullptr)
+   //   {
 
-         return false;
+   //      return false;
 
-      }
+   //   }
 
-      m_pdevicecontext1->DrawGeometryRealization(prealization, pbrush);
+   //   m_pdevicecontext1->DrawGeometryRealization(prealization, pbrush);
 
-      return true;
+   //   return true;
 
-   }
+   //}
 
 
-   bool graphics::fill(ID2D1GeometryRealization * prealization, ::draw2d::brush * pbrush)
-   {
+   //bool graphics::fill(ID2D1GeometryRealization * prealization, ::draw2d::brush * pbrush)
+   //{
 
-      ::ID2D1Brush * pd2d1brush = pbrush->get_os_data < ID2D1Brush * >(this);
+   //   ::ID2D1Brush * pd2d1brush = pbrush->get_os_data < ID2D1Brush * >(this);
 
-      if (pd2d1brush == nullptr)
-      {
+   //   if (pd2d1brush == nullptr)
+   //   {
 
-         return false;
+   //      return false;
 
-      }
+   //   }
 
-      m_pdevicecontext1->DrawGeometryRealization(prealization, pd2d1brush);
+   //   m_pdevicecontext1->DrawGeometryRealization(prealization, pd2d1brush);
 
-      return true;
+   //   return true;
 
-   }
+   //}
 
 
    void graphics::draw(::draw2d::path * ppathParam, ::draw2d::pen * ppen)
@@ -7078,27 +7084,27 @@ namespace draw2d_direct2d
 
       ::pointer<class path> ppath = ppathParam;
 
-      ID2D1PathGeometry * pgeometry = ppath->get_os_data < ID2D1PathGeometry * >(this, path_hollow);
+      //ID2D1PathGeometry * pgeometry = ppath->get_os_data < ID2D1PathGeometry * >(this, path_hollow);
 
-      if (pgeometry != nullptr)
-      {
+      //if (pgeometry != nullptr)
+      //{
 
-         if (ppath && ppath->m_bUseGeometryRealization)
-         {
+      //   if (ppath && ppath->m_bUseGeometryRealization)
+      //   {
 
-            auto prealization = ppath->_get_stroked_geometry_realization(this, (int)ppen->m_dWidth);
+      //      auto prealization = ppath->_get_stroked_geometry_realization(this, (int)ppen->m_dWidth);
 
-            draw(prealization, ppen);
+      //      draw(prealization, ppen);
 
-            return;
+      //      return;
 
-         }
+      //   }
 
-         defer_primitive_blend();
+      //   defer_primitive_blend();
 
-         draw(pgeometry, ppen);
+      //   draw(pgeometry, ppen);
 
-      }
+      //}
 
       //for(::collection::index i = 0; i < ppath->m_shapea.get_size(); i++)
       //{
@@ -7227,31 +7233,31 @@ namespace draw2d_direct2d
 
       m_bOutline = false;
 
-      ID2D1PathGeometry * pgeometry = ppath->get_os_data < ID2D1PathGeometry * >(this, path_filled);
+      //ID2D1PathGeometry * pgeometry = ppath->get_os_data < ID2D1PathGeometry * >(this, path_filled);
 
-      if (pgeometry != nullptr)
-      {
+      //if (pgeometry != nullptr)
+      //{
 
-         if (ppath && ppath->m_bUseGeometryRealization && pbrush->m_ebrush != ::draw2d::e_brush_box_gradient)
-         {
+      //   if (ppath && ppath->m_bUseGeometryRealization && pbrush->m_ebrush != ::draw2d::e_brush_box_gradient)
+      //   {
 
-            auto prealization = ppath->_get_filled_geometry_realization(this);
+      //      auto prealization = ppath->_get_filled_geometry_realization(this);
 
-            fill(prealization, m_pbrush);
+      //      fill(prealization, m_pbrush);
 
-            return;
+      //      return;
 
-         }
+      //   }
 
 
 
-         defer_primitive_blend();
+      //   defer_primitive_blend();
 
-         fill(pgeometry, pbrush);
+      //   fill(pgeometry, pbrush);
 
-         //m_pd2d1rendertarget->FillGeometry(pgeometry, pbrush);
+      //   //m_pd2d1rendertarget->FillGeometry(pgeometry, pbrush);
 
-      }
+      //}
 
       //for (::collection::index i = 0; i < ppath->m_shapea.get_size(); i++)
       //{
@@ -7308,7 +7314,7 @@ namespace draw2d_direct2d
 
       //IDWriteTextFormat * pformat = textout.m_pfont->get_os_data < IDWriteTextFormat * > (this);
 
-      //IDWriteFactory * pfactory = m_pdirect2d->dwrite_factory();
+      //IDWriteFactory * pfactory = m_pdirectx11->dwrite_factory();
 
       //comptr<IDWriteTextLayout> playout;
 
@@ -7328,7 +7334,7 @@ namespace draw2d_direct2d
 
       //}
 
-      //CustomTextRenderer renderer(m_pdirect2d->d2d1_factory1(),m_pd2d1rendertarget,ppen->get_os_data < ID2D1Brush * >(this));
+      //CustomTextRenderer renderer(m_pdirectx11->d2d1_factory1(),m_pd2d1rendertarget,ppen->get_os_data < ID2D1Brush * >(this));
 
       //defer_text_primitive_blend();
 
@@ -7348,7 +7354,7 @@ namespace draw2d_direct2d
 
       //IDWriteTextFormat * pformat = textout.m_pfont->get_os_data < IDWriteTextFormat * >(this);
 
-      //IDWriteFactory * pfactory = m_pdirect2d->dwrite_factory();
+      //IDWriteFactory * pfactory = m_pdirectx11->dwrite_factory();
 
       //comptr<IDWriteTextLayout> playout;
 
@@ -7373,7 +7379,7 @@ namespace draw2d_direct2d
       //if (posbrush)
       //{
 
-      //   CustomTextRenderer renderer(m_pdirect2d->d2d1_factory1(), m_pd2d1rendertarget, nullptr, posbrush);
+      //   CustomTextRenderer renderer(m_pdirectx11->d2d1_factory1(), m_pd2d1rendertarget, nullptr, posbrush);
 
       //   defer_text_primitive_blend();
 
@@ -7395,7 +7401,7 @@ namespace draw2d_direct2d
 
       //IDWriteTextFormat* pformat = drawtext.m_pfont->get_os_data < IDWriteTextFormat* >(this);
 
-      //IDWriteFactory* pfactory = m_pdirect2d->dwrite_factory();
+      //IDWriteFactory* pfactory = m_pdirectx11->dwrite_factory();
 
       //IDWriteTextLayout* playout = nullptr;
 
@@ -7415,7 +7421,7 @@ namespace draw2d_direct2d
 
       //}
 
-      //CustomTextRenderer renderer(m_pdirect2d->d2d1_factory1(), m_pd2d1rendertarget, ppen->get_os_data < ID2D1Brush* >(this));
+      //CustomTextRenderer renderer(m_pdirectx11->d2d1_factory1(), m_pd2d1rendertarget, ppen->get_os_data < ID2D1Brush* >(this));
 
       //defer_text_primitive_blend();
 
@@ -7435,7 +7441,7 @@ namespace draw2d_direct2d
 
       //IDWriteTextFormat* pformat = drawtext.m_pfont->get_os_data < IDWriteTextFormat* >(this);
 
-      //IDWriteFactory* pfactory = m_pdirect2d->dwrite_factory();
+      //IDWriteFactory* pfactory = m_pdirectx11->dwrite_factory();
 
       //IDWriteTextLayout* playout = nullptr;
 
@@ -7460,7 +7466,7 @@ namespace draw2d_direct2d
       //if (posbrush)
       //{
 
-      //   CustomTextRenderer renderer(m_pdirect2d->d2d1_factory1(), m_pd2d1rendertarget, nullptr, posbrush);
+      //   CustomTextRenderer renderer(m_pdirectx11->d2d1_factory1(), m_pd2d1rendertarget, nullptr, posbrush);
 
       //   defer_text_primitive_blend();
 
@@ -7487,7 +7493,7 @@ namespace draw2d_direct2d
 
       }
 
-      HRESULT hr = m_pd2d1rendertarget->Flush();
+      //HRESULT hr = m_pd2d1rendertarget->Flush();
 
       //return SUCCEEDED(hr);
 
@@ -7511,163 +7517,163 @@ namespace draw2d_direct2d
    //}
 
 
-   //void graphics::set_direct2d_plugin(::draw2d_direct2d::plugin * pplugin)
+   //void graphics::set_directx11_plugin(::draw2d_directx11::plugin * pplugin)
    //{
 
-   //   ::direct2d::direct2d() = pplugin;
+   //   ::directx11::directx11() = pplugin;
 
    //}
 
-   comptr < ID2D1SolidColorBrush > graphics::_create_solid_brush(const ::color::color & color)
-   {
+   //comptr < ID2D1SolidColorBrush > graphics::_create_solid_brush(const ::color::color & color)
+   //{
 
-      comptr<ID2D1SolidColorBrush> pbrush;
+   //   comptr<ID2D1SolidColorBrush> pbrush;
 
-      D2D1_COLOR_F d2d1color;
+   //   D2D1_COLOR_F d2d1color;
 
-      copy(d2d1color, color);
+   //   copy(d2d1color, color);
 
-      HRESULT hr = m_pd2d1rendertarget->CreateSolidColorBrush(d2d1color, &pbrush);
+   //   HRESULT hr = m_pd2d1rendertarget->CreateSolidColorBrush(d2d1color, &pbrush);
 
-      if (FAILED(hr))
-      {
+   //   if (FAILED(hr))
+   //   {
 
-         throw hresult_exception(hr);
+   //      throw hresult_exception(hr);
 
-      }
+   //   }
 
-      return pbrush;
+   //   return pbrush;
 
-   }
+   //}
 
-   comptr<ID2D1RadialGradientBrush> graphics::_create_simple_radial_gradient(const ::double_rectangle & r, ID2D1GradientStopCollection * pstopcollection)
-   {
+   //comptr<ID2D1RadialGradientBrush> graphics::_create_simple_radial_gradient(const ::double_rectangle & r, ID2D1GradientStopCollection * pstopcollection)
+   //{
 
-      comptr<ID2D1RadialGradientBrush> pbrush;
+   //   comptr<ID2D1RadialGradientBrush> pbrush;
 
-      double centerx = r.center_x();
-      double centery = r.center_y();
-      double offsetx = 0.0;
-      double offsety = 0.0;
-      double radiusx = r.width() / 2.0;
-      double radiusy = r.height() / 2.0;
+   //   double centerx = r.center_x();
+   //   double centery = r.center_y();
+   //   double offsetx = 0.0;
+   //   double offsety = 0.0;
+   //   double radiusx = r.width() / 2.0;
+   //   double radiusy = r.height() / 2.0;
 
-      HRESULT hr = m_pd2d1rendertarget->CreateRadialGradientBrush(
-         D2D1::RadialGradientBrushProperties(
-            D2D1::Point2F((FLOAT)(centerx), (FLOAT)(centery)),
-            D2D1::Point2F((FLOAT)(offsetx), (FLOAT)(offsety)),
-            (FLOAT)(radiusx), (FLOAT)(radiusy)),
-         pstopcollection,
-         &pbrush
-      );
+   //   HRESULT hr = m_pd2d1rendertarget->CreateRadialGradientBrush(
+   //      D2D1::RadialGradientBrushProperties(
+   //         D2D1::Point2F((FLOAT)(centerx), (FLOAT)(centery)),
+   //         D2D1::Point2F((FLOAT)(offsetx), (FLOAT)(offsety)),
+   //         (FLOAT)(radiusx), (FLOAT)(radiusy)),
+   //      pstopcollection,
+   //      &pbrush
+   //   );
 
-      if (FAILED(hr))
-      {
+   //   if (FAILED(hr))
+   //   {
 
-         throw hresult_exception(hr);
+   //      throw hresult_exception(hr);
 
-      }
+   //   }
 
-      return pbrush;
+   //   return pbrush;
 
-   }
-
-
-   comptr<ID2D1LinearGradientBrush> graphics::_create_simple_linear_gradient(const ::double_point & p1, const ::double_point & p2, ID2D1GradientStopCollection * pstopcollection)
-   {
-
-      comptr<ID2D1LinearGradientBrush> pbrush;
-
-      D2D1_LINEAR_GRADIENT_BRUSH_PROPERTIES prop{};
-
-      ::int_point pointViewport(0, 0);
-
-      prop.startPoint.x = (FLOAT)p1.x() + pointViewport.x();
-      prop.startPoint.y = (FLOAT)p1.y() + pointViewport.y();
-      prop.endPoint.x = (FLOAT)p2.x() + pointViewport.x();
-      prop.endPoint.y = (FLOAT)p2.y() + pointViewport.y();
-
-      D2D1_BRUSH_PROPERTIES brushproperties = {};
-
-      brushproperties.opacity = 1.0f;
-      brushproperties.transform = D2D1::IdentityMatrix();
-
-      HRESULT hr = m_pd2d1rendertarget->CreateLinearGradientBrush(&prop, &brushproperties, pstopcollection, &pbrush);
-
-      if (FAILED(hr))
-      {
-
-         throw hresult_exception(hr);
-
-      }
-
-      return pbrush;
-
-   }
+   //}
 
 
+   //comptr<ID2D1LinearGradientBrush> graphics::_create_simple_linear_gradient(const ::double_point & p1, const ::double_point & p2, ID2D1GradientStopCollection * pstopcollection)
+   //{
 
-   comptr <ID2D1GradientStopCollection > graphics::_create_simple_full_range_flat_gradient_stop_collection(const ::color::color & color1, const ::color::color & color2)
-   {
+   //   comptr<ID2D1LinearGradientBrush> pbrush;
 
-      // Create an array of gradient stops to put in the gradient stop
-      // collection that will be used in the gradient brush.
-      comptr <ID2D1GradientStopCollection > pgradientstops;
+   //   D2D1_LINEAR_GRADIENT_BRUSH_PROPERTIES prop{};
 
-      D2D1_GRADIENT_STOP gradientstops[2];
+   //   ::int_point pointViewport(0, 0);
 
-      copy(gradientstops[0].color, color1);
-      gradientstops[0].position = 0.0f;
+   //   prop.startPoint.x = (FLOAT)p1.x() + pointViewport.x();
+   //   prop.startPoint.y = (FLOAT)p1.y() + pointViewport.y();
+   //   prop.endPoint.x = (FLOAT)p2.x() + pointViewport.x();
+   //   prop.endPoint.y = (FLOAT)p2.y() + pointViewport.y();
 
-      copy(gradientstops[1].color, color2);
-      gradientstops[1].position = 1.0f;
+   //   D2D1_BRUSH_PROPERTIES brushproperties = {};
 
-      // Create the ID2D1GradientStopCollection from a previously
-      // declared array of D2D1_GRADIENT_STOP structs.
-      HRESULT hr = m_pd2d1rendertarget->CreateGradientStopCollection(
-         gradientstops,
-         2,
-         D2D1_GAMMA_2_2,
-         D2D1_EXTEND_MODE_CLAMP,
-         &pgradientstops
-      );
+   //   brushproperties.opacity = 1.0f;
+   //   brushproperties.transform = D2D1::IdentityMatrix();
 
-      if (FAILED(hr))
-      {
+   //   HRESULT hr = m_pd2d1rendertarget->CreateLinearGradientBrush(&prop, &brushproperties, pstopcollection, &pbrush);
 
-         throw hresult_exception(hr);
+   //   if (FAILED(hr))
+   //   {
 
-      }
+   //      throw hresult_exception(hr);
 
-      return pgradientstops;
+   //   }
 
-   }
+   //   return pbrush;
+
+   //}
 
 
-   ID2D1Geometry * graphics::defer_update_os_data(::pointer < ::geometry2d::region > & pregion)
-   {
 
-      ::pointer < region > pdirect2dregion = pregion;
+   //comptr <ID2D1GradientStopCollection > graphics::_create_simple_full_range_flat_gradient_stop_collection(const ::color::color & color1, const ::color::color & color2)
+   //{
 
-      if (!pdirect2dregion)
-      {
+   //   // Create an array of gradient stops to put in the gradient stop
+   //   // collection that will be used in the gradient brush.
+   //   comptr <ID2D1GradientStopCollection > pgradientstops;
 
-         pdirect2dregion = __create_new < region >();
+   //   D2D1_GRADIENT_STOP gradientstops[2];
 
-         //pdirect2dregion->m_eregion = pregion->m_eregion;
+   //   copy(gradientstops[0].color, color1);
+   //   gradientstops[0].position = 0.0f;
 
-         pdirect2dregion->m_pitem = pregion->m_pitem;
+   //   copy(gradientstops[1].color, color2);
+   //   gradientstops[1].position = 1.0f;
 
-         pregion = pdirect2dregion;
+   //   // Create the ID2D1GradientStopCollection from a previously
+   //   // declared array of D2D1_GRADIENT_STOP structs.
+   //   HRESULT hr = m_pd2d1rendertarget->CreateGradientStopCollection(
+   //      gradientstops,
+   //      2,
+   //      D2D1_GAMMA_2_2,
+   //      D2D1_EXTEND_MODE_CLAMP,
+   //      &pgradientstops
+   //   );
 
-      }
+   //   if (FAILED(hr))
+   //   {
 
-      return (ID2D1Geometry *)pdirect2dregion->get_os_data(this);
+   //      throw hresult_exception(hr);
 
-   }
+   //   }
+
+   //   return pgradientstops;
+
+   //}
 
 
-} // namespace draw2d_direct2d
+   //ID2D1Geometry * graphics::defer_update_os_data(::pointer < ::geometry2d::region > & pregion)
+   //{
+
+   //   ::pointer < region > pdirectx11region = pregion;
+
+   //   if (!pdirectx11region)
+   //   {
+
+   //      pdirectx11region = __create_new < region >();
+
+   //      //pdirectx11region->m_eregion = pregion->m_eregion;
+
+   //      pdirectx11region->m_pitem = pregion->m_pitem;
+
+   //      pregion = pdirectx11region;
+
+   //   }
+
+   //   return (ID2D1Geometry *)pdirectx11region->get_os_data(this);
+
+   //}
+
+
+} // namespace draw2d_directx11
 
 
 

@@ -1259,7 +1259,14 @@ SamplerState samp : register(s0);
 
 float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_TARGET
 {
+if(uv.y<0.5)
+{
     return tex.Sample(samp, uv); // Assumes premultiplied alpha
+}
+else
+{
+return float4(0.8*0.5,0.8*0.5,0.4*0.5,0.5);
+}
 }
 )hlsl";
 
@@ -1297,10 +1304,43 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_TARGET
 
          ::cast < ::gpu_directx11::device > pgpudevice = m_pgpudevice;
 
-         HRESULT hr = pgpudevice->m_pdevice->CreateBlendState(&blendDesc, &m_pd3d11blendstateBlend3);
+         HRESULT hr = pgpudevice->m_pdevice->CreateBlendState(
+            &blendDesc, 
+            &m_pd3d11blendstateBlend3);
          ::defer_throw_hresult(hr);
 
       }
+
+
+      m_pcontext->OMSetDepthStencilState(depth_stencil_state_disabled(), 0);
+
+
+      {
+
+         D3D11_VIEWPORT vp = {};
+         vp.TopLeftX = 0;
+         vp.TopLeftY = 0;
+         vp.Width = static_cast<float>(m_rectangle.width());
+         vp.Height = static_cast<float>(m_rectangle.height());
+         vp.MinDepth = 0.0f;
+         vp.MaxDepth = 1.0f;
+         m_pcontext->RSSetViewports(1, &vp);
+
+         D3D11_RECT rectScissor;
+         rectScissor.left = 0;
+         rectScissor.top = 0;
+         rectScissor.right = m_rectangle.width();
+         rectScissor.bottom = m_rectangle.height();
+
+         m_pcontext->RSSetScissorRects(1, &rectScissor);
+
+      }
+
+
+      ::cast <texture > ptextureDst = ptextureTarget;
+      float clearColor[4] = { 0.95f * 0.5f, 0.95f * 0.5f, 0.25f * 0.5f, 0.5f }; // Clear to transparent
+      m_pcontext->ClearRenderTargetView(
+         ptextureDst->m_prendertargetview, clearColor);
 
 
       m_pshaderBlend3->bind(ptextureTarget);
@@ -1324,24 +1364,15 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_TARGET
 
          ::cast < ::gpu_directx11::device > pgpudevice = m_pgpudevice;
 
-         pgpudevice->m_pdevice->CreateRasterizerState(&rasterDesc, &m_prasterizerstateMergeLayers);
+         HRESULT hrCreateRasterizerState = pgpudevice->m_pdevice->CreateRasterizerState(&rasterDesc, 
+            &m_prasterizerstateMergeLayers);
+
+         ::defer_throw_hresult(hrCreateRasterizerState);
 
       }
 
       m_pcontext->RSSetState(m_prasterizerstateMergeLayers);
 
-      D3D11_RECT rectScissor;
-      rectScissor.left = 0;
-      rectScissor.top = 0;
-      rectScissor.right = 400;
-      rectScissor.bottom = 300;
-
-      m_pcontext->RSSetScissorRects(1, &rectScissor);
-
-
-      ::cast <texture > ptextureDst = ptextureTarget;
-      float clearColor[4] = { 0.95f * 0.5f, 0.95f * 0.5f, 0.25f * 0.5f, 0.5f }; // Clear to transparent
-      m_pcontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor);
       //float clearColor[4] = { 0.f, 0.f, 0.f, 0.f }; // Clear to transparent
       //m_pcontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor);
 
@@ -1362,6 +1393,13 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_TARGET
 
          m_pshaderBlend3->bind_source(ptexture);
 
+         if (ptexture == ptextureDst)
+         {
+
+            warningf("What?!? Source texture and destination texture are the same?!?!");
+
+         }
+
          //ID3D11SamplerState* samplerstatea[] =
          //{ ptexture->m_psamplerstate };
          //ID3D11ShaderResourceView* sharedresourceviewa[] =
@@ -1376,10 +1414,10 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_TARGET
          m_pcontext->RSSetViewports(1, &vp);
 
          D3D11_RECT rectScissor;
-         rectScissor.left = 0;
-         rectScissor.top = 0;
-         rectScissor.right = 400;
-         rectScissor.bottom = 300;
+         rectScissor.left = ptexture->m_rectangleTarget.left();
+         rectScissor.top = ptexture->m_rectangleTarget.top();
+         rectScissor.right = ptexture->m_rectangleTarget.width();
+         rectScissor.bottom = ptexture->m_rectangleTarget.height();
 
          m_pcontext->RSSetScissorRects(1, &rectScissor);
 
@@ -1394,36 +1432,61 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_TARGET
 
       m_pshaderBlend3->unbind();
 
+      //bool bClearAtEndDebug = true;
 
-      bool bClearAtEndDebug = true;
+      //if (bClearAtEndDebug)
+      //{
 
-      if (bClearAtEndDebug)
+      //   D3D11_VIEWPORT vp = {};
+      //   vp.TopLeftX = 0;
+      //   vp.TopLeftY = 0;
+      //   vp.Width = static_cast<float>(m_rectangle.width());
+      //   vp.Height = static_cast<float>(m_rectangle.height());
+      //   vp.MinDepth = 0.0f;
+      //   vp.MaxDepth = 1.0f;
+      //   m_pcontext->RSSetViewports(1, &vp);
+
+      //   D3D11_RECT rectScissor;
+      //   rectScissor.left = 0;
+      //   rectScissor.top = 0;
+      //   rectScissor.right = m_rectangle.width();
+      //   rectScissor.bottom = m_rectangle.height();
+
+      //   m_pcontext->RSSetScissorRects(1, &rectScissor);
+
+      //   //::cast <texture > ptextureDst = ptextureTarget;
+      //   float clearColor2[4] = { 0.95f * 0.5f, 0.75f * 0.5f, 0.95f * 0.5f, 0.5f };
+      //   m_pcontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor2);
+
+      //}
+
       {
 
-         D3D11_VIEWPORT vp = {};
-         vp.TopLeftX = 0;
-         vp.TopLeftY = 0;
-         vp.Width = static_cast<float>(m_rectangle.width());
-         vp.Height = static_cast<float>(m_rectangle.height());
-         vp.MinDepth = 0.0f;
-         vp.MaxDepth = 1.0f;
-         m_pcontext->RSSetViewports(1, &vp);
+         D3D11_RECT rect = {};
+         rect.left = 200;
+         rect.top = 100;
+         rect.right = 300;
+         rect.bottom = 200;
 
-         D3D11_RECT rectScissor;
-         rectScissor.left = 0;
-         rectScissor.top = 0;
-         rectScissor.right = m_rectangle.width();
-         rectScissor.bottom = m_rectangle.height();
+         float clearColor[4] = { 0.95f * 0.5f, 0.75f * 0.5f, 0.95f * 0.5f, 0.5f };
 
-         m_pcontext->RSSetScissorRects(1, &rectScissor);
+         m_pcontext1->ClearView(ptextureDst->m_prendertargetview, clearColor, &rect, 1);
 
-         //::cast <texture > ptextureDst = ptextureTarget;
-         float clearColor2[4] = { 0.95f * 0.5f, 0.75f * 0.5f, 0.95f * 0.5f, 0.5f }; // Clear to transparent
-         m_pcontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor2);
+      }
+
+      {
+
+         ID3D11ShaderResourceView* nullSRV[1] = { nullptr };
+         m_pcontext->PSSetShaderResources(0, 1, nullSRV);
+         ID3D11RenderTargetView* nullRTV[1] = { nullptr };
+         m_pcontext->OMSetRenderTargets(1, nullRTV, nullptr);
+         ID3D11SamplerState* nullSampler[1] = { nullptr };
+         m_pcontext->PSSetSamplers(0, 1, nullSampler);
 
       }
 
    }
+
 
    void context::on_start_layer(::gpu::layer* player)
    {
@@ -1504,6 +1567,33 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_TARGET
 
    }
 
+
+   ID3D11DepthStencilState* context::depth_stencil_state_disabled()
+   {
+
+      if (!m_pdepthstencilstateDisabled)
+      {
+
+         D3D11_DEPTH_STENCIL_DESC dsDesc = {};
+         dsDesc.DepthEnable = FALSE; // ✅ disable depth test
+         dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO; // also disables writing to depth buffer
+         dsDesc.DepthFunc = D3D11_COMPARISON_ALWAYS; // not used since DepthEnable = FALSE
+
+         // (optional) Stencil test settings
+         dsDesc.StencilEnable = FALSE;
+
+         ::cast < device > pgpudevice = m_pgpudevice;
+
+         HRESULT hrCreateDepthStencilState = pgpudevice->m_pdevice->CreateDepthStencilState(
+            &dsDesc, &m_pdepthstencilstateDisabled);
+
+         ::defer_throw_hresult(hrCreateDepthStencilState);
+
+      }
+
+      return m_pdepthstencilstateDisabled;
+
+   }
 
 
 

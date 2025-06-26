@@ -102,21 +102,55 @@ namespace gpu_directx11
    void device::initialize_d3d11_device()
    {
 
+      // This flag adds support for surfaces with a different color channel ordering
+      // than the API default. It is required for compatibility with Direct2D.
+      unsigned int creationFlags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
+
+#if defined(__DEBUG)
+
+      // If the project is in a debug build, enable debugging via SDK Layers with this flag.
+      creationFlags |= D3D11_CREATE_DEVICE_DEBUG;
+
+#endif
+
+
+      // This array defines the set of DirectX hardware feature levels this app will support.
+   // Note the ordering should be preserved.
+   // Don't forget to declare your application's minimum required feature level in its
+   // description.  All applications are assumed to support 9.1 unless otherwise stated.
+      D3D_FEATURE_LEVEL featureLevels[] =
+      {
+         D3D_FEATURE_LEVEL_11_1,
+         D3D_FEATURE_LEVEL_11_0,
+         D3D_FEATURE_LEVEL_10_1,
+         D3D_FEATURE_LEVEL_10_0,
+         //D3D_FEATURE_LEVEL_9_3,
+         //D3D_FEATURE_LEVEL_9_2,
+         //D3D_FEATURE_LEVEL_9_1
+      };
+
+
+      D3D_FEATURE_LEVEL featureLevelActual = D3D_FEATURE_LEVEL_1_0_GENERIC;
+
       ::defer_throw_hresult(D3D11CreateDevice(nullptr,    // Adapter
          D3D_DRIVER_TYPE_HARDWARE,
          nullptr,    // Module
-         D3D11_CREATE_DEVICE_BGRA_SUPPORT,
-         nullptr, 0, // Highest available feature level
+         creationFlags,
+         featureLevels, 
+         ARRAYSIZE(featureLevels), // Highest available feature level
          D3D11_SDK_VERSION,
          &m_pdevice,
-         nullptr,    // Actual feature level
-         nullptr));  // Device context
+         &featureLevelActual,    // Actual feature level
+         &m_pdevicecontext));  // Device context
+
+      //preempt(5_s);
+
 
       ::defer_throw_hresult(m_pdevice.as(m_pdevice1));
 
       ::defer_throw_hresult(m_pdevice.as(m_pdxgidevice));
 
-      m_pdevice->GetImmediateContext(&m_pdevicecontext);
+      //m_pdevice->GetImmediateContext();
 
 #if defined(_DEBUG)
 
@@ -1885,9 +1919,9 @@ namespace gpu_directx11
          D3D_FEATURE_LEVEL_11_0,
          D3D_FEATURE_LEVEL_10_1,
          D3D_FEATURE_LEVEL_10_0,
-         D3D_FEATURE_LEVEL_9_3,
-         D3D_FEATURE_LEVEL_9_2,
-         D3D_FEATURE_LEVEL_9_1
+         //D3D_FEATURE_LEVEL_9_3,
+         //D3D_FEATURE_LEVEL_9_2,
+         //D3D_FEATURE_LEVEL_9_1
 
       };
 

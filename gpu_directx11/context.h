@@ -26,6 +26,8 @@ namespace gpu_directx11
 
       ::comptr<ID3D10Multithread> m_pmultithread;
 
+      ::comptr < ID3D11DepthStencilState > m_pdepthstencilstateDisabled;
+
 
       //itask									m_itaskGpu;
       //VkSampler m_vksampler001;
@@ -120,6 +122,9 @@ namespace gpu_directx11
 
       context();
       ~context() override;
+
+
+      virtual ID3D11DepthStencilState* depth_stencil_state_disabled();
 
 
       virtual void _directx11_lock();

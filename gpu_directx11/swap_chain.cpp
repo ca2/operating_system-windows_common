@@ -8,40 +8,6 @@
 #include "windowing_win32/window.h"
 
 
-const char* fullscreen_vertex_shader = R"hlsl(// fullscreen_vs.hlsl
-      struct VSOut {
-         float4 pos : SV_POSITION;
-         float2 uv : TEXCOORD0;
-      };
-
-      VSOut main(uint vid : SV_VertexID) {
-         float2 verts[3] = {
-             float2(-1, -1),
-             float2(-1, +3),
-             float2(+3, -1)
-         };
-         float2 uvs[3] = {
-             float2(0, 1),
-             float2(0, -1),
-             float2(2, 1)
-         };
-
-         VSOut o;
-o.pos = float4(verts[vid], 0, 1);
-float2 uv = 0.5 * (verts[vid] + 1.0);
-o.uv = float2(uv.x, 1.0 - uv.y); // Flip Y
-         return o;
-      }
-)hlsl";
-
-const char* fullscreen_pixel_shader = R"hlsl(// fullscreen_ps.hlsl
-Texture2D tex : register(t0);
-SamplerState samp : register(s0);
-
-float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
-    return tex.Sample(samp, uv);
-}
-)hlsl";
 
 
 namespace gpu_directx11
@@ -122,7 +88,7 @@ namespace gpu_directx11
 
       ::gpu::swap_chain::m_pgpurenderer = pgpurenderer;
 
-      
+      m_bSwapChainInitialized = true;
 
    }
 
@@ -143,6 +109,10 @@ namespace gpu_directx11
       ::cast < ::gpu_directx11::context > pgpucontext = pgpurenderer->m_pgpucontext;
 
       directx11_lock directx11_lock(pgpucontext);
+
+      ID3D11RenderTargetView* nullRTV[1] = { nullptr };
+
+      pgpucontext->m_pcontext->OMSetRenderTargets(1, nullRTV, nullptr);
 
       m_size = pgpucontext->m_rectangle.size();
 
@@ -209,6 +179,49 @@ namespace gpu_directx11
       if (!m_pshaderPresent)
       {
 
+
+         const char* fullscreen_vertex_shader = R"hlsl(// fullscreen_vs.hlsl
+      struct VSOut {
+         float4 pos : SV_POSITION;
+         float2 uv : TEXCOORD0;
+      };
+
+      VSOut main(uint vid : SV_VertexID) {
+         float2 verts[3] = {
+             float2(-1, -1),
+             float2(-1, +3),
+             float2(+3, -1)
+         };
+         float2 uvs[3] = {
+             float2(0, 1),
+             float2(0, -1),
+             float2(2, 1)
+         };
+
+         VSOut o;
+o.pos = float4(verts[vid], 0, 1);
+float2 uv = 0.5 * (verts[vid] + 1.0);
+o.uv = float2(uv.x, 1.0 - uv.y); // Flip Y
+         return o;
+      }
+)hlsl";
+
+         const char* fullscreen_pixel_shader = R"hlsl(// fullscreen_ps.hlsl
+Texture2D tex : register(t0);
+SamplerState samp : register(s0);
+
+float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
+if(uv.x<0.5)
+{
+    return tex.Sample(samp, uv);
+}
+else
+{
+return float4(0.5*0.5, 0.90*0.5, 0.98*0.5, 0.5);
+}
+}
+)hlsl";
+
          __construct_new(m_pshaderPresent);
 
          m_pshaderPresent->initialize_shader_with_block(
@@ -217,6 +230,9 @@ namespace gpu_directx11
             as_block(fullscreen_pixel_shader));  
 
       }
+
+
+      pgpucontext->m_pcontext->OMSetDepthStencilState(pgpucontext->depth_stencil_state_disabled(), 0);
 
       m_pshaderPresent->bind(m_ptextureSwapChain, pgputexture);
       //pgpucontext->m_pcontext->VSSetShader(m_pvertexshaderFullscreen, nullptr, 0);
@@ -237,6 +253,15 @@ namespace gpu_directx11
       pgpucontext->m_pcontext->RSSetViewports(1, &vp);
 
 
+      D3D11_RECT rectScissor;
+      rectScissor.left = 0;
+      rectScissor.top = 0;
+      rectScissor.right = m_size.cx();
+      rectScissor.bottom = m_size.cy();
+
+      pgpucontext->m_pcontext->RSSetScissorRects(1, &rectScissor);
+
+
       pgpucontext->m_pcontext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
       pgpucontext->m_pcontext->Draw(3, 0);
 
@@ -248,7 +273,28 @@ namespace gpu_directx11
 
       //pgpucontext->m_pcontext->ClearRenderTargetView(m_ptextureSwapChain->m_prendertargetview, colorRGBA2);
 
-      
+      D3D11_RECT rect = {};
+      rect.left = 100;
+      rect.top = 100;
+      rect.right = 200;
+      rect.bottom = 200;
+
+      float clearColor[4] = { 0.5f * 0.5f,0.75f * 0.5f, 0.95f * 0.5f, 0.5f }; 
+
+      pgpucontext->m_pcontext1->ClearView(m_ptextureSwapChain->m_prendertargetview, clearColor, &rect, 1);
+
+
+      {
+
+         ID3D11ShaderResourceView* nullSRV[1] = { nullptr };
+         pgpucontext->m_pcontext->PSSetShaderResources(0, 1, nullSRV);
+         ID3D11RenderTargetView* nullRTV[1] = { nullptr };
+         pgpucontext->m_pcontext->OMSetRenderTargets(1, nullRTV, nullptr);
+         ID3D11SamplerState* nullSampler[1] = { nullptr };
+         pgpucontext->m_pcontext->PSSetSamplers(0, 1, nullSampler);
+
+      }
+
 
    }
 

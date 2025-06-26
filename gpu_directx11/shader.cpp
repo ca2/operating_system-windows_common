@@ -412,44 +412,7 @@ namespace gpu_directx11
    void shader::bind(::gpu::texture* pgputextureTarget, ::gpu::texture* pgputextureSource)
    {
 
-      ::cast <context> pgpucontext = m_pgpurenderer->m_pgpucontext;
-
-      directx11_lock directx11_lock(pgpucontext);
-
-      ::cast <device> pgpudevice = pgpucontext->m_pgpudevice;
-
-      if (m_pinputlayout)
-      {
-
-         pgpucontext->m_pcontext->IASetInputLayout(m_pinputlayout);
-
-      }
-
-      //defer_throw_hresult(hr1);
-
-      pgpucontext->m_pcontext->VSSetShader(m_pvertexshader, nullptr, 0);
-
-      ///defer_throw_hresult(hr2);
-
-      pgpucontext->m_pcontext->PSSetShader(m_ppixelshader, nullptr, 0);
-
-      if (pgputextureTarget)
-      {
-
-         ::cast < texture > ptextureDst = pgputextureTarget;
-
-         ID3D11RenderTargetView* rendertargetviewa[] =
-         {
-            ptextureDst->m_prendertargetview
-         };
-
-         ID3D11DepthStencilView* pdepthstencilview = ptextureDst->m_pdepthstencilview;
-         pgpucontext->m_pcontext->OMSetRenderTargets(
-            1,
-            rendertargetviewa, 
-            pdepthstencilview);
-
-      }
+      bind(pgputextureTarget);
 
       bind_source(pgputextureSource);
 
@@ -482,15 +445,26 @@ namespace gpu_directx11
          if (pshaderresourceview)
          {
 
-            pgpucontext->m_pcontext->PSSetShaderResources(0, 1, pshaderresourceview.pp());
+            ID3D11ShaderResourceView* shaderresourceviewa[] =
+            {
+               pshaderresourceview
+            };
+            pgpucontext->m_pcontext->PSSetShaderResources(0, 1, shaderresourceviewa);
 
          }
 
-         if (ptextureSrc->m_psamplerstate)
+         auto psamplerstate = ptextureSrc->m_psamplerstate;
+
+         if (psamplerstate)
          {
 
+            ID3D11SamplerState* samplerstatea[] =
+            {
+               psamplerstate
+            };
+
             pgpucontext->m_pcontext->PSSetSamplers(
-               0, 1, ptextureSrc->m_psamplerstate.pp());
+               0, 1, samplerstatea);
 
          }
 
@@ -503,8 +477,54 @@ namespace gpu_directx11
    void shader::bind(::gpu::texture* pgputextureTarget)
    {
 
-      bind(pgputextureTarget, nullptr);
+      bind();
 
+      ::cast <context> pgpucontext = m_pgpurenderer->m_pgpucontext;
+
+      directx11_lock directx11_lock(pgpucontext);
+
+      ::cast <device> pgpudevice = pgpucontext->m_pgpudevice;
+
+      if (!pgputextureTarget)
+      {
+
+         ::cast <renderer> prenderer = m_pgpurenderer;
+
+         if (prenderer)
+         {
+
+            ::cast < render_target_view > pgpurendertargetview = prenderer->m_pgpurendertarget;
+
+            if (pgpurendertargetview)
+            {
+
+               ::cast < texture > ptexture = pgpurendertargetview->current_texture();
+
+               pgputextureTarget = ptexture.m_p;
+
+            }
+
+         }
+
+      }
+
+      if (pgputextureTarget)
+      {
+
+         ::cast < texture > ptextureDst = pgputextureTarget;
+
+         ID3D11RenderTargetView* rendertargetviewa[] =
+         {
+            ptextureDst->m_prendertargetview
+         };
+
+         ID3D11DepthStencilView* pdepthstencilview = ptextureDst->m_pdepthstencilview;
+         pgpucontext->m_pcontext->OMSetRenderTargets(
+            1,
+            rendertargetviewa,
+            pdepthstencilview);
+
+      }
 
    }
 
@@ -512,21 +532,32 @@ namespace gpu_directx11
    void shader::bind()
    {
 
-      ::cast <renderer> prenderer = m_pgpurenderer;
-    
-      if (prenderer)
+      ::cast <context> pgpucontext = m_pgpurenderer->m_pgpucontext;
+
+      directx11_lock directx11_lock(pgpucontext);
+
+      ::cast <device> pgpudevice = pgpucontext->m_pgpudevice;
+
+
+      //defer_throw_hresult(hr1);
+
+      pgpucontext->m_pcontext->VSSetShader(m_pvertexshader, nullptr, 0);
+
+      ///defer_throw_hresult(hr2);
+
+      pgpucontext->m_pcontext->PSSetShader(m_ppixelshader, nullptr, 0);
+
+
+      if (m_pinputlayout)
       {
 
-         ::cast < render_target_view > pgpurendertargetview = prenderer->m_pgpurendertarget;
+         pgpucontext->m_pcontext->IASetInputLayout(m_pinputlayout);
 
-         if (pgpurendertargetview)
-         {
+      }
+      else
+      {
 
-            ::cast < texture > ptexture = pgpurendertargetview->current_texture();
-
-            bind(ptexture);
-
-         }
+         pgpucontext->m_pcontext->IASetInputLayout(nullptr);
 
       }
 

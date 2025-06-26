@@ -55,7 +55,9 @@ namespace gpu_directx11
       m_texture2ddesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
       m_texture2ddesc.SampleDesc.Count = 1;
       m_texture2ddesc.Usage = D3D11_USAGE_DEFAULT;
-      m_texture2ddesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
+      m_texture2ddesc.BindFlags = 
+         D3D11_BIND_RENDER_TARGET
+         | D3D11_BIND_SHADER_RESOURCE;
 
       ::cast < ::gpu_directx11::device > pgpudevice = m_pgpurenderer->m_pgpucontext->m_pgpudevice;
 
@@ -263,7 +265,8 @@ namespace gpu_directx11
 
       ::cast < ::gpu_directx11::device > pgpudevice = m_pgpurenderer->m_pgpucontext->m_pgpudevice;
 
-      HRESULT hrCreateRenderTargetView = pgpudevice->m_pdevice->CreateRenderTargetView(m_ptextureOffscreen, nullptr, &m_prendertargetview);
+      HRESULT hrCreateRenderTargetView = pgpudevice->m_pdevice->CreateRenderTargetView(
+         m_ptextureOffscreen, nullptr, &m_prendertargetview);
 
       if (FAILED(hrCreateRenderTargetView))
       {
@@ -280,7 +283,15 @@ namespace gpu_directx11
 
       ::cast < ::gpu_directx11::device > pgpudevice = m_pgpurenderer->m_pgpucontext->m_pgpudevice;
 
-      HRESULT hrCreateShaderResourceView = pgpudevice->m_pdevice->CreateShaderResourceView(m_ptextureOffscreen, nullptr, &m_pshaderresourceview);
+      D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
+      srvDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM; // Must match or be compatible
+      srvDesc.ViewDimension = D3D_SRV_DIMENSION_TEXTURE2D;
+      srvDesc.Texture2D.MostDetailedMip = 0;
+      srvDesc.Texture2D.MipLevels = 1;
+
+      HRESULT hrCreateShaderResourceView = pgpudevice->m_pdevice->CreateShaderResourceView(
+         m_ptextureOffscreen,
+         &srvDesc, &m_pshaderresourceview);
 
       if (FAILED(hrCreateShaderResourceView))
       {
@@ -289,10 +300,12 @@ namespace gpu_directx11
 
       }
 
-      D3D11_SAMPLER_DESC samp = {};
-      samp.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-      samp.AddressU = samp.AddressV = samp.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
-      pgpudevice->m_pdevice->CreateSamplerState(&samp, &m_psamplerstate);
+      D3D11_SAMPLER_DESC sampDesc = {};
+      sampDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+      sampDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
+      sampDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+      sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+      pgpudevice->m_pdevice->CreateSamplerState(&sampDesc, &m_psamplerstate);
 
       new_texture.set_new_texture();
 
