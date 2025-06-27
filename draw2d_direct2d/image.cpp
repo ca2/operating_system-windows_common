@@ -6,6 +6,7 @@
 #include "aura/graphics/image/context.h"
 #include "aura/graphics/image/icon.h"
 #include "aura/graphics/image/drawing.h"
+#include "bred/gpu/context_lock.h"
 
 
 namespace draw2d_direct2d
@@ -1091,6 +1092,8 @@ namespace draw2d_direct2d
       }
 
       auto pgraphics2d = m_pgraphics.cast < ::draw2d_direct2d::graphics>();
+
+      ::gpu::context_lock contextlock(pgraphics2d->m_pgpucontextCompositor);
 
       D2D1_SIZE_U size;
 

@@ -27,8 +27,8 @@
 #include "aura/windowing/window.h"
 #include "bred/gpu/approach.h"
 #include "bred/gpu/context.h"
+#include "bred/gpu/context_lock.h"
 #include "bred/gpu/device.h"
-#include "bred/gpu/lock.h"
 #include "bred/gpu/renderer.h"
 #include "bred/gpu/swap_chain.h"
 #include "bred/gpu/types.h"
@@ -155,9 +155,9 @@ namespace draw2d_direct2d
    void graphics::defer_set_size(const ::int_size& size)
    {
       _create_memory_graphics(size);
-      /*m_pgpucontext->_send([this, size]()
+      /*m_pgpucontextCompositor->_send([this, size]()
          {
-            m_pgpucontext->_send([this, size]()
+            m_pgpucontextCompositor->_send([this, size]()
                {
          });*/
    }
@@ -174,11 +174,11 @@ namespace draw2d_direct2d
 
       m_pdirect2d = ::direct2d::from_gpu_device(pgpudevice);
 
-      m_pgpucontext = pgpudevice->main_draw2d_context();
+      m_pgpucontextCompositor = pgpudevice->main_draw2d_context();
 
-      m_pgpucontext->m_pgpucompositor = this;
+      m_pgpucontextCompositor->m_pgpucompositor = this;
 
-      ::cast < ::dxgi_device_source > pdxgidevicesource = m_pgpucontext;
+      ::cast < ::dxgi_device_source > pdxgidevicesource = m_pgpucontextCompositor;
 
       m_pdevicecontext = m_pdirect2d->default_d2d1_device_context(pdxgidevicesource);
 
@@ -206,11 +206,11 @@ namespace draw2d_direct2d
 
       //create_memory_graphics({ 1920,1080 });
       
-      //m_pgpucontext->m_iOverrideFrame = 0;
+      //m_pgpucontextCompositor->m_iOverrideFrame = 0;
       //
       //bind_draw2d_compositor();
 
-      //m_pgpucontext->m_iOverrideFrame = -1;
+      //m_pgpucontextCompositor->m_iOverrideFrame = -1;
 
       set_ok_flag();
 
@@ -244,28 +244,53 @@ namespace draw2d_direct2d
 
       //auto pgpudevice = pgpuapproach->get_gpu_device();
 
-      //m_pgpucontext = pgpudevice->create_draw2d_context(::gpu::e_output_gpu_buffer, size);
+      //m_pgpucontextCompositor = pgpudevice->create_draw2d_context(::gpu::e_output_gpu_buffer, size);
 
       /*_create_memory_graphics(size);
 
-      m_pgpucontext->_send([this, size]()
+      m_pgpucontextCompositor->_send([this, size]()
          {
 
-            m_pgpucontext->create_offscreen_graphics_for_swap_chain_blitting(this, size);
+            m_pgpucontextCompositor->create_offscreen_graphics_for_swap_chain_blitting(this, size);
 
          });*/
 
    }
 
+   
+   void graphics::_create_from_dxgi_surface(int iIndex, int iLayerIndex, IDXGISurface* pdxgisurface)
+   {
+
+      auto& pd2d1rendertarget = m_d2d1rendertargeta.element_at_grow(iIndex).element_at_grow(iLayerIndex);
+
+      D2D1_RENDER_TARGET_PROPERTIES props = D2D1::RenderTargetProperties(
+         D2D1_RENDER_TARGET_TYPE_DEFAULT,
+         D2D1::PixelFormat(DXGI_FORMAT_B8G8R8A8_UNORM, D2D1_ALPHA_MODE_PREMULTIPLIED),
+         96.0f, 96.0f
+      );
+
+      HRESULT hrCreateDxgiSurfaceRenderTarget=
+         m_pdirect2d->d2d1_factory1()->CreateDxgiSurfaceRenderTarget(
+         pdxgisurface, &props, &pd2d1rendertarget);
+
+      ::defer_throw_hresult(hrCreateDxgiSurfaceRenderTarget);
+
+      m_pd2d1rendertarget = pd2d1rendertarget;
+
+      ::defer_throw_hresult(m_pd2d1rendertarget.as(m_pdevicecontext));
+
+      ::defer_throw_hresult(m_pdevicecontext.as(m_pdevicecontext1));
+
+   }
 
 
    void graphics::_create_memory_graphics(const ::int_size & size)
    {
 
-      if (m_pgpucontext)
+      if (m_pgpucontextCompositor)
       {
 
-         if (m_pgpucontext->m_rectangle.size() == size)
+         if (m_pgpucontextCompositor->m_rectangle.size() == size)
          {
 
             return;
@@ -302,17 +327,17 @@ namespace draw2d_direct2d
 
       auto pgpudevice = pgpuapproach->get_gpu_device();
 
-      m_pgpucontext = pgpudevice->create_draw2d_context(
+      m_pgpucontextCompositor = pgpudevice->create_draw2d_context(
          ::gpu::e_output_gpu_buffer,
          size);
 
       {
 
-         ::gpu::context_lock context_lock(m_pgpucontext);
+         ::gpu::context_lock context_lock(m_pgpucontextCompositor);
 
-         m_pgpucontext->m_pgpucompositor = this;
+         m_pgpucontextCompositor->m_pgpucompositor = this;
 
-         auto pdirect2d = ::direct2d::from_gpu_device(m_pgpucontext->m_pgpudevice);
+         auto pdirect2d = ::direct2d::from_gpu_device(m_pgpucontextCompositor->m_pgpudevice);
 
          initialize_direct2d_object(pdirect2d);
 
@@ -323,7 +348,7 @@ namespace draw2d_direct2d
       //m_pgpucontextDraw2d->m_pgpurenderer = pgpucontext->get_output_renderer();
       //{
 
-      //   m_pgpucontext->start_gpu_context(
+      //   m_pgpucontextCompositor->start_gpu_context(
       //      ::gpu::start_gpu_output_context_t
       //      {
       //         this,
@@ -334,10 +359,10 @@ namespace draw2d_direct2d
 
       //}
 
-      m_pgpucontext->_send([this, size]()
+      m_pgpucontextCompositor->_send([this, size]()
          {
 
-            ::gpu::context_lock context_lock(m_pgpucontext);
+            ::gpu::context_lock context_lock(m_pgpucontextCompositor);
             /*::direct2d::direct2d() = __allocate ::draw2d_direct2d::plugin();
 
             ::direct2d::get()->initialize();*/
@@ -361,7 +386,7 @@ namespace draw2d_direct2d
 
             ::direct2d_lock lock(pdirect2d);
 
-            ::cast < ::dxgi_device_source > pdxgidevicesource = m_pgpucontext;
+            ::cast < ::dxgi_device_source > pdxgidevicesource = m_pgpucontextCompositor;
 
             auto pdevicecontextDefault = pdirect2d->default_d2d1_device_context(pdxgidevicesource);
 
@@ -2566,7 +2591,7 @@ namespace draw2d_direct2d
 
          auto pd2d1contextImage = pgraphicsImage->m_pdevicecontext;
 
-         ::direct2d_lock direct2dlock(::direct2d::from_gpu_device(m_pgpucontext->m_pgpudevice));
+         ::direct2d_lock direct2dlock(::direct2d::from_gpu_device(m_pgpucontextCompositor->m_pgpudevice));
 
          HRESULT hrFlush = pd2d1contextImage->Flush();
 
@@ -6409,10 +6434,10 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::start_gpu_layer()
+   void graphics::start_gpu_layer(::gpu::frame * pgpuframe)
    {
 
-      ::draw2d_gpu::graphics::start_gpu_layer();
+      ::draw2d_gpu::graphics::start_gpu_layer(pgpuframe);
       //m_pgpucontextDraw2d->m_pgpudevice->start_stacking_layers();
       //m_pgpucontextDraw2d->m_pgpurenderer->start_layer(m_puserinteraction->raw_rectangle());
 
@@ -6421,10 +6446,10 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::end_gpu_layer()
+   ::gpu::frame * graphics::end_gpu_layer()
    {
 
-      ::draw2d_gpu::graphics::end_gpu_layer();
+      return ::draw2d_gpu::graphics::end_gpu_layer();
 
    }
 
@@ -6486,7 +6511,7 @@ namespace draw2d_direct2d
    
 
    //void graphics::__attach(ID2D1DeviceContext* pdevicecontext)
-   void graphics::_bind(int iIndex, IDXGISurface * pdxgisurface)
+   void graphics::_bind(int iIndex, int iLayerIndex, IDXGISurface * pdxgisurface)
    {
 
       if (::is_null(pdxgisurface))
@@ -6501,13 +6526,23 @@ namespace draw2d_direct2d
          throw ::exception(error_bad_argument, "what?!");
 
       }
+      if (iLayerIndex < 0 || iLayerIndex >= 8)
+      {
 
-      auto& pdxgisurfaceBound = m_dxgisurfaceaBound.element_at_grow(iIndex);
+         throw ::exception(error_bad_argument, "what?!");
 
-      auto& pd2d1bitmap = m_d2d1bitmapa.element_at_grow(iIndex);
+      }
+
+      auto& pdxgisurfaceBound = m_dxgisurfaceaBound.element_at_grow(iIndex).element_at_grow(iLayerIndex);
+
+      auto& pd2d1bitmap = m_d2d1bitmapa.element_at_grow(iIndex).element_at_grow(iLayerIndex);
+
+      auto & pd2d1rendertarget = m_d2d1rendertargeta.element_at_grow(iIndex).element_at_grow(iLayerIndex);
 
       if (pdxgisurfaceBound != pdxgisurface)
       {
+
+         pd2d1rendertarget.Release();
 
          pd2d1bitmap.Release();
 
@@ -6525,10 +6560,13 @@ namespace draw2d_direct2d
          ::defer_throw_hresult(hrDxgiSurfaceGetDesc);
 
          if (size.width == desc.Width
-            && size.height == desc.Height)
+            && size.height == desc.Height
+            && pd2d1rendertarget)
          {
 
-            __attach(pd2d1bitmap);
+            pdxgisurfaceBound = pdxgisurface;
+
+            __attach(iIndex, iLayerIndex, pd2d1bitmap);
 
             return;
 
@@ -6545,7 +6583,7 @@ namespace draw2d_direct2d
       //IDXGIDevice* dxgiDevice = nullptr;
 //      d3d11Device->QueryInterface(__uuidof(IDXGIDevice), (void**)&dxgiDevice);
 
-      ::cast < ::dxgi_device_source > pdxgidevicesource = m_pgpucontext;
+      ::cast < ::dxgi_device_source > pdxgidevicesource = m_pgpucontextCompositor;
 
       auto pd2d1device = m_pdirect2d->d2d1_device(pdxgidevicesource);
 
@@ -6565,21 +6603,34 @@ namespace draw2d_direct2d
     D2D1_BITMAP_OPTIONS_TARGET | D2D1_BITMAP_OPTIONS_CANNOT_DRAW,
     nullptr
       };
-
-      m_pdevicecontext1->CreateBitmapFromDxgiSurface(
+      
+      _create_from_dxgi_surface(iIndex, iLayerIndex, pdxgisurface);
+      
+      HRESULT hrCreateBitmapFromDxgiSurface = 
+         m_pdevicecontext1->CreateBitmapFromDxgiSurface(
          pdxgisurface, 
          &bitmapProps, 
          &pd2d1bitmap);
 
+      ::defer_throw_hresult(hrCreateBitmapFromDxgiSurface);
+
       pdxgisurfaceBound = pdxgisurface;
 
-      __attach(pd2d1bitmap);
+      __attach(iIndex, iLayerIndex, pd2d1bitmap);
 
    }
 
 
-   void graphics::__attach(ID2D1Bitmap1* pd2d1bitmap)
+   void graphics::__attach(int iIndex, int iLayerIndex, ID2D1Bitmap1* pd2d1bitmap)
    {
+
+      auto& pd2d1rendertarget = m_d2d1rendertargeta[iIndex][iLayerIndex];
+
+      m_pd2d1rendertarget = pd2d1rendertarget;
+
+      m_pd2d1rendertarget.as(m_pdevicecontext);
+
+      m_pd2d1rendertarget.as(m_pdevicecontext1);
 
       m_pdevicecontext->SetTarget(pd2d1bitmap);
 

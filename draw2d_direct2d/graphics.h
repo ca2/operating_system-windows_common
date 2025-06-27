@@ -31,13 +31,14 @@ namespace draw2d_direct2d
       };
 
       ::pointer < ::particle > m_pSwapChainForBlitting;
-      ::array < ::comptr < IDXGISurface > > m_dxgisurfaceaBound;
+      ::array < ::array < ::comptr < IDXGISurface > > > m_dxgisurfaceaBound;
 
       int                                                m_iLayerCount;
 
       //comptr<ID2D1Device>                                m_pdevice;
       comptr<ID2D1DeviceContext>                         m_pdevicecontext; // 0
       comptr<ID2D1RenderTarget>                          m_pd2d1rendertarget; // 1
+      array < array < comptr<ID2D1RenderTarget> > >      m_d2d1rendertargeta; // 1
       comptr<ID2D1BitmapRenderTarget>                    m_pbitmaprendertarget; // 2
       comptr<ID2D1DCRenderTarget>                        m_pdcrendertarget; // 3
       comptr<ID2D1DeviceContext1>                        m_pdevicecontext1; // 4
@@ -45,7 +46,7 @@ namespace draw2d_direct2d
       comptr<IDXGISurface>                               m_pdxgisurface;
       comptr < ID2D1Bitmap1>                              m_pd2d1bitmap;
 
-      ::array <comptr < ID2D1Bitmap1>   >           m_d2d1bitmapa;
+      ::array<::array <comptr < ID2D1Bitmap1>   > >          m_d2d1bitmapa;
 
       comptr<IDXGIAdapter>                               m_padapter;
       comptr<IDXGIFactory2>                              m_pfactory2;
@@ -95,8 +96,8 @@ namespace draw2d_direct2d
       void just_after_new_frame() override;
 
 
-      void start_gpu_layer() override;
-      void end_gpu_layer() override;
+      void start_gpu_layer(::gpu::frame * pgpuframe) override;
+      ::gpu::frame* end_gpu_layer() override;
 
 
       using ::draw2d::graphics::set;
@@ -153,6 +154,7 @@ namespace draw2d_direct2d
       //bool CreateIC(const ::string & lpszDriverName, const ::string & lpszDeviceName,
       //              const char * lpszOutput, const void * lpInitData) override;
       void CreateCompatibleDC(::draw2d::graphics * pgraphics) override;
+      virtual void _create_from_dxgi_surface(int iIndex, int iLayerIndex, IDXGISurface* pdxgisurface);
       void _create_memory_graphics(const ::int_size& size = {}) override;
       void defer_set_size(const ::int_size& size = {}) override;
 
@@ -620,9 +622,9 @@ namespace draw2d_direct2d
 
       //virtual void __attach(ID2D1DeviceContext* pdevicecontext);
 
-      void _bind(int iIndex, IDXGISurface* pdxgisurface) override;
+      void _bind(int iIndex, int iLayerIndex, IDXGISurface* pdxgisurface) override;
 
-      virtual void __attach(ID2D1Bitmap1* pd2d1bitmap);
+      virtual void __attach(int iIndex, int iLayerIndex, ID2D1Bitmap1* pd2d1bitmap);
 
 #ifdef WINDOWS_DESKTOP
       //virtual bool attach_hdc(HDC hdc) override;

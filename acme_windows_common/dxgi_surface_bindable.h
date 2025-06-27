@@ -15,7 +15,7 @@ public:
    ~dxgi_surface_bindable() override;
 
 
-   virtual void _bind(int iIndex, IDXGISurface * psurface);
+   virtual void _bind(int iIndex, int iLayerIndex, IDXGISurface * psurface);
 
 
 };

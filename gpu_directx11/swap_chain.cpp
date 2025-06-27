@@ -6,7 +6,7 @@
 #include "swap_chain.h"
 #include "texture.h"
 #include "windowing_win32/window.h"
-#include "bred/gpu/lock.h"
+#include "bred/gpu/context_lock.h"
 
 
 CLASS_DECL_DIRECTX11 bool IsRenderDocAttached();

@@ -193,7 +193,7 @@ namespace gpu_directx11
       void on_create_context(::gpu::device* pgpudevice, const ::gpu::enum_output& eoutput, ::windowing::window* pwindow, const ::int_size& size) override;
 
 
-      void __bind_draw2d_compositor(::gpu::compositor* pgpucompositor) override;
+      void __bind_draw2d_compositor(::gpu::compositor* pgpucompositor, ::gpu::layer* player) override;
 
       //VkDevice logicalDevice();
 

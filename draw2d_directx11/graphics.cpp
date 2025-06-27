@@ -27,8 +27,8 @@
 #include "aura/windowing/window.h"
 #include "bred/gpu/approach.h"
 #include "bred/gpu/context.h"
+#include "bred/gpu/context_lock.h"
 #include "bred/gpu/device.h"
-#include "bred/gpu/lock.h"
 #include "bred/gpu/renderer.h"
 #include "bred/gpu/swap_chain.h"
 #include "bred/gpu/types.h"
@@ -160,9 +160,9 @@ namespace draw2d_directx11
    void graphics::defer_set_size(const ::int_size& size)
    {
       _create_memory_graphics(size);
-      /*m_pgpucontext->_send([this, size]()
+      /*m_pgpucontextCompositor->_send([this, size]()
          {
-            m_pgpucontext->_send([this, size]()
+            m_pgpucontextCompositor->_send([this, size]()
                {
          });*/
    }
@@ -179,11 +179,11 @@ namespace draw2d_directx11
 
       //m_pdirectx11 = ::directx11::from_gpu_device(pgpudevice);
 
-      m_pgpucontext = pgpudevice->main_draw2d_context();
+      m_pgpucontextCompositor = pgpudevice->main_draw2d_context();
 
-      m_pgpucontext->m_pgpucompositor = this;
+      m_pgpucontextCompositor->m_pgpucompositor = this;
 
-      ::cast < ::dxgi_device_source > pdxgidevicesource = m_pgpucontext;
+      ::cast < ::dxgi_device_source > pdxgidevicesource = m_pgpucontextCompositor;
 
       //m_pdevicecontext = m_pdirectx11->default_d2d1_device_context(pdxgidevicesource);
 
@@ -211,11 +211,11 @@ namespace draw2d_directx11
 
       //create_memory_graphics({ 1920,1080 });
       
-      //m_pgpucontext->m_iOverrideFrame = 0;
+      //m_pgpucontextCompositor->m_iOverrideFrame = 0;
       //
       //bind_draw2d_compositor();
 
-      //m_pgpucontext->m_iOverrideFrame = -1;
+      //m_pgpucontextCompositor->m_iOverrideFrame = -1;
 
       set_ok_flag();
 
@@ -249,14 +249,14 @@ namespace draw2d_directx11
 
       //auto pgpudevice = pgpuapproach->get_gpu_device();
 
-      //m_pgpucontext = pgpudevice->create_draw2d_context(::gpu::e_output_gpu_buffer, size);
+      //m_pgpucontextCompositor = pgpudevice->create_draw2d_context(::gpu::e_output_gpu_buffer, size);
 
       /*_create_memory_graphics(size);
 
-      m_pgpucontext->_send([this, size]()
+      m_pgpucontextCompositor->_send([this, size]()
          {
 
-            m_pgpucontext->create_offscreen_graphics_for_swap_chain_blitting(this, size);
+            m_pgpucontextCompositor->create_offscreen_graphics_for_swap_chain_blitting(this, size);
 
          });*/
 
@@ -267,10 +267,10 @@ namespace draw2d_directx11
    void graphics::_create_memory_graphics(const ::int_size & size)
    {
 
-      if (m_pgpucontext)
+      if (m_pgpucontextCompositor)
       {
 
-         if (m_pgpucontext->m_rectangle.size() == size)
+         if (m_pgpucontextCompositor->m_rectangle.size() == size)
          {
 
             return;
@@ -307,17 +307,17 @@ namespace draw2d_directx11
 
       auto pgpudevice = pgpuapproach->get_gpu_device();
 
-      m_pgpucontext = pgpudevice->create_draw2d_context(
+      m_pgpucontextCompositor = pgpudevice->create_draw2d_context(
          ::gpu::e_output_gpu_buffer,
          size);
 
       {
 
-         ::gpu::context_lock context_lock(m_pgpucontext);
+         ::gpu::context_lock context_lock(m_pgpucontextCompositor);
 
-         m_pgpucontext->m_pgpucompositor = this;
+         m_pgpucontextCompositor->m_pgpucompositor = this;
 
-         //auto pdirectx11 = ::directx11::from_gpu_device(m_pgpucontext->m_pgpudevice);
+         //auto pdirectx11 = ::directx11::from_gpu_device(m_pgpucontextCompositor->m_pgpudevice);
 
          //initialize_directx11_object(pdirectx11);
 
@@ -328,7 +328,7 @@ namespace draw2d_directx11
       //m_pgpucontextDraw2d->m_pgpurenderer = pgpucontext->get_output_renderer();
       //{
 
-      //   m_pgpucontext->start_gpu_context(
+      //   m_pgpucontextCompositor->start_gpu_context(
       //      ::gpu::start_gpu_output_context_t
       //      {
       //         this,
@@ -339,10 +339,10 @@ namespace draw2d_directx11
 
       //}
 
-      m_pgpucontext->_send([this, size]()
+      m_pgpucontextCompositor->_send([this, size]()
          {
 
-            ::gpu::context_lock context_lock(m_pgpucontext);
+            ::gpu::context_lock context_lock(m_pgpucontextCompositor);
             /*::directx11::directx11() = __allocate ::draw2d_directx11::plugin();
 
             ::directx11::get()->initialize();*/
@@ -366,7 +366,7 @@ namespace draw2d_directx11
 
             ////::directx11_lock lock(pdirectx11);
 
-            //::cast < ::dxgi_device_source > pdxgidevicesource = m_pgpucontext;
+            //::cast < ::dxgi_device_source > pdxgidevicesource = m_pgpucontextCompositor;
 
             ////auto pdevicecontextDefault = pdirectx11->default_d2d1_device_context(pdxgidevicesource);
 
@@ -2635,7 +2635,7 @@ namespace draw2d_directx11
 
          //auto pd2d1contextImage = pgraphicsImage->m_pdevicecontext;
 
-         //::directx11_lock directx11lock(::directx11::from_gpu_device(m_pgpucontext->m_pgpudevice));
+         //::directx11_lock directx11lock(::directx11::from_gpu_device(m_pgpucontextCompositor->m_pgpudevice));
 
          //HRESULT hrFlush = pd2d1contextImage->Flush();
 
@@ -5474,7 +5474,7 @@ namespace draw2d_directx11
 
          //m_pdevicecontext->Clear();
 
-         ::cast < ::gpu_directx11::context > pcontext = m_pgpucontext;
+         ::cast < ::gpu_directx11::context > pcontext = m_pgpucontextCompositor;
 
          pcontext->m_pcontext->OMSetDepthStencilState(
             pcontext->depth_stencil_state_disabled(), 0);
@@ -6165,7 +6165,7 @@ VSOut main(VSIn input) {
 )hlsl";
 
          m_pshaderFillSolidRectangle->initialize_shader_with_block(
-            m_pgpucontext->m_pgpurenderer,
+            m_pgpucontextCompositor->m_pgpurenderer,
             ::as_block(pszVert),
             ::as_block(pszFrag),
             {}, {}, {}, {},
@@ -6184,8 +6184,8 @@ VSOut main(VSIn input) {
       m_m1.transform(r.top_left());
       m_m1.transform(r.bottom_right());
 
-      ::cast < ::gpu_directx11::context > pcontext = m_pgpucontext;
-      ::cast < ::gpu_directx11::device > pdevice = m_pgpucontext->m_pgpudevice;
+      ::cast < ::gpu_directx11::context > pcontext = m_pgpucontextCompositor;
+      ::cast < ::gpu_directx11::device > pdevice = m_pgpucontextCompositor->m_pgpudevice;
       auto pbuffer = CreateRectangleVertexBuffer(
          pdevice->m_pdevice,
          r.left(),
@@ -6579,7 +6579,7 @@ VSOut main(VSIn input) {
    }
 
 
-   void graphics::_bind(int iIndex, IDXGISurface* psurface)
+   void graphics::_bind(int iIndex, int iLayerIndex, IDXGISurface* psurface)
    {
 
 
@@ -6587,10 +6587,10 @@ VSOut main(VSIn input) {
    }
 
 
-   void graphics::start_gpu_layer()
+   void graphics::start_gpu_layer(::gpu::frame * pgpuframe)
    {
 
-      ::draw2d_gpu::graphics::start_gpu_layer();
+      ::draw2d_gpu::graphics::start_gpu_layer(pgpuframe);
       //m_pgpucontextDraw2d->m_pgpudevice->start_stacking_layers();
       //m_pgpucontextDraw2d->m_pgpurenderer->start_layer(m_puserinteraction->raw_rectangle());
 
@@ -6599,10 +6599,10 @@ VSOut main(VSIn input) {
    }
 
 
-   void graphics::end_gpu_layer()
+   ::gpu::frame * graphics::end_gpu_layer()
    {
 
-      ::draw2d_gpu::graphics::end_gpu_layer();
+      return ::draw2d_gpu::graphics::end_gpu_layer();
 
    }
 
@@ -6634,7 +6634,7 @@ VSOut main(VSIn input) {
 
                blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
-               ::cast < ::gpu_directx11::device > pgpudevice = m_pgpucontext->m_pgpudevice;
+               ::cast < ::gpu_directx11::device > pgpudevice = m_pgpucontextCompositor->m_pgpudevice;
 
                HRESULT hr = pgpudevice->m_pdevice->CreateBlendState(
                   &blendDesc,
@@ -6643,7 +6643,7 @@ VSOut main(VSIn input) {
 
             }
 
-            ::cast < ::gpu_directx11::context > pcontext = m_pgpucontext;
+            ::cast < ::gpu_directx11::context > pcontext = m_pgpucontextCompositor;
 
             {
 
@@ -6666,7 +6666,7 @@ VSOut main(VSIn input) {
                blendDesc.RenderTarget[0].BlendEnable = FALSE; // 🚫 no blending
                blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
-               ::cast < ::gpu_directx11::device > pgpudevice = m_pgpucontext->m_pgpudevice;
+               ::cast < ::gpu_directx11::device > pgpudevice = m_pgpucontextCompositor->m_pgpudevice;
 
                HRESULT hr = pgpudevice->m_pdevice->CreateBlendState(
                   &blendDesc,
@@ -6675,7 +6675,7 @@ VSOut main(VSIn input) {
 
             }
 
-            ::cast < ::gpu_directx11::context > pcontext = m_pgpucontext;
+            ::cast < ::gpu_directx11::context > pcontext = m_pgpucontextCompositor;
 
             {
 
@@ -6796,7 +6796,7 @@ VSOut main(VSIn input) {
 //      //IDXGIDevice* dxgiDevice = nullptr;
 ////      d3d11Device->QueryInterface(__uuidof(IDXGIDevice), (void**)&dxgiDevice);
 //
-//      ::cast < ::dxgi_device_source > pdxgidevicesource = m_pgpucontext;
+//      ::cast < ::dxgi_device_source > pdxgidevicesource = m_pgpucontextCompositor;
 //
 //      auto pd2d1device = m_pdirectx11->d2d1_device(pdxgidevicesource);
 //

@@ -16,9 +16,10 @@
 #include "acme/platform/application.h"
 #include "aura/graphics/image/image.h"
 #include "aura/user/user/interaction.h"
+#include "bred/gpu/command_buffer.h"
+#include "bred/gpu/context_lock.h"
 #include "bred/gpu/graphics.h"
 #include "bred/gpu/layer.h"
-#include "bred/gpu/lock.h"
 #include "bred/gpu/types.h"
 #include "gpu_directx11/descriptors.h"
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
@@ -808,7 +809,7 @@ namespace gpu_directx11
    }
 
 
-   void context::__bind_draw2d_compositor(::gpu::compositor* pgpucompositor)
+   void context::__bind_draw2d_compositor(::gpu::compositor* pgpucompositor, ::gpu::layer* player)
    {
 
       ::cast < ::dxgi_surface_bindable > pdxgisurfacebindable = pgpucompositor;
@@ -819,7 +820,7 @@ namespace gpu_directx11
 
       auto pdxgisurface = ptexture->__get_dxgi_surface();
 
-      pdxgisurfacebindable->_bind(iFrameIndex, pdxgisurface);
+      pdxgisurfacebindable->_bind(iFrameIndex, player->m_iLayerIndex, pdxgisurface);
 
    }
 
@@ -1432,7 +1433,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_TARGET
 
          m_pcontext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
          m_pcontext->Draw(3, 0); // Fullscreen triangle
-
+         
       }
       //}
 
@@ -1529,7 +1530,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_TARGET
 
          ////pdxgisurfacebindable->_bind(iFrameIndex, pdxgisurface);
 
-         __bind_draw2d_compositor(m_pgpucompositor);
+         __bind_draw2d_compositor(m_pgpucompositor, player);
 
          m_pgpucompositor->on_start_layer();
 
@@ -1546,7 +1547,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_TARGET
 
          m_pgpucompositor->on_end_layer();
 
-         __soft_unbind_draw2d_compositor(m_pgpucompositor);
+         __soft_unbind_draw2d_compositor(m_pgpucompositor, player);
 
          //::cast < device > pdevice = m_pgpudevice;
 

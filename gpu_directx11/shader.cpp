@@ -9,7 +9,7 @@
 #include "renderer.h"
 #include "texture.h"
 #include "offscreen_render_target_view.h"
-#include "bred/gpu/lock.h"
+#include "bred/gpu/context_lock.h"
 #include "bred/gpu/types.h"
 #include "acme_windows_common/hresult_exception.h"
 #include <d3dcompiler.h>

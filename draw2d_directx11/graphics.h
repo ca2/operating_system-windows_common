@@ -101,11 +101,11 @@ namespace draw2d_directx11
       void just_after_new_frame() override;
 
 
-      void _bind(int iIndex, IDXGISurface* psurface) override;
+      void _bind(int iIndex, int iLayerIndex, IDXGISurface* psurface) override;
 
 
-      void start_gpu_layer() override;
-      void end_gpu_layer() override;
+      void start_gpu_layer(::gpu::frame * pgpuframe) override;
+      ::gpu::frame * end_gpu_layer() override;
 
 
       using ::draw2d::graphics::set;
