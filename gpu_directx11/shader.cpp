@@ -187,6 +187,7 @@ namespace gpu_directx11
 
    }
 
+
    void shader::create_vertex_shader(const ::block& block)
    {
 

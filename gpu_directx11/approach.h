@@ -23,7 +23,7 @@ namespace gpu_directx11
       //VkInstance                       m_vkinstance;
 
 
-      //::cube::application_object::map				m_mapObjects;
+      //::graphics3d::application_object::map				m_mapObjects;
 
 
 
