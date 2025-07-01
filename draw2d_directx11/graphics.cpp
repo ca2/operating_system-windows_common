@@ -109,7 +109,7 @@ namespace draw2d_directx11
    ::gpu_directx11::context* graphics::gpu_context()
    {
 
-      return dynamic_cast <::gpu_directx11::context*>(::draw2d_gpu::graphics::gpu_context());
+      return dynamic_cast <::gpu_directx11::context*>(::gpu::graphics::gpu_context());
 
    }
 
@@ -180,7 +180,7 @@ namespace draw2d_directx11
    void graphics::create_for_window_draw2d(::user::interaction * puserinteraction, const ::int_size& size)
    {
 
-      ::draw2d_gpu::graphics::create_for_window_draw2d(puserinteraction, size);
+      ::gpu::graphics::create_for_window_draw2d(puserinteraction, size);
 
       auto pgpuapproach = m_papplication->get_gpu_approach();
 
@@ -1219,7 +1219,7 @@ namespace draw2d_directx11
 
    void graphics::_set(const ::geometry2d::matrix & matrix)
    {
-      ::draw2d_gpu::graphics::_set(matrix);
+      ::gpu::graphics::_set(matrix);
       //if (!m_pd2d1rendertarget)
       //{
 
@@ -6534,7 +6534,7 @@ VSOut main(VSIn input) {
 
       set_smooth_mode(::draw2d::e_smooth_mode_high);
 
-      ::draw2d_gpu::graphics::on_begin_draw();
+      ::gpu::graphics::on_begin_draw();
 
       //if (m_egraphics == ::e_graphics_draw)
       //{
@@ -6590,7 +6590,7 @@ VSOut main(VSIn input) {
 
       //}
 
-      ::draw2d_gpu::graphics::on_end_draw();
+      ::gpu::graphics::on_end_draw();
 
    }
 
@@ -6598,7 +6598,7 @@ VSOut main(VSIn input) {
    void graphics::just_after_new_frame()
    {
 
-      ::draw2d_gpu::graphics::just_after_new_frame();
+      ::gpu::graphics::just_after_new_frame();
 
    }
 
@@ -6614,7 +6614,7 @@ VSOut main(VSIn input) {
    void graphics::start_gpu_layer(::gpu::frame * pgpuframe)
    {
 
-      ::draw2d_gpu::graphics::start_gpu_layer(pgpuframe);
+      ::gpu::graphics::start_gpu_layer(pgpuframe);
       //m_pgpucontextDraw2d->m_pgpudevice->start_stacking_layers();
       //m_pgpucontextDraw2d->m_pgpurenderer->start_layer(m_puserinteraction->raw_rectangle());
 
@@ -6626,7 +6626,7 @@ VSOut main(VSIn input) {
    ::gpu::frame * graphics::end_gpu_layer()
    {
 
-      return ::draw2d_gpu::graphics::end_gpu_layer();
+      return ::gpu::graphics::end_gpu_layer();
 
    }
 

@@ -12,7 +12,7 @@ namespace draw2d_direct2d
 
 
    class CLASS_DECL_DRAW2D_DIRECT2D graphics :
-      virtual public ::draw2d_gpu::graphics,
+      virtual public ::gpu::graphics,
       virtual public ::direct2d::object,
       virtual public ::dxgi_surface_bindable
    {

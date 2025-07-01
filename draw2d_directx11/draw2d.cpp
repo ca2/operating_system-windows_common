@@ -106,7 +106,7 @@ namespace draw2d_directx11
    void draw2d::on_create_window(::windowing::window* pwindow)
    {
 
-      ::draw2d_gpu::draw2d::on_create_window(pwindow);
+      ::gpu::draw2d::on_create_window(pwindow);
 
       ///auto rectangleWindow = pwindow->get_window_rectangle();
       

@@ -10,7 +10,7 @@ namespace draw2d_directx11
 
 
    class CLASS_DECL_DRAW2D_DIRECTX11 draw2d :
-      virtual public ::draw2d_gpu::draw2d,
+      virtual public ::gpu::draw2d,
       virtual public ::directx11::object
    {
    public:

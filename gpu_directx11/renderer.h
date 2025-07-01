@@ -191,7 +191,7 @@ namespace gpu_directx11
       //void _on_begin_render(::gpu::frame* pframeParam) override;
       //void _on_end_render(::gpu::frame* pframeParam) override;
       void endFrame() override;
-      void endDraw(::draw2d_gpu::graphics * pgraphics, ::user::interaction * puserinteraction) override;
+      void endDraw(::gpu::graphics * pgraphics, ::user::interaction * puserinteraction) override;
 
 
       void copy(::gpu::texture* pgputextureTarget, ::gpu::texture* pgputextureSource) override;

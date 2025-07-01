@@ -10,7 +10,7 @@ namespace draw2d_direct2d
 
 
    class CLASS_DECL_DRAW2D_DIRECT2D draw2d :
-      virtual public ::draw2d_gpu::draw2d,
+      virtual public ::gpu::draw2d,
       virtual public ::direct2d::object
    {
    public:

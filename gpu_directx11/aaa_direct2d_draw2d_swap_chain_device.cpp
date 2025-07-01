@@ -255,7 +255,7 @@
 //   }
 //
 //
-//   void direct2d_draw2d_swap_chain_gpu_device::endDraw(::draw2d_gpu::graphics * pgraphics, ::user::interaction* puserinteraction, ::gpu::renderer* prendererSrc)
+//   void direct2d_draw2d_swap_chain_gpu_device::endDraw(::gpu::graphics * pgraphics, ::user::interaction* puserinteraction, ::gpu::renderer* prendererSrc)
 //   {
 //
 //      ::cast < ::draw2d_direct2d::graphics > pgraphicsDirect2d = pgraphics;
