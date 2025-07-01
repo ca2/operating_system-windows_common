@@ -15,10 +15,17 @@ namespace gpu_directx11
    public:
 
 
+      
+
       input_layout();
       ~input_layout();
 
-      ::comptr <ID3D11InputLayout > m_pd3d11inputlayout;
+
+      //void on_initialize_input_layout() override;
+
+
+
+      ::comptr <ID3D11InputLayout > _get_d3d11_input_layout(ID3DBlob* pblobShader);
 
 
    };

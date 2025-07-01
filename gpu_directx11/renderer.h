@@ -96,8 +96,8 @@ namespace gpu_directx11
       //::array<VkCommandBuffer>	commandBuffers;
       //VkExtent2D m_extentRenderer;
       //int currentFrameIndex = 0;
-      bool isFrameStarted = false;
-      bool m_bNeedToRecreateSwapChain = false;
+      //bool isFrameStarted = false;
+      //bool m_bNeedToRecreateSwapChain = false;
       //bool m_bOffScreen = true;
       //renderer(VkWindow &window, context * pvkcdevice);
 
@@ -149,7 +149,7 @@ namespace gpu_directx11
       float getAspectRatio() const;
     
 
-      bool isFrameInProgress() const { return isFrameStarted; }
+      //bool isFrameInProgress() const { return isFrameStarted; }
 
 
       //VkCommandBuffer getCurrentCommandBuffer() const {
@@ -177,9 +177,9 @@ namespace gpu_directx11
 
    //public:
 
-      void createCommandBuffers();
+      void create_command_buffers() override;
 
-      void freeCommandBuffers();
+      void free_command_buffers() override;
       //void recreateSwapchain();
       //void set_size(const ::int_size & size) override;
 

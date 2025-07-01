@@ -1134,8 +1134,7 @@ float4 main(float2 uv : TEXCOORD) : SV_TARGET {
             {},
             {},
             {},
-            {},
-            copy_using_shader_input_layout_properties()
+            input_layout(copy_using_shader_input_layout_properties())
 
          );
 

@@ -1767,14 +1767,7 @@ namespace gpu_directx11
    void device::on_top_end_frame()
    {
 
-      auto procedureaOnTopFrameEnd = ::transfer(m_procedureaOnTopFrameEnd);
-
-      for (auto& procedure : procedureaOnTopFrameEnd)
-      {
-
-         procedure();
-
-      }
+      gpu::device::on_top_end_frame();
 
    }
 

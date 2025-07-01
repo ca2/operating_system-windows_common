@@ -101,6 +101,9 @@
     <ClInclude Include="input_layout.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="context_object.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="framework.cpp">
@@ -188,6 +191,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="input_layout.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="context_object.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

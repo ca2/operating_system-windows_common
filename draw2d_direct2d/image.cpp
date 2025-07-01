@@ -1093,7 +1093,7 @@ namespace draw2d_direct2d
 
       auto pgraphics2d = m_pgraphics.cast < ::draw2d_direct2d::graphics>();
 
-      ::gpu::context_lock contextlock(pgraphics2d->m_pgpucontextCompositor);
+      ::gpu::context_lock contextlock(pgraphics2d->gpu_context());
 
       D2D1_SIZE_U size;
 

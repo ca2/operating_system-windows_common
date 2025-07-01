@@ -56,6 +56,8 @@ namespace gpu_directx11
 
    class shader;
 
+   class context_object;
+
 
 } // namespace gpu_directx11
 

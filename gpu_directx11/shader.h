@@ -20,6 +20,7 @@ namespace gpu_directx11
 
       ::comptr < ID3D11PixelShader> m_ppixelshader;
 
+      ::comptr <ID3D11InputLayout > m_pd3d11inputlayout;
       
       comptr < ID3D11Buffer> m_pbufferPushConstants;
       int m_iSizePushConstants = -1;

@@ -32,6 +32,7 @@
 #include "bred/gpu/renderer.h"
 #include "bred/gpu/swap_chain.h"
 #include "bred/gpu/types.h"
+#include "bred/graphics3d/types.h"
 #include "gpu_directx11/context.h"
 #include "gpu_directx11/device.h"
 #include "gpu_directx11/renderer.h"
@@ -101,6 +102,14 @@ namespace draw2d_directx11
    {
 
       destroy();
+
+   }
+
+
+   ::gpu_directx11::context* graphics::gpu_context()
+   {
+
+      return dynamic_cast <::gpu_directx11::context*>(::draw2d_gpu::graphics::gpu_context());
 
    }
 
@@ -179,11 +188,13 @@ namespace draw2d_directx11
 
       //m_pdirectx11 = ::directx11::from_gpu_device(pgpudevice);
 
-      m_pgpucontextCompositor = pgpudevice->main_draw2d_context();
+      auto pgpucontextNew = pgpudevice->main_draw2d_context();
 
-      m_pgpucontextCompositor->m_pgpucompositor = this;
+      pgpucontextNew->m_pgpucompositor = this;
 
-      ::cast < ::dxgi_device_source > pdxgidevicesource = m_pgpucontextCompositor;
+      set_gpu_context(pgpucontextNew);
+
+      ::cast < ::dxgi_device_source > pdxgidevicesource = pgpucontextNew;
 
       //m_pdevicecontext = m_pdirectx11->default_d2d1_device_context(pdxgidevicesource);
 
@@ -267,10 +278,12 @@ namespace draw2d_directx11
    void graphics::_create_memory_graphics(const ::int_size & size)
    {
 
-      if (m_pgpucontextCompositor)
+      auto pcontext = gpu_context();
+
+      if (pcontext)
       {
 
-         if (m_pgpucontextCompositor->m_rectangle.size() == size)
+         if (pcontext->m_rectangle.size() == size)
          {
 
             return;
@@ -307,15 +320,19 @@ namespace draw2d_directx11
 
       auto pgpudevice = pgpuapproach->get_gpu_device();
 
-      m_pgpucontextCompositor = pgpudevice->create_draw2d_context(
+      auto pgpucontextNew = pgpudevice->create_draw2d_context(
          ::gpu::e_output_gpu_buffer,
          size);
 
+      set_gpu_context(pgpucontextNew);
+
+      pcontext = gpu_context();
+
       {
 
-         ::gpu::context_lock context_lock(m_pgpucontextCompositor);
+         ::gpu::context_lock context_lock(pcontext);
 
-         m_pgpucontextCompositor->m_pgpucompositor = this;
+         pcontext->m_pgpucompositor = this;
 
          //auto pdirectx11 = ::directx11::from_gpu_device(m_pgpucontextCompositor->m_pgpudevice);
 
@@ -339,10 +356,14 @@ namespace draw2d_directx11
 
       //}
 
-      m_pgpucontextCompositor->_send([this, size]()
+      //auto pcontext = gpu_context();
+
+      pcontext->_send([this, size]()
          {
 
-            ::gpu::context_lock context_lock(m_pgpucontextCompositor);
+            auto pcontext = gpu_context();
+
+            ::gpu::context_lock context_lock(pcontext);
             /*::directx11::directx11() = __allocate ::draw2d_directx11::plugin();
 
             ::directx11::get()->initialize();*/
@@ -2147,10 +2168,10 @@ namespace draw2d_directx11
    }
 
 
-   BEGIN_GPU_PROPERTIES(fill_rectangle_shader)
-      GPU_PROPERTY("position", ::gpu::e_type_seq2)
-      GPU_PROPERTY("color", ::gpu::e_type_seq4)
-      END_GPU_PROPERTIES()
+   //BEGIN_GPU_PROPERTIES(fill_rectangle_shader)
+   //   GPU_PROPERTY("position", ::gpu::e_type_seq2)
+   //   GPU_PROPERTY("color", ::gpu::e_type_seq4)
+   //   END_GPU_PROPERTIES()
 
       struct fill_rectangle_Vertex
    {
@@ -5474,7 +5495,7 @@ namespace draw2d_directx11
 
          //m_pdevicecontext->Clear();
 
-         ::cast < ::gpu_directx11::context > pcontext = m_pgpucontextCompositor;
+         auto pcontext = gpu_context();
 
          pcontext->m_pcontext->OMSetDepthStencilState(
             pcontext->depth_stencil_state_disabled(), 0);
@@ -6164,13 +6185,14 @@ VSOut main(VSIn input) {
          }
 )hlsl";
 
+         auto pcontext = gpu_context();
+
          m_pshaderFillSolidRectangle->initialize_shader_with_block(
-            m_pgpucontextCompositor->m_pgpurenderer,
+            pcontext->m_pgpurenderer,
             ::as_block(pszVert),
             ::as_block(pszFrag),
-            {}, {}, {}, {},
-            fill_rectangle_shader_properties()
-
+            {}, {}, {}, 
+            pcontext->input_layout(::graphics3d::sequence2_uv_properties())
          );
 
          //fill_rectangle_shader
@@ -6184,8 +6206,10 @@ VSOut main(VSIn input) {
       m_m1.transform(r.top_left());
       m_m1.transform(r.bottom_right());
 
-      ::cast < ::gpu_directx11::context > pcontext = m_pgpucontextCompositor;
-      ::cast < ::gpu_directx11::device > pdevice = m_pgpucontextCompositor->m_pgpudevice;
+      auto pcontext = gpu_context();
+
+      ::cast < ::gpu_directx11::device > pdevice = pcontext->m_pgpudevice;
+
       auto pbuffer = CreateRectangleVertexBuffer(
          pdevice->m_pdevice,
          r.left(),
@@ -6634,7 +6658,9 @@ VSOut main(VSIn input) {
 
                blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
-               ::cast < ::gpu_directx11::device > pgpudevice = m_pgpucontextCompositor->m_pgpudevice;
+               auto pcontext = gpu_context();
+
+               ::cast < ::gpu_directx11::device > pgpudevice = pcontext->m_pgpudevice;
 
                HRESULT hr = pgpudevice->m_pdevice->CreateBlendState(
                   &blendDesc,
@@ -6643,7 +6669,7 @@ VSOut main(VSIn input) {
 
             }
 
-            ::cast < ::gpu_directx11::context > pcontext = m_pgpucontextCompositor;
+            auto pcontext = gpu_context();
 
             {
 
@@ -6666,7 +6692,9 @@ VSOut main(VSIn input) {
                blendDesc.RenderTarget[0].BlendEnable = FALSE; // 🚫 no blending
                blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
-               ::cast < ::gpu_directx11::device > pgpudevice = m_pgpucontextCompositor->m_pgpudevice;
+               auto pcontext = gpu_context();
+
+               ::cast < ::gpu_directx11::device > pgpudevice = pcontext->m_pgpudevice;
 
                HRESULT hr = pgpudevice->m_pdevice->CreateBlendState(
                   &blendDesc,
@@ -6675,7 +6703,7 @@ VSOut main(VSIn input) {
 
             }
 
-            ::cast < ::gpu_directx11::context > pcontext = m_pgpucontextCompositor;
+            auto pcontext = gpu_context();
 
             {
 

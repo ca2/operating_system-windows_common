@@ -80,7 +80,8 @@ namespace draw2d_directx11
       graphics();
       ~graphics() override;
 
-
+      ::gpu_directx11::context* gpu_context();
+    
 
       void gpu_layer_on_after_begin_render() override;
       void gpu_layer_on_before_end_render() override;

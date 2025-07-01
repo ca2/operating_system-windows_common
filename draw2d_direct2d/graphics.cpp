@@ -174,11 +174,13 @@ namespace draw2d_direct2d
 
       m_pdirect2d = ::direct2d::from_gpu_device(pgpudevice);
 
-      m_pgpucontextCompositor = pgpudevice->main_draw2d_context();
+      auto pgpucontextNew = pgpudevice->main_draw2d_context();
 
-      m_pgpucontextCompositor->m_pgpucompositor = this;
+      pgpucontextNew->m_pgpucompositor = this;
 
-      ::cast < ::dxgi_device_source > pdxgidevicesource = m_pgpucontextCompositor;
+      set_gpu_context(pgpucontextNew);
+
+      ::cast < ::dxgi_device_source > pdxgidevicesource = gpu_context();
 
       m_pdevicecontext = m_pdirect2d->default_d2d1_device_context(pdxgidevicesource);
 
@@ -287,10 +289,12 @@ namespace draw2d_direct2d
    void graphics::_create_memory_graphics(const ::int_size & size)
    {
 
-      if (m_pgpucontextCompositor)
+      auto pcontext = gpu_context();
+
+      if (pcontext)
       {
 
-         if (m_pgpucontextCompositor->m_rectangle.size() == size)
+         if (pcontext->m_rectangle.size() == size)
          {
 
             return;
@@ -327,17 +331,21 @@ namespace draw2d_direct2d
 
       auto pgpudevice = pgpuapproach->get_gpu_device();
 
-      m_pgpucontextCompositor = pgpudevice->create_draw2d_context(
+      auto pgpucontextNew = pgpudevice->create_draw2d_context(
          ::gpu::e_output_gpu_buffer,
          size);
 
+      set_gpu_context(pgpucontextNew);
+
+      pcontext = gpu_context();
+
       {
 
-         ::gpu::context_lock context_lock(m_pgpucontextCompositor);
+         ::gpu::context_lock context_lock(pcontext);
 
-         m_pgpucontextCompositor->m_pgpucompositor = this;
+         pcontext->m_pgpucompositor = this;
 
-         auto pdirect2d = ::direct2d::from_gpu_device(m_pgpucontextCompositor->m_pgpudevice);
+         auto pdirect2d = ::direct2d::from_gpu_device(pcontext->m_pgpudevice);
 
          initialize_direct2d_object(pdirect2d);
 
@@ -359,10 +367,14 @@ namespace draw2d_direct2d
 
       //}
 
-      m_pgpucontextCompositor->_send([this, size]()
+      //auto pcontext = gpu_context();
+
+      pcontext->_send([this, size]()
          {
 
-            ::gpu::context_lock context_lock(m_pgpucontextCompositor);
+            auto pcontext = gpu_context();
+
+            ::gpu::context_lock context_lock(pcontext);
             /*::direct2d::direct2d() = __allocate ::draw2d_direct2d::plugin();
 
             ::direct2d::get()->initialize();*/
@@ -386,7 +398,9 @@ namespace draw2d_direct2d
 
             ::direct2d_lock lock(pdirect2d);
 
-            ::cast < ::dxgi_device_source > pdxgidevicesource = m_pgpucontextCompositor;
+            //auto pcontext = gpu_context();
+
+            ::cast < ::dxgi_device_source > pdxgidevicesource = pcontext;
 
             auto pdevicecontextDefault = pdirect2d->default_d2d1_device_context(pdxgidevicesource);
 
@@ -2591,7 +2605,9 @@ namespace draw2d_direct2d
 
          auto pd2d1contextImage = pgraphicsImage->m_pdevicecontext;
 
-         ::direct2d_lock direct2dlock(::direct2d::from_gpu_device(m_pgpucontextCompositor->m_pgpudevice));
+         auto pcontext = gpu_context();
+
+         ::direct2d_lock direct2dlock(::direct2d::from_gpu_device(pcontext->m_pgpudevice));
 
          HRESULT hrFlush = pd2d1contextImage->Flush();
 
@@ -6583,7 +6599,9 @@ namespace draw2d_direct2d
       //IDXGIDevice* dxgiDevice = nullptr;
 //      d3d11Device->QueryInterface(__uuidof(IDXGIDevice), (void**)&dxgiDevice);
 
-      ::cast < ::dxgi_device_source > pdxgidevicesource = m_pgpucontextCompositor;
+      auto pcontext = gpu_context();
+
+      ::cast < ::dxgi_device_source > pdxgidevicesource = pcontext;
 
       auto pd2d1device = m_pdirect2d->d2d1_device(pdxgidevicesource);
 

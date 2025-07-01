@@ -2,6 +2,7 @@
 #include "approach.h"
 #include "descriptors.h"
 #include "frame.h"
+#include "input_layout.h"
 #include "renderer.h"
 #include "texture.h"
 #include "offscreen_render_target_view.h"
@@ -116,7 +117,7 @@ namespace gpu_directx11
 
       //defer_layout();
 
-      createCommandBuffers();
+      create_command_buffers();
 
    }
 
@@ -124,7 +125,7 @@ namespace gpu_directx11
    renderer::~renderer()
    {
 
-      freeCommandBuffers();
+      free_command_buffers();
 
    }
 
@@ -314,7 +315,7 @@ namespace gpu_directx11
    }
 
 
-   void renderer::createCommandBuffers()
+   void renderer::create_command_buffers()
    {
 
       //commandBuffers.resize(render_target_view::MAX_FRAMES_IN_FLIGHT);
@@ -333,7 +334,7 @@ namespace gpu_directx11
    }
 
 
-   void renderer::freeCommandBuffers()
+   void renderer::free_command_buffers()
    {
 
       //vkFreeCommandBuffers(
@@ -841,7 +842,7 @@ namespace gpu_directx11
       if (!m_pshaderImageBlend)
       {
 
-         auto pshadervertexinput = __allocate  shader_vertex_input();
+         auto pinputlayoutEmpty = __øcreate <::gpu::input_layout >();
 
          //pshadervertexinput->m_bindings.add(
          //   {
@@ -868,7 +869,8 @@ namespace gpu_directx11
             as_memory_block(g_uaImageBlendFragmentShader),
             { ::gpu::shader::e_descriptor_set_slot_local },
             m_psetdescriptorlayoutImageBlend,
-            pshadervertexinput);
+            {},
+            pinputlayoutEmpty);
 
       }
 
@@ -883,7 +885,7 @@ namespace gpu_directx11
       if (!m_pshaderImageBlend)
       {
 
-         auto pshadervertexinput = __allocate  shader_vertex_input();
+         auto pinputlayoutEmpty = __øcreate< ::gpu::input_layout >();
 
          //pshadervertexinput->m_bindings.add(
          //   {
@@ -907,7 +909,8 @@ namespace gpu_directx11
             as_memory_block(g_uaImageBlendFragmentShader),
             { ::gpu::shader::e_descriptor_set_slot_local },
             m_psetdescriptorlayoutImageBlend,
-            pshadervertexinput);
+            {},
+            pinputlayoutEmpty);
 
       }
 

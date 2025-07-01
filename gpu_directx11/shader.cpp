@@ -5,7 +5,7 @@
 #include "shader.h"
 #include "context.h"
 #include "descriptors.h"
-//#include "lock.h"
+#include "input_layout.h"
 #include "renderer.h"
 #include "texture.h"
 #include "offscreen_render_target_view.h"
@@ -125,68 +125,6 @@ namespace gpu_directx11
    }
 
 
-   inline const char* input_layout_semantic_name_from_gpu_property_name(const ::scoped_string& scopedstr)
-   {
-
-      if (scopedstr.case_insensitive_equals("position"))
-      {
-
-         return "POSITION";
-
-      }
-      else if (scopedstr.case_insensitive_equals("color"))
-      {
-
-         return "COLOR";
-
-      }
-      else if (scopedstr.case_insensitive_equals("normal"))
-      {
-
-         return "NORMAL";
-
-      }
-      else if (scopedstr.case_insensitive_equals("uv"))
-      {
-
-         return "TEXCOORD";
-
-      }
-      else
-      {
-
-         throw ::exception(error_not_implemented, "please implement this missing implementation");
-
-      }
-
-   }
-
-
-   inline DXGI_FORMAT input_layout_format_from_gpu_property_type(const ::gpu::enum_type& etype)
-   {
-
-      switch (etype)
-      {
-      case ::gpu::e_type_seq2:
-         return DXGI_FORMAT_R32G32_FLOAT;
-      case ::gpu::e_type_seq3:
-         return DXGI_FORMAT_R32G32B32_FLOAT;
-      case ::gpu::e_type_seq4:
-         return DXGI_FORMAT_R32G32B32A32_FLOAT;
-      default:
-         throw ::exception(error_not_implemented, "please implement this missing implementation");
-      }
-
-   }
-
-
-   inline int input_layout_aligned_property_size(int i)
-   {
-
-      return (i + 3) & ~3;
-
-   }
-
 
    void shader::create_vertex_shader(const ::block& block)
    {
@@ -209,89 +147,70 @@ namespace gpu_directx11
 
       }
 
-      ::array < D3D11_INPUT_ELEMENT_DESC > layout;
+      //::array < D3D11_INPUT_ELEMENT_DESC > layout;
 
-      auto countInputLayout = m_propertiesInputLayout.count();
+      //auto countInputLayout = m_propertiesInputLayout.count();
 
-      if (countInputLayout > 0)
-      {
+      //if (countInputLayout > 0)
+      //{
 
-         int iSemanticIndex = 0;
-         int iInputSlot = 0;
-         D3D11_INPUT_CLASSIFICATION classification = D3D11_INPUT_PER_VERTEX_DATA;
-         UINT DataStepRate = 0;
-         int iOffset = 0;
-         int iNextOffset = 0;
+      //   int iSemanticIndex = 0;
+      //   int iInputSlot = 0;
+      //   D3D11_INPUT_CLASSIFICATION classification = D3D11_INPUT_PER_VERTEX_DATA;
+      //   UINT DataStepRate = 0;
+      //   int iOffset = 0;
+      //   int iNextOffset = 0;
 
-         for (::collection::index iInputLayout = 0; iInputLayout < countInputLayout; iInputLayout++)
-         {
+      //   for (::collection::index iInputLayout = 0; iInputLayout < countInputLayout; iInputLayout++)
+      //   {
 
-            auto pproperty = m_propertiesInputLayout.m_pproperties + iInputLayout;
+      //      auto pproperty = m_propertiesInputLayout.m_pproperties + iInputLayout;
 
-            auto name = pproperty->m_pszName;
-            auto type = pproperty->m_etype;
-            auto offset = iNextOffset;
-            iNextOffset = offset + input_layout_aligned_property_size(pproperty->get_item_size());
+      //      auto name = pproperty->m_pszName;
+      //      auto type = pproperty->m_etype;
+      //      auto offset = iNextOffset;
+      //      iNextOffset = offset + input_layout_aligned_property_size(pproperty->get_item_size());
 
-            D3D11_INPUT_ELEMENT_DESC desc{};
+      //      D3D11_INPUT_ELEMENT_DESC desc{};
 
-            desc.SemanticName = input_layout_semantic_name_from_gpu_property_name(name);
-            desc.SemanticIndex = iSemanticIndex;
-            desc.Format = input_layout_format_from_gpu_property_type(type);
-            desc.InputSlot = iInputSlot;
-            desc.AlignedByteOffset = offset;
-            desc.InputSlotClass = classification;
-            desc.InstanceDataStepRate = DataStepRate;
+      //      desc.SemanticName = input_layout_semantic_name_from_gpu_property_name(name);
+      //      desc.SemanticIndex = iSemanticIndex;
+      //      desc.Format = input_layout_format_from_gpu_property_type(type);
+      //      desc.InputSlot = iInputSlot;
+      //      desc.AlignedByteOffset = offset;
+      //      desc.InputSlotClass = classification;
+      //      desc.InstanceDataStepRate = DataStepRate;
 
-            layout.add(desc);
+      //      layout.add(desc);
 
-         }
+      //   }
 
-         //// Input layout
-         //D3D12_INPUT_ELEMENT_DESC layout[] = {
-         //    {"POSITION", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},
-         //    {"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 8, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},
-         //};
+      //   //// Input layout
+      //   //D3D12_INPUT_ELEMENT_DESC layout[] = {
+      //   //    {"POSITION", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},
+      //   //    {"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 8, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},
+      //   //};
 
-      }
+      //}
 
 
       ///::array < D3D11_INPUT_ELEMENT_DESC > layout;
 
-      UINT uOffset0 = offsetof(gpu::Vertex, position);
-      UINT uOffset1 = offsetof(gpu::Vertex, color);
-      UINT uOffset2 = offsetof(gpu::Vertex, normal);
-      UINT uOffset3 = offsetof(gpu::Vertex, uv);
+      //UINT uOffset0 = offsetof(gpu::Vertex, position);
+      //UINT uOffset1 = offsetof(gpu::Vertex, color);
+      //UINT uOffset2 = offsetof(gpu::Vertex, normal);
+      //UINT uOffset3 = offsetof(gpu::Vertex, uv);
       
       //layout.add({ "POSITION" , 0, DXGI_FORMAT_R32G32B32_FLOAT , 0, uOffset0, D3D11_INPUT_PER_VERTEX_DATA, 0 });
       //layout.add({ "COLOR"    , 0, DXGI_FORMAT_R32G32B32_FLOAT , 0, uOffset1, D3D11_INPUT_PER_VERTEX_DATA, 0 });
       //layout.add({ "NORMAL"   , 0, DXGI_FORMAT_R32G32B32_FLOAT , 0, uOffset2, D3D11_INPUT_PER_VERTEX_DATA, 0 });
       //layout.add({ "TEXCOORD" , 0, DXGI_FORMAT_R32G32_FLOAT    , 0, uOffset3, D3D11_INPUT_PER_VERTEX_DATA, 0 });
       
+      ::cast < input_layout > pinputlayout = m_pinputlayout;
 
-      auto data = layout.data();
-      auto size = layout.size();
+      m_pd3d11inputlayout = pinputlayout->_get_d3d11_input_layout(pblobShader);
 
-      if (size > 0)
-      {
 
-         //ID3D11InputLayout* inputLayout = nullptr;
-         hresult = pgpudevice->m_pdevice->CreateInputLayout(
-            data,
-            size,
-            pblobShader->GetBufferPointer(),
-            pblobShader->GetBufferSize(),
-            &m_pinputlayout
-         );
-
-         if (FAILED(hresult))
-         {
-
-            throw ::hresult_exception(hresult);
-
-         }
-
-      }
 
    }
 
@@ -398,7 +317,7 @@ namespace gpu_directx11
 
       //PipelineConfigInfo pipelineConfig{};
 
-      ::cast < shader_vertex_input > pshadervertexinput = m_pVertexInput;
+      //::cast < input_layout > pshadervertexinput = m_pinputlayout;
 
 
       pgpudevice->defer_shader_memory(m_memoryVertex, m_pathVertex);
@@ -407,8 +326,6 @@ namespace gpu_directx11
 
       create_vertex_shader(m_memoryVertex);
       create_pixel_shader(m_memoryFragment);
-
-
 
    }
 
@@ -562,7 +479,14 @@ namespace gpu_directx11
       if (m_pinputlayout)
       {
 
-         pgpucontext->m_pcontext->IASetInputLayout(m_pinputlayout);
+         if (!m_pd3d11inputlayout)
+         {
+
+            throw ::exception(error_wrong_state);
+
+         }
+
+         pgpucontext->m_pcontext->IASetInputLayout(m_pd3d11inputlayout);
 
       }
       else

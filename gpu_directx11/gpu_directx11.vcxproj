@@ -692,6 +692,7 @@
     <ClInclude Include="aaa_accumulation_render_pass.h" />
     <ClInclude Include="assimp.h" />
     <ClInclude Include="buffer.h" />
+    <ClInclude Include="context_object.h" />
     <ClInclude Include="cpu_buffer.h" />
     <ClInclude Include="context.h" />
     <ClInclude Include="debug.h" />
@@ -739,6 +740,7 @@
     </ClCompile>
     <ClCompile Include="assimp.cpp" />
     <ClCompile Include="buffer.cpp" />
+    <ClCompile Include="context_object.cpp" />
     <ClCompile Include="cpu_buffer.cpp" />
     <ClCompile Include="context.cpp" />
     <ClCompile Include="aaa_context_win32.cpp">
