@@ -11,7 +11,7 @@
 #include "graphics.h"
 #include "draw2d.h"
 #include "directx11/directx11.h"
-//#include "directx11_swap_chain.h"
+#include "bred/gpu/command_buffer.h"
 
 
 CLASS_DECL_AURA void init_draw2d_mutex();
@@ -33,7 +33,7 @@ __FACTORY_EXPORT void draw2d_directx11_factory(::factory::factory* pfactory)
    pfactory->add_factory_item < ::draw2d_directx11::graphics, ::draw2d::graphics >();
 
    pfactory->add_factory_item < ::draw2d_directx11::draw2d, ::draw2d::draw2d >();
-   pfactory->add_factory_item < ::directx11::directx11 >();
+   pfactory->add_factory_item < ::gpu::command_buffer >();
    //pfactory->add_factory_item < ::draw2d_directx11::directx11_swap_chain, ::gpu::swap_chain >();
 
 

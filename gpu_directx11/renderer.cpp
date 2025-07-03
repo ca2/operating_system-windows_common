@@ -9,6 +9,7 @@
 #include "physical_device.h"
 #include "swap_chain_render_target_view.h"
 #include "initializers.h"
+#include "bred/gpu/command_buffer.h"
 #include "bred/gpu/context_lock.h"
 #include "bred/gpu/cpu_buffer.h"
 #include "bred/gpu/render_state.h"
@@ -317,6 +318,17 @@ namespace gpu_directx11
 
    void renderer::create_command_buffers()
    {
+
+      m_commandbuffera.set_size(m_iDefaultFrameCount);
+
+      for(auto & pcommandbuffer : m_commandbuffera)
+      {
+         
+         __defer_construct(pcommandbuffer);
+         
+         pcommandbuffer->initialize_command_buffer(m_pgpurendertarget);
+
+      }
 
       //commandBuffers.resize(render_target_view::MAX_FRAMES_IN_FLIGHT);
 
@@ -1149,6 +1161,8 @@ namespace gpu_directx11
       
       m_prenderstate->on_happening(::gpu::e_happening_begin_frame);
 
+      isFrameStarted = true;
+
       return m_pgpurendertarget->m_pframe;
 
    }
@@ -1173,6 +1187,8 @@ namespace gpu_directx11
          this->do_sampling_to_cpu();
 
       }
+
+      isFrameStarted = false;
 
    }
 
