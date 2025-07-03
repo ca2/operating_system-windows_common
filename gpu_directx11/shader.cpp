@@ -208,7 +208,12 @@ namespace gpu_directx11
       
       ::cast < input_layout > pinputlayout = m_pinputlayout;
 
-      m_pd3d11inputlayout = pinputlayout->_get_d3d11_input_layout(pblobShader);
+      if (pinputlayout)
+      {
+
+         m_pd3d11inputlayout = pinputlayout->_get_d3d11_input_layout(pblobShader);
+
+      }
 
 
 

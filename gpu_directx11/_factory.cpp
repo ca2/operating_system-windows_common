@@ -12,6 +12,7 @@
 #include "swap_chain.h"
 #include "texture.h"
 #include "bred/gpu/command_buffer.h"
+#include "bred/gpu/layer.h"
 
 //BEGIN_FACTORY(gpu_directx11)
 //FACTORY_ITEM(::directx11::directx11)
@@ -42,6 +43,7 @@ __FACTORY_EXPORT void gpu_directx11_factory(::factory::factory * pfactory)
 
    pfactory->add_factory_item < ::gpu_directx11::input_layout, ::gpu::input_layout >();
    pfactory->add_factory_item < ::gpu::command_buffer >();
+   pfactory->add_factory_item < ::gpu::layer >();
 
 
 }
