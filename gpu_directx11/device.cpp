@@ -106,7 +106,7 @@ namespace gpu_directx11
       // than the API default. It is required for compatibility with Direct2D.
       unsigned int creationFlags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
 
-#if defined(__DEBUG)
+#if defined(_DEBUG)
 
       // If the project is in a debug build, enable debugging via SDK Layers with this flag.
       creationFlags |= D3D11_CREATE_DEVICE_DEBUG;

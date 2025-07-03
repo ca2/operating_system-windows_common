@@ -6191,8 +6191,8 @@ VSOut main(VSIn input) {
             pcontext->m_pgpurenderer,
             ::as_block(pszVert),
             ::as_block(pszFrag),
-            {}, {}, {}, 
-            pcontext->input_layout(::graphics3d::sequence2_uv_properties())
+            {}, {}, {},
+            pcontext->input_layout(::graphics3d::sequence2_color_properties())
          );
 
          //fill_rectangle_shader

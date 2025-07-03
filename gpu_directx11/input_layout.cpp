@@ -152,8 +152,10 @@ namespace gpu_directx11
 
          ::cast < device > pdevice = pcontext->m_pgpudevice;
 
+         auto pd3d11device = pdevice->m_pdevice;
+
          //ID3D11InputLayout* inputLayout = nullptr;
-         HRESULT hresult = pdevice->m_pdevice->CreateInputLayout(
+         HRESULT hresult = pd3d11device->CreateInputLayout(
             data,
             size,
             pblobShader->GetBufferPointer(),

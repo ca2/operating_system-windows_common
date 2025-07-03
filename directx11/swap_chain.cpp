@@ -15,8 +15,24 @@
 
 CLASS_DECL_DIRECTX11 bool IsRenderDocAttached()
 {
-   return GetModuleHandleA("renderdoc.dll") != nullptr;
+
+   return true;
+   
+   if (GetModuleHandleA("renderdoc.dll") != nullptr)
+   {
+
+      return true;
+
+   }
+   else
+   {
+
+      return false;
+
+   }
+
 }
+
 
 const char* fullscreen_vertex_shader = R"hlsl(// fullscreen_vs.hlsl
       struct VSOut {

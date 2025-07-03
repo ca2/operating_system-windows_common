@@ -1099,7 +1099,15 @@ namespace gpu_directx11
 
       ::cast < texture > ptexture = pgpurendertargetview->current_texture();
 
-      pgpucontext->m_pcontext->ClearRenderTargetView(ptexture->m_prendertargetview, clear);
+      if (!ptexture->m_prendertargetview)
+      {
+
+         ptexture->create_render_target_view();
+
+      }
+
+      pgpucontext->m_pcontext->ClearRenderTargetView(
+         ptexture->m_prendertargetview, clear);
 
    }
 
