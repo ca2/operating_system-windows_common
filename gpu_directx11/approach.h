@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "bred/gpu/approach.h"
+#include "bred/gpu/bred_approach.h"
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
 #define GLM_FORCE_LEFT_HANDED
 #include <glm/glm.hpp>
@@ -15,7 +15,7 @@ namespace gpu_directx11
 
 
    class CLASS_DECL_GPU_DIRECTX11 approach :
-      virtual public ::gpu::approach
+      virtual public ::gpu::bred_approach
    {
    public:
 
@@ -243,8 +243,6 @@ namespace gpu_directx11
       ~approach() override;
 
 
-      ::file::path shader_path(const ::file::path& pathShader) override;
-
 
       virtual void initialize(::particle * pparticle) override;
 
@@ -276,10 +274,7 @@ namespace gpu_directx11
 
 //      void engine_on_frame_context_initialization(::gpu::context* pgpucontext) override;
 
-      ::gpu::payload load_dds(const ::scoped_string & scopedstrImagePath) override;
-
-
-
+      void on_create_window(::windowing::window* pwindow) override;
 
    };
 

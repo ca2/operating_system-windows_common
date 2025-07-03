@@ -26,7 +26,7 @@ namespace draw2d_direct2d
       bool lock_device() override;
       void unlock_device() override;
 
-      void on_create_window(::windowing::window* pwindow) override;
+      //void on_create_window(::windowing::window* pwindow) override;
       
       void adjust_composited_window_styles(unsigned int& nExStyle, unsigned int& nStyle) override;
       

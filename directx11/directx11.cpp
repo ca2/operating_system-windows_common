@@ -4,7 +4,7 @@
 #include "acme/graphics/write_text/font_weight.h"
 #include "acme/prototype/geometry2d/rectangle.h"
 #include "acme_windows_common/hresult_exception.h"
-#include "bred/gpu/approach.h"
+#include "bred/gpu/bred_approach.h"
 #include "bred/gpu/device.h"
 #include "aura/windowing/window.h"
 

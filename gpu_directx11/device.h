@@ -287,6 +287,13 @@ namespace gpu_directx11
       void set_mat4(void* p, const ::glm::mat4& mat4) override;
 
 
+      ::file::path shader_path(const ::file::path& pathShader) override;
+
+
+      ::gpu::payload load_dds(const ::scoped_string& scopedstrImagePath) override;
+
+      
+
    };
 
 

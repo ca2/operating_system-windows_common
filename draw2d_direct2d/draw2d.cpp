@@ -103,16 +103,16 @@ namespace draw2d_direct2d
    }
 
 
-   void draw2d::on_create_window(::windowing::window* pwindow)
-   {
+   //void draw2d::on_create_window(::windowing::window* pwindow)
+   //{
 
-      ::gpu::draw2d::on_create_window(pwindow);
+   //   ::gpu::draw2d::on_create_window(pwindow);
 
-      ///auto rectangleWindow = pwindow->get_window_rectangle();
-      
-      //::direct2d::defer_initialize(pwindow, rectangleWindow);
+   //   ///auto rectangleWindow = pwindow->get_window_rectangle();
+   //   
+   //   //::direct2d::defer_initialize(pwindow, rectangleWindow);
 
-   }
+   //}
 
 
    void draw2d::adjust_composited_window_styles(unsigned int& nExStyle, unsigned int& nStyle)

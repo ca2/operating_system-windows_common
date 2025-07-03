@@ -3,7 +3,7 @@
 #include "font_enumeration.h"
 #include "directx11/directx11.h"
 #include "aura/graphics/write_text/font_enumeration_item.h"
-#include "bred/gpu/approach.h"
+#include "bred/gpu/bred_approach.h"
 #include <dwrite.h>
 
 
