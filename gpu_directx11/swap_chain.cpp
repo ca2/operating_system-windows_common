@@ -191,8 +191,6 @@ namespace gpu_directx11
 
          m_ptextureSwapChain->m_bShaderResourceView = false;
 
-         m_ptextureSwapChain->m_bDepthStencil = false;
-
          m_ptextureSwapChain->_initialize_gpu_texture(
             pgpurenderer,
             m_pdxgiswapchain1);

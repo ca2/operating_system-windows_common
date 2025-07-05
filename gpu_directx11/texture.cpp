@@ -24,7 +24,7 @@ namespace gpu_directx11
    }
 
 
-   void texture::initialize_gpu_texture(::gpu::renderer* prenderer, const ::int_rectangle& rectangleTarget) //, bool bCreateRenderTargetView, bool bCreateShaderResourceView)
+   void texture::initialize_image_texture(::gpu::renderer* prenderer, const ::int_rectangle& rectangleTarget, bool bWithDepth)
    {
 
       if (m_rectangleTarget == rectangleTarget
@@ -37,7 +37,7 @@ namespace gpu_directx11
 
       auto sizeCurrent = m_rectangleTarget.size();
 
-      ::gpu::texture::initialize_gpu_texture(prenderer, rectangleTarget);
+      ::gpu::texture::initialize_image_texture(prenderer, rectangleTarget, bWithDepth);
 
       if (sizeCurrent == m_rectangleTarget.size())
       {
@@ -86,7 +86,7 @@ namespace gpu_directx11
 
       }
 
-      if (m_bDepthStencil)
+      if (m_etype & ::gpu::texture::e_type_depth)
       {
 
          create_depth_resources();
