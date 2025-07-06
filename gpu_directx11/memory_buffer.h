@@ -33,9 +33,11 @@ namespace gpu_directx11
 
 
 
-      void initialize_memory_buffer(::gpu::context* pcontext, memsize size, ::gpu::memory_buffer::enum_type etype) override;
+      void on_initialize_memory_buffer() override;
+
 
       bool is_initialized() const override;
+
 
 
 

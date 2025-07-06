@@ -296,7 +296,7 @@ namespace gpu_directx11
          if (pmemorybuffer->m_bNew)
          {
 
-            pmemorybuffer->initialize_memory_buffer(pgpucontext, size, false);
+            pmemorybuffer->initialize_memory_buffer_with_context(pgpucontext, size, ::gpu::memory_buffer::e_type_constant_buffer);
 
          }
 

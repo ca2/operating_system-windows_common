@@ -3,7 +3,6 @@
 #include "memory_buffer.h"
 #include "context.h"
 #include "device.h"
-//#include "lock.h"
 #include "physical_device.h"
 #include "program.h"
 #include "renderer.h"
@@ -21,6 +20,7 @@
 #include "bred/gpu/graphics.h"
 #include "bred/gpu/layer.h"
 #include "bred/gpu/types.h"
+#include "bred/graphics3d/types.h"
 #include "gpu_directx11/descriptors.h"
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
 #define GLM_FORCE_LEFT_HANDED
@@ -1077,10 +1077,10 @@ namespace gpu_directx11
    }
 
 
-   BEGIN_GPU_PROPERTIES(copy_using_shader_input_layout)
-      GPU_PROPERTY("position", ::gpu::e_type_seq2)
-      GPU_PROPERTY("uv", ::gpu::e_type_seq2)
-   END_GPU_PROPERTIES()
+   //BEGIN_GPU_PROPERTIES(copy_using_shader_input_layout)
+   //   GPU_PROPERTY("position", ::gpu::e_type_seq2)
+   //   GPU_PROPERTY("uv", ::gpu::e_type_seq2)
+   //END_GPU_PROPERTIES()
 
 
    void context::copy_using_shader(::gpu::texture* pgputextureTarget, ::gpu::texture* pgputextureSource)
@@ -1134,7 +1134,7 @@ float4 main(float2 uv : TEXCOORD) : SV_TARGET {
             {},
             {},
             {},
-            input_layout(copy_using_shader_input_layout_properties())
+            input_layout<::graphics3d::sequence2_uv>()
 
          );
 
@@ -2382,7 +2382,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_TARGET
       ::cast < device > pgpudevice = m_pgpudevice;
 
       // GlobalUbo
-      cbd.ByteWidth = iGlobalUboSize;
+      cbd.ByteWidth = (iGlobalUboSize+15)&~15;
       pgpudevice->m_pdevice->CreateBuffer(&cbd, nullptr, &m_pbufferGlobalUbo);
 
       //for (int i = 0; i < m_uboBuffers.size(); i++)
