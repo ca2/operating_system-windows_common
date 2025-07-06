@@ -5989,115 +5989,57 @@ namespace draw2d_directx11
    double_size graphics::get_text_extent(const ::scoped_string & scopedstr, character_count iIndex)
    {
 
+      return gpu::graphics::get_text_extent(scopedstr, iIndex);
+
+
+
+      ////if (iIndex <= 0)
+      ////{
+
+      ////   size.cx() = 0;
+
+      ////   size.cy() = 0;
+
+      ////   //return true;
+
+      ////   return;
+
+      ////}
+
+      ////string str;
+
+      ////if (nCount < 0)
+      ////{
+
+      ////   nCount = strlen(lpszString) + nCount + 1;
+
+      ////}
+
+      //if (iIndex < 0)
+      //{
+
+      //   iIndex = scopedstr.size() + iIndex + 1;
+
+      //}
+
+      //if (iIndex > scopedstr.size())
+      //{
+
+      //   iIndex = scopedstr.size();
+
+      //}
+
       //if (iIndex <= 0)
       //{
 
-      //   size.cx() = 0;
-
-      //   size.cy() = 0;
-
-      //   //return true;
-
-      //   return;
+      //   return {};
 
       //}
 
-      //string str;
+      //auto range = scopedstr(0, iIndex);
 
-      //if (nCount < 0)
+      //if (m_pfont.is_null())
       //{
-
-      //   nCount = strlen(lpszString) + nCount + 1;
-
-      //}
-
-      if (iIndex < 0)
-      {
-
-         iIndex = scopedstr.size() + iIndex + 1;
-
-      }
-
-      if (iIndex > scopedstr.size())
-      {
-
-         iIndex = scopedstr.size();
-
-      }
-
-      if (iIndex <= 0)
-      {
-
-         return {};
-
-      }
-
-      auto range = scopedstr(0, iIndex);
-
-      if (m_pfont.is_null())
-      {
-
-         //return false;
-
-         throw ::exception(error_null_pointer);
-
-      }
-
-      //auto pfont = m_pfont->get_os_data < IDWriteTextFormat * >(this);
-
-      //if (pfont == nullptr)
-      //{
-
-      //   //return false;
-      //   throw ::exception(error_null_pointer);
-
-      //}
-
-      //synchronous_lock synchronouslock(this->synchronization());
-
-      //synchronous_lock synchronouslockFontTextMap(system()->draw2d()->write_text()->m_pparticleFontTextMapSynchronization);
-
-      //auto & text = m_pfont->m_mapFontText[range];
-
-      //if (text.m_bSize)
-      //{
-
-      //   return text.m_size;
-
-      //}
-
-      //if (text.m_wstr.is_empty())
-      //{
-
-      //   text.m_wstr = range;
-
-      //}
-
-      //::double_size size;
-
-      //comptr<IDWriteTextLayout> playout1;
-
-      //HRESULT hr;
-
-      //comptr<IDWriteTextLayout> playout;
-
-      //unsigned int uLength = (unsigned int)text.m_wstr.length();
-
-      //hr = m_pdirectx11->dwrite_factory()->CreateTextLayout(
-      //     text.m_wstr,                // The string to be laid out and formatted.
-      //     uLength,   // The length of the string.
-      //     pfont,    // The text format to apply to the string (contains font information, etc).
-      //     1024.f * 1024.f,               // The width of the on_layout box.
-      //     1024.f * 1024.f,        // The height of the on_layout box.
-      //     &playout  // The IDWriteTextLayout interface pointer.
-      //);
-
-      //if (playout == nullptr || FAILED(hr))
-      //{
-
-      //   size.cx() = 0;
-
-      //   size.cy() = 0;
 
       //   //return false;
 
@@ -6105,21 +6047,83 @@ namespace draw2d_directx11
 
       //}
 
-      //DWRITE_TEXT_METRICS m;
+      ////auto pfont = m_pfont->get_os_data < IDWriteTextFormat * >(this);
 
-      //playout->GetMetrics(&m);
+      ////if (pfont == nullptr)
+      ////{
 
-      //size.cx() = (double)(m.widthIncludingTrailingWhitespace * m_pfont->m_dFontWidth);
+      ////   //return false;
+      ////   throw ::exception(error_null_pointer);
 
-      //size.cy() = m.height;
+      ////}
 
-      //text.m_size = size;
+      ////synchronous_lock synchronouslock(this->synchronization());
 
-      //text.m_bSize = true;
+      ////synchronous_lock synchronouslockFontTextMap(system()->draw2d()->write_text()->m_pparticleFontTextMapSynchronization);
 
-      //return size;
+      ////auto & text = m_pfont->m_mapFontText[range];
 
-      return {};
+      ////if (text.m_bSize)
+      ////{
+
+      ////   return text.m_size;
+
+      ////}
+
+      ////if (text.m_wstr.is_empty())
+      ////{
+
+      ////   text.m_wstr = range;
+
+      ////}
+
+      ////::double_size size;
+
+      ////comptr<IDWriteTextLayout> playout1;
+
+      ////HRESULT hr;
+
+      ////comptr<IDWriteTextLayout> playout;
+
+      ////unsigned int uLength = (unsigned int)text.m_wstr.length();
+
+      ////hr = m_pdirectx11->dwrite_factory()->CreateTextLayout(
+      ////     text.m_wstr,                // The string to be laid out and formatted.
+      ////     uLength,   // The length of the string.
+      ////     pfont,    // The text format to apply to the string (contains font information, etc).
+      ////     1024.f * 1024.f,               // The width of the on_layout box.
+      ////     1024.f * 1024.f,        // The height of the on_layout box.
+      ////     &playout  // The IDWriteTextLayout interface pointer.
+      ////);
+
+      ////if (playout == nullptr || FAILED(hr))
+      ////{
+
+      ////   size.cx() = 0;
+
+      ////   size.cy() = 0;
+
+      ////   //return false;
+
+      ////   throw ::exception(error_null_pointer);
+
+      ////}
+
+      ////DWRITE_TEXT_METRICS m;
+
+      ////playout->GetMetrics(&m);
+
+      ////size.cx() = (double)(m.widthIncludingTrailingWhitespace * m_pfont->m_dFontWidth);
+
+      ////size.cy() = m.height;
+
+      ////text.m_size = size;
+
+      ////text.m_bSize = true;
+
+      ////return size;
+
+      //return {};
 
    }
 
@@ -6128,16 +6132,7 @@ namespace draw2d_directx11
    double_size graphics::get_text_extent(const ::scoped_string & scopedstr)
    {
 
-      //if (nCount < 0)
-      //{
-
-      //   nCount = strlen(lpszString) + nCount + 1;
-
-      //}
-
-      //return get_text_extent(size, lpszString, nCount, nCount);
-
-      return get_text_extent(scopedstr, scopedstr.size());
+      return gpu::graphics::get_text_extent(scopedstr);
 
    }
 

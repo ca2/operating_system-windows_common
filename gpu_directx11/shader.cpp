@@ -6,6 +6,7 @@
 #include "context.h"
 #include "descriptors.h"
 #include "input_layout.h"
+#include "memory_buffer.h"
 #include "renderer.h"
 #include "texture.h"
 #include "offscreen_render_target_view.h"
@@ -237,75 +238,6 @@ namespace gpu_directx11
    }
 
 
-   //void shader::_create_pipeline_layout(int iSize)
-   //{
-
-   //   ::cast < context > pgpucontext = m_pgpurenderer->m_pgpucontext;
-
-   //   ::cast < device > pgpudevice = pgpucontext->m_pgpudevice;
-
-   //   //VkPushConstantRange pushConstantRange{};
-   //   //pushConstantRange.stageFlags = VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT;
-   //   //pushConstantRange.offset = 0;
-   //   ////pushConstantRange.size = sizeof(PointLightPushConstants);
-   //   //pushConstantRange.size = iSize;
-
-   //   //::array<VkDescriptorSetLayout> descriptorSetLayouts;
-
-   //   //if (m_edescriptorsetslota.contains(e_descriptor_set_slot_global))
-   //   //{
-
-   //   //   auto globalSetLayout = pgpucontext->m_psetdescriptorlayoutGlobal->getDescriptorSetLayout();
-
-   //   //   descriptorSetLayouts.add(globalSetLayout);
-
-   //   //}
-
-   //   //if (m_pLocalDescriptorSet)
-   //   //{
-
-   //   //   ::cast < ::gpu_directx11::set_descriptor_layout > pset = m_pLocalDescriptorSet;
-
-   //   //   auto setLayout = pset->getDescriptorSetLayout();
-
-   //   //   descriptorSetLayouts.add(setLayout);
-
-   //   //}
-
-   //   //VkPipelineLayoutCreateInfo pipelineLayoutInfo{};
-   //   //pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-   //   //pipelineLayoutInfo.setLayoutCount = static_cast<uint32_t>(descriptorSetLayouts.size());
-   //   //pipelineLayoutInfo.pSetLayouts = descriptorSetLayouts.data();
-
-   //   //if (iSize > 0)
-   //   //{
-   //   //   pipelineLayoutInfo.pushConstantRangeCount = 1;
-   //   //   pipelineLayoutInfo.pPushConstantRanges = &pushConstantRange;
-   //   //}
-   //   //else
-   //   //{
-   //   //   pipelineLayoutInfo.pushConstantRangeCount = 0;
-   //   //   pipelineLayoutInfo.pPushConstantRanges = NULL;
-
-
-   //   //}
-
-   //   ////pipelineLayoutInfo.pPushConstantRanges = nullptr;
-
-   //   //if (vkCreatePipelineLayout(
-   //   //   pgpucontext->logicalDevice(),
-   //   //   &pipelineLayoutInfo,
-   //   //   nullptr,
-   //   //   &m_vkpipelinelayout) !=
-   //   //   VK_SUCCESS)
-   //   //{
-
-   //   //   throw ::exception(error_failed, "failed to create pipeline layout!");
-
-   //   //}
-
-   //}
-
 
    void shader::on_initialize_shader()
    {
@@ -334,6 +266,75 @@ namespace gpu_directx11
 
    }
 
+
+   void shader::on_set_constant_buffer(const ::scoped_string& scopedstrName)
+   {
+
+      auto p1 = m_mapConstantBuffer.plookup(scopedstrName);
+
+      if(p1)
+      {
+
+         auto& constantbuffer = p1->m_element2;
+ 
+         ::cast <context> pgpucontext = m_pgpurenderer->m_pgpucontext;
+
+         auto size = p1->m_element2.m_memory.size();
+ 
+         auto & poolmemorybuffer = pgpucontext->m_mapPoolMemoryBuffer[size];
+
+         if (!poolmemorybuffer.m_ppoolgroup)
+         {
+
+            poolmemorybuffer.m_ppoolgroup = pgpucontext->m_pgpudevice->frame_pool_group(
+               m_pgpurenderer->m_pgpurendertarget->get_frame_index());
+
+         }
+
+         ::cast < ::gpu_directx11::memory_buffer > pmemorybuffer = poolmemorybuffer.get();
+
+         if (pmemorybuffer->m_bNew)
+         {
+
+            pmemorybuffer->initialize_memory_buffer(pgpucontext, size, false);
+
+         }
+
+         pmemorybuffer->assign(p1->m_element2.m_memory);
+
+
+         
+         //D3D11_MAPPED_SUBRESOURCE mapped;
+         //pgpucontext->m_pcontext->Map(pd3d11buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
+         //memcpy(mapped.pData, p1->m_element2.m_memory.data(), p1->m_element2.m_memory.size());
+         //pgpucontext->m_pcontext->Unmap(pd3d11buffer, 0);
+
+         if (constantbuffer.m_i1FragmentShader >= 0
+            && constantbuffer.m_i2FragmentShader >= 0)
+         {
+
+            pgpucontext->m_pcontext->PSSetConstantBuffers(
+               constantbuffer.m_i1FragmentShader, 
+               constantbuffer.m_i2FragmentShader,
+               pmemorybuffer->m_pbuffer.pp());
+
+         }
+
+
+         if (constantbuffer.m_i1VertexShader >= 0
+            && constantbuffer.m_i2VertexShader >= 0)
+         {
+
+            pgpucontext->m_pcontext->VSSetConstantBuffers(
+               constantbuffer.m_i1VertexShader,
+               constantbuffer.m_i2VertexShader,
+               pmemorybuffer->m_pbuffer.pp());
+
+         }
+
+      }
+
+   }
 
    void shader::bind(::gpu::texture* pgputextureTarget, ::gpu::texture* pgputextureSource)
    {

@@ -6125,7 +6125,7 @@ namespace draw2d_direct2d
    //}
 
 
-   void graphics::TextOutRaw(double x, double y, const ::scoped_string & scopedstr)
+   void graphics::text_out(double x, double y, const ::scoped_string & scopedstr)
    {
 
       if (scopedstr.is_empty())

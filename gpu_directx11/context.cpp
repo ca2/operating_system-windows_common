@@ -1,6 +1,6 @@
 #include "framework.h"
 #include "approach.h"
-#include "buffer.h"
+#include "memory_buffer.h"
 #include "context.h"
 #include "device.h"
 //#include "lock.h"

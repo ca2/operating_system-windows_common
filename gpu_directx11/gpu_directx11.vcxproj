@@ -691,7 +691,7 @@
   <ItemGroup>
     <ClInclude Include="aaa_accumulation_render_pass.h" />
     <ClInclude Include="assimp.h" />
-    <ClInclude Include="buffer.h" />
+    <ClInclude Include="memory_buffer.h" />
     <ClInclude Include="context_object.h" />
     <ClInclude Include="cpu_buffer.h" />
     <ClInclude Include="context.h" />
@@ -702,10 +702,12 @@
     <ClInclude Include="initializers.h" />
     <ClInclude Include="aaa_lock.h" />
     <ClInclude Include="input_layout.h" />
+    <ClInclude Include="model_buffer.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="approach.h" />
     <ClInclude Include="offscreen_render_target_view.h" />
     <ClInclude Include="physical_device.h" />
+    <ClInclude Include="pixmap.h" />
     <ClInclude Include="program.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="render_target_view.h" />
@@ -739,7 +741,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="assimp.cpp" />
-    <ClCompile Include="buffer.cpp" />
+    <ClCompile Include="memory_buffer.cpp" />
     <ClCompile Include="context_object.cpp" />
     <ClCompile Include="cpu_buffer.cpp" />
     <ClCompile Include="context.cpp" />
@@ -767,10 +769,12 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="input_layout.cpp" />
+    <ClCompile Include="model_buffer.cpp" />
     <ClCompile Include="object.cpp" />
     <ClCompile Include="offscreen_render_target_view.cpp" />
     <ClCompile Include="operating_system\windows.cpp" />
     <ClCompile Include="physical_device.cpp" />
+    <ClCompile Include="pixmap.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="render_target_view.cpp" />
     <ClCompile Include="swap_chain.cpp" />

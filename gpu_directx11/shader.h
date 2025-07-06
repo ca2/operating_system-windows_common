@@ -27,6 +27,14 @@ namespace gpu_directx11
 
       //::pointer < pipeline > m_ppipeline;
 
+      //struct d3d11_constant_buffer
+      //{
+      //   comptr < ID3D11Buffer> m_pd3d11buffer;
+
+      //};
+
+      ///::string_map < d3d11_constant_buffer > m_mapD3D11ConstantBuffer;
+
       bool m_bDisableDepthTest = false;
       bool m_bDepthTestButNoDepthWrite = false;
       bool m_bEnableBlend = false;
@@ -76,6 +84,9 @@ namespace gpu_directx11
 
       void on_initialize_shader() override;
       void draw() override;
+
+
+      void on_set_constant_buffer(const ::scoped_string& scopedstrName) override;
 
       void bind(::gpu::texture* pgputextureTarget) override;
       void bind(::gpu::texture* pgputextureTarget, ::gpu::texture* pgputextureSource) override;

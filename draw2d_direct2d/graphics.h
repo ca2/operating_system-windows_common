@@ -473,7 +473,7 @@ namespace draw2d_direct2d
       // Text Functions
       //virtual bool text_out(double x, double y, const ::string & lpszString, character_count nCount) override;
       //virtual bool text_out(double x, double y, const block & block) override;
-      void TextOutRaw(double x, double y, const ::scoped_string & scopedstr) override;
+      void text_out(double x, double y, const ::scoped_string & scopedstr) override;
       //virtual bool text_out(double x, double y, const ::string & str) override;
       //virtual bool ExtTextOut(double x, double y, unsigned int nOptions, const ::double_rectangle & rectangle, const ::string & lpszString, character_count nCount, LPINT lpDxWidths) override;
       //virtual bool ExtTextOut(double x, double y, unsigned int nOptions, const ::double_rectangle & rectangle, const ::string & str, LPINT lpDxWidths) override;

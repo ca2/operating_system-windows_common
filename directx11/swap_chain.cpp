@@ -16,7 +16,7 @@
 CLASS_DECL_DIRECTX11 bool IsRenderDocAttached()
 {
 
-   return true;
+   ///return true;
    
    if (GetModuleHandleA("renderdoc.dll") != nullptr)
    {
