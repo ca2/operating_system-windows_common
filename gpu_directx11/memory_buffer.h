@@ -33,7 +33,7 @@ namespace gpu_directx11
 
 
 
-      void on_initialize_memory_buffer() override;
+      void on_initialize_memory_buffer(const void* dataStatic = nullptr, memsize sizeStatic = 0) override;
 
 
       bool is_initialized() const override;
@@ -43,8 +43,8 @@ namespace gpu_directx11
 
       uint32_t getInstanceCount() const { return m_instanceCount; }
 
-      void* __map(memsize start, memsize count) override;
-      void __unmap() override;
+      void* _map(memsize start, memsize count) override;
+      void _unmap() override;
 
       void bind() override;
       void unbind()override;

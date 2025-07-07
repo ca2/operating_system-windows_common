@@ -29,7 +29,7 @@ namespace gpu_directx11
    }
 
 
-   void memory_buffer::on_initialize_memory_buffer()
+   void memory_buffer::on_initialize_memory_buffer(const void* dataStatic, memsize sizeStatic)
    {
 
       auto etype = m_etype;
@@ -39,7 +39,7 @@ namespace gpu_directx11
       if (etype == ::gpu::memory_buffer::e_type_vertex_buffer)
       {
 
-         bufferdesc.ByteWidth = total_size_in_bytes();
+         bufferdesc.ByteWidth = (UINT) total_size_in_bytes();
          bufferdesc.Usage = D3D11_USAGE_DYNAMIC;
          bufferdesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
          bufferdesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
@@ -48,7 +48,7 @@ namespace gpu_directx11
       else if (etype == ::gpu::memory_buffer::e_type_index_buffer)
       {
 
-         bufferdesc.ByteWidth = total_size_in_bytes();
+         bufferdesc.ByteWidth = (UINT) total_size_in_bytes();
          bufferdesc.Usage = D3D11_USAGE_DYNAMIC;
          bufferdesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
          bufferdesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
@@ -57,7 +57,7 @@ namespace gpu_directx11
       else if (etype == ::gpu::memory_buffer::e_type_constant_buffer)
       {
 
-         bufferdesc.ByteWidth = (total_size_in_bytes()+15)&~15;
+         bufferdesc.ByteWidth = (UINT) (total_size_in_bytes()+15)&~15;
          bufferdesc.Usage = D3D11_USAGE_DYNAMIC;
          bufferdesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
          bufferdesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
@@ -76,7 +76,12 @@ namespace gpu_directx11
 
       auto pd3d11device = pgpudevice->m_pdevice;
 
-      auto hresult = pd3d11device->CreateBuffer(&bufferdesc, nullptr, &m_pbuffer);
+      D3D11_SUBRESOURCE_DATA data{};
+
+      data.pSysMem = dataStatic;
+
+      auto hresult = pd3d11device->CreateBuffer(
+         &bufferdesc, dataStatic? &data: nullptr, &m_pbuffer);
 
       if (FAILED(hresult))
       {
@@ -96,7 +101,7 @@ namespace gpu_directx11
    }
 
 
-   void* memory_buffer::__map(memsize start, memsize count)
+   void* memory_buffer::_map(memsize start, memsize count)
    {
 
       ::cast < ::gpu_directx11::context > pcontext = m_pcontext;
@@ -114,7 +119,7 @@ namespace gpu_directx11
    }
 
 
-   void memory_buffer::__unmap()
+   void memory_buffer::_unmap()
    {
       
       ::cast < ::gpu_directx11::context > pcontext = m_pcontext;
