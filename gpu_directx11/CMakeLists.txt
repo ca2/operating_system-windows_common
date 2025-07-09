@@ -9,6 +9,8 @@ list(APPEND library_source
         _.cpp
         _.h
         _factory.cpp
+        approach.cpp
+        approach.h
         assimp.cpp
         assimp.h
         cpu_buffer.cpp
@@ -20,20 +22,10 @@ list(APPEND library_source
         image_directx11.cpp
         object.cpp
         object.h
-        directx11.cpp
-        directx11.h
         program.cpp
         program.h
         shader.cpp
         shader.h)
-
-if (WIN32)
-    list(APPEND library_source
-            context_win32.cpp
-            context_win32.h
-            )
-
-endif ()
 
 
 if(${LINUX} OR ${__BSD__})

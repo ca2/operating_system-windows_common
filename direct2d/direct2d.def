@@ -1,5 +1,5 @@
 LIBRARY "direct2d"
 
 EXPORTS
-direct2d_factory_exchange
+;direct2d_factory_exchange
 
