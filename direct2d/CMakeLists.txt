@@ -12,6 +12,11 @@ list(APPEND library_source
         framework.h
         geometry.cpp
         geometry.h
+        geometry_sink_text_renderer.cpp
+        geometry_sink_text_renderer.h
+        object.cpp
+        object.h
+
 )
 
 
@@ -29,7 +34,7 @@ if (MSVC)
     target_link_libraries(${PROJECT_NAME} PRIVATE
             apex_windows_common
             acme_windows_common
-            acme apex aqua aura axis base bred directx11 gpu_directx11 Gdiplus)
+            acme apex aqua aura axis base bred directx11 gpu_directx11 d2d1 dwrite Gdiplus)
 elseif (LINUX)
 
     if (NOT DONT_USE_PKG_CONFIG)

@@ -5,6 +5,7 @@ project(directx11 CXX)
 list(APPEND library_source
         _.cpp
         _.h
+        _directx11.cpp
         _factory.cpp
         directx11.cpp
         directx11.h
@@ -35,7 +36,7 @@ if (MSVC)
     target_link_libraries(${PROJECT_NAME} PRIVATE
             apex_windows_common
             acme_windows_common
-            acme apex aqua aura Gdiplus)
+            acme apex aqua aura axis base bred Gdiplus)
 elseif (LINUX)
 
     if (NOT DONT_USE_PKG_CONFIG)

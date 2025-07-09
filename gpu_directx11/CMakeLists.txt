@@ -9,6 +9,7 @@ list(APPEND library_source
         _.cpp
         _.h
         _factory.cpp
+        _gpu_directx11.cpp
         approach.cpp
         approach.h
         assimp.cpp
@@ -17,15 +18,42 @@ list(APPEND library_source
         cpu_buffer.h
         context.cpp
         context.h
+        debug.cpp
+        debug.h
+        descriptors.cpp
+        descriptors.h
+        device.cpp
+        device.h
         framework.cpp
         framework.h
         image_directx11.cpp
+        input_layout.cpp
+        input_layout.h
+        memory_buffer.cpp
+        memory_buffer.h
+        model_buffer.cpp
+        model_buffer.h
         object.cpp
         object.h
+        offscreen_render_target_view.cpp
+        offscreen_render_target_view.h
+        physical_device.cpp
+        physical_device.h
+        pixmap.cpp
+        pixmap.h
         program.cpp
         program.h
+        render_target_view.cpp
+        render_target_view.h
+        renderer.cpp
+        renderer.h
         shader.cpp
-        shader.h)
+        shader.h
+        swap_chain.cpp
+        swap_chain.h
+        texture.cpp
+        texture.h
+)
 
 
 if(${LINUX} OR ${__BSD__})
@@ -55,6 +83,11 @@ list(APPEND library_references
         apex
         aqua
         aura
+        axis
+        base
+        bred
+        acme_windows_common
+        directx11
         )
 
 
@@ -100,7 +133,7 @@ if (MSVC)
     target_link_options(${PROJECT_NAME} PRIVATE "/DEFAULTLIB:msvcrt$<$<CONFIG:Debug>:d>")
     target_link_options(${PROJECT_NAME} PRIVATE "/IMPLIB:${LIBRARY_OUTPUT_PATH}/${PROJECT_NAME}.lib")
     target_link_options(${PROJECT_NAME} PRIVATE "/DEF:${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}.def")
-    target_link_libraries(${PROJECT_NAME} PRIVATE assimp glu32 directx1132)
+    target_link_libraries(${PROJECT_NAME} PRIVATE assimp)
     target_link_libraries(${PROJECT_NAME} PRIVATE ${library_references} ${global_library_references})
 
 

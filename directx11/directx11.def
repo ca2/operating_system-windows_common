@@ -1,5 +1,5 @@
 LIBRARY "directx11"
 
 EXPORTS
-directx11_factory_exchange
+;directx11_factory_exchange
 
