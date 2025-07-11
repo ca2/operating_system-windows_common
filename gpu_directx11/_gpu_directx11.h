@@ -9,8 +9,8 @@
 #undef USUAL_OPERATING_SYSTEM_SUPPRESSIONS
 #include "acme/_operating_system.h"
 #endif
-#include "acme_windows_common/comptr.h"
-#include "acme_windows_common/hresult_exception.h"
+#include "acme/operating_system/windows_common/com/comptr.h"
+#include "acme/operating_system/windows_common/com/hresult_exception.h"
 
 
 #include <D3D11.h>

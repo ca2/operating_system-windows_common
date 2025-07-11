@@ -7,7 +7,7 @@
 #include "apex/parallelization/handler_manager.h"
 #include "apex_windows_common/single_threaded_handler_manager.h"
 #include "aura/graphics/image/encoding_options.h"
-#include "acme_windows_common/comptr.h"
+#include "acme/operating_system/windows_common/com/comptr.h"
 
 
 #include "acme/_operating_system.h"

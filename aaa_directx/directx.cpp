@@ -1,7 +1,7 @@
 // Created by camilo on 2021-06-05 23:48 BRT <3ThomasBS_!!
 #include "framework.h"
 #include "directx.h"
-#include "acme_windows_common/hresult_exception.h"
+#include "acme/operating_system/windows_common/com/hresult_exception.h"
 
 
 namespace directx

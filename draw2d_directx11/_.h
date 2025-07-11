@@ -6,7 +6,7 @@
 #include "directx11/_.h"
 #include "gpu_directx11/_.h"
 #include "acme_windows_common/_.h"
-#include "acme_windows_common/hresult_exception.h"
+#include "acme/operating_system/windows_common/com/hresult_exception.h"
 
 
 #if defined(_draw2d_directx11_project)

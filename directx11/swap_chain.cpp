@@ -7,7 +7,7 @@
 #include "bred/gpu/renderer.h"
 #include "bred/gpu/graphics.h"
 #include "windowing_win32/_.h"
-#include "acme_windows_common/hresult_exception.h"
+#include "acme/operating_system/windows_common/com/hresult_exception.h"
 #include "windowing_win32/window.h"
 
 #include <d3dcompiler.h>

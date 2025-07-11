@@ -9,7 +9,7 @@
 #include "direct2d/_.h"
 //#include "acme/prototype/geometry2d/_geometry2d.h"
 #include "acme_windows_common/_.h"
-#include "acme_windows_common/hresult_exception.h"
+#include "acme/operating_system/windows_common/com/hresult_exception.h"
 
 #if defined(_nano_graphics_direct2d_project)
 #define CLASS_DECL_NANO_GRAPHICS_DIRECT2D  CLASS_DECL_EXPORT

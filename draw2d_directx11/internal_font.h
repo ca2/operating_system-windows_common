@@ -5,7 +5,7 @@
 #include "acme/platform/auto_pointer.h"
 #include "aura/graphics/write_text/internal_font.h"
 #include "acme/_operating_system.h"
-#include "acme_windows_common/comptr.h"
+#include "acme/operating_system/windows_common/com/comptr.h"
 #include <dwrite.h>
 
 

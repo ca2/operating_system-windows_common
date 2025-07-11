@@ -6,7 +6,7 @@
 
 #include "acme_windows_common/_.h"
 #include "acme/_operating_system.h"
-#include "acme_windows_common/hresult_exception.h"
+#include "acme/operating_system/windows_common/com/hresult_exception.h"
 
 
 namespace draw2d_direct2d

@@ -12,7 +12,7 @@
 #include "offscreen_render_target_view.h"
 #include "bred/gpu/context_lock.h"
 #include "bred/gpu/types.h"
-#include "acme_windows_common/hresult_exception.h"
+#include "acme/operating_system/windows_common/com/hresult_exception.h"
 #include <d3dcompiler.h>
 //#include "bred/user/user/graphics3d.h"
 
