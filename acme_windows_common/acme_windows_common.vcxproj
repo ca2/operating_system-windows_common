@@ -1876,12 +1876,9 @@
     <ClCompile Include="dxgi_surface_bindable.cpp" />
     <ClCompile Include="file_system.cpp" />
     <ClCompile Include="path_system.cpp" />
-    <ClCompile Include="bstring.cpp" />
-    <ClCompile Include="com.cpp" />
     <ClCompile Include="exception_translator.cpp" />
     <ClCompile Include="file.cpp" />
     <ClCompile Include="file_context.cpp" />
-    <ClCompile Include="hresult_exception.cpp" />
     <ClCompile Include="mutex.cpp" />
     <ClCompile Include="node.cpp" />
     <ClCompile Include="security_attributes.cpp" />
