@@ -255,12 +255,12 @@ namespace draw2d_directx11
 
       // Mapping Functions
       //virtual int GetMapMode() override;
-      ::double_point get_origin() override;
+      //::double_point get_origin() override;
       //virtual int SetMapMode(int nMapMode) override;
       // Viewport Origin
-      ::double_point set_origin(double x, double y) override;
-      ::double_point set_origin(const ::double_point & point) override;
-      ::double_point offset_origin(double nWidth, double nHeight) override;
+      //::double_point set_origin(double x, double y) override;
+      //::double_point set_origin(const ::double_point & point) override;
+      //::double_point offset_origin(double nWidth, double nHeight) override;
 
       // Viewport Extent
       double_size get_extents() override;
@@ -276,9 +276,9 @@ namespace draw2d_directx11
 
       // Window extent
       ::double_size GetWindowExt() override;
-      ::double_size set_window_ext(double cx, double cy) override;
-      ::double_size set_window_ext(const ::double_size & size) override;
-      ::double_size scale_window_ext(double xNum, double xDenom, double yNum, double yDenom) override;
+      //::double_size set_window_ext(double cx, double cy) override;
+      //::double_size set_window_ext(const ::double_size & size) override;
+      //::double_size scale_window_ext(double xNum, double xDenom, double yNum, double yDenom) override;
 
       // Coordinate Functions
       void DPtoLP(::double_point * ppoints, ::collection::count nCount = 1) override;
