@@ -140,8 +140,8 @@ namespace draw2d_direct2d
       unsigned int GetLayout() override;
       unsigned int SetLayout(unsigned int dwLayout) override;
 
-      void on_start_layer() override;
-      void on_end_layer() override;
+      void on_start_layer(::gpu::layer* pgpulayer) override;
+      void on_end_layer(::gpu::layer* pgpulayer) override;
 
       //virtual bool save_clip() override;
       //virtual bool restore_clip() override;
@@ -347,9 +347,9 @@ namespace draw2d_direct2d
       double_point current_position() override;
 //      ::double_point move_to(double x, double y) override;
       //    ::double_point move_to(const ::double_point & point) override;
-      using ::draw2d::graphics::line_to;
-      void line_to(double x, double y) override;
-      void draw_line(double x1, double y1, double x2, double y2, ::draw2d::pen * ppen) override;
+      using ::draw2d::graphics::line;
+      void line(double x1, double y1, double x2, double y2) override;
+      void line(double x1, double y1, double x2, double y2, ::draw2d::pen * ppen) override;
       //  bool line_to(const ::double_point & point) override;
       void arc(double x1, double y1, double w, double h, ::double_angle start, ::double_angle extends) override;
       void arc(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4) override;

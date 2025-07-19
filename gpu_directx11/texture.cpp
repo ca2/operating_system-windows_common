@@ -2,6 +2,7 @@
 #include "framework.h"
 #include "texture.h"
 #include "renderer.h"
+#include "acme/graphics/image/pixmap.h"
 
 
 namespace gpu_directx11
@@ -24,7 +25,7 @@ namespace gpu_directx11
    }
 
 
-   void texture::initialize_image_texture(::gpu::renderer* prenderer, const ::int_rectangle& rectangleTarget, bool bWithDepth)
+   void texture::initialize_image_texture(::gpu::renderer* prenderer, const ::int_rectangle& rectangleTarget, bool bWithDepth, ::pixmap * ppixmap, enum_type etype)
    {
 
       if (m_rectangleTarget == rectangleTarget
@@ -63,7 +64,20 @@ namespace gpu_directx11
 
       auto pdevice = pgpudevice->m_pdevice;
 
-      HRESULT hrCreateTexture = pdevice->CreateTexture2D(&m_texture2ddesc, nullptr, &m_ptextureOffscreen);
+      D3D11_SUBRESOURCE_DATA data{};
+
+      if (ppixmap)
+      {
+
+         data.pSysMem = ppixmap->data();
+         data.SysMemPitch = ppixmap->m_iScan;
+
+      }
+
+      HRESULT hrCreateTexture = pdevice->CreateTexture2D(
+         &m_texture2ddesc, 
+         ppixmap ? &data : nullptr, 
+         &m_ptextureOffscreen);
 
       if (FAILED(hrCreateTexture))
       {

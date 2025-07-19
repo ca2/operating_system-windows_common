@@ -40,18 +40,20 @@ namespace gpu_directx11
       {
 
          bufferdesc.ByteWidth = (UINT) total_size_in_bytes();
-         bufferdesc.Usage = D3D11_USAGE_DYNAMIC;
+         bufferdesc.Usage = dataStatic ? D3D11_USAGE_DEFAULT : D3D11_USAGE_DYNAMIC;
          bufferdesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-         bufferdesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+         if(!dataStatic)
+            bufferdesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 
       }
       else if (etype == ::gpu::memory_buffer::e_type_index_buffer)
       {
 
          bufferdesc.ByteWidth = (UINT) total_size_in_bytes();
-         bufferdesc.Usage = D3D11_USAGE_DYNAMIC;
+         bufferdesc.Usage = dataStatic ? D3D11_USAGE_DEFAULT : D3D11_USAGE_DYNAMIC;
          bufferdesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
-         bufferdesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+         if (!dataStatic)
+            bufferdesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 
       }
       else if (etype == ::gpu::memory_buffer::e_type_constant_buffer)

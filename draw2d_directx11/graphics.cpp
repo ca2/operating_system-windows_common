@@ -5482,7 +5482,7 @@ namespace draw2d_directx11
    }
 
 
-   void graphics::on_start_layer()
+   void graphics::on_start_layer(::gpu::layer * pgpulayer)
    {
 
       //if (m_pdevicecontext && m_bInLayer)
@@ -5522,7 +5522,7 @@ namespace draw2d_directx11
    }
 
 
-   void graphics::on_end_layer()
+   void graphics::on_end_layer(::gpu::layer * pgpulayer)
    {
 
       //if (m_pdevicecontext)
@@ -6442,7 +6442,7 @@ VSOut main(VSIn input) {
    }
 
 
-   void graphics::draw_line(double x1, double y1, double x2, double y2, ::draw2d::pen * ppen)
+   void graphics::line(double x1, double y1, double x2, double y2, ::draw2d::pen * ppen)
    {
 
       //D2D1_POINT_2F p1;
@@ -6481,7 +6481,7 @@ VSOut main(VSIn input) {
    }
 
 
-   void graphics::line_to(double x, double y)
+   void graphics::line(double x1, double y1, double x2, double y2)
    {
 
       //D2D1_POINT_2F p1;

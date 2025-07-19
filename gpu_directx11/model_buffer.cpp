@@ -50,10 +50,10 @@ namespace gpu_directx11
    }
 
 
-   void model_buffer::defer_set_input_layout(::gpu::input_layout* pgpuinputlayout)
+   void model_buffer::apply_input_layout()
    {
 
-      ::cast < input_layout > pinputlayout = pgpuinputlayout;
+      ::cast < input_layout > pinputlayout = m_pinputlayout;
 
       ::cast < memory_buffer > pbufferVertex = m_pbufferVertex;
 
@@ -703,6 +703,10 @@ namespace gpu_directx11
          //GLCheckError("");
 
          m_pbufferVertex->bind();
+
+         ::cast <::gpu_directx11::context> pcontext = m_pgpucontext;
+
+         pcontext->m_pcontext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
          if (m_pbufferIndex)
          {

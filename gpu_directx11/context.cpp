@@ -814,7 +814,7 @@ namespace gpu_directx11
 
       ::cast < ::dxgi_surface_bindable > pdxgisurfacebindable = pgpucompositor;
 
-      ::cast < texture > ptexture = get_gpu_renderer()->m_pgpurendertarget->current_texture();
+      ::cast < ::gpu_directx11::texture > ptexture = get_gpu_renderer()->m_pgpurendertarget->current_texture();
 
       auto iFrameIndex = m_pgpurenderer->m_pgpurendertarget->get_frame_index();
 
@@ -1055,7 +1055,7 @@ namespace gpu_directx11
 
       ::gpu::context_lock context_lock(this);
 
-      ::cast < texture > ptextureDst = pgputextureTarget;
+      ::cast < ::gpu_directx11::texture > ptextureDst = pgputextureTarget;
 
       if (ptextureDst->m_prendertargetview)
       {
@@ -1066,7 +1066,7 @@ namespace gpu_directx11
       else
       {
 
-         ::cast < texture > ptextureSrc = pgputextureSource;
+         ::cast < ::gpu_directx11::texture > ptextureSrc = pgputextureSource;
 
          m_pcontext->CopyResource(
             ptextureDst->m_ptextureOffscreen,
@@ -1177,7 +1177,7 @@ float4 main(float2 uv : TEXCOORD) : SV_TARGET {
 
       m_pshaderCopyUsingShader->bind(pgputextureTarget, pgputextureSource);
 
-      ::cast <texture > ptextureDst = pgputextureTarget;
+      ::cast <::gpu_directx11::texture > ptextureDst = pgputextureTarget;
       float clearColor[4] = { 0, 0, 0, 0 }; // Clear to transparent
       m_pcontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor);
 
@@ -1342,7 +1342,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_TARGET
       }
 
 
-      ::cast <texture > ptextureDst = ptextureTarget;
+      ::cast <::gpu_directx11::texture > ptextureDst = ptextureTarget;
       //float clearColor[4] = { 0.95f * 0.5f, 0.95f * 0.5f, 0.25f * 0.5f, 0.5f }; // Translucent Yellow
       float clearColor[4] = { 0.f, 0.f, 0.f, 0.f }; // Clear to transparent
       m_pcontext->ClearRenderTargetView(
@@ -1395,7 +1395,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_TARGET
       for (auto player : *playera)
       {
          
-         ::cast <texture > ptexture = player->texture();
+         ::cast <::gpu_directx11::texture > ptexture = player->texture();
 
          m_pshaderBlend3->bind_source(ptexture);
 
@@ -1531,7 +1531,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_TARGET
 
          __bind_draw2d_compositor(m_pgpucompositor, player);
 
-         m_pgpucompositor->on_start_layer();
+         m_pgpucompositor->on_start_layer(player);
 
       }
 
@@ -1544,7 +1544,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_TARGET
       if (m_pgpucompositor)
       {
 
-         m_pgpucompositor->on_end_layer();
+         m_pgpucompositor->on_end_layer(player);
 
          __soft_unbind_draw2d_compositor(m_pgpucompositor, player);
 

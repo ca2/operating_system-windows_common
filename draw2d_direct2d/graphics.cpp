@@ -4627,7 +4627,7 @@ namespace draw2d_direct2d
 
          auto r = rectanglea[i];
 
-         D2D1_RECT_F clipRect{r.left(), r.top(), r.right(), r.bottom()};
+         D2D1_RECT_F clipRect{(FLOAT) r.left(), (FLOAT)r.top(), (FLOAT)r.right(), (FLOAT)r.bottom()};
 
          m_pd2d1rendertarget->PushAxisAlignedClip(clipRect, D2D1_ANTIALIAS_MODE_PER_PRIMITIVE);
 
@@ -5419,7 +5419,7 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::on_start_layer()
+   void graphics::on_start_layer(::gpu::layer* pgpulayer)
    {
 
       //if (m_pdevicecontext && m_bInLayer)
@@ -5437,7 +5437,7 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::on_end_layer()
+   void graphics::on_end_layer(::gpu::layer* pgpulayer)
    {
 
       //if (m_pdevicecontext)
@@ -6278,7 +6278,7 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::draw_line(double x1, double y1, double x2, double y2, ::draw2d::pen * ppen)
+   void graphics::line(double x1, double y1, double x2, double y2, ::draw2d::pen * ppen)
    {
 
       D2D1_POINT_2F p1;
@@ -6317,18 +6317,20 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::line_to(double x, double y)
+   void graphics::line(double x1, double y1, double x2, double y2)
    {
 
       D2D1_POINT_2F p1;
 
-      copy(p1, m_point);
+      p1.x = (FLOAT) x1;
+
+      p1.y = (FLOAT) y1;
 
       D2D1_POINT_2F p2;
 
-      p2.x = (FLOAT)x;
+      p2.x = (FLOAT)x2;
 
-      p2.y = (FLOAT)y;
+      p2.y = (FLOAT)y2;
 
       ID2D1Brush * pbrush = m_ppen->get_os_data < ID2D1Brush * >(this);
 
@@ -6347,9 +6349,9 @@ namespace draw2d_direct2d
 
       m_pd2d1rendertarget->DrawLine(p1, p2, pbrush, fWidth);
 
-      m_point.x() = x;
+      m_point.x() = x2;
 
-      m_point.y() = y;
+      m_point.y() = y2;
 
       //return true;
 

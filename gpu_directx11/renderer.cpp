@@ -1068,7 +1068,9 @@ namespace gpu_directx11
          D3D11_RASTERIZER_DESC rasterizerDesc = {};
          rasterizerDesc.FillMode = D3D11_FILL_SOLID;
          rasterizerDesc.CullMode = D3D11_CULL_BACK;        // Cull back faces
+         //rasterizerDesc.CullMode = D3D11_CULL_FRONT; 
          rasterizerDesc.FrontCounterClockwise = false; // Treat CCW as front-facing
+         //rasterizerDesc.FrontCounterClockwise = true;
          rasterizerDesc.DepthClipEnable = TRUE;
 
          HRESULT hr = pgpucontext->m_pgpudevice->m_pdevice->CreateRasterizerState(
