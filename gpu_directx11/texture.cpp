@@ -38,7 +38,7 @@ namespace gpu_directx11
 
       auto sizeCurrent = m_rectangleTarget.size();
 
-      ::gpu::texture::initialize_image_texture(prenderer, rectangleTarget, bWithDepth);
+      ::gpu::texture::initialize_image_texture(prenderer, rectangleTarget, bWithDepth, ppixmap, etype);
 
       if (sizeCurrent == m_rectangleTarget.size())
       {
@@ -47,36 +47,86 @@ namespace gpu_directx11
 
       }
 
+
       m_texture2ddesc = {};
       // 1. Create offscreen render target texture
       m_texture2ddesc.Width = m_rectangleTarget.width();
       m_texture2ddesc.Height = m_rectangleTarget.height();
+      if (m_etype == e_type_cube_map)
+      {
+
+         if (m_texture2ddesc.Width != m_texture2ddesc.Height)
+         {
+
+            throw ::exception(error_wrong_state, "width and height should be the same for a cube map texture");
+
+         }
+
+      }
+
       m_texture2ddesc.MipLevels = 1;
-      m_texture2ddesc.ArraySize = 1;
+      if (m_etype == e_type_cube_map)
+      {
+         m_texture2ddesc.ArraySize =6;
+      }
+      else
+      {
+         m_texture2ddesc.ArraySize = 1;
+
+      }
       m_texture2ddesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
       m_texture2ddesc.SampleDesc.Count = 1;
       m_texture2ddesc.Usage = D3D11_USAGE_DEFAULT;
-      m_texture2ddesc.BindFlags = 
-         D3D11_BIND_RENDER_TARGET
-         | D3D11_BIND_SHADER_RESOURCE;
+      if (m_etype == e_type_cube_map)
+      {
+
+         m_texture2ddesc.MiscFlags = D3D11_RESOURCE_MISC_TEXTURECUBE;
+
+      }
+      m_texture2ddesc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+      if (m_bRenderTarget)
+      {
+         m_texture2ddesc.BindFlags |= D3D11_BIND_RENDER_TARGET;
+
+      }
 
       ::cast < ::gpu_directx11::device > pgpudevice = m_pgpurenderer->m_pgpucontext->m_pgpudevice;
 
       auto pdevice = pgpudevice->m_pdevice;
 
-      D3D11_SUBRESOURCE_DATA data{};
+      D3D11_SUBRESOURCE_DATA data[6];
 
       if (ppixmap)
       {
 
-         data.pSysMem = ppixmap->data();
-         data.SysMemPitch = ppixmap->m_iScan;
+         memset(data, 0, sizeof(D3D11_SUBRESOURCE_DATA) * 6);
+
+         if (m_etype == e_type_cube_map)
+         {
+
+            for (int i = 0; i < 6; ++i) 
+            {
+               data[i].pSysMem = ppixmap->data() + m_texture2ddesc.Width * i;  // Your RGBA image data per face
+               data[i].SysMemPitch = ppixmap->m_iScan;
+            }
+
+         }
+         else
+         {
+
+            memset(data, 0, sizeof(D3D11_SUBRESOURCE_DATA));
+
+            data[0].pSysMem = ppixmap->data();
+            data[0].SysMemPitch = ppixmap->m_iScan;
+
+
+         }
 
       }
 
       HRESULT hrCreateTexture = pdevice->CreateTexture2D(
          &m_texture2ddesc, 
-         ppixmap ? &data : nullptr, 
+         ppixmap ? data : nullptr, 
          &m_ptextureOffscreen);
 
       if (FAILED(hrCreateTexture))
@@ -127,6 +177,9 @@ namespace gpu_directx11
       D3D11_SAMPLER_DESC samp = {};
       samp.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
       samp.AddressU = samp.AddressV = samp.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+      samp.ComparisonFunc = D3D11_COMPARISON_NEVER;
+      samp.MinLOD = 0;
+      samp.MaxLOD = D3D11_FLOAT32_MAX;
       pdevice->CreateSamplerState(&samp, &m_psamplerstate);
 
       new_texture.set_new_texture();
@@ -277,15 +330,20 @@ namespace gpu_directx11
 
       //m_bRenderTarget = true;
 
-      ::cast < ::gpu_directx11::device > pgpudevice = m_pgpurenderer->m_pgpucontext->m_pgpudevice;
-
-      HRESULT hrCreateRenderTargetView = pgpudevice->m_pdevice->CreateRenderTargetView(
-         m_ptextureOffscreen, nullptr, &m_prendertargetview);
-
-      if (FAILED(hrCreateRenderTargetView))
+      if (m_bRenderTarget)
       {
 
-         throw ::hresult_exception(hrCreateRenderTargetView, "Failed to create offscreen render target view");
+         ::cast < ::gpu_directx11::device > pgpudevice = m_pgpurenderer->m_pgpucontext->m_pgpudevice;
+
+         HRESULT hrCreateRenderTargetView = pgpudevice->m_pdevice->CreateRenderTargetView(
+            m_ptextureOffscreen, nullptr, &m_prendertargetview);
+
+         if (FAILED(hrCreateRenderTargetView))
+         {
+
+            throw ::hresult_exception(hrCreateRenderTargetView, "Failed to create offscreen render target view");
+
+         }
 
       }
 
@@ -299,9 +357,17 @@ namespace gpu_directx11
 
       D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
       srvDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM; // Must match or be compatible
-      srvDesc.ViewDimension = D3D_SRV_DIMENSION_TEXTURE2D;
+      if (m_etype == e_type_cube_map)
+      {
+         srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURECUBE;
+      }
+      else
+      {
+         srvDesc.ViewDimension = D3D_SRV_DIMENSION_TEXTURE2D;
+      }
       srvDesc.Texture2D.MostDetailedMip = 0;
       srvDesc.Texture2D.MipLevels = 1;
+
 
       HRESULT hrCreateShaderResourceView = pgpudevice->m_pdevice->CreateShaderResourceView(
          m_ptextureOffscreen,

@@ -714,7 +714,7 @@ namespace gpu_directx11
 
       ID3D11DeviceContext* context = pgpucontext->m_pcontext;
 
-      ::cast < ::gpu_directx11::texture > ptexture = poffscreenrendertargetview->current_texture();
+      ::cast < ::gpu_directx11::texture > ptexture = poffscreenrendertargetview->current_texture(::gpu::current_frame());
 
       ID3D11Texture2D* offscreenTexture = ptexture->m_ptextureOffscreen;
 
@@ -954,7 +954,7 @@ namespace gpu_directx11
       if (pgpurendertargetview)
       {
 
-         ::cast < texture > ptexture = pgpurendertargetview->current_texture();
+         ::cast < texture > ptexture = pgpurendertargetview->current_texture(pframe);
 
          ::comptr < ID3D11RenderTargetView > prendertargetview;
 
@@ -1099,7 +1099,7 @@ namespace gpu_directx11
 
       //::cast < render_target_view > pgpurendertargetview = m_pgpurendertarget;
 
-      ::cast < texture > ptexture = pgpurendertargetview->current_texture();
+      ::cast < texture > ptexture = pgpurendertargetview->current_texture(::gpu::current_frame());
 
       if (!ptexture->m_prendertargetview)
       {
@@ -1167,13 +1167,13 @@ namespace gpu_directx11
 
       assert(!isFrameStarted && "Can't call beginFrame while already in progress");
 
-      __defer_construct(m_pgpurendertarget->m_pframe);
+      __defer_construct(m_pgpurendertarget->m_pgpuframe);
       
       m_prenderstate->on_happening(::gpu::e_happening_begin_frame);
 
       isFrameStarted = true;
 
-      return m_pgpurendertarget->m_pframe;
+      return m_pgpurendertarget->m_pgpuframe;
 
    }
 

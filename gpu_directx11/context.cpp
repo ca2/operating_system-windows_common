@@ -17,6 +17,7 @@
 #include "aura/user/user/interaction.h"
 #include "bred/gpu/command_buffer.h"
 #include "bred/gpu/context_lock.h"
+#include "bred/gpu/frame.h"
 #include "bred/gpu/graphics.h"
 #include "bred/gpu/layer.h"
 #include "bred/gpu/types.h"
@@ -814,7 +815,7 @@ namespace gpu_directx11
 
       ::cast < ::dxgi_surface_bindable > pdxgisurfacebindable = pgpucompositor;
 
-      ::cast < ::gpu_directx11::texture > ptexture = get_gpu_renderer()->m_pgpurendertarget->current_texture();
+      ::cast < ::gpu_directx11::texture > ptexture = get_gpu_renderer()->m_pgpurendertarget->current_texture(::gpu::current_frame());
 
       auto iFrameIndex = m_pgpurenderer->m_pgpurendertarget->get_frame_index();
 
@@ -1506,7 +1507,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_TARGET
 
          //_get_dxgi_device();
 
-         ////ptexture->_new_state(prenderer->getCurrentCommandBuffer2()->m_pcommandlist, D3D12_RESOURCE_STATE_RENDER_TARGET);
+         ////ptexture->_new_state(prenderer->getCurrentCommandBuffer2(::gpu::current_frame())->m_pcommandlist, D3D12_RESOURCE_STATE_RENDER_TARGET);
 
          //// 4. Release wrapped resource to allow access from D3D12
 
@@ -1541,35 +1542,37 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_TARGET
    void context::on_end_layer(::gpu::layer* player)
    {
 
-      if (m_pgpucompositor)
-      {
+      ::gpu::context::on_end_layer(player);
 
-         m_pgpucompositor->on_end_layer(player);
+      //if (m_pgpucompositor)
+      //{
 
-         __soft_unbind_draw2d_compositor(m_pgpucompositor, player);
+      //   m_pgpucompositor->on_end_layer(player);
 
-         //::cast < device > pdevice = m_pgpudevice;
+      //   //__soft_unbind_draw2d_compositor(m_pgpucompositor, player);
 
-         //if (m_etype == e_type_draw2d)
-         //{
+      //   //::cast < device > pdevice = m_pgpudevice;
 
-         //   d3d11on12()->m_pd3d11context->Flush(); // ✅ Ensures D3D11 commands are issued
+      //   //if (m_etype == e_type_draw2d)
+      //   //{
 
-         //   // 4. Release wrapped resource to allow access from D3D12
-         //   d3d11on12()->m_pd3d11on12->ReleaseWrappedResources(
-         //      d3d11on12()->m_d3d11wrappedresources, 1);
+      //   //   d3d11on12()->m_pd3d11context->Flush(); // ✅ Ensures D3D11 commands are issued
 
-         //   m_iResourceWrappingCount--;
+      //   //   // 4. Release wrapped resource to allow access from D3D12
+      //   //   d3d11on12()->m_pd3d11on12->ReleaseWrappedResources(
+      //   //      d3d11on12()->m_d3d11wrappedresources, 1);
 
-         //   ASSERT(m_iResourceWrappingCount == 0);
+      //   //   m_iResourceWrappingCount--;
 
-         //   ::cast < texture > ptexture = get_gpu_renderer()->m_pgpurendertarget->current_texture();
+      //   //   ASSERT(m_iResourceWrappingCount == 0);
 
-         //   //ptexture->m_estate = D3D12_RESOURCE_STATE_COPY_SOURCE;
+      //   //   ::cast < texture > ptexture = get_gpu_renderer()->m_pgpurendertarget->current_texture();
 
-         //}
+      //   //   //ptexture->m_estate = D3D12_RESOURCE_STATE_COPY_SOURCE;
 
-      }
+      //   //}
+
+      //}
 
    }
 

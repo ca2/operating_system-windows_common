@@ -11,6 +11,7 @@
 #include "texture.h"
 #include "offscreen_render_target_view.h"
 #include "bred/gpu/context_lock.h"
+#include "bred/gpu/frame.h"
 #include "bred/gpu/types.h"
 #include "acme/operating_system/windows_common/com/hresult_exception.h"
 #include <d3dcompiler.h>
@@ -425,7 +426,7 @@ namespace gpu_directx11
             if (pgpurendertargetview)
             {
 
-               ::cast < texture > ptexture = pgpurendertargetview->current_texture();
+               ::cast < texture > ptexture = pgpurendertargetview->current_texture(::gpu::current_frame());
 
                pgputextureTarget = ptexture.m_p;
 
@@ -544,7 +545,7 @@ namespace gpu_directx11
          if (pgpurendertargetview)
          {
 
-            ::cast < texture > ptexture = pgpurendertargetview->current_texture();
+            ::cast < texture > ptexture = pgpurendertargetview->current_texture(::gpu::current_frame());
 
             //::cast < offscreen_render_target_view > poffscreenrendertargetview = pgpurendertargetview;
 

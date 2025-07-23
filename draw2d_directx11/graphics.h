@@ -106,7 +106,7 @@ namespace draw2d_directx11
 
 
       void start_gpu_layer(::gpu::frame * pgpuframe) override;
-      ::gpu::frame * end_gpu_layer() override;
+      ::gpu::frame * end_gpu_layer(::gpu::frame* pgpuframe) override;
 
 
       using ::draw2d::graphics::set;

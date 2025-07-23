@@ -5453,6 +5453,8 @@ namespace draw2d_direct2d
 
       }
 
+      defer_soft_unbind_draw2d_compositor(pgpulayer);
+
    }
 
    //void graphics::arc_to(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4)
@@ -6450,10 +6452,10 @@ namespace draw2d_direct2d
    }
 
 
-   ::gpu::frame * graphics::end_gpu_layer()
+   ::gpu::frame * graphics::end_gpu_layer(::gpu::frame * pgpuframe)
    {
 
-      return ::gpu::graphics::end_gpu_layer();
+      return ::gpu::graphics::end_gpu_layer(pgpuframe);
 
    }
 

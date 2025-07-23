@@ -65,6 +65,12 @@ namespace gpu_directx11
          bufferdesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 
       }
+      else if (etype == ::gpu::memory_buffer::e_type_none)
+      {
+
+         return;
+
+      }
       else
       {
 

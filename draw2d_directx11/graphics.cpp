@@ -29,6 +29,7 @@
 #include "bred/gpu/context.h"
 #include "bred/gpu/context_lock.h"
 #include "bred/gpu/device.h"
+#include "bred/gpu/frame.h"
 #include "bred/gpu/renderer.h"
 #include "bred/gpu/swap_chain.h"
 #include "bred/gpu/types.h"
@@ -5504,7 +5505,7 @@ namespace draw2d_directx11
 
          auto prendertarget = prenderer->m_pgpurendertarget;
 
-         ::cast < ::gpu_directx11::texture > ptexture = prendertarget->current_texture();
+         ::cast < ::gpu_directx11::texture > ptexture = prendertarget->current_texture(::gpu::current_frame());
 
          if (!ptexture->m_prendertargetview)
          {
@@ -6620,10 +6621,10 @@ VSOut main(VSIn input) {
    }
 
 
-   ::gpu::frame * graphics::end_gpu_layer()
+   ::gpu::frame * graphics::end_gpu_layer(::gpu::frame * pgpuframe)
    {
 
-      return ::gpu::graphics::end_gpu_layer();
+      return ::gpu::graphics::end_gpu_layer(pgpuframe);
 
    }
 

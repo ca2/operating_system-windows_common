@@ -29,6 +29,8 @@ CLASS_DECL_DIRECTX11 bool IsRenderDocAttached()
 
       return false;
 
+      //return true;
+
    }
 
 }
