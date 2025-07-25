@@ -122,7 +122,7 @@ namespace gpu_directx11
 
 
       //virtual void restart_frame_counter();
-      void on_new_frame() override;
+      //void on_new_frame() override;
       void initialize_gpu_renderer(::gpu::context* pgpucontext) override;
 
       //int width()  override;

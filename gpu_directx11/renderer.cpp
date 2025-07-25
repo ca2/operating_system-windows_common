@@ -144,12 +144,12 @@ namespace gpu_directx11
    //}
 
 
-   void renderer::on_new_frame()
-   {
+   //void renderer::on_new_frame()
+   //{
 
-      ::gpu::renderer::on_new_frame();
+   //   ::gpu::renderer::on_new_frame();
 
-   }
+   //}
 
 
    //void renderer::restart_frame_counter()
