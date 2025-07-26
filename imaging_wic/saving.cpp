@@ -146,6 +146,9 @@ namespace imaging_wic
          case ::image::e_format_jpeg:
             hr = pimagingfactory->CreateEncoder(GUID_ContainerFormatJpeg, nullptr, &pbitmapencoder);
             break;
+         case ::image::e_format_webp:
+            hr = pimagingfactory->CreateEncoder(GUID_ContainerFormatWebp, nullptr, &pbitmapencoder);
+            break;
          default:
             hr = pimagingfactory->CreateEncoder(GUID_ContainerFormatPng, nullptr, &pbitmapencoder);
             break;
