@@ -3,6 +3,7 @@
 #include "texture.h"
 #include "renderer.h"
 #include "acme/graphics/image/pixmap.h"
+#include "aura/graphics/image/image.h"
 
 
 namespace gpu_directx11
@@ -25,7 +26,7 @@ namespace gpu_directx11
    }
 
 
-   void texture::initialize_image_texture(::gpu::renderer* prenderer, const ::int_rectangle& rectangleTarget, bool bWithDepth, ::pixmap * ppixmap, enum_type etype)
+   void texture::initialize_image_texture(::gpu::renderer* prenderer, const ::int_rectangle& rectangleTarget, bool bWithDepth, const ::pointer_array < ::image::image >& imagea, enum_type etype)
    {
 
       if (m_rectangleTarget == rectangleTarget
@@ -38,7 +39,7 @@ namespace gpu_directx11
 
       auto sizeCurrent = m_rectangleTarget.size();
 
-      ::gpu::texture::initialize_image_texture(prenderer, rectangleTarget, bWithDepth, ppixmap, etype);
+      ::gpu::texture::initialize_image_texture(prenderer, rectangleTarget, bWithDepth, imagea, etype);
 
       if (sizeCurrent == m_rectangleTarget.size())
       {
@@ -96,18 +97,30 @@ namespace gpu_directx11
 
       D3D11_SUBRESOURCE_DATA data[6];
 
-      if (ppixmap)
+      if (imagea.has_element())
       {
 
          memset(data, 0, sizeof(D3D11_SUBRESOURCE_DATA) * 6);
 
          if (m_etype == e_type_cube_map)
          {
-
-            for (int i = 0; i < 6; ++i) 
+            
+            if (imagea.size() != 6)
             {
-               data[i].pSysMem = ppixmap->data() + m_texture2ddesc.Width * i;  // Your RGBA image data per face
-               data[i].SysMemPitch = ppixmap->m_iScan;
+
+               throw ::exception(error_wrong_state);
+
+            }
+
+            for (int i = 0; i < 6; ++i)
+            {
+
+               auto pimage = imagea[i];
+
+               data[i].pSysMem = pimage->data();  // Your RGBA image data per face
+
+               data[i].SysMemPitch = pimage->m_iScan;
+
             }
 
          }
@@ -115,9 +128,10 @@ namespace gpu_directx11
          {
 
             memset(data, 0, sizeof(D3D11_SUBRESOURCE_DATA));
-
-            data[0].pSysMem = ppixmap->data();
-            data[0].SysMemPitch = ppixmap->m_iScan;
+            
+            auto pimage = imagea.first();
+            data[0].pSysMem = pimage->data();
+            data[0].SysMemPitch = pimage->m_iScan;
 
 
          }
@@ -126,7 +140,7 @@ namespace gpu_directx11
 
       HRESULT hrCreateTexture = pdevice->CreateTexture2D(
          &m_texture2ddesc, 
-         ppixmap ? data : nullptr, 
+         imagea.has_element() ? data : nullptr,
          &m_ptextureOffscreen);
 
       if (FAILED(hrCreateTexture))
@@ -176,7 +190,9 @@ namespace gpu_directx11
       //}
       D3D11_SAMPLER_DESC samp = {};
       samp.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-      samp.AddressU = samp.AddressV = samp.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+      samp.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
+      samp.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+      samp.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
       samp.ComparisonFunc = D3D11_COMPARISON_NEVER;
       samp.MinLOD = 0;
       samp.MaxLOD = D3D11_FLOAT32_MAX;

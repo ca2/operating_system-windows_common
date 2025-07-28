@@ -1089,44 +1089,52 @@ namespace gpu_directx11
 
       ::gpu::context_lock context_lock(this);
 
+      struct Vertex {
+         glm::vec2 m_position;   // Position
+         glm::vec2 m_uv;   // Texture coordinates
+      };
+
       if (!m_pshaderCopyUsingShader)
       {
 
          const char* copy_using_shader_vertex_shader = R"hlsl(
-      // FullscreenQuadVS.hlsl
-      struct VS_IN {
-         float2 pos : POSITION;
-         float2 uv : TEXCOORD;
-      };
+struct VSOut {
+    float4 pos : SV_POSITION;
+    float2 uv  : TEXCOORD0;
+};
 
-      struct VS_OUT {
-         float4 pos : SV_POSITION;
-         float2 uv : TEXCOORD;
-      };
+VSOut main(uint vid : SV_VertexID) {
+    float2 verts[3] = {
+        float2(-1, -1),
+        float2(-1, +3),
+        float2(+3, -1)
+    };
 
-      VS_OUT main(VS_IN input) {
-         VS_OUT output;
-         output.pos = float4(input.pos, 0.0, 1.0);
-         output.uv = input.uv;
-         return output;
-      }
+    VSOut o;
+    o.pos = float4(verts[vid], 0, 1);
 
-)hlsl";
+    // Map clip-space [-1..1] to texture-space [0..1]
+    float2 uv = 0.5f * (verts[vid] + float2(1.0f, 1.0f));
+    uv.y = 1.0f - uv.y;
+    o.uv = uv;
+    return o;
+})hlsl";
 
 
 
          const char* copy_using_shader_pixel_shader = R"hlsl(
-      // CopyTexturePS.hlsl
-Texture2D sourceTexture : register(t0);
+Texture2D tex : register(t0);
 SamplerState samp : register(s0);
 
-float4 main(float2 uv : TEXCOORD) : SV_TARGET {
-    return sourceTexture.Sample(samp, uv);
+float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
+    return tex.Sample(samp, uv);
 }
-
 )hlsl";
 
          __defer_construct_new(m_pshaderCopyUsingShader);
+
+         m_pshaderCopyUsingShader->m_bDisableDepthTest = true;
+         m_pshaderCopyUsingShader->m_bEnableBlend = false;
 
          m_pshaderCopyUsingShader->initialize_shader_with_block(
             m_pgpurenderer,
@@ -1134,60 +1142,83 @@ float4 main(float2 uv : TEXCOORD) : SV_TARGET {
             ::as_block(copy_using_shader_pixel_shader),
             {},
             {},
-            {},
-            input_layout<::graphics3d::sequence2_uv>()
+            {}//,
+            //input_layout<::graphics3d::sequence2_uv>()
 
          );
 
 
          ::cast < device > pgpudevice = m_pgpudevice;
 
-         struct Vertex {
-            float x, y;   // Position
-            float u, v;   // Texture coordinates
-         };
 
-         Vertex vertices[] = {
-            //   x     y     u     v
-            { -1.0f, -1.0f, 0.0f, 1.0f }, // bottom-left
-            {  1.0f, -1.0f, 1.0f, 1.0f }, // bottom-right
-            { -1.0f,  1.0f, 0.0f, 0.0f }, // top-left
-            {  1.0f,  1.0f, 1.0f, 0.0f }  // top-right
-         };
+    //     Vertex vertices[] = {
+    //        //   x     y     u     v
+    ////  Position         Texcoord
+    //{ { -1.0f, -1.0f }, { 0.0f, 1.0f } }, // Bottom-left
+    //{ { -1.0f,  1.0f }, { 0.0f, 0.0f } }, // Top-left
+    //{ {  1.0f, -1.0f }, { 1.0f, 1.0f } }, // Bottom-right
+    //{ {  1.0f,  1.0f }, { 1.0f, 0.0f } }, // Top-right         
+    //     };
 
-         m_iVertexBufferSizeCopyUsingShader = sizeof(vertices);
-         D3D11_BUFFER_DESC bufferdesc = {};
-         bufferdesc.Usage = D3D11_USAGE_DEFAULT;
-         bufferdesc.ByteWidth = m_iVertexBufferSizeCopyUsingShader;
-         bufferdesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-         bufferdesc.CPUAccessFlags = 0;
+         //m_iVertexBufferSizeCopyUsingShader = sizeof(vertices);
+         //D3D11_BUFFER_DESC bufferdesc = {};
+         //bufferdesc.Usage = D3D11_USAGE_DEFAULT;
+         //bufferdesc.ByteWidth = m_iVertexBufferSizeCopyUsingShader;
+         //bufferdesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+         //bufferdesc.CPUAccessFlags = 0;
 
-         D3D11_SUBRESOURCE_DATA subresourceddata = {};
-         subresourceddata.pSysMem = vertices;
+         //D3D11_SUBRESOURCE_DATA subresourceddata = {};
+         //subresourceddata.pSysMem = vertices;
 
-         HRESULT hr = pgpudevice->m_pdevice->CreateBuffer(
-            &bufferdesc,
-            &subresourceddata,
-            &m_pd3d11bufferVertexCopyUsingShader);
+         //HRESULT hr = pgpudevice->m_pdevice->CreateBuffer(
+         //   &bufferdesc,
+         //   &subresourceddata,
+         //   &m_pd3d11bufferVertexCopyUsingShader);
 
 
-         ::defer_throw_hresult(hr);
+         //::defer_throw_hresult(hr);
 
       }
 
 
       m_pshaderCopyUsingShader->bind(pgputextureTarget, pgputextureSource);
 
+      D3D11_VIEWPORT viewport = {};
+      //viewport.TopLeftX = pgputextureSource->m_rectangleTarget.left();
+      //viewport.TopLeftY = pgputextureSource->m_rectangleTarget.top();
+      viewport.TopLeftX = 0;
+      viewport.TopLeftY = 0;
+      viewport.Width = (FLOAT)pgputextureSource->m_rectangleTarget.width();   // usually swap chain buffer width
+      viewport.Height = (FLOAT)pgputextureSource->m_rectangleTarget.height();  // usually swap chain buffer height
+      viewport.MinDepth = 0.0f;    // near depth
+      viewport.MaxDepth = 1.0f;    // far depth
+
+      m_pcontext->RSSetViewports(1, &viewport);
+
+      D3D11_RECT scissorRect;
+      //scissorRect.left = pgputextureSource->m_rectangleTarget.left();
+      //scissorRect.top = pgputextureSource->m_rectangleTarget.top();
+      //scissorRect.right = pgputextureSource->m_rectangleTarget.right();
+      //scissorRect.bottom = pgputextureSource->m_rectangleTarget.bottom();
+      scissorRect.left = 0;
+      scissorRect.top = 0;
+      scissorRect.right = pgputextureSource->m_rectangleTarget.width();
+      scissorRect.bottom = pgputextureSource->m_rectangleTarget.height();
+
+      m_pcontext->RSSetScissorRects(1, &scissorRect);
+
+
       ::cast <::gpu_directx11::texture > ptextureDst = pgputextureTarget;
-      float clearColor[4] = { 0, 0, 0, 0 }; // Clear to transparent
+      //float clearColor[4] = { 0.4*0.5, 0.35*0.5, 0.2*0.5, 0.5 }; // Clear to transparent
+      float clearColor[4] = { 0.f, 0.f, 0.f, 0.f }; // Clear to transparent
       m_pcontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor);
 
-      UINT stride = m_iVertexBufferSizeCopyUsingShader;
-      UINT offset = 0;
-      ID3D11Buffer* buffera[] = { m_pd3d11bufferVertexCopyUsingShader };
+      //UINT stride = sizeof(Vertex);
+      //UINT offset = 0;
+      //ID3D11Buffer* buffera[] = { m_pd3d11bufferVertexCopyUsingShader };
 
-      m_pcontext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-      m_pcontext->IASetVertexBuffers(0, 1, buffera, &stride, &offset);
+      m_pcontext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+      //m_pcontext->IASetVertexBuffers(0, 1, buffera, &stride, &offset);
       //for (auto player : *playera)
       //{
       //   //            player->
@@ -1212,8 +1243,8 @@ float4 main(float2 uv : TEXCOORD) : SV_TARGET {
       m_pshaderCopyUsingShader->unbind();
 
 
-      float clearColor2[4] = { 0.95f * 0.5f, 0.75f * 0.5f, 0.95f * 0.5f, 0.5f }; // Clear to transparent
-      m_pcontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor2);
+      //float clearColor2[4] = { 0.45f * 0.5f, 0.99f * 0.5f, 0.45f * 0.5f, 0.5f }; // Clear to transparent
+      //m_pcontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor2);
 
 
    }
@@ -1229,50 +1260,35 @@ float4 main(float2 uv : TEXCOORD) : SV_TARGET {
       {
 
          const char* full_screen_triangle_vertex_shader = R"hlsl(
-// vertex.hlsl
 struct VSOut {
     float4 pos : SV_POSITION;
     float2 uv  : TEXCOORD0;
 };
 
-VSOut main(uint id : SV_VertexID)
-{
+VSOut main(uint vid : SV_VertexID) {
     float2 verts[3] = {
         float2(-1, -1),
-        float2(-1,  3),
-        float2( 3, -1)
-    };
-
-    float2 uv[3] = {
-        float2(0, 1),
-        float2(0, -1),
-        float2(2, 1)
+        float2(-1, +3),
+        float2(+3, -1)
     };
 
     VSOut o;
-    o.pos = float4(verts[id], 0, 1);
-    o.uv  = uv[id];
+    o.pos = float4(verts[vid], 0, 1);
+
+    // Map clip-space [-1..1] to texture-space [0..1]
+    float2 uv = 0.5f * (verts[vid] + float2(1.0f, 1.0f));
+    uv.y = 1.0f - uv.y;
+    o.uv = uv;
     return o;
 }
 )hlsl";
 
          const char* full_screen_triangle_fragment_shader = R"hlsl(  
-// pixel.hlsl
 Texture2D tex : register(t0);
 SamplerState samp : register(s0);
 
-float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_TARGET
-{
-    return tex.Sample(samp, uv); // Assumes premultiplied alpha
-//return float4(0, 1, 0, 1); // Green
-//if(uv.y<0.5)
-//{
-//    return tex.Sample(samp, uv); // Assumes premultiplied alpha
-//}
-//else
-//{
-//return float4(0.8*0.5,0.8*0.5,0.4*0.5,0.5);
-//}
+float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
+    return tex.Sample(samp, uv);
 }
 )hlsl";
 
@@ -1420,7 +1436,13 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_TARGET
          vp.MaxDepth = 1.0f;
          m_pcontext->RSSetViewports(1, &vp);
 
+
+
          D3D11_RECT rectScissor;
+         //rectScissor.left = ptexture->m_rectangleTarget.left();
+         //rectScissor.top = ptexture->m_rectangleTarget.top();
+         //rectScissor.right = ptexture->m_rectangleTarget.right();
+         //rectScissor.bottom = ptexture->m_rectangleTarget.bottom();
          rectScissor.left = ptexture->m_rectangleTarget.left();
          rectScissor.top = ptexture->m_rectangleTarget.top();
          rectScissor.right = ptexture->m_rectangleTarget.right();

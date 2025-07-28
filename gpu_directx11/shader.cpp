@@ -265,6 +265,75 @@ namespace gpu_directx11
       create_vertex_shader(m_memoryVertex);
       create_pixel_shader(m_memoryFragment);
 
+      D3D11_DEPTH_STENCIL_DESC dsDesc = {};
+      if (m_bDisableDepthTest)
+      {
+         dsDesc.DepthEnable = FALSE; // ✅ disable depth test
+      }
+      else
+      {
+         dsDesc.DepthEnable = TRUE; // ✅ disable depth test
+      }
+      if (m_bDepthTestButNoDepthWrite || m_bDisableDepthTest)
+      {
+         dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO; // also disables writing to depth buffer
+      }
+      else
+      {
+         dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+      }
+      if (m_bLequalDepth)
+      {
+         dsDesc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL; // not used since DepthEnable = FALSE
+      }
+      else
+      {
+         dsDesc.DepthFunc = D3D11_COMPARISON_LESS; // not used since DepthEnable = FALSE
+      }
+
+      // (optional) Stencil test settings
+      dsDesc.StencilEnable = FALSE;
+
+      //::cast < device > pgpudevice = pgpucontext->m_pgpudevice;
+
+      HRESULT hrCreateDepthStencilState = pgpudevice->m_pdevice->CreateDepthStencilState(
+         &dsDesc, &m_pdepthstencilstate);
+
+      ::defer_throw_hresult(hrCreateDepthStencilState);
+
+      //if (!pgpucontext->m_prasterizerstate)
+      {
+
+         D3D11_RASTERIZER_DESC rasterizerDesc = {};
+         rasterizerDesc.FillMode = D3D11_FILL_SOLID;
+         if (m_ecullmode == ::gpu::e_cull_mode_back)
+         {
+            rasterizerDesc.CullMode = D3D11_CULL_BACK;        // Cull back faces
+         }
+         else if (m_ecullmode == ::gpu::e_cull_mode_front)
+         {
+            rasterizerDesc.CullMode = D3D11_CULL_FRONT;        // Cull back faces
+         }
+         else
+         {
+            rasterizerDesc.CullMode = D3D11_CULL_NONE;        // Cull back faces
+         }
+         //rasterizerDesc.CullMode = D3D11_CULL_FRONT; 
+         rasterizerDesc.FrontCounterClockwise = false; // Treat CCW as front-facing
+         //rasterizerDesc.FrontCounterClockwise = true;
+         //rasterizerDesc.DepthClipEnable = TRUE;
+
+         HRESULT hr = pgpucontext->m_pgpudevice->m_pdevice->CreateRasterizerState(
+            &rasterizerDesc,
+            &pgpucontext->m_prasterizerstate);
+
+         ::defer_throw_hresult(hr);
+
+      }
+
+
+
+
    }
 
 
@@ -337,6 +406,7 @@ namespace gpu_directx11
 
    }
 
+
    void shader::bind(::gpu::texture* pgputextureTarget, ::gpu::texture* pgputextureSource)
    {
 
@@ -405,7 +475,7 @@ namespace gpu_directx11
    void shader::bind(::gpu::texture* pgputextureTarget)
    {
 
-      bind();
+      _bind();
 
       ::cast <context> pgpucontext = m_pgpurenderer->m_pgpucontext;
 
@@ -467,6 +537,50 @@ namespace gpu_directx11
    void shader::bind()
    {
 
+      ::cast <texture> ptexture = m_pgpurenderer->current_render_target_texture(::gpu::current_frame());
+
+      bind(ptexture);
+
+      //::gpu::context_lock context_lock(pgpucontext);
+
+      //::cast <device> pgpudevice = pgpucontext->m_pgpudevice;
+
+
+      ////defer_throw_hresult(hr1);
+
+      //pgpucontext->m_pcontext->VSSetShader(m_pvertexshader, nullptr, 0);
+
+      /////defer_throw_hresult(hr2);
+
+      //pgpucontext->m_pcontext->PSSetShader(m_ppixelshader, nullptr, 0);
+
+
+      //if (m_pinputlayout)
+      //{
+
+      //   if (!m_pd3d11inputlayout)
+      //   {
+
+      //      throw ::exception(error_wrong_state);
+
+      //   }
+
+      //   pgpucontext->m_pcontext->IASetInputLayout(m_pd3d11inputlayout);
+
+      //}
+      //else
+      //{
+
+      //   pgpucontext->m_pcontext->IASetInputLayout(nullptr);
+
+      //}
+
+   }
+
+
+   void shader::_bind()
+   {
+
       ::cast <context> pgpucontext = m_pgpurenderer->m_pgpucontext;
 
       ::gpu::context_lock context_lock(pgpucontext);
@@ -500,6 +614,21 @@ namespace gpu_directx11
       {
 
          pgpucontext->m_pcontext->IASetInputLayout(nullptr);
+
+      }
+
+      if (m_pdepthstencilstate)
+      {
+
+         // Bind the new depth-stencil state
+         pgpucontext->m_pcontext->OMSetDepthStencilState(m_pdepthstencilstate, 0);
+
+      }
+
+      if (m_prasterizerstate)
+      {
+       
+         pgpucontext->m_pcontext->RSSetState(m_prasterizerstate);
 
       }
 

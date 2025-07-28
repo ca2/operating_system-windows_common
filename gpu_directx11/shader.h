@@ -25,6 +25,8 @@ namespace gpu_directx11
       comptr < ID3D11Buffer> m_pbufferPushConstants;
       int m_iSizePushConstants = -1;
 
+      ::comptr < ID3D11DepthStencilState > m_pdepthstencilstate;
+      ::comptr < ID3D11RasterizerState> m_prasterizerstate;
       //::pointer < pipeline > m_ppipeline;
 
       //struct d3d11_constant_buffer
@@ -92,6 +94,7 @@ namespace gpu_directx11
       void bind(::gpu::texture* pgputextureTarget, ::gpu::texture* pgputextureSource) override;
       void bind_source(::gpu::texture* pgputextureSource);
       void bind() override;
+      void _bind() override;
       void unbind() override;
       
 

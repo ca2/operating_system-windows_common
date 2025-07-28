@@ -326,7 +326,8 @@ namespace gpu_directx11
          
          __defer_construct(pcommandbuffer);
          
-         pcommandbuffer->initialize_command_buffer(m_pgpurendertarget);
+         pcommandbuffer->initialize_command_buffer(m_pgpurendertarget,
+            ::gpu::e_command_buffer_graphics);
 
       }
 
@@ -1031,17 +1032,28 @@ namespace gpu_directx11
 
             }
 
-            D3D11_VIEWPORT vp = {};
-            vp.TopLeftX = 0;
-            vp.TopLeftY = 0;
-            vp.Width = static_cast<float>(size.width());
-            vp.Height = static_cast<float>(size.height());
-            vp.MinDepth = 0.0f;
-            vp.MaxDepth = 1.0f;
-
-            pcontext->RSSetViewports(1, &vp);
-
          }
+
+
+         D3D11_VIEWPORT vp = {};
+         vp.TopLeftX = 0;
+         vp.TopLeftY = 0;
+         vp.Width = static_cast<float>(size.width());
+         vp.Height = static_cast<float>(size.height());
+         vp.MinDepth = 0.0f;
+         vp.MaxDepth = 1.0f;
+
+         pcontext->RSSetViewports(1, &vp);
+
+         D3D11_RECT scissorRect;
+
+         scissorRect.left = 0;
+         scissorRect.top = 0;
+         scissorRect.right = size.width();
+         scissorRect.bottom = size.height();
+
+         pcontext->RSSetScissorRects(1, &scissorRect);
+
 
 
          ////::cast < offscreen_render_target_view > poffscreenrendertargetview = pgpurendertargetview;
@@ -1165,15 +1177,17 @@ namespace gpu_directx11
    ::pointer < ::gpu::frame > renderer::beginFrame()
    {
 
-      assert(!isFrameStarted && "Can't call beginFrame while already in progress");
+      return ::gpu::renderer::beginFrame();
 
-      __defer_construct(m_pgpurendertarget->m_pgpuframe);
-      
-      m_prenderstate->on_happening(::gpu::e_happening_begin_frame);
+      //assert(!isFrameStarted && "Can't call beginFrame while already in progress");
 
-      isFrameStarted = true;
+      //__defer_construct(m_pgpurendertarget->m_pgpuframe);
+      //
+      //m_prenderstate->on_happening(::gpu::e_happening_begin_frame);
 
-      return m_pgpurendertarget->m_pgpuframe;
+      //isFrameStarted = true;
+
+      //return m_pgpurendertarget->m_pgpuframe;
 
    }
 
@@ -1182,6 +1196,8 @@ namespace gpu_directx11
    {
 
       m_prenderstate->on_happening(::gpu::e_happening_end_frame);
+
+      defer_end_frame_layer_copy();
 
       auto eoutput = m_pgpucontext->m_eoutput;
 

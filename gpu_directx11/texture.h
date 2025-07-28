@@ -84,7 +84,7 @@ namespace gpu_directx11
       ~texture() override;
 
 
-      void initialize_image_texture(::gpu::renderer* prenderer, const ::int_rectangle & rectangleTarget, bool bWithDepth, ::pixmap * ppixmap = nullptr, enum_type type = e_type_image) override;
+      void initialize_image_texture(::gpu::renderer* prenderer, const ::int_rectangle& rectangleTarget, bool bWithDepth, const ::pointer_array < ::image::image >& imagea = {}, enum_type type = e_type_image) override;
       virtual void _initialize_gpu_texture(::gpu::renderer* prenderer, IDXGISwapChain1 * pdxgiswapchain);
 
 

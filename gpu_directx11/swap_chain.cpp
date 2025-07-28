@@ -244,46 +244,35 @@ namespace gpu_directx11
       {
 
 
-         const char* fullscreen_vertex_shader = R"hlsl(// fullscreen_vs.hlsl
-      struct VSOut {
-         float4 pos : SV_POSITION;
-         float2 uv : TEXCOORD0;
-      };
+         const char* fullscreen_vertex_shader = R"hlsl(
+struct VSOut {
+    float4 pos : SV_POSITION;
+    float2 uv  : TEXCOORD0;
+};
 
-      VSOut main(uint vid : SV_VertexID) {
-         float2 verts[3] = {
-             float2(-1, -1),
-             float2(-1, +3),
-             float2(+3, -1)
-         };
-         float2 uvs[3] = {
-             float2(0, 1),
-             float2(0, -1),
-             float2(2, 1)
-         };
+VSOut main(uint vid : SV_VertexID) {
+    float2 verts[3] = {
+        float2(-1, -1),
+        float2(-1, +3),
+        float2(+3, -1)
+    };
 
-         VSOut o;
-o.pos = float4(verts[vid], 0, 1);
-float2 uv = 0.5 * (verts[vid] + 1.0);
-o.uv = float2(uv.x, 1.0 - uv.y); // Flip Y
-         return o;
-      }
-)hlsl";
+    VSOut o;
+    o.pos = float4(verts[vid], 0, 1);
 
-         const char* fullscreen_pixel_shader = R"hlsl(// fullscreen_ps.hlsl
+    // Map clip-space [-1..1] to texture-space [0..1]
+    float2 uv = 0.5f * (verts[vid] + float2(1.0f, 1.0f));
+    uv.y = 1.0f - uv.y;
+    o.uv = uv;
+    return o;
+})hlsl";
+
+         const char* fullscreen_pixel_shader = R"hlsl(
 Texture2D tex : register(t0);
 SamplerState samp : register(s0);
 
 float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
-   return tex.Sample(samp, uv);
-//if(uv.x<0.5)
-//{
-//    return tex.Sample(samp, uv);
-//}
-//else
-//{
-//return float4(0.5*0.5, 0.90*0.5, 0.98*0.5, 0.5);
-//}
+    return tex.Sample(samp, uv);
 }
 )hlsl";
 
