@@ -757,9 +757,6 @@
     <ProjectReference Include="..\acme_windows_common\acme_windows_common.vcxproj">
       <Project>{eb9dc9c0-0573-4da0-8700-4dbb371773f1}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\directx11\directx11.vcxproj">
-      <Project>{c4b37bd9-1ddb-4d98-9740-182ed114cb3a}</Project>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
