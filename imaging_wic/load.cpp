@@ -63,6 +63,13 @@ namespace imaging_wic
 
       auto filepath = payloadFile.as_file_path();
 
+      //if (!filepath.case_insensitive_ends(".webp"))
+      //{
+
+      //   return;
+
+      //}
+
       if (filepath.case_insensitive_begins("http:/")
          || filepath.case_insensitive_begins("https:/"))
       {

@@ -102,15 +102,15 @@ namespace directx11
 //}
 
 
-#endif
-
-
 CLASS_DECL_DIRECTX11 void directx11_debug()
 {
 
    ::directx11::dxgi_debug::s_pdxgidebug->debug();
 
 }
+
+
+#endif
 
 
 
