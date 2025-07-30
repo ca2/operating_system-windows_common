@@ -78,7 +78,7 @@ namespace gpu_directx11
          //VkBuffer m_indexBuffer = nullptr;
          //VkDeviceMemory m_indexMemory = nullptr;
       };
-
+      ::comptr < ID3D11DepthStencilState > m_pdepthstencilstateForCleaning;
       ::pointer<::gpu::shader>                        m_pshaderImageBlend;
       ::pointer<::gpu::shader>                        m_pshaderImageSet;
       //map < VkImage, ::pointer < descriptor > >       m_imagedescriptor;

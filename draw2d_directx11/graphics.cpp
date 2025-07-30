@@ -5498,8 +5498,8 @@ namespace draw2d_directx11
 
          auto pcontext = gpu_context();
 
-         pcontext->m_pcontext->OMSetDepthStencilState(
-            pcontext->depth_stencil_state_disabled(), 0);
+         //pcontext->m_pcontext->OMSetDepthStencilState(
+         //   pcontext->depth_stencil_state_disabled(), 0);
 
          ::cast < ::gpu_directx11::renderer > prenderer = pcontext->m_pgpurenderer;
 
@@ -6151,11 +6151,11 @@ namespace draw2d_directx11
    void graphics::fill_rectangle(const ::double_rectangle & rectangleParam, const ::color::color & color)
    {
 
-      if (!m_pshaderFillSolidRectangle)
+      if (::nok(m_pshaderFillSolidRectangle))
       {
 
 
-         __defer_construct_new(m_pshaderFillSolidRectangle);
+         gpu_context()->øconstruct(m_pshaderFillSolidRectangle);
 
          const char* pszVert = R"hlsl(
 struct VSIn {
@@ -6197,7 +6197,7 @@ VSOut main(VSIn input) {
 
       }
 
-      m_pshaderFillSolidRectangle->bind();
+      //m_pshaderFillSolidRectangle->bind();
 
       auto r = rectangleParam;
 
@@ -6205,6 +6205,8 @@ VSOut main(VSIn input) {
       m_m1.transform(r.bottom_right());
 
       auto pcontext = gpu_context();
+
+      pcontext->defer_bind(m_pshaderFillSolidRectangle);
 
       ::cast < ::gpu_directx11::device > pdevice = pcontext->m_pgpudevice;
 
@@ -6230,7 +6232,7 @@ VSOut main(VSIn input) {
       pcontext->m_pcontext->Draw(6, 0);
 
 
-      m_pshaderFillSolidRectangle->unbind();
+      pcontext->defer_unbind(m_pshaderFillSolidRectangle);
 
 
       //if (!m_pdevicecontext)

@@ -325,7 +325,7 @@ namespace gpu_directx11
 
          HRESULT hr = pgpucontext->m_pgpudevice->m_pdevice->CreateRasterizerState(
             &rasterizerDesc,
-            &pgpucontext->m_prasterizerstate);
+            &m_prasterizerstate);
 
          ::defer_throw_hresult(hr);
 
@@ -337,74 +337,74 @@ namespace gpu_directx11
    }
 
 
-   void shader::on_set_constant_buffer(const ::scoped_string& scopedstrName)
-   {
+   //void shader::on_set_constant_buffer(const ::scoped_string& scopedstrName)
+   //{
 
-      auto p1 = m_mapConstantBuffer.plookup(scopedstrName);
+   //   auto p1 = m_mapConstantBuffer.plookup(scopedstrName);
 
-      if(p1)
-      {
+   //   if(p1)
+   //   {
 
-         auto& constantbuffer = p1->m_element2;
+   //      auto& constantbuffer = p1->m_element2;
  
-         ::cast <context> pgpucontext = m_pgpurenderer->m_pgpucontext;
+   //      ::cast <context> pgpucontext = m_pgpurenderer->m_pgpucontext;
 
-         auto size = p1->m_element2.m_memory.size();
+   //      auto size = p1->m_element2.m_memory.size();
  
-         auto & poolmemorybuffer = pgpucontext->m_mapPoolMemoryBuffer[size];
+   //      auto & poolmemorybuffer = pgpucontext->m_mapPoolMemoryBuffer[size];
 
-         if (!poolmemorybuffer.m_ppoolgroup)
-         {
+   //      if (!poolmemorybuffer.m_ppoolgroup)
+   //      {
 
-            poolmemorybuffer.m_ppoolgroup = pgpucontext->m_pgpudevice->frame_pool_group(
-               m_pgpurenderer->m_pgpurendertarget->get_frame_index());
+   //         poolmemorybuffer.m_ppoolgroup = pgpucontext->m_pgpudevice->frame_pool_group(
+   //            m_pgpurenderer->m_pgpurendertarget->get_frame_index());
 
-         }
+   //      }
 
-         ::cast < ::gpu_directx11::memory_buffer > pmemorybuffer = poolmemorybuffer.get();
+   //      ::cast < ::gpu_directx11::memory_buffer > pmemorybuffer = poolmemorybuffer.get();
 
-         if (pmemorybuffer->m_bNew)
-         {
+   //      if (pmemorybuffer->m_bNew)
+   //      {
 
-            pmemorybuffer->initialize_memory_buffer_with_context(pgpucontext, size, ::gpu::memory_buffer::e_type_constant_buffer);
+   //         pmemorybuffer->initialize_memory_buffer_with_context(pgpucontext, size, ::gpu::memory_buffer::e_type_constant_buffer);
 
-         }
+   //      }
 
-         pmemorybuffer->assign(p1->m_element2.m_memory);
-
-
-         
-         //D3D11_MAPPED_SUBRESOURCE mapped;
-         //pgpucontext->m_pcontext->Map(pd3d11buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
-         //memcpy(mapped.pData, p1->m_element2.m_memory.data(), p1->m_element2.m_memory.size());
-         //pgpucontext->m_pcontext->Unmap(pd3d11buffer, 0);
-
-         if (constantbuffer.m_i1FragmentShader >= 0
-            && constantbuffer.m_i2FragmentShader >= 0)
-         {
-
-            pgpucontext->m_pcontext->PSSetConstantBuffers(
-               constantbuffer.m_i1FragmentShader, 
-               constantbuffer.m_i2FragmentShader,
-               pmemorybuffer->m_pbuffer.pp());
-
-         }
+   //      pmemorybuffer->assign(p1->m_element2.m_memory);
 
 
-         if (constantbuffer.m_i1VertexShader >= 0
-            && constantbuffer.m_i2VertexShader >= 0)
-         {
+   //      
+   //      //D3D11_MAPPED_SUBRESOURCE mapped;
+   //      //pgpucontext->m_pcontext->Map(pd3d11buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
+   //      //memcpy(mapped.pData, p1->m_element2.m_memory.data(), p1->m_element2.m_memory.size());
+   //      //pgpucontext->m_pcontext->Unmap(pd3d11buffer, 0);
 
-            pgpucontext->m_pcontext->VSSetConstantBuffers(
-               constantbuffer.m_i1VertexShader,
-               constantbuffer.m_i2VertexShader,
-               pmemorybuffer->m_pbuffer.pp());
+   //      if (constantbuffer.m_i1FragmentShader >= 0
+   //         && constantbuffer.m_i2FragmentShader >= 0)
+   //      {
 
-         }
+   //         pgpucontext->m_pcontext->PSSetConstantBuffers(
+   //            constantbuffer.m_i1FragmentShader, 
+   //            constantbuffer.m_i2FragmentShader,
+   //            pmemorybuffer->m_pbuffer.pp());
 
-      }
+   //      }
 
-   }
+
+   //      if (constantbuffer.m_i1VertexShader >= 0
+   //         && constantbuffer.m_i2VertexShader >= 0)
+   //      {
+
+   //         pgpucontext->m_pcontext->VSSetConstantBuffers(
+   //            constantbuffer.m_i1VertexShader,
+   //            constantbuffer.m_i2VertexShader,
+   //            pmemorybuffer->m_pbuffer.pp());
+
+   //      }
+
+   //   }
+
+   //}
 
 
    void shader::bind(::gpu::texture* pgputextureTarget, ::gpu::texture* pgputextureSource)
@@ -412,12 +412,12 @@ namespace gpu_directx11
 
       bind(pgputextureTarget);
 
-      bind_source(pgputextureSource);
+      bind_source(pgputextureSource, 0);
 
    }
 
 
-   void shader::bind_source( ::gpu::texture* pgputextureSource)
+   void shader::bind_source( ::gpu::texture* pgputextureSource, int iSlot)
    {
 
       ::cast <context> pgpucontext = m_pgpurenderer->m_pgpucontext;
@@ -632,6 +632,14 @@ namespace gpu_directx11
 
       }
 
+      auto etopology = ::directx11::as_d3d11_topology(m_etopology);
+
+      pgpucontext->m_pcontext->IASetPrimitiveTopology(etopology);
+
+      pgpucontext->m_pcontext->VSSetConstantBuffers(0, 1, pgpucontext->m_pbufferGlobalUbo.pp());
+      pgpucontext->m_pcontext->PSSetConstantBuffers(0, 1, pgpucontext->m_pbufferGlobalUbo.pp());
+
+
    }
 
 
@@ -773,8 +781,8 @@ namespace gpu_directx11
       pgpucontext->m_pcontext->Unmap(m_pbufferPushConstants, 0);
 
 
-      pgpucontext->m_pcontext->VSSetConstantBuffers(0, 1, pgpucontext->m_pbufferGlobalUbo.pp());
-      pgpucontext->m_pcontext->PSSetConstantBuffers(0, 1, pgpucontext->m_pbufferGlobalUbo.pp());
+      //pgpucontext->m_pcontext->VSSetConstantBuffers(0, 1, pgpucontext->m_pbufferGlobalUbo.pp());
+      //pgpucontext->m_pcontext->PSSetConstantBuffers(0, 1, pgpucontext->m_pbufferGlobalUbo.pp());
 
 
       auto pVS = m_pbufferPushConstants.m_p;

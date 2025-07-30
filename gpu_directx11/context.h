@@ -21,14 +21,14 @@ namespace gpu_directx11
       comptr<ID3D11DeviceContext>         m_pcontext;
       comptr<ID3D11DeviceContext1>        m_pcontext1;
 
-      comptr < ID3D11RasterizerState> m_prasterizerstate;
+      //comptr < ID3D11RasterizerState> m_prasterizerstate;
       ::comptr < ID3D11RasterizerState > m_prasterizerstateMergeLayers;
 
       ::comptr<ID3D10Multithread> m_pmultithread;
 
-      ::comptr < ID3D11DepthStencilState > m_pdepthstencilstateDisabled;
+      //::comptr < ID3D11DepthStencilState > m_pdepthstencilstateDisabled;
 
-
+      ::comptr < ID3DUserDefinedAnnotation > m_puserdefinedannotation;
       //itask									m_itaskGpu;
       //VkSampler m_vksampler001;
 
@@ -124,7 +124,7 @@ namespace gpu_directx11
       ~context() override;
 
 
-      virtual ID3D11DepthStencilState* depth_stencil_state_disabled();
+      //virtual ID3D11DepthStencilState* depth_stencil_state_disabled();
 
 
       void _context_lock() override;
@@ -151,6 +151,11 @@ namespace gpu_directx11
 
       void on_start_layer(::gpu::layer* player) override;
       void on_end_layer(::gpu::layer* player) override;
+
+
+      void start_debug_happening(const ::scoped_string& scopedstrDebugHappening) override;
+      void end_debug_happening() override;
+
 
       //void swap_buffers() override;
 

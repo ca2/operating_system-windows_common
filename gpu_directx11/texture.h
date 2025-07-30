@@ -50,7 +50,7 @@ namespace gpu_directx11
 
       comptr<ID3D11Texture2D> m_ptextureDepthStencil;
       comptr<ID3D11DepthStencilView>m_pdepthstencilview;
-      comptr <ID3D11DepthStencilState>m_pdepthstencilstate;
+      //comptr <ID3D11DepthStencilState>m_pdepthstencilstate;
 
 
       comptr < IDXGISurface > m_pdxgisurface;

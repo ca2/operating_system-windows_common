@@ -31,7 +31,7 @@ namespace draw2d_directx11
       };
 
 
-      ::pointer < ::gpu_directx11::shader > m_pshaderFillSolidRectangle;
+      ::pointer < ::gpu::shader > m_pshaderFillSolidRectangle;
 
       ::pointer < ::particle > m_pSwapChainForBlitting;
       //::array < ::comptr < IDXGISurface > > m_dxgisurfaceaBound;

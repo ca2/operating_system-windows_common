@@ -37,7 +37,24 @@ namespace directx11
       return str;
 
    }
+   
+   CLASS_DECL_DIRECTX11 D3D_PRIMITIVE_TOPOLOGY as_d3d11_topology(::gpu::enum_topology etopology)
+   {
 
+      switch (etopology)
+      {
+      case ::gpu::e_topology_triangle_list:
+         return D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
+      case ::gpu::e_topology_triangle_strip:
+         return D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
+      case ::gpu::e_topology_line_list:
+         return D3D11_PRIMITIVE_TOPOLOGY_LINELIST;
+      default:
+         throw ::exception(error_unexpected);
+
+      }
+
+   }
 
 } // namespace directx11
 

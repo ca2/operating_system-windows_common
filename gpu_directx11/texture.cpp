@@ -90,17 +90,23 @@ namespace gpu_directx11
          m_texture2ddesc.BindFlags |= D3D11_BIND_RENDER_TARGET;
 
       }
+      
+      //if (imagea.is_empty() && !m_bRenderTarget)
+      //{
+
+      //   m_texture2ddesc.Usage = D3D11_USAGE_DYNAMIC;
+      //   m_texture2ddesc.CPUAccessFlags |= D3D11_CPU_ACCESS_WRITE;
+
+      //}
 
       ::cast < ::gpu_directx11::device > pgpudevice = m_pgpurenderer->m_pgpucontext->m_pgpudevice;
 
       auto pdevice = pgpudevice->m_pdevice;
 
-      D3D11_SUBRESOURCE_DATA data[6];
+      D3D11_SUBRESOURCE_DATA data[6]{};
 
       if (imagea.has_element())
       {
-
-         memset(data, 0, sizeof(D3D11_SUBRESOURCE_DATA) * 6);
 
          if (m_etype == e_type_cube_map)
          {
@@ -127,8 +133,6 @@ namespace gpu_directx11
          else
          {
 
-            memset(data, 0, sizeof(D3D11_SUBRESOURCE_DATA));
-            
             auto pimage = imagea.first();
             data[0].pSysMem = pimage->data();
             data[0].SysMemPitch = pimage->m_iScan;
@@ -140,7 +144,7 @@ namespace gpu_directx11
 
       HRESULT hrCreateTexture = pdevice->CreateTexture2D(
          &m_texture2ddesc, 
-         imagea.has_element() ? data : nullptr,
+         data[0].pSysMem ? data : nullptr,
          &m_ptextureOffscreen);
 
       if (FAILED(hrCreateTexture))
@@ -422,15 +426,21 @@ namespace gpu_directx11
       int MorePrecisionNoStencil = 1;
       if (MorePrecisionNoStencil)
       {
+         
          depthDesc.Format = DXGI_FORMAT_D32_FLOAT;
+
       }
       else
       {
+         
          depthDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+
       }
+      
       depthDesc.SampleDesc.Count = 1;
       depthDesc.Usage = D3D11_USAGE_DEFAULT;
       depthDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+
       ::cast < ::gpu_directx11::device > pgpudevice = m_pgpurenderer->m_pgpucontext->m_pgpudevice;
 
       auto pdevice = pgpudevice->m_pdevice;
@@ -443,6 +453,7 @@ namespace gpu_directx11
          throw ::hresult_exception(hrCreateTexture);
 
       }
+
       D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
 
       if (MorePrecisionNoStencil)
@@ -450,7 +461,9 @@ namespace gpu_directx11
 
          dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;
          dsvDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+
       }
+
       HRESULT hrCreateDepthStencilView = pdevice->CreateDepthStencilView(
          m_ptextureDepthStencil,
          MorePrecisionNoStencil ? &dsvDesc : nullptr, &m_pdepthstencilview);
@@ -464,21 +477,20 @@ namespace gpu_directx11
 
       //ID3D11DepthStencilState* depthStencilState = nullptr;
 
-      D3D11_DEPTH_STENCIL_DESC dsDesc = {};
-      dsDesc.DepthEnable = TRUE;
-      dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
-      dsDesc.DepthFunc = D3D11_COMPARISON_LESS;
+      //D3D11_DEPTH_STENCIL_DESC dsDesc = {};
 
-      HRESULT hrCreateDepthStencilState = pdevice->CreateDepthStencilState(&dsDesc, &m_pdepthstencilstate);
+      //dsDesc.DepthEnable = TRUE;
+      //dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+      //dsDesc.DepthFunc = D3D11_COMPARISON_LESS;
 
-      if (FAILED(hrCreateDepthStencilState))
-      {
+      //HRESULT hrCreateDepthStencilState = pdevice->CreateDepthStencilState(&dsDesc, &m_pdepthstencilstate);
 
-         throw ::hresult_exception(hrCreateDepthStencilState);
+      //if (FAILED(hrCreateDepthStencilState))
+      //{
 
-      }
+      //   throw ::hresult_exception(hrCreateDepthStencilState);
 
-
+      //}
 
       //VkFormat depthFormat = findDepthFormat();
 
@@ -606,6 +618,52 @@ namespace gpu_directx11
    void texture::set_pixels(const ::int_rectangle& rectangle, const void* data)
    {
 
+      //D3D11_MAPPED_SUBRESOURCE mapped{};
+
+      //::cast < ::gpu_directx11::device > pgpudevice = m_pgpurenderer->m_pgpucontext->m_pgpudevice;
+
+      ::cast < ::gpu_directx11::context > pgpucontext = m_pgpurenderer->m_pgpucontext;
+
+      // Define the box region to update (in texel coordinates)
+      D3D11_BOX box{};
+      box.left = rectangle.left();
+      box.top = rectangle.top();
+      box.front = 0;
+      box.right = rectangle.right();
+      box.bottom = rectangle.bottom();;
+      box.back = 1;
+
+      UINT rowPitch = rectangle.width() * 4;
+
+      // Upload the sub-region
+      pgpucontext->m_pcontext->UpdateSubresource(
+         m_ptextureOffscreen,           // destination texture
+         0,               // subresource (mip 0, array slice 0)
+         &box,            // region to update
+         data,      // source pixels (must be tightly packed)
+         rowPitch,        // bytes per row
+         0                // bytes per slice (not used for 2D textures)
+      );
+      //HRESULT hrMap = pgpucontext->m_pcontext->Map(
+      //   m_ptextureOffscreen, 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
+
+      //::defer_throw_hresult(hrMap);
+      //   
+      //auto pimage32 = (::image32_t*)mapped.pData;
+      //   
+      //pimage32->copy(rectangle, mapped.RowPitch,(const ::image32_t *) data, rectangle.width() * 4);
+
+      ////// Copy pixel rows into mapped.pData
+      ////for (UINT row = 0; row < height; ++row)
+      ////{
+      ////   memcpy(
+      ////      (BYTE*)mapped.pData + (y + row) * mapped.RowPitch + x * bytesPerPixel,
+      ////      srcData + row * width * bytesPerPixel,
+      ////      width * bytesPerPixel
+      ////   );
+      ////}
+
+      //pgpucontext->m_pcontext->Unmap(m_ptextureOffscreen, 0);
 
    }
 

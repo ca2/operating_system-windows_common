@@ -1249,6 +1249,39 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
    }
 
+   //ID3DUserDefinedAnnotation* pAnnotation = nullptr;
+//context->QueryInterface(__uuidof(ID3DUserDefinedAnnotation), (void**)&pAnnotation);
+
+//if (pAnnotation)
+//{
+//   pAnnotation->BeginEvent(L"Update Tile Region");
+//   // ... do some GPU work (Draw/Dispatch/UpdateSubresource)
+//   pAnnotation->EndEvent();
+//}
+   void context::start_debug_happening(const ::scoped_string& scopedstrDebugHappening)
+   {
+
+      if (!m_puserdefinedannotation)
+      {
+
+         m_pcontext.as(m_puserdefinedannotation);
+
+      }
+
+      ::wstring wstrDebugHappening(scopedstrDebugHappening);
+
+      m_puserdefinedannotation->BeginEvent(wstrDebugHappening);
+
+
+   }
+
+
+   void context::end_debug_happening()
+   {
+
+      m_puserdefinedannotation->EndEvent();
+
+   }
 
 
    void context::merge_layers(::gpu::texture* ptextureTarget, ::pointer_array < ::gpu::layer >* playera)
@@ -1334,7 +1367,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       }
 
 
-      m_pcontext->OMSetDepthStencilState(depth_stencil_state_disabled(), 0);
+      //m_pcontext->OMSetDepthStencilState(depth_stencil_state_disabled(), 0);
 
 
       {
@@ -1414,7 +1447,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
          
          ::cast <::gpu_directx11::texture > ptexture = player->texture();
 
-         m_pshaderBlend3->bind_source(ptexture);
+         m_pshaderBlend3->bind_source(ptexture, 0);
 
          if (ptexture == ptextureDst)
          {
@@ -1599,32 +1632,32 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    }
 
 
-   ID3D11DepthStencilState* context::depth_stencil_state_disabled()
-   {
+   //ID3D11DepthStencilState* context::depth_stencil_state_disabled()
+   //{
 
-      if (!m_pdepthstencilstateDisabled)
-      {
+   //   if (!m_pdepthstencilstateDisabled)
+   //   {
 
-         D3D11_DEPTH_STENCIL_DESC dsDesc = {};
-         dsDesc.DepthEnable = FALSE; // ✅ disable depth test
-         dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO; // also disables writing to depth buffer
-         dsDesc.DepthFunc = D3D11_COMPARISON_ALWAYS; // not used since DepthEnable = FALSE
+   //      D3D11_DEPTH_STENCIL_DESC dsDesc = {};
+   //      dsDesc.DepthEnable = FALSE; // ✅ disable depth test
+   //      dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO; // also disables writing to depth buffer
+   //      dsDesc.DepthFunc = D3D11_COMPARISON_ALWAYS; // not used since DepthEnable = FALSE
 
-         // (optional) Stencil test settings
-         dsDesc.StencilEnable = FALSE;
+   //      // (optional) Stencil test settings
+   //      dsDesc.StencilEnable = FALSE;
 
-         ::cast < device > pgpudevice = m_pgpudevice;
+   //      ::cast < device > pgpudevice = m_pgpudevice;
 
-         HRESULT hrCreateDepthStencilState = pgpudevice->m_pdevice->CreateDepthStencilState(
-            &dsDesc, &m_pdepthstencilstateDisabled);
+   //      HRESULT hrCreateDepthStencilState = pgpudevice->m_pdevice->CreateDepthStencilState(
+   //         &dsDesc, &m_pdepthstencilstateDisabled);
 
-         ::defer_throw_hresult(hrCreateDepthStencilState);
+   //      ::defer_throw_hresult(hrCreateDepthStencilState);
 
-      }
+   //   }
 
-      return m_pdepthstencilstateDisabled;
+   //   return m_pdepthstencilstateDisabled;
 
-   }
+   //}
 
 
 

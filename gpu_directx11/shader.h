@@ -88,11 +88,11 @@ namespace gpu_directx11
       void draw() override;
 
 
-      void on_set_constant_buffer(const ::scoped_string& scopedstrName) override;
+      //void on_set_constant_buffer(const ::scoped_string& scopedstrName) override;
 
       void bind(::gpu::texture* pgputextureTarget) override;
       void bind(::gpu::texture* pgputextureTarget, ::gpu::texture* pgputextureSource) override;
-      void bind_source(::gpu::texture* pgputextureSource);
+      void bind_source(::gpu::texture* pgputextureSource, int iSlot) override;
       void bind() override;
       void _bind() override;
       void unbind() override;

@@ -33,6 +33,8 @@ namespace directx11
 
 #endif
 
+   CLASS_DECL_DIRECTX11 D3D_PRIMITIVE_TOPOLOGY as_d3d11_topology(::gpu::enum_topology etopology);
+
 
 } // namespace directx11
 

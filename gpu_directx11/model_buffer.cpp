@@ -704,9 +704,9 @@ namespace gpu_directx11
 
          m_pbufferVertex->bind();
 
-         ::cast <::gpu_directx11::context> pcontext = m_pgpucontext;
+         //::cast <::gpu_directx11::context> pcontext = m_pgpucontext;
 
-         pcontext->m_pcontext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+         //pcontext->m_pcontext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
          if (m_pbufferIndex)
          {
@@ -752,8 +752,16 @@ namespace gpu_directx11
          //}
 
       }
-      else
+      else if(m_bDummy)
       {
+
+         ::cast <::gpu_directx11::context> pcontext = m_pgpucontext;
+
+         // No input layout (we're not feeding vertex attributes)
+         pcontext->m_pcontext->IASetInputLayout(nullptr);
+
+         // No vertex buffers
+         pcontext->m_pcontext->IASetVertexBuffers(0, 0, nullptr, nullptr, nullptr);
 
          //glBindVertexArray(m_gluVao);
          //GLCheckError("");

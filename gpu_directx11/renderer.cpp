@@ -961,7 +961,22 @@ namespace gpu_directx11
 
          ::comptr < ID3D11DepthStencilView > pdepthstencilview;
 
-         ::comptr < ID3D11DepthStencilState > pdepthstencilstate;
+         if (!m_pdepthstencilstateForCleaning)
+         {
+            ::cast < ::gpu_directx11::device > pgpudevice = pgpucontext->m_pgpudevice;
+            D3D11_DEPTH_STENCIL_DESC dsDesc = {};
+
+dsDesc.DepthEnable = TRUE;
+dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+dsDesc.DepthFunc = D3D11_COMPARISON_LESS;
+
+HRESULT hrCreateDepthStencilState = pgpudevice->m_pdevice->CreateDepthStencilState(&dsDesc,
+   &m_pdepthstencilstateForCleaning);
+::defer_throw_hresult(hrCreateDepthStencilState);
+
+         }
+
+         //::comptr < ID3D11DepthStencilState > pdepthstencilstate;
 
          if (ptexture)
          {
@@ -1002,7 +1017,7 @@ namespace gpu_directx11
 
                }
 
-               pdepthstencilstate = ptexture->m_pdepthstencilstate;
+               //pdepthstencilstate = ptexture->m_pdepthstencilstate;
 
                pdepthstencilview = ptexture->m_pdepthstencilview;
 
@@ -1015,10 +1030,10 @@ namespace gpu_directx11
          if (prendertargetview)
          {
 
-            if (pdepthstencilstate && pdepthstencilview)
+            if (m_pdepthstencilstateForCleaning && pdepthstencilview)
             { 
 
-               pcontext->OMSetDepthStencilState(pdepthstencilstate, 0);
+               pcontext->OMSetDepthStencilState(m_pdepthstencilstateForCleaning, 0);
 
                pcontext->OMSetRenderTargets(1, ptexture->m_prendertargetview.pp(), pdepthstencilview);
 
@@ -1074,26 +1089,26 @@ namespace gpu_directx11
 
       }
 
-      if (!pgpucontext->m_prasterizerstate)
-      {
+      //if (!pgpucontext->m_prasterizerstate)
+      //{
 
-         D3D11_RASTERIZER_DESC rasterizerDesc = {};
-         rasterizerDesc.FillMode = D3D11_FILL_SOLID;
-         rasterizerDesc.CullMode = D3D11_CULL_BACK;        // Cull back faces
-         //rasterizerDesc.CullMode = D3D11_CULL_FRONT; 
-         rasterizerDesc.FrontCounterClockwise = false; // Treat CCW as front-facing
-         //rasterizerDesc.FrontCounterClockwise = true;
-         rasterizerDesc.DepthClipEnable = TRUE;
+      //   D3D11_RASTERIZER_DESC rasterizerDesc = {};
+      //   rasterizerDesc.FillMode = D3D11_FILL_SOLID;
+      //   rasterizerDesc.CullMode = D3D11_CULL_BACK;        // Cull back faces
+      //   //rasterizerDesc.CullMode = D3D11_CULL_FRONT; 
+      //   rasterizerDesc.FrontCounterClockwise = false; // Treat CCW as front-facing
+      //   //rasterizerDesc.FrontCounterClockwise = true;
+      //   rasterizerDesc.DepthClipEnable = TRUE;
 
-         HRESULT hr = pgpucontext->m_pgpudevice->m_pdevice->CreateRasterizerState(
-            &rasterizerDesc,
-            &pgpucontext->m_prasterizerstate);
+      //   HRESULT hr = pgpucontext->m_pgpudevice->m_pdevice->CreateRasterizerState(
+      //      &rasterizerDesc,
+      //      &pgpucontext->m_prasterizerstate);
 
-         ::defer_throw_hresult(hr);
+      //   ::defer_throw_hresult(hr);
 
-      }
+      //}
 
-      pgpucontext->m_pcontext->RSSetState(pgpucontext->m_prasterizerstate);
+      //pgpucontext->m_pcontext->RSSetState(pgpucontext->m_prasterizerstate);
 
       //::cast < ::gpu_directx11::context > pcontext = m_pgpucontext;
 
