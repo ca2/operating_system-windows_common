@@ -156,7 +156,7 @@ namespace gpu_directx11
       void start_debug_happening(const ::scoped_string& scopedstrDebugHappening) override;
       void end_debug_happening() override;
 
-
+      //void defer_bind(::gpu::shader* pgpushader) override;
       //void swap_buffers() override;
 
       //VkSampler _001VkSampler();

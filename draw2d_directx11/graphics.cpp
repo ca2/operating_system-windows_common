@@ -6185,6 +6185,10 @@ VSOut main(VSIn input) {
 
          auto pcontext = gpu_context();
 
+         m_pshaderFillSolidRectangle->m_bDisableDepthTest = true;
+         m_pshaderFillSolidRectangle->m_bEnableBlend = true;
+         m_pshaderFillSolidRectangle->m_ecullmode = ::gpu::e_cull_mode_none;
+
          m_pshaderFillSolidRectangle->initialize_shader_with_block(
             pcontext->m_pgpurenderer,
             ::as_block(pszVert),

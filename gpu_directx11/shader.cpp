@@ -297,7 +297,7 @@ namespace gpu_directx11
       //::cast < device > pgpudevice = pgpucontext->m_pgpudevice;
 
       HRESULT hrCreateDepthStencilState = pgpudevice->m_pdevice->CreateDepthStencilState(
-         &dsDesc, &m_pdepthstencilstate);
+         &dsDesc, &m_pdepthstencilstate2);
 
       ::defer_throw_hresult(hrCreateDepthStencilState);
 
@@ -325,7 +325,7 @@ namespace gpu_directx11
 
          HRESULT hr = pgpucontext->m_pgpudevice->m_pdevice->CreateRasterizerState(
             &rasterizerDesc,
-            &m_prasterizerstate);
+            &m_prasterizerstate2);
 
          ::defer_throw_hresult(hr);
 
@@ -617,18 +617,18 @@ namespace gpu_directx11
 
       }
 
-      if (m_pdepthstencilstate)
+      if (m_pdepthstencilstate2)
       {
 
          // Bind the new depth-stencil state
-         pgpucontext->m_pcontext->OMSetDepthStencilState(m_pdepthstencilstate, 0);
+         pgpucontext->m_pcontext->OMSetDepthStencilState(m_pdepthstencilstate2, 0);
 
       }
 
-      if (m_prasterizerstate)
+      if (m_prasterizerstate2)
       {
        
-         pgpucontext->m_pcontext->RSSetState(m_prasterizerstate);
+         pgpucontext->m_pcontext->RSSetState(m_prasterizerstate2);
 
       }
 

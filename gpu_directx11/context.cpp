@@ -1660,6 +1660,31 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    //}
 
 
+   //void context::defer_bind(::gpu::shader* pgpushader)
+   //{
+
+   //   if (pgpushader == m_pshaderBound)
+   //   {
+
+   //      return;
+
+   //   }
+
+   //   //if (m_pshaderBound)
+   //   //{
+
+   //   //   m_pshaderBound->unbind();
+
+   //   //}
+
+   //   pgpushader->bind();
+
+   //   m_pshaderBound = pgpushader;
+
+   //}
+
+
+
 
    void context::_create_cpu_buffer(const ::int_size& size)
    {

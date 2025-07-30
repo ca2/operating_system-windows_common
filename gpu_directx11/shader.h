@@ -25,8 +25,8 @@ namespace gpu_directx11
       comptr < ID3D11Buffer> m_pbufferPushConstants;
       int m_iSizePushConstants = -1;
 
-      ::comptr < ID3D11DepthStencilState > m_pdepthstencilstate;
-      ::comptr < ID3D11RasterizerState> m_prasterizerstate;
+      ::comptr < ID3D11DepthStencilState > m_pdepthstencilstate2;
+      ::comptr < ID3D11RasterizerState> m_prasterizerstate2;
       //::pointer < pipeline > m_ppipeline;
 
       //struct d3d11_constant_buffer
@@ -37,11 +37,11 @@ namespace gpu_directx11
 
       ///::string_map < d3d11_constant_buffer > m_mapD3D11ConstantBuffer;
 
-      bool m_bDisableDepthTest = false;
-      bool m_bDepthTestButNoDepthWrite = false;
-      bool m_bEnableBlend = false;
-      bool m_bAccumulationEnable = false;
-      int m_iColorAttachmentCount = 1;
+      //bool m_bDisableDepthTest = false;
+      //bool m_bDepthTestButNoDepthWrite = false;
+      //bool m_bEnableBlend = false;
+      //bool m_bAccumulationEnable = false;
+      //int m_iColorAttachmentCount = 1;
       //VkPrimitiveTopology m_vktopology;
 
       //s::comparable_array<VkDynamicState> m_dynamicstateaEnable;
