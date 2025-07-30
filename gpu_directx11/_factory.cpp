@@ -16,6 +16,7 @@
 #include "texture.h"
 #include "bred/gpu/command_buffer.h"
 #include "bred/gpu/layer.h"
+#include "bred/gpu/pixmap.h"
 // #include "bred/gpu/model_buffer.h"
 
 //BEGIN_FACTORY(gpu_directx11)
@@ -50,7 +51,8 @@ __FACTORY_EXPORT void gpu_directx11_factory(::factory::factory * pfactory)
    pfactory->add_factory_item < ::gpu::layer >();
    pfactory->add_factory_item < ::gpu_directx11::model_buffer, ::gpu::model_buffer >();
    pfactory->add_factory_item < ::gpu_directx11::memory_buffer, ::gpu::memory_buffer >();
-   pfactory->add_factory_item < ::gpu_directx11::pixmap, ::gpu::pixmap >();
+   //pfactory->add_factory_item < ::gpu_directx11::pixmap, ::gpu::pixmap >();
+   pfactory->add_factory_item < ::gpu::pixmap >();
 
 
 }

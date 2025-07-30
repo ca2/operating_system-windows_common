@@ -103,7 +103,7 @@ namespace gpu_directx11
 
       virtual IDXGISurface* __get_dxgi_surface();
 
-
+      void set_pixels(const ::int_rectangle& rectangle, const void* data) override;
    };
 
 

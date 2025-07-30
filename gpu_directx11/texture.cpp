@@ -603,6 +603,12 @@ namespace gpu_directx11
    }
 
 
+   void texture::set_pixels(const ::int_rectangle& rectangle, const void* data)
+   {
+
+
+   }
+
 
 } // namespace gpu_directx11
 
