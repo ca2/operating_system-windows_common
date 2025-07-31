@@ -1,4 +1,5 @@
 #include "framework.h"
+#include "bitmap.h"
 #include "image.h"
 #include "graphics.h"
 #include "aura/graphics/draw2d/lock.h"
@@ -1115,7 +1116,7 @@ namespace draw2d_directx11
 
       //}
 
-      //auto pbitmap = m_pbitmap->get_os_data < ID2D1Bitmap * >(data_bitmap);
+      ::cast < ::draw2d_directx11::bitmap> pbitmap = m_pbitmap;
 
       //D2D1_BITMAP_OPTIONS options = 
       //   D2D1_BITMAP_OPTIONS_CPU_READ |
@@ -1153,15 +1154,15 @@ namespace draw2d_directx11
 
       //}
 
-      //auto pimage32 = (::image32_t *)map.bits;
+      auto pimage32 = (::image32_t *)pbitmap->m_memory.data();
 
       //auto p = pimage32;
 
-      //auto iScan = map.pitch;
+      auto iScan = pbitmap->m_size.width() *4;
 
       //auto area = (iScan / sizeof(*pimage32)) * m_size.cy();
 
-      //pixmap::initialize(m_size, pimage32, iScan);
+      pixmap::initialize(m_size, pimage32, iScan);
 
       m_bMapped = true;
 

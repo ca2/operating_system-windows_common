@@ -98,7 +98,9 @@ namespace draw2d_directx11
       //::draw2d::lock draw2dlock;
 
       ::draw2d::device_lock devicelock(this);
-
+      m_memory.set_size(size.area() * 4);
+      m_size = size;
+      m_iStride = size.cx() * 4;
       //if (m_pbitmap != nullptr)
       //{
 

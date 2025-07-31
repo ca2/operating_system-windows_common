@@ -17,7 +17,6 @@ namespace draw2d_directx11
       HRESULT                             m_hrEndDraw;
       //comptr<ID2D1Bitmap1>                m_pbitmap1Map;
 
-
       image();
       ~image() override;
 
