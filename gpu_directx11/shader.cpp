@@ -47,7 +47,7 @@ namespace gpu_directx11
       comptr <ID3DBlob> pblobShader;
       comptr <ID3DBlob> pblobError;
 
-      auto data = (const_char_pointer  )block.data();
+      auto data = (const_char_pointer )block.data();
 
       auto size = block.size();
 
@@ -71,7 +71,7 @@ namespace gpu_directx11
          if (pblobError)
          {
 
-            ::string strError((const_char_pointer  ) pblobError->GetBufferPointer(),
+            ::string strError((const_char_pointer )pblobError->GetBufferPointer(),
                pblobError->GetBufferSize());
 
             throw ::exception(error_failed);
@@ -90,7 +90,7 @@ namespace gpu_directx11
       comptr <ID3DBlob> pblobShader;
       comptr <ID3DBlob> pblobError;
 
-      auto data = (const_char_pointer  )block.data();
+      auto data = (const_char_pointer )block.data();
 
       auto size = block.size();
 
@@ -114,7 +114,7 @@ namespace gpu_directx11
          if (pblobError)
          {
 
-            ::string strError((const_char_pointer  )pblobError->GetBufferPointer(),
+            ::string strError((const_char_pointer )pblobError->GetBufferPointer(),
                pblobError->GetBufferSize());
 
             throw ::exception(error_failed);
@@ -821,7 +821,7 @@ namespace gpu_directx11
 //{
 //
 //
-//   const_char_pointer  shader_type_c_str(VkShaderStageFlagBits etype)
+//   const_char_pointer shader_type_c_str(VkShaderStageFlagBits etype)
 //   {
 //
 //      switch (etype)
@@ -875,7 +875,7 @@ namespace gpu_directx11
 //
 //      //}
 //
-//      //const_char_pointer  sza[1];
+//      //const_char_pointer sza[1];
 //
 //      //sza[0] = strSource;
 //
@@ -1215,9 +1215,9 @@ namespace gpu_directx11
 //
 //      //   glGetShaderInfoLog(shader, sizeof(infoLog), NULL, infoLog);
 //
-//      //   const_char_pointer  psz = shader_type_c_str(type);
+//      //   const_char_pointer psz = shader_type_c_str(type);
 //
-//      //   const_char_pointer  pszLog = infoLog;
+//      //   const_char_pointer pszLog = infoLog;
 //
 //      //   strSummary.formatf("error::SHADER_COMPILATION_ERROR of type: %s \n %s \n -- --------------------------------------------------- -- \n", psz, pszLog);
 //

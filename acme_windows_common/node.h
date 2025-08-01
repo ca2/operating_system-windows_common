@@ -55,7 +55,7 @@ namespace acme_windows_common
 
 
 
-      virtual ::pointer < ::mutex > create_named_mutex(::particle * pparticleContext, bool bInitiallyOwn, const_char_pointer  pszName, security_attributes * psecurityattributes = nullptr);
+      virtual ::pointer < ::mutex > create_named_mutex(::particle * pparticleContext, bool bInitiallyOwn, const_char_pointer pszName, security_attributes * psecurityattributes = nullptr);
 
 
       ::pointer < ::mutex > create_local_named_mutex(::particle * pparticleContext, bool bInitiallyOwned, const ::scoped_string & scopedstrName, security_attributes * psecurityattributes = nullptr) override;

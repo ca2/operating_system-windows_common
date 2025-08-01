@@ -115,7 +115,7 @@ namespace imaging_wic
 
       }
 
-      const_char_pointer  pszData = (const_char_pointer  ) memory.data();
+      const_char_pointer pszData = (const_char_pointer )memory.data();
 
       auto size = memory.size();
 

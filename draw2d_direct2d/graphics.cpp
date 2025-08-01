@@ -5870,9 +5870,9 @@ namespace draw2d_direct2d
 
    //   double_size s;
 
-   //   get_text_extent(s, (const_char_pointer  )block.get_data(), block.get_size());
+   //   get_text_extent(s, (const_char_pointer )block.get_data(), block.get_size());
 
-   //   //if (!get_text_extent(s, (const_char_pointer  ) block.get_data(), block.get_size()))
+   //   //if (!get_text_extent(s, (const_char_pointer )block.get_data(), block.get_size()))
    //   //{
 
    //   //   return ::double_size(0, 0);
@@ -5884,7 +5884,7 @@ namespace draw2d_direct2d
    //}
 
 
-   //::double_size graphics::GetOutputTextExtent(const_char_pointer  lpszString, character_count nCount)
+   //::double_size graphics::GetOutputTextExtent(const_char_pointer lpszString, character_count nCount)
    //{
 
    //   throw ::exception(todo);
@@ -5904,7 +5904,7 @@ namespace draw2d_direct2d
    //}
 
 
-   //void graphics::get_text_extent(double_size & size, const_char_pointer  lpszString, character_count nCount, character_count iIndex)
+   //void graphics::get_text_extent(double_size & size, const_char_pointer lpszString, character_count nCount, character_count iIndex)
    double_size graphics::get_text_extent(const ::scoped_string & scopedstr, character_count iIndex)
    {
 
@@ -6041,7 +6041,7 @@ namespace draw2d_direct2d
    }
 
 
-   //void graphics::get_text_extent(double_size & size, const_char_pointer  lpszString, character_count nCount)
+   //void graphics::get_text_extent(double_size & size, const_char_pointer lpszString, character_count nCount)
    double_size graphics::get_text_extent(const ::scoped_string & scopedstr)
    {
 

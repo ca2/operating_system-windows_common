@@ -974,7 +974,7 @@ namespace gpu_directx11
 
       ////         pdirectx11->defer_init_gpu_library();
 
-      //         //auto pszVersion = (const_char_pointer  )glGetString(GL_VERSION);
+      //         //auto pszVersion = (const_char_pointer )glGetString(GL_VERSION);
       //         ////::e_status estatus = 
 
       //         //::string strVersion(pszVersion);
@@ -1097,7 +1097,7 @@ namespace gpu_directx11
       if (!m_pshaderCopyUsingShader)
       {
 
-         const_char_pointer  copy_using_shader_vertex_shader = R"hlsl(
+         const_char_pointer copy_using_shader_vertex_shader = R"hlsl(
 struct VSOut {
     float4 pos : SV_POSITION;
     float2 uv  : TEXCOORD0;
@@ -1122,7 +1122,7 @@ VSOut main(uint vid : SV_VertexID) {
 
 
 
-         const_char_pointer  copy_using_shader_pixel_shader = R"hlsl(
+         const_char_pointer copy_using_shader_pixel_shader = R"hlsl(
 Texture2D tex : register(t0);
 SamplerState samp : register(s0);
 
@@ -1292,7 +1292,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       if (!m_pshaderBlend3)
       {
 
-         const_char_pointer  full_screen_triangle_vertex_shader = R"hlsl(
+         const_char_pointer full_screen_triangle_vertex_shader = R"hlsl(
 struct VSOut {
     float4 pos : SV_POSITION;
     float2 uv  : TEXCOORD0;
@@ -1316,7 +1316,7 @@ VSOut main(uint vid : SV_VertexID) {
 }
 )hlsl";
 
-         const_char_pointer  full_screen_triangle_fragment_shader = R"hlsl(  
+         const_char_pointer full_screen_triangle_fragment_shader = R"hlsl(
 Texture2D tex : register(t0);
 SamplerState samp : register(s0);
 
@@ -2156,7 +2156,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    //   ::array<VkLayerProperties> availableLayers(layerCount);
    //   vkEnumerateInstanceLayerProperties(&layerCount, availableLayers.data());
 
-   //   for (const_char_pointer  layerName : validationLayers)
+   //   for (const_char_pointer layerName : validationLayers)
    //   {
    //      bool layerFound = false;
 
@@ -2182,14 +2182,14 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    //}
 
 
-   //::array<const_char_pointer  > context::getRequiredExtensions()
+   //::array<const_char_pointer >context::getRequiredExtensions()
    //{
    //   uint32_t glfwExtensionCount = 0;
-   //   const_char_pointer  * glfwExtensions;
+   //   const_char_pointer *glfwExtensions;
    //   //glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
 
-   //   //::array<const_char_pointer  > extensions(glfwExtensions, glfwExtensions + glfwExtensionCount);
-   //   ::array<const_char_pointer  > extensions;
+   //   //::array<const_char_pointer >extensions(glfwExtensions, glfwExtensions + glfwExtensionCount);
+   //   ::array<const_char_pointer >extensions;
 
    //   if (enableValidationLayers)
    //   {
