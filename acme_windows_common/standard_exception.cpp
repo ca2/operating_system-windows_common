@@ -8,7 +8,7 @@ namespace acme_windows_common
 
 
    standard_exception::standard_exception(const ::e_status & estatus, const ::scoped_string & scopedstrMessage, const ::scoped_string & scopedstrDetails, EXCEPTION_POINTERS * ppointers) :
-      exception(estatus, strMessage, strDetails),
+      exception(estatus, scopedstrMessage, scopedstrDetails),
       m_ppointers(ppointers)
    {
 

@@ -822,7 +822,7 @@ namespace acme_windows_common
 
       ::string strLocalName;
 
-      strLocalName = "Local\\" + strName;
+      strLocalName = "Local\\" + scopedstrName;
 
       return create_named_mutex(pparticleContext, bInitiallyOwned, strLocalName, psecurityattributes);
 
@@ -834,7 +834,7 @@ namespace acme_windows_common
 
       ::string strGlobalName;
 
-      strGlobalName = "Global\\" + strName;
+      strGlobalName = "Global\\" + scopedstrName;
 
       return create_named_mutex(pparticleContext, bInitiallyOwned, strGlobalName, psecurityattributes);
 

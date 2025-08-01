@@ -28,7 +28,7 @@ namespace windows_common
 
 #ifdef WINDOWS_DESKTOP
 
-      return ::LoadLibraryW(wstring(str));
+      return ::LoadLibraryW(wstring(scopedstr));
 
 #else
 
