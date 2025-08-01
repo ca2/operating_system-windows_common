@@ -178,7 +178,7 @@ namespace gpu_directx11
 //      virtual void shader_compile_errors(int shader, VkShaderStageFlagBits type, string & strSummary);
 //
 //      virtual void program_compile_errors(int program, string & strSummary);
-//      //::gpu::uniform get_uniform(const ::string & strUniform) override;
+//      //::gpu::uniform get_uniform(const ::scoped_string & scopedstrUniform) override;
 //
 //   };
 //

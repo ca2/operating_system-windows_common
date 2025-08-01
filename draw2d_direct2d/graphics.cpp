@@ -2725,7 +2725,7 @@ namespace draw2d_direct2d
       //}
 
 
-      //void graphics::text_out(double x, double y, const ::string & str)
+      //void graphics::text_out(double x, double y, const ::scoped_string & scopedstr)
       //{
 
       //   return text_out((int) x, (int) y, str, (int) str.length());
@@ -2741,7 +2741,7 @@ namespace draw2d_direct2d
       //}
 
 
-      //void graphics::ExtTextOut(double x, double y, unsigned int nOptions, const ::double_rectangle & rectangle, const ::string & str, LPINT lpDxWidths)
+      //void graphics::ExtTextOut(double x, double y, unsigned int nOptions, const ::double_rectangle & rectangle, const ::scoped_string & scopedstr, LPINT lpDxWidths)
       //{
 
       //   throw ::exception(todo);
@@ -2757,7 +2757,7 @@ namespace draw2d_direct2d
       //}
 
 
-      //::double_size graphics::TabbedTextOut(double x, double y, const ::string & str, ::collection::count nTabPositions, LPINT lpnTabStopPositions, int nTabOrigin)
+      //::double_size graphics::TabbedTextOut(double x, double y, const ::scoped_string & scopedstr, ::collection::count nTabPositions, LPINT lpnTabStopPositions, int nTabOrigin)
       //{
 
       //   throw ::exception(todo);
@@ -2773,7 +2773,7 @@ namespace draw2d_direct2d
       //}
 
 
-      //::double_size graphics::GetTabbedTextExtent(const ::string & str, ::collection::count nTabPositions, LPINT lpnTabStopPositions)
+      //::double_size graphics::GetTabbedTextExtent(const ::scoped_string & scopedstr, ::collection::count nTabPositions, LPINT lpnTabStopPositions)
       //{
 
       //   throw ::exception(todo);
@@ -2791,7 +2791,7 @@ namespace draw2d_direct2d
       //}
 
 
-      //::double_size graphics::GetOutputTabbedTextExtent(const ::string & str, ::collection::count nTabPositions, LPINT lpnTabStopPositions)
+      //::double_size graphics::GetOutputTabbedTextExtent(const ::scoped_string & scopedstr, ::collection::count nTabPositions, LPINT lpnTabStopPositions)
       //{
 
       //   throw ::exception(todo);
@@ -5689,7 +5689,7 @@ namespace draw2d_direct2d
    //}
 
 
-   void graphics::draw_text(const ::string & str, const ::double_rectangle & rectangle, const ::e_align & ealign, const ::e_draw_text & edrawtext)
+   void graphics::draw_text(const ::scoped_string & scopedstr, const ::double_rectangle & rectangle, const ::e_align & ealign, const ::e_draw_text & edrawtext)
    {
 
       if (str.is_empty())
@@ -5894,7 +5894,7 @@ namespace draw2d_direct2d
    //}
 
 
-   //::double_size graphics::GetOutputTextExtent(const ::string & str)
+   //::double_size graphics::GetOutputTextExtent(const ::scoped_string & scopedstr)
    //{
 
    //   throw ::exception(todo);
@@ -6059,7 +6059,7 @@ namespace draw2d_direct2d
    }
 
 
-   //void graphics::get_text_extent(double_size & size, const ::string & str)
+   //void graphics::get_text_extent(double_size & size, const ::scoped_string & scopedstr)
    //{
 
    //   return get_text_extent(size, str, str.length());

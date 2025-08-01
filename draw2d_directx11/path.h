@@ -69,7 +69,7 @@ namespace draw2d_directx11
 
       virtual bool internal_add_lines(::draw2d::graphics* pgraphics, const ::double_point_array& pointa, bool bClose);
 
-      virtual bool internal_add_string(::draw2d_directx11::graphics * pgraphics, double x, double y, const ::string & strText, ::write_text::font * pfont);
+      virtual bool internal_add_string(::draw2d_directx11::graphics * pgraphics, double x, double y, const ::scoped_string & scopedstrText, ::write_text::font * pfont);
 
       virtual bool internal_start_figure(::draw2d::graphics * pgraphics);
 

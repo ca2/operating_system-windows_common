@@ -23,7 +23,7 @@ namespace windows_common
 {
 
 
-   HINSTANCE load_library(const ::string & str)
+   HINSTANCE load_library(const ::scoped_string & scopedstr)
    {
 
 #ifdef WINDOWS_DESKTOP

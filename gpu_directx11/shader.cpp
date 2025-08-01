@@ -855,7 +855,7 @@ namespace gpu_directx11
 //   }
 //
 //
-//   unsigned int shader::create_shader(const ::string & strSource, VkShaderStageFlagBits type)
+//   unsigned int shader::create_shader(const ::scoped_string & scopedstrSource, VkShaderStageFlagBits type)
 //   {
 //
 //      //unsigned int uShader;

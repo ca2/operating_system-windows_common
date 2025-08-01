@@ -817,7 +817,7 @@ namespace acme_windows_common
    }
 
 
-   ::pointer < ::mutex > node::create_local_named_mutex(::particle * pparticleContext, bool bInitiallyOwned, const ::string & strName, security_attributes * psecurityattributes)
+   ::pointer < ::mutex > node::create_local_named_mutex(::particle * pparticleContext, bool bInitiallyOwned, const ::scoped_string & scopedstrName, security_attributes * psecurityattributes)
    {
 
       ::string strLocalName;
@@ -829,7 +829,7 @@ namespace acme_windows_common
    }
 
 
-   ::pointer < ::mutex > node::create_global_named_mutex(::particle * pparticleContext, bool bInitiallyOwned, const ::string & strName, security_attributes * psecurityattributes)
+   ::pointer < ::mutex > node::create_global_named_mutex(::particle * pparticleContext, bool bInitiallyOwned, const ::scoped_string & scopedstrName, security_attributes * psecurityattributes)
    {
 
       ::string strGlobalName;
@@ -841,7 +841,7 @@ namespace acme_windows_common
    }
 
 
-   ::pointer < ::mutex > node::open_local_named_mutex(::particle * pparticleContext, const ::string & strName)
+   ::pointer < ::mutex > node::open_local_named_mutex(::particle * pparticleContext, const ::scoped_string & scopedstrName)
    {
 
       return nullptr;
@@ -849,7 +849,7 @@ namespace acme_windows_common
    }
 
 
-   ::pointer < ::mutex > node::open_global_named_mutex(::particle * pparticleContext, const ::string & strName)
+   ::pointer < ::mutex > node::open_global_named_mutex(::particle * pparticleContext, const ::scoped_string & scopedstrName)
    {
 
       return nullptr;
@@ -857,7 +857,7 @@ namespace acme_windows_common
    }
 
    
-   ::pointer < ::mutex > node::get_install_mutex(::particle * pparticleContext, const ::string & strPlatform, const ::string & strSuffix)
+   ::pointer < ::mutex > node::get_install_mutex(::particle * pparticleContext, const ::scoped_string & scopedstrPlatform, const ::scoped_string & scopedstrSuffix)
    {
 
       return nullptr;

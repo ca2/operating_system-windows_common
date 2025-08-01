@@ -222,7 +222,7 @@ namespace draw2d_direct2d
    }
 
 
-   bool path::internal_add_string(::draw2d_direct2d::graphics * pgraphics, double x, double y, const ::string & strText, ::write_text::font * pfont)
+   bool path::internal_add_string(::draw2d_direct2d::graphics * pgraphics, double x, double y, const ::scoped_string & scopedstrText, ::write_text::font * pfont)
    {
 
       if(!internal_start_figure(pgraphics))
