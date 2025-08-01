@@ -266,7 +266,7 @@ namespace music
                return thread::pre_translate_message(pmessage);
             }
 
-            void player::SaveFile(const ::string & lpszPathName)
+            void player::SaveFile(const ::scoped_string & scopedstrPathName)
             {
 
                void                estatus;

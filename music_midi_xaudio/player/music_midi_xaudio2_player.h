@@ -56,7 +56,7 @@ namespace music
                virtual void pre_translate_message(::message::message * pmessage);
                void OnMmsgDone(::music::midi::sequence *pSeq);
                DECLARE_MESSAGE_HANDLER(OnUserMessage)
-               void SaveFile(const ::string & lpszPathName);
+               void SaveFile(const ::scoped_string & scopedstrPathName);
                void SetPosition(double dRate);
                void Pause();
                void CloseFile();

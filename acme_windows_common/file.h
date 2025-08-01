@@ -80,7 +80,7 @@ namespace acme_windows_common
       void set_file_path(const ::file::path & path) override;
 
 
-      void open(const ::file::path & pszFileName, ::file::e_open eopen, ::pointer < ::file::exception > * pfileexception = nullptr) override;
+      void open(const ::file::path & pathFileName, ::file::e_open eopen, ::pointer < ::file::exception > * pfileexception = nullptr) override;
 
 
       void translate(filesize filesize, ::enum_seek nFrom) override;

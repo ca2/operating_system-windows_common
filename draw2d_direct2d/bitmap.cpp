@@ -208,7 +208,7 @@ namespace draw2d_direct2d
       //return ::GetBitmapBits((HBITMAP)get_handle(), dwCount, lpBits);
       return 0;
    }
-   bool bitmap::LoadBitmap(const ::string & lpszResourceName)
+   bool bitmap::LoadBitmap(const ::scoped_string & scopedstrResourceName)
    {
       //   return Attach(::LoadBitmap(::aura::FindResourceHandle(
       //lpszResourceName, RT_BITMAP), lpszResourceName));

@@ -145,14 +145,14 @@ namespace draw2d_directx11
    //}
 
 
-   //void graphics::CreateDC(const ::string & lpszDriverName, const ::string & lpszDeviceName, const ::string & lpszOutput, const void * lpInitData)
+   //void graphics::CreateDC(const ::scoped_string & scopedstrDriverName, const ::scoped_string & scopedstrDeviceName, const ::scoped_string & scopedstrOutput, const void * lpInitData)
    //{
    //   throw ::exception(todo);
    //   //return Attach(::CreateDC(lpszDriverName, lpszDeviceName, lpszOutput, (const DEVMODE*)lpInitData));
    //}
 
 
-   //void graphics::CreateIC(const ::string & lpszDriverName, const ::string & lpszDeviceName, const ::string & lpszOutput, const void * lpInitData)
+   //void graphics::CreateIC(const ::scoped_string & scopedstrDriverName, const ::scoped_string & scopedstrDeviceName, const ::scoped_string & scopedstrOutput, const void * lpInitData)
    //{
 
    //   throw ::exception(todo);
@@ -1736,7 +1736,7 @@ namespace draw2d_directx11
 //
 //   }
 //
-//   void graphics::DrawState(const ::double_point & point, const ::double_size& ::double_size, const ::string & lpszText, unsigned int nFlags, bool bPrefixText, double dTextLen, HBRUSH hBrush)
+//   void graphics::DrawState(const ::double_point & point, const ::double_size& ::double_size, const ::scoped_string & scopedstrText, unsigned int nFlags, bool bPrefixText, double dTextLen, HBRUSH hBrush)
 //   {
 //
 //      throw ::exception(todo);
@@ -1746,7 +1746,7 @@ namespace draw2d_directx11
 //
 //   }
 //
-//   void graphics::DrawState(const ::double_point & point, const ::double_size& ::double_size, const ::string & lpszText, unsigned int nFlags, bool bPrefixText, double dTextLen, ::draw2d::brush* pBrush)
+//   void graphics::DrawState(const ::double_point & point, const ::double_size& ::double_size, const ::scoped_string & scopedstrText, unsigned int nFlags, bool bPrefixText, double dTextLen, ::draw2d::brush* pBrush)
 //   {
 //
 //      throw ::exception(todo);
@@ -2797,7 +2797,7 @@ namespace draw2d_directx11
       //}
 
 
-      //void graphics::ExtTextOut(double x, double y, unsigned int nOptions, const ::double_rectangle & rectangle, const ::string & lpszString, character_count nCount, LPINT lpDxWidths)
+      //void graphics::ExtTextOut(double x, double y, unsigned int nOptions, const ::double_rectangle & rectangle, const ::scoped_string & scopedstrString, character_count nCount, LPINT lpDxWidths)
       //{
 
       //   throw ::exception(todo);
@@ -2813,7 +2813,7 @@ namespace draw2d_directx11
       //}
 
 
-      //::double_size graphics::TabbedTextOut(double x, double y, const ::string & lpszString, character_count nCount, ::collection::count nTabPositions, LPINT lpnTabStopPositions, int nTabOrigin)
+      //::double_size graphics::TabbedTextOut(double x, double y, const ::scoped_string & scopedstrString, character_count nCount, ::collection::count nTabPositions, LPINT lpnTabStopPositions, int nTabOrigin)
       //{
 
       //   throw ::exception(todo);
@@ -2829,7 +2829,7 @@ namespace draw2d_directx11
       //}
 
 
-      //::double_size graphics::GetTabbedTextExtent(const ::string & lpszString, character_count nCount, ::collection::count nTabPositions, LPINT lpnTabStopPositions)
+      //::double_size graphics::GetTabbedTextExtent(const ::scoped_string & scopedstrString, character_count nCount, ::collection::count nTabPositions, LPINT lpnTabStopPositions)
       //{
 
       //   throw ::exception(todo);
@@ -2845,7 +2845,7 @@ namespace draw2d_directx11
       //}
 
 
-      //::double_size graphics::GetOutputTabbedTextExtent(const ::string & lpszString, character_count nCount, ::collection::count nTabPositions, LPINT lpnTabStopPositions)
+      //::double_size graphics::GetOutputTabbedTextExtent(const ::scoped_string & scopedstrString, character_count nCount, ::collection::count nTabPositions, LPINT lpnTabStopPositions)
       //{
 
       //   throw ::exception(todo);
@@ -3068,7 +3068,7 @@ namespace draw2d_directx11
    //   }
    //
    //   // Printer Escape Functions
-   //   int graphics::Escape(double dEscape, double dCount, const ::string & lpszInData, LPVOID lpOutData)
+   //   int graphics::Escape(double dEscape, double dCount, const ::scoped_string & scopedstrInData, LPVOID lpOutData)
    //   {
    //
    //      throw ::exception(todo);
@@ -3392,7 +3392,7 @@ namespace draw2d_directx11
    }
 
 
-   //   int graphics::DrawEscape(double dEscape, double dInputSize, const ::string & lpszInputData)
+   //   int graphics::DrawEscape(double dEscape, double dInputSize, const ::scoped_string & scopedstrInputData)
    //   {
    //
    //      throw ::exception(todo);
@@ -3404,7 +3404,7 @@ namespace draw2d_directx11
    //   }
    //
    //
-   //   int graphics::Escape(double dEscape, double dInputSize, const ::string & lpszInputData, double dOutputSize, char * lpszOutputData)
+   //   int graphics::Escape(double dEscape, double dInputSize, const ::scoped_string & scopedstrInputData, double dOutputSize, char * lpszOutputData)
    //   {
    //
    //      throw ::exception(todo);
@@ -4295,7 +4295,7 @@ namespace draw2d_directx11
    }
 
 
-   //int graphics::StartDoc(const ::string & lpszDocName)
+   //int graphics::StartDoc(const ::scoped_string & scopedstrDocName)
    //{
 
    //   throw ::exception(todo);
@@ -5758,7 +5758,7 @@ namespace draw2d_directx11
    }
 
 
-   //void graphics::draw_text(const ::string & lpszString, character_count nCount, const ::int_rectangle & rectangle, const ::e_align & ealign, const ::e_draw_text & edrawtext)
+   //void graphics::draw_text(const ::scoped_string & scopedstrString, character_count nCount, const ::int_rectangle & rectangle, const ::e_align & ealign, const ::e_draw_text & edrawtext)
    //{
 
    //   if (nCount < 0)

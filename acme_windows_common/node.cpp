@@ -575,7 +575,7 @@ namespace acme_windows_common
    // enzymes: Liveedu.tv, Twitch.tv and Mixer.com streamers and viewers
    // Mummi and bilbo!!
    // create call to :
-   void node::install_crash_dump_reporting(const string& strModuleNameWithTheExeExtension)
+   void node::install_crash_dump_reporting(const ::scoped_string & scopedstrModuleNameWithTheExeExtension)
    {
 
       //::acme_windows::registry::key k;

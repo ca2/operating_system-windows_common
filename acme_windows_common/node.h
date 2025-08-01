@@ -49,7 +49,7 @@ namespace acme_windows_common
 
       //virtual ::file::path roaming() override;
 
-      void install_crash_dump_reporting(const string& strModuleNameWithTheExeExtension) override;
+      void install_crash_dump_reporting(const ::scoped_string & scopedstrModuleNameWithTheExeExtension) override;
 
       ::enum_id key_command(::user::enum_key ekey, ::user::key_state* pkeystate) override;
 
