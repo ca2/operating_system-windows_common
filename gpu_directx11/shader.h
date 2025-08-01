@@ -145,7 +145,7 @@ namespace gpu_directx11
 //      ~shader() override;
 //
 //      
-//      virtual void create_shader(const ::string & pszVertex, const ::string & pszFragment, const ::string & pszGeometry = nullptr) override;
+//      virtual void create_shader(const ::scoped_string & scopedstrVertex, const ::scoped_string & scopedstrFragment, const ::scoped_string & scopedstrGeometry = nullptr) override;
 //
 //      virtual void use() override;
 //
@@ -173,7 +173,7 @@ namespace gpu_directx11
 //
 //
 //
-//      unsigned int create_shader(const ::string & pszVertex, VkShaderStageFlagBits type);
+//      unsigned int create_shader(const ::scoped_string & scopedstrVertex, VkShaderStageFlagBits type);
 //
 //      virtual void shader_compile_errors(int shader, VkShaderStageFlagBits type, string & strSummary);
 //

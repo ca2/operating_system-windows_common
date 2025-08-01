@@ -63,7 +63,7 @@ namespace acme_windows_common
 
       file();
       file(HANDLE hFile);
-      file(const ::string & pszFileName, ::file::e_open eopen);
+      file(const ::scoped_string & scopedstrFileName, ::file::e_open eopen);
       ~file() override;
 
 

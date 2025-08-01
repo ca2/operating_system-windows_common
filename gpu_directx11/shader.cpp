@@ -907,7 +907,7 @@ namespace gpu_directx11
 //   }
 //
 //
-//   void shader::create_shader(const ::string & pszVertex, const ::string & pszFragment, const ::string & pszGeometry)
+//   void shader::create_shader(const ::scoped_string & scopedstrVertex, const ::scoped_string & scopedstrFragment, const ::scoped_string & scopedstrGeometry)
 //   {
 //
 //      unsigned int uVertex = create_shader(pszVertex, VK_SHADER_STAGE_VERTEX_BIT);

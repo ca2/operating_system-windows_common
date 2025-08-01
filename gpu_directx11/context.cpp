@@ -575,7 +575,7 @@ namespace gpu_directx11
 
    }
 
-   //   string context::load_fragment(const ::string & pszPath, enum_shader & eshader)
+   //   string context::load_fragment(const ::scoped_string & scopedstrPath, enum_shader & eshader)
    //   {
    //
    //      ::file::path path(pszPath);
