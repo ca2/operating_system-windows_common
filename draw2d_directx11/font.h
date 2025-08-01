@@ -50,7 +50,7 @@ namespace draw2d_directx11
                   int nOrientation, int nWeight, unsigned char bItalic, unsigned char bUnderline,
                   unsigned char cStrikeOut, unsigned char nCharSet, unsigned char nOutPrecision,
                   unsigned char nClipPrecision, unsigned char nQuality, unsigned char nPitchAndFamily,
-                  const_char_pointer lpszFacename);
+                  const_char_pointer  lpszFacename);
             virtual bool CreatePointFont(int nPointSize, const ::scoped_string & scopedstrFaceName, const ::draw2d::graphics * pgraphics = nullptr);
             virtual bool CreatePointFontIndirect(const LOGFONTW* lpLogFont, const ::draw2d::graphics * pgraphics = nullptr);
 

@@ -260,7 +260,7 @@ namespace gpu_directx11
    HRESULT approach::createInstance()
    {
 
-      ::array<const_char_pointer > instanceExtensions;
+      ::array<const_char_pointer  > instanceExtensions;
 
 //      if (m_papplication->m_bUseSwapChainWindow)
 //      {
@@ -321,7 +321,7 @@ namespace gpu_directx11
       // Enabled requested instance extensions
       //if (m_pszaEnabledDeviceExtensions.has_element())
       //{
-      for (const_char_pointer enabledExtension : m_pszaEnabledDeviceExtensions)
+      for (const_char_pointer  enabledExtension : m_pszaEnabledDeviceExtensions)
       {
          // Output message if requested extension is not available
          if (!m_straSupportedInstanceExtensions.contains(enabledExtension))
@@ -372,7 +372,7 @@ namespace gpu_directx11
 
       //// The VK_LAYER_KHRONOS_validation contains all current validation functionality.
       //// Note that on Android this layer requires at least NDK r20
-      //const_char_pointer validationLayerName = "VK_LAYER_KHRONOS_validation";
+      //const_char_pointer  validationLayerName = "VK_LAYER_KHRONOS_validation";
       //if (settings.validation) {
       //   // Check if this layer is available at instance level
       //   uint32_t instanceLayerCount;
@@ -513,7 +513,7 @@ namespace gpu_directx11
       //         if (err != GLEW_OK)
       //         {
       //
-      //            const ::ansi_character * pszErrorString = (const_char_pointer ) glewGetErrorString(err);
+      //            const ::ansi_character * pszErrorString = (const_char_pointer  ) glewGetErrorString(err);
       //
       //            //throw ::exception(error_resource);
       //            // Problem: glewInit failed, something is seriously wrong.

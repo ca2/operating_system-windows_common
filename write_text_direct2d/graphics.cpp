@@ -5461,11 +5461,11 @@ namespace draw2d_gdiplus
    //   character_count iRange = 0;
    //   character_count i = 0;
    //   character_count iLen;
-   //   const_char_pointer pszStart = str;
-   //   const_char_pointer psz = pszStart;
+   //   const_char_pointer  pszStart = str;
+   //   const_char_pointer  psz = pszStart;
    //   while (*psz)
    //   {
-   //      const_char_pointer pszNext = ::str().utf8_inc(psz);
+   //      const_char_pointer  pszNext = ::str().utf8_inc(psz);
    //      if (pszNext == nullptr)
    //         break;
    //      iLen = pszNext - psz;
@@ -5980,7 +5980,7 @@ namespace draw2d_gdiplus
       character_count iRange = 0;
       character_count i = 0;
       character_count iLen;
-      const_char_pointer psz = pszString;
+      const_char_pointer  psz = pszString;
 
       while(i < iIndex)
       {

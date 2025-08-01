@@ -26,7 +26,7 @@ namespace acme_windows_common
    }
 
 
-   mutex::mutex(::particle * pparticle, bool bInitiallyOwn, const_char_pointer pszName, security_attributes * psecurityattributes)
+   mutex::mutex(::particle * pparticle, bool bInitiallyOwn, const_char_pointer  pszName, security_attributes * psecurityattributes)
    {
 
 #ifdef MUTEX_DEBUG
@@ -80,7 +80,7 @@ namespace acme_windows_common
    }
 
 
-   mutex::mutex(enum_create_new, const_char_pointer pstrName, HANDLE handleSyncObject, bool bOwner)
+   mutex::mutex(enum_create_new, const_char_pointer  pstrName, HANDLE handleSyncObject, bool bOwner)
    {
 
 #ifdef MUTEX_DEBUG
@@ -132,7 +132,7 @@ namespace acme_windows_common
    }
 
 
-   void wait_until_mutex_does_not_exist(::particle * pparticle, const_char_pointer lpszName)
+   void wait_until_mutex_does_not_exist(::particle * pparticle, const_char_pointer  lpszName)
    {
 
       ::pointer<mutex>pmutex = __allocate mutex(pparticle, false, "Global\\::ca::account::ca2_spa::7807e510-5579-11dd-ae16-0800200c7784");

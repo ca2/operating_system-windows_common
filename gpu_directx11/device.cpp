@@ -300,7 +300,7 @@ namespace gpu_directx11
 //
 //   HRESULT device::createLogicalDevice(
 //      VkPhysicalDeviceFeatures enabledFeatures,
-//      ::array<const_char_pointer > enabledExtensions,
+//      ::array<const_char_pointer  > enabledExtensions,
 //      void* pNextChain,
 //      bool useSwapChain,
 //      VkQueueFlags requestedQueueTypes)
@@ -386,7 +386,7 @@ namespace gpu_directx11
 //      }
 //
 //      // Create the logical device representation
-//      ::array<const_char_pointer > deviceExtensions(enabledExtensions);
+//      ::array<const_char_pointer  > deviceExtensions(enabledExtensions);
 //      if (useSwapChain)
 //      {
 //
@@ -421,7 +421,7 @@ namespace gpu_directx11
 //
 //      if (deviceExtensions.size() > 0)
 //      {
-//         for (const_char_pointer enabledExtension : deviceExtensions)
+//         for (const_char_pointer  enabledExtension : deviceExtensions)
 //         {
 //            if (!isExtensionSupported(enabledExtension)) {
 //               information() << "Enabled device extension \"" << enabledExtension << "\" is not present at device level\n";
@@ -606,7 +606,7 @@ namespace gpu_directx11
 
    //      pdirectx11->defer_init_gpu_library();
 
-   //      //auto pszVersion = (const_char_pointer )glGetString(GL_VERSION);
+   //      //auto pszVersion = (const_char_pointer  )glGetString(GL_VERSION);
    //      ////::e_status estatus = 
 
    //      //::string strVersion(pszVersion);
@@ -797,7 +797,7 @@ namespace gpu_directx11
 
    //   ////         pdirectx11->defer_init_gpu_library();
 
-   //   //         //auto pszVersion = (const_char_pointer )glGetString(GL_VERSION);
+   //   //         //auto pszVersion = (const_char_pointer  )glGetString(GL_VERSION);
    //   //         ////::e_status estatus = 
 
    //   //         //::string strVersion(pszVersion);
@@ -1399,7 +1399,7 @@ namespace gpu_directx11
       //::array<VkLayerProperties> availableLayers(layerCount);
       //vkEnumerateInstanceLayerProperties(&layerCount, availableLayers.data());
 
-      //for (const_char_pointer layerName : validationLayers)
+      //for (const_char_pointer  layerName : validationLayers)
       //{
       //   bool layerFound = false;
 
@@ -1425,14 +1425,14 @@ namespace gpu_directx11
    }
 
 
-   //::array<const_char_pointer > device::getRequiredExtensions()
+   //::array<const_char_pointer  > device::getRequiredExtensions()
    //{
    //   uint32_t glfwExtensionCount = 0;
-   //   const_char_pointer * glfwExtensions;
+   //   const_char_pointer  * glfwExtensions;
    //   //glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
 
-   //   //::array<const_char_pointer > extensions(glfwExtensions, glfwExtensions + glfwExtensionCount);
-   //   ::array<const_char_pointer > extensions;
+   //   //::array<const_char_pointer  > extensions(glfwExtensions, glfwExtensions + glfwExtensionCount);
+   //   ::array<const_char_pointer  > extensions;
 
    //   if (enableValidationLayers)
    //   {

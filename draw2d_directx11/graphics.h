@@ -159,9 +159,9 @@ namespace draw2d_directx11
 
       //// Constructors
       //bool CreateDC(const ::scoped_string & scopedstrDriverName, const ::scoped_string & scopedstrDeviceName,
-      //              const_char_pointer lpszOutput, const void * lpInitData) override;
+      //              const_char_pointer  lpszOutput, const void * lpInitData) override;
       //bool CreateIC(const ::scoped_string & scopedstrDriverName, const ::scoped_string & scopedstrDeviceName,
-      //              const_char_pointer lpszOutput, const void * lpInitData) override;
+      //              const_char_pointer  lpszOutput, const void * lpInitData) override;
       void CreateCompatibleDC(::draw2d::graphics * pgraphics) override;
       void _create_memory_graphics(const ::int_size& size = {}) override;
       void defer_set_size(const ::int_size& size = {}) override;
@@ -497,10 +497,10 @@ namespace draw2d_directx11
       double_size get_text_extent(const ::scoped_string & scopedstr, character_count iIndex) override;
       //virtual double_size get_text_extent(const ::scoped_string & scopedstrString, character_count nCount) override;
       double_size get_text_extent(const ::scoped_string & scopedstr) override;
-      //void get_text_extent(double_size & size, const_char_pointer pszString, character_count nCount, character_count iIndex) override;
-      //void get_text_extent(double_size & size, const_char_pointer pszString, character_count nCount) override;
+      //void get_text_extent(double_size & size, const_char_pointer  pszString, character_count nCount, character_count iIndex) override;
+      //void get_text_extent(double_size & size, const_char_pointer  pszString, character_count nCount) override;
       //void get_text_extent(double_size & size, const ::scoped_string & scopedstr) override;
-      //virtual ::double_size GetOutputTextExtent(const_char_pointer pszString, character_count nCount) override;
+      //virtual ::double_size GetOutputTextExtent(const_char_pointer  pszString, character_count nCount) override;
       //virtual ::double_size GetOutputTextExtent(const ::scoped_string & scopedstr) override;
       //virtual ::double_size GetTabbedTextExtent(const ::scoped_string & scopedstrString, character_count nCount, ::collection::count nTabPositions, LPINT lpnTabStopPositions) override;
       //virtual ::double_size GetTabbedTextExtent(const ::scoped_string & scopedstr, ::collection::count nTabPositions, LPINT lpnTabStopPositions) override;

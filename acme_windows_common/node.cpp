@@ -808,7 +808,7 @@ namespace acme_windows_common
    }
 
 
-   ::pointer < ::mutex > node::create_named_mutex(::particle * pparticleContext, bool bInitiallyOwn, const_char_pointer pszName, security_attributes * psecurityattributes)
+   ::pointer < ::mutex > node::create_named_mutex(::particle * pparticleContext, bool bInitiallyOwn, const_char_pointer  pszName, security_attributes * psecurityattributes)
    {
 
       //return __allocate mutex(pparticleContext, bInitiallyOwn, pszName ADD_PARAM_SEC_ATTRS);
@@ -957,7 +957,7 @@ namespace acme_windows_common
    //// replace __try __finally with at_end_of_scope
    //// changed arguments to ansi_character * and used bstring class for string conversion
    //// use of comptr to guard COM objets and variant to guard VARIANTs
-   //void node::_com_unzip_to_folder(const_char_pointer pszZip, const_char_pointer pszFolder)
+   //void node::_com_unzip_to_folder(const_char_pointer  pszZip, const_char_pointer  pszFolder)
    //{
 
    //   comptr < IShellDispatch> pISD;
