@@ -19,7 +19,7 @@
 #include <intsafe.h>
 
 
-CLASS_DECL_ACME_WINDOWS_COMMON bool _os_may_have_alias(const char * psz)
+CLASS_DECL_ACME_WINDOWS_COMMON bool _os_may_have_alias(const_char_pointer psz)
 {
 
    string str(psz);

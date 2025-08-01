@@ -37,8 +37,8 @@ namespace acme_windows_common
       //virtual string _get_standard_exception_name(unsigned int uiCode) override;
       //virtual string _get_standard_exception_description(unsigned int uiCode) override;
 
-      static const char * _get_standard_exception_name(unsigned int uiCode);
-      static const char * _get_standard_exception_description(unsigned int uiCode);
+      static const_char_pointer _get_standard_exception_name(unsigned int uiCode);
+      static const_char_pointer _get_standard_exception_description(unsigned int uiCode);
 
    };
 

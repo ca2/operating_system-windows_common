@@ -244,7 +244,7 @@ namespace gpu_directx11
       {
 
 
-         const char* fullscreen_vertex_shader = R"hlsl(
+         const_char_pointer fullscreen_vertex_shader = R"hlsl(
 struct VSOut {
     float4 pos : SV_POSITION;
     float2 uv  : TEXCOORD0;
@@ -267,7 +267,7 @@ VSOut main(uint vid : SV_VertexID) {
     return o;
 })hlsl";
 
-         const char* fullscreen_pixel_shader = R"hlsl(
+         const_char_pointer fullscreen_pixel_shader = R"hlsl(
 Texture2D tex : register(t0);
 SamplerState samp : register(s0);
 

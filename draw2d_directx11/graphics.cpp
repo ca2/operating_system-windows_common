@@ -5954,9 +5954,9 @@ namespace draw2d_directx11
 
    //   double_size s;
 
-   //   get_text_extent(s, (const char*)block.get_data(), block.get_size());
+   //   get_text_extent(s, (const_char_pointer )block.get_data(), block.get_size());
 
-   //   //if (!get_text_extent(s, (const char *) block.get_data(), block.get_size()))
+   //   //if (!get_text_extent(s, (const_char_pointer ) block.get_data(), block.get_size()))
    //   //{
 
    //   //   return ::double_size(0, 0);
@@ -5968,7 +5968,7 @@ namespace draw2d_directx11
    //}
 
 
-   //::double_size graphics::GetOutputTextExtent(const char * lpszString, character_count nCount)
+   //::double_size graphics::GetOutputTextExtent(const_char_pointer lpszString, character_count nCount)
    //{
 
    //   throw ::exception(todo);
@@ -5988,7 +5988,7 @@ namespace draw2d_directx11
    //}
 
 
-   //void graphics::get_text_extent(double_size & size, const char * lpszString, character_count nCount, character_count iIndex)
+   //void graphics::get_text_extent(double_size & size, const_char_pointer lpszString, character_count nCount, character_count iIndex)
    double_size graphics::get_text_extent(const ::scoped_string & scopedstr, character_count iIndex)
    {
 
@@ -6131,7 +6131,7 @@ namespace draw2d_directx11
    }
 
 
-   //void graphics::get_text_extent(double_size & size, const char * lpszString, character_count nCount)
+   //void graphics::get_text_extent(double_size & size, const_char_pointer lpszString, character_count nCount)
    double_size graphics::get_text_extent(const ::scoped_string & scopedstr)
    {
 
@@ -6157,7 +6157,7 @@ namespace draw2d_directx11
 
          gpu_context()->øconstruct(m_pshaderFillSolidRectangle);
 
-         const char* pszVert = R"hlsl(
+         const_char_pointer pszVert = R"hlsl(
 struct VSIn {
     float2 pos : POSITION;
     float4 color : COLOR;
@@ -6176,7 +6176,7 @@ VSOut main(VSIn input) {
 }
 )hlsl";
 
-         const char* pszFrag = R"hlsl(
+         const_char_pointer pszFrag = R"hlsl(
          float4 main(float4 pos : SV_POSITION, float4 color : COLOR) : SV_Target
          {
              return color;

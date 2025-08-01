@@ -277,10 +277,10 @@ namespace acme_windows_common
    //}
 
 
-   const char * exception_translator::_get_standard_exception_name(unsigned int uiCode)
+   const_char_pointer exception_translator::_get_standard_exception_name(unsigned int uiCode)
    {
 
-      const char * pszName = nullptr;
+      const_char_pointer pszName = nullptr;
 
       switch (uiCode)
       {
@@ -321,10 +321,10 @@ namespace acme_windows_common
    }
 
 
-   const char * exception_translator::_get_standard_exception_description(unsigned int uiCode)
+   const_char_pointer exception_translator::_get_standard_exception_description(unsigned int uiCode)
    {
 
-      const char* pszDescription = nullptr;
+      const_char_pointer pszDescription = nullptr;
 
       switch (uiCode)
       {

@@ -66,11 +66,11 @@ namespace draw2d_gdiplus
       // Constructors
       bool CreateDC(const ::scoped_string & scopedstrDriverName, const ::scoped_string & scopedstrDeviceName,
 
-                    const char * pszOutput, const void * lpInitData) override;
+                    const_char_pointer pszOutput, const void * lpInitData) override;
 
       bool CreateIC(const ::scoped_string & scopedstrDriverName, const ::scoped_string & scopedstrDeviceName,
 
-                    const char * pszOutput, const void * lpInitData) override;
+                    const_char_pointer pszOutput, const void * lpInitData) override;
 
       bool CreateCompatibleDC(::draw2d::graphics * pgraphics) override;
 
@@ -443,7 +443,7 @@ namespace draw2d_gdiplus
 
 //      virtual unsigned int GetCharacterPlacement(string & str, character_count nMaxExtent, LPGCP_RESULTS pResults, unsigned int dwFlags) override;
 //
-//      virtual unsigned int GetCharacterPlacement(const ::string & pString, character_count nCount, character_count nMaxExtent, LPGCP_RESULTS lpResults, unsigned int dwFlags) override;
+//      virtual unsigned int GetCharacterPlacement(const ::scoped_string & scopedstrString, character_count nCount, character_count nMaxExtent, LPGCP_RESULTS lpResults, unsigned int dwFlags) override;
 //
 //
 //#if (_WIN32_WINNT >= 0x0500)
@@ -510,7 +510,7 @@ namespace draw2d_gdiplus
 //
 //      virtual int Escape(int nEscape, int nCount, const ::scoped_string & scopedstrInData, LPVOID lpOutData) override;
 //
-//      int Escape(int nEscape, int nInputSize,  const char * pszInputData,int nOutputSize, char * pszOutputData) override;
+//      int Escape(int nEscape, int nInputSize,  const_char_pointer pszInputData,int nOutputSize, char * pszOutputData) override;
 //
 //      int DrawEscape(int nEscape, int nInputSize, const ::scoped_string & scopedstrInputData) override;
 

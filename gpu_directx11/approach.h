@@ -32,9 +32,9 @@ namespace gpu_directx11
       ::string_array                   m_straSupportedInstanceExtensions;
       ::pointer < physical_device >    m_pphysicaldevice;
       /** @brief Set of device extensions to be enabled for this example (must be set in the derived constructor) */
-      ::array<const char *>            m_pszaEnabledDeviceExtensions;
+      ::array<const_char_pointer >            m_pszaEnabledDeviceExtensions;
       /** @brief Set of instance extensions to be enabled for this example (must be set in the derived constructor) */
-      ::array<const char *>            m_pszaEnabledInstanceExtensions;
+      ::array<const_char_pointer >            m_pszaEnabledInstanceExtensions;
       /** @brief Set of layer settings to be enabled for this example (must be set in the derived constructor) */
       //::array<VkLayerSettingEXT>       m_layersettingsEnabled;
       /** @brief Optional pNext structure for passing extension structures to device creation */
@@ -131,7 +131,7 @@ namespace gpu_directx11
 
       //VkClearColorValue defaultClearColor = { { 0.025f, 0.025f, 0.025f, 1.0f } };
 
-      //static ::array<const char *> args;
+      //static ::array<const_char_pointer > args;
 
       //// Defines a frame rate independent timer value clamped from -1.0...1.0
       //// For use in animations, rotations, etc.

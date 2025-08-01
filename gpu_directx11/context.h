@@ -104,8 +104,8 @@ namespace gpu_directx11
       //VkQueue m_vkqueueGraphics;
       //VkQueue m_vkqueuePresent;
 
-      //::array<const char *> validationLayers;
-      //::array<const char *> deviceExtensions;
+      //::array<const_char_pointer > validationLayers;
+      //::array<const_char_pointer > deviceExtensions;
 
       ::pointer<::gpu_directx11::set_descriptor_layout>           m_psetdescriptorlayoutGlobal;
       //::array<VkDescriptorSet>                                 m_descriptorsetsGlobal;
@@ -204,7 +204,7 @@ namespace gpu_directx11
 
       //virtual HRESULT createLogicalDevice(
       //   VkPhysicalDeviceFeatures enabledFeatures,
-      //   ::array<const char *> enabledExtensions,
+      //   ::array<const_char_pointer > enabledExtensions,
       //   void * pNextChain,
       //   bool useSwapChain = true,
       //   VkQueueFlags requestedQueueTypes = VK_QUEUE_GRAPHICS_BIT | VK_QUEUE_COMPUTE_BIT);
@@ -281,7 +281,7 @@ namespace gpu_directx11
 
       // helper functions
       //bool isDeviceSuitable(VkPhysicalDevice pvkcdevice);
-      //::array<const char *> getRequiredExtensions();
+      //::array<const_char_pointer > getRequiredExtensions();
       //bool checkValidationLayerSupport();
       //void populateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT & createInfo);
       //void hasGflwRequiredInstanceExtensions();

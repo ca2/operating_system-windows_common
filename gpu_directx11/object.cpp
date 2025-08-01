@@ -10,10 +10,10 @@
 
 //#include <GLUT/GLUT.h>
 
-//GLuint loadDDS(const char * imagepath);
+//GLuint loadDDS(const_char_pointer imagepath);
 
 
-const char * directx11_error_string(int iError)
+const_char_pointer directx11_error_string(int iError)
 {
    
    switch(iError)
@@ -129,12 +129,12 @@ namespace gpu_directx11
 //
 //
 //      int iErrorN;
-//      const char * pszErrorN = nullptr;
+//      const_char_pointer pszErrorN = nullptr;
 //
 //      while ((iErrorN = glGetError()))
 //      {
 //       
-//         pszErrorN = (const char *)directx11_error_string(iErrorN);
+//         pszErrorN = (const_char_pointer )directx11_error_string(iErrorN);
 //
 //      }
 //
@@ -144,7 +144,7 @@ namespace gpu_directx11
 //      glGenVertexArrays(1, (GLuint *) &m_vao_vertices); // vertext array object
 //#endif
 //      int iError2 = glGetError();
-//      auto pszError2 = (const char *)directx11_error_string(iError2);
+//      auto pszError2 = (const_char_pointer )directx11_error_string(iError2);
 //      if(pszError2)
 //      {
 //         
@@ -157,7 +157,7 @@ namespace gpu_directx11
 //      glBindVertexArray(m_vao_vertices);
 //#endif
 //      int iErrorA = glGetError();
-//      auto pszErrorA = (const char *)directx11_error_string(iErrorA);
+//      auto pszErrorA = (const_char_pointer )directx11_error_string(iErrorA);
 //      if(pszErrorA)
 //      {
 //         
@@ -167,7 +167,7 @@ namespace gpu_directx11
 //
 //      glGenBuffers(1, (GLuint *)&m_vbo_vertices); // vertex buffer object
 //      int iError1 = glGetError();
-//      auto pszError1 = (const char *) directx11_error_string(iError1);
+//      auto pszError1 = (const_char_pointer ) directx11_error_string(iError1);
 //      if(pszError1)
 //      {
 //         
@@ -178,7 +178,7 @@ namespace gpu_directx11
 //
 //      glBindBuffer(GL_ARRAY_BUFFER, m_vbo_vertices);
 //      int iError5 = glGetError();
-//      auto pszError5 = (const char *)directx11_error_string(iError5);
+//      auto pszError5 = (const_char_pointer )directx11_error_string(iError5);
 //      if(pszError5)
 //      {
 //         
@@ -191,7 +191,7 @@ namespace gpu_directx11
 //
 //      glBufferData(GL_ARRAY_BUFFER, byteCount1, data1, GL_STATIC_DRAW);
 //      int iError4 = glGetError();
-//      auto pszError4 = (const char *)directx11_error_string(iError4);
+//      auto pszError4 = (const_char_pointer )directx11_error_string(iError4);
 //      if(pszError4)
 //      {
 //         
@@ -200,7 +200,7 @@ namespace gpu_directx11
 //      }
 //      //glEnableVertexAttribArray(m_vao_vertices);
 //      //int iError3 = glGetError();
-//      //auto pszError3 = (const char *)gluErrorString(iError3);
+//      //auto pszError3 = (const_char_pointer )gluErrorString(iError3);
 //
 //      //glVertexAttribPointer(
 //      //   m_vao_vertices,  // attribute
@@ -211,27 +211,27 @@ namespace gpu_directx11
 //      //   0                   // offset of first element
 //      //);
 //      //int iError6 = glGetError();
-//      //auto pszError6 = (const char *)gluErrorString(iError6);
+//      //auto pszError6 = (const_char_pointer )gluErrorString(iError6);
 //
 //      //glGenBuffers(1, &m_vbo_normals); // vertex buffer object
 //      //int iError7 = glGetError();
-//      //auto pszError7 = (const char *)gluErrorString(iError7);
+//      //auto pszError7 = (const_char_pointer )gluErrorString(iError7);
 //
 //      //glGenVertexArrays(1, &m_vao_normals); // vertext array object
 //      //int iError8 = glGetError();
-//      //auto pszError8 = (const char *)gluErrorString(iError8);
+//      //auto pszError8 = (const_char_pointer )gluErrorString(iError8);
 //
 //      //glBindBuffer(GL_ARRAY_BUFFER, m_vbo_normals);
 //      //int iError11 = glGetError();
-//      //auto pszError11 = (const char *)gluErrorString(iError11);
+//      //auto pszError11 = (const_char_pointer )gluErrorString(iError11);
 //
 //      //glBufferData(GL_ARRAY_BUFFER, m_normals.byte_count(), m_normals.data(), GL_STATIC_DRAW);
 //      //int iError10 = glGetError();
-//      //auto pszError10 = (const char *)gluErrorString(iError10);
+//      //auto pszError10 = (const_char_pointer )gluErrorString(iError10);
 //
 //      //glEnableVertexAttribArray(m_vao_normals);
 //      //int iError9 = glGetError();
-//      //auto pszError9 = (const char *)gluErrorString(iError9);
+//      //auto pszError9 = (const_char_pointer )gluErrorString(iError9);
 //
 //      //glVertexAttribPointer(
 //      //   m_vao_normals, // attribute
@@ -242,7 +242,7 @@ namespace gpu_directx11
 //      //   0              // offset of first element
 //      //);
 //      //int iError12 = glGetError();
-//      //auto pszError12 = (const char *)gluErrorString(iError12);
+//      //auto pszError12 = (const_char_pointer )gluErrorString(iError12);
 //
 //
 //      //GLuint vertexbuffer;
@@ -261,19 +261,19 @@ namespace gpu_directx11
 //
 //      //glGenBuffers(1, &m_ibo_elements);
 //      //int iError13 = glGetError();
-//      //auto pszError13 = (const char *)gluErrorString(iError13);
+//      //auto pszError13 = (const_char_pointer )gluErrorString(iError13);
 //
 //      //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo_elements);
 //      //int iError16 = glGetError();
-//      //auto pszError16 = (const char *)gluErrorString(iError16);
+//      //auto pszError16 = (const_char_pointer )gluErrorString(iError16);
 //
 //      //glBufferData(GL_ARRAY_BUFFER, m_normals.byte_count(), m_normals.data(), GL_STATIC_DRAW);
 //      //int iError14 = glGetError();
-//      //auto pszError14 = (const char *)gluErrorString(iError14);
+//      //auto pszError14 = (const_char_pointer )gluErrorString(iError14);
 //
 //      //glBufferData(GL_ARRAY_BUFFER, m_vertices.byte_count(), m_vertices.data(), GL_STATIC_DRAW);
 //      //int iError15 = glGetError();
-//      //auto pszError15 = (const char *)gluErrorString(iError15);
+//      //auto pszError15 = (const_char_pointer )gluErrorString(iError15);
 //
 //      // Load the texture
 //      m_uniformTexture = pgpuapproach->load_dds(m_path+ ".uvmap.DDS");

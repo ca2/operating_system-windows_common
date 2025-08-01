@@ -10,7 +10,7 @@ namespace gpu_directx11
 
 
 
-   inline const char* input_layout_semantic_name_from_gpu_property_name(const ::scoped_string& scopedstr)
+   inline const_char_pointer input_layout_semantic_name_from_gpu_property_name(const ::scoped_string& scopedstr)
    {
 
       if (scopedstr.case_insensitive_equals("position"))

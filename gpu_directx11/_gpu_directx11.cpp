@@ -375,7 +375,7 @@ namespace directx11
 //   //#if defined(__ANDROID__)
 //   //      // Android shaders are stored as assets in the apk
 //   //      // So they need to be loaded via the asset manager
-//   //      VkShaderModule loadShader(AAssetManager * assetManager, const char * fileName, VkDevice device)
+//   //      VkShaderModule loadShader(AAssetManager * assetManager, const_char_pointer fileName, VkDevice device)
 //   //      {
 //   //         // Load shader from compressed asset
 //   //         AAsset * asset = AAssetManager_open(assetManager, fileName, AASSET_MODE_STREAMING);
@@ -402,7 +402,7 @@ namespace directx11
 //   //         return shaderModule;
 //   //      }
 //   //#else
-//   //      VkShaderModule loadShader(const char * fileName, VkDevice device)
+//   //      VkShaderModule loadShader(const_char_pointer fileName, VkDevice device)
 //   //      {
 //   //         std::ifstream is(fileName, std::ios::binary | std::ios::in | std::ios::ate);
 //   //
