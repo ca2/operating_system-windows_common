@@ -924,7 +924,7 @@ namespace acme_windows_common
    //void node::operating_system_file_dialog(
    //   void* poswindow,
    //   const ::array < ::pair < ::string, ::string > >& filetypesParam,
-   //   const ::function < void(const ::file::path_array&) >& function,
+   //   const ::function < void(const ::file::path_array_base&) >& function,
    //   bool save, bool multiple)
    //{
 
