@@ -1041,7 +1041,7 @@ namespace gpu_directx11
    }
 
 
-   void device::_translate_shader(string_array& stra)
+   void device::_translate_shader(string_array_base& stra)
    {
 
       ::gpu::device::_translate_shader(stra);

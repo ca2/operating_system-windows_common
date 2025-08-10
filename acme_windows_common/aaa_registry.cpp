@@ -493,7 +493,7 @@ namespace windows
    }
 
 
-   void registry::key::ls_key(string_array & stra)
+   void registry::key::ls_key(string_array_base & stra)
    { 
 
       auto estatus = _ls_key(stra);
@@ -503,7 +503,7 @@ namespace windows
    }
 
 
-   void registry::key::ls_value(string_array & stra)
+   void registry::key::ls_value(string_array_base & stra)
    {
 
       auto estatus = _ls_value(stra);
@@ -549,7 +549,7 @@ namespace windows
    }
 
 
-   void registry::key::_ls_key(string_array & stra)
+   void registry::key::_ls_key(string_array_base & stra)
    {
 
       DWORD dwMaxSubKeyLen;
@@ -585,7 +585,7 @@ namespace windows
       return m_hkey;
    }
 
-   void registry::key::_ls_value(string_array & stra)
+   void registry::key::_ls_value(string_array_base & stra)
    {
       
       unsigned int dwMaxValueNameLen = 16384;

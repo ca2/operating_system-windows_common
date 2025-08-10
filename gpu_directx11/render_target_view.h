@@ -43,7 +43,7 @@ namespace gpu_directx11
       //VkSwapchainKHR swapChain;
       ::pointer<render_target_view> m_prendertargetviewOld;
 
-      ::int_array imageAvailable;
+      ::int_array_base imageAvailable;
       //::array<VkSemaphore> imageAvailableSemaphores;
       //::array<VkSemaphore> renderFinishedSemaphores;
       //::array<VkFence>     inFlightFences;

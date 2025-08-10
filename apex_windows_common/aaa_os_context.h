@@ -43,8 +43,8 @@ namespace windows
       virtual bool current_user_set_run_once(const ::string & pszKey, const ::string & pszCommand, bool bSet) override;
       virtual bool defer_register_ca2_plugin_for_mozilla() override;
 
-      virtual bool file_extension_get_open_with_list_keys(string_array & straKey, const ::string & pszExtension) override;
-      virtual bool file_extension_get_open_with_list_commands(string_array & straCommand, const ::string & pszExtension) override;
+      virtual bool file_extension_get_open_with_list_keys(string_array_base & straKey, const ::string & pszExtension) override;
+      virtual bool file_extension_get_open_with_list_commands(string_array_base & straCommand, const ::string & pszExtension) override;
 
       virtual bool file_association_set_default_icon(const ::string & pszExtension, const ::string & pszExtensionNamingClass, const ::string & pszIconPath) override;
       virtual bool file_association_set_shell_open_command(const ::string & pszExtension, const ::string & pszExtensionNamingClass, const ::string & pszCommand, const ::string & pszParam) override;
@@ -103,7 +103,7 @@ namespace windows
 
       virtual bool set_default_browser() override;
 
-      virtual bool add_default_program(string_array & straExtension, string_array & straMimeType) override;
+      virtual bool add_default_program(string_array_base & straExtension, string_array_base & straMimeType) override;
 
       virtual void list_process(::file::path_array & patha, unsigned_int_array & uaPid) override;
 

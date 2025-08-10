@@ -644,7 +644,7 @@ namespace gpu_directx11
       //void context::translate_shader(string& strFragment)
       //{
 
-      //   string_array stra;
+      //   string_array_base stra;
 
       //   stra.add_lines(strFragment);
 
@@ -670,7 +670,7 @@ namespace gpu_directx11
       //}
 
 
-      //void context::_translate_shader(string_array& stra)
+      //void context::_translate_shader(string_array_base& stra)
       //{
 
       //}
@@ -1836,7 +1836,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    }
 
 
-   void context::_translate_shader(string_array& stra)
+   void context::_translate_shader(string_array_base& stra)
    {
 
       ::gpu::context::_translate_shader(stra);

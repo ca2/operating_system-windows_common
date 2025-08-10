@@ -17,8 +17,8 @@ namespace draw2d_direct2d
       virtual public ::dxgi_surface_bindable
    {
    public:
-      int_array m_iaPushLayer;
-      int_array m_iaPushLayerCount;
+      int_array_base m_iaPushLayer;
+      int_array_base m_iaPushLayerCount;
       class state
       {
       public:

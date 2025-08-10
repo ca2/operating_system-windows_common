@@ -68,7 +68,7 @@ namespace gpu_directx11
 //      ///** @brief Queue family properties of the physical device */
 //      //::array<VkQueueFamilyProperties> m_queuefamilypropertya;
 //      /** @brief List of extensions supported by the device */
-//      string_array m_straSupportedExtensions;
+//      string_array_base m_straSupportedExtensions;
 //      ///** @brief Default command pool for the graphics queue family index */
 //      VkCommandPool m_vkcommandpool;
 //
@@ -179,7 +179,7 @@ namespace gpu_directx11
 
    /*   virtual void translate_shader(string & str);
 
-      virtual void _translate_shader(string_array& stra);*/
+      virtual void _translate_shader(string_array_base& stra);*/
 
       //virtual void make_current();
 
@@ -231,7 +231,7 @@ namespace gpu_directx11
 
       string get_shader_version_text() override;
 
-      void _translate_shader(string_array & straFragment) override;
+      void _translate_shader(string_array_base & straFragment) override;
 
       //void swap_buffers() override;
 

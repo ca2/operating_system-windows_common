@@ -941,7 +941,7 @@ namespace gpu_directx11
    }
 
 
-   void context_win32::_translate_shader(string_array& stra)
+   void context_win32::_translate_shader(string_array_base& stra)
    {
 
       context::_translate_shader(stra);

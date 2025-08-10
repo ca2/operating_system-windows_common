@@ -86,14 +86,14 @@ namespace windows
          void _delete_key();
 
          
-         void ls_key(string_array & stra);
-         inline auto ls_key() { string_array stra; ls_key(stra); return stra; }
-         void _ls_key(string_array & stra);
+         void ls_key(string_array_base & stra);
+         inline auto ls_key() { string_array_base stra; ls_key(stra); return stra; }
+         void _ls_key(string_array_base & stra);
 
 
-         void ls_value(string_array & stra);
-         inline auto ls_value() { string_array stra; ls_value(stra); return stra; }
-         void _ls_value(string_array & stra);
+         void ls_value(string_array_base & stra);
+         inline auto ls_value() { string_array_base stra; ls_value(stra); return stra; }
+         void _ls_value(string_array_base & stra);
 
 
       };

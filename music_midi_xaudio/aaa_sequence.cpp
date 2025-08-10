@@ -1748,7 +1748,7 @@ seq_Preroll_Cleanup:
 
 
          void sequence::Prepare(
-         string_array_array & straa,
+         string_array_array_base & straa,
          imedia_position_2darray & tickaaTokensTicks,
          int iMelodyTrack,
          int2a & ia2TokenLine,
@@ -2194,7 +2194,7 @@ seq_Preroll_Cleanup:
 
             ::music::midi::tracks & tracks = file.GetTracks();
 
-            string_array_array & straa = data.GetStaticData().m_straaRawTokens;
+            string_array_array_base & straa = data.GetStaticData().m_straaRawTokens;
 
             imedia_position_2darray position2a;
 
@@ -2223,7 +2223,7 @@ seq_Preroll_Cleanup:
          {
             ::music::midi::mmsystem::buffer & file = *this->file();
             ::music::midi::tracks & tracks = file.GetTracks();
-            string_array_array & straa = data.GetStaticData().m_straaRawTokens;
+            string_array_array_base & straa = data.GetStaticData().m_straaRawTokens;
             imedia_position_2darray position2a;
             int2a iaaTokenLine;
 

@@ -29,7 +29,7 @@ namespace gpu_directx11
 
 
       //VkInstance instance{ VK_NULL_HANDLE };
-      ::string_array                   m_straSupportedInstanceExtensions;
+      ::string_array_base                   m_straSupportedInstanceExtensions;
       ::pointer < physical_device >    m_pphysicaldevice;
       /** @brief Set of device extensions to be enabled for this example (must be set in the derived constructor) */
       ::array<const_char_pointer >       m_pszaEnabledDeviceExtensions;
