@@ -5692,7 +5692,7 @@ namespace draw2d_direct2d
    void graphics::draw_text(const ::scoped_string & scopedstr, const ::double_rectangle & rectangle, const ::e_align & ealign, const ::e_draw_text & edrawtext)
    {
 
-      if (str.is_empty())
+      if (scopedstr.is_empty())
       {
 
          //return true;
@@ -5701,7 +5701,7 @@ namespace draw2d_direct2d
 
       }
 
-      if (str.is_empty())
+      if (scopedstr.is_empty())
       {
 
          //return false;
@@ -5792,12 +5792,12 @@ namespace draw2d_direct2d
 
       synchronous_lock synchronouslockFontTextMap(system()->draw2d()->write_text()->m_pparticleFontTextMapSynchronization);
 
-      auto & text = m_pfont->m_mapFontText[str];
+      auto & text = m_pfont->m_mapFontText[scopedstr];
 
       if (text.m_wstr.is_empty())
       {
 
-         text.m_wstr = str;
+         text.m_wstr = scopedstr;
 
       }
 
