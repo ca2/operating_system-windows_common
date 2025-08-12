@@ -81,8 +81,8 @@ namespace gpu_directx11
       ::comptr < ID3D11DepthStencilState > m_pdepthstencilstateForCleaning;
       ::pointer<::gpu::shader>                        m_pshaderImageBlend;
       ::pointer<::gpu::shader>                        m_pshaderImageSet;
-      //map < VkImage, ::pointer < descriptor > >       m_imagedescriptor;
-      //map < VkImage, ::pointer < model > >       m_imagemodel;
+      //map_base < VkImage, ::pointer < descriptor > >       m_imagedescriptor;
+      //map_base < VkImage, ::pointer < model > >       m_imagemodel;
       //::pointer < ::user::graphics3d >	m_pimpact;
       //::pointer < context >				               m_pgpucontext;
       ::pointer < cpu_buffer_sampler >	               m_pcpubuffersampler;

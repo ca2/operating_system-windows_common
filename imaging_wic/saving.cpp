@@ -269,7 +269,7 @@ namespace imaging_wic
 
       }
 
-      pimage->map();
+      pimage->map_base();
 
       auto pimage32 = pimage->data();
 

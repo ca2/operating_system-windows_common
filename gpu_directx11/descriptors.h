@@ -2,7 +2,7 @@
 
 
 #include "context.h"
-#include "acme/prototype/collection/map.h"
+#include "acme/prototype/collection/map_base.h"
 
 
 namespace gpu_directx11
@@ -27,11 +27,11 @@ namespace gpu_directx11
 
       //private:
       //   ::pointer < context > m_pgpucontext;
-      //   ::map < unsigned int, VkDescriptorSetLayoutBinding> bindings{};
+      //   ::map_base < unsigned int, VkDescriptorSetLayoutBinding> bindings{};
       //};
 
       //set_descriptor_layout(
-        //  context * pvkcdevice, ::map<unsigned int, VkDescriptorSetLayoutBinding> bindings);
+        //  context * pvkcdevice, ::map_base<unsigned int, VkDescriptorSetLayoutBinding> bindings);
       set_descriptor_layout();
       ~set_descriptor_layout();
 
@@ -39,7 +39,7 @@ namespace gpu_directx11
 
       ::pointer < context > m_pgpucontext;
       //VkDescriptorSetLayout descriptorSetLayout;
-      //::map<unsigned int, VkDescriptorSetLayoutBinding> bindings;
+      //::map_base<unsigned int, VkDescriptorSetLayoutBinding> bindings;
 
    };
 

@@ -529,7 +529,7 @@ namespace draw2d_direct2d
 
          ::comptr<IDWriteLocalizedStrings> pFamilyNames;
 
-         // Get a list of localized strings for the family name.
+         // Get a list_base of localized strings for the family name.
          if (SUCCEEDED(hrItem))
          {
 
@@ -642,7 +642,7 @@ namespace draw2d_direct2d
 
       //      IDWriteLocalizedStrings * pFamilyNames = NULL;
 
-      //      // Get a list of localized strings for the family name.
+      //      // Get a list_base of localized strings for the family name.
       //      if (SUCCEEDED(hrItem))
       //      {
       //         hrItem = pdwritefontfamily->GetFamilyNames(&pFamilyNames);
@@ -669,7 +669,7 @@ namespace draw2d_direct2d
       //         }
       //      }
 
-      //      // If the specified locale doesn't exist, select the first on the list.
+      //      // If the specified locale doesn't exist, select the first on the list_base.
       //      if (!exists)
       //         index = 0;
 

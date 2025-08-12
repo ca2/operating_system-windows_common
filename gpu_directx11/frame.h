@@ -35,7 +35,7 @@ namespace gpu_directx11
 		//VkCommandBuffer commandBuffer;
 		//::graphics3d::camera &camera;
 		//VkDescriptorSet globalDescriptorSet;
-		//::graphics3d::scene_object::map& gameObjects;
+		//::graphics3d::scene_object::map_base& gameObjects;
 	};
 
 

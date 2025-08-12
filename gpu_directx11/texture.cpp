@@ -59,7 +59,7 @@ namespace gpu_directx11
          if (m_texture2ddesc.Width != m_texture2ddesc.Height)
          {
 
-            throw ::exception(error_wrong_state, "width and height should be the same for a cube map texture");
+            throw ::exception(error_wrong_state, "width and height should be the same for a cube map_base texture");
 
          }
 

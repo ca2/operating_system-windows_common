@@ -110,7 +110,7 @@ namespace write_text_directx11
 
       //   }
 
-      //   // If the specified locale doesn't exist, select the first on the list.
+      //   // If the specified locale doesn't exist, select the first on the list_base.
       //   if (!exists)
       //   {
       //      index = 0;

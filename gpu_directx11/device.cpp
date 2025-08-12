@@ -233,7 +233,7 @@ namespace gpu_directx11
 
       //auto physicaldevice = pphysicaldevice->m_physicaldevice;
 
-      //// Get list of supported extensions
+      //// Get list_base of supported extensions
       //uint32_t extCount = 0;
       //vkEnumerateDeviceExtensionProperties(physicaldevice, nullptr, &extCount, nullptr);
       //if (extCount > 0)
@@ -248,7 +248,7 @@ namespace gpu_directx11
       //   }
       //}
 
-      // Derived examples can enable extensions based on the list of supported extensions read from the physical device
+      // Derived examples can enable extensions based on the list_base of supported extensions read from the physical device
       //getEnabledExtensions();
 
       //bool useSwapChain = m_eoutput == ::gpu::e_output_swap_chain;
@@ -477,7 +477,7 @@ namespace gpu_directx11
    *
    * @param extension Name of the extension to check
    *
-   * @return True if the extension is supported (present in the list read at device creation time)
+   * @return True if the extension is supported (present in the list_base read at device creation time)
    */
    bool device::isExtensionSupported(const ::scoped_string& scopedstrExtension)
    {

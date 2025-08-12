@@ -366,7 +366,7 @@ namespace gpu_directx11
       //      if (pimage->is_ok())
       //      {
       //
-      //         pimage->map();
+      //         pimage->map_base();
       //
       //         //glBindTexture(GL_TEXTURE_2D, m_gluTextureBitmap1);
       //
@@ -2480,7 +2480,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       //      VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
       //      VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
 
-      //   m_uboBuffers[i]->map();
+      //   m_uboBuffers[i]->map_base();
 
       //   auto bufferInfo = m_uboBuffers[i]->descriptorInfo();
 

@@ -578,7 +578,7 @@ namespace directx11
       //   return bindSparseInfo;
       //}
 
-      ///** @brief Initialize a map entry for a shader specialization constant */
+      ///** @brief Initialize a map_base entry for a shader specialization constant */
       //inline VkSpecializationMapEntry specializationMapEntry(uint32_t constantID, uint32_t offset, size_t size)
       //{
       //   VkSpecializationMapEntry specializationMapEntry{};

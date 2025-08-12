@@ -240,7 +240,7 @@ namespace draw2d_directx11
       if (size() != s)
       {
 
-         pimage->map();
+         pimage->map_base();
          
          if (::is_set(pimage->m_pimage32Raw) && pimage->m_iScan > 0)
          {
@@ -696,7 +696,7 @@ namespace draw2d_directx11
 
    ::color::color * pcr;
 
-   map();
+   map_base();
 
    int iSize32 = size / 32;
    int i;
@@ -1143,11 +1143,11 @@ namespace draw2d_directx11
 
       //hr = m_pbitmap1Map->CopyFromBitmap(&pointDst, pbitmap, &srcRect);
 
-      //D2D1_MAPPED_RECT map = {};
+      //D2D1_MAPPED_RECT map_base = {};
 
-      //hr = m_pbitmap1Map->Map(D2D1_MAP_OPTIONS_READ, &map);
+      //hr = m_pbitmap1Map->Map(D2D1_MAP_OPTIONS_READ, &map_base);
 
-      //if (FAILED(hr) || map.bits == nullptr)
+      //if (FAILED(hr) || map_base.bits == nullptr)
       //{
 
       //   throw ::exception(error_failed);
@@ -1452,7 +1452,7 @@ namespace draw2d_directx11
 
    //   m_pgraphics->SetViewportOrg(0, 0);
 
-   //   map(false);
+   //   map_base(false);
 
    //   ::int_rectangle rectangle(rectangleWindow);
 

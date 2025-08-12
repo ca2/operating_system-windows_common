@@ -358,7 +358,7 @@ namespace acme_windows_common
          pszDescription = "The result of a floating-int_point operation cannot be represented exactly as a decimal fraction";
          break;
       case EXCEPTION_FLT_INVALID_OPERATION:
-         pszDescription = "This exception represents any floating-int_point exception not included in this list";
+         pszDescription = "This exception represents any floating-int_point exception not included in this list_base";
          break;
       case EXCEPTION_FLT_OVERFLOW:
          pszDescription = "The exponent of a floating-int_point operation is greater than the magnitude allowed by the corresponding type";

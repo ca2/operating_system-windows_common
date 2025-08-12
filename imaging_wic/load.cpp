@@ -344,7 +344,7 @@ namespace imaging_wic
 
       }
 
-      pimageFrame->map();
+      pimageFrame->map_base();
 
       auto pdataTarget = pimageFrame->data();
 
@@ -669,7 +669,7 @@ namespace imaging_wic
 
    //   }
 
-   //   pimage->map();
+   //   pimage->map_base();
 
    //   auto * pcr = pimage->data();
 

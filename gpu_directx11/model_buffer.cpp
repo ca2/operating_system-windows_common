@@ -304,7 +304,7 @@ namespace gpu_directx11
 
    //   float g_z = 0.0f; // Assuming z is 0 for 2D rendering, adjust as needed
 
-   //   auto data = this->map < graphics3d::sequence3_color > ();
+   //   auto data = this->map_base < graphics3d::sequence3_color > ();
 
    //   //   // Triangle 1
    //   data[0] = { {points[0].x(), points[0].y(), g_z}, {fR, fG, fB, fA} };

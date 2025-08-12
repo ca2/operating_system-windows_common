@@ -659,7 +659,7 @@ namespace gpu_directx11
       if (FAILED(pcontext->m_pcontext->Map((ID3D11Resource*)m_ptextureStaging, 0, D3D11_MAP_READ, 0, &mapped)))
       {
          
-         warning() << "Failed to map staging texture.";
+         warning() << "Failed to map_base staging texture.";
          
          throw ::exception(error_wrong_state);
 

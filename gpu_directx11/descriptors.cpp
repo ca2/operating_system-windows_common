@@ -34,7 +34,7 @@ namespace gpu_directx11
    //// *************** Descriptor Set Layout *********************
 
    //set_descriptor_layout::set_descriptor_layout(
-   //    context * pvkcdevice, ::map<uint32_t, VkDescriptorSetLayoutBinding> bindings)
+   //    context * pvkcdevice, ::map_base<uint32_t, VkDescriptorSetLayoutBinding> bindings)
    //   : m_pgpucontext{ pvkcdevice }, bindings{ bindings } {
    //   ::array<VkDescriptorSetLayoutBinding> setLayoutBindings{};
    //   for (auto kv : bindings) {

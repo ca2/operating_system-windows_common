@@ -201,7 +201,7 @@ namespace gpu_directx11
       //// and encapsulates functions related to a device
       //m_pgpudevice = new vks::DirectX11Device(physicalDevice);
 
-      //// Derived examples can enable extensions based on the list of supported extensions read from the physical device
+      //// Derived examples can enable extensions based on the list_base of supported extensions read from the physical device
       //getEnabledExtensions();
 
       //result = directx11Device->createLogicalDevice(enabledFeatures, enabledDeviceExtensions, deviceCreatepNextChain);
@@ -216,7 +216,7 @@ namespace gpu_directx11
 
       //// Find a suitable depth and/or stencil format
       //VkBool32 validFormat{ false };
-      //// Samples that make use of stencil will require a depth + stencil format, so we select from a different list
+      //// Samples that make use of stencil will require a depth + stencil format, so we select from a different list_base
       //if (requiresStencil) {
       //   validFormat = getSupportedDepthStencilFormat(physicalDevice, &depthFormat);
       //}
