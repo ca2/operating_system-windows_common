@@ -340,7 +340,7 @@ namespace gpu_directx11
    //void shader::on_set_constant_buffer(const ::scoped_string& scopedstrName)
    //{
 
-   //   auto p1 = m_mapConstantBuffer.plookup(scopedstrName);
+   //   auto p1 = m_mapConstantBuffer.find(scopedstrName);
 
    //   if(p1)
    //   {

@@ -267,7 +267,7 @@ namespace multimedia
       void device::OnMixerLineChange(unsigned int dwLineID)
       {
          ::audio_mixer::source * pSource;
-         if(m_mapIDToLine.lookup(dwLineID, pSource))
+         if(m_mapIDToLine.find(dwLineID, pSource))
          {
             pSource->OnMixerLineChange();
          }
@@ -276,7 +276,7 @@ namespace multimedia
       void device::OnMixerControlChange(unsigned int dwControlID)
       {
          ::audio_mixer::control * pControl;
-         if(m_mapIDToControl.lookup(dwControlID, pControl))
+         if(m_mapIDToControl.find(dwControlID, pControl))
          {
             pControl->OnMixerControlChange();
          }
@@ -364,7 +364,7 @@ namespace multimedia
 
          ::audio_mixer::control * pinteraction;
 
-         if(m_mapDlgItemIDToControl.lookup(uiID, pinteraction)
+         if(m_mapDlgItemIDToControl.find(uiID, pinteraction)
                && pinteraction->OnCommand(wparam, lparam))
             return true;
 

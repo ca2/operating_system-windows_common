@@ -1463,7 +1463,7 @@ namespace gpu_directx11
    //   for (const auto & required : requiredExtensions)
    //   {
    //      information() << "\t" << required;
-   //      if (!available.plookup(required)) {
+   //      if (!available.find(required)) {
    //         throw ::exception(error_failed,"Missing required glfw extension");
    //      }
    //   }
