@@ -125,7 +125,7 @@ namespace acme_windows_common
 
       }
 
-      ASSERT_VALID(this);
+      ASSERT_OK(this);
       ASSERT(is_string_ok(path));
 
       eopen -= ::file::e_open_binary;
@@ -232,7 +232,7 @@ namespace acme_windows_common
    memsize file::read(void * p, ::memsize s)
    {
 
-      ASSERT_VALID(this);
+      ASSERT_OK(this);
       ASSERT(m_file.is_ok());
 
       if (s <= 0)
@@ -279,7 +279,7 @@ namespace acme_windows_common
    void file::write(const void * p, ::memsize s)
    {
 
-      ASSERT_VALID(this);
+      ASSERT_OK(this);
       ASSERT(m_file.is_ok());
 
       if (::is_null(p) || s <= 0)
@@ -334,7 +334,7 @@ namespace acme_windows_common
 
       }
 
-      ASSERT_VALID(this);
+      ASSERT_OK(this);
       ASSERT(m_file.is_ok());
       ASSERT(nFrom == ::e_seek_set || nFrom == ::e_seek_from_end || nFrom == ::e_seek_current);
       ASSERT(::e_seek_set == FILE_BEGIN && ::e_seek_from_end == FILE_END && ::e_seek_current == FILE_CURRENT);
@@ -407,7 +407,7 @@ namespace acme_windows_common
    filesize file::get_position() const
    {
 
-      ASSERT_VALID(this);
+      ASSERT_OK(this);
       ASSERT(m_file.is_ok());
 
       auto position = m_file.get_file_pointer();
@@ -420,7 +420,7 @@ namespace acme_windows_common
    void file::flush()
    {
 
-      ASSERT_VALID(this);
+      ASSERT_OK(this);
 
       if (m_file.nok() || !(m_eopen & ::file::e_open_write))
       {
@@ -444,7 +444,7 @@ namespace acme_windows_common
 
       }
 
-      ASSERT_VALID(this);
+      ASSERT_OK(this);
       ASSERT(m_file.is_ok());
 
       //bool bError = false;
@@ -494,7 +494,7 @@ namespace acme_windows_common
    void file::lock(filesize dwPos, filesize dwCount)
    {
       
-      ASSERT_VALID(this);
+      ASSERT_OK(this);
       ASSERT(m_file.is_ok());
 
       m_file.lock_file(dwPos, dwCount);
@@ -505,7 +505,7 @@ namespace acme_windows_common
    void file::unlock(filesize dwPos, filesize dwCount)
    {
 
-      ASSERT_VALID(this);
+      ASSERT_OK(this);
       ASSERT(m_file.is_ok());
 
       m_file.unlock_file(dwPos, dwCount);
@@ -517,7 +517,7 @@ namespace acme_windows_common
    void file::set_size(filesize dwNewLen)
    {
 
-      ASSERT_VALID(this);
+      ASSERT_OK(this);
       ASSERT(m_file.is_ok());
 
       m_file.set_file_size(dwNewLen);
@@ -529,7 +529,7 @@ namespace acme_windows_common
    filesize file::size() const
    {
 
-      ASSERT_VALID(this);
+      ASSERT_OK(this);
       ASSERT(m_file.is_ok());
 
       return m_file.get_file_size();
@@ -607,7 +607,7 @@ namespace acme_windows_common
 
    //string file::GetFileName() const
    //{
-   //   ASSERT_VALID(this);
+   //   ASSERT_OK(this);
 
    //   ::file::file_status status;
    //   GetStatus(status);
@@ -616,7 +616,7 @@ namespace acme_windows_common
 
    //string file::GetFileTitle() const
    //{
-   //   ASSERT_VALID(this);
+   //   ASSERT_OK(this);
 
    //   ::file::file_status status;
    //   GetStatus(status);
@@ -635,7 +635,7 @@ namespace acme_windows_common
    ::file::file_status file::get_status() const
    {
 
-      ASSERT_VALID(this);
+      ASSERT_OK(this);
       ASSERT(m_file.is_ok());
 
       ::file::file_status filestatus;
@@ -704,7 +704,7 @@ namespace acme_windows_common
    void file::set_file_path(const ::file::path & path)
    {
 
-      ASSERT_VALID(this);
+      ASSERT_OK(this);
 
       m_path = path;
 
@@ -722,7 +722,7 @@ namespace acme_windows_common
    class ::time file::modification_time()
    {
 
-      ASSERT_VALID(this);
+      ASSERT_OK(this);
       ASSERT(m_file.is_ok());
 
       FILETIME filetimeLastWrite;
@@ -737,7 +737,7 @@ namespace acme_windows_common
    void file::set_modification_time(const class ::time& time)
    {
 
-      ASSERT_VALID(this);
+      ASSERT_OK(this);
       ASSERT(m_file.is_ok());
 
       auto FILETIMELastWrite = as_FILETIME(file_time(time));

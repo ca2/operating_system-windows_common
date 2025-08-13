@@ -35,7 +35,7 @@ namespace gpu_directx11
 
       //};
 
-      ///::string_map < d3d11_constant_buffer > m_mapD3D11ConstantBuffer;
+      ///::string_map_base < d3d11_constant_buffer > m_mapD3D11ConstantBuffer;
 
       //bool m_bDisableDepthTest = false;
       //bool m_bDepthTestButNoDepthWrite = false;

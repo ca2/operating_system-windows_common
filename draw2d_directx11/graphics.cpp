@@ -4052,7 +4052,7 @@ namespace draw2d_directx11
       //         int cxPerInch, cyPerInch;
       //         if (this != nullptr)
       //         {
-      //            ASSERT_VALID(this);
+      //            ASSERT_OK(this);
       //            ASSERT(get_handle1() != nullptr);  // no HDC attached or created?
       //            cxPerInch = GetDeviceCaps(LOGPIXELSX);
       //            cyPerInch = GetDeviceCaps(LOGPIXELSY);
@@ -4088,7 +4088,7 @@ namespace draw2d_directx11
       //         int cxPerInch, cyPerInch;
       //         if (this != nullptr)
       //         {
-      //            ASSERT_VALID(this);
+      //            ASSERT_OK(this);
       //            ASSERT(get_handle1() != nullptr);  // no HDC attached or created?
       //            cxPerInch = GetDeviceCaps(LOGPIXELSX);
       //            cyPerInch = GetDeviceCaps(LOGPIXELSY);
@@ -5615,7 +5615,7 @@ namespace draw2d_directx11
 //
 //      ::draw2d::graphics * pgraphics = (::draw2d::graphics *)lParam;
 //
-//      ASSERT_VALID(pgraphics);
+//      ASSERT_OK(pgraphics);
 //
 //      switch (pMetaRec->rdFunction)
 //      {
