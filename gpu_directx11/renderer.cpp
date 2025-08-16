@@ -939,10 +939,14 @@ namespace gpu_directx11
    }
 
 
-   void renderer::_on_begin_render(::gpu::frame * pframe)
+   void renderer::_on_begin_render(::gpu::frame * pgpuframe)
    {
 
+      ::cast < frame > pframe = pgpuframe;
+
       ::cast < ::gpu_directx11::context > pgpucontext = m_pgpucontext;
+
+      ::cast < device > pdevice = pgpucontext->m_pgpudevice;
 
       ::gpu::context_lock context_lock(m_pgpucontext);
 

@@ -2,6 +2,7 @@
 
 
 #include "bred/gpu/frame.h"
+#include "bred/gpu/layer.h"
 
 
 namespace gpu_directx11
@@ -36,7 +37,17 @@ namespace gpu_directx11
 		//::graphics3d::camera &camera;
 		//VkDescriptorSet globalDescriptorSet;
 		//::graphics3d::scene_object::map_base& gameObjects;
+
+		//array_base < ::comptr<ID3D11Buffer> > m_buffera;
+		//int m_iBuffer;
+		//int m_iBufferSize = 1_MiB;
+		//int m_iBufferOffset;
 	};
+
+
+   // Created by camilo on 2025-08-15 21:51 <3ThomasBorregaardSørensen!!
+
+
 
 
 } // namespace gpu_directx11 

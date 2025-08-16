@@ -14,6 +14,8 @@ namespace gpu_directx11
    public:
 
 
+      bool m_bStatic = false;
+
       //context* m_pgpucontext;
       //void* m_mapped = nullptr;
       //VkBuffer m_buffer = VK_NULL_HANDLE;
@@ -27,6 +29,9 @@ namespace gpu_directx11
       //VkMemoryPropertyFlags m_memoryPropertyFlags;
 
       ::comptr<ID3D11Buffer> m_pbuffer;
+      int m_iBufferOffset;
+      int m_iSizeMapped;
+
 
       memory_buffer();
       ~memory_buffer();
@@ -46,8 +51,13 @@ namespace gpu_directx11
       void* _map(memsize start, memsize count) override;
       void _unmap() override;
 
+      void* map(memsize start, memsize count) override;
+      void unmap() override;
+
       void bind() override;
       void unbind()override;
+
+      void on_set_memory_buffer(const void* data, memsize size) override;
 
 
    };

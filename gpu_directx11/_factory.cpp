@@ -3,6 +3,7 @@
 #include "cpu_buffer.h"
 //#include "direct2d_draw2d_swap_chain.h"
 #include "frame.h"
+#include "frame_storage.h"
 #include "input_layout.h"
 #include "memory_buffer.h"
 #include "model_buffer.h"
@@ -53,6 +54,8 @@ __FACTORY_EXPORT void gpu_directx11_factory(::factory::factory * pfactory)
    pfactory->add_factory_item < ::gpu_directx11::memory_buffer, ::gpu::memory_buffer >();
    //pfactory->add_factory_item < ::gpu_directx11::pixmap, ::gpu::pixmap >();
    pfactory->add_factory_item < ::gpu::pixmap >();
+
+   pfactory->add_factory_item < ::gpu_directx11::frame_storage, ::gpu::frame_storage >();
 
 
 }

@@ -41,7 +41,7 @@ namespace draw2d_directx11
       //void dump(dump_context& dumpcontext) const override;
 
 
-      void map_base();
+      void map();
       void unmap();
 
 

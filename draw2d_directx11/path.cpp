@@ -238,7 +238,7 @@ namespace draw2d_directx11
 
       comptr<IDWriteTextLayout> playout;*/
 
-      wstring wstr(strText);
+      wstring wstr(scopedstrText);
 
       //HRESULT hr = pfactory->CreateTextLayout(
       //   wstr,      // The string to be laid out and formatted.

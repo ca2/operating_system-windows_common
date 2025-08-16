@@ -163,6 +163,7 @@ namespace gpu_directx11
 
 
 
+
    void device::initialize_gpu_device_for_swap_chain(::gpu::approach* pgpuapproachParam, ::windowing::window * pwindow)
    {
 
@@ -2165,7 +2166,25 @@ namespace gpu_directx11
    }
 
 
+   void device::on_new_frame()
+   {
 
+      gpu::device::on_new_frame();
+
+      //auto& pframestorage = m_framestoragea.ø(m_iCurrentFrame2);
+
+      //if (!pframestorage)
+      //{
+
+      //   __defer_construct_new(pframestorage);
+
+      //}
+
+      //pframestorage->m_iBuffer = 0;
+
+      //pframestorage->m_iBufferOffset = 0;
+
+   }
 
 
 } // namespace gpu_directx11

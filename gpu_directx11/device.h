@@ -7,6 +7,7 @@
 #include "acme/prototype/prototype/memory.h"
 #include "acme_windows_common/dxgi_device_source.h"
 //#include "directx11/directx11.h"
+#include "frame_storage.h"
 
 
 namespace gpu_directx11
@@ -29,7 +30,6 @@ namespace gpu_directx11
 
 
       D3D_FEATURE_LEVEL                               m_featurelevel;
-
 
 
       //directx11();
@@ -126,7 +126,7 @@ namespace gpu_directx11
       virtual void initialize_d3d11_device();
 
       //svirtual void initialize_swap_chain(::windowing::window * pwindow);
-
+      
       void initialize_gpu_device_for_swap_chain(::gpu::approach* pgpuapproach, ::windowing::window *pwindow) override;
       void initialize_gpu_device_for_off_screen(::gpu::approach* pgpuapproach, const ::int_rectangle& rectanglePlacement) override;
 
@@ -292,6 +292,8 @@ namespace gpu_directx11
 
       ::gpu::payload load_dds(const ::scoped_string& scopedstrImagePath) override;
 
+
+      void on_new_frame() override;
       
 
    };

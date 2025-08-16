@@ -522,7 +522,7 @@ namespace imaging_wic
 
             pimage->create({(int) width, (int)height });
 
-            pimage->map_base();
+            pimage->map();
 
             hr = pframe->CopyPixels(nullptr, pimage->scan_size(), pimage->scan_size() * height, (unsigned char *)pimage->data());
 
@@ -542,7 +542,7 @@ namespace imaging_wic
 
             pimage->create(::int_size(width, height));
 
-            pimage->map_base();
+            pimage->map();
 
             hr = pframe->CopyPixels(nullptr, pimage->scan_size(), pimage->scan_size() * height, (unsigned char *)pimage->data());
    #ifdef UNIVERSAL_WINDOWS
@@ -580,7 +580,7 @@ namespace imaging_wic
 
             pimage->create({ (int)width, (int)height });
 
-            pimage->map_base();
+            pimage->map();
 
             hr = pbitmap->CopyPixels(nullptr, pimage->scan_size(), pimage->scan_size() * height, (unsigned char *)pimage->data());
 
@@ -654,7 +654,7 @@ namespace imaging_wic
 
       pframe->m_pimage->create({ (int)width, (int)height });
 
-      pframe->m_pimage->map_base();
+      pframe->m_pimage->map();
 
       byte_array ba;
 

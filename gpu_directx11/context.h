@@ -231,6 +231,10 @@ namespace gpu_directx11
 
       string get_shader_version_text() override;
 
+      ::memory rectangle_shader_vert() override;
+      ::memory rectangle_shader_frag() override;
+
+
       void _translate_shader(string_array_base & straFragment) override;
 
       //void swap_buffers() override;

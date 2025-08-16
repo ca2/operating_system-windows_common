@@ -297,7 +297,7 @@ namespace draw2d_direct2d
 
 
       virtual void _push_layer(ID2D1Geometry * pgeometry);
-      virtual void _push_layer(const ::int_rectangle_array & rectanglea);
+      virtual void _push_layer(const ::int_rectangle_array_base & rectanglea);
       virtual void _pop_layer();
       virtual void _pop_all_layers();
 

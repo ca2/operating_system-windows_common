@@ -257,7 +257,7 @@ namespace imaging_wic
 
             pimage->create({ _->bmiHeader.biWidth,  _->bmiHeader.biHeight });
 
-            pimage->map_base();
+            pimage->map();
 
             pimage->image32()->vertical_swap_copy(
                pimage->width(),

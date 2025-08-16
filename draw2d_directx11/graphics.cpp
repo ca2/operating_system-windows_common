@@ -4679,7 +4679,7 @@ namespace draw2d_directx11
    //}
 
 
-   void graphics::_push_layer(const ::int_rectangle_array& rectanglea)
+   void graphics::_push_layer(const ::int_rectangle_array_base& rectanglea)
    {
 
       m_iaPushLayer.add(1);
@@ -5043,7 +5043,7 @@ namespace draw2d_directx11
 
       //HRESULT hr = m_pdirectx11->d2d1_factory1()->CreatePathGeometry(&ppathgeometry);
 
-      //::int_rectangle_array rectanglea;
+      //::int_rectangle_array_base rectanglea;
 
       //if (clipgroup.is_rectangle_only(rectanglea))
       //{
@@ -5776,7 +5776,7 @@ namespace draw2d_directx11
    void graphics::draw_text(const ::scoped_string & scopedstr, const ::double_rectangle & rectangle, const ::e_align & ealign, const ::e_draw_text & edrawtext)
    {
 
-      if (str.is_empty())
+      if (scopedstr.is_empty())
       {
 
          //return true;
@@ -5785,7 +5785,7 @@ namespace draw2d_directx11
 
       }
 
-      if (str.is_empty())
+      if (scopedstr.is_empty())
       {
 
          //return false;
@@ -6449,8 +6449,10 @@ VSOut main(VSIn input) {
    }
 
 
-   void graphics::line(double x1, double y1, double x2, double y2, ::draw2d::pen * ppen)
+   void graphics::line(double x1, double y1, double x2, double y2)
    {
+
+      ::gpu::graphics::line(x1, y1, x2, y2);
 
       //D2D1_POINT_2F p1;
 
@@ -6488,8 +6490,10 @@ VSOut main(VSIn input) {
    }
 
 
-   void graphics::line(double x1, double y1, double x2, double y2)
+   void graphics::line(double x1, double y1, double x2, double y2, ::draw2d::pen* ppen)
    {
+
+      ::gpu::graphics::line(x1, y1, x2, y2, ppen);
 
       //D2D1_POINT_2F p1;
 
@@ -7357,11 +7361,13 @@ VSOut main(VSIn input) {
    void graphics::draw(::draw2d::path * ppathParam, ::draw2d::pen * ppen)
    {
 
-      scoped_restore(m_bOutline);
+      ::gpu::graphics::draw(ppathParam, ppen);
 
-      m_bOutline = true;
+      //scoped_restore(m_bOutline);
 
-      ::pointer<class path> ppath = ppathParam;
+      //m_bOutline = true;
+
+      //::pointer<class path> ppath = ppathParam;
 
       //ID2D1PathGeometry * pgeometry = ppath->get_os_data < ID2D1PathGeometry * >(this, path_hollow);
 

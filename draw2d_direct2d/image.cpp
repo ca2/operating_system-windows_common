@@ -240,7 +240,7 @@ namespace draw2d_direct2d
       if (size() != s)
       {
 
-         pimage->map_base();
+         pimage->map();
          
          if (::is_set(pimage->m_pimage32Raw) && pimage->m_iScan > 0)
          {
@@ -696,7 +696,7 @@ namespace draw2d_direct2d
 
    ::color::color * pcr;
 
-   map_base();
+   map();
 
    int iSize32 = size / 32;
    int i;

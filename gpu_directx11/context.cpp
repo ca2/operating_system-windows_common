@@ -366,7 +366,7 @@ namespace gpu_directx11
       //      if (pimage->is_ok())
       //      {
       //
-      //         pimage->map_base();
+      //         pimage->map();
       //
       //         //glBindTexture(GL_TEXTURE_2D, m_gluTextureBitmap1);
       //
@@ -1836,6 +1836,63 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    }
 
 
+   ::memory context::rectangle_shader_vert()
+   {
+
+      return hlsl_context::rectangle_shader_vert();
+
+//      const char proto_vert[] = R"vert(
+//// Vertex input structure
+//struct VSInput {
+//    float2 inPos   : POSITION; // matches location=0 in GLSL
+//    float4 inColor : COLOR0;   // matches location=1 in GLSL
+//};
+//
+//// Vertex output structure
+//struct VSOutput {
+//    float4 pos     : SV_Position; // required for position in HLSL
+//    float4 color   : COLOR0;      // passed to pixel shader
+//};
+//
+//// Vertex shader
+//VSOutput main(VSInput input) {
+//    VSOutput output;
+//    output.pos   = float4(input.inPos, 0.0, 1.0); // clip-space position
+//    output.color = input.inColor;
+//    return output;
+//}
+//
+//)vert";
+//
+//      return ::as_memory_block(proto_vert);
+
+   }
+
+
+   ::memory context::rectangle_shader_frag()
+   {
+
+      return hlsl_context::rectangle_shader_frag();
+
+//
+//      const char proto_frag[] = R"frag(
+//struct PSInput {
+//   float4 pos   : SV_Position; // required for position in HLSL
+//   float4 color : COLOR0; // Matches VS output COLOR0
+//};
+//
+//float4 main(PSInput input) : SV_Target {
+//    return input.color;
+//}
+//
+//)frag";
+//
+//      return ::as_memory_block(proto_frag);
+
+   }
+
+
+
    void context::_translate_shader(string_array_base& stra)
    {
 
@@ -2480,7 +2537,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       //      VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
       //      VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
 
-      //   m_uboBuffers[i]->map_base();
+      //   m_uboBuffers[i]->map();
 
       //   auto bufferInfo = m_uboBuffers[i]->descriptorInfo();
 

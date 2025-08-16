@@ -4615,7 +4615,7 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::_push_layer(const ::int_rectangle_array& rectanglea)
+   void graphics::_push_layer(const ::int_rectangle_array_base& rectanglea)
    {
 
       m_iaPushLayer.add(1);
@@ -4979,7 +4979,7 @@ namespace draw2d_direct2d
 
       HRESULT hr = m_pdirect2d->d2d1_factory1()->CreatePathGeometry(&ppathgeometry);
 
-      ::int_rectangle_array rectanglea;
+      ::int_rectangle_array_base rectanglea;
 
       if (clipgroup.is_rectangle_only(rectanglea))
       {

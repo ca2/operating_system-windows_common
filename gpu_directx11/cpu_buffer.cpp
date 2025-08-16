@@ -38,7 +38,7 @@ namespace gpu_directx11
 //
 //      }
 //
-//      //m_pixmap.map_base();
+//      //m_pixmap.map();
 //
 //      auto cx = m_pimagetarget->m_pimage->width();
 //
@@ -167,7 +167,7 @@ namespace gpu_directx11
 
       }
 
-      // //     m_pixmap.map_base();
+      // //     m_pixmap.map();
       //      //
       ////      glDrawPixels(
       ////         m_pixmap.m_size.cx(), m_pixmap.m_size.cy(),
