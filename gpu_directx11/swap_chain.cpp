@@ -185,7 +185,7 @@ namespace gpu_directx11
       if (!m_ptextureSwapChain)
       {
 
-         __construct_new(m_ptextureSwapChain);
+         øconstruct_new(m_ptextureSwapChain);
 
          m_ptextureSwapChain->m_bRenderTarget= true;
 
@@ -276,7 +276,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 }
 )hlsl";
 
-         __construct_new(m_pshaderPresent);
+         øconstruct_new(m_pshaderPresent);
 
          m_pshaderPresent->initialize_shader_with_block(
             pgpurenderer,
@@ -367,7 +367,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    //   if (!m_ptextureSwapChain)
    //   {
 
-   //      __construct_new(m_ptextureSwapChain);
+   //      øconstruct_new(m_ptextureSwapChain);
 
    //      m_ptextureSwapChain->m_bRenderTarget = true;
 

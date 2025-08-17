@@ -180,7 +180,7 @@ namespace gpu_directx11
 
 //      auto physicaldevice = physicalDevices[selectedDevice];
 //
-      auto pphysicaldevice = __create_new < physical_device >();
+      auto pphysicaldevice = øcreate_new < physical_device >();
 
   //    pphysicaldevice->_initialize_physical_device(this, physicaldevice);
 

@@ -94,8 +94,8 @@ namespace draw2d_directx11
       ::draw2d::bitmap_pointer         pbitmap;
       ::draw2d::graphics_pointer       pgraphics;
 
-      __øconstruct(pbitmap);
-      __øconstruct(pgraphics);
+      øconstruct(pbitmap);
+      øconstruct(pgraphics);
 
       if (::is_null(pbitmap) || ::is_null(pgraphics))
       {

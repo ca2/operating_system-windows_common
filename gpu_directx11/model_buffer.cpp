@@ -129,8 +129,8 @@ namespace gpu_directx11
    //   //auto vertexSize = sizeof(quadVertices);
    //   //auto indexSize = sizeof(quadIndices);
 
-   //  /* __defer_construct_new(m_pbufferVertex);
-   //   __defer_construct_new(m_pbufferIndex);
+   //  /* ødefer_construct_new(m_pbufferVertex);
+   //   ødefer_construct_new(m_pbufferIndex);
 
    //   m_pbufferVertex->initialize_memory_buffer(pcontext, vertexSize);
    //   m_pbufferIndex->initialize_memory_buffer(pcontext, indexSize);

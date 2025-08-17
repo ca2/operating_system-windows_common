@@ -295,7 +295,7 @@ namespace direct2d
    //   //}
 
 
-   //   pwindow->__defer_construct(direct2d::s_pdirect2d);
+   //   pwindow->ødefer_construct(direct2d::s_pdirect2d);
 
    //   //direct2d::s_pdirect2d->initialize(pwindow);
 
@@ -325,7 +325,7 @@ namespace direct2d
 
          ::pointer < direct2d > pdirect2dNew;
 
-         pgpudevice->__construct_new(pdirect2dNew);
+         pgpudevice->øconstruct_new(pdirect2dNew);
 
          ::cast < ::dxgi_device_source > pdxgidevicesource = pgpudevice;
 

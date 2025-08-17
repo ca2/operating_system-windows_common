@@ -10,7 +10,7 @@
 //   if (!m_pplugin)
 //   {
 //
-//      __construct_new(m_pplugin);
+//      øconstruct_new(m_pplugin);
 //
 //   }
 //

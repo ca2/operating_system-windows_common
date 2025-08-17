@@ -473,7 +473,7 @@ namespace gpu_directx11
 
    //   }
 
-   //   ::e_status estatus = __øconstruct(m_pbuffer);
+   //   ::e_status estatus = øconstruct(m_pbuffer);
 
    //   if (!estatus)
    //   {
@@ -686,7 +686,7 @@ namespace gpu_directx11
    ::pointer < ::gpu::context > allocate_system_context(::particle* pparticle)
    {
 
-      return pparticle->__create_new <context>();
+      return pparticle->øcreate_new <context>();
 
    }
 
@@ -1131,7 +1131,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 }
 )hlsl";
 
-         __defer_construct_new(m_pshaderCopyUsingShader);
+         ødefer_construct_new(m_pshaderCopyUsingShader);
 
          m_pshaderCopyUsingShader->m_bDisableDepthTest = true;
          m_pshaderCopyUsingShader->m_bEnableBlend = false;
@@ -1325,7 +1325,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 }
 )hlsl";
 
-         __defer_construct_new(m_pshaderBlend3);
+         ødefer_construct_new(m_pshaderBlend3);
 
          m_pshaderBlend3->initialize_shader_with_block(
             m_pgpurenderer,

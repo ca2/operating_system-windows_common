@@ -75,7 +75,7 @@ namespace imaging_wic
       ::image::image_context::initialize(pparticle);
 
 
-      //__øconstruct(m_pparticleImageSynchronization);
+      //øconstruct(m_pparticleImageSynchronization);
 
       //if (!estatus)
       //{

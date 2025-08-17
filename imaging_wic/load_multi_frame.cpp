@@ -179,11 +179,11 @@ namespace imaging_wic
 
             auto & pframe = pframea->element_at(iFrame);
 
-            __defer_construct_new(pframe);
+            ødefer_construct_new(pframe);
 
             //auto estatus =
             
-            __øconstruct(pframe->m_pimage);
+            øconstruct(pframe->m_pimage);
 
             //if (!estatus)
             //{
@@ -194,7 +194,7 @@ namespace imaging_wic
 
             pframe->m_iFrame = iFrame;
 
-            __defer_construct(pimageFrame);
+            ødefer_construct(pimageFrame);
 
             //estatus = 
             

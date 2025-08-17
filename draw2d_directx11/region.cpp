@@ -273,7 +273,7 @@ namespace draw2d_directx11
    //ID2D1Geometry * region::get_polygon(::draw2d::graphics* pgraphics)
    //{
 
-   //   //auto ppath = pgraphics->__øcreate < ::draw2d::path > ();
+   //   //auto ppath = pgraphics->øcreate < ::draw2d::path > ();
 
    //   /*int_point_array pa;
 
@@ -313,7 +313,7 @@ namespace draw2d_directx11
    //ID2D1Geometry * region::get_poly_polygon(::draw2d::graphics* pgraphics)
    //{
 
-   //   auto ppath = pgraphics->__øcreate < ::draw2d::path > ();
+   //   auto ppath = pgraphics->øcreate < ::draw2d::path > ();
 
    //   double_point_array pa;
 

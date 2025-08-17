@@ -106,7 +106,7 @@ namespace gpu_directx11
 
          pgpucontext->create_cpu_buffer(pgpucontext->rectangle().size());
 
-         __construct_new(m_pcpubuffersampler);
+         øconstruct_new(m_pcpubuffersampler);
 
          m_pcpubuffersampler->initialize_cpu_buffer_sampler(pgpucontext);
 
@@ -258,7 +258,7 @@ namespace gpu_directx11
    //   //         paccumulationrendertargetview->m_formatAlphaAccumulation = VK_FORMAT_R32_SFLOAT;
    //   //         m_prendertargetview = paccumulationrendertargetview;
    //   //
-   //   //         //__construct_new(m_prendererResolve);
+   //   //         //øconstruct_new(m_prendererResolve);
    //   //
    //   //         //m_prendererResolve->initialize_renderer(m_pgpucontext, ::gpu::e_output_resolve_color_and_alpha_accumulation_buffers);
    //   //
@@ -324,7 +324,7 @@ namespace gpu_directx11
       for(auto & pcommandbuffer : m_commandbuffera)
       {
          
-         __defer_construct(pcommandbuffer);
+         ødefer_construct(pcommandbuffer);
          
          pcommandbuffer->initialize_command_buffer(m_pgpurendertarget,
             ::gpu::e_command_buffer_graphics);
@@ -407,7 +407,7 @@ namespace gpu_directx11
          //}
 
          //m_
-         //auto pframe = __create_new < frame >();
+         //auto pframe = øcreate_new < frame >();
          //pframe->commandBuffer = commandBuffer;
          //m_pframe = pframe;
          //return m_pframe;
@@ -855,7 +855,7 @@ namespace gpu_directx11
       if (!m_pshaderImageBlend)
       {
 
-         auto pinputlayoutEmpty = __øcreate <::gpu::input_layout >();
+         auto pinputlayoutEmpty = øcreate <::gpu::input_layout >();
 
          //pshadervertexinput->m_bindings.add(
          //   {
@@ -867,7 +867,7 @@ namespace gpu_directx11
          //pshadervertexinput->m_attribs.add({ .location = 0, .binding = 0, .format = VK_FORMAT_R32G32_SFLOAT, .offset = 0 });
          //pshadervertexinput->m_attribs.add({ .location = 1, .binding = 0, .format = VK_FORMAT_R32G32_SFLOAT, .offset = sizeof(float) * 2 });
 
-         auto pshaderImageBlend = __create_new<::gpu_directx11::shader>();
+         auto pshaderImageBlend = øcreate_new<::gpu_directx11::shader>();
 
          m_pshaderImageBlend = pshaderImageBlend;
 
@@ -898,7 +898,7 @@ namespace gpu_directx11
       if (!m_pshaderImageBlend)
       {
 
-         auto pinputlayoutEmpty = __øcreate< ::gpu::input_layout >();
+         auto pinputlayoutEmpty = øcreate< ::gpu::input_layout >();
 
          //pshadervertexinput->m_bindings.add(
          //   {
@@ -910,7 +910,7 @@ namespace gpu_directx11
          //pshadervertexinput->m_attribs.add({ .location = 0, .binding = 0, .format = VK_FORMAT_R32G32_SFLOAT, .offset = 0 });
          //pshadervertexinput->m_attribs.add({ .location = 1, .binding = 0, .format = VK_FORMAT_R32G32_SFLOAT, .offset = sizeof(float) * 2 });
 
-         auto pshaderImageBlend = __create_new<::gpu_directx11::shader>();
+         auto pshaderImageBlend = øcreate_new<::gpu_directx11::shader>();
 
          m_pshaderImageBlend = pshaderImageBlend;
 
@@ -1200,7 +1200,7 @@ HRESULT hrCreateDepthStencilState = pgpudevice->m_pdevice->CreateDepthStencilSta
 
       //assert(!isFrameStarted && "Can't call beginFrame while already in progress");
 
-      //__defer_construct(m_pgpurendertarget->m_pgpuframe);
+      //ødefer_construct(m_pgpurendertarget->m_pgpuframe);
       //
       //m_prenderstate->on_happening(::gpu::e_happening_begin_frame);
 
