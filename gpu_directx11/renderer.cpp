@@ -190,11 +190,11 @@ namespace gpu_directx11
       //vkDeviceWaitIdle(m_pgpucontext->logicalDevice());
 
       //if (vkcSwapChain == nullptr) {
-      //	vkcSwapChain = std::make_unique<swap_chain_render_target_view>(m_pgpucontext, extent);
+      //	vkcSwapChain = øcreate_pointer<swap_chain_render_target_view>(m_pgpucontext, extent);
       //}
       //else {
       //	::pointer<swap_chain_render_target_view> oldSwapChain = std::move(vkcSwapChain);
-      //	vkcSwapChain = std::make_unique<swap_chain_render_target_view>(m_pgpucontext, extent, oldSwapChain);
+      //	vkcSwapChain = øcreate_pointer<swap_chain_render_target_view>(m_pgpucontext, extent, oldSwapChain);
       //	if (!oldSwapChain->compareSwapFormats(*vkcSwapChain.get())) {
       //		throw ::exception(error_failed, "Swap chain image(or depth) format has changed!");
       //	}
