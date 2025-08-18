@@ -154,7 +154,7 @@ namespace write_text_directx11
 
       //      string strName = string((const ::wide_character*)(name));
 
-      //      m_pfontenumerationitema->add(__allocate ::write_text::font_enumeration_item(strName, strName));
+      //      m_pfontenumerationitema->add(øallocate ::write_text::font_enumeration_item(strName, strName));
 
       //   }
 

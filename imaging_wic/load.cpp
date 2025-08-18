@@ -36,7 +36,7 @@ namespace imaging_wic
    void image_context::_load_image(::image::image * pimageParam, const ::payload & payloadFile, const ::image::load_options & loadoptions)
    {
 
-      auto ploadimage = __allocate::image::load_image(this);
+      auto ploadimage = øallocate::image::load_image(this);
 
       //auto estatus = 
 

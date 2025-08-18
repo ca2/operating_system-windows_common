@@ -365,7 +365,7 @@ namespace draw2d_directx11
             auto pcontext = gpu_context();
 
             ::gpu::context_lock context_lock(pcontext);
-            /*::directx11::directx11() = __allocate ::draw2d_directx11::plugin();
+            /*::directx11::directx11() = øallocate ::draw2d_directx11::plugin();
 
             ::directx11::get()->initialize();*/
 
@@ -6570,7 +6570,7 @@ VSOut main(VSIn input) {
 
    //   }
 
-   //   m_penddraw = __allocate swap_chain_end_draw();
+   //   m_penddraw = øallocate swap_chain_end_draw();
 
    //   m_penddraw->initialize(this);
 

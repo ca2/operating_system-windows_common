@@ -1510,7 +1510,7 @@ bool ::mutex::unlock()
 
    }
 
-   auto pmutex  = __allocate ::mutex(e_create_new, lpszName, h);
+   auto pmutex  = øallocate ::mutex(e_create_new, lpszName, h);
 
    return pmutex;
 
@@ -1543,7 +1543,7 @@ bool ::mutex::unlock()
 
    }
 
-   auto pmutex = __allocate ::mutex(strName, psem, isCreator);
+   auto pmutex = øallocate ::mutex(strName, psem, isCreator);
 
    return pmutex;
 
@@ -1612,7 +1612,7 @@ pacmedir->create(path.folder());
 
    //pthread_mutex_init(&m_mutex, &attr);
 
-   auto pmutex = __allocate ::mutex(e_create_new, lpszName, iFd, false);
+   auto pmutex = øallocate ::mutex(e_create_new, lpszName, iFd, false);
 
    return pmutex;
 
@@ -1638,7 +1638,7 @@ pacmedir->create(path.folder());
 
    }
 
-   auto pmutex = __allocate ::mutex(strName, key, semid);
+   auto pmutex = øallocate ::mutex(strName, key, semid);
 
    return pmutex;
 
@@ -1650,7 +1650,7 @@ pacmedir->create(path.folder());
 void wait_until_mutex_does_not_exist(const ::string & lpszName)
 {
 
-   ::pointer<::mutex>pmutex = __allocate ::mutex(e_create_new, false, "Global\\::ca::account::ca2_spa::7807e510-5579-11dd-ae16-0800200c7784");
+   ::pointer<::mutex>pmutex = øallocate ::mutex(e_create_new, false, "Global\\::ca::account::ca2_spa::7807e510-5579-11dd-ae16-0800200c7784");
 
    if(::get_last_status() == ::error_already_exists)
    {
@@ -1662,7 +1662,7 @@ void wait_until_mutex_does_not_exist(const ::string & lpszName)
 
          sleep(200_ms);
 
-         pmutex = __allocate ::mutex(e_create_new, false, "Global\\::ca::account::ca2_spa::7807e510-5579-11dd-ae16-0800200c7784");
+         pmutex = øallocate ::mutex(e_create_new, false, "Global\\::ca::account::ca2_spa::7807e510-5579-11dd-ae16-0800200c7784");
 
       }
 

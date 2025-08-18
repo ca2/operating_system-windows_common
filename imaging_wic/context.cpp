@@ -87,15 +87,15 @@ namespace imaging_wic
 
 #ifdef UNIVERSAL_WINDOWS
 
-      m_pmanagerImageLoadSlowQueue = __allocate multi_threaded_handler_manager();
+      m_pmanagerImageLoadSlowQueue = øallocate multi_threaded_handler_manager();
 
-      m_pmanagerImageLoadFastQueue = __allocate multi_threaded_handler_manager();
+      m_pmanagerImageLoadFastQueue = øallocate multi_threaded_handler_manager();
 
 #else
 
-      m_pmanagerImageLoadSlowQueue = __allocate single_threaded_handler_manager();
+      m_pmanagerImageLoadSlowQueue = øallocate single_threaded_handler_manager();
 
-      m_pmanagerImageLoadFastQueue = __allocate single_threaded_handler_manager();
+      m_pmanagerImageLoadFastQueue = øallocate single_threaded_handler_manager();
 
 #endif
 

@@ -363,7 +363,7 @@ namespace draw2d_direct2d
             auto pcontext = gpu_context();
 
             ::gpu::context_lock context_lock(pcontext);
-            /*::direct2d::direct2d() = __allocate ::draw2d_direct2d::plugin();
+            /*::direct2d::direct2d() = øallocate ::draw2d_direct2d::plugin();
 
             ::direct2d::get()->initialize();*/
 
@@ -6401,7 +6401,7 @@ namespace draw2d_direct2d
 
    //   }
 
-   //   m_penddraw = __allocate swap_chain_end_draw();
+   //   m_penddraw = øallocate swap_chain_end_draw();
 
    //   m_penddraw->initialize(this);
 

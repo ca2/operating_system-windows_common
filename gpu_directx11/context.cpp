@@ -2528,7 +2528,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       //for (int i = 0; i < m_uboBuffers.size(); i++)
       //{
 
-      //   m_uboBuffers[i] = __allocate buffer();
+      //   m_uboBuffers[i] = øallocate buffer();
 
       //   m_uboBuffers[i]->initialize_buffer(
       //      this,
@@ -2607,7 +2607,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
       //   m_descriptorsetsGlobal.resize(iFrameCount);
 
-      //   auto pdescriptorpoolbuilder = __allocate::gpu_directx11::descriptor_pool::Builder();
+      //   auto pdescriptorpoolbuilder = øallocate::gpu_directx11::descriptor_pool::Builder();
 
       //   pdescriptorpoolbuilder->initialize_builder(this);
       //   pdescriptorpoolbuilder->setMaxSets(iFrameCount);
