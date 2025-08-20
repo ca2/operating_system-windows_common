@@ -47,26 +47,27 @@ namespace gpu_directx11
    // void main() {
    //     outColor = texture(srcImage, fragUV);
    // }
-   static unsigned int g_uaImageBlendFragmentShader[] = {
- #include "shader/image_blend.frag.spv.inl"
-   };
-   // 
-   // Vertex shader (GLSL -> SPIR-V):
-   // layout(location = 0) in vec2 inPos;
-   // layout(location = 1) in vec2 inUV;
-   // layout(location = 0) out vec2 fragUV;
-   // void main() {
-   //     fragUV = inUV;
-   //     gl_Position = vec4(inPos, 0.0, 1.0);
-   // }
-   static unsigned int g_uaImageBlendVertexShader[] = {
- #include "shader/image_blend.vert.spv.inl"
-   };
+    static const char * g_uaImageBlendFragmentShader = R"(
+#include "shader/image_blend.frag"
+)";
+ //   //
+ //   // Vertex shader (GLSL -> SPIR-V):
+ //   // layout(location = 0) in vec2 inPos;
+ //   // layout(location = 1) in vec2 inUV;
+ //   // layout(location = 0) out vec2 fragUV;
+ //   // void main() {
+ //   //     fragUV = inUV;
+ //   //     gl_Position = vec4(inPos, 0.0, 1.0);
+ //   // }
+   static const char * g_uaImageBlendVertexShader = R"(
+#include "shader/image_blend.vertr"
+)";
 
 
-   static unsigned int g_uaResolveFragmentShader[] = {
- #include "shader/resolve.frag.spv.inl"
-   };
+
+ //   static unsigned int g_uaResolveFragmentShader[] = {
+ // #include "shader/resolve.frag.spv.inl"
+ //   };
 
 
    // renderer::renderer(VkWindow& window, context* pvkcdevice) : vkcWindow{ window }, m_pgpucontext{ pvkcdevice } 
@@ -878,8 +879,8 @@ namespace gpu_directx11
 
          pshaderImageBlend->initialize_shader_with_block(
             this,
-            as_memory_block(g_uaImageBlendVertexShader),
-            as_memory_block(g_uaImageBlendFragmentShader),
+            as_block(g_uaImageBlendVertexShader),
+            as_block(g_uaImageBlendFragmentShader),
             { ::gpu::shader::e_descriptor_set_slot_local },
             m_psetdescriptorlayoutImageBlend,
             {},

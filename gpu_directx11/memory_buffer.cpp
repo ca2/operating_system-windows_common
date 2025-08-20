@@ -40,7 +40,16 @@ namespace gpu_directx11
 
       D3D11_BUFFER_DESC bufferdesc{};
 
-      if (etype == ::gpu::memory_buffer::e_type_vertex_buffer)
+      if (etype == ::gpu::memory_buffer::e_type_shared_dynamic_vertex_buffer)
+      {
+
+         bufferdesc.ByteWidth = (UINT)m_size;
+         bufferdesc.Usage = D3D11_USAGE_DYNAMIC;
+         bufferdesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+         bufferdesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+
+      }
+      else if (etype == ::gpu::memory_buffer::e_type_vertex_buffer)
       {
 
          bufferdesc.ByteWidth = (UINT)total_size_in_bytes();
@@ -92,10 +101,19 @@ namespace gpu_directx11
 
       data.pSysMem = dataStatic;
 
-      if (dataStatic)
+      if (dataStatic || etype == e_type_shared_dynamic_vertex_buffer)
       {
 
-         m_bStatic = true;
+         if (dataStatic)
+         {
+            m_bStatic = true;
+         }
+         else
+            {
+
+   m_bStatic = false;
+         }
+
 
          auto hresult = pd3d11device->CreateBuffer(
             &bufferdesc, dataStatic ? &data : nullptr, &m_pbuffer);
@@ -106,6 +124,18 @@ namespace gpu_directx11
             throw ::hresult_exception(hresult);
 
          }
+
+         // if (etype == e_type_shared_dynamic_vertex_buffer)
+         // {
+         //
+         //    D3D11_MAPPED_SUBRESOURCE mapped;
+         //    HRESULT hresultResourceMap =pgpucontext->m_pcontext->Map(m_pbuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
+         //
+         //    ::defer_throw_hresult(hresultResourceMap);
+         //
+         //    m_pMap = mapped.pData;
+         //
+         // }
 
       }
       else
@@ -140,7 +170,9 @@ namespace gpu_directx11
 
          ::cast < device > pdevice = pcontext->m_pgpudevice;
 
-         ::cast < frame_storage > pframestorage = pdevice->current_frame_storage();
+         //::cast < frame_storage > pframestorage = pdevice->current_frame_storage();
+
+         auto pframestorage = pdevice->current_frame_storage();
 
          pframestorage->map_allocate(this, count);
 
@@ -209,6 +241,18 @@ namespace gpu_directx11
          //m_pmodelbuffer->m_strDebugString.formatf("24*th:%d", m_iBufferOffset / 24);
 
          //m_pbuffer = pbuffer;
+
+         //m_iBufferOffset = 0;
+
+         D3D11_MAPPED_SUBRESOURCE mapped;
+
+         pcontext->m_pcontext->Map(
+            m_pbuffer, 0, m_iBufferOffset == 0 ? D3D11_MAP_WRITE_DISCARD :
+
+            D3D11_MAP_WRITE_NO_OVERWRITE, 0, &mapped);
+         //      memcpy(mapped.pData, &myData, sizeof(MyConstants));
+         m_pMap = ((unsigned char*)mapped.pData) + m_iBufferOffset;
+
 
       }
       else
@@ -331,6 +375,20 @@ namespace gpu_directx11
 
    }
 
+   void memory_buffer::_complete_map_allocate(::gpu::memory_buffer* pmemorybufferSource, ::gpu::frame_storage* pgpuframestorage, int size)
+   {
+
+      gpu::memory_buffer::_complete_map_allocate(pmemorybufferSource, pgpuframestorage, size);
+
+      ::cast < memory_buffer > pbufferSource = pmemorybufferSource;
+
+      m_pbuffer = pbufferSource->m_pbuffer;
+
+      m_bDynamic = true;
+
+      m_pMap = ((unsigned char *) pbufferSource->m_pMap) + m_iBufferOffset;
+
+   }
 
 
 }  // namespace graphics3d_directx11

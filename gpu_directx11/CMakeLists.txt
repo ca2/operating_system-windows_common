@@ -24,6 +24,8 @@ list(APPEND library_source
         descriptors.h
         device.cpp
         device.h
+        frame_storage.cpp
+        frame_storage.h
         framework.cpp
         framework.h
         image_directx11.cpp
@@ -84,7 +86,7 @@ list(APPEND library_references
         aqua
         aura
         axis
-        base
+        berg
         bred
         acme_windows_common
         directx11

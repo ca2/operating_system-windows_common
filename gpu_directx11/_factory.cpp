@@ -18,6 +18,8 @@
 #include "bred/gpu/command_buffer.h"
 #include "bred/gpu/layer.h"
 #include "bred/gpu/pixmap.h"
+#include "bred/gpu/frame_ephemeral.h"
+#include "bred/gpu/frame_storage.h"
 // #include "bred/gpu/model_buffer.h"
 
 //BEGIN_FACTORY(gpu_directx11)
@@ -55,9 +57,10 @@ __FACTORY_EXPORT void gpu_directx11_factory(::factory::factory * pfactory)
    //pfactory->add_factory_item < ::gpu_directx11::pixmap, ::gpu::pixmap >();
    pfactory->add_factory_item < ::gpu::pixmap >();
 
-   pfactory->add_factory_item < ::gpu_directx11::frame_storage, ::gpu::frame_storage >();
+   //pfactory->add_factory_item < ::gpu_directx11::frame_storage, ::gpu::frame_storage >();
 
-
+   pfactory->add_factory_item < ::gpu::frame_ephemeral >();
+   pfactory->add_factory_item < ::gpu::frame_storage >();
 }
 
 

@@ -687,6 +687,10 @@ namespace draw2d_directx11
       //ID2D1Geometry * defer_update_os_data(::pointer < ::geometry2d::region > & pregion);
 
 
+         ::geometry2d::matrix context_matrix(enum_transform_context etransformcontext) override;
+
+         ::geometry2d::matrix context_scale_matrix() override;
+
    };
 
 
@@ -724,6 +728,9 @@ namespace draw2d_directx11
       //   m_prendertarget->PopLayer();
 
       //}
+
+
+
 
    };
 

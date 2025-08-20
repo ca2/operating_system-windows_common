@@ -59,6 +59,8 @@ namespace gpu_directx11
 
       void on_set_memory_buffer(const void* data, memsize size) override;
 
+      void _complete_map_allocate(::gpu::memory_buffer* pmemorybufferSource, ::gpu::frame_storage* pgpuframestorage, int size) override;
+
 
    };
 

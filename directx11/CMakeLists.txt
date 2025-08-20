@@ -36,7 +36,7 @@ if (MSVC)
     target_link_libraries(${PROJECT_NAME} PRIVATE
             apex_windows_common
             acme_windows_common
-            acme apex aqua aura axis base bred Gdiplus)
+            acme apex aqua aura axis berg bred Gdiplus)
 elseif (LINUX)
 
     if (NOT DONT_USE_PKG_CONFIG)

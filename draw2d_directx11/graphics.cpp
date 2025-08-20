@@ -6151,118 +6151,120 @@ namespace draw2d_directx11
    void graphics::fill_rectangle(const ::double_rectangle & rectangleParam, const ::color::color & color)
    {
 
-      if (::nok(m_pshaderFillSolidRectangle))
-      {
+      return ::gpu::graphics::fill_rectangle(rectangleParam, color);
 
-
-         gpu_context()->øconstruct(m_pshaderFillSolidRectangle);
-
-         const_char_pointer pszVert = R"hlsl(
-struct VSIn {
-    float2 pos : POSITION;
-    float4 color : COLOR;
-};
-
-struct VSOut {
-    float4 pos : SV_POSITION;
-    float4 color : COLOR;
-};
-
-VSOut main(VSIn input) {
-    VSOut o;
-    o.pos = float4(input.pos, 0.0f, 1.0f);
-    o.color = input.color;
-    return o;
-}
-)hlsl";
-
-         const_char_pointer pszFrag = R"hlsl(
-         float4 main(float4 pos : SV_POSITION, float4 color : COLOR) : SV_Target
-         {
-             return color;
-         }
-)hlsl";
-
-         auto pcontext = gpu_context();
-
-         m_pshaderFillSolidRectangle->m_bDisableDepthTest = true;
-         m_pshaderFillSolidRectangle->m_bEnableBlend = true;
-         m_pshaderFillSolidRectangle->m_ecullmode = ::gpu::e_cull_mode_none;
-
-         m_pshaderFillSolidRectangle->initialize_shader_with_block(
-            pcontext->m_pgpurenderer,
-            ::as_block(pszVert),
-            ::as_block(pszFrag),
-            {}, {}, {},
-            pcontext->input_layout<::graphics3d::sequence2_color>()
-         );
-
-         //fill_rectangle_shader
-
-      }
-
-      //m_pshaderFillSolidRectangle->bind();
-
-      auto r = rectangleParam;
-
-      m_m1.transform(r.top_left());
-      m_m1.transform(r.bottom_right());
-
-      auto pcontext = gpu_context();
-
-      pcontext->defer_bind(m_pshaderFillSolidRectangle);
-
-      ::cast < ::gpu_directx11::device > pdevice = pcontext->m_pgpudevice;
-
-      auto pbuffer = CreateRectangleVertexBuffer(
-         pdevice->m_pdevice,
-         r.left(),
-         r.top(),
-         r.right(),
-         r.bottom(),  // rectangle in pixels (left, top, right, bottom)
-         pcontext->m_rectangle.width(),
-         pcontext->m_rectangle.height(),            // viewport size in pixels (width, height)
-         color.f32_red() * color.f32_opacity(),
-         color.f32_green() * color.f32_opacity(),
-         color.f32_blue() * color.f32_opacity(),
-         color.f32_opacity()); // color RGBA
-      UINT stride = sizeof(fill_rectangle_Vertex);
-      UINT offset = 0;
-      ID3D11Buffer* buffera[] = { pbuffer };
-
-
-      pcontext->m_pcontext->IASetVertexBuffers(0, 1, buffera, &stride, &offset);
-      pcontext->m_pcontext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-      pcontext->m_pcontext->Draw(6, 0);
-
-
-      pcontext->defer_unbind(m_pshaderFillSolidRectangle);
-
-
-      //if (!m_pdevicecontext)
-      //{
-
-      //   //return false;
-
-      //   throw ::exception(error_null_pointer);
-
-      //}
-
-      //D2D1_COLOR_F d2d1color;
-
-      //copy(d2d1color, color);
-
-      //comptr< ID2D1SolidColorBrush> psolidbrush;
-
-      //m_pd2d1rendertarget->CreateSolidColorBrush(d2d1color, &psolidbrush);
-
-      //D2D1_RECT_F rectangle;
-
-      //copy(&rectangle, &rectangleParam);
-
-      //defer_primitive_blend();
-
-      //m_pdevicecontext->FillRectangle(&rectangle, psolidbrush);
+//       if (::nok(m_pshaderFillSolidRectangle))
+//       {
+//
+//
+//          gpu_context()->øconstruct(m_pshaderFillSolidRectangle);
+//
+//          const_char_pointer pszVert = R"hlsl(
+// struct VSIn {
+//     float2 pos : POSITION;
+//     float4 color : COLOR;
+// };
+//
+// struct VSOut {
+//     float4 pos : SV_POSITION;
+//     float4 color : COLOR;
+// };
+//
+// VSOut main(VSIn input) {
+//     VSOut o;
+//     o.pos = float4(input.pos, 0.0f, 1.0f);
+//     o.color = input.color;
+//     return o;
+// }
+// )hlsl";
+//
+//          const_char_pointer pszFrag = R"hlsl(
+//          float4 main(float4 pos : SV_POSITION, float4 color : COLOR) : SV_Target
+//          {
+//              return color;
+//          }
+// )hlsl";
+//
+//          auto pcontext = gpu_context();
+//
+//          m_pshaderFillSolidRectangle->m_bDisableDepthTest = true;
+//          m_pshaderFillSolidRectangle->m_bEnableBlend = true;
+//          m_pshaderFillSolidRectangle->m_ecullmode = ::gpu::e_cull_mode_none;
+//
+//          m_pshaderFillSolidRectangle->initialize_shader_with_block(
+//             pcontext->m_pgpurenderer,
+//             ::as_block(pszVert),
+//             ::as_block(pszFrag),
+//             {}, {}, {},
+//             pcontext->input_layout<::graphics3d::sequence2_color>()
+//          );
+//
+//          //fill_rectangle_shader
+//
+//       }
+//
+//       //m_pshaderFillSolidRectangle->bind();
+//
+//       auto r = rectangleParam;
+//
+//       m_m1.transform(r.top_left());
+//       m_m1.transform(r.bottom_right());
+//
+//       auto pcontext = gpu_context();
+//
+//       pcontext->defer_bind(m_pshaderFillSolidRectangle);
+//
+//       ::cast < ::gpu_directx11::device > pdevice = pcontext->m_pgpudevice;
+//
+//       auto pbuffer = CreateRectangleVertexBuffer(
+//          pdevice->m_pdevice,
+//          r.left(),
+//          r.top(),
+//          r.right(),
+//          r.bottom(),  // rectangle in pixels (left, top, right, bottom)
+//          pcontext->m_rectangle.width(),
+//          pcontext->m_rectangle.height(),            // viewport size in pixels (width, height)
+//          color.f32_red() * color.f32_opacity(),
+//          color.f32_green() * color.f32_opacity(),
+//          color.f32_blue() * color.f32_opacity(),
+//          color.f32_opacity()); // color RGBA
+//       UINT stride = sizeof(fill_rectangle_Vertex);
+//       UINT offset = 0;
+//       ID3D11Buffer* buffera[] = { pbuffer };
+//
+//
+//       pcontext->m_pcontext->IASetVertexBuffers(0, 1, buffera, &stride, &offset);
+//       pcontext->m_pcontext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+//       pcontext->m_pcontext->Draw(6, 0);
+//
+//
+//       pcontext->defer_unbind(m_pshaderFillSolidRectangle);
+//
+//
+//       //if (!m_pdevicecontext)
+//       //{
+//
+//       //   //return false;
+//
+//       //   throw ::exception(error_null_pointer);
+//
+//       //}
+//
+//       //D2D1_COLOR_F d2d1color;
+//
+//       //copy(d2d1color, color);
+//
+//       //comptr< ID2D1SolidColorBrush> psolidbrush;
+//
+//       //m_pd2d1rendertarget->CreateSolidColorBrush(d2d1color, &psolidbrush);
+//
+//       //D2D1_RECT_F rectangle;
+//
+//       //copy(&rectangle, &rectangleParam);
+//
+//       //defer_primitive_blend();
+//
+//       //m_pdevicecontext->FillRectangle(&rectangle, psolidbrush);
 
    }
 
@@ -7480,6 +7482,48 @@ VSOut main(VSIn input) {
       ////return true;
 
    }
+
+
+
+   ::geometry2d::matrix graphics::context_matrix(enum_transform_context etransformcontext)
+   {
+
+      auto pcontext = gpu_context();
+
+      ::geometry2d::matrix contextmatrix;
+
+      if (etransformcontext == e_transform_context_default
+         || etransformcontext == e_transform_context_geometry)
+      {
+
+         contextmatrix.translate(0.5, -0.5);
+
+      }
+
+      contextmatrix.append(context_scale_matrix());
+
+      return contextmatrix;
+
+   }
+
+
+   ::geometry2d::matrix graphics::context_scale_matrix()
+   {
+
+      auto pcontext = gpu_context();
+
+      auto size = pcontext->m_rectangle.size();
+
+      ::geometry2d::matrix contextmatrix;
+
+      contextmatrix.scale(2.0 / size.cx(), -2.0 / size.cy());
+
+      contextmatrix.translate(-1.0, 1.0);
+
+      return contextmatrix;
+
+   }
+
 
 
    void graphics::fill(::draw2d::path * ppathParam, ::draw2d::brush * pbrush)
