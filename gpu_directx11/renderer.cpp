@@ -327,7 +327,9 @@ namespace gpu_directx11
          
          ødefer_construct(pcommandbuffer);
          
-         pcommandbuffer->initialize_command_buffer(m_pgpurendertarget,
+         pcommandbuffer->initialize_command_buffer(
+            m_pgpurendertarget,
+            m_pgpucontext->graphics_queue(),
             ::gpu::e_command_buffer_graphics);
 
       }
