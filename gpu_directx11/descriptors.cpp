@@ -9,7 +9,7 @@ namespace gpu_directx11
 
    // *************** Descriptor Set Layout Builder *********************
 
-   //set_descriptor_layout::Builder & set_descriptor_layout::Builder::addBinding(
+   //descriptor_set_layout::Builder & descriptor_set_layout::Builder::addBinding(
    //    uint32_t binding,
    //    VkDescriptorType descriptorType,
    //    VkShaderStageFlags stageFlags,
@@ -24,16 +24,16 @@ namespace gpu_directx11
    //   return *this;
    //}
 
-   //::pointer<set_descriptor_layout> set_descriptor_layout::Builder::build() const
+   //::pointer<descriptor_set_layout> descriptor_set_layout::Builder::build() const
    //{
    //   auto pvkcdevice = this->m_pgpucontext.m_p;
    //   __refdbg_this(pvkcdevice);
-   //   return øallocate set_descriptor_layout(m_pgpucontext, bindings);
+   //   return øallocate descriptor_set_layout(m_pgpucontext, bindings);
    //}
 
    //// *************** Descriptor Set Layout *********************
 
-   //set_descriptor_layout::set_descriptor_layout(
+   //descriptor_set_layout::descriptor_set_layout(
    //    context * pvkcdevice, ::map_base<uint32_t, VkDescriptorSetLayoutBinding> bindings)
    //   : m_pgpucontext{ pvkcdevice }, bindings{ bindings } {
    //   ::array<VkDescriptorSetLayoutBinding> setLayoutBindings{};
@@ -55,7 +55,7 @@ namespace gpu_directx11
    //   }
    //}
 
-   set_descriptor_layout::~set_descriptor_layout() {
+   descriptor_set_layout::~descriptor_set_layout() {
       //if (descriptorSetLayout != VK_NULL_HANDLE) {
       //   ::cast < device > pgpudevice = m_pgpucontext->m_pgpudevice;
       //   vkDestroyDescriptorSetLayout(m_pgpucontext->logicalDevice(), descriptorSetLayout, nullptr);
@@ -146,7 +146,7 @@ namespace gpu_directx11
 
    // *************** Descriptor Writer *********************
 
-   descriptor_writer::descriptor_writer(set_descriptor_layout & setLayout, descriptor_pool & pool)
+   descriptor_writer::descriptor_writer(descriptor_set_layout & setLayout, descriptor_pool & pool)
       : setLayout{ setLayout }, pool{ pool } {
    }
 

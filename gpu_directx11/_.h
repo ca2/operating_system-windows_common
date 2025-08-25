@@ -42,7 +42,7 @@ namespace gpu_directx11
 
    class buffer;
 
-   class set_descriptor_layout;
+   class descriptor_set_layout;
 
    class frame;
 

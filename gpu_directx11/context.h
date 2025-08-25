@@ -107,7 +107,7 @@ namespace gpu_directx11
       //::array<const_char_pointer >validationLayers;
       //::array<const_char_pointer >deviceExtensions;
 
-      ::pointer<::gpu_directx11::set_descriptor_layout>           m_psetdescriptorlayoutGlobal;
+      ::pointer<::gpu_directx11::descriptor_set_layout>           m_psetdescriptorlayoutGlobal;
       //::array<VkDescriptorSet>                                 m_descriptorsetsGlobal;
       ::pointer_array<::gpu_directx11::buffer>							m_uboBuffers;
       ::pointer <::gpu_directx11::descriptor_pool>                m_pdescriptorpoolGlobal;
@@ -161,7 +161,7 @@ namespace gpu_directx11
 
       //VkSampler _001VkSampler();
 
-      //set_descriptor_layout* get_set_descriptor_layout();
+      //descriptor_set_layout* get_set_descriptor_layout();
       //virtual VkDescriptorSet getCurrentDescriptorSet(::gpu_directx11::renderer* prenderer);
 
       //::gpu_directx11::descriptor_pool* get_global_pool(int iFrameCount);
@@ -291,13 +291,13 @@ namespace gpu_directx11
       //void hasGflwRequiredInstanceExtensions();
       //bool checkDeviceExtensionSupport(VkPhysicalDevice pvkcdevice);
 
-      //      //set_descriptor_layout* get_set_descriptor_layout(::gpu::context * pgpucontext);
+      //      //descriptor_set_layout* get_set_descriptor_layout(::gpu::context * pgpucontext);
       //virtual VkDescriptorSet getGlobalDescriptorSet(::gpu_directx11::renderer* prenderer);
 
       ::gpu_directx11::descriptor_pool* get_global_pool(int iFrameCount);
 
 
-      ////set_descriptor_layout* get_set_descriptor_layout(::gpu::context * pgpucontext);
+      ////descriptor_set_layout* get_set_descriptor_layout(::gpu::context * pgpucontext);
       //virtual VkDescriptorSet getGlobalDescriptorSet(::gpu::context* pgpucontext, ::gpu_directx11::renderer* prenderer);
 
       //::gpu_directx11::descriptor_pool* get_global_pool(::gpu::context* pgpucontext, int iFrameCount);

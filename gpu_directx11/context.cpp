@@ -2599,7 +2599,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
       //   auto pgpurenderer = get_renderer(::gpu::e_scene_3d);
 
-      //   m_psetdescriptorlayoutGlobal = set_descriptor_layout::Builder(this)
+      //   m_psetdescriptorlayoutGlobal = descriptor_set_layout::Builder(this)
       //      .addBinding(0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_ALL_GRAPHICS)
       //      .build();
 

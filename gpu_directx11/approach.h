@@ -11,7 +11,7 @@ namespace gpu_directx11
 {
 
 
-   class set_descriptor_layout;
+   class descriptor_set_layout;
 
 
    class CLASS_DECL_GPU_DIRECTX11 approach :

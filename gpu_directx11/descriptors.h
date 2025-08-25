@@ -9,7 +9,7 @@ namespace gpu_directx11
 {
 
 
-   class CLASS_DECL_GPU_DIRECTX11 set_descriptor_layout :
+   class CLASS_DECL_GPU_DIRECTX11 descriptor_set_layout :
       virtual public ::particle
    {
    public:
@@ -23,17 +23,17 @@ namespace gpu_directx11
       //       VkDescriptorType descriptorType,
       //       VkShaderStageFlags stageFlags,
       //       uint32_t count = 1);
-      //   ::pointer<set_descriptor_layout> build() const;
+      //   ::pointer<descriptor_set_layout> build() const;
 
       //private:
       //   ::pointer < context > m_pgpucontext;
       //   ::map_base < unsigned int, VkDescriptorSetLayoutBinding> bindings{};
       //};
 
-      //set_descriptor_layout(
+      //descriptor_set_layout(
         //  context * pvkcdevice, ::map_base<unsigned int, VkDescriptorSetLayoutBinding> bindings);
-      set_descriptor_layout();
-      ~set_descriptor_layout();
+      descriptor_set_layout();
+      ~descriptor_set_layout();
 
       //VkDescriptorSetLayout getDescriptorSetLayout() const { return descriptorSetLayout; }
 
@@ -100,7 +100,7 @@ namespace gpu_directx11
    class CLASS_DECL_GPU_DIRECTX11 descriptor_writer
    {
    public:
-      descriptor_writer(set_descriptor_layout& setLayout, descriptor_pool& pool);
+      descriptor_writer(descriptor_set_layout& setLayout, descriptor_pool& pool);
 
       //descriptor_writer& writeBuffer(uint32_t binding, VkDescriptorBufferInfo* bufferInfo);
       //descriptor_writer& writeImage(uint32_t binding, VkDescriptorImageInfo* imageInfo);
@@ -108,7 +108,7 @@ namespace gpu_directx11
       //bool build(VkDescriptorSet& set);
       //void overwrite(VkDescriptorSet& set);
 
-      set_descriptor_layout& setLayout;
+      descriptor_set_layout& setLayout;
       descriptor_pool& pool;
       //::array<VkWriteDescriptorSet> writes;
    };

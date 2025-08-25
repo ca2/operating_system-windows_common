@@ -553,7 +553,7 @@ namespace gpu_directx11
 
 
 
-   //   set_descriptor_layout* approach::get_set_descriptor_layout(::gpu::context* pgpucontext)
+   //   descriptor_set_layout* approach::get_set_descriptor_layout(::gpu::context* pgpucontext)
      // {
 
        //  if (!m_psetdescriptorlayoutGlobal)

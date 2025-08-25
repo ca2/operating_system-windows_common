@@ -101,11 +101,11 @@ namespace gpu_directx11
       //bool m_bOffScreen = true;
       //renderer(VkWindow &window, context * pvkcdevice);
 
-      ::pointer<::gpu_directx11::set_descriptor_layout>           m_psetdescriptorlayoutImageBlend;
+      ::pointer<::gpu_directx11::descriptor_set_layout>           m_psetdescriptorlayoutImageBlend;
       ::pointer <::gpu_directx11::descriptor_pool>                m_pdescriptorpoolImageBlend;
 
 
-      ::pointer<::gpu_directx11::set_descriptor_layout>           m_psetdescriptorlayoutResolve;
+      ::pointer<::gpu_directx11::descriptor_set_layout>           m_psetdescriptorlayoutResolve;
       ::pointer <::gpu_directx11::descriptor_pool>                m_pdescriptorpoolResolve;
       ::pointer < descriptor >                                 m_pdescriptorResolve;
 
