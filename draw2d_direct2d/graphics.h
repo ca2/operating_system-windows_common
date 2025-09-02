@@ -309,7 +309,7 @@ namespace draw2d_direct2d
       void _intersect_clip() override;
       void _add_shape(const ::double_rectangle & rectangle) override;
       void _add_shape(const ::double_ellipse & ellipse) override;
-      void _add_shape(const ::double_polygon & polygon) override;
+      void _add_shape(const ::double_polygon_base & polygon) override;
 
 
       virtual void intersect_clip(const ::draw2d::clip_group & clipgroup);
