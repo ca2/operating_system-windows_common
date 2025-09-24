@@ -5792,14 +5792,16 @@ namespace draw2d_direct2d
 
       synchronous_lock synchronouslock(this->synchronization());
 
-      synchronous_lock synchronouslockFontTextMap(system()->draw2d()->write_text()->m_pparticleFontTextMapSynchronization);
+      synchronous_lock synchronouslockFontTextMap(::write_text::font::s_pmutexFontTextMap);
 
       auto & text = m_pfont->m_mapFontText[scopedstr];
 
-      if (text.m_wstr.is_empty())
+      auto ptextitem = text.get_item(::write_text::font::text::e_size_backend_draw_text);
+
+      if (ptextitem->get_text().is_empty())
       {
 
-         text.m_wstr = scopedstr;
+         ptextitem->set_text(scopedstr);
 
       }
 
@@ -5812,7 +5814,8 @@ namespace draw2d_direct2d
 
          D2D1_RECT_F float_rectangle = D2D1::RectF((FLOAT)rectangle.left(), (FLOAT)rectangle.top(), (FLOAT)rectangle.right(), (FLOAT)rectangle.bottom());
 
-         m_pd2d1rendertarget->DrawText(text.m_wstr, (unsigned int)text.m_wstr.length(), pfont, &float_rectangle, pbrush);
+         m_pd2d1rendertarget->DrawText(ptextitem->get_text(), (unsigned int)ptextitem->get_text().length(), pfont,
+                                       &float_rectangle, pbrush);
 
       }
       else
@@ -5831,7 +5834,10 @@ namespace draw2d_direct2d
 
          m_pd2d1rendertarget->SetTransform(&m);
 
-         m_pd2d1rendertarget->DrawText(text.m_wstr, (unsigned int)text.m_wstr.length(), pfont, &float_rectangle, pbrush);
+         m_pd2d1rendertarget->DrawText(ptextitem->get_text(), (unsigned int)ptextitem->get_text().length(),
+                                       pfont,
+                                       &float_rectangle,
+                                       pbrush);
 
          m_pd2d1rendertarget->SetTransform(&mOriginal);
 
@@ -5976,21 +5982,23 @@ namespace draw2d_direct2d
 
       synchronous_lock synchronouslock(this->synchronization());
 
-      synchronous_lock synchronouslockFontTextMap(system()->draw2d()->write_text()->m_pparticleFontTextMapSynchronization);
+      synchronous_lock synchronouslockFontTextMap(::write_text::font::s_pmutexFontTextMap);
 
       auto & text = m_pfont->m_mapFontText[range];
 
-      if (text.m_bSize)
+      auto ptextitem = text.get_item(::write_text::font::text::e_size_backend_draw_text);
+
+      if (ptextitem->has_size())
       {
 
-         return text.m_size;
+         return ptextitem->get_size();
 
       }
 
-      if (text.m_wstr.is_empty())
+      if (ptextitem->get_text().is_empty())
       {
 
-         text.m_wstr = range;
+         ptextitem->set_text(range);
 
       }
 
@@ -6002,10 +6010,10 @@ namespace draw2d_direct2d
 
       comptr<IDWriteTextLayout> playout;
 
-      unsigned int uLength = (unsigned int)text.m_wstr.length();
+      unsigned int uLength = (unsigned int)ptextitem->get_text().length();
 
       hr = m_pdirect2d->dwrite_factory()->CreateTextLayout(
-           text.m_wstr,                // The string to be laid out and formatted.
+         ptextitem->get_text(), // The string to be laid out and formatted.
            uLength,   // The length of the string.
            pfont,    // The text format to apply to the string (contains font information, etc).
            1024.f * 1024.f,               // The width of the on_layout box.
@@ -6034,9 +6042,7 @@ namespace draw2d_direct2d
 
       size.cy() = m.height;
 
-      text.m_size = size;
-
-      text.m_bSize = true;
+      ptextitem->set_size(size);
 
       return size;
 
@@ -6170,16 +6176,18 @@ namespace draw2d_direct2d
 
       D2D1::Matrix3x2F mOriginal;
 
-      synchronous_lock synchronouslockFontTextMap(system()->draw2d()->write_text()->m_pparticleFontTextMapSynchronization);
+      synchronous_lock synchronouslockFontTextMap(::write_text::font::s_pmutexFontTextMap);
 
       auto & text = m_pfont->m_mapFontText[scopedstr];
 
+      auto ptextitem = text.get_item(::write_text::font::text::e_size_backend_draw_text);
+
       ::double_size sizeText;
 
-      if (text.m_bSize)
+      if (ptextitem->has_size())
       {
 
-         sizeText = text.m_size;
+         sizeText = ptextitem->get_size();
 
       }
       else
@@ -6255,9 +6263,9 @@ namespace draw2d_direct2d
 
       }
 
-      const ::wide_character * lpcwsz = text.m_wstr;
+      auto lpcwsz = ptextitem->get_text().c_str();
 
-      character_count uiLen = text.m_wstr.length();
+      character_count uiLen = ptextitem->get_text().length();
 
       defer_text_primitive_blend();
 
