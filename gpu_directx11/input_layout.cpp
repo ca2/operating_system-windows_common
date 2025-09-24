@@ -157,7 +157,7 @@ namespace gpu_directx11
          //ID3D11InputLayout* inputLayout = nullptr;
          HRESULT hresult = pd3d11device->CreateInputLayout(
             data,
-            size,
+            (UINT)size,
             pblobShader->GetBufferPointer(),
             pblobShader->GetBufferSize(),
             &pd3d11inputlayout

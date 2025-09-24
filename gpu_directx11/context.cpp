@@ -1461,8 +1461,8 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
          //ID3D11ShaderResourceView* sharedresourceviewa[] =
          //{ ptexture->m_pshaderresourceview };
          D3D11_VIEWPORT vp = {};
-         vp.TopLeftX = ptexture->m_rectangleTarget.left();
-         vp.TopLeftY = ptexture->m_rectangleTarget.top();
+         vp.TopLeftX = (FLOAT) ptexture->m_rectangleTarget.left();
+         vp.TopLeftY = (FLOAT) ptexture->m_rectangleTarget.top();
          vp.Width = static_cast<float>(ptexture->m_rectangleTarget.width());
          vp.Height = static_cast<float>(ptexture->m_rectangleTarget.height());
          vp.MinDepth = 0.0f;

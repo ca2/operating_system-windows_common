@@ -759,7 +759,7 @@ namespace gpu_directx11
 
          }
 
-         m_iSizePushConstants = m_propertiesPush.size();
+         m_iSizePushConstants = (int) m_propertiesPush.size();
 
 
 

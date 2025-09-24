@@ -174,7 +174,7 @@ namespace gpu_directx11
 
          auto pframestorage = pdevice->current_frame_storage();
 
-         pframestorage->map_allocate(this, count);
+         pframestorage->map_allocate(this, (int) count);
 
          //if (count > pframestorage->m_iBufferSize)
          //{
@@ -292,7 +292,7 @@ namespace gpu_directx11
       if (m_etype == e_type_vertex_buffer)
       {
 
-         UINT stride = type_size();
+         UINT stride = (UINT) type_size();
 
          UINT offset = m_iBufferOffset;
 
