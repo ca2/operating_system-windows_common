@@ -13,48 +13,50 @@
 //GLuint loadDDS(const_char_pointer imagepath);
 
 
-const_char_pointer directx11_error_string(int iError)
-{
-   
-   switch(iError)
-   {
-//      case GL_NO_ERROR:
-//         return "GL_NO_ERROR";
-//      case GL_INVALID_ENUM:
-//         return "GL_INVALID_ENUM";
+//const_char_pointer directx11_error_string(int iError)
+//{
 //
-//
-//      case  GL_INVALID_VALUE:
-//         return "GL_INVALID_VALUE";
-//
-//      case GL_INVALID_OPERATION:
+//   return "some directx11 error";
 //   
-//         return "GL_INVALID_OPERATION";
-//
-//      case GL_INVALID_FRAMEBUFFER_OPERATION:
-//         return "GL_INVALID_FRAMEBUFFER_OPERATION";
-//
-//      case  GL_OUT_OF_MEMORY:
-//  
-//         return "GL_OUT_OF_MEMORY";
-//#ifdef GL_STACK_UNDERFLOW
-//      case GL_STACK_UNDERFLOW:
-//     
-//         return "GL_STACK_UNDERFLOW";
-//#endif
-//#ifdef GL_STACK_OVERFLOW
-//      case GL_STACK_OVERFLOW:
-//         
-//         return "GL_STACK_OVERFLOW";
-//#endif
-//      default:
-   default:
-         return "Unknown VK Error";
-         
-         
-   }
-   
-}
+////   switch(iError)
+////   {
+//////      case GL_NO_ERROR:
+//////         return "GL_NO_ERROR";
+//////      case GL_INVALID_ENUM:
+//////         return "GL_INVALID_ENUM";
+//////
+//////
+//////      case  GL_INVALID_VALUE:
+//////         return "GL_INVALID_VALUE";
+//////
+//////      case GL_INVALID_OPERATION:
+//////   
+//////         return "GL_INVALID_OPERATION";
+//////
+//////      case GL_INVALID_FRAMEBUFFER_OPERATION:
+//////         return "GL_INVALID_FRAMEBUFFER_OPERATION";
+//////
+//////      case  GL_OUT_OF_MEMORY:
+//////  
+//////         return "GL_OUT_OF_MEMORY";
+//////#ifdef GL_STACK_UNDERFLOW
+//////      case GL_STACK_UNDERFLOW:
+//////     
+//////         return "GL_STACK_UNDERFLOW";
+//////#endif
+//////#ifdef GL_STACK_OVERFLOW
+//////      case GL_STACK_OVERFLOW:
+//////         
+//////         return "GL_STACK_OVERFLOW";
+//////#endif
+//////      default:
+////   default:
+////         return "Unknown VK Error";
+////         
+////         
+////   }
+////   
+//}
 
 namespace gpu_directx11
 {

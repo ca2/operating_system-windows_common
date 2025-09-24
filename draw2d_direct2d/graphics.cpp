@@ -4622,7 +4622,7 @@ namespace draw2d_direct2d
 
       m_iaPushLayer.add(1);
 
-      m_iaPushLayerCount.add(rectanglea.size());
+      m_iaPushLayerCount.add((int) rectanglea.size());
 
       for (int i = 0; i < rectanglea.size(); i++)
       {
