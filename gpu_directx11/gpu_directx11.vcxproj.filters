@@ -15,12 +15,6 @@
     <Filter Include="Source Files\operating_system">
       <UniqueIdentifier>{7d5251d2-1d85-456a-b600-24603712b07d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\shader">
-      <UniqueIdentifier>{179b8e43-ca4a-4546-a31a-fc40ccd96636}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\shader">
-      <UniqueIdentifier>{bcc98f30-5e91-4bb2-a66d-b15d8d0c7e75}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -219,39 +213,5 @@
     <ResourceCompile Include="deployment.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="shader\image_blend.frag">
-      <Filter>Source Files\shader</Filter>
-    </CustomBuild>
-    <CustomBuild Include="shader\image_blend.vert">
-      <Filter>Source Files\shader</Filter>
-    </CustomBuild>
-    <CustomBuild Include="shader\shader.frag">
-      <Filter>Source Files\shader</Filter>
-    </CustomBuild>
-    <CustomBuild Include="shader\shader.vert">
-      <Filter>Source Files\shader</Filter>
-    </CustomBuild>
-    <CustomBuild Include="shader\resolve.frag">
-      <Filter>Source Files\shader</Filter>
-    </CustomBuild>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="shader\image_blend.frag.spv.inl">
-      <Filter>Header Files\shader</Filter>
-    </None>
-    <None Include="shader\image_blend.vert.spv.inl">
-      <Filter>Header Files\shader</Filter>
-    </None>
-    <None Include="shader\shader.frag.spv.inl">
-      <Filter>Header Files\shader</Filter>
-    </None>
-    <None Include="shader\shader.vert.spv.inl">
-      <Filter>Header Files\shader</Filter>
-    </None>
-    <None Include="shader\resolve.frag.spv.inl">
-      <Filter>Header Files\shader</Filter>
-    </None>
   </ItemGroup>
 </Project>
