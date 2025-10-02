@@ -465,7 +465,7 @@ namespace draw2d_directx11
 
 
 
-   //   m_pcollection = __raw_new Gdiplus::PrivateFontCollection();
+   //   m_pcollection = øraw_new Gdiplus::PrivateFontCollection();
 
    //   m_pcollection->AddMemoryFont(pmemory->data(), (INT)pmemory->size());
 
@@ -765,7 +765,7 @@ namespace draw2d_directx11
 
       ////bFont = true;
 
-      ////auto pgdiplusfont = __raw_new Gdiplus::Font(
+      ////auto pgdiplusfont = øraw_new Gdiplus::Font(
       ////   pgdiplusfontfamily,
       ////   gdiplus_font_size(pdraw2dgdiplusfont->m_fontsize),
       ////   pdraw2dgdiplusfont->m_iStyle,
