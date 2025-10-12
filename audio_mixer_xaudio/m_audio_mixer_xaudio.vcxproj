@@ -403,7 +403,7 @@
     <ClCompile Include="video_decode\video_decode_decoder_plugin_set.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\source\app\base\m_base.vcxproj">
+    <ProjectReference Include="..\..\..\source\app\base\m_berg.vcxproj">
       <Project>{5487686f-8a2f-401a-a38e-fda8900e1984}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\source\app\boot\m_boot.vcxproj">

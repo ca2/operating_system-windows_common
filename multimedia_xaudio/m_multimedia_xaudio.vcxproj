@@ -170,7 +170,7 @@
     <ProjectReference Include="..\..\..\..\source\app-core\multimedia\m_multimedia.vcxproj">
       <Project>{2c8b3100-192e-423f-a651-66ee6ccb6604}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\source\app\base\m_base.vcxproj">
+    <ProjectReference Include="..\..\..\source\app\base\m_berg.vcxproj">
       <Project>{5487686f-8a2f-401a-a38e-fda8900e1984}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\source\app\aura\m_core.vcxproj">
