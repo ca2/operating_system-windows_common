@@ -407,17 +407,18 @@ namespace gpu_directx11
    //}
 
 
-   void shader::bind(::gpu::texture* pgputextureTarget, ::gpu::texture* pgputextureSource)
+   void shader::bind(::gpu::command_buffer *pgpucommandbuffer, ::gpu::texture *pgputextureTarget,
+                     ::gpu::texture *pgputextureSource)
    {
 
-      bind(pgputextureTarget);
+      bind(pgpucommandbuffer, pgputextureTarget);
 
-      bind_source(pgputextureSource, 0);
+      bind_source(pgpucommandbuffer, pgputextureSource, 0);
 
    }
 
 
-   void shader::bind_source( ::gpu::texture* pgputextureSource, int iSlot)
+   void shader::bind_source(::gpu::command_buffer *pgpucommandbuffer, ::gpu::texture *pgputextureSource, int iSlot)
    {
 
       ::cast <context> pgpucontext = m_pgpurenderer->m_pgpucontext;
@@ -472,10 +473,10 @@ namespace gpu_directx11
    }
 
 
-   void shader::bind(::gpu::texture* pgputextureTarget)
+   void shader::bind(::gpu::command_buffer *pgpucommandbuffer, ::gpu::texture *pgputextureTarget)
    {
 
-      _bind();
+      _bind(pgpucommandbuffer);
 
       ::cast <context> pgpucontext = m_pgpurenderer->m_pgpucontext;
 
@@ -534,12 +535,12 @@ namespace gpu_directx11
    }
 
 
-   void shader::bind()
+   void shader::bind(::gpu::command_buffer *pgpucommandbuffer)
    {
 
       ::cast <texture> ptexture = m_pgpurenderer->current_render_target_texture(::gpu::current_frame());
 
-      bind(ptexture);
+      bind(pgpucommandbuffer, ptexture);
 
       //::gpu::context_lock context_lock(pgpucontext);
 
@@ -578,7 +579,7 @@ namespace gpu_directx11
    }
 
 
-   void shader::_bind()
+   void shader::_bind(::gpu::command_buffer *pgpucommandbuffer)
    {
 
       ::cast <context> pgpucontext = m_pgpurenderer->m_pgpucontext;
@@ -643,7 +644,7 @@ namespace gpu_directx11
    }
 
 
-   void shader::unbind()
+   void shader::unbind(::gpu::command_buffer *pgpucommandbuffer)
    {
 
       ::cast <context> pgpucontext = m_pgpurenderer->m_pgpucontext;
@@ -709,7 +710,7 @@ namespace gpu_directx11
    }
 
 
-   void shader::push_properties()
+   void shader::push_properties(::gpu::command_buffer *pgpucommandbuffer)
    {
 
       ::cast < renderer > prenderer = m_pgpurenderer;
@@ -724,7 +725,7 @@ namespace gpu_directx11
       //      m_properties.size(),
       //      m_properties.data());
 
-      if (m_propertiesPush.size() <= 0)
+      if (m_propertiesPush.size(false) <= 0)
       {
 
          return;
@@ -735,7 +736,7 @@ namespace gpu_directx11
 
       ::cast <device> pgpudevice = pgpucontext->m_pgpudevice;
 
-      auto iSetSize = m_propertiesPush.size();
+      auto iSetSize = m_propertiesPush.size(false);
 
       if (iSetSize != m_iSizePushConstants || !m_pbufferPushConstants)
       {
@@ -743,7 +744,7 @@ namespace gpu_directx11
          m_pbufferPushConstants.Release();
 
          D3D11_BUFFER_DESC cbDesc = {};
-         cbDesc.ByteWidth = (m_propertiesPush.size() + 15) & ~15;
+         cbDesc.ByteWidth = (m_propertiesPush.size(false) + 15) & ~15;
          cbDesc.Usage = D3D11_USAGE_DYNAMIC;
          cbDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
          cbDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
@@ -759,7 +760,7 @@ namespace gpu_directx11
 
          }
 
-         m_iSizePushConstants = (int) m_propertiesPush.size();
+         m_iSizePushConstants = (int) m_propertiesPush.size(false);
 
 
 
@@ -777,7 +778,7 @@ namespace gpu_directx11
 
       }
       
-      memcpy(mapped.pData, m_propertiesPush.data(), m_propertiesPush.size());
+      memcpy(mapped.pData, m_propertiesPush.data(false), m_propertiesPush.size(false));
       pgpucontext->m_pcontext->Unmap(m_pbufferPushConstants, 0);
 
 

@@ -7,6 +7,7 @@
 #include "texture.h"
 #include "windowing_win32/window.h"
 #include "bred/gpu/context_lock.h"
+#include "bred/gpu/context_lock.h"
 
 
 CLASS_DECL_DIRECTX11 bool IsRenderDocAttached();
@@ -288,7 +289,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
       //pgpucontext->m_pcontext->OMSetDepthStencilState(pgpucontext->depth_stencil_state_disabled(), 0);
 
-      m_pshaderPresent->bind(m_ptextureSwapChain, pgputexture);
+      m_pshaderPresent->bind(nullptr, m_ptextureSwapChain, pgputexture);
       //pgpucontext->m_pcontext->VSSetShader(m_pvertexshaderFullscreen, nullptr, 0);
       //pgpucontext->m_pcontext->PSSetShader(m_ppixelshaderFullscreen, nullptr, 0);
 
@@ -320,7 +321,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       pgpucontext->m_pcontext->Draw(3, 0);
 
 
-      m_pshaderPresent->unbind();
+      m_pshaderPresent->unbind(nullptr);
 
 
       //FLOAT colorRGBA2[] = { 0.5f * 0.5f,0.75f * 0.5f, 0.95f * 0.5f, 0.5f };

@@ -1181,7 +1181,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       }
 
 
-      m_pshaderCopyUsingShader->bind(pgputextureTarget, pgputextureSource);
+      m_pshaderCopyUsingShader->bind(nullptr, pgputextureTarget, pgputextureSource);
 
       D3D11_VIEWPORT viewport = {};
       //viewport.TopLeftX = pgputextureSource->m_rectangleTarget.left();
@@ -1240,7 +1240,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       //g_context->PSSetSamplers(0, 1, &g_sampler);
 
       m_pcontext->Draw(4, 0); // Fullscreen triangle
-      m_pshaderCopyUsingShader->unbind();
+      m_pshaderCopyUsingShader->unbind(nullptr);
 
 
       //float clearColor2[4] = { 0.45f * 0.5f, 0.99f * 0.5f, 0.45f * 0.5f, 0.5f }; // Clear to transparent
@@ -1399,7 +1399,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
          ptextureDst->m_prendertargetview, clearColor);
 
 
-      m_pshaderBlend3->bind(ptextureTarget);
+      m_pshaderBlend3->bind(nullptr, ptextureTarget);
 
 
 
@@ -1447,7 +1447,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
          
          ::cast <::gpu_directx11::texture > ptexture = player->texture();
 
-         m_pshaderBlend3->bind_source(ptexture, 0);
+         m_pshaderBlend3->bind_source(nullptr, ptexture, 0);
 
          if (ptexture == ptextureDst)
          {
@@ -1492,7 +1492,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       }
       //}
 
-      m_pshaderBlend3->unbind();
+      m_pshaderBlend3->unbind(nullptr);
 
       //bool bClearAtEndDebug = true;
 

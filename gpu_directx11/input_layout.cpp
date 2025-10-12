@@ -118,7 +118,7 @@ namespace gpu_directx11
             auto name = pproperty->m_pszName;
             auto type = pproperty->m_etype;
             auto offset = iNextOffset;
-            iNextOffset = offset + input_layout_aligned_property_size(pproperty->get_item_size());
+            iNextOffset = offset + input_layout_aligned_property_size(pproperty->get_item_size(true));
 
             D3D11_INPUT_ELEMENT_DESC desc{};
 
