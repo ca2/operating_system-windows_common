@@ -476,7 +476,7 @@ namespace gpu_directx11
    void shader::bind(::gpu::command_buffer *pgpucommandbuffer, ::gpu::texture *pgputextureTarget)
    {
 
-      _bind(pgpucommandbuffer);
+      _bind(pgpucommandbuffer, ::gpu::e_scene_none);
 
       ::cast <context> pgpucontext = m_pgpurenderer->m_pgpucontext;
 
@@ -579,7 +579,7 @@ namespace gpu_directx11
    }
 
 
-   void shader::_bind(::gpu::command_buffer *pgpucommandbuffer)
+   void shader::_bind(::gpu::command_buffer *pgpucommandbuffer, ::gpu::enum_scene escene)
    {
 
       ::cast <context> pgpucontext = m_pgpurenderer->m_pgpucontext;
