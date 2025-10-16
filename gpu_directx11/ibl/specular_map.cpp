@@ -26,10 +26,7 @@
 #include "mipmap_cubemap_framebuffer.h"
 #include "gpu/full_screen_quad.h"
 
-#include "shaders/specularenv.vert.h"
-#include "shaders/specularenv.frag.h"
-#include "shaders/brdfconvolution.vert.h"
-#include "shaders/brdfconvolution.frag.h"
+#include "gpu/ibl/_hlsl.h"
 
 
 namespace gpu_directx11
@@ -56,23 +53,15 @@ namespace gpu_directx11
       ::block specular_map::embedded_prefiltered_env_map_vert()
       {
 
-         return {g_psz_specularenv_vert, sizeof(g_psz_specularenv_vert) - 1};
+         return hlsl_embedded_prefiltered_env_map_vert();
 
       }
+
 
 
       ::block specular_map::embedded_prefiltered_env_map_frag()
       {
-
-         return {g_psz_specularenv_frag, sizeof(g_psz_specularenv_frag) - 1};
-
-      }
-
-      ::block specular_map::embedded_brdf_convolution_vert()
-      {
-
-         return {g_psz_brdfconvolution_vert, sizeof(g_psz_brdfconvolution_vert) - 1};
-
+         return hlsl_embedded_prefiltered_env_map_frag()
       }
 
 

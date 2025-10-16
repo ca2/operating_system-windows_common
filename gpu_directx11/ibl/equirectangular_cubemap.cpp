@@ -16,8 +16,10 @@
 #include "cubemap_framebuffer.h"
 #include "hdri_cube.h"
 
-#include "shaders/hdricube.frag.h"
-#include "shaders/hdricube.vert.h"
+#include "gpu/ibl/_hlsl.h"
+
+//#include "shaders/hdricube.frag.h"
+//#include "shaders/hdricube.vert.h"
 
 namespace gpu_directx11
 {
@@ -43,14 +45,14 @@ namespace gpu_directx11
       ::block equirectangular_cubemap::embedded_ibl_hdri_cube_vert()
       {
 
-         return {g_psz_hdricube_vert, sizeof(g_psz_hdricube_vert) - 1};
+         return hlsl_embedded_ibl_hdri_cube_vert();
       }
 
 
       ::block equirectangular_cubemap::embedded_ibl_hdri_cube_frag()
       {
 
-         return {g_psz_hdricube_frag, sizeof(g_psz_hdricube_frag) - 1};
+         return hlsl_embedded_ibl_hdri_cube_frag();
       }
 
 
