@@ -1,4 +1,4 @@
-// From gpu_opengl/model_buffer.h by
+// From gpu_directx11/model_buffer.h by
 // camilo on 2025-07-06 01:08 <3ThomasBorregaardSørensen!!
 // From gpu_vulkan/model_buffer.h by
 // camilo on 2025-07-01 20:34 <3ThomasBorregaardSørensen!!

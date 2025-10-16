@@ -47,6 +47,7 @@ namespace gpu_directx11
       comptr< ID3D11SamplerState> m_psamplerstate;
       comptr<ID3D11ShaderResourceView>m_pshaderresourceview;
 
+      ::array_base <::comptr<ID3D11RenderTargetView>> m_rendertargetviewa;
 
       comptr<ID3D11Texture2D> m_ptextureDepthStencil;
       comptr<ID3D11DepthStencilView>m_pdepthstencilview;

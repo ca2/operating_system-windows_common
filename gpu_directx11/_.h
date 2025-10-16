@@ -4,6 +4,7 @@
 
 #include "aura/_.h"
 #include "directx11/_.h"
+#include "gpu/_.h"
 
 
 #if defined(_gpu_directx11_project)

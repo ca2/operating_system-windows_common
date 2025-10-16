@@ -691,7 +691,21 @@
   <ItemGroup>
     <ClInclude Include="aaa_accumulation_render_pass.h" />
     <ClInclude Include="assimp.h" />
+    <ClInclude Include="cube.h" />
     <ClInclude Include="frame_storage.h" />
+    <ClInclude Include="full_screen_quad.h" />
+    <ClInclude Include="gltf\material.h" />
+    <ClInclude Include="gltf\mesh.h" />
+    <ClInclude Include="gltf\model.h" />
+    <ClInclude Include="gltf\vertex.h" />
+    <ClInclude Include="gltf\_constant.h" />
+    <ClInclude Include="ibl\brdf_convolution_framebuffer.h" />
+    <ClInclude Include="ibl\cubemap_framebuffer.h" />
+    <ClInclude Include="ibl\diffuse_irradiance_map.h" />
+    <ClInclude Include="ibl\equirectangular_cubemap.h" />
+    <ClInclude Include="ibl\hdri_cube.h" />
+    <ClInclude Include="ibl\mipmap_cubemap_framebuffer.h" />
+    <ClInclude Include="ibl\specular_map.h" />
     <ClInclude Include="memory_buffer.h" />
     <ClInclude Include="context_object.h" />
     <ClInclude Include="cpu_buffer.h" />
@@ -742,7 +756,18 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="assimp.cpp" />
+    <ClCompile Include="cube.cpp" />
     <ClCompile Include="frame_storage.cpp" />
+    <ClCompile Include="full_screen_quad.cpp" />
+    <ClCompile Include="gltf\mesh.cpp" />
+    <ClCompile Include="gltf\model.cpp" />
+    <ClCompile Include="ibl\brdf_convolution_framebuffer.cpp" />
+    <ClCompile Include="ibl\cubemap_framebuffer.cpp" />
+    <ClCompile Include="ibl\diffuse_irradiance_map.cpp" />
+    <ClCompile Include="ibl\equirectangular_cubemap.cpp" />
+    <ClCompile Include="ibl\hdri_cube.cpp" />
+    <ClCompile Include="ibl\mipmap_cubemap_framebuffer.cpp" />
+    <ClCompile Include="ibl\specular_map.cpp" />
     <ClCompile Include="memory_buffer.cpp" />
     <ClCompile Include="context_object.cpp" />
     <ClCompile Include="cpu_buffer.cpp" />
@@ -824,6 +849,9 @@
     </ProjectReference>
     <ProjectReference Include="..\..\..\source\app\bred\bred.vcxproj">
       <Project>{dfbf067f-aff9-4bd6-a5e1-72af984d1476}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\source\app\gpu\gpu.vcxproj">
+      <Project>{d728fd54-84d0-4b93-9d34-43338f285886}</Project>
     </ProjectReference>
     <ProjectReference Include="..\acme_windows_common\acme_windows_common.vcxproj">
       <Project>{eb9dc9c0-0573-4da0-8700-4dbb371773f1}</Project>

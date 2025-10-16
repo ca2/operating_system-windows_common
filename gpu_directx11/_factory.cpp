@@ -20,6 +20,16 @@
 #include "bred/gpu/pixmap.h"
 #include "bred/gpu/frame_ephemeral.h"
 #include "bred/gpu/frame_storage.h"
+#include "gltf/model.h"
+#include "ibl/brdf_convolution_framebuffer.h"
+#include "ibl/diffuse_irradiance_map.h"
+#include "ibl/equirectangular_cubemap.h"
+#include "ibl/specular_map.h"
+#include "ibl/cubemap_framebuffer.h"
+#include "ibl/mipmap_cubemap_framebuffer.h"
+#include "ibl/hdri_cube.h"
+
+
 // #include "bred/gpu/model_buffer.h"
 
 //BEGIN_FACTORY(gpu_directx11)
@@ -61,6 +71,17 @@ __FACTORY_EXPORT void gpu_directx11_factory(::factory::factory * pfactory)
 
    pfactory->add_factory_item < ::gpu::frame_ephemeral >();
    pfactory->add_factory_item < ::gpu::frame_storage >();
+
+
+   pfactory->add_factory_item<::gpu_directx11::gltf::mesh, ::gpu::gltf::mesh>();
+   pfactory->add_factory_item<::gpu_directx11::gltf::model, ::gpu::gltf::model>();
+   pfactory->add_factory_item<::gpu_directx11::ibl::diffuse_irradiance_map, ::gpu::ibl::diffuse_irradiance_map>();
+   pfactory->add_factory_item<::gpu_directx11::ibl::specular_map, ::gpu::ibl::specular_map>();
+   pfactory->add_factory_item<::gpu_directx11::ibl::mipmap_cubemap_framebuffer, ::gpu::ibl::mipmap_cubemap_framebuffer>();
+   pfactory->add_factory_item<::gpu_directx11::ibl::cubemap_framebuffer, ::gpu::ibl::cubemap_framebuffer>();
+   pfactory->add_factory_item<::gpu_directx11::ibl::equirectangular_cubemap, ::gpu::ibl::equirectangular_cubemap>();
+   pfactory->add_factory_item<::gpu_directx11::ibl::brdf_convolution_framebuffer, ::gpu::ibl::brdf_convolution_framebuffer>();
+   pfactory->add_factory_item<::gpu_directx11::ibl::hdri_cube, ::gpu::ibl::hdri_cube>();
 }
 
 
