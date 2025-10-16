@@ -22,8 +22,12 @@ namespace gpu_directx11
 
       ::comptr <ID3D11InputLayout > m_pd3d11inputlayout;
       
-      comptr < ID3D11Buffer> m_pbufferPushConstants;
-      int m_iSizePushConstants = -1;
+      comptr < ID3D11Buffer> m_pbufferSharedPushConstants;
+      comptr<ID3D11Buffer> m_pbufferVertexPushConstants;
+      comptr<ID3D11Buffer> m_pbufferFragmentPushConstants;
+      int m_iSizeSharedPushConstants = -1;
+      int m_iSizeVertexPushConstants = -1;
+      int m_iSizeFragmentPushConstants = -1;
 
       ::comptr < ID3D11DepthStencilState > m_pdepthstencilstate2;
       ::comptr < ID3D11RasterizerState> m_prasterizerstate2;

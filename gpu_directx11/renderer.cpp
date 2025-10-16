@@ -880,12 +880,9 @@ namespace gpu_directx11
          ::cast < device > pgpudevice = m_pgpucontext->m_pgpudevice;
 
          pshaderImageBlend->initialize_shader_with_block(
-            this,
-            as_block(g_uaImageBlendVertexShader),
-            as_block(g_uaImageBlendFragmentShader),
-            { ::gpu::shader::e_descriptor_set_slot_local },
-            m_psetdescriptorlayoutImageBlend,
-            {},
+            this, as_block(g_uaImageBlendVertexShader), as_block(g_uaImageBlendFragmentShader),
+            {::gpu::shader::e_descriptor_set_slot_local}, m_psetdescriptorlayoutImageBlend, 
+            //{},
             pinputlayoutEmpty);
 
       }
@@ -925,7 +922,6 @@ namespace gpu_directx11
             as_memory_block(g_uaImageBlendFragmentShader),
             { ::gpu::shader::e_descriptor_set_slot_local },
             m_psetdescriptorlayoutImageBlend,
-            {},
             pinputlayoutEmpty);
 
       }

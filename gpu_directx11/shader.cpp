@@ -725,33 +725,33 @@ namespace gpu_directx11
       //      m_properties.size(),
       //      m_properties.data());
 
-      if (m_propertiesPush.size(false) <= 0)
-      {
+      //if (m_propertiesPush.size(false) <= 0)
+      //{
 
-         return;
+      //   return;
 
-      }
+      //}
 
       ::cast <context> pgpucontext = m_pgpurenderer->m_pgpucontext;
 
       ::cast <device> pgpudevice = pgpucontext->m_pgpudevice;
 
-      auto iSetSize = m_propertiesPush.size(false);
+      auto iSetSizeShared = m_propertiesPushShared.size(false);
 
-      if (iSetSize != m_iSizePushConstants || !m_pbufferPushConstants)
+      if (iSetSizeShared != m_iSizeSharedPushConstants || !m_pbufferSharedPushConstants)
       {
 
-         m_pbufferPushConstants.Release();
+         m_pbufferSharedPushConstants.Release();
 
          D3D11_BUFFER_DESC cbDesc = {};
-         cbDesc.ByteWidth = (m_propertiesPush.size(false) + 15) & ~15;
+         cbDesc.ByteWidth = (m_propertiesPushShared.size(false) + 15) & ~15;
          cbDesc.Usage = D3D11_USAGE_DYNAMIC;
          cbDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
          cbDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 
          auto pdevice = pgpudevice->m_pdevice;
 
-         HRESULT hr = pdevice->CreateBuffer(&cbDesc, nullptr, &m_pbufferPushConstants);
+         HRESULT hr = pdevice->CreateBuffer(&cbDesc, nullptr, &m_pbufferSharedPushConstants);
 
          if (FAILED(hr))
          {
@@ -760,7 +760,7 @@ namespace gpu_directx11
 
          }
 
-         m_iSizePushConstants = (int) m_propertiesPush.size(false);
+         m_iSizeSharedPushConstants = (int) m_propertiesPushShared.size(false);
 
 
 
@@ -769,7 +769,7 @@ namespace gpu_directx11
       //PushConstants pc = { XMFLOAT4(1, 0, 0, 1), currentTime };
 
       D3D11_MAPPED_SUBRESOURCE mapped;
-      HRESULT hrMap = pgpucontext->m_pcontext->Map(m_pbufferPushConstants, 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
+      HRESULT hrMap = pgpucontext->m_pcontext->Map(m_pbufferSharedPushConstants, 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
 
       if (FAILED(hrMap))
       {
@@ -778,17 +778,17 @@ namespace gpu_directx11
 
       }
       
-      memcpy(mapped.pData, m_propertiesPush.data(false), m_propertiesPush.size(false));
-      pgpucontext->m_pcontext->Unmap(m_pbufferPushConstants, 0);
+      memcpy(mapped.pData, m_propertiesPushShared.data(false), m_propertiesPushShared.size(false));
+      pgpucontext->m_pcontext->Unmap(m_pbufferSharedPushConstants, 0);
 
 
       //pgpucontext->m_pcontext->VSSetConstantBuffers(0, 1, pgpucontext->m_pbufferGlobalUbo.pp());
       //pgpucontext->m_pcontext->PSSetConstantBuffers(0, 1, pgpucontext->m_pbufferGlobalUbo.pp());
 
 
-      auto pVS = m_pbufferPushConstants.m_p;
+      auto pVS = m_pbufferSharedPushConstants.m_p;
       pgpucontext->m_pcontext->VSSetConstantBuffers(1, 1, &pVS);
-      auto pPS = m_pbufferPushConstants.m_p;
+      auto pPS = m_pbufferSharedPushConstants.m_p;
       pgpucontext->m_pcontext->PSSetConstantBuffers(1, 1, &pPS);
 
 
