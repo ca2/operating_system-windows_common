@@ -231,6 +231,8 @@ namespace gpu_directx11
          desc.CPUAccessFlags = 0;
          desc.MiscFlags = 0;
 
+         ødefer_construct(ptexture->m_ptextureDepth);
+
          ::cast<::gpu_directx11::texture> ptextureDepth = ptexture->m_ptextureDepth;
 
          HRESULT hr = pgpudevice->m_pdevice->CreateTexture2D(&desc, nullptr, &ptextureDepth->m_ptextureOffscreen);
@@ -303,7 +305,7 @@ namespace gpu_directx11
          m_uCurrentMip = level;
 
          // Recreate depth buffer for new mip size (similar to GL glRenderbufferStorage)
-         createDepthForCurrentMip();
+         //createDepthForCurrentMip();
 
          // Optionally: if you want to change SRV/RTV usage or other states per mip, do it here.
       }

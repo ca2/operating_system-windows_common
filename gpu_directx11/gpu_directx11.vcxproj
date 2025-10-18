@@ -693,11 +693,10 @@
     <ClInclude Include="assimp.h" />
     <ClInclude Include="cube.h" />
     <ClInclude Include="frame_storage.h" />
-    <ClInclude Include="full_screen_quad.h" />
     <ClInclude Include="gltf\material.h" />
     <ClInclude Include="gltf\mesh.h" />
     <ClInclude Include="gltf\model.h" />
-    <ClInclude Include="gltf\vertex.h" />
+    <ClInclude Include="gltf\aaa_vertex.h" />
     <ClInclude Include="gltf\_constant.h" />
     <ClInclude Include="ibl\brdf_convolution_framebuffer.h" />
     <ClInclude Include="ibl\cubemap_framebuffer.h" />
@@ -758,7 +757,6 @@
     <ClCompile Include="assimp.cpp" />
     <ClCompile Include="cube.cpp" />
     <ClCompile Include="frame_storage.cpp" />
-    <ClCompile Include="full_screen_quad.cpp" />
     <ClCompile Include="gltf\mesh.cpp" />
     <ClCompile Include="gltf\model.cpp" />
     <ClCompile Include="ibl\brdf_convolution_framebuffer.cpp" />

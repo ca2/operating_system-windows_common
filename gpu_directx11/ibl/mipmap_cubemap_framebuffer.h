@@ -28,6 +28,8 @@ namespace gpu_directx11
          // unsigned int m_uDepthRenderbufferId;
          // unsigned int m_uCubemapTextureId;
 
+         //::array_base<::array_base<::comptr<ID3D11RenderTargetView>>> m_rendertargetviewa;
+
 
          mipmap_cubemap_framebuffer();
 

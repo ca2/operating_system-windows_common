@@ -24,8 +24,8 @@ namespace gpu_directx11
    public:
       
       
-      unsigned int m_uVAO;
-      unsigned int m_uVBO;
+      //unsigned int m_uVAO;
+      //unsigned int m_uVBO;
 
 
 

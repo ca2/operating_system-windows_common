@@ -79,7 +79,6 @@ namespace gpu_directx11
       //::pointer < d3d11 > m_pd3d11;
 
       //bool m_bCreateRenderTargetView;
-      bool m_bShaderResourceView;
 
       texture();
       ~texture() override;
@@ -105,6 +104,13 @@ namespace gpu_directx11
       virtual IDXGISurface* __get_dxgi_surface();
 
       void set_pixels(const ::int_rectangle& rectangle, const void* data) override;
+      void initialize_with_image_data(::gpu::renderer *pgpurenderer, const ::int_rectangle &rectangleTarget,
+                                      int numChannels, bool bSrgb, const void *pdata, enum_type etype) override;
+
+
+      void initialize_hdr_texture_on_memory(::gpu::renderer *pgpurenderer, const ::block &block) override;
+
+
    };
 
 

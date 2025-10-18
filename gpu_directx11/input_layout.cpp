@@ -37,6 +37,17 @@ namespace gpu_directx11
          return "TEXCOORD";
 
       }
+      else if (scopedstr.case_insensitive_equals("tangent"))
+      {
+
+         return "TEXCOORD";
+      }
+      else if (scopedstr.case_insensitive_equals("bitangent"))
+      {
+
+         return "BINORMAL";
+
+      }
       else
       {
 
@@ -104,6 +115,7 @@ namespace gpu_directx11
       {
 
          int iSemanticIndex = 0;
+         int iTexCoord = 0;
          int iInputSlot = 0;
          D3D11_INPUT_CLASSIFICATION classification = D3D11_INPUT_PER_VERTEX_DATA;
          UINT DataStepRate = 0;
@@ -123,7 +135,15 @@ namespace gpu_directx11
             D3D11_INPUT_ELEMENT_DESC desc{};
 
             desc.SemanticName = input_layout_semantic_name_from_gpu_property_name(name);
-            desc.SemanticIndex = iSemanticIndex;
+            if (!strcmp(desc.SemanticName, "TEXCOORD"))
+            {
+               desc.SemanticIndex = iTexCoord;
+               iTexCoord++;
+            }
+            else
+            {
+               desc.SemanticIndex = iSemanticIndex;
+            }
             desc.Format = input_layout_format_from_gpu_property_type(type);
             desc.InputSlot = iInputSlot;
             desc.AlignedByteOffset = offset;

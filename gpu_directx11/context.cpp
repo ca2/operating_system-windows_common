@@ -28,7 +28,7 @@
 #include <glm/mat4x4.hpp>
 #include "initializers.h"
 #include "acme_windows_common/dxgi_surface_bindable.h"
-
+#include <DirectXMath.h>
 
 using namespace directx11;
 
@@ -574,6 +574,97 @@ namespace gpu_directx11
       return strFragment;
 
    }
+
+   
+::pointer<::gpu::texture> context::load_cube_map(const ::scoped_string &scopedstrName, const ::file::path &path,
+                                                    bool b32)
+   {
+
+      /*VkFormat vkformat;
+
+      if (!b32)
+      {
+
+         vkformat = VK_FORMAT_R16G16B16A16_SFLOAT;
+      }
+      else
+      {
+
+         vkformat = VK_FORMAT_R32G32B32A32_SFLOAT;
+      }*/
+
+      ::cast<gpu_directx11::context> pcontext = m_pgpurenderer->m_pgpucontext;
+
+      ///::cast<gpu_directx11::queue> pqueueCopy = pcontext->m_pgpudevice->transfer_queue();
+
+      //auto vkqueueCopy = pqueueCopy->m_vkqueue;
+
+      //VkImageUsageFlags usageFlags = VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT;
+
+      //VkImageLayout initialLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+
+      //auto ptexture = loadCubemap(scopedstrName, path, vkformat, vkqueueCopy, usageFlags, initialLayout);
+      auto ptexture = loadCubemap(scopedstrName, path, b32);
+
+      return ptexture;
+   }
+
+
+
+::pointer<::gpu::texture> context::loadCubemap(const ::scoped_string &name, const ::scoped_string &scopedstrFileName,bool b32)
+   {
+
+      auto pgputexture = øcreate<::gpu::texture>();
+
+      ::cast<::gpu_directx11::texture> ptexture = pgputexture;
+
+      ptexture->m_pgpurenderer = m_pgpurenderer;
+
+      try
+      {
+
+         if (scopedstrFileName.case_insensitive_ends(".ktx"))
+         {
+
+            //::cast<::gpu_directx11::queue> pqueueGraphics = m_pgpudevice->graphics_queue();
+
+            throw "todoKtxLoadCubemapFromFile";
+
+            //ptexture->KtxLoadCubemapFromFile(name, scopedstrFileName, format, pqueueGraphics->m_vkqueue, usageFlags,
+                                             //initialLayout);
+         }
+         else if (scopedstrFileName.case_insensitive_ends(".hdr"))
+         {
+
+            try
+            {
+
+               auto ptexture = cubemap_from_hdr(scopedstrFileName);
+
+               return ptexture;
+            }
+            catch (const ::exception &e)
+            {
+
+               throw ::exception(e.m_estatus, "Failed to load HDR cubemap '" + name + "': " + e.get_message());
+            }
+         }
+         else
+         {
+
+            warning() << "not implemented loadCubemap case";
+         }
+      }
+      catch (const ::exception &e)
+      {
+
+         throw ::exception(e.m_estatus, "Failed to load HDR cubemap '" + name + "': " + e.get_message());
+      }
+
+      return pgputexture;
+   }
+
+
 
    //   string context::load_fragment(const ::scoped_string & scopedstrPath, enum_shader & eshader)
    //   {
@@ -2510,6 +2601,215 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    }
 
 
+   void context::layout_push_constants(::gpu::properties & properties)
+   {
+    
+      auto pproperty = properties.m_pproperties;
+
+   ::collection::index i = 0;
+
+   int iSizeWithSamplers = 0;
+
+   int iSizeWithoutSamplers = 0;
+
+   while (pproperty->m_pszName)
+   {
+
+      int iItemSize;
+
+      			if (pproperty->m_etype == ::gpu::e_type_array)
+      {
+                  ::gpu::properties propertiesNested;
+
+                  propertiesNested.m_pproperties = pproperty->m_pproperties;
+
+                  layout_push_constants(propertiesNested);
+
+         iItemSize = propertiesNested.m_blockWithoutSamplers.size();
+                  iItemSize *= pproperty->m_iArraySize;
+      }
+      else
+      {
+         iItemSize= ::gpu::get_type_size(pproperty->m_etype);
+      }
+
+       
+
+      int iSize = iItemSize;
+
+      if (iItemSize == 4)
+      {
+
+         if (iSizeWithSamplers % 16 != 0)
+         {
+
+            iSizeWithSamplers += 16 - iSizeWithSamplers % 16;
+         }
+
+         //iSize = (iSize + 15) & ~15;
+         
+
+
+         ::gpu::property_data data;
+
+         data.m_iOffset = iSizeWithSamplers;
+
+         properties.m_propertydataa.set_at_grow(i, data);
+
+         i++;
+
+         iSizeWithSamplers += 4;
+
+         if (!pproperty[1].m_pszName)
+         {
+            break;
+         }
+         if (pproperty[1].m_etype != ::gpu::e_type_array && ::gpu::get_type_size(pproperty[1].m_etype) != 4)
+         {
+            goto iteration1;
+         }
+
+         pproperty++;
+
+//         ::gpu::property_data data;
+
+         data.m_iOffset = iSizeWithSamplers;
+
+         properties.m_propertydataa.set_at_grow(i, data);
+
+         i++;
+
+         iSizeWithSamplers += 4;
+
+         if (!pproperty[1].m_pszName)
+         {
+            break;
+         }
+         if (pproperty[1].m_etype != ::gpu::e_type_array && ::gpu::get_type_size(pproperty[1].m_etype) != 4)
+         {
+            goto iteration1;
+         }
+
+         pproperty++;
+
+         //::gpu::property_data data;
+
+         data.m_iOffset = iSizeWithSamplers;
+
+         properties.m_propertydataa.set_at_grow(i, data);
+
+         i++;
+
+         iSizeWithSamplers += 4;
+
+         if (!pproperty[1].m_pszName)
+         {
+            break;
+         }
+         if (pproperty[1].m_etype != ::gpu::e_type_array && ::gpu::get_type_size(pproperty[1].m_etype) != 4)
+         {
+            goto iteration1;
+         }
+
+         pproperty++;
+
+         //::gpu::property_data data;
+
+         data.m_iOffset = iSizeWithSamplers;
+
+         properties.m_propertydataa.set_at_grow(i, data);
+
+         i++;
+
+         iSizeWithSamplers += 4;
+
+      }
+      else if (iItemSize == 8)
+      {
+
+                  if (iSizeWithSamplers % 16 != 0)
+         {
+
+            iSizeWithSamplers += 16 - iSizeWithSamplers % 16;
+         }
+
+         ::gpu::property_data data;
+
+         data.m_iOffset = iSizeWithSamplers;
+
+         properties.m_propertydataa.set_at_grow(i, data);
+
+         i++;
+
+         iSizeWithSamplers += 8;
+
+         if (!pproperty[1].m_pszName)
+         {
+            break;
+         }
+         if (pproperty[1].m_etype != ::gpu::e_type_array && ::gpu::get_type_size(pproperty[1].m_etype) != 8)
+         {
+            goto iteration1;
+         }
+
+         pproperty++;
+
+ //::gpu::property_data data;
+
+         data.m_iOffset = iSizeWithSamplers;
+
+         properties.m_propertydataa.set_at_grow(i, data);
+
+         i++;
+
+         iSizeWithSamplers += 8;
+
+      }
+      else
+      {
+
+                   if (iSizeWithSamplers % 16 != 0)
+         {
+
+            iSizeWithSamplers += 16 - iSizeWithSamplers % 16;
+         }
+
+         iSize = (iSize + 15) & ~15;
+         
+
+
+         ::gpu::property_data data;
+
+         data.m_iOffset = iSizeWithSamplers;
+
+         properties.m_propertydataa.set_at_grow(i, data);
+
+         i++;
+
+         iSizeWithSamplers += iSize;
+
+      }
+
+      iteration1:
+
+      ::string strName(pproperty->m_pszName);
+
+      if (!strName.begins("sampler:"))
+      {
+
+         iSizeWithoutSamplers = iSizeWithSamplers;
+      }
+
+      pproperty++;
+   }
+
+   properties.m_memory.set_size(iSizeWithSamplers);
+   properties.m_blockWithoutSamplers = properties.m_memory(0, iSizeWithoutSamplers);
+   properties.m_blockWithSamplers = properties.m_memory;
+
+   }
+
+
    void context::create_global_ubo(int iGlobalUboSize, int iFrameCount)
    {
 
@@ -2582,6 +2882,13 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
          m_pcontext->Unmap(m_pbufferGlobalUbo, 0);
 
+
+               //auto pVS = m_pbufferGlobalUbo.m_p;
+         //m_pcontext->VSSetConstantBuffers(0, 1, &pVS);
+               //auto pPS = m_pbufferGlobalUbo.m_p;
+         //m_pcontext->PSSetConstantBuffers(0, 1, &pPS);
+
+
       }
 
       //m_pbufferGlobalUbo
@@ -2589,6 +2896,28 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
    }
 
+
+      void context::set_viewport(::gpu::command_buffer *pgpucommandbuffer, const ::int_rectangle &rectangle)
+      {
+      
+      D3D11_VIEWPORT vp = {};
+         vp.TopLeftX = rectangle.left();
+      vp.TopLeftY = rectangle.top();
+         vp.Width = (float)rectangle.width();
+         vp.Height = (float)rectangle.height();
+         vp.MinDepth = 0.0f;
+         vp.MaxDepth = 1.0f;
+         m_pcontext->RSSetViewports(1, &vp);
+      }
+
+
+         void context::clear(::gpu::texture * pgputexture, const ::color::color &color)
+         {
+            ::cast<::gpu_directx11::texture> ptexture = pgputexture;
+            float clearColor[4] = {color.f32_red(), color.f32_green(), color.f32_blue(), color.f32_opacity()};
+            m_pcontext->ClearRenderTargetView(ptexture->m_prendertargetview, clearColor);
+         
+         }
 
    void context::engine_on_frame_context_initialization()
    {
@@ -2635,6 +2964,10 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
       return m_pcontext1;
 
+   }
+   ::glm::mat4 context::defer_transpose(const ::glm::mat4 &m) 
+      {
+          return glm::transpose(m);
    }
 
 

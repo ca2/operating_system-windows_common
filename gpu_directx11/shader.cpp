@@ -74,6 +74,8 @@ namespace gpu_directx11
             ::string strError((const_char_pointer )pblobError->GetBufferPointer(),
                pblobError->GetBufferSize());
 
+            warning() << strError;
+
             throw ::exception(error_failed);
 
          }
@@ -116,6 +118,8 @@ namespace gpu_directx11
 
             ::string strError((const_char_pointer )pblobError->GetBufferPointer(),
                pblobError->GetBufferSize());
+
+            warning() << strError;
 
             throw ::exception(error_failed);
 
@@ -525,10 +529,15 @@ namespace gpu_directx11
          };
 
          ID3D11DepthStencilView* pdepthstencilview = ptextureDst->m_pdepthstencilview;
-         pgpucontext->m_pcontext->OMSetRenderTargets(
-            1,
-            rendertargetviewa,
-            pdepthstencilview);
+         if (pdepthstencilview)
+         {
+            pgpucontext->m_pcontext->OMSetRenderTargets(1, rendertargetviewa, pdepthstencilview);
+         }
+         else
+         {
+
+            pgpucontext->m_pcontext->OMSetRenderTargets(1, rendertargetviewa, nullptr);
+         }
 
       }
 
@@ -793,6 +802,33 @@ namespace gpu_directx11
 
 
 
+   }
+   glm::mat4 ConvertViewRHtoLH(const glm::mat4 &viewRH)
+   {
+      glm::mat4 viewLH = viewRH;
+
+      // Flip the Z axis
+      viewLH[0][2] *= -1.0f;
+      viewLH[1][2] *= -1.0f;
+      viewLH[2][2] *= -1.0f;
+      viewLH[3][2] *= -1.0f;
+
+      return viewLH;
+   }
+   // Remap OpenGL clip-space Z [-1,1] to DirectX [0,1]
+   glm::mat4 ClipRemap()
+   {
+      glm::mat4 remap(1.0f);
+      remap[2][2] = 0.5f;
+      remap[3][2] = 0.5f;
+      return remap;
+   }
+      void shader::setModelViewProjectionMatrices(glm::mat4 &model, glm::mat4 &view, glm::mat4 &projection)
+   {
+       
+      set_mat4("model", model);
+      set_mat4("view", ConvertViewRHtoLH(view));
+      set_mat4("projection", (ClipRemap() * projection));
    }
 
 

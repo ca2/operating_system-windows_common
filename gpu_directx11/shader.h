@@ -105,7 +105,7 @@ namespace gpu_directx11
 
 
       void push_properties(::gpu::command_buffer * pgpucommandbuffer) override;
-
+      void setModelViewProjectionMatrices(glm::mat4 &model, glm::mat4 &view, glm::mat4 &projection) override;
 
    };
 

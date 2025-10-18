@@ -119,7 +119,7 @@
     <ClInclude Include="frame_storage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="gltf\vertex.h">
+    <ClInclude Include="gltf\aaa_vertex.h">
       <Filter>Header Files\gltf</Filter>
     </ClInclude>
     <ClInclude Include="gltf\model.h">
@@ -156,9 +156,6 @@
       <Filter>Header Files\ibl</Filter>
     </ClInclude>
     <ClInclude Include="cube.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="full_screen_quad.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -290,9 +287,6 @@
       <Filter>Source Files\ibl</Filter>
     </ClCompile>
     <ClCompile Include="cube.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="full_screen_quad.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

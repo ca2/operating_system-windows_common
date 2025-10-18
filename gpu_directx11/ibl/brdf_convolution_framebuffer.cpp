@@ -33,66 +33,68 @@ namespace gpu_directx11
       void brdf_convolution_framebuffer::on_initialize_BrdfConvolutionFramebuffer()
       {
 
-         ::gpu::context_lock contextlock(m_pgpucontext);
-         
-         
-         ::cast < gpu_directx11::texture>ptexture = m_ptexture;
+         ::gpu::ibl::brdf_convolution_framebuffer::on_initialize_BrdfConvolutionFramebuffer();
+
+         //::gpu::context_lock contextlock(m_pgpucontext);
+         //
+         //
+         //::cast < gpu_directx11::texture>ptexture = m_ptexture;
 
 
-         ////// framebuffer
-         ////glGenFramebuffers(1, &ptexture->m_gluFbo);
+         //////// framebuffer
+         //////glGenFramebuffers(1, &ptexture->m_gluFbo);
+         //////GLCheckError("");
+         //////glBindFramebuffer(GL_FRAMEBUFFER, ptexture->m_gluFbo);
+         //////GLCheckError("");
+
+         ////auto w = ptexture->m_rectangleTarget.width();
+
+         ////auto h = ptexture->m_rectangleTarget.height();
+
+         ////// depth buffer
+         ////glGenRenderbuffers(1, &ptexture->m_gluDepthStencilRBO);
          ////GLCheckError("");
-         ////glBindFramebuffer(GL_FRAMEBUFFER, ptexture->m_gluFbo);
+         ////glBindRenderbuffer(GL_RENDERBUFFER, ptexture->m_gluDepthStencilRBO);
+         ////GLCheckError("");
+         ////glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, w, h);
          ////GLCheckError("");
 
-         //auto w = ptexture->m_rectangleTarget.width();
+         ////// attach the depth buffer
+         ////glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, ptexture->m_gluDepthStencilRBO);
+         ////GLCheckError("");
 
-         //auto h = ptexture->m_rectangleTarget.height();
+         ////// color texture
+         ////glGenTextures(1, &ptexture->m_gluTextureID);
+         ////GLCheckError("");
+         ////ptexture->m_gluType = GL_TEXTURE_2D;
+         ////glBindTexture(GL_TEXTURE_2D, ptexture->m_gluTextureID);
+         ////GLCheckError("");
 
-         //// depth buffer
-         //glGenRenderbuffers(1, &ptexture->m_gluDepthStencilRBO);
-         //GLCheckError("");
-         //glBindRenderbuffer(GL_RENDERBUFFER, ptexture->m_gluDepthStencilRBO);
-         //GLCheckError("");
-         //glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, w, h);
-         //GLCheckError("");
+         ////glTexImage2D(GL_TEXTURE_2D, 0, GL_RG16F, w, h, 0, GL_RG, GL_FLOAT, 0);
+         ////GLCheckError("");
+         ////glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+         ////GLCheckError("");
+         ////glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+         ////GLCheckError("");
+         ////glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+         ////GLCheckError("");
+         ////glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+         ////GLCheckError("");
 
-         //// attach the depth buffer
-         //glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, ptexture->m_gluDepthStencilRBO);
-         //GLCheckError("");
+         ////glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, ptexture->m_gluTextureID, 0);
+         ////GLCheckError("");
 
-         //// color texture
-         //glGenTextures(1, &ptexture->m_gluTextureID);
-         //GLCheckError("");
-         //ptexture->m_gluType = GL_TEXTURE_2D;
-         //glBindTexture(GL_TEXTURE_2D, ptexture->m_gluTextureID);
-         //GLCheckError("");
+         ////GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 
-         //glTexImage2D(GL_TEXTURE_2D, 0, GL_RG16F, w, h, 0, GL_RG, GL_FLOAT, 0);
-         //GLCheckError("");
-         //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-         //GLCheckError("");
-         //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-         //GLCheckError("");
-         //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-         //GLCheckError("");
-         //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-         //GLCheckError("");
+         ////if (status != GL_FRAMEBUFFER_COMPLETE)
+         ////{
 
-         //glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, ptexture->m_gluTextureID, 0);
-         //GLCheckError("");
+         ////   warning() << "Framebuffer incomplete! with status " << status;
 
-         //GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+         ////}
 
-         //if (status != GL_FRAMEBUFFER_COMPLETE)
-         //{
-
-         //   warning() << "Framebuffer incomplete! with status " << status;
-
-         //}
-
-         //glBindFramebuffer(GL_FRAMEBUFFER, 0);
-         //GLCheckError("");
+         ////glBindFramebuffer(GL_FRAMEBUFFER, 0);
+         ////GLCheckError("");
 
 
       }

@@ -12,6 +12,7 @@
 #include "bred/gpu/context_lock.h"
 #include "bred/gpu/device.h"
 #include "gpu_directx11/_gpu_directx11.h"
+#include "gpu_directx11/context.h"
 #include "gpu_directx11/texture.h"
 #include "gpu/cube.h"
 #include "gpu/gltf/_constant.h"
@@ -61,16 +62,26 @@ namespace gpu_directx11
 
       ::block specular_map::embedded_prefiltered_env_map_frag()
       {
-         return hlsl_embedded_prefiltered_env_map_frag()
+         
+         return hlsl_embedded_prefiltered_env_map_frag();
+
       }
 
 
       ::block specular_map::embedded_brdf_convolution_frag()
       {
 
-         return {g_psz_brdfconvolution_frag, sizeof(g_psz_brdfconvolution_frag) - 1};
+         return hlsl_embedded_brdf_convolution_frag();
 
       }
+
+      ::block specular_map::embedded_brdf_convolution_vert()
+      {
+         
+         return hlsl_embedded_brdf_convolution_vert(); 
+      
+      }
+
 
 
       // void specular_map::initialize_specular_map(const ::string &engineRoot, const unsigned int environmentCubemapId)
@@ -101,6 +112,7 @@ namespace gpu_directx11
 
       void specular_map::computePrefilteredEnvMap()
       {
+         //return;
          //Timer timer;
 
          ::gpu::context_lock contextlock(m_pgpucontext);
@@ -134,10 +146,15 @@ namespace gpu_directx11
          auto pcube = øcreate<::gpu::cube>();
          pcube->initialize_gpu_cube(m_pgpucontext);
          ::cast<::gpu_directx11::texture> ptextureSkybox = ptexture;
+         ::cast<::gpu_directx11::context> pcontext = m_pgpucontext;
+
+         ::cast<::gpu_directx11::texture> ptextureEnvMap = m_pframebufferPrefilteredEnvMap->m_ptexture;
+         ::cast<::gpu_directx11::ibl::mipmap_cubemap_framebuffer> pframebufferEnvMap = m_pframebufferPrefilteredEnvMap;
 
          //m_pframebufferPrefilteredEnvMap->bind();
          //m_pshaderPrefilteredEnvMap->_bind();
-         m_pshaderPrefilteredEnvMap->bind(nullptr, m_pframebufferPrefilteredEnvMap->m_ptexture);
+         m_pshaderPrefilteredEnvMap->_bind(nullptr, ::gpu::e_scene_none);
+         m_pshaderPrefilteredEnvMap->bind_source(nullptr, ptextureSkybox);
          //m_pshaderPrefilteredEnvMap->set_int("environmentCubemap", 0);
 
          for (auto mipLevel = 0; mipLevel < m_uPrefilteredEnvMapMipLevels; mipLevel++)
@@ -158,14 +175,25 @@ namespace gpu_directx11
 
                //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
                //GLCheckError("");
+               ::int_rectangle rectangle;
+               rectangle.set(0, 0, m_pframebufferPrefilteredEnvMap->m_ptexture->m_sizeMip.cx(),
+                             m_pframebufferPrefilteredEnvMap->m_ptexture->m_sizeMip.cy());
+               // Bind RTV
+               ID3D11RenderTargetView *rtv =
+                  ptextureEnvMap->m_rendertargetviewa[pframebufferEnvMap->rtvIndex(i, mipLevel)];
+                                                //->m_pt[face * MIP_COUNT + mip]
+                                                //.Get();
+               pcontext->m_pcontext->OMSetRenderTargets(1, &rtv, nullptr);
 
+               m_pgpucontext->set_viewport(pgpucommandbuffer, rectangle);
                //glBindTexture(GL_TEXTURE_CUBE_MAP, ptextureSkybox->m_gluTextureID);
                //GLCheckError("");
-               m_pshaderPrefilteredEnvMap->set_int("environmentCubemap", 0);
+               //m_pshaderPrefilteredEnvMap->set_int("environmentCubemap", 0);
                //pcube->draw(pgpucommandbuffer);
                ::graphics3d::render_system rendersystemScope;
                rendersystemScope.m_erendersystem = ::graphics3d::e_render_system_skybox_ibl;
                pgpucommandbuffer->m_prendersystem = &rendersystemScope;
+               m_pshaderPrefilteredEnvMap->push_properties(pgpucommandbuffer);
                pcube->bind(pgpucommandbuffer);
                pcube->draw(pgpucommandbuffer);
                pcube->unbind(pgpucommandbuffer);
@@ -202,50 +230,103 @@ namespace gpu_directx11
 
       void specular_map::computeBrdfConvolutionMap()
       {
+         //return;
+         ::gpu::ibl::specular_map::computeBrdfConvolutionMap();
 
-         //Timer timer;
+         ::cast<::gpu_directx11::context> pcontext = m_pgpucontext;
+         ::cast<::gpu_directx11::device> pdevice = m_pgpucontext->m_pgpudevice;
+         ::cast<::gpu_directx11::texture> ptexture = m_pbrdfconvolutionframebuffer->m_ptexture;
 
-         ::gpu::context_lock contextlock(m_pgpucontext);
+         ID3D11RenderTargetView *rtvs[8];
+         UINT numRTVs = 8;
+         pcontext->m_pcontext->OMGetRenderTargets(numRTVs, rtvs, nullptr);
 
-         auto pcommandbuffer = m_pgpucontext->beginSingleTimeCommands(m_pgpucontext->m_pgpudevice->graphics_queue());
+         if (rtvs[0] == ptexture->m_prendertargetview)
+         {
 
-         auto pfullscreenquad = øcreate<::gpu::full_screen_quad>();
+            information() << "seems ok";
 
-         pfullscreenquad->initialize_full_screen_quad(m_pgpucontext);
-         //m_pbrdfconvolutionframebuffer->bind();
+         }
+         else
+         {
 
-         //     auto pskybox = m_pscene->current_skybox();
+            information() << "well...";
 
-         //// auto prenderable = pskybox->m_prenderable;
+         }
 
-         //auto ptexture = pskybox->m_ptexture;
+         D3D11_VIEWPORT vp;
+         UINT num = 1;
+         pcontext->m_pcontext->RSGetViewports(&num, &vp);
+         if (vp.Width > 0 && vp.Height > 0)
+         {
+
+            information() << "a viewport";
+         }
+         else
+         {
+
+            information() << "empty viewport";
+         }
+
+         ::comptr<ID3D11Texture2D> pd3d11textureStaging;
+         D3D11_TEXTURE2D_DESC desc = {};
+         ptexture->m_ptextureOffscreen->GetDesc(&desc);
+         desc.Usage = D3D11_USAGE_STAGING;
+         desc.BindFlags = 0;
+         desc.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
+
+         pdevice->m_pdevice->CreateTexture2D(&desc, nullptr, &pd3d11textureStaging);
+         pcontext->m_pcontext->CopyResource(pd3d11textureStaging, ptexture->m_ptextureOffscreen);
+
          
-         //m_pshaderBrdfConvolution->bind(m_pbrdfconvolutionframebuffer->m_ptexture, ptexture);
-         m_pshaderBrdfConvolution->bind(nullptr, m_pbrdfconvolutionframebuffer->m_ptexture);
-         //m_pshaderPrefilteredEnvMap->set_int("environmentCubemap", 0);
-
-         //glViewport(0, 0, m_uBrdfConvolutionMapWidth, m_uBrdfConvolutionMapHeight);
-         //GLCheckError("");
-         //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-         //GLCheckError("");
-
-         pfullscreenquad->bind(pcommandbuffer);
-         pfullscreenquad->draw(pcommandbuffer);
-         pfullscreenquad->unbind(pcommandbuffer);
-
-         //GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-
-         //if (status != GL_FRAMEBUFFER_COMPLETE)
+         // 4. Map (readback)
+         D3D11_MAPPED_SUBRESOURCE mapped = {};
+         HRESULT hr = pcontext->m_pcontext->Map(pd3d11textureStaging, 0, D3D11_MAP_READ, 0, &mapped);
+         ::defer_throw_hresult(hr);
          //{
-
-         //   printf("Framebuffer incomplete!\n");
-
+         //   printf("Failed to map staging texture: 0x%08X\n", hr);
+         //   return;
          //}
 
-         ////timer.logDifference("Rendered specular brdf convolution map");
+         //// 5. Print the first few values
+         ////    Adjust according to your format: assuming DXGI_FORMAT_R16G16_FLOAT
+         //uint8_t *rowPtr = reinterpret_cast<uint8_t *>(mapped.pData);
+         //for (UINT y = 0; y < minimum(desc.Height, 4u); y++) // print first 4 rows
+         //{
+         //   auto *pixel = reinterpret_cast<const uint16_t *>(rowPtr); // 16-bit floats
+         //   for (UINT x = 0; x < minimum(desc.Width, 4u); x++)
+         //   {
+         //      // Convert half to float (quick approximate if no helper)
+         //      float r = DirectX::PackedVector::XMConvertHalfToFloat(pixel[0]);
+         //      float g = DirectX::PackedVector::XMConvertHalfToFloat(pixel[1]);
+         //      printf("(%f, %f) ", r, g);
+         //      pixel += 2; // R16G16
+         //   }
+         //   printf("\n");
+         //   rowPtr += mapped.RowPitch;
+         //}
+         // 5. Print the first few values
+         //    for DXGI_FORMAT_R32G32_FLOAT
+         float *rowPtr = (float*)(mapped.pData);
+         for (UINT y = 0; y < minimum(desc.Height, 4u); y++) // print first 4 rows
+         {
+            auto *pixel = rowPtr; // 32-bit floats
+            for (UINT x = 0; x < minimum(desc.Width, 4u); x++)
+            {
+               // Convert half to float (quick approximate if no helper)
+               float r = pixel[0];
+               float g = pixel[1];
+               informationf("(%f, %f) ", r, g);
+               pixel += 2; // R32G32
+            }
+            //printf("\n");
+            rowPtr += mapped.RowPitch;
+         }
 
-         //glBindFramebuffer(GL_FRAMEBUFFER, 0);
-         //GLCheckError("");
+         // 6. Unmap
+         pcontext->m_pcontext->Unmap(pd3d11textureStaging, 0);
+
+         information() << "end computerBrdfConvolutionMap";
 
       }
 

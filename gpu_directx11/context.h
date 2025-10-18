@@ -185,6 +185,13 @@ namespace gpu_directx11
 
       //virtual void make_current();
 
+      ::pointer<::gpu::texture> load_cube_map(const ::scoped_string &scopedstrName, const ::file::path &path,
+                                              bool b32) override;
+
+
+      ::pointer<::gpu::texture> loadCubemap(const ::scoped_string &name, const ::scoped_string &scopedstrFileName,
+                                            bool b32);
+
       // virtual string load_fragment(const ::scoped_string & scopedstrPath, enum_shader_source& eshadersource);
 
       //virtual string get_shader_version_text();
@@ -298,7 +305,7 @@ namespace gpu_directx11
 
       ::gpu_directx11::descriptor_pool* get_global_pool(int iFrameCount);
 
-
+      void layout_push_constants(::gpu::properties &properties) override;
       ////descriptor_set_layout* get_set_descriptor_layout(::gpu::context * pgpucontext);
       //virtual VkDescriptorSet getGlobalDescriptorSet(::gpu::context* pgpucontext, ::gpu_directx11::renderer* prenderer);
 
@@ -308,12 +315,13 @@ namespace gpu_directx11
       void create_global_ubo(int iSize, int iFrameCount) override;
       void update_global_ubo(const ::block& block) override;
 
-
+            void set_viewport(::gpu::command_buffer *pgpucommandbuffer, const ::int_rectangle &rectangle) override;
+      void clear(::gpu::texture * pgputexture, const ::color::color &color) override; 
       void engine_on_frame_context_initialization() override;
 
       ID3D11DeviceContext* draw_get_d3d11_device_context();
       ID3D11DeviceContext1* draw_get_d3d11_device_context1();
-
+      ::glm::mat4 defer_transpose(const ::glm::mat4 &m) override;
    };
 
 

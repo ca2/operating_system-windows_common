@@ -5,6 +5,7 @@
 #include "cubemap_framebuffer.h"
 #include "bred/gpu/context_lock.h"
 #include "bred/gpu/shader.h"
+#include "gpu_directx11/context.h"
 //#include <glad/glad.h>
 
 #include "texture.h"
@@ -38,6 +39,20 @@ namespace gpu_directx11
          ::gpu::context_lock contextlock(m_pgpucontext);
 
          ::cast < gpu_directx11::texture>ptexture = m_ptexture;
+
+         ::cast<gpu_directx11::context> pcontext = m_pgpucontext;
+
+         //ptexture->m_mipsLevel = (uint32_t)(floor(::log2((double)::maximum(ptexture->m_rectangleTarget.width(),
+                                                                           //ptexture->m_rectangleTarget.height()))) +
+           //                                 1.0);
+                                                                              ptexture->m_mipsLevel = -1;
+         ptexture->m_bTransferSrc = true;
+         ptexture->m_bWithDepth = false;
+         ptexture->m_bSrgb = true;
+         ptexture->initialize_image_texture(m_pgpucontext->m_pgpurenderer, ptexture->m_rectangleTarget, true, {},
+                                            ::gpu::texture::e_type_cube_map);
+
+        
 
          //// framebuffer
          //glGenFramebuffers(1, &ptexture->m_gluFbo);
@@ -128,18 +143,44 @@ namespace gpu_directx11
          //GLCheckError("");
          //glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
          //GLCheckError("");
+         ::cast<gpu_directx11::texture> ptexture = m_ptexture;
+         ::cast<gpu_directx11::context> pcontext = m_pgpucontext;
+
+           // Now generate mipmaps using DirectX
+         pcontext->m_pcontext->GenerateMips(ptexture->m_pshaderresourceview);
+
       }
 
 
       void cubemap_framebuffer::setCubeFace(unsigned int index, ::gpu::shader * pgpushader)
       {
-         //::cast < gpu_directx11::texture>ptexture = m_ptexture;
-         //glFramebufferTexture2D(
-         //   GL_FRAMEBUFFER,
-         //   GL_COLOR_ATTACHMENT0,
-         //   GL_TEXTURE_CUBE_MAP_POSITIVE_X + index,
-         //   ptexture->m_gluTextureID,
-         //   0);
+         ::cast < gpu_directx11::texture>ptexture = m_ptexture;
+         ::cast<gpu_directx11::context> pcontext = m_pgpucontext;
+         ::cast<gpu_directx11::device> pdevice = pcontext->m_pgpudevice;
+         ////glFramebufferTexture2D(
+         //  // GL_FRAMEBUFFER,
+         //   //GL_COLOR_ATTACHMENT0,
+         //   //GL_TEXTURE_CUBE_MAP_POSITIVE_X + index,
+         //   //ptexture->m_gluTextureID,
+         //   //0);
+         //   D3D11_RENDER_TARGET_VIEW_DESC rtvDesc = {};
+         //rtvDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT; // match texture format
+         //rtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2DARRAY;
+         //rtvDesc.Texture2DArray.MipSlice = 0;
+         //rtvDesc.Texture2DArray.FirstArraySlice = index; // which cube face
+         //rtvDesc.Texture2DArray.ArraySize = 1; // just one face
+         //ptexture->m_rendertargetviewa.set_size(6);
+         //HRESULT hr = pdevice->m_pdevice->CreateRenderTargetView(ptexture->m_ptextureOffscreen, &rtvDesc, &ptexture->m_rendertargetviewa[index]);
+         //defer_throw_hresult(hr);
+
+                  ID3D11RenderTargetView *rtvPtr = nullptr;
+         if (index < ptexture->m_rendertargetviewa.size() && ptexture->m_rendertargetviewa[index])
+            rtvPtr = ptexture->m_rendertargetviewa[index];
+
+
+         // --- Bind the cube face as render target ---
+         pcontext->m_pcontext->OMSetRenderTargets(1, &rtvPtr, nullptr);
+
          //GLCheckError("");
          //
          ////if (m_strSamplerUniform.has_character())

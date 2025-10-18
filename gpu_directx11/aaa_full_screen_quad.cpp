@@ -16,8 +16,6 @@ namespace gpu_directx11
    full_screen_quad::full_screen_quad()
    {
 
-      m_uVAO = 0;
-      m_uVBO = 0;
 
    }
 

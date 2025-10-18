@@ -1,9 +1,10 @@
 #include "framework.h"
 #include "approach.h"
 #include "cpu_buffer.h"
-//#include "direct2d_draw2d_swap_chain.h"
+#include "cube.h"
 #include "frame.h"
 #include "frame_storage.h"
+//#include "full_screen_quad.h"
 #include "input_layout.h"
 #include "memory_buffer.h"
 #include "model_buffer.h"
@@ -21,6 +22,7 @@
 #include "bred/gpu/frame_ephemeral.h"
 #include "bred/gpu/frame_storage.h"
 #include "gltf/model.h"
+#include "gpu/full_screen_quad.h"
 #include "ibl/brdf_convolution_framebuffer.h"
 #include "ibl/diffuse_irradiance_map.h"
 #include "ibl/equirectangular_cubemap.h"
@@ -71,6 +73,11 @@ __FACTORY_EXPORT void gpu_directx11_factory(::factory::factory * pfactory)
 
    pfactory->add_factory_item < ::gpu::frame_ephemeral >();
    pfactory->add_factory_item < ::gpu::frame_storage >();
+
+
+   //pfactory->add_factory_item<::gpu_directx11::cube, ::gpu::cube>();
+   pfactory->add_factory_item< ::gpu::cube>();
+   pfactory->add_factory_item<::gpu::full_screen_quad>();
 
 
    pfactory->add_factory_item<::gpu_directx11::gltf::mesh, ::gpu::gltf::mesh>();
