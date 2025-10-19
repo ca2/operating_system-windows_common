@@ -1349,7 +1349,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 //   // ... do some GPU work (Draw/Dispatch/UpdateSubresource)
 //   pAnnotation->EndEvent();
 //}
-   void context::start_debug_happening(const ::scoped_string& scopedstrDebugHappening)
+   void context::start_debug_happening(::gpu::command_buffer * pgpucommandbuffer, const ::scoped_string& scopedstrDebugHappening)
    {
 
       if (!m_puserdefinedannotation)
@@ -1367,7 +1367,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    }
 
 
-   void context::end_debug_happening()
+   void context::end_debug_happening(::gpu::command_buffer * pgpucommandbuffer)
    {
 
       m_puserdefinedannotation->EndEvent();
@@ -2947,6 +2947,39 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       //}
 
 
+
+   }
+
+      // Remap OpenGL clip-space Z [-1,1] to DirectX [0,1]
+   glm::mat4 ClipRemap()
+   {
+      glm::mat4 remap(1.0f);
+      remap[2][2] = 0.5f;
+      remap[3][2] = 0.5f;
+      return remap;
+   }
+   ::glm::mat4 context::defer_clip_remap_projection(const ::glm::mat4 & m)
+   {
+
+      return (ClipRemap() * m);
+
+   }
+
+    glm::mat4 ConvertViewRHtoLH(const glm::mat4 &viewRH)
+   {
+      glm::mat4 viewLH = viewRH;
+
+      // Flip the Z axis
+      viewLH[0][2] *= -1.0f;
+      viewLH[1][2] *= -1.0f;
+      viewLH[2][2] *= -1.0f;
+      viewLH[3][2] *= -1.0f;
+
+      return viewLH;
+   }
+   ::glm::mat4 context::defer_remap_impact_matrix(const ::glm::mat4 &m){
+
+      return ConvertViewRHtoLH(m);
 
    }
 

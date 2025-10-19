@@ -82,7 +82,7 @@ namespace gpu_directx11
 
       glm::vec3 rot180Y(::glm::vec3 v);
 
-      void diffuse_irradiance_map::compute()
+      void diffuse_irradiance_map::computeIrradianceMap(::gpu::command_buffer * pgpucommandbuffer)
       {
          //return;
          //::gpu::ibl::diffuse_irradiance_map::compute();
@@ -91,7 +91,7 @@ namespace gpu_directx11
 
          // Timer timer;
 
-         auto pgpucommandbuffer = m_pgpucontext->beginSingleTimeCommands(m_pgpucontext->m_pgpudevice->graphics_queue());
+         //auto pgpucommandbuffer = m_pgpucontext->beginSingleTimeCommands(m_pgpucontext->m_pgpudevice->graphics_queue());
 
          glm::mat4 model = ::gpu::gltf::mIndentity4;
          glm::mat4 cameraAngles[] = {

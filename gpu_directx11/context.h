@@ -155,8 +155,8 @@ namespace gpu_directx11
       void on_end_layer(::gpu::layer* player) override;
 
 
-      void start_debug_happening(const ::scoped_string& scopedstrDebugHappening) override;
-      void end_debug_happening() override;
+      void start_debug_happening(::gpu::command_buffer * pgpucommandbuffer, const ::scoped_string& scopedstrDebugHappening) override;
+      void end_debug_happening(::gpu::command_buffer * pgpucommandbuffer) override;
 
       //void defer_bind(::gpu::shader* pgpushader) override;
       //void swap_buffers() override;
@@ -322,6 +322,9 @@ namespace gpu_directx11
       ID3D11DeviceContext* draw_get_d3d11_device_context();
       ID3D11DeviceContext1* draw_get_d3d11_device_context1();
       ::glm::mat4 defer_transpose(const ::glm::mat4 &m) override;
+      ::glm::mat4 defer_clip_remap_projection(const ::glm::mat4 &m) override;
+      ::glm::mat4 defer_remap_impact_matrix(const ::glm::mat4 &m) override;
+
    };
 
 

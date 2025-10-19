@@ -108,7 +108,7 @@ namespace gpu_directx11
          for (auto i = 0; i < 6; i++)
          {
 
-            pcontext->start_debug_happening("equirectangular_cubemap face " + ::as_string(i + 1));
+            pcontext->start_debug_happening(pgpucommandbuffer, "equirectangular_cubemap face " + ::as_string(i + 1));
             
             m_pshaderHdri->setModelViewProjectionMatrices(model, cameraAngles[i], projection);
             
@@ -139,17 +139,17 @@ namespace gpu_directx11
 
             m_phdricube->draw(pgpucommandbuffer);
 
-            pcontext->end_debug_happening();
+            pcontext->end_debug_happening(pgpucommandbuffer);
 
          }
 
-         pcontext->start_debug_happening("equirectangular_cubemap generateMipmap");
+         pcontext->start_debug_happening(pgpucommandbuffer, "equirectangular_cubemap generateMipmap");
 
          pcontext->m_pcontext->Flush();
 
          m_pframebuffer->generateMipmap();
 
-         pcontext->end_debug_happening();
+         pcontext->end_debug_happening(pgpucommandbuffer);
 
          // timer.logDifference("Rendered equirectangular cubemap");
 

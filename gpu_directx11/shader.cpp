@@ -803,32 +803,14 @@ namespace gpu_directx11
 
 
    }
-   glm::mat4 ConvertViewRHtoLH(const glm::mat4 &viewRH)
-   {
-      glm::mat4 viewLH = viewRH;
+  
 
-      // Flip the Z axis
-      viewLH[0][2] *= -1.0f;
-      viewLH[1][2] *= -1.0f;
-      viewLH[2][2] *= -1.0f;
-      viewLH[3][2] *= -1.0f;
-
-      return viewLH;
-   }
-   // Remap OpenGL clip-space Z [-1,1] to DirectX [0,1]
-   glm::mat4 ClipRemap()
-   {
-      glm::mat4 remap(1.0f);
-      remap[2][2] = 0.5f;
-      remap[3][2] = 0.5f;
-      return remap;
-   }
       void shader::setModelViewProjectionMatrices(glm::mat4 &model, glm::mat4 &view, glm::mat4 &projection)
    {
        
       set_mat4("model", model);
-      set_mat4("view", ConvertViewRHtoLH(view));
-      set_mat4("projection", (ClipRemap() * projection));
+      set_mat4("view", m_pgpurenderer->m_pgpucontext->defer_remap_impact_matrix(view));
+      set_mat4("projection", m_pgpurenderer->m_pgpucontext->defer_clip_remap_projection(projection));
    }
 
 

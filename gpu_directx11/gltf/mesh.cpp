@@ -78,9 +78,29 @@ namespace gpu_directx11
 
             auto pscenerenderable = prendersystem->m_pscenerenderableCurrent;
 
-                        glm::mat4 world = pscenerenderable->transform().getMatrix() * uniformBlock.matrix;
+            auto m1 = pscenerenderable->transform().getMatrix();
+
+            auto m2 = uniformBlock.matrix;
+
+            //// Remap Z (linear transformation)
+            //projD3D[2][0] *= 0.5f; // column-major indexing: projD3D[col][row]
+            //projD3D[2][1] *= 0.5f;
+            //projD3D[2][2] = projD3D[2][2] * 0.5f + 0.5f;
+            //projD3D[2][3] = projD3D[2][3] * 0.5f + 0.5f;
+
+            // -------------------------
+            // Step 2: Handedness flip if needed (right-handed -> left-handed)
+            // -------------------------
+            //glm::mat4 handednessFlip = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 1.0f, -1.0f));
+            //modelMatrixGL = modelMatrixGL * handednessFlip;
+            //normalMatrixGL = normalMatrixGL * handednessFlip;
+
+
+                        glm::mat4 world =  m1*m2 ;
+            //world = world * handednessFlip;
             glm::mat4 normalMat = glm::transpose(glm::inverse(world));
                         pshader->set_mat4("modelMatrix", world);
+            //normalMat = normalMat * handednessFlip;
             pshader->set_mat4("normalMatrix", normalMat);
 
 

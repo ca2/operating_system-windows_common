@@ -110,14 +110,14 @@ namespace gpu_directx11
       // }
 
 
-      void specular_map::computePrefilteredEnvMap()
+      void specular_map::computePrefilteredEnvMap(::gpu::command_buffer * pgpucommandbuffer)
       {
          //return;
          //Timer timer;
 
          ::gpu::context_lock contextlock(m_pgpucontext);
 
-         auto pgpucommandbuffer = m_pgpucontext->beginSingleTimeCommands(m_pgpucontext->m_pgpudevice->graphics_queue());
+         //auto pgpucommandbuffer = m_pgpucontext->beginSingleTimeCommands(m_pgpucontext->m_pgpudevice->graphics_queue());
 
          glm::mat4 model = ::gpu::gltf::mIndentity4;
          glm::mat4 cameraAngles[] =
