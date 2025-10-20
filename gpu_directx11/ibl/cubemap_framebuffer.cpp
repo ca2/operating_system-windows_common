@@ -42,10 +42,10 @@ namespace gpu_directx11
 
          ::cast<gpu_directx11::context> pcontext = m_pgpucontext;
 
-         //ptexture->m_mipsLevel = (uint32_t)(floor(::log2((double)::maximum(ptexture->m_rectangleTarget.width(),
+         //ptexture->m_iMipCount = (uint32_t)(floor(::log2((double)::maximum(ptexture->m_rectangleTarget.width(),
                                                                            //ptexture->m_rectangleTarget.height()))) +
            //                                 1.0);
-                                                                              ptexture->m_mipsLevel = -1;
+         ptexture->m_iMipCount = -1;
          ptexture->m_bTransferSrc = true;
          ptexture->m_bWithDepth = false;
          ptexture->m_bSrgb = true;

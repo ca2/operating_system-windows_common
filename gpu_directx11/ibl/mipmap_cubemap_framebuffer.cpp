@@ -15,12 +15,8 @@ namespace gpu_directx11
 
    namespace ibl
    {
-      size_t mipmap_cubemap_framebuffer::rtvIndex(unsigned int face, unsigned int mip) const
-      {
+      
 
-         ::cast<::gpu_directx11::texture> ptexture = m_ptexture;
-         return static_cast<size_t>(face) * static_cast<size_t>(ptexture->m_mipsLevel) + static_cast<size_t>(mip);
-      }
 
       mipmap_cubemap_framebuffer::mipmap_cubemap_framebuffer()
       {
@@ -84,26 +80,33 @@ namespace gpu_directx11
          //m_baseWidth = static_cast<UINT>(ptexture->m_rectangleTarget.width());
          //m_baseHeight = static_cast<UINT>(ptexture->m_rectangleTarget.height());
 
-         //// compute mip count: you may already have ptexture->m_mipsLevel or similar
+         //// compute mip count: you may already have ptexture->m_iMipCount or similar
          // We'll compute full mip chain if not provided
-         ptexture->m_mipsLevel =
-            1u + static_cast<UINT>(std::floor(
-                    std::log2(static_cast<float>(std::max(ptexture->m_rectangleTarget.width(),
-                       ptexture->m_rectangleTarget.height())))));
-         if (ptexture->m_mipsLevel < 1)
-            ptexture->m_mipsLevel = 1;
+
+         if (ptexture->m_iMipCount <= 1)
+         {
+            ptexture->m_iMipCount =
+               1u + static_cast<UINT>(std::floor(std::log2(static_cast<float>(
+                       std::max(ptexture->m_rectangleTarget.width(), ptexture->m_rectangleTarget.height())))));
+         }
+         if (ptexture->m_iMipCount < 1)
+            ptexture->m_iMipCount = 1;
 
          // Create the cubemap texture + SRV + RTVs
          createCubemapTextureAndViews();
 
          // set current mip to what base class may have (if any). We'll default to 0.
-         m_uCurrentMip = static_cast<unsigned int>(
-            ptexture->m_mipsLevel); // ADAPT if your texture class stores current mip differently
-         if (m_uCurrentMip >= ptexture->m_mipsLevel)
-            m_uCurrentMip = 0;
+         //m_uCurrentMip = static_cast<unsigned int>(
+           // ptexture->m_iMipCount); // ADAPT if your texture class stores current mip differently
+         if (ptexture->m_iCurrentMip >= ptexture->m_iMipCount)
+            ptexture->m_iCurrentMip = 0;
 
-         // create depth for the current mip level
-         createDepthForCurrentMip();
+         if (m_ptexture->m_bWithDepth)
+         {
+
+            // create depth for the current mip level
+            createDepthForCurrentMip();
+         }
 
       }
 
@@ -128,7 +131,7 @@ namespace gpu_directx11
          D3D11_TEXTURE2D_DESC desc = {};
          desc.Width = ptexture->width();
          desc.Height = ptexture->height();
-         desc.MipLevels = ptexture->m_mipsLevel;
+         desc.MipLevels = ptexture->m_iMipCount;
          desc.ArraySize = 6; // cube
          desc.Format = DXGI_FORMAT_R16G16B16A16_FLOAT; // use 16-bit float RGBA similar to GL_RGB16F (use RGBA because
                                                        // DX doesn't have RGB)
@@ -162,41 +165,30 @@ namespace gpu_directx11
 
          // Create RTVs: one per face per mip level
          ptexture->m_rendertargetviewa.clear();
-         ptexture->m_rendertargetviewa.set_size(6 * ptexture->m_mipsLevel);
+         ptexture->m_rendertargetviewa.set_size(6 * ptexture->m_iMipCount);
 
-         for (UINT face = 0; face < 6; ++face)
+         for (int iFace = 0; iFace < 6; ++iFace)
          {
-            for (UINT mip = 0; mip < ptexture->m_mipsLevel; ++mip)
+            for (int iMip = 0; iMip < ptexture->m_iMipCount; ++iMip)
             {
                D3D11_RENDER_TARGET_VIEW_DESC rtvDesc = {};
                rtvDesc.Format = desc.Format;
                // We create RTV for a single array slice (face) and a single mip slice
                rtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2DARRAY;
-               rtvDesc.Texture2DArray.MipSlice = static_cast<UINT>(mip);
-               rtvDesc.Texture2DArray.FirstArraySlice = static_cast<UINT>(face);
+               rtvDesc.Texture2DArray.MipSlice = (UINT)iMip;
+               rtvDesc.Texture2DArray.FirstArraySlice = (UINT)iFace;
                rtvDesc.Texture2DArray.ArraySize = 1;
 
-               comptr<ID3D11RenderTargetView> rtv;
-               HRESULT r = pgpudevice->m_pdevice->CreateRenderTargetView(ptexture->m_ptextureOffscreen, &rtvDesc, &rtv);
-               if (FAILED(r))
-               {
-                  // log and continue
-                  OutputDebugStringA("Failed CreateRenderTargetView for one face/mip — continuing.\n");
-               }
-               ptexture->m_rendertargetviewa[rtvIndex(face, mip)] = rtv;
+               auto iRenderTargetView = ptexture->render_target_view_index(iFace, iMip);
+
+               auto &rtv = ptexture->m_rendertargetviewa[iRenderTargetView];
+               HRESULT hr = pgpudevice->m_pdevice->CreateRenderTargetView(
+                  ptexture->m_ptextureOffscreen, &rtvDesc, &rtv);
+               ::defer_throw_hresult(hr);
             }
          }
       }
-      // Helper: compute integer mip size (never below 1)
-      UINT mipmap_cubemap_framebuffer::mipWidthForLevel(UINT baseWidth, UINT level) const
-      {
-         return std::max<UINT>(1u, baseWidth >> level);
-      }
-
-      UINT mipmap_cubemap_framebuffer::mipHeightForLevel(UINT baseHeight, UINT level) const
-      {
-         return std::max<UINT>(1u, baseHeight >> level);
-      }
+      
       void mipmap_cubemap_framebuffer::createDepthForCurrentMip()
       {
          ::gpu::context_lock contextlock(m_pgpucontext);
@@ -216,8 +208,8 @@ namespace gpu_directx11
          ptexture->m_pdepthstencilview.Release();
          ptexture->m_ptextureDepth.release();
 
-         const UINT w = mipWidthForLevel(ptexture->width(), m_uCurrentMip);
-         const UINT h = mipHeightForLevel(ptexture->height(), m_uCurrentMip);
+         auto w = ptexture->mip_width();
+         auto h = ptexture->mip_height();
 
          D3D11_TEXTURE2D_DESC desc = {};
          desc.Width = w;
@@ -267,7 +259,8 @@ namespace gpu_directx11
          ::cast<device> pgpudevice = pgpucontext->m_pgpudevice;
 
          // choose the RTV for current face + mip
-         size_t idx = rtvIndex(m_uCurrentFace, m_uCurrentMip);
+         size_t idx = ptexture->current_render_target_view_index();
+
          ID3D11RenderTargetView *rtvPtr = nullptr;
          if (idx < ptexture->m_rendertargetviewa.size() && ptexture->m_rendertargetviewa[idx])
             rtvPtr = ptexture->m_rendertargetviewa[idx];
@@ -279,8 +272,8 @@ namespace gpu_directx11
          D3D11_VIEWPORT vp = {};
          vp.TopLeftX = 0.0f;
          vp.TopLeftY = 0.0f;
-         vp.Width = static_cast<FLOAT>(mipWidthForLevel(ptexture->width(), m_uCurrentMip));
-         vp.Height = static_cast<FLOAT>(mipHeightForLevel(ptexture->height(), m_uCurrentMip));
+         vp.Width = (float) ptexture->mip_width();
+         vp.Height = (float)ptexture->mip_height();
          vp.MinDepth = 0.0f;
          vp.MaxDepth = 1.0f;
          pgpucontext->m_pcontext->RSSetViewports(1, &vp);
@@ -288,21 +281,21 @@ namespace gpu_directx11
       }
 
 
-      void mipmap_cubemap_framebuffer::setMipLevel(unsigned int level)
+      void mipmap_cubemap_framebuffer::set_current_mip(int iMip)
       {
          
-         ::gpu::ibl::mipmap_cubemap_framebuffer::setMipLevel(level); // call base (as original)
+         ::gpu::ibl::mipmap_cubemap_framebuffer::set_current_mip(iMip); // call base (as original)
 
          ::cast<::gpu_directx11::texture> ptexture = m_ptexture;
 
-         if (level >= ptexture->m_mipsLevel)
+         if (iMip >= m_ptexture->m_iMipCount)
          {
 
-            level = 0;
+            iMip = 0;
 
          }
 
-         m_uCurrentMip = level;
+         ptexture->m_iCurrentMip = iMip;
 
          // Recreate depth buffer for new mip size (similar to GL glRenderbufferStorage)
          //createDepthForCurrentMip();
@@ -310,12 +303,12 @@ namespace gpu_directx11
          // Optionally: if you want to change SRV/RTV usage or other states per mip, do it here.
       }
 
-      void mipmap_cubemap_framebuffer::setCubeFace(unsigned int faceIndex)
+      void mipmap_cubemap_framebuffer::set_cube_face(int iFace)
       {
-         ::gpu::ibl::mipmap_cubemap_framebuffer::setCubeFace(faceIndex);
-         if (faceIndex >= 6)
-            faceIndex = 0;
-         m_uCurrentFace = faceIndex;
+         ::gpu::ibl::mipmap_cubemap_framebuffer::set_cube_face(iFace);
+         if (iFace >= 6)
+            iFace = 0;
+         m_ptexture->m_iCurrentFace = iFace;
          // We don't actually rebind here — bind() will pick up current face & mip
       }
 

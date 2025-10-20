@@ -37,6 +37,8 @@ namespace gpu_directx11
    namespace ibl
    {
 
+      glm::vec3 rot180Y(::glm::vec3 v);
+
       specular_map::specular_map()
       {
 
@@ -120,15 +122,19 @@ namespace gpu_directx11
          //auto pgpucommandbuffer = m_pgpucontext->beginSingleTimeCommands(m_pgpucontext->m_pgpudevice->graphics_queue());
 
          glm::mat4 model = ::gpu::gltf::mIndentity4;
-         glm::mat4 cameraAngles[] =
-         {
-            glm::lookAt(::gpu::gltf::origin, ::gpu::gltf::unitX, -::gpu::gltf::unitY),
-            glm::lookAt(::gpu::gltf::origin, -::gpu::gltf::unitX, -::gpu::gltf::unitY),
-            glm::lookAt(::gpu::gltf::origin, ::gpu::gltf::unitY, ::gpu::gltf::unitZ),
-            glm::lookAt(::gpu::gltf::origin, -::gpu::gltf::unitY, -::gpu::gltf::unitZ),
-            glm::lookAt(::gpu::gltf::origin, ::gpu::gltf::unitZ, -::gpu::gltf::unitY),
-            glm::lookAt(::gpu::gltf::origin, -::gpu::gltf::unitZ, -::gpu::gltf::unitY)
-         };
+         glm::mat4 cameraAngles[] = {
+            // Swap +X/-X
+            glm::lookAt(::gpu::gltf::origin, rot180Y(-::gpu::gltf::unitX), -::gpu::gltf::unitY), // DX +X face
+            glm::lookAt(::gpu::gltf::origin, rot180Y(::gpu::gltf::unitX), -::gpu::gltf::unitY), // DX -X face
+
+            // +Y/-Y (may also need flipping depending on your loader)
+            glm::lookAt(::gpu::gltf::origin, rot180Y(::gpu::gltf::unitY), ::gpu::gltf::unitZ),
+            glm::lookAt(::gpu::gltf::origin, rot180Y(-::gpu::gltf::unitY), -::gpu::gltf::unitZ),
+
+            // +Z/-Z
+            glm::lookAt(::gpu::gltf::origin, rot180Y(::gpu::gltf::unitZ), -::gpu::gltf::unitY),
+            glm::lookAt(::gpu::gltf::origin, rot180Y(-::gpu::gltf::unitZ), -::gpu::gltf::unitY)};
+
          glm::mat4 projection = glm::perspective(
             glm::radians(90.0f), // 90 degrees to cover one face
             1.0f, // its a square
@@ -157,21 +163,21 @@ namespace gpu_directx11
          m_pshaderPrefilteredEnvMap->bind_source(nullptr, ptextureSkybox);
          //m_pshaderPrefilteredEnvMap->set_int("environmentCubemap", 0);
 
-         for (auto mipLevel = 0; mipLevel < m_uPrefilteredEnvMapMipLevels; mipLevel++)
+         for (auto iMip = 0; iMip < m_iPrefilteredEnvMapMipCount; iMip++)
          {
-            m_pframebufferPrefilteredEnvMap->setMipLevel(mipLevel);
+            m_pframebufferPrefilteredEnvMap->set_current_mip(iMip);
 
             //glViewport(0, 0, m_pframebufferPrefilteredEnvMap->getWidth(), m_pframebufferPrefilteredEnvMap->getHeight());
             //GLCheckError("");
             // each mip level has increasing roughness
-            float roughness = (float)mipLevel / (float)(m_uPrefilteredEnvMapMipLevels - 1);
+            float roughness = (float)iMip / (float)(m_iPrefilteredEnvMapMipCount - 1);
             m_pshaderPrefilteredEnvMap->set_float("roughness", roughness);
 
             // render to each side of the cubemap
-            for (auto i = 0; i < 6; i++)
+            for (auto iFace = 0; iFace < 6; iFace++)
             {
-               m_pshaderPrefilteredEnvMap->setModelViewProjectionMatrices(model, cameraAngles[i], projection);
-               m_pframebufferPrefilteredEnvMap->setCubeFace(i);
+               m_pshaderPrefilteredEnvMap->setModelViewProjectionMatrices(model, cameraAngles[iFace], projection);
+               m_pframebufferPrefilteredEnvMap->set_cube_face(iFace);
 
                //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
                //GLCheckError("");
@@ -179,11 +185,10 @@ namespace gpu_directx11
                rectangle.set(0, 0, m_pframebufferPrefilteredEnvMap->m_ptexture->m_sizeMip.cx(),
                              m_pframebufferPrefilteredEnvMap->m_ptexture->m_sizeMip.cy());
                // Bind RTV
-               ID3D11RenderTargetView *rtv =
-                  ptextureEnvMap->m_rendertargetviewa[pframebufferEnvMap->rtvIndex(i, mipLevel)];
+               auto prendertargetview = ptextureEnvMap->render_target_view(iFace, iMip);
                                                 //->m_pt[face * MIP_COUNT + mip]
                                                 //.Get();
-               pcontext->m_pcontext->OMSetRenderTargets(1, &rtv, nullptr);
+               pcontext->m_pcontext->OMSetRenderTargets(1, &prendertargetview, nullptr);
 
                m_pgpucontext->set_viewport(pgpucommandbuffer, rectangle);
                //glBindTexture(GL_TEXTURE_CUBE_MAP, ptextureSkybox->m_gluTextureID);

@@ -42,15 +42,12 @@ namespace gpu_directx11
          void on_initialize_mipmap_cubemap_framebuffer() override;
 
          void bind() override;
-         UINT mipWidthForLevel(UINT baseWidth, UINT level) const;
-         UINT mipHeightForLevel(UINT baseHeight, UINT level) const;
-         size_t rtvIndex(unsigned int face, unsigned int mip) const;
 
          /**
           * Set the mip level to render with.
           * @param mipLevel
           */
-         void setMipLevel(unsigned int level) override;
+         void set_current_mip(int iCurrentMip) override;
 
 
          // /**
@@ -71,7 +68,7 @@ namespace gpu_directx11
           * Set which cube face texture to render to.
           * @param index
           */
-         void setCubeFace(unsigned int faceIndex) override;
+         void set_cube_face(int iFace) override;
 
 
          //;

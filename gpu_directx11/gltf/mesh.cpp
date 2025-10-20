@@ -98,16 +98,16 @@ namespace gpu_directx11
 
                         glm::mat4 world =  m1*m2 ;
             //world = world * handednessFlip;
-            glm::mat4 normalMat = glm::transpose(glm::inverse(world));
                         pshader->set_mat4("modelMatrix", world);
-            //normalMat = normalMat * handednessFlip;
+                        glm::mat4 normalMat = glm::mat4(glm::inverse(glm::mat3(world)));
+                        // normalMat = normalMat * handednessFlip;
             pshader->set_mat4("normalMatrix", normalMat);
 
 
             bool bAlbedo = !prendersystem->m_bDisableAlbedo && m_pmaterial->useTextureAlbedo;
             pshader->set_int("useTextureAlbedo", bAlbedo);
             glm::vec3 seq3Albedo= {};
-            if (prendersystem->m_bForceDefaultAmbientOcclusionFactor)
+            if (prendersystem->m_bForceDefaultAlbedo)
             {
 
                seq3Albedo = prendersystem->m_seq3DefaultAlbedo;

@@ -107,17 +107,17 @@ namespace gpu_directx11
 
 
       }
-      if (m_mipsLevel < 0)
+      if (m_iMipCount < 0)
       {
 
 
          m_texture2ddesc.MipLevels = 0;
          m_texture2ddesc.MiscFlags |= D3D11_RESOURCE_MISC_GENERATE_MIPS;
       }
-      else if (m_mipsLevel > 1)
+      else if (m_iMipCount > 1)
       {
 
-         m_texture2ddesc.MipLevels = m_mipsLevel;
+         m_texture2ddesc.MipLevels = m_iMipCount;
          m_texture2ddesc.MiscFlags |= D3D11_RESOURCE_MISC_GENERATE_MIPS;
       }
       else
@@ -397,7 +397,7 @@ namespace gpu_directx11
       {
 
 
-         if (m_etype == e_type_cube_map)
+         if (m_etype == e_type_cube_map && m_rendertargetviewa.is_empty())
          {
             m_rendertargetviewa.set_size(6);
             for (int i = 0; i < 6; i++)
@@ -463,7 +463,7 @@ namespace gpu_directx11
          srvDesc.ViewDimension = D3D_SRV_DIMENSION_TEXTURE2D;
       }
       srvDesc.Texture2D.MostDetailedMip = 0;
-      if (m_mipsLevel < 0)
+      if (m_iMipCount < 0)
          srvDesc.Texture2D.MipLevels = -1;
       else
       srvDesc.Texture2D.MipLevels = 1;
@@ -805,17 +805,30 @@ namespace gpu_directx11
          buffer[i] = buffer[i + 2];
          buffer[i + 2] = t;
       }
-      int h = height;
-      int halfh = h / 2;
-      ::memory memoryLine;
-      memoryLine.set_size(width * 4);
-      auto p = buffer;
-      for (size_t y = 0; y < halfh; y++)
-      {
-         memcpy(memoryLine.data(), p + y * width * 4, memoryLine.size());
-         memcpy(p + y * width * 4, p + (h - 1 - y) * width * 4, memoryLine.size());
-         memcpy(p + (h - 1 - y) * width * 4, memoryLine.data(), memoryLine.size());
-      }
+    int h = height;
+          int w = width;
+    auto p = buffer;
+
+      // int halfw = w / 2;
+      // for (size_t y = 0; y < h; y++)
+      // {
+      //    auto pline = p + y * width * 4;
+      //    for (size_t x = 0; x < halfw; x++)
+      //    {
+      //       swap(((unsigned int *)pline)[x], ((unsigned int *)pline)[w - x - 1]);
+      //    }
+      // }
+
+      //int halfh = h / 2;
+      //::memory memoryLine;
+      //memoryLine.set_size(width * 4);
+      //p = buffer;
+      //for (size_t y = 0; y < halfh; y++)
+      //{
+      //   memcpy(memoryLine.data(), p + y * width * 4, memoryLine.size());
+      //   memcpy(p + y * width * 4, p + (h - 1 - y) * width * 4, memoryLine.size());
+      //   memcpy(p + (h - 1 - y) * width * 4, memoryLine.data(), memoryLine.size());
+      //}
 
       // Fill subresource data
       D3D11_SUBRESOURCE_DATA initData = {};
@@ -1002,7 +1015,21 @@ namespace gpu_directx11
       }
    }
 
+   ID3D11RenderTargetView * texture::render_target_view(int iFace, int iMip)
+   {
 
+      auto iIndex = render_target_view_index(iFace, iMip);
+
+      if (iIndex < 0 || iIndex >= m_rendertargetviewa.count())
+      {
+
+         throw ::exception(error_wrong_state);
+
+      }
+     
+      return m_rendertargetviewa[iIndex];
+
+   }
 
 } // namespace gpu_directx11
 
