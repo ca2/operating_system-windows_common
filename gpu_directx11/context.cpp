@@ -2882,7 +2882,6 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
          m_pcontext->Unmap(m_pbufferGlobalUbo, 0);
 
-
                //auto pVS = m_pbufferGlobalUbo.m_p;
          //m_pcontext->VSSetConstantBuffers(0, 1, &pVS);
                //auto pPS = m_pbufferGlobalUbo.m_p;
