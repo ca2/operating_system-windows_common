@@ -6,6 +6,9 @@
 #include "acme/_operating_system.h"
 
 
+
+
+
 CLASS_DECL_ACME bool _hsynchronization_wait(::hsynchronization h, const class ::time& timeWait);
 
 
@@ -30,7 +33,16 @@ namespace acme_windows_common
          if (has_own_synchronization_flag())
          {
 
-            ::CloseHandle(m_handle);
+            BOOL bOk = ::CloseHandle(m_handle);
+
+            if (!bOk)
+            {
+
+               auto errorcodeLastError = ::windows::last_error_error_code();
+
+               ::warningf("synchronization_object::~synchronization_object : Failed to close synchronization handle (%d)", errorcodeLastError.m_iOsError);
+
+            }
 
          }
 
