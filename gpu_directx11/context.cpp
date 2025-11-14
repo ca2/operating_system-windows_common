@@ -23,9 +23,9 @@
 #include "bred/gpu/types.h"
 #include "bred/graphics3d/types.h"
 #include "gpu_directx11/descriptors.h"
-#define GLM_FORCE_DEPTH_ZERO_TO_ONE
-#define GLM_FORCE_LEFT_HANDED
-#include <glm/mat4x4.hpp>
+//#define GLM_FORCE_DEPTH_ZERO_TO_ONE
+//#define GLM_FORCE_LEFT_HANDED
+//#include <glm/mat4x4.hpp>
 #include "initializers.h"
 #include "acme_windows_common/dxgi_surface_bindable.h"
 #include <DirectXMath.h>
