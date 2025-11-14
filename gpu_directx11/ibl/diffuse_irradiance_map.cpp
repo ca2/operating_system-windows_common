@@ -106,7 +106,7 @@ namespace gpu_directx11
             // +Z/-Z
             glm::lookAt(::gpu::gltf::origin, rot180Y(::gpu::gltf::unitZ), -::gpu::gltf::unitY),
             glm::lookAt(::gpu::gltf::origin, rot180Y(-::gpu::gltf::unitZ), -::gpu::gltf::unitY)};
-         floating_matrix4 projection = glm::perspective(glm::radians(90.0f), // 90 degrees to cover one face
+         floating_matrix4 projection = glm::perspective(::radians(90.0f), // 90 degrees to cover one face
                                                  1.0f, // its a square
                                                  0.1f, 2.0f);
 
@@ -188,7 +188,7 @@ namespace gpu_directx11
          //   glm::lookAt(::gpu::gltf::origin, -::gpu::gltf::unitZ, -::gpu::gltf::unitY)
          //};
          //floating_matrix4 projection = glm::perspective(
-         //   glm::radians(90.0f), // 90 degrees to cover one face
+         //   ::radians(90.0f), // 90 degrees to cover one face
          //   1.0f, // its a square
          //   0.1f,
          //   2.0f);
