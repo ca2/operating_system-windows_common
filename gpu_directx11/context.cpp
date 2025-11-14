@@ -2997,9 +2997,13 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       return m_pcontext1;
 
    }
+   
+   
    floating_matrix4 context::defer_transpose(const floating_matrix4 &m) 
-      {
-          return glm::transpose(m);
+   {
+
+      return m.transposed();
+
    }
 
 
