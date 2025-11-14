@@ -41,8 +41,8 @@ namespace direct2d
          auto pointCenter = ellipse.center();
          auto sizeRadius = ellipse.size() / 2.f;
 
-         d2d1ellipse.point.x = pointCenter.x();
-         d2d1ellipse.point.y = pointCenter.y();
+         d2d1ellipse.point.x = pointCenter.x;
+         d2d1ellipse.point.y = pointCenter.y;
          d2d1ellipse.radiusX = sizeRadius.cx();
          d2d1ellipse.radiusY = sizeRadius.cy();
 
@@ -153,12 +153,12 @@ namespace direct2d
       void add_polygon(ID2D1GeometrySink * pgeometrysink, const ::double_polygon & polygon, bool bFilled)
       {
 
-         pgeometrysink->BeginFigure({ (FLOAT)polygon.first().x(), (FLOAT)polygon.first().y() }, bFilled ? D2D1_FIGURE_BEGIN_FILLED : D2D1_FIGURE_BEGIN_HOLLOW);
+         pgeometrysink->BeginFigure({ (FLOAT)polygon.first().x, (FLOAT)polygon.first().y }, bFilled ? D2D1_FIGURE_BEGIN_FILLED : D2D1_FIGURE_BEGIN_HOLLOW);
 
          for (::collection::index i = 1; i < polygon.size(); i++)
          {
 
-            pgeometrysink->AddLine({ (FLOAT)polygon[i].x(), (FLOAT)polygon[i].y() });
+            pgeometrysink->AddLine({ (FLOAT)polygon[i].x, (FLOAT)polygon[i].y });
 
          }
 

@@ -643,7 +643,7 @@ namespace draw2d_direct2d
 
       //throw ::exception(todo);
       //ASSERT(get_handle1() != nullptr);
-      //VERIFY(::SetBrushOrgEx(get_handle1(), point.x(), point.y(), &point));
+      //VERIFY(::SetBrushOrgEx(get_handle1(), point.x, point.y, &point));
       //return point;
 
       return ::double_point();
@@ -813,16 +813,16 @@ namespace draw2d_direct2d
          if (rectangleIntersect.intersect(rectangleIntersect, rectangleBlt))
          {
 
-            //if (m_pointAlphaBlend.x() < 0)
+            //if (m_pointAlphaBlend.x < 0)
             //{
 
-            //   xSrc += -m_pointAlphaBlend.x();
+            //   xSrc += -m_pointAlphaBlend.x;
 
             //}
-            //if (m_pointAlphaBlend.y() < 0)
+            //if (m_pointAlphaBlend.y < 0)
             //{
 
-            //   ySrc += -m_pointAlphaBlend.y();
+            //   ySrc += -m_pointAlphaBlend.y;
 
             //}
 
@@ -833,11 +833,11 @@ namespace draw2d_direct2d
 
             //   ::double_point pointOff = get_origin();
 
-            //   x += pointOff.x();
+            //   x += pointOff.x;
 
-            //   y += pointOff.y();
+            //   y += pointOff.y;
 
-            //   return m_pimage->blend(::double_point(x, y), pgraphicsSrc->m_pimage, ::double_point(xSrc, ySrc), m_pimageAlphaBlend, int_point(m_pointAlphaBlend.x() - x, m_pointAlphaBlend.y() - y), rectangleBlt.size());
+            //   return m_pimage->blend(::double_point(x, y), pgraphicsSrc->m_pimage, ::double_point(xSrc, ySrc), m_pimageAlphaBlend, int_point(m_pointAlphaBlend.x - x, m_pointAlphaBlend.y - y), rectangleBlt.size());
 
             //}
             //else
@@ -858,7 +858,7 @@ namespace draw2d_direct2d
 
             //}
 
-            pimage1->blend2(::double_point(), m_pimageAlphaBlend, double_point(x - m_pointAlphaBlend.x(), y - m_pointAlphaBlend.y()), rectangleBlt.size(), 255);
+            pimage1->blend2(::double_point(), m_pimageAlphaBlend, double_point(x - m_pointAlphaBlend.x, y - m_pointAlphaBlend.y), rectangleBlt.size(), 255);
 
             ::image::image_drawing_options imagedrawingoptions;
 
@@ -1108,8 +1108,8 @@ namespace draw2d_direct2d
 
       //   //D2D1_POINT_2U p;
 
-      //   //p.x() = 0;
-      //   //p.y() = 0;
+      //   //p.x = 0;
+      //   //p.y = 0;
 
       //   //D2D1_RECT_U srcRect;
 
@@ -1287,7 +1287,7 @@ namespace draw2d_direct2d
    //double_point graphics::set_origin(const ::double_point & point)
    //{
 
-   //   return ::draw2d::graphics::set_origin(point.x(), point.y());
+   //   return ::draw2d::graphics::set_origin(point.x, point.y);
 
    //}
 
@@ -1303,7 +1303,7 @@ namespace draw2d_direct2d
    double_point graphics::SetWindowOrg(const ::double_point & point)
    {
 
-      return SetWindowOrg(point.x(), point.y());
+      return SetWindowOrg(point.x, point.y);
 
    }
 
@@ -1415,7 +1415,7 @@ namespace draw2d_direct2d
 
    //   ASSERT(get_handle1() != nullptr);
 
-   //   return PtVisible(point.x(), point.y());
+   //   return PtVisible(point.x, point.y);
 
    //} // call virtual
 
@@ -1526,7 +1526,7 @@ namespace draw2d_direct2d
 
       //ASSERT(get_handle1() != nullptr);
 
-      arc(rectangle.left(), rectangle.top(), rectangle.right(), rectangle.bottom(), pointStart.x(), pointStart.y(), pointEnd.x(), pointEnd.y());
+      arc(rectangle.left(), rectangle.top(), rectangle.right(), rectangle.bottom(), pointStart.x, pointStart.y, pointEnd.x, pointEnd.y);
 
 
    }
@@ -1601,7 +1601,7 @@ namespace draw2d_direct2d
    //   //if(picon == nullptr)
    //   //   return false;
 
-   //   //return ::DrawIcon(get_handle1(), point.x(), point.y(), picon->m_hicon) != false;
+   //   //return ::DrawIcon(get_handle1(), point.x, point.y, picon->m_hicon) != false;
 
    //}
 
@@ -1699,7 +1699,7 @@ namespace draw2d_direct2d
 //
 //      throw ::exception(todo);
 //      //ASSERT(get_handle1() != nullptr);
-//      //return ::DrawState(get_handle1(), hBrush, nullptr, (LPARAM)hBitmap, 0, point.x(), point.y(), size.cx(), size.cy(), nFlags|DST_BITMAP) != false;
+//      //return ::DrawState(get_handle1(), hBrush, nullptr, (LPARAM)hBitmap, 0, point.x, point.y, size.cx(), size.cy(), nFlags|DST_BITMAP) != false;
 //
 //   }
 //
@@ -1709,7 +1709,7 @@ namespace draw2d_direct2d
 //      throw ::exception(todo);
 //
 //      //ASSERT(get_handle1() != nullptr);
-//      //return ::DrawState(get_handle1(), (HBRUSH)pBrush->get_os_data(), nullptr, (LPARAM)pBitmap->get_os_data(), 0, point.x(), point.y(), size.cx(), size.cy(), nFlags|DST_BITMAP) != false;
+//      //return ::DrawState(get_handle1(), (HBRUSH)pBrush->get_os_data(), nullptr, (LPARAM)pBitmap->get_os_data(), 0, point.x, point.y, size.cx(), size.cy(), nFlags|DST_BITMAP) != false;
 //
 //   }
 //
@@ -1720,7 +1720,7 @@ namespace draw2d_direct2d
 //      throw ::exception(todo);
 //
 //      //ASSERT(get_handle1() != nullptr);
-//      //return ::DrawState(get_handle1(), hBrush, nullptr, (LPARAM)hIcon, 0, point.x(), point.y(), size.cx(), size.cy(), nFlags|DST_ICON) != false;
+//      //return ::DrawState(get_handle1(), hBrush, nullptr, (LPARAM)hIcon, 0, point.x, point.y, size.cx(), size.cy(), nFlags|DST_ICON) != false;
 //
 //   }
 //
@@ -1732,7 +1732,7 @@ namespace draw2d_direct2d
 //      throw ::exception(todo);
 //
 //      //ASSERT(get_handle1() != nullptr);
-//      //return ::DrawState(get_handle1(), (HBRUSH)pBrush->get_os_data(), nullptr, (LPARAM)hIcon, 0, point.x(), point.y(), size.cx(), size.cy(), nFlags|DST_ICON) != false;
+//      //return ::DrawState(get_handle1(), (HBRUSH)pBrush->get_os_data(), nullptr, (LPARAM)hIcon, 0, point.x, point.y, size.cx(), size.cy(), nFlags|DST_ICON) != false;
 //
 //   }
 //
@@ -1742,7 +1742,7 @@ namespace draw2d_direct2d
 //      throw ::exception(todo);
 //
 //      //ASSERT(get_handle1() != nullptr);
-//      //return ::DrawState(get_handle1(), hBrush,  nullptr, (LPARAM)lpszText, (WPARAM)nTextLen, point.x(), point.y(), size.cx(), size.cy(), nFlags|(bPrefixText ? DST_PREFIXTEXT : DST_TEXT)) != false;
+//      //return ::DrawState(get_handle1(), hBrush,  nullptr, (LPARAM)lpszText, (WPARAM)nTextLen, point.x, point.y, size.cx(), size.cy(), nFlags|(bPrefixText ? DST_PREFIXTEXT : DST_TEXT)) != false;
 //
 //   }
 //
@@ -1752,7 +1752,7 @@ namespace draw2d_direct2d
 //      throw ::exception(todo);
 //
 //      //ASSERT(get_handle1() != nullptr);
-//      //return ::DrawState(get_handle1(), (HBRUSH)pBrush->get_os_data(), nullptr, (LPARAM)lpszText, (WPARAM)nTextLen, point.x(), point.y(), size.cx(), size.cy(), nFlags|(bPrefixText ? DST_PREFIXTEXT : DST_TEXT)) != false;
+//      //return ::DrawState(get_handle1(), (HBRUSH)pBrush->get_os_data(), nullptr, (LPARAM)lpszText, (WPARAM)nTextLen, point.x, point.y, size.cx(), size.cy(), nFlags|(bPrefixText ? DST_PREFIXTEXT : DST_TEXT)) != false;
 //
 //   }
 //
@@ -1764,7 +1764,7 @@ namespace draw2d_direct2d
 //
 //      throw ::exception(todo);
 //
-//      //ASSERT(get_handle1() != nullptr); return ::DrawState(get_handle1(), hBrush, lpDrawProc, lData, 0, point.x(), point.y(), size.cx(), size.cy(), nFlags|DST_COMPLEX) != false;
+//      //ASSERT(get_handle1() != nullptr); return ::DrawState(get_handle1(), hBrush, lpDrawProc, lData, 0, point.x, point.y, size.cx(), size.cy(), nFlags|DST_COMPLEX) != false;
 //
 //   }
 //
@@ -1773,7 +1773,7 @@ namespace draw2d_direct2d
 //
 //      throw ::exception(todo);
 //
-//      //ASSERT(get_handle1() != nullptr); return ::DrawState(get_handle1(), (HBRUSH)pBrush->get_os_data(), lpDrawProc, lData, 0, point.x(), point.y(), size.cx(), size.cy(), nFlags|DST_COMPLEX) != false;
+//      //ASSERT(get_handle1() != nullptr); return ::DrawState(get_handle1(), (HBRUSH)pBrush->get_os_data(), lpDrawProc, lData, 0, point.x, point.y, size.cx(), size.cy(), nFlags|DST_COMPLEX) != false;
 //
 //   }
 //   */
@@ -1822,7 +1822,7 @@ namespace draw2d_direct2d
 
       //ASSERT(get_handle1() != nullptr);
 
-      //return ::Chord(get_handle1(), rectangle.left(), rectangle.top(), rectangle.right(), rectangle.bottom(), pointStart.x(), pointStart.y(), pointEnd.x(), pointEnd.y()) != false;
+      //return ::Chord(get_handle1(), rectangle.left(), rectangle.top(), rectangle.right(), rectangle.bottom(), pointStart.x, pointStart.y, pointEnd.x, pointEnd.y) != false;
 
       //return false;
 
@@ -1999,12 +1999,12 @@ namespace draw2d_direct2d
 
          psink->SetFillMode(D2D1_FILL_MODE_WINDING);
 
-         psink->BeginFigure(D2D1::Point2F((FLOAT)ppoints->x(), (FLOAT)ppoints->y()), D2D1_FIGURE_BEGIN_FILLED);
+         psink->BeginFigure(D2D1::Point2F((FLOAT)ppoints->x, (FLOAT)ppoints->y), D2D1_FIGURE_BEGIN_FILLED);
 
          for (::collection::index i = 1; i < count; i++)
          {
 
-            psink->AddLine({ (FLOAT)ppoints[i].x(), (FLOAT)ppoints[i].y() });
+            psink->AddLine({ (FLOAT)ppoints[i].x, (FLOAT)ppoints[i].y });
 
          }
 
@@ -2051,12 +2051,12 @@ namespace draw2d_direct2d
 
          psink->SetFillMode(D2D1_FILL_MODE_WINDING);
 
-         psink->BeginFigure(D2D1::Point2F((FLOAT)ppoints->x(), (FLOAT)ppoints->y()), D2D1_FIGURE_BEGIN_FILLED);
+         psink->BeginFigure(D2D1::Point2F((FLOAT)ppoints->x, (FLOAT)ppoints->y), D2D1_FIGURE_BEGIN_FILLED);
 
          for (::collection::index i = 1; i < count; i++)
          {
 
-            psink->AddLine({ (FLOAT)ppoints[i].x(), (FLOAT)ppoints[i].y() });
+            psink->AddLine({ (FLOAT)ppoints[i].x, (FLOAT)ppoints[i].y });
 
          }
 
@@ -2099,12 +2099,12 @@ namespace draw2d_direct2d
 
          psink->SetFillMode(D2D1_FILL_MODE_WINDING);
 
-         psink->BeginFigure(D2D1::Point2F((FLOAT)ppoints->x(), (FLOAT)ppoints->y()), D2D1_FIGURE_BEGIN_FILLED);
+         psink->BeginFigure(D2D1::Point2F((FLOAT)ppoints->x, (FLOAT)ppoints->y), D2D1_FIGURE_BEGIN_FILLED);
 
          for (::collection::index i = 1; i < count; i++)
          {
 
-            psink->AddLine({ (FLOAT)ppoints[i].x(), (FLOAT)ppoints[i].y() });
+            psink->AddLine({ (FLOAT)ppoints[i].x, (FLOAT)ppoints[i].y });
 
          }
 
@@ -2322,8 +2322,8 @@ namespace draw2d_direct2d
       double y = rectangleTarget.top();
       double nWidth = rectangleTarget.width();
       double nHeight = rectangleTarget.height();
-      double xSrc = pointSrc.x();
-      double ySrc = pointSrc.y();
+      double xSrc = pointSrc.x;
+      double ySrc = pointSrc.y;
 
       if (x < 0)
       {
@@ -2357,17 +2357,17 @@ namespace draw2d_direct2d
 
             D2D1_SIZE_U sz = pd2d1bitmap->GetPixelSize();
 
-            if (nWidth + x + m_pointOrigin.x() > sz.width)
+            if (nWidth + x + m_pointOrigin.x > sz.width)
             {
 
-               nWidth = sz.width - x - m_pointOrigin.x();
+               nWidth = sz.width - x - m_pointOrigin.x;
 
             }
 
-            if (nHeight + y + m_pointOrigin.y() > sz.height)
+            if (nHeight + y + m_pointOrigin.y > sz.height)
             {
 
-               nHeight = sz.height - y - m_pointOrigin.y();
+               nHeight = sz.height - y - m_pointOrigin.y;
 
             }
 
@@ -3243,7 +3243,7 @@ namespace draw2d_direct2d
 
       //   //ASSERT(get_handle1() != nullptr);
 
-      //   //return ::SetPixelV(get_handle1(), point.x(), point.y(), crColor) != false;
+      //   //return ::SetPixelV(get_handle1(), point.x, point.y, crColor) != false;
 
       //   return false;
 
@@ -3270,7 +3270,7 @@ namespace draw2d_direct2d
 
    //   //ASSERT(get_handle1() != nullptr);
 
-   //   //return ArcTo(rectangle.left(), rectangle.top(), rectangle.right(), rectangle.bottom(), pointStart.x(), pointStart.y(), pointEnd.x(), pointEnd.y());
+   //   //return ArcTo(rectangle.left(), rectangle.top(), rectangle.right(), rectangle.bottom(), pointStart.x, pointStart.y, pointEnd.x, pointEnd.y);
    //   //return false;
 
 
@@ -3816,8 +3816,8 @@ namespace draw2d_direct2d
 
    imageWork4.Fill(255, 0, 0, 0);
 
-   imageWork4.from(int_point(maximum(0, m_pointAlphaBlend.x() - xDest), maximum(0, m_pointAlphaBlend.y() - yDest)),
-   m_pimageAlphaBlend->get_graphics(), int_point(maximum(0, xDest - m_pointAlphaBlend.x()), maximum(0, yDest - m_pointAlphaBlend.y())), ::double_size);
+   imageWork4.from(int_point(maximum(0, m_pointAlphaBlend.x - xDest), maximum(0, m_pointAlphaBlend.y - yDest)),
+   m_pimageAlphaBlend->get_graphics(), int_point(maximum(0, xDest - m_pointAlphaBlend.x), maximum(0, yDest - m_pointAlphaBlend.y)), ::double_size);
 
    imageWork.channel_multiply(::color::e_channel_opacity, imageWork4);
 
@@ -6320,9 +6320,9 @@ namespace draw2d_direct2d
 
       m_pd2d1rendertarget->DrawLine(p1, p2, pbrush, (FLOAT)(dynamic_cast <::draw2d_direct2d::pen *> (m_ppen.m_p))->m_dWidth);
 
-      m_point.x() = x2;
+      m_point.x = x2;
 
-      m_point.y() = y2;
+      m_point.y = y2;
 
       //return true;
 
@@ -6361,9 +6361,9 @@ namespace draw2d_direct2d
 
       m_pd2d1rendertarget->DrawLine(p1, p2, pbrush, fWidth);
 
-      m_point.x() = x2;
+      m_point.x = x2;
 
-      m_point.y() = y2;
+      m_point.y = y2;
 
       //return true;
 
@@ -7403,7 +7403,7 @@ namespace draw2d_direct2d
 
       //defer_text_rendering_hint();
 
-      //playout->Draw(nullptr, &renderer, (FLOAT) textout.m_point.x(), (FLOAT) textout.m_point.y());
+      //playout->Draw(nullptr, &renderer, (FLOAT) textout.m_point.x, (FLOAT) textout.m_point.y);
 
       return true;
 
@@ -7448,7 +7448,7 @@ namespace draw2d_direct2d
 
       //   defer_text_rendering_hint();
 
-      //   playout->Draw(nullptr, &renderer, (FLOAT)textout.m_point.x(), (FLOAT)textout.m_point.y());
+      //   playout->Draw(nullptr, &renderer, (FLOAT)textout.m_point.x, (FLOAT)textout.m_point.y);
 
       //}
 
@@ -7651,10 +7651,10 @@ namespace draw2d_direct2d
 
       ::int_point pointViewport(0, 0);
 
-      prop.startPoint.x = (FLOAT)p1.x() + pointViewport.x();
-      prop.startPoint.y = (FLOAT)p1.y() + pointViewport.y();
-      prop.endPoint.x = (FLOAT)p2.x() + pointViewport.x();
-      prop.endPoint.y = (FLOAT)p2.y() + pointViewport.y();
+      prop.startPoint.x = (FLOAT)p1.x + pointViewport.x;
+      prop.startPoint.y = (FLOAT)p1.y + pointViewport.y;
+      prop.endPoint.x = (FLOAT)p2.x + pointViewport.x;
+      prop.endPoint.y = (FLOAT)p2.y + pointViewport.y;
 
       D2D1_BRUSH_PROPERTIES brushproperties = {};
 

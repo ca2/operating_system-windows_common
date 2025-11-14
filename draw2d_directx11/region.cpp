@@ -95,7 +95,7 @@ namespace draw2d_directx11
    //   throw ::exception(todo);
 
 
-   //   //ASSERT(get_os_data() != nullptr); return ::OffsetRgn((HRGN)get_os_data(), point.x(), point.y());
+   //   //ASSERT(get_os_data() != nullptr); return ::OffsetRgn((HRGN)get_os_data(), point.x, point.y);
    //}
    //int region::GetRgnBox(::int_rectangle * prectangle) const
    //{
@@ -133,13 +133,13 @@ namespace draw2d_directx11
    bool region::contains(::draw2d::graphics* pgraphics, const ::int_point & point) const
    {
 
-      return contains(pgraphics, point.x(), point.y());
+      return contains(pgraphics, point.x, point.y);
 
       //throw ::exception(todo);
 
 
-      //return ::PtInRegion((HRGN)get_os_data(), point.x(), point.y());
-      //Gdiplus::PointF float_point((Gdiplus::REAL) point.x(), (Gdiplus::REAL) point.y());
+      //return ::PtInRegion((HRGN)get_os_data(), point.x, point.y);
+      //Gdiplus::PointF float_point((Gdiplus::REAL) point.x, (Gdiplus::REAL) point.y);
       //
       //ASSERT(get_os_data() != nullptr); //return ::PtInRegion((HRGN)get_os_data(), x, y);
 
@@ -254,8 +254,8 @@ namespace draw2d_directx11
    //   //auto pointCenter = pitem->m_item.center();
    //   //auto sizeRadius = pitem->m_item.size() / 2.0;
 
-   //   //ellipse.point.x = (float)pointCenter.x();
-   //   //ellipse.point.y = (float)pointCenter.y();
+   //   //ellipse.point.x = (float)pointCenter.x;
+   //   //ellipse.point.y = (float)pointCenter.y;
    //   //ellipse.radiusX = (float)sizeRadius.cx();
    //   //ellipse.radiusY = (float)sizeRadius.cy();
 
@@ -279,7 +279,7 @@ namespace draw2d_directx11
 
    //   for(int i = 0; i < m_nCount; i++)
    //   {
-   //      pa.add(Gdiplus::PointF((Gdiplus::REAL) m_lppoints[i].x(), (Gdiplus::REAL) m_lppoints[i].y()));
+   //      pa.add(Gdiplus::PointF((Gdiplus::REAL) m_lppoints[i].x, (Gdiplus::REAL) m_lppoints[i].y));
    //   }*/
 
    //   /*
@@ -337,7 +337,7 @@ namespace draw2d_directx11
    //      //pa.erase_all();
    //      //for(int j = 0; j < jCount; j++)
    //      //{
-   //      //   pa.add(double_point(m_lppoints[n].x(), m_lppoints[n].y()));
+   //      //   pa.add(double_point(m_lppoints[n].x, m_lppoints[n].y));
    //      //   n++;
    //      //}
    //      //ppath->begin_figure(true, m_efillmode);

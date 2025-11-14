@@ -228,7 +228,7 @@ namespace draw2d_directx11
    //bool image::draw(::draw2d::graphics* pgraphics, const ::int_point & point, const ::int_size & size, const ::int_point & pointSrc)
    //{
 
-   //   return pgraphics->BitBlt(point.x(), point.y(), size.cx(), size.cy(), get_graphics(), pointSrc.x(), pointSrc.y()) != false;
+   //   return pgraphics->BitBlt(point.x, point.y, size.cx(), size.cy(), get_graphics(), pointSrc.x, pointSrc.y) != false;
 
    //}
 
@@ -268,7 +268,7 @@ namespace draw2d_directx11
    //bool image::from(const ::int_point & pointDest, ::draw2d::graphics* pgraphics, const ::int_point & point, const ::int_size & sz)
    //{
 
-   //   return m_pgraphics->BitBlt(pointDest.x(), pointDest.y(), sz.cx(), sz.cy(), pgraphics, point.x(), point.y()) != false;
+   //   return m_pgraphics->BitBlt(pointDest.x, pointDest.y, sz.cx(), sz.cy(), pgraphics, point.x, point.y) != false;
 
    //}
 
@@ -1413,8 +1413,8 @@ namespace draw2d_directx11
 
       //D2D1_POINT_2U p;
 
-      //p.x() = 0;
-      //p.y() = 0;
+      //p.x = 0;
+      //p.y = 0;
 
       //D2D1_RECT_U srcRect;
 
@@ -1438,8 +1438,8 @@ namespace draw2d_directx11
 
       D2D1_POINT_2U p;
 
-      p.x() = 0;
-      p.y() = 0;
+      p.x = 0;
+      p.y = 0;
 
       D2D1_RECT_U srcRect;
 
@@ -1539,11 +1539,11 @@ namespace draw2d_directx11
 
       //      D2D1_SIZE_U sz = ((ID2D1Bitmap *)get_graphics()->get_current_bitmap()->get_os_data())->GetPixelSize();
 
-      //      if (natural(size.cx() + pointDst.x()) > sz.width)
-      //         size.cx() = sz.width - pointDst.x();
+      //      if (natural(size.cx() + pointDst.x) > sz.width)
+      //         size.cx() = sz.width - pointDst.x;
 
-      //      if (natural(size.cy() + pointDst.y()) > sz.height)
-      //         size.cy() = sz.height - pointDst.y();
+      //      if (natural(size.cy() + pointDst.y) > sz.height)
+      //         size.cy() = sz.height - pointDst.y;
 
       //   }
 
@@ -1559,19 +1559,19 @@ namespace draw2d_directx11
 
       //      sizeSource.cy() = sz.height;
 
-      //      if (natural(size.cx() + pointSrc.x()) > sz.width)
+      //      if (natural(size.cx() + pointSrc.x) > sz.width)
       //      {
 
-      //         size.cx() = sz.width - pointSrc.x();
+      //         size.cx() = sz.width - pointSrc.x;
 
       //         bSmallerSourceRegion = true;
 
       //      }
 
-      //      if (natural(size.cy() + pointSrc.y()) < sz.height)
+      //      if (natural(size.cy() + pointSrc.y) < sz.height)
       //      {
 
-      //         size.cy() = sz.height - pointSrc.y();
+      //         size.cy() = sz.height - pointSrc.y;
 
       //         bSmallerSourceRegion = true;
 
@@ -1579,16 +1579,16 @@ namespace draw2d_directx11
 
       //   }
 
-      //   if (pointDst.x() > 0 || pointDst.y() > 0)
+      //   if (pointDst.x > 0 || pointDst.y > 0)
       //   {
 
       //      bSmallerSourceRegion = true;
 
       //   }
 
-      //   D2D1_RECT_F rectangleTarget = D2D1::RectF((float)pointDst.x(), (float)pointDst.y(), (float)(pointDst.x() + size.cx()), (float)(pointDst.y() + size.cy()));
+      //   D2D1_RECT_F rectangleTarget = D2D1::RectF((float)pointDst.x, (float)pointDst.y, (float)(pointDst.x + size.cx()), (float)(pointDst.y + size.cy()));
 
-      //   D2D1_RECT_F rectangleSource = D2D1::RectF((float)pointSrc.x(), (float)pointSrc.y(), (float)(pointSrc.x() + size.cx()), (float)(pointSrc.y() + size.cy()));
+      //   D2D1_RECT_F rectangleSource = D2D1::RectF((float)pointSrc.x, (float)pointSrc.y, (float)(pointSrc.x + size.cx()), (float)(pointSrc.y + size.cy()));
 
       //   HRESULT hr = ((ID2D1DeviceContext *)pgraphicsMap->get_os_data())->EndDraw();
 
@@ -1599,8 +1599,8 @@ namespace draw2d_directx11
       //   {
 
       //      D2D1_POINT_2F p;
-      //      p.x() = rectangleTarget.left();
-      //      p.y() = rectangleTarget.top();
+      //      p.x = rectangleTarget.left();
+      //      p.y = rectangleTarget.top();
 
       //      pgraphics->m_pdevicecontext->DrawImage((ID2D1Bitmap *)pgraphicsMap->get_current_bitmap()->get_os_data(), p, rectangleSource, pgraphics->m_interpolationmode, D2D1_COMPOSITE_MODE_DESTINATION_IN);
 
@@ -1612,24 +1612,24 @@ namespace draw2d_directx11
       //      ::draw2d::savedc k1(pgraphics);
 
       //      ::int_rectangle rDst;
-      //      rDst.left() = pointDst.x();
-      //      rDst.top() = pointDst.y();
-      //      rDst.right() = pointDst.x() + size.cx();
-      //      rDst.bottom() = pointDst.y() + size.cy();
+      //      rDst.left() = pointDst.x;
+      //      rDst.top() = pointDst.y;
+      //      rDst.right() = pointDst.x + size.cx();
+      //      rDst.bottom() = pointDst.y + size.cy();
 
       //      pgraphics->ExcludeClipRect(rDst);
 
       //      D2D1_RECT_F r1;
-      //      r1.left() = (FLOAT) (pointDst.x());
-      //      r1.top() = (FLOAT)(pointDst.y());
-      //      r1.right() = (FLOAT)(pointDst.x() + sizeParam.cx());
-      //      r1.bottom() = (FLOAT)(pointDst.y() + sizeParam.cy());
+      //      r1.left() = (FLOAT) (pointDst.x);
+      //      r1.top() = (FLOAT)(pointDst.y);
+      //      r1.right() = (FLOAT)(pointDst.x + sizeParam.cx());
+      //      r1.bottom() = (FLOAT)(pointDst.y + sizeParam.cy());
 
       //      D2D1_RECT_F r2;
-      //      r2.left() = (FLOAT)(pointSrc.x());
-      //      r2.top() = (FLOAT)(pointSrc.y());
-      //      r2.right() = (FLOAT)(pointSrc.x() + sizeParam.cx());
-      //      r2.bottom() = (FLOAT)(pointSrc.y() + sizeParam.cy());
+      //      r2.left() = (FLOAT)(pointSrc.x);
+      //      r2.top() = (FLOAT)(pointSrc.y);
+      //      r2.right() = (FLOAT)(pointSrc.x + sizeParam.cx());
+      //      r2.bottom() = (FLOAT)(pointSrc.y + sizeParam.cy());
 
       //      pgraphics->m_pdevicecontext->DrawBitmap((ID2D1Bitmap *)pgraphicsMap->get_current_bitmap()->get_os_data(), r1,bA / 255.0f, pgraphics->m_interpolationmode, r2);
 

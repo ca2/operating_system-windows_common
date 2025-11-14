@@ -100,8 +100,8 @@ CLASS_DECL_DIRECT2D DWRITE_FONT_WEIGHT dwrite_font_weight(const write_text::font
 inline void copy(D2D1_POINT_2F & pointDst, const ::double_point & pointSrc)
 {
    
-   pointDst.x = (FLOAT)pointSrc.x();
-   pointDst.y = (FLOAT)pointSrc.y();
+   pointDst.x = (FLOAT)pointSrc.x;
+   pointDst.y = (FLOAT)pointSrc.y;
 
 }
 

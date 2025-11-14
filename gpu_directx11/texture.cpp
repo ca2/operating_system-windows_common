@@ -908,10 +908,14 @@ namespace gpu_directx11
 
       int width, height, channels;
 
+      stbi_set_flip_vertically_on_load(1);
+
       auto imagedata = stbi_loadf_from_memory(data, size, &width, &height, &channels, 0);
 
       if (!imagedata)
       {
+
+         stbi_set_flip_vertically_on_load(0);
 
          warning() << "Failed to load texture data";
 
@@ -919,6 +923,8 @@ namespace gpu_directx11
 
          return;
       }
+
+      stbi_set_flip_vertically_on_load(0);
 
       // m_etype = etype;
       m_rectangleTarget = ::int_rectangle(::int_size(width, height));
