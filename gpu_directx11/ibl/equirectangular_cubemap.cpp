@@ -66,22 +66,22 @@ namespace gpu_directx11
       //     hdri_cube = std::make_unique<hdri_cube>(hdriPath);
       //     framebuffer = std::make_unique<cubemap_framebuffer>(cubemapWidth, cubemapHeight);
       // }
-      glm::vec3 rot180Y(::glm::vec3 v) { return glm::vec3(-v.x, v.y, -v.z); }
+      floating_sequence3 rot180Y(::floating_sequence3 v) { return floating_sequence3(-v.x, v.y, -v.z); }
 
       void equirectangular_cubemap::compute()
       {
          // Timer timer;
 
          auto pgpucommandbuffer = m_pgpucontext->beginSingleTimeCommands(m_pgpucontext->m_pgpudevice->graphics_queue());
-         glm::mat4 model = ::gpu::gltf::mIndentity4;
-         //glm::mat4 cameraAngles[] = {glm::lookAt(::gpu::gltf::origin, ::gpu::gltf::unitX, -::gpu::gltf::unitY),
+         floating_matrix4 model = ::gpu::gltf::mIndentity4;
+         //floating_matrix4 cameraAngles[] = {glm::lookAt(::gpu::gltf::origin, ::gpu::gltf::unitX, -::gpu::gltf::unitY),
            ///                          glm::lookAt(::gpu::gltf::origin, -::gpu::gltf::unitX, -::gpu::gltf::unitY),
               //                       glm::lookAt(::gpu::gltf::origin, ::gpu::gltf::unitY, ::gpu::gltf::unitZ),
                 ///                     glm::lookAt(::gpu::gltf::origin, -::gpu::gltf::unitY, -::gpu::gltf::unitZ),
                    //                  glm::lookAt(::gpu::gltf::origin, ::gpu::gltf::unitZ, -::gpu::gltf::unitY),
                      //                glm::lookAt(::gpu::gltf::origin, -::gpu::gltf::unitZ, -::gpu::gltf::unitY)};
          // Rotate targets around Y
-         glm::mat4 cameraAngles[] = {
+         floating_matrix4 cameraAngles[] = {
             // Swap +X/-X
             glm::lookAt(::gpu::gltf::origin, rot180Y( - ::gpu::gltf::unitX), -::gpu::gltf::unitY), // DX +X face
             glm::lookAt(::gpu::gltf::origin, rot180Y(::gpu::gltf::unitX), -::gpu::gltf::unitY), // DX -X face
@@ -93,7 +93,7 @@ namespace gpu_directx11
             // +Z/-Z
             glm::lookAt(::gpu::gltf::origin,rot180Y( ::gpu::gltf::unitZ), -::gpu::gltf::unitY),
             glm::lookAt(::gpu::gltf::origin, rot180Y(-::gpu::gltf::unitZ), -::gpu::gltf::unitY)};
-         glm::mat4 projection = glm::perspective(glm::radians(90.0f), // 90 degrees to cover one face
+         floating_matrix4 projection = glm::perspective(glm::radians(90.0f), // 90 degrees to cover one face
                                                  1.0f, // its a square
                                                  0.1f, 2.0f);
          ::cast<::gpu_directx11::context> pcontext = m_pgpucontext;

@@ -91,22 +91,22 @@ namespace gpu_directx11
             // -------------------------
             // Step 2: Handedness flip if needed (right-handed -> left-handed)
             // -------------------------
-            //glm::mat4 handednessFlip = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 1.0f, -1.0f));
+            //floating_matrix4 handednessFlip = glm::scale(floating_matrix4(1.0f), floating_sequence3(1.0f, 1.0f, -1.0f));
             //modelMatrixGL = modelMatrixGL * handednessFlip;
             //normalMatrixGL = normalMatrixGL * handednessFlip;
 
 
-                        glm::mat4 world =  m1*m2 ;
+                        floating_matrix4 world =  m1*m2 ;
             //world = world * handednessFlip;
-                        pshader->set_mat4("modelMatrix", world);
-                        glm::mat4 normalMat = glm::mat4(glm::inverse(glm::mat3(world)));
+                        pshader->set_matrix4("modelMatrix", world);
+                        floating_matrix4 normalMat = floating_matrix4(glm::inverse(floating_matrix3(world)));
                         // normalMat = normalMat * handednessFlip;
-            pshader->set_mat4("normalMatrix", normalMat);
+            pshader->set_matrix4("normalMatrix", normalMat);
 
 
             bool bAlbedo = !prendersystem->m_bDisableAlbedo && m_pmaterial->useTextureAlbedo;
             pshader->set_int("useTextureAlbedo", bAlbedo);
-            glm::vec3 seq3Albedo= {};
+            floating_sequence3 seq3Albedo= {};
             if (prendersystem->m_bForceDefaultAlbedo)
             {
 
@@ -118,7 +118,7 @@ namespace gpu_directx11
                seq3Albedo = m_pmaterial->m_seq3Albedo;
             }
 
-            pshader->set_seq3("albedo", seq3Albedo);
+            pshader->set_sequence3("albedo", seq3Albedo);
             if (bAlbedo)
             {
                int iTextureIndex = ::gpu::e_gltf_texture_albedo;
@@ -205,7 +205,7 @@ namespace gpu_directx11
 
             bool bEmissive = !prendersystem->m_bDisableEmissive && m_pmaterial->useTextureEmissive;
             pshader->set_int("useTextureEmissive", bEmissive);
-            glm::vec3 seq3Emission = {};
+            floating_sequence3 seq3Emission = {};
             if (prendersystem->m_bForceDefaultEmission)
             {
 
@@ -216,7 +216,7 @@ namespace gpu_directx11
 
                seq3Emission = m_pmaterial->m_seq3Emissive;
             }
-            pshader->set_seq3("emissive", seq3Emission);
+            pshader->set_sequence3("emissive", seq3Emission);
             if (bEmissive)
             {
                //glActiveTexture(GL_TEXTURE0 + ::gpu::e_gltf_texture_emissive);
@@ -229,7 +229,7 @@ namespace gpu_directx11
                      // // albedo
                      // 
             // shader.setBool("material.useTextureAlbedo", m_pmaterial->useTextureAlbedo);
-            //pshader->set_seq3("albedo", m_pmaterial->m_seq3Albedo);
+            //pshader->set_sequence3("albedo", m_pmaterial->m_seq3Albedo);
             if (bAlbedo)
             {
                ::cast<::gpu_directx11::texture> ptexture = m_pmaterial->m_ptextureAlbedo;
@@ -333,7 +333,7 @@ namespace gpu_directx11
             // albedo
                         //;
             //pshader->set_int("material.useTextureAlbedo", m_pmaterial->useTextureAlbedo);
-            //pshader->set_seq3("material.albedo", m_pmaterial->m_seq3Albedo);
+            //pshader->set_sequence3("material.albedo", m_pmaterial->m_seq3Albedo);
             if (m_pmaterial->useTextureAlbedo)
             {
                int iTextureIndex = ::gpu::e_gltf_texture_albedo;
@@ -384,7 +384,7 @@ namespace gpu_directx11
             //}
 
             //pshader->set_int("material.useTextureEmissive", m_pmaterial->useTextureEmissive);
-            //pshader->set_seq3("material.emissive", m_pmaterial->m_seq3Emissive);
+            //pshader->set_sequence3("material.emissive", m_pmaterial->m_seq3Emissive);
             //if (m_pmaterial->useTextureEmissive)
             //{
             //   glActiveTexture(GL_TEXTURE0 + ::gpu::e_gltf_texture_emissive);

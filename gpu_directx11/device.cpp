@@ -24,12 +24,12 @@
 #include <glm/glm.hpp>
 #include <DirectXMath.h>
 
-DirectX::XMMATRIX GLMToDX_Transposed(const glm::mat4& m) {
+DirectX::XMMATRIX GLMToDX_Transposed(const floating_matrix4& m) {
    return DirectX::XMMatrixTranspose(
       DirectX::XMMATRIX(reinterpret_cast<const float*>(&m))
    );
 }
-DirectX::XMMATRIX GLMToDX(const glm::mat4& m) {
+DirectX::XMMATRIX GLMToDX(const floating_matrix4& m) {
    return DirectX::XMMATRIX(reinterpret_cast<const float*>(&m));
 }
 using namespace directx11;
@@ -2023,12 +2023,12 @@ namespace gpu_directx11
       {
       case ::gpu::e_type_int: return sizeof(int);
       case ::gpu::e_type_float: return sizeof(float);
-      case ::gpu::e_type_seq4: return sizeof(::glm::vec4);
-      case ::gpu::e_type_mat4: return sizeof(::glm::mat4);
-      case ::gpu::e_type_seq3: return sizeof(::glm::vec3);
-      case ::gpu::e_type_mat3: return sizeof(::glm::mat3);
-      case ::gpu::e_type_seq2: return sizeof(::glm::vec2);
-      case ::gpu::e_type_mat2: return sizeof(::glm::mat2);
+      case ::gpu::e_type_seq4: return sizeof(::floating_sequence4);
+      case ::gpu::e_type_mat4: return sizeof(floating_matrix4);
+      case ::gpu::e_type_seq3: return sizeof(::floating_sequence3);
+      case ::gpu::e_type_mat3: return sizeof(::floating_matrix3);
+      case ::gpu::e_type_seq2: return sizeof(::floating_sequence2);
+      case ::gpu::e_type_mat2: return sizeof(::floating_matrix2);
       default:
          throw ::exception(error_wrong_state);
 
@@ -2037,7 +2037,7 @@ namespace gpu_directx11
 
    }
 
-   void device::set_mat4(void* p, const ::glm::mat4& mat4)
+   void device::set_matrix4(void* p, const floating_matrix4& mat4)
    {
 
       auto m = GLMToDX_Transposed(mat4);

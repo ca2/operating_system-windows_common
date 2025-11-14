@@ -321,9 +321,9 @@ namespace gpu_directx11
 
       ID3D11DeviceContext* draw_get_d3d11_device_context();
       ID3D11DeviceContext1* draw_get_d3d11_device_context1();
-      ::glm::mat4 defer_transpose(const ::glm::mat4 &m) override;
-      ::glm::mat4 defer_clip_remap_projection(const ::glm::mat4 &m) override;
-      ::glm::mat4 defer_remap_impact_matrix(const ::glm::mat4 &m) override;
+      floating_matrix4 defer_transpose(const floating_matrix4 &m) override;
+      floating_matrix4 defer_clip_remap_projection(const floating_matrix4 &m) override;
+      floating_matrix4 defer_remap_impact_matrix(const floating_matrix4 &m) override;
 
    };
 

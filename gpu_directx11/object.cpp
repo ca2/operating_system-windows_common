@@ -250,7 +250,7 @@ namespace gpu_directx11
 //      //GLuint vertexbuffer;
 //      //glGenBuffers(1, &vertexbuffer);
 //      //glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-//      //glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
+//      //glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(floating_sequence3), &vertices[0], GL_STATIC_DRAW);
 //
 //
 //      auto byteCount2 = m_uvs.byte_count();

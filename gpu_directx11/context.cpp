@@ -240,10 +240,10 @@ namespace gpu_directx11
 
       //   // Compute the MVP matrix from keyboard and mouse input
       //   //computeMatricesFromInputs();
-      //   ::glm::mat4 matrixProjection = (::glm::mat4 &)projection_matrix();
-      //   ::glm::mat4 matrixView = (::glm::mat4 &)view_matrix();
-      //   ::glm::mat4 matrixModel = glm::mat4(1.0);
-      //   ::glm::mat4 matrixMVP = matrixProjection * matrixView * matrixModel;
+      //   floating_matrix4 matrixProjection = (floating_matrix4 &)projection_matrix();
+      //   floating_matrix4 matrixView = (floating_matrix4 &)view_matrix();
+      //   floating_matrix4 matrixModel = floating_matrix4(1.0);
+      //   floating_matrix4 matrixMVP = matrixProjection * matrixView * matrixModel;
 
       //   // Send our transformation to the currently bound shader, 
       //   // in the "MVP" uniform
@@ -251,16 +251,16 @@ namespace gpu_directx11
 
       //}
 
-      ////glm::mat4 getViewMatrix() {
+      ////floating_matrix4 getViewMatrix() {
       ////   return ViewMatrix;
       ////}
-      ////glm::mat4 getProjectionMatrix() {
+      ////floating_matrix4 getProjectionMatrix() {
       ////   return ProjectionMatrix;
       ////}
 
 
       ////// Initial position : on +Z
-      ////glm::vec3 position = glm::vec3(0, 0, 5);
+      ////floating_sequence3 position = floating_sequence3(0, 0, 5);
       ////// Initial horizontal angle : toward -Z
       ////float horizontalAngle = 3.14f;
       ////// Initial vertical angle : none
@@ -1181,8 +1181,8 @@ namespace gpu_directx11
       ::gpu::context_lock context_lock(this);
 
       struct Vertex {
-         glm::vec2 m_position;   // Position
-         glm::vec2 m_uv;   // Texture coordinates
+         floating_sequence2 m_position;   // Position
+         floating_sequence2 m_uv;   // Texture coordinates
       };
 
       if (!m_pshaderCopyUsingShader)
@@ -2950,23 +2950,23 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    }
 
       // Remap OpenGL clip-space Z [-1,1] to DirectX [0,1]
-   glm::mat4 ClipRemap()
+   floating_matrix4 ClipRemap()
    {
-      glm::mat4 remap(1.0f);
+      floating_matrix4 remap(1.0f);
       remap[2][2] = 0.5f;
       remap[3][2] = 0.5f;
       return remap;
    }
-   ::glm::mat4 context::defer_clip_remap_projection(const ::glm::mat4 & m)
+   floating_matrix4 context::defer_clip_remap_projection(const floating_matrix4 & m)
    {
 
       return (ClipRemap() * m);
 
    }
 
-    glm::mat4 ConvertViewRHtoLH(const glm::mat4 &viewRH)
+    floating_matrix4 ConvertViewRHtoLH(const floating_matrix4 &viewRH)
    {
-      glm::mat4 viewLH = viewRH;
+      floating_matrix4 viewLH = viewRH;
 
       // Flip the Z axis
       viewLH[0][2] *= -1.0f;
@@ -2976,7 +2976,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
       return viewLH;
    }
-   ::glm::mat4 context::defer_remap_impact_matrix(const ::glm::mat4 &m){
+   floating_matrix4 context::defer_remap_impact_matrix(const floating_matrix4 &m){
 
       return ConvertViewRHtoLH(m);
 
@@ -2997,7 +2997,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       return m_pcontext1;
 
    }
-   ::glm::mat4 context::defer_transpose(const ::glm::mat4 &m) 
+   floating_matrix4 context::defer_transpose(const floating_matrix4 &m) 
       {
           return glm::transpose(m);
    }

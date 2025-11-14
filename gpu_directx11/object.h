@@ -1,10 +1,10 @@
 // Created by camilo on 2022-04-25 20:42 <3ThomasBorregaardSorensen!!
 #pragma once
 
-#define GLM_FORCE_DEPTH_ZERO_TO_ONE
-#define GLM_FORCE_LEFT_HANDED
-#include <glm/vec2.hpp>
-#include <glm/vec3.hpp>
+//#define GLM_FORCE_DEPTH_ZERO_TO_ONE
+//#define GLM_FORCE_LEFT_HANDED
+//#include <glm/vec2.hpp>
+//#include <glm/vec3.hpp>
 #include "acme/prototype/geometry3d/location.h"
 #include "bred/gpu/object.h"
 
@@ -29,9 +29,9 @@ namespace gpu_directx11
       ::gpu::element             m_ibo_elements;
 
       ::array<unsigned short>    m_indices;
-      ::array<::glm::vec3>       m_vertices;
-      ::array<::glm::vec2>       m_uvs;
-      ::array<::glm::vec3>       m_normals;
+      ::array<::floating_sequence3>       m_vertices;
+      ::array<::floating_sequence2>       m_uvs;
+      ::array<::floating_sequence3>       m_normals;
 
       ::gpu::payload             m_payloadTexture;
       ::gpu::element             m_uniformTexture;

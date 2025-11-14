@@ -12,16 +12,16 @@ namespace gpu_directx11
 //#define MAX_LIGHTS 10
 //
 //	struct PointLight {
-//		glm::vec4 position{};  // ignore w
-//		glm::vec4 color{};     // w is intensity
+//		floating_sequence4 position{};  // ignore w
+//		floating_sequence4 color{};     // w is intensity
 //	};
 //
 //
 //	//struct GlobalUbo {
-//	//	glm::mat4 projection{ 1.f };
-//	//	glm::mat4 view{ 1.f };
-//	//	glm::mat4 inverseView{ 1.f };
-//	//	glm::vec4 ambientLightColor{ 1.f, 1.f, 1.f, .02f };
+//	//	floating_matrix4 projection{ 1.f };
+//	//	floating_matrix4 view{ 1.f };
+//	//	floating_matrix4 inverseView{ 1.f };
+//	//	floating_sequence4 ambientLightColor{ 1.f, 1.f, 1.f, .02f };
 //	//	PointLight pointLights[MAX_LIGHTS];
 //	//	int numLights;
 //	//};

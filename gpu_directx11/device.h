@@ -284,7 +284,7 @@ namespace gpu_directx11
       virtual IDXGIDevice* _get_dxgi_device();
 
       int get_type_size(::gpu::enum_type etype) override;
-      void set_mat4(void* p, const ::glm::mat4& mat4) override;
+      void set_matrix4(void* p, const floating_matrix4& mat4) override;
 
 
       ::file::path shader_path(const ::file::path& pathShader) override;

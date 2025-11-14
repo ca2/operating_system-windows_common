@@ -9,10 +9,10 @@
 
 //#include "gpu_directx11/directx11.h"
 
-#define GLM_FORCE_RADIANS
-#define GLM_FORCE_DEPTH_ZERO_TO_ONE
-#define GLM_FORCE_LEFT_HANDED
-#include <glm/glm.hpp>
+//#define GLM_FORCE_RADIANS
+//#define GLM_FORCE_DEPTH_ZERO_TO_ONE
+//#define GLM_FORCE_LEFT_HANDED
+//#include <glm/glm.hpp>
 
 namespace directx11
 {
@@ -38,7 +38,7 @@ namespace directx11
    //namespace debugutils
    //{
    //   void setup(VkInstance instance);
-   //   void cmdBeginLabel(VkCommandBuffer cmdbuffer, ::string caption, glm::vec4 color);
+   //   void cmdBeginLabel(VkCommandBuffer cmdbuffer, ::string caption, floating_sequence4 color);
    //   void cmdEndLabel(VkCommandBuffer cmdbuffer);
    //}
 } // namespace debug

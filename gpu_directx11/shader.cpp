@@ -805,12 +805,12 @@ namespace gpu_directx11
    }
   
 
-      void shader::setModelViewProjectionMatrices(glm::mat4 &model, glm::mat4 &view, glm::mat4 &projection)
+      void shader::setModelViewProjectionMatrices(floating_matrix4 &model, floating_matrix4 &view, floating_matrix4 &projection)
    {
        
-      set_mat4("model", model);
-      set_mat4("view", m_pgpurenderer->m_pgpucontext->defer_remap_impact_matrix(view));
-      set_mat4("projection", m_pgpurenderer->m_pgpucontext->defer_clip_remap_projection(projection));
+      set_matrix4("model", model);
+      set_matrix4("view", m_pgpurenderer->m_pgpucontext->defer_remap_impact_matrix(view));
+      set_matrix4("projection", m_pgpurenderer->m_pgpucontext->defer_clip_remap_projection(projection));
    }
 
 
@@ -1074,7 +1074,7 @@ namespace gpu_directx11
 //   }
 //
 //
-////   void shader::setVec2(const ::scoped_string & scopedstrName, const glm::vec2& value)
+////   void shader::setVec2(const ::scoped_string & scopedstrName, const floating_sequence2& value)
 ////   {
 ////
 ////      GLint i = glGetUniformLocation(m_uId, pszName);
@@ -1102,7 +1102,7 @@ namespace gpu_directx11
 //   }
 //
 //
-////   void shader::setVec3(const ::scoped_string & scopedstrName, const glm::vec3& value)
+////   void shader::setVec3(const ::scoped_string & scopedstrName, const floating_sequence3& value)
 ////   {
 ////
 ////      GLint i = glGetUniformLocation(m_uId, pszName);
@@ -1131,7 +1131,7 @@ namespace gpu_directx11
 //   }
 //
 //
-////   void shader::setVec4(const ::scoped_string & scopedstrName, const glm::vec4& value)
+////   void shader::setVec4(const ::scoped_string & scopedstrName, const floating_sequence4& value)
 ////   {
 ////
 ////      GLint i = glGetUniformLocation(m_uId, pszName);
