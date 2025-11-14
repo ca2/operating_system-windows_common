@@ -99,7 +99,7 @@ namespace gpu_directx11
                         floating_matrix4 world =  m1*m2 ;
             //world = world * handednessFlip;
                         pshader->set_matrix4("modelMatrix", world);
-                        floating_matrix4 normalMat = floating_matrix4(glm::inverse(floating_matrix3(world)));
+                        floating_matrix4 normalMat = floating_matrix4(floating_matrix3(world).inversed());
                         // normalMat = normalMat * handednessFlip;
             pshader->set_matrix4("normalMatrix", normalMat);
 

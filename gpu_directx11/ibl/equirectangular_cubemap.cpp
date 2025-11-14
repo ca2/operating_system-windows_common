@@ -7,9 +7,9 @@
 #include "bred/graphics3d/skybox.h"
 #include "bred/gpu/device.h"
 #include "bred/gpu/texture.h"
-#include <glm/gtc/matrix_transform.hpp>
-//#include "glad/glad.h"
-#include "glm/glm.hpp"
+//#include <glm/gtc/matrix_transform.hpp>
+////#include "glad/glad.h"
+//#include "glm/glm.hpp"
 
 #include "gpu/gltf/_constant.h"
 #include "gpu_directx11/_gpu_directx11.h"
@@ -83,17 +83,17 @@ namespace gpu_directx11
          // Rotate targets around Y
          floating_matrix4 cameraAngles[] = {
             // Swap +X/-X
-            glm::lookAt(::gpu::gltf::origin, rot180Y( - ::gpu::gltf::unitX), -::gpu::gltf::unitY), // DX +X face
-            glm::lookAt(::gpu::gltf::origin, rot180Y(::gpu::gltf::unitX), -::gpu::gltf::unitY), // DX -X face
+            m_pgpucontext->lookAt(::gpu::gltf::origin, rot180Y(-::gpu::gltf::unitX), -::gpu::gltf::unitY), // DX +X face
+            m_pgpucontext->lookAt(::gpu::gltf::origin, rot180Y(::gpu::gltf::unitX), -::gpu::gltf::unitY), // DX -X face
 
             // +Y/-Y (may also need flipping depending on your loader)
-            glm::lookAt(::gpu::gltf::origin, rot180Y(::gpu::gltf::unitY), ::gpu::gltf::unitZ),
-            glm::lookAt(::gpu::gltf::origin, rot180Y(-::gpu::gltf::unitY), -::gpu::gltf::unitZ),
+            m_pgpucontext->lookAt(::gpu::gltf::origin, rot180Y(::gpu::gltf::unitY), ::gpu::gltf::unitZ),
+            m_pgpucontext->lookAt(::gpu::gltf::origin, rot180Y(-::gpu::gltf::unitY), -::gpu::gltf::unitZ),
 
             // +Z/-Z
-            glm::lookAt(::gpu::gltf::origin,rot180Y( ::gpu::gltf::unitZ), -::gpu::gltf::unitY),
-            glm::lookAt(::gpu::gltf::origin, rot180Y(-::gpu::gltf::unitZ), -::gpu::gltf::unitY)};
-         floating_matrix4 projection = glm::perspective(::radians(90.0f), // 90 degrees to cover one face
+            m_pgpucontext->lookAt(::gpu::gltf::origin, rot180Y(::gpu::gltf::unitZ), -::gpu::gltf::unitY),
+            m_pgpucontext->lookAt(::gpu::gltf::origin, rot180Y(-::gpu::gltf::unitZ), -::gpu::gltf::unitY)};
+         floating_matrix4 projection = m_pgpucontext->perspective(::radians(90.0f), // 90 degrees to cover one face
                                                  1.0f, // its a square
                                                  0.1f, 2.0f);
          ::cast<::gpu_directx11::context> pcontext = m_pgpucontext;
