@@ -96,16 +96,16 @@ namespace gpu_directx11
          floating_matrix4 model = ::gpu::gltf::mIndentity4;
          floating_matrix4 cameraAngles[] = {
             // Swap +X/-X
-            m_pgpucontext->lookAt(::gpu::gltf::origin, rot180Y(-::gpu::gltf::unitX), -::gpu::gltf::unitY), // DX +X face
-            m_pgpucontext->lookAt(::gpu::gltf::origin, rot180Y(::gpu::gltf::unitX), -::gpu::gltf::unitY), // DX -X face
+            m_pgpucontext->lookAt(::geometry3d::origin, rot180Y(-::geometry3d::unitX), -::geometry3d::unitY), // DX +X face
+            m_pgpucontext->lookAt(::geometry3d::origin, rot180Y(::geometry3d::unitX), -::geometry3d::unitY), // DX -X face
 
             // +Y/-Y (may also need flipping depending on your loader)
-            m_pgpucontext->lookAt(::gpu::gltf::origin, rot180Y(::gpu::gltf::unitY), ::gpu::gltf::unitZ),
-            m_pgpucontext->lookAt(::gpu::gltf::origin, rot180Y(-::gpu::gltf::unitY), -::gpu::gltf::unitZ),
+            m_pgpucontext->lookAt(::geometry3d::origin, rot180Y(::geometry3d::unitY), ::geometry3d::unitZ),
+            m_pgpucontext->lookAt(::geometry3d::origin, rot180Y(-::geometry3d::unitY), -::geometry3d::unitZ),
 
             // +Z/-Z
-            m_pgpucontext->lookAt(::gpu::gltf::origin, rot180Y(::gpu::gltf::unitZ), -::gpu::gltf::unitY),
-            m_pgpucontext->lookAt(::gpu::gltf::origin, rot180Y(-::gpu::gltf::unitZ), -::gpu::gltf::unitY)};
+            m_pgpucontext->lookAt(::geometry3d::origin, rot180Y(::geometry3d::unitZ), -::geometry3d::unitY),
+            m_pgpucontext->lookAt(::geometry3d::origin, rot180Y(-::geometry3d::unitZ), -::geometry3d::unitY)};
          floating_matrix4 projection = m_pgpucontext->perspective(::radians(90.0f), // 90 degrees to cover one face
                                                  1.0f, // its a square
                                                  0.1f, 2.0f);
@@ -180,12 +180,12 @@ namespace gpu_directx11
          //floating_matrix4 model = ::gpu::gltf::mIndentity4;
          //floating_matrix4 cameraAngles[] =
          //{
-         //   glm::lookAt(::gpu::gltf::origin, ::gpu::gltf::unitX, -::gpu::gltf::unitY),
-         //   glm::lookAt(::gpu::gltf::origin, -::gpu::gltf::unitX, -::gpu::gltf::unitY),
-         //   glm::lookAt(::gpu::gltf::origin, ::gpu::gltf::unitY, ::gpu::gltf::unitZ),
-         //   glm::lookAt(::gpu::gltf::origin, -::gpu::gltf::unitY, -::gpu::gltf::unitZ),
-         //   glm::lookAt(::gpu::gltf::origin, ::gpu::gltf::unitZ, -::gpu::gltf::unitY),
-         //   glm::lookAt(::gpu::gltf::origin, -::gpu::gltf::unitZ, -::gpu::gltf::unitY)
+         //   glm::lookAt(::geometry3d::origin, ::geometry3d::unitX, -::geometry3d::unitY),
+         //   glm::lookAt(::geometry3d::origin, -::geometry3d::unitX, -::geometry3d::unitY),
+         //   glm::lookAt(::geometry3d::origin, ::geometry3d::unitY, ::geometry3d::unitZ),
+         //   glm::lookAt(::geometry3d::origin, -::geometry3d::unitY, -::geometry3d::unitZ),
+         //   glm::lookAt(::geometry3d::origin, ::geometry3d::unitZ, -::geometry3d::unitY),
+         //   glm::lookAt(::geometry3d::origin, -::geometry3d::unitZ, -::geometry3d::unitY)
          //};
          //floating_matrix4 projection = glm::perspective(
          //   ::radians(90.0f), // 90 degrees to cover one face
