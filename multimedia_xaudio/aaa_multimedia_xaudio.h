@@ -7,10 +7,6 @@
 //
 //
 //#include <xaudio2.h>
-//
-//
-//
-//
 //#include "translation.h"
 //
 //

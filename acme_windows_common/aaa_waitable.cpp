@@ -71,10 +71,6 @@
 //   return synchronization_result(synchronization_result::Failure);
 //
 //}
-//
-//
-//
-//
 //// forward declaration
 ////class event_base;
 //
@@ -102,10 +98,6 @@
 //{
 //   ::sleep(static_cast<unsigned int>(duration.total_milliseconds()));
 //}
-//
-//
-//
-//
 //
 //void * matter::get_os_data() const
 //{

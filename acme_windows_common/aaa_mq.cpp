@@ -390,10 +390,6 @@
 //   return pmq->post_message(nullptr, atom.m_emessage, wparam, lparam);
 //
 //}
-//
-//
-//
-//
 //CLASS_DECL_ACME int_bool mq_peek_message(MESSAGE * pMsg, oswindow oswindow, unsigned int wMsgFilterMin, unsigned int wMsgFilterMax, unsigned int wRemoveMsg)
 //{
 //
@@ -440,10 +436,6 @@
 //   return true;
 //
 //}
-//
-//
-//
-//
 //
 //void initialize_global_message_queue()
 //{

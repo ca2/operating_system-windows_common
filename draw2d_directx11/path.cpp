@@ -1230,10 +1230,6 @@ namespace draw2d_directx11
 //}
 //
 //
-//
-//
-//
-//
 //namespace draw2d_directx11
 //{
 //   void path::CreatePathTextRenderer(FLOAT pixelsPerDip, IDWriteTextRenderer **textRenderer)

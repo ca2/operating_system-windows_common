@@ -7,9 +7,9 @@
 #include "bred/graphics3d/skybox.h"
 #include "bred/gpu/device.h"
 #include "bred/gpu/texture.h"
-//#include <glm/gtc/matrix_transform.hpp>
+//
 ////#include "glad/glad.h"
-//#include "glm/glm.hpp"
+//
 
 #include "gpu/gltf/_constant.h"
 #include "gpu_directx11/_gpu_directx11.h"

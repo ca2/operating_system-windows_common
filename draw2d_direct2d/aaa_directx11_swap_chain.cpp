@@ -9,10 +9,6 @@
 ////#include "gpu_directx11/swap_chain_render_target_view.h"
 //#include "bred/gpu/graphics.h"
 //#include "windowing_win32/window.h"
-//
-//
-//
-//
 //namespace draw2d_direct2d
 //{
 //

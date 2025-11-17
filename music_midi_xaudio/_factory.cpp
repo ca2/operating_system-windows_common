@@ -48,11 +48,3 @@ __FACTORY_EXPORT void music_midi_xaudio_factory(::factory::factory * pfactory)
 //
 //}
 //
-//
-//
-//
-//
-//
-//
-//
-//

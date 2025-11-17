@@ -13,8 +13,8 @@
 #include "gpu/gltf/_constant.h"
 #include "gpu/cube.h"
 //#include <glad/glad.h>
-//#include <glm/glm.hpp>
-//#include <glm/gtc/matrix_transform.hpp>
+//
+//
 #include "gpu_directx11/_gpu_directx11.h"
 #include "gpu_directx11/context.h"
 #include "gpu_directx11/texture.h"

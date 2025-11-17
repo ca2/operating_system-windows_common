@@ -3,7 +3,7 @@
 // From gpu_directx11 by camilo on 2025-10-16 16:45 <3ThomasBorregaardSorensen!!
 #pragma once
 
-#include <glm/glm.hpp>
+
 
 
 namespace gpu_directx11

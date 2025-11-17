@@ -19,7 +19,3 @@
 //
 //
 //} // namespace imaging_wic
-//
-//
-//
-//

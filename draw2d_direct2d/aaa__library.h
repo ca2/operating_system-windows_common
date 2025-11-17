@@ -3,10 +3,6 @@
 
 //
 //#include "direct2d/_library.h"
-//
-//
-//
-//
 //#include "factory_exchange.h"
 //
 //

@@ -403,10 +403,6 @@ namespace gpu_directx11
 //      const ::double_size& size)
 //   {
 ////      VkBuffer vertexBuffer;
-//
-//
-//
-//
 //      //static const graphics::RectangleVertex quadVertices[] = {
 //      //   // Triangle 1
 //      //   {{-0.5f, -0.5f}, {1.0f, 0.0f, 0.0f, 0.5f}}, // Red

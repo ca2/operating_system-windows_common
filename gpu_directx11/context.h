@@ -83,10 +83,6 @@ namespace gpu_directx11
 //      //   uint32_t transfer;
 //      //} m_queuefamilyindices;
 //
-//
-//
-//
-//
 //      //graphics3d_directx11::context
 //#if defined(NDEBUG)
 //      const bool enableValidationLayers = false;

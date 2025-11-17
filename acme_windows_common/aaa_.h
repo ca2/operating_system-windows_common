@@ -40,10 +40,6 @@ CLASS_DECL_ACME int_bool is_windows_7_or_lower();
 CLASS_DECL_ACME int_bool is_windows_8_or_greater();
 //
 CLASS_DECL_ACME int_bool is_windows_native_unicode();
-//
-//
-//
-//
 
 
 #include "parallelization.h"

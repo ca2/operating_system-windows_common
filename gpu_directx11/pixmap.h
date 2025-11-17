@@ -47,7 +47,3 @@
 //} // namespace gpu_directx11
 //
 //
-//
-//
-//
-//
