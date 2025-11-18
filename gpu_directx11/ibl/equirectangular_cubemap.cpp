@@ -8,6 +8,7 @@
 #include "bred/graphics3d/skybox.h"
 #include "bred/gpu/device.h"
 #include "bred/gpu/texture.h"
+#include "bred/graphics3d/engine.h"
 //
 ////#include "glad/glad.h"
 //
@@ -96,7 +97,7 @@ namespace gpu_directx11
             // +Z/-Z
             lookAt(origin, rot180Y(unitZ), -unitY),
             lookAt(origin, rot180Y(-unitZ), -unitY)};
-         floating_matrix4 projection = m_pgpucontext->perspective(::radians(90.0f), // 90 degrees to cover one face
+         floating_matrix4 projection = m_pgpucontext->m_pengine->perspective(90f_degrees, // 90 degrees to cover one face
                                                  1.0f, // its a square
                                                  0.1f, 2.0f);
          ::cast<::gpu_directx11::context> pcontext = m_pgpucontext;
