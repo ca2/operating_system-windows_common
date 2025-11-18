@@ -4,6 +4,7 @@
 #include "framework.h"
 #include "equirectangular_cubemap.h"
 #include "bred/gpu/context.h"
+#include "bred/graphics3d/_functions.h"
 #include "bred/graphics3d/skybox.h"
 #include "bred/gpu/device.h"
 #include "bred/gpu/texture.h"
@@ -74,25 +75,27 @@ namespace gpu_directx11
 
          auto pgpucommandbuffer = m_pgpucontext->beginSingleTimeCommands(m_pgpucontext->m_pgpudevice->graphics_queue());
          floating_matrix4 model = ::gpu::gltf::mIndentity4;
-         //floating_matrix4 cameraAngles[] = {glm::lookAt(::geometry3d::origin, ::geometry3d::unitX, -::geometry3d::unitY),
-           ///                          glm::lookAt(::geometry3d::origin, -::geometry3d::unitX, -::geometry3d::unitY),
-              //                       glm::lookAt(::geometry3d::origin, ::geometry3d::unitY, ::geometry3d::unitZ),
-                ///                     glm::lookAt(::geometry3d::origin, -::geometry3d::unitY, -::geometry3d::unitZ),
-                   //                  glm::lookAt(::geometry3d::origin, ::geometry3d::unitZ, -::geometry3d::unitY),
-                     //                glm::lookAt(::geometry3d::origin, -::geometry3d::unitZ, -::geometry3d::unitY)};
+         //floating_matrix4 cameraAngles[] = {glm::lookAt(origin, unitX, -unitY),
+           ///                          glm::lookAt(origin, -unitX, -unitY),
+              //                       glm::lookAt(origin, unitY, unitZ),
+                ///                     glm::lookAt(origin, -unitY, -unitZ),
+                   //                  glm::lookAt(origin, unitZ, -unitY),
+                     //                glm::lookAt(origin, -unitZ, -unitY)};
+
+                      using namespace graphics3d;
          // Rotate targets around Y
          floating_matrix4 cameraAngles[] = {
             // Swap +X/-X
-            m_pgpucontext->lookAt(::geometry3d::origin, rot180Y(-::geometry3d::unitX), -::geometry3d::unitY), // DX +X face
-            m_pgpucontext->lookAt(::geometry3d::origin, rot180Y(::geometry3d::unitX), -::geometry3d::unitY), // DX -X face
+            lookAt(origin, rot180Y(-unitX), -unitY), // DX +X face
+            lookAt(origin, rot180Y(unitX), -unitY), // DX -X face
 
             // +Y/-Y (may also need flipping depending on your loader)
-            m_pgpucontext->lookAt(::geometry3d::origin, rot180Y(::geometry3d::unitY), ::geometry3d::unitZ),
-            m_pgpucontext->lookAt(::geometry3d::origin, rot180Y(-::geometry3d::unitY), -::geometry3d::unitZ),
+            lookAt(origin, rot180Y(unitY), unitZ),
+            lookAt(origin, rot180Y(-unitY), -unitZ),
 
             // +Z/-Z
-            m_pgpucontext->lookAt(::geometry3d::origin, rot180Y(::geometry3d::unitZ), -::geometry3d::unitY),
-            m_pgpucontext->lookAt(::geometry3d::origin, rot180Y(-::geometry3d::unitZ), -::geometry3d::unitY)};
+            lookAt(origin, rot180Y(unitZ), -unitY),
+            lookAt(origin, rot180Y(-unitZ), -unitY)};
          floating_matrix4 projection = m_pgpucontext->perspective(::radians(90.0f), // 90 degrees to cover one face
                                                  1.0f, // its a square
                                                  0.1f, 2.0f);
