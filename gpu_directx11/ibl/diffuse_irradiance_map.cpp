@@ -95,8 +95,9 @@ namespace gpu_directx11
 
          //auto pgpucommandbuffer = m_pgpucontext->beginSingleTimeCommands(m_pgpucontext->m_pgpudevice->graphics_queue());
 
-         floating_matrix4 model = ::gpu::gltf::mIndentity4;
+         
          using namespace graphics3d;
+         floating_matrix4 model = mIndentity4;
          floating_matrix4 cameraAngles[] = {
             // Swap +X/-X
             lookAt(origin, rot180Y(-unitX), -unitY), // DX +X face
@@ -145,7 +146,7 @@ namespace gpu_directx11
          // render to each side of the cubemap
          for (auto i = 0; i < 6; i++)
          {
-            m_pshaderDiffuseIrradiance->setModelViewProjectionMatrices(model, cameraAngles[i], projection);
+            m_pshaderDiffuseIrradiance->setModelViewProjection(model, cameraAngles[i], projection);
             m_pdiffuseIrradianceFramebuffer->setCubeFace(i, m_pshaderDiffuseIrradiance);
 
             // glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

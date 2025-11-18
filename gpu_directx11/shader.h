@@ -105,7 +105,7 @@ namespace gpu_directx11
 
 
       void push_properties(::gpu::command_buffer * pgpucommandbuffer) override;
-      void setModelViewProjectionMatrices(floating_matrix4 &model, floating_matrix4 &view, floating_matrix4 &projection) override;
+      void setModelViewProjection(const floating_matrix4 &model, const floating_matrix4 &view, const floating_matrix4 &projection) override;
 
    };
 

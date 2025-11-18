@@ -75,15 +75,15 @@ namespace gpu_directx11
          // Timer timer;
 
          auto pgpucommandbuffer = m_pgpucontext->beginSingleTimeCommands(m_pgpucontext->m_pgpudevice->graphics_queue());
-         floating_matrix4 model = ::gpu::gltf::mIndentity4;
+         
          //floating_matrix4 cameraAngles[] = {glm::lookAt(origin, unitX, -unitY),
            ///                          glm::lookAt(origin, -unitX, -unitY),
               //                       glm::lookAt(origin, unitY, unitZ),
                 ///                     glm::lookAt(origin, -unitY, -unitZ),
                    //                  glm::lookAt(origin, unitZ, -unitY),
                      //                glm::lookAt(origin, -unitZ, -unitY)};
-
-                      using namespace graphics3d;
+         using namespace graphics3d;
+         floating_matrix4 model = mIndentity4;
          // Rotate targets around Y
          floating_matrix4 cameraAngles[] = {
             // Swap +X/-X
@@ -114,7 +114,7 @@ namespace gpu_directx11
 
             pcontext->start_debug_happening(pgpucommandbuffer, "equirectangular_cubemap face " + ::as_string(i + 1));
             
-            m_pshaderHdri->setModelViewProjectionMatrices(model, cameraAngles[i], projection);
+            m_pshaderHdri->setModelViewProjection(model, cameraAngles[i], projection);
             
             m_pframebuffer->setCubeFace(i, m_pshaderHdri);
             m_pshaderHdri->push_properties(pgpucommandbuffer);

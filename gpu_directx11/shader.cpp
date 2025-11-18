@@ -805,7 +805,7 @@ namespace gpu_directx11
    }
   
 
-      void shader::setModelViewProjectionMatrices(floating_matrix4 &model, floating_matrix4 &view, floating_matrix4 &projection)
+      void shader::setModelViewProjection(const floating_matrix4 &model, const floating_matrix4 &view, const floating_matrix4 &projection)
    {
        
       set_matrix4("model", model);
