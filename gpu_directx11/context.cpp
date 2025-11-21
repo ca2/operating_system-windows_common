@@ -2601,7 +2601,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    }
 
 
-   void context::layout_push_constants(::gpu::properties & properties)
+   void context::layout_push_constants(::gpu::properties & properties, bool bGlobalUbo)
    {
     
       auto pproperty = properties.m_pproperties;
@@ -2623,7 +2623,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
                   propertiesNested.m_pproperties = pproperty->m_pproperties;
 
-                  layout_push_constants(propertiesNested);
+                  layout_push_constants(propertiesNested, bGlobalUbo);
 
          iItemSize = propertiesNested.m_blockWithoutSamplers.size();
                   iItemSize *= pproperty->m_iArraySize;

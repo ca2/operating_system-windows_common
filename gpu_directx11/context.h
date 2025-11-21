@@ -301,7 +301,7 @@ namespace gpu_directx11
 
       ::gpu_directx11::descriptor_pool* get_global_pool(int iFrameCount);
 
-      void layout_push_constants(::gpu::properties &properties) override;
+      void layout_push_constants(::gpu::properties &properties, bool bGlobalUbo) override;
       ////descriptor_set_layout* get_set_descriptor_layout(::gpu::context * pgpucontext);
       //virtual VkDescriptorSet getGlobalDescriptorSet(::gpu::context* pgpucontext, ::gpu_directx11::renderer* prenderer);
 
