@@ -50,7 +50,7 @@ namespace draw2d_direct2d
 
       throw ::exception(todo);
 
-      //   ::SetRectRgn((HRGN)get_os_data(), rectangle.left(), rectangle.top(), rectangle.right(), rectangle.bottom());
+      //   ::SetRectRgn((HRGN)get_os_data(), rectangle.left, rectangle.top, rectangle.right, rectangle.bottom);
    }
 
    //int region::CombineRgn(const ::draw2d::region* pRgn1, const ::draw2d::region* pRgn2, int nCombineMode)
@@ -156,7 +156,7 @@ namespace draw2d_direct2d
 
       //ASSERT(get_os_data() != nullptr); return ::rectInRegion((HRGN)get_os_data(), rectangle);
 
-      //Gdiplus::RectF float_rectangle((Gdiplus::REAL) rectangle.left(), (Gdiplus::REAL) rectangle.top(), (Gdiplus::REAL) (rectangle.right() - rectangle.left()), (Gdiplus::REAL) (rectangle.bottom() - rectangle.top()));
+      //Gdiplus::RectF float_rectangle((Gdiplus::REAL) rectangle.left, (Gdiplus::REAL) rectangle.top, (Gdiplus::REAL) (rectangle.right - rectangle.left), (Gdiplus::REAL) (rectangle.bottom - rectangle.top));
       //
       //ASSERT(get_os_data() != nullptr); //return ::PtInRegion((HRGN)get_os_data(), x, y);
 

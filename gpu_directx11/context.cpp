@@ -1275,8 +1275,8 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       m_pshaderCopyUsingShader->bind(nullptr, pgputextureTarget, pgputextureSource);
 
       D3D11_VIEWPORT viewport = {};
-      //viewport.TopLeftX = pgputextureSource->m_rectangleTarget.left();
-      //viewport.TopLeftY = pgputextureSource->m_rectangleTarget.top();
+      //viewport.TopLeftX = pgputextureSource->m_rectangleTarget.left;
+      //viewport.TopLeftY = pgputextureSource->m_rectangleTarget.top;
       viewport.TopLeftX = 0;
       viewport.TopLeftY = 0;
       viewport.Width = (FLOAT)pgputextureSource->m_rectangleTarget.width();   // usually swap chain buffer width
@@ -1287,10 +1287,10 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       m_pcontext->RSSetViewports(1, &viewport);
 
       D3D11_RECT scissorRect;
-      //scissorRect.left = pgputextureSource->m_rectangleTarget.left();
-      //scissorRect.top = pgputextureSource->m_rectangleTarget.top();
-      //scissorRect.right = pgputextureSource->m_rectangleTarget.right();
-      //scissorRect.bottom = pgputextureSource->m_rectangleTarget.bottom();
+      //scissorRect.left = pgputextureSource->m_rectangleTarget.left;
+      //scissorRect.top = pgputextureSource->m_rectangleTarget.top;
+      //scissorRect.right = pgputextureSource->m_rectangleTarget.right;
+      //scissorRect.bottom = pgputextureSource->m_rectangleTarget.bottom;
       scissorRect.left = 0;
       scissorRect.top = 0;
       scissorRect.right = pgputextureSource->m_rectangleTarget.width();
@@ -1552,8 +1552,8 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
          //ID3D11ShaderResourceView* sharedresourceviewa[] =
          //{ ptexture->m_pshaderresourceview };
          D3D11_VIEWPORT vp = {};
-         vp.TopLeftX = (FLOAT) ptexture->m_rectangleTarget.left();
-         vp.TopLeftY = (FLOAT) ptexture->m_rectangleTarget.top();
+         vp.TopLeftX = (FLOAT) ptexture->m_rectangleTarget.left;
+         vp.TopLeftY = (FLOAT) ptexture->m_rectangleTarget.top;
          vp.Width = static_cast<float>(ptexture->m_rectangleTarget.width());
          vp.Height = static_cast<float>(ptexture->m_rectangleTarget.height());
          vp.MinDepth = 0.0f;
@@ -1563,14 +1563,14 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
 
          D3D11_RECT rectScissor;
-         //rectScissor.left = ptexture->m_rectangleTarget.left();
-         //rectScissor.top = ptexture->m_rectangleTarget.top();
-         //rectScissor.right = ptexture->m_rectangleTarget.right();
-         //rectScissor.bottom = ptexture->m_rectangleTarget.bottom();
-         rectScissor.left = ptexture->m_rectangleTarget.left();
-         rectScissor.top = ptexture->m_rectangleTarget.top();
-         rectScissor.right = ptexture->m_rectangleTarget.right();
-         rectScissor.bottom = ptexture->m_rectangleTarget.bottom();
+         //rectScissor.left = ptexture->m_rectangleTarget.left;
+         //rectScissor.top = ptexture->m_rectangleTarget.top;
+         //rectScissor.right = ptexture->m_rectangleTarget.right;
+         //rectScissor.bottom = ptexture->m_rectangleTarget.bottom;
+         rectScissor.left = ptexture->m_rectangleTarget.left;
+         rectScissor.top = ptexture->m_rectangleTarget.top;
+         rectScissor.right = ptexture->m_rectangleTarget.right;
+         rectScissor.bottom = ptexture->m_rectangleTarget.bottom;
 
          m_pcontext->RSSetScissorRects(1, &rectScissor);
 
@@ -2900,8 +2900,8 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       {
       
       D3D11_VIEWPORT vp = {};
-         vp.TopLeftX = rectangle.left();
-      vp.TopLeftY = rectangle.top();
+         vp.TopLeftX = rectangle.left;
+      vp.TopLeftY = rectangle.top;
          vp.Width = (float)rectangle.width();
          vp.Height = (float)rectangle.height();
          vp.MinDepth = 0.0f;

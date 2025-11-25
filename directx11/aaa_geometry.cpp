@@ -131,7 +131,7 @@ namespace directx11
          D2D1_ARC_SEGMENT arcsegment;
 
          arcsegment.point.x = (FLOAT) ellipse.center_y();
-         arcsegment.point.y = (FLOAT) ellipse.right();
+         arcsegment.point.y = (FLOAT) ellipse.right;
 
          arcsegment.rotationAngle = (FLOAT)(2.0 * π);
 

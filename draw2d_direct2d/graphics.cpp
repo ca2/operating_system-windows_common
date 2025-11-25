@@ -776,10 +776,10 @@ namespace draw2d_direct2d
          auto rectangleSource = imagedrawing.source_rectangle();
 
 
-         auto x = rectangleTarget.left();
-         auto y = rectangleTarget.top();
-         auto xSrc = rectangleSource.left();
-         auto ySrc = rectangleSource.top();
+         auto x = rectangleTarget.left;
+         auto y = rectangleTarget.top;
+         auto xSrc = rectangleSource.left;
+         auto ySrc = rectangleSource.top;
          auto nWidth = rectangleTarget.width();
          auto nHeight = rectangleTarget.height();
 
@@ -1113,10 +1113,10 @@ namespace draw2d_direct2d
 
       //   //D2D1_RECT_U srcRect;
 
-      //   //srcRect.left() = 0;
-      //   //srcRect.right() = this->width();
-      //   //srcRect.top() = 0;
-      //   //srcRect.bottom() = this->height();
+      //   //srcRect.left = 0;
+      //   //srcRect.right = this->width();
+      //   //srcRect.top = 0;
+      //   //srcRect.bottom = this->height();
 
       ////   return true;
 
@@ -1526,7 +1526,7 @@ namespace draw2d_direct2d
 
       //ASSERT(get_handle1() != nullptr);
 
-      arc(rectangle.left(), rectangle.top(), rectangle.right(), rectangle.bottom(), pointStart.x, pointStart.y, pointEnd.x, pointEnd.y);
+      arc(rectangle.left, rectangle.top, rectangle.right, rectangle.bottom, pointStart.x, pointStart.y, pointEnd.x, pointEnd.y);
 
 
    }
@@ -1663,10 +1663,10 @@ namespace draw2d_direct2d
 //               D2D1_RECT_F int_rectangle;
 //
 //               __copy(rectangle, rectangleTarget);
-//               //rectangle.left()   = (FLOAT) int_rectangle;
-//               //rectangle.top()    = (FLOAT) y;
-//               //rectangle.right()  = rectangle.left()    + cx;
-//               //rectangle.bottom() = rectangle.top()     + cy;
+//               //rectangle.left   = (FLOAT) int_rectangle;
+//               //rectangle.top    = (FLOAT) y;
+//               //rectangle.right  = rectangle.left    + cx;
+//               //rectangle.bottom = rectangle.top     + cy;
 //
 //               m_pd2d1rendertarget->DrawBitmap((ID2D1Bitmap *) b->get_os_data(), rectangle);
 //
@@ -1822,7 +1822,7 @@ namespace draw2d_direct2d
 
       //ASSERT(get_handle1() != nullptr);
 
-      //return ::Chord(get_handle1(), rectangle.left(), rectangle.top(), rectangle.right(), rectangle.bottom(), pointStart.x, pointStart.y, pointEnd.x, pointEnd.y) != false;
+      //return ::Chord(get_handle1(), rectangle.left, rectangle.top, rectangle.right, rectangle.bottom, pointStart.x, pointStart.y, pointEnd.x, pointEnd.y) != false;
 
       //return false;
 
@@ -1902,10 +1902,10 @@ namespace draw2d_direct2d
 
       D2D1_ELLIPSE ellipse;
 
-      ellipse.point.x = (float)(rectangle.right() + rectangle.left()) / 2.f;
-      ellipse.point.y = (float)(rectangle.bottom() + rectangle.top()) / 2.f;
-      ellipse.radiusX = (float)(rectangle.right() - rectangle.left()) / 2.f;
-      ellipse.radiusY = (float)(rectangle.bottom() - rectangle.top()) / 2.f;
+      ellipse.point.x = (float)(rectangle.right + rectangle.left) / 2.f;
+      ellipse.point.y = (float)(rectangle.bottom + rectangle.top) / 2.f;
+      ellipse.radiusX = (float)(rectangle.right - rectangle.left) / 2.f;
+      ellipse.radiusY = (float)(rectangle.bottom - rectangle.top) / 2.f;
 
       defer_primitive_blend();
 
@@ -1941,10 +1941,10 @@ namespace draw2d_direct2d
 
       D2D1_ELLIPSE ellipse;
 
-      ellipse.point.x = (float)(rectangle.right() + rectangle.left()) / 2.f;
-      ellipse.point.y = (float)(rectangle.bottom() + rectangle.top()) / 2.f;
-      ellipse.radiusX = (float)(rectangle.right() - rectangle.left()) / 2.f;
-      ellipse.radiusY = (float)(rectangle.bottom() - rectangle.top()) / 2.f;
+      ellipse.point.x = (float)(rectangle.right + rectangle.left) / 2.f;
+      ellipse.point.y = (float)(rectangle.bottom + rectangle.top) / 2.f;
+      ellipse.radiusX = (float)(rectangle.right - rectangle.left) / 2.f;
+      ellipse.radiusY = (float)(rectangle.bottom - rectangle.top) / 2.f;
 
       defer_primitive_blend();
 
@@ -2318,8 +2318,8 @@ namespace draw2d_direct2d
 
       //}
 
-      double x = rectangleTarget.left();
-      double y = rectangleTarget.top();
+      double x = rectangleTarget.left;
+      double y = rectangleTarget.top;
       double nWidth = rectangleTarget.width();
       double nHeight = rectangleTarget.height();
       double xSrc = pointSrc.x;
@@ -2491,12 +2491,12 @@ namespace draw2d_direct2d
       //try
       //{
 
-      double xDst = rectangleTarget.left();
-      double yDst = rectangleTarget.top();
+      double xDst = rectangleTarget.left;
+      double yDst = rectangleTarget.top;
       double nDstWidth = rectangleTarget.width();
       double nDstHeight = rectangleTarget.height();
-      double xSrc = rectangleSource.left();
-      double ySrc = rectangleSource.top();
+      double xSrc = rectangleSource.left;
+      double ySrc = rectangleSource.top;
       double nSrcWidth = rectangleSource.width();
       double nSrcHeight = rectangleSource.height();
 
@@ -3270,7 +3270,7 @@ namespace draw2d_direct2d
 
    //   //ASSERT(get_handle1() != nullptr);
 
-   //   //return ArcTo(rectangle.left(), rectangle.top(), rectangle.right(), rectangle.bottom(), pointStart.x, pointStart.y, pointEnd.x, pointEnd.y);
+   //   //return ArcTo(rectangle.left, rectangle.top, rectangle.right, rectangle.bottom, pointStart.x, pointStart.y, pointEnd.x, pointEnd.y);
    //   //return false;
 
 
@@ -3601,7 +3601,7 @@ namespace draw2d_direct2d
 
    //   throw ::exception(todo);
 
-   //   //Gdiplus::RectF int_rectangle((Gdiplus::REAL) lpBounds->left(), (Gdiplus::REAL) lpBounds->top(), (Gdiplus::REAL) width(lpBounds), (Gdiplus::REAL) height(lpBounds));
+   //   //Gdiplus::RectF int_rectangle((Gdiplus::REAL) lpBounds->left, (Gdiplus::REAL) lpBounds->top, (Gdiplus::REAL) width(lpBounds), (Gdiplus::REAL) height(lpBounds));
 
    //   //Gdiplus::Metafile* pMeta = ___new Gdiplus::Metafile(hEnhMF, false);
 
@@ -3693,8 +3693,8 @@ namespace draw2d_direct2d
 
    //               }*/
 
-   //      D2D1_RECT_F rDst = D2D1::RectF((float)rectangleTarget.left(), (float)rectangleTarget.top(), (float) rectangleTarget.right(), (float) rectangleTarget.bottom());
-   //      D2D1_RECT_F rSrc = D2D1::RectF((float)rectangleSource.left(), (float)rectangleSource.top(), (float) rectangleSource.right(), (float) rectangleSource.bottom());
+   //      D2D1_RECT_F rDst = D2D1::RectF((float)rectangleTarget.left, (float)rectangleTarget.top, (float) rectangleTarget.right, (float) rectangleTarget.bottom);
+   //      D2D1_RECT_F rSrc = D2D1::RectF((float)rectangleSource.left, (float)rectangleSource.top, (float) rectangleSource.right, (float) rectangleSource.bottom);
 
 
    //      //dynamic_cast <::draw2d_direct2d::graphics *> (pgraphicsSrc)->SaveClip();
@@ -4145,7 +4145,7 @@ namespace draw2d_direct2d
    //   SelectClipRgn(&rgnLast);
    //   get_clip_box(&rectangle);
    //   pBrushOld = SelectObject(pBrushLast);
-   //   PatBlt(rectangle.left(), rectangle.top(), rectangle.width(), rectangle.height(), PATINVERT);
+   //   PatBlt(rectangle.left, rectangle.top, rectangle.width(), rectangle.height(), PATINVERT);
    //   SelectObject(pBrushOld);
    //   pBrushOld = nullptr;
    //   }
@@ -4154,7 +4154,7 @@ namespace draw2d_direct2d
    //   SelectClipRgn(rgnUpdate.get_os_data() != nullptr ? &rgnUpdate : &rgnNew);
    //   get_clip_box(&rectangle);
    //   pBrushOld = SelectObject(pBrush);
-   //   PatBlt(rectangle.left(), rectangle.top(), rectangle.width(), rectangle.height(), PATINVERT);
+   //   PatBlt(rectangle.left, rectangle.top, rectangle.width(), rectangle.height(), PATINVERT);
 
    //   // cleanup DC
    //   if (pBrushOld != nullptr)
@@ -4185,8 +4185,8 @@ namespace draw2d_direct2d
    //void graphics::draw_inset_3d_rectangle(const ::double_rectangle & rectangle,  const ::color::color & colorTopLeft, const ::color::color & colorBottomRight, const ::e_border & eborder)
    //{
 
-   //   double x = rectangle.left();
-   //   double y = rectangle.top();
+   //   double x = rectangle.left;
+   //   double y = rectangle.top;
    //   double cx = ::width(rectangle);
    //   double cy = ::height(rectangle);
 
@@ -4629,7 +4629,7 @@ namespace draw2d_direct2d
 
          auto r = rectanglea[i];
 
-         D2D1_RECT_F clipRect{(FLOAT) r.left(), (FLOAT)r.top(), (FLOAT)r.right(), (FLOAT)r.bottom()};
+         D2D1_RECT_F clipRect{(FLOAT) r.left, (FLOAT)r.top, (FLOAT)r.right, (FLOAT)r.bottom};
 
          m_pd2d1rendertarget->PushAxisAlignedClip(clipRect, D2D1_ANTIALIAS_MODE_PER_PRIMITIVE);
 
@@ -5233,7 +5233,7 @@ namespace draw2d_direct2d
    //int graphics::ExcludeClipRect(const ::int_rectangle & rectangle)
    //{
 
-   //   return ExcludeClipRect(rectangle.left(), rectangle.top(), rectangle.right(), rectangle.bottom());
+   //   return ExcludeClipRect(rectangle.left, rectangle.top, rectangle.right, rectangle.bottom);
 
    //}
 
@@ -5812,7 +5812,7 @@ namespace draw2d_direct2d
       if (m_pfont->m_dFontWidth == 1.0)
       {
 
-         D2D1_RECT_F float_rectangle = D2D1::RectF((FLOAT)rectangle.left(), (FLOAT)rectangle.top(), (FLOAT)rectangle.right(), (FLOAT)rectangle.bottom());
+         D2D1_RECT_F float_rectangle = D2D1::RectF((FLOAT)rectangle.left, (FLOAT)rectangle.top, (FLOAT)rectangle.right, (FLOAT)rectangle.bottom);
 
          m_pd2d1rendertarget->DrawText(ptextitem->get_text(), (unsigned int)ptextitem->get_text().length(), pfont,
                                        &float_rectangle, pbrush);
@@ -5828,7 +5828,7 @@ namespace draw2d_direct2d
 
          D2D1_RECT_F float_rectangle = D2D1::RectF((FLOAT)0, (FLOAT)0, (FLOAT)width(rectangle), (FLOAT)height(rectangle));
 
-         m = m * D2D1::Matrix3x2F::Translation((FLOAT)rectangle.left(), (FLOAT)rectangle.top());
+         m = m * D2D1::Matrix3x2F::Translation((FLOAT)rectangle.left, (FLOAT)rectangle.top);
 
          m = m * D2D1::Matrix3x2F::Scale((FLOAT)m_pfont->m_dFontWidth, 1.f);
 
@@ -6941,8 +6941,8 @@ namespace draw2d_direct2d
             auto pbrush = _create_simple_radial_gradient(cornerBrush, pstopcollection);
 
             m_pd2d1rendertarget->FillRectangle(
-               { (FLOAT)cornerClip.left(), (FLOAT)cornerClip.top(),
-               (FLOAT)cornerClip.right(), (FLOAT)cornerClip.bottom() },
+               { (FLOAT)cornerClip.left, (FLOAT)cornerClip.top,
+               (FLOAT)cornerClip.right, (FLOAT)cornerClip.bottom },
                pbrush);
 
          }
@@ -6958,8 +6958,8 @@ namespace draw2d_direct2d
             auto pbrush = _create_simple_radial_gradient(cornerBrush, pstopcollection);
 
             m_pd2d1rendertarget->FillRectangle(
-               { (FLOAT)cornerClip.left(), (FLOAT)cornerClip.top(),
-               (FLOAT)cornerClip.right(), (FLOAT)cornerClip.bottom() },
+               { (FLOAT)cornerClip.left, (FLOAT)cornerClip.top,
+               (FLOAT)cornerClip.right, (FLOAT)cornerClip.bottom },
                pbrush);
 
          }
@@ -6975,8 +6975,8 @@ namespace draw2d_direct2d
             auto pbrush = _create_simple_radial_gradient(cornerBrush, pstopcollection);
 
             m_pd2d1rendertarget->FillRectangle(
-               { (FLOAT)cornerClip.left(), (FLOAT)cornerClip.top(),
-               (FLOAT)cornerClip.right(), (FLOAT)cornerClip.bottom() },
+               { (FLOAT)cornerClip.left, (FLOAT)cornerClip.top,
+               (FLOAT)cornerClip.right, (FLOAT)cornerClip.bottom },
                pbrush);
 
          }
@@ -6992,8 +6992,8 @@ namespace draw2d_direct2d
             auto pbrush = _create_simple_radial_gradient(cornerBrush, pstopcollection);
 
             m_pd2d1rendertarget->FillRectangle(
-               { (FLOAT)cornerClip.left(), (FLOAT)cornerClip.top(),
-               (FLOAT)cornerClip.right(), (FLOAT)cornerClip.bottom() },
+               { (FLOAT)cornerClip.left, (FLOAT)cornerClip.top,
+               (FLOAT)cornerClip.right, (FLOAT)cornerClip.bottom },
                pbrush);
 
          }
@@ -7010,8 +7010,8 @@ namespace draw2d_direct2d
             auto pd2d1brush = _create_solid_brush(pbrush->m_color1);
 
             m_pd2d1rendertarget->FillRectangle(
-               { (FLOAT)inner.left(), (FLOAT)inner.top(),
-               (FLOAT)inner.right(), (FLOAT)inner.bottom() },
+               { (FLOAT)inner.left, (FLOAT)inner.top,
+               (FLOAT)inner.right, (FLOAT)inner.bottom },
                pd2d1brush);
 
          }
@@ -7027,8 +7027,8 @@ namespace draw2d_direct2d
                auto pbrush = _create_simple_linear_gradient(side.bottom_left(), side.top_left(), pstopcollection);
 
                m_pd2d1rendertarget->FillRectangle(
-                  { (FLOAT)side.left(), (FLOAT)side.top(),
-                  (FLOAT)side.right(), (FLOAT)side.bottom() },
+                  { (FLOAT)side.left, (FLOAT)side.top,
+                  (FLOAT)side.right, (FLOAT)side.bottom },
                   pbrush);
 
             }
@@ -7040,8 +7040,8 @@ namespace draw2d_direct2d
                auto pbrush = _create_simple_linear_gradient(side.top_left(), side.bottom_left(), pstopcollection);
 
                m_pd2d1rendertarget->FillRectangle(
-                  { (FLOAT)side.left(), (FLOAT)side.top(),
-                  (FLOAT)side.right(), (FLOAT)side.bottom() },
+                  { (FLOAT)side.left, (FLOAT)side.top,
+                  (FLOAT)side.right, (FLOAT)side.bottom },
                   pbrush);
 
             }
@@ -7060,8 +7060,8 @@ namespace draw2d_direct2d
                auto pbrush = _create_simple_linear_gradient(side.top_right(), side.top_left(), pstopcollection);
 
                m_pd2d1rendertarget->FillRectangle(
-                  { (FLOAT)side.left(), (FLOAT)side.top(),
-                  (FLOAT)side.right(), (FLOAT)side.bottom() },
+                  { (FLOAT)side.left, (FLOAT)side.top,
+                  (FLOAT)side.right, (FLOAT)side.bottom },
                   pbrush);
 
             }
@@ -7073,8 +7073,8 @@ namespace draw2d_direct2d
                auto pbrush = _create_simple_linear_gradient(side.top_left(), side.top_right(), pstopcollection);
 
                m_pd2d1rendertarget->FillRectangle(
-                  { (FLOAT)side.left(), (FLOAT)side.top(),
-                  (FLOAT)side.right(), (FLOAT)side.bottom() },
+                  { (FLOAT)side.left, (FLOAT)side.top,
+                  (FLOAT)side.right, (FLOAT)side.bottom },
                   pbrush);
 
             }
@@ -7490,7 +7490,7 @@ namespace draw2d_direct2d
 
       //defer_text_rendering_hint();
 
-      //playout->Draw(nullptr, &renderer, (FLOAT)drawtext.m_rectangle.left(), (FLOAT)drawtext.m_rectangle.top());
+      //playout->Draw(nullptr, &renderer, (FLOAT)drawtext.m_rectangle.left, (FLOAT)drawtext.m_rectangle.top);
 
       return true;
 
@@ -7535,7 +7535,7 @@ namespace draw2d_direct2d
 
       //   defer_text_rendering_hint();
 
-      //   playout->Draw(nullptr, &renderer, (FLOAT)drawtext.m_rectangle.left(), (FLOAT)drawtext.m_rectangle.top());
+      //   playout->Draw(nullptr, &renderer, (FLOAT)drawtext.m_rectangle.left, (FLOAT)drawtext.m_rectangle.top);
 
       //}
 

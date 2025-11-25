@@ -545,8 +545,8 @@ namespace draw2d_directx
    //   int imin = - imax;
 
 
-   //   int joff = cy / 2 + rectangle.left();
-   //   int ioff = cx / 2 + rectangle.top();
+   //   int joff = cy / 2 + rectangle.left;
+   //   int ioff = cx / 2 + rectangle.top;
 
    //   //int iAngle = iStep % 360;
    //   //int iAngle = iStep;
@@ -1231,10 +1231,10 @@ namespace draw2d_directx
 
          D2D1_RECT_U srcRect;
 
-         srcRect.left() = 0;
-         srcRect.right() = this->width();
-         srcRect.top() = 0;
-         srcRect.bottom() = this->height();
+         srcRect.left = 0;
+         srcRect.right = this->width();
+         srcRect.top = 0;
+         srcRect.bottom = this->height();
 
          //HRESULT hr = pbitmap1Map->CopyFromMemory(&srcRect, m_pimage32Raw, m_iScan);
 
@@ -1418,10 +1418,10 @@ namespace draw2d_directx
 
       //D2D1_RECT_U srcRect;
 
-      //srcRect.left() = 0;
-      //srcRect.right() = this->width();
-      //srcRect.top() = 0;
-      //srcRect.bottom() = this->height();
+      //srcRect.left = 0;
+      //srcRect.right = this->width();
+      //srcRect.top = 0;
+      //srcRect.bottom = this->height();
 
       return true;
 
@@ -1443,10 +1443,10 @@ namespace draw2d_directx
 
       D2D1_RECT_U srcRect;
 
-      srcRect.left() = 0;
-      srcRect.right() = this->width();
-      srcRect.top() = 0;
-      srcRect.bottom() = this->height();
+      srcRect.left = 0;
+      srcRect.right = this->width();
+      srcRect.top = 0;
+      srcRect.bottom = this->height();
 
       HRESULT hr = ((ID2D1Bitmap *)((image *) this)->m_pbitmapMap->m_osdata[0])->CopyFromBitmap(&p, ((ID2D1Bitmap *)((image *) this)->m_pbitmapMap->m_osdata[0]), &srcRect);
 
@@ -1599,8 +1599,8 @@ namespace draw2d_directx
       //   {
 
       //      D2D1_POINT_2F p;
-      //      p.x = rectangleTarget.left();
-      //      p.y = rectangleTarget.top();
+      //      p.x = rectangleTarget.left;
+      //      p.y = rectangleTarget.top;
 
       //      pgraphics->m_pdevicecontext->DrawImage((ID2D1Bitmap *)pgraphicsMap->get_current_bitmap()->get_os_data(), p, rectangleSource, pgraphics->m_interpolationmode, D2D1_COMPOSITE_MODE_DESTINATION_IN);
 
@@ -1612,24 +1612,24 @@ namespace draw2d_directx
       //      ::draw2d::savedc k1(pgraphics);
 
       //      ::int_rectangle rDst;
-      //      rDst.left() = pointDst.x;
-      //      rDst.top() = pointDst.y;
-      //      rDst.right() = pointDst.x + size.cx();
-      //      rDst.bottom() = pointDst.y + size.cy();
+      //      rDst.left = pointDst.x;
+      //      rDst.top = pointDst.y;
+      //      rDst.right = pointDst.x + size.cx();
+      //      rDst.bottom = pointDst.y + size.cy();
 
       //      pgraphics->ExcludeClipRect(rDst);
 
       //      D2D1_RECT_F r1;
-      //      r1.left() = (FLOAT) (pointDst.x);
-      //      r1.top() = (FLOAT)(pointDst.y);
-      //      r1.right() = (FLOAT)(pointDst.x + sizeParam.cx());
-      //      r1.bottom() = (FLOAT)(pointDst.y + sizeParam.cy());
+      //      r1.left = (FLOAT) (pointDst.x);
+      //      r1.top = (FLOAT)(pointDst.y);
+      //      r1.right = (FLOAT)(pointDst.x + sizeParam.cx());
+      //      r1.bottom = (FLOAT)(pointDst.y + sizeParam.cy());
 
       //      D2D1_RECT_F r2;
-      //      r2.left() = (FLOAT)(pointSrc.x);
-      //      r2.top() = (FLOAT)(pointSrc.y);
-      //      r2.right() = (FLOAT)(pointSrc.x + sizeParam.cx());
-      //      r2.bottom() = (FLOAT)(pointSrc.y + sizeParam.cy());
+      //      r2.left = (FLOAT)(pointSrc.x);
+      //      r2.top = (FLOAT)(pointSrc.y);
+      //      r2.right = (FLOAT)(pointSrc.x + sizeParam.cx());
+      //      r2.bottom = (FLOAT)(pointSrc.y + sizeParam.cy());
 
       //      pgraphics->m_pdevicecontext->DrawBitmap((ID2D1Bitmap *)pgraphicsMap->get_current_bitmap()->get_os_data(), r1,bA / 255.0f, pgraphics->m_interpolationmode, r2);
 

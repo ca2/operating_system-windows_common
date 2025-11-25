@@ -269,7 +269,7 @@ namespace imaging_wic
                      if (SUCCEEDED(hr))
                      {
 
-                        pframe->m_rectangle.left() = static_cast<int>(propValue.uiVal);
+                        pframe->m_rectangle.left = static_cast<int>(propValue.uiVal);
 
                      }
 
@@ -294,7 +294,7 @@ namespace imaging_wic
                      if (SUCCEEDED(hr))
                      {
 
-                        pframe->m_rectangle.top() = static_cast<int>(propValue.uiVal);
+                        pframe->m_rectangle.top = static_cast<int>(propValue.uiVal);
 
                      }
 
@@ -319,7 +319,7 @@ namespace imaging_wic
                      if (SUCCEEDED(hr))
                      {
 
-                        pframe->m_rectangle.right() = static_cast<int>(propValue.uiVal) + pframe->m_rectangle.left();
+                        pframe->m_rectangle.right = static_cast<int>(propValue.uiVal) + pframe->m_rectangle.left;
 
                      }
 
@@ -344,7 +344,7 @@ namespace imaging_wic
                      if (SUCCEEDED(hr))
                      {
 
-                        pframe->m_rectangle.bottom() = static_cast<int>(propValue.uiVal) + pframe->m_rectangle.top();
+                        pframe->m_rectangle.bottom = static_cast<int>(propValue.uiVal) + pframe->m_rectangle.top;
 
                      }
 
@@ -688,7 +688,7 @@ namespace imaging_wic
             if (SUCCEEDED(hr))
             {
 
-               pframe->m_rectangle.left() = propValue.uiVal;
+               pframe->m_rectangle.left = propValue.uiVal;
 
             }
 
@@ -713,7 +713,7 @@ namespace imaging_wic
             if (SUCCEEDED(hr))
             {
 
-               pframe->m_rectangle.top() = propValue.uiVal;
+               pframe->m_rectangle.top = propValue.uiVal;
 
             }
 
@@ -738,7 +738,7 @@ namespace imaging_wic
             if (SUCCEEDED(hr))
             {
 
-               pframe->m_rectangle.right() = propValue.uiVal + pframe->m_rectangle.left();
+               pframe->m_rectangle.right = propValue.uiVal + pframe->m_rectangle.left;
 
             }
 
@@ -763,7 +763,7 @@ namespace imaging_wic
             if (SUCCEEDED(hr))
             {
 
-               pframe->m_rectangle.bottom() = propValue.uiVal + pframe->m_rectangle.top();
+               pframe->m_rectangle.bottom = propValue.uiVal + pframe->m_rectangle.top;
 
             }
 

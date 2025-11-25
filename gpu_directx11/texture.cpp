@@ -706,11 +706,11 @@ namespace gpu_directx11
 
       // Define the box region to update (in texel coordinates)
       D3D11_BOX box{};
-      box.left = rectangle.left();
-      box.top = rectangle.top();
+      box.left = rectangle.left;
+      box.top = rectangle.top;
       box.front = 0;
-      box.right = rectangle.right();
-      box.bottom = rectangle.bottom();;
+      box.right = rectangle.right;
+      box.bottom = rectangle.bottom;;
       box.back = 1;
 
       UINT rowPitch = rectangle.width() * 4;

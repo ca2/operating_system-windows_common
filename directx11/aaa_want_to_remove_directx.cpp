@@ -236,10 +236,10 @@ namespace draw2d_directx11
          CreateWindowSizeDependentResources();
       }
 
-      psystem->m_puserinteraction->m_rectangleParentClient.left()     = 0;
-      psystem->m_puserinteraction->m_rectangleParentClient.top()      = 0;
-      psystem->m_puserinteraction->m_rectangleParentClient.right()    = (long long) m_window.Bounds.Width;
-      psystem->m_puserinteraction->m_rectangleParentClient.bottom()   = (long long) m_window.Bounds.Height;
+      psystem->m_puserinteraction->m_rectangleParentClient.left     = 0;
+      psystem->m_puserinteraction->m_rectangleParentClient.top      = 0;
+      psystem->m_puserinteraction->m_rectangleParentClient.right    = (long long) m_window.Bounds.Width;
+      psystem->m_puserinteraction->m_rectangleParentClient.bottom   = (long long) m_window.Bounds.Height;
       */
    }
 
@@ -658,10 +658,10 @@ namespace draw2d_directx11
 
       RECT32 rectangle;
 
-      rectangle.left()     = 200;
-      rectangle.top()      = 200;
-      rectangle.right()    = 300;
-      rectangle.bottom()   = 100;
+      rectangle.left     = 200;
+      rectangle.top      = 200;
+      rectangle.right    = 300;
+      rectangle.bottom   = 100;
 
       g.fill_rectangle(rectangle, argb(127, 255, 255, 240));
 
