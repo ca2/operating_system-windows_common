@@ -836,7 +836,7 @@ namespace gpu_directx11
       initData.SysMemPitch = width * 4 ;
       initData.SysMemSlicePitch = 0;
 
-      HRESULT hr = pgpudevice->m_pdevice->CreateTexture2D(&texDesc, &initData, &m_ptextureOffscreen);
+      HRESULT hr = pdevice->CreateTexture2D(&texDesc, &initData, &m_ptextureOffscreen);
       defer_throw_hresult(hr);
 
             if (m_bRenderTarget)
