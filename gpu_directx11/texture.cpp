@@ -499,8 +499,8 @@ namespace gpu_directx11
       auto size = m_rectangleTarget.size();
 
       D3D11_TEXTURE2D_DESC depthDesc = {};
-      depthDesc.Width = size.cx();
-      depthDesc.Height = size.cy();
+      depthDesc.Width = size.cx;
+      depthDesc.Height = size.cy;
       depthDesc.MipLevels = 1;
       depthDesc.ArraySize = 1;
       int MorePrecisionNoStencil = 1;

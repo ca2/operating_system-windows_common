@@ -184,8 +184,8 @@ namespace gpu_directx11
                //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
                //GLCheckError("");
                ::int_rectangle rectangle;
-               rectangle.set(0, 0, m_pframebufferPrefilteredEnvMap->m_ptexture->m_sizeMip.cx(),
-                             m_pframebufferPrefilteredEnvMap->m_ptexture->m_sizeMip.cy());
+               rectangle.set(0, 0, m_pframebufferPrefilteredEnvMap->m_ptexture->m_sizeMip.cx,
+                             m_pframebufferPrefilteredEnvMap->m_ptexture->m_sizeMip.cy);
                // Bind RTV
                auto prendertargetview = ptextureEnvMap->render_target_view(iFace, iMip);
                                                 //->m_pt[face * MIP_COUNT + mip]

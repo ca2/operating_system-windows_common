@@ -40,8 +40,8 @@ namespace draw2d_directx11
 
       //D2D1_SIZE_U size;
 
-      //size.width = sizeParam.cx();
-      //size.height = sizeParam.cy();
+      //size.width = sizeParam.cx;
+      //size.height = sizeParam.cy;
 
       //D2D1_BITMAP_PROPERTIES props;
 
@@ -100,7 +100,7 @@ namespace draw2d_directx11
       ::draw2d::device_lock devicelock(this);
       m_memory.set_size(size.area() * 4);
       m_size = size;
-      m_iStride = size.cx() * 4;
+      m_iStride = size.cx * 4;
       //if (m_pbitmap != nullptr)
       //{
 
@@ -110,9 +110,9 @@ namespace draw2d_directx11
 
       //D2D1_SIZE_U usize;
 
-      //usize.width = abs(size.cx());
+      //usize.width = abs(size.cx);
 
-      //usize.height = abs(size.cy());
+      //usize.height = abs(size.cy);
 
       //D2D1_BITMAP_PROPERTIES1 props = {};
 
@@ -171,9 +171,9 @@ namespace draw2d_directx11
 
       //   D2D1_RECT_U rectangleDst = {};
 
-      //   rectangleDst.right = size.cx();
+      //   rectangleDst.right = size.cx;
 
-      //   rectangleDst.bottom = size.cy();
+      //   rectangleDst.bottom = size.cy;
 
       //   hrResultCopyBitmap = m_pbitmap->CopyFromMemory(&rectangleDst, pimage32, iScan);
 

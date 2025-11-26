@@ -301,8 +301,8 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       D3D11_VIEWPORT vp = {};
       vp.TopLeftX = 0;
       vp.TopLeftY = 0;
-      vp.Width = static_cast<float>(m_size.cx());
-      vp.Height = static_cast<float>(m_size.cy());
+      vp.Width = static_cast<float>(m_size.cx);
+      vp.Height = static_cast<float>(m_size.cy);
       vp.MinDepth = 0.0f;
       vp.MaxDepth = 1.0f;
       pgpucontext->m_pcontext->RSSetViewports(1, &vp);
@@ -311,8 +311,8 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       D3D11_RECT rectScissor;
       rectScissor.left = 0;
       rectScissor.top = 0;
-      rectScissor.right = m_size.cx();
-      rectScissor.bottom = m_size.cy();
+      rectScissor.right = m_size.cx;
+      rectScissor.bottom = m_size.cy;
 
       pgpucontext->m_pcontext->RSSetScissorRects(1, &rectScissor);
 

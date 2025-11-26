@@ -160,8 +160,8 @@ namespace draw2d_directx11
          //      double centery = m_point.y;
          //      double offsetx = 0.0;
          //      double offsety = 0.0;
-         //      double radiusx = m_size.cx();
-         //      double radiusy = m_size.cy();
+         //      double radiusx = m_size.cx;
+         //      double radiusy = m_size.cy;
 
          //      hr = pgraphics->m_pd2d1rendertarget->CreateRadialGradientBrush(
          //           D2D1::RadialGradientBrushProperties(

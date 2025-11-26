@@ -256,8 +256,8 @@ namespace draw2d_directx11
 
    //   //ellipse.point.x = (float)pointCenter.x;
    //   //ellipse.point.y = (float)pointCenter.y;
-   //   //ellipse.radiusX = (float)sizeRadius.cx();
-   //   //ellipse.radiusY = (float)sizeRadius.cy();
+   //   //ellipse.radiusX = (float)sizeRadius.cx;
+   //   //ellipse.radiusY = (float)sizeRadius.cy;
 
    //   //ID2D1EllipseGeometry * pgeometry = nullptr;
 

@@ -43,8 +43,8 @@ namespace direct2d
 
          d2d1ellipse.point.x = pointCenter.x;
          d2d1ellipse.point.y = pointCenter.y;
-         d2d1ellipse.radiusX = sizeRadius.cx();
-         d2d1ellipse.radiusY = sizeRadius.cy();
+         d2d1ellipse.radiusX = sizeRadius.cx;
+         d2d1ellipse.radiusY = sizeRadius.cy;
 
          pdirect2d->d2d1_factory1()->CreateEllipseGeometry(d2d1ellipse, &pgeometry);
 

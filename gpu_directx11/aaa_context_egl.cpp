@@ -160,9 +160,9 @@ namespace directx11
 //
 ////      EGLint pbufferAttribs[5];
 ////      pbufferAttribs[0] = EGL_WIDTH;
-////      pbufferAttribs[1] = size.cx();
+////      pbufferAttribs[1] = size.cx;
 ////      pbufferAttribs[2] = EGL_HEIGHT;
-////      pbufferAttribs[3] = size.cy();
+////      pbufferAttribs[3] = size.cy;
 ////      pbufferAttribs[4] = EGL_NONE;
 ////
 ////      // Step 6 - Create a surface to draw to.
@@ -305,9 +305,9 @@ namespace directx11
 //
 //      EGLint pbufferAttribs[5];
 //      pbufferAttribs[0] = EGL_WIDTH;
-//      pbufferAttribs[1] = size.cx();
+//      pbufferAttribs[1] = size.cx;
 //      pbufferAttribs[2] = EGL_HEIGHT;
-//      pbufferAttribs[3] = size.cy();
+//      pbufferAttribs[3] = size.cy;
 //      pbufferAttribs[4] = EGL_NONE;
 //
 //      // Step 6 - Create a surface to draw to.
@@ -449,9 +449,9 @@ namespace directx11
 
       EGLint pbufferAttribs[5];
       pbufferAttribs[0] = EGL_WIDTH;
-      pbufferAttribs[1] = size.cx();
+      pbufferAttribs[1] = size.cx;
       pbufferAttribs[2] = EGL_HEIGHT;
-      pbufferAttribs[3] = size.cy();
+      pbufferAttribs[3] = size.cy;
       pbufferAttribs[4] = EGL_NONE;
 
       // Step 6 - Create a surface to draw to.
@@ -531,9 +531,9 @@ namespace directx11
 
       EGLint pbufferAttribs[5];
       pbufferAttribs[0] = EGL_WIDTH;
-      pbufferAttribs[1] = size.cx();
+      pbufferAttribs[1] = size.cx;
       pbufferAttribs[2] = EGL_HEIGHT;
-      pbufferAttribs[3] = size.cy();
+      pbufferAttribs[3] = size.cy;
       pbufferAttribs[4] = EGL_NONE;
 
       // Step 6 - Create a surface to draw to.

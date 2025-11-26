@@ -635,9 +635,9 @@ namespace gpu_directx11
 
          }
 
-         m_sizeStaging.cx() = texture2ddescSource.Width;
+         m_sizeStaging.cx = texture2ddescSource.Width;
 
-         m_sizeStaging.cy() = texture2ddescSource.Height;
+         m_sizeStaging.cy = texture2ddescSource.Height;
 
       }
 

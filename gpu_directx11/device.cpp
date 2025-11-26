@@ -845,8 +845,8 @@ namespace gpu_directx11
    //   //      //memset(&BIH, 0, sizeof(pwindow->m_bitmapinfoheaderProto));
 
    //   //      //BIH.biSize = sizeof(pwindow->m_bitmapinfoheaderProto);        // размер структуры
-   //   //      //BIH.biWidth = m_size.cx();       // геометрия
-   //   //      //BIH.biHeight = m_size.cy();      // битмапа
+   //   //      //BIH.biWidth = m_size.cx;       // геометрия
+   //   //      //BIH.biHeight = m_size.cy;      // битмапа
    //   //      //BIH.biPlanes = 1;          // один план
    //   //      //BIH.biBitCount = 32;       // 24 bits per pixel
    //   //      //BIH.biCompression = BI_RGB;// без сжатия// создаем новый DC в памяти
@@ -933,7 +933,7 @@ namespace gpu_directx11
 
    //   //#ifdef WINDOWS_DESKTOP
    //   //
-   //   //      ::SetWindowPos(m_hwnd, 0, 0, 0, size.cx(), size.cy(), SWP_NOZORDER | SWP_NOMOVE | SWP_HIDEWINDOW);
+   //   //      ::SetWindowPos(m_hwnd, 0, 0, 0, size.cx, size.cy, SWP_NOZORDER | SWP_NOMOVE | SWP_HIDEWINDOW);
    //   //
    //   //#else
 
@@ -950,10 +950,10 @@ namespace gpu_directx11
 
    //         make_current();
 
-   //         //glViewport(0, 0, size.cx(), size.cy());
+   //         //glViewport(0, 0, size.cx, size.cy);
    //         //glMatrixMode(GL_PROJECTION);
    //         //glLoadIdentity();
-   //         //glOrtho(0, size.cx(), 0, size.cy(), -10, 10);
+   //         //glOrtho(0, size.cx, 0, size.cy, -10, 10);
    //         //glMatrixMode(GL_MODELVIEW);
    //         //glutPostRedisplay();
 

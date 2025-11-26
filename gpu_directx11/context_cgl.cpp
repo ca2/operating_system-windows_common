@@ -65,7 +65,7 @@ namespace directx11
 //
 //      long max_level = 0;
 //
-//      CGLError error = CGLCreatePBuffer(size.cx(), size.cy(), target, internalFormat, max_level, &m_pbuffer);
+//      CGLError error = CGLCreatePBuffer(size.cx, size.cy, target, internalFormat, max_level, &m_pbuffer);
 //
 //      if(error != kCGLNoError)
 //      {

@@ -155,12 +155,12 @@ namespace draw2d_directx11
             if(SUCCEEDED(hr))
             {
 
-               double centerx = m_size.cx() - m_point.x;
-               double centery = m_size.cy() - m_point.y;
-               double originx = m_size.cx() / 2 -m_point.x;
-               double originy = m_size.cy() / 2 -m_point.y;
-               double radiusx = m_size.cx() / 2;
-               double radiusy = m_size.cy() / 2;
+               double centerx = m_size.cx - m_point.x;
+               double centery = m_size.cy - m_point.y;
+               double originx = m_size.cx / 2 -m_point.x;
+               double originy = m_size.cy / 2 -m_point.y;
+               double radiusx = m_size.cx / 2;
+               double radiusy = m_size.cy / 2;
 
                hr = pgraphics->m_prendertarget->CreateRadialGradientBrush(
                     D2D1::RadialGradientBrushProperties(

@@ -126,7 +126,7 @@ namespace imaging_wic
             if (SUCCEEDED(hr))
             {
 
-               pframea->m_size.cx() = propValue.uiVal;
+               pframea->m_size.cx = propValue.uiVal;
 
             }
 
@@ -153,7 +153,7 @@ namespace imaging_wic
             if (SUCCEEDED(hr))
             {
 
-               pframea->m_size.cy() = propValue.uiVal;
+               pframea->m_size.cy = propValue.uiVal;
 
             }
 

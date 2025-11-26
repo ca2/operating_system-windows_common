@@ -34,8 +34,8 @@ namespace draw2d_directx
 
       D2D1_SIZE_U size;
 
-      size.width = sizeParam.cx();
-      size.height = sizeParam.cy();
+      size.width = sizeParam.cx;
+      size.height = sizeParam.cy;
 
       D2D1_BITMAP_PROPERTIES props;
 
@@ -100,9 +100,9 @@ namespace draw2d_directx
 
       D2D1_SIZE_U usize;
 
-      usize.width = abs(size.cx());
+      usize.width = abs(size.cx);
 
-      usize.height = abs(size.cy());
+      usize.height = abs(size.cy);
 
       D2D1_BITMAP_PROPERTIES1 props = {};
 
