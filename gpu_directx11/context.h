@@ -320,7 +320,7 @@ namespace gpu_directx11
       floating_matrix4 defer_transpose(const floating_matrix4 &m) override;
       floating_matrix4 defer_clip_remap_projection(const floating_matrix4 &m) override;
       floating_matrix4 defer_remap_impact_matrix(const floating_matrix4 &m) override;
-
+      floating_sequence3 front(const ::graphics3d::floating_rotation &rotation) override;
    };
 
 

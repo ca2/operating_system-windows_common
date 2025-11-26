@@ -85,19 +85,33 @@ namespace gpu_directx11
          using namespace graphics3d;
          floating_matrix4 model = mIndentity4;
          // Rotate targets around Y
-         floating_matrix4 cameraAngles[] = {
+         //floating_matrix4 cameraAngles[] = {
+         //   // Swap +X/-X
+         //   lookAt(origin, rot180Y(-unitX), -unitY), // DX +X face
+         //   lookAt(origin, rot180Y(unitX), -unitY), // DX -X face
+
+         //   // +Y/-Y (may also need flipping depending on your loader)
+         //   lookAt(origin, rot180Y(unitY), unitZ),
+         //   lookAt(origin, rot180Y(-unitY), -unitZ),
+
+         //   // +Z/-Z
+         //   lookAt(origin, rot180Y(unitZ), -unitY),
+         //   lookAt(origin, rot180Y(-unitZ), -unitY)};
+          floating_matrix4 cameraAngles[] = {
             // Swap +X/-X
-            lookAt(origin, rot180Y(-unitX), -unitY), // DX +X face
-            lookAt(origin, rot180Y(unitX), -unitY), // DX -X face
+            lookAt(origin, unitX, -unitY), // DX +X face
+            lookAt(origin, -unitX, -unitY), // DX -X face
 
             // +Y/-Y (may also need flipping depending on your loader)
-            lookAt(origin, rot180Y(unitY), unitZ),
-            lookAt(origin, rot180Y(-unitY), -unitZ),
+            lookAt(origin, unitY, -unitZ),
+            lookAt(origin, -unitY, unitZ),
 
             // +Z/-Z
-            lookAt(origin, rot180Y(unitZ), -unitY),
-            lookAt(origin, rot180Y(-unitZ), -unitY)};
-         floating_matrix4 projection = m_pgpucontext->m_pengine->perspective(90f_degrees, // 90 degrees to cover one face
+            lookAt(origin, -unitZ, -unitY),
+            lookAt(origin, unitZ, -unitY)};
+         floating_matrix4 projection =
+            m_pgpucontext->m_pengine->perspective(
+            90f_degrees, // 90 degrees to cover one face
                                                  1.0f, // its a square
                                                  0.1f, 2.0f);
          ::cast<::gpu_directx11::context> pcontext = m_pgpucontext;
