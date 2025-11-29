@@ -9,40 +9,40 @@
 //#include "texture.h"
 #include "aura/message/user.h"
 
-namespace gpu_directx11
-{
+// namespace gpu_directx11
+// {
 
 
-namespace gltf
-{
-   class CLASS_DECL_GPU material :
-   virtual public ::message::particle
-   {
+// namespace gltf
+// {
+//    class CLASS_DECL_GPU material :
+//    virtual public ::message::particle
+//    {
 
-   public:
+//    public:
 
-      bool useTextureAlbedo = false;
-      bool useTextureMetallicRoughness = false;
-      bool useTextureNormal = false;
-      bool useTextureAmbientOcclusion = false;
-      bool useTextureEmissive = false;
+//       bool useTextureAlbedo = false;
+//       bool useTextureMetallicRoughness = false;
+//       bool useTextureNormal = false;
+//       bool useTextureAmbientOcclusion = false;
+//       bool useTextureEmissive = false;
 
-      floating_sequence3 m_seq3Albedo = constants::colorRed;
-      float m_fMetallic = 1.0f;
-      float m_fRoughness = 0.0f;
-      float m_fAmbientOcclusion = 1.0f;
-      floating_sequence3 m_seq3Emissive = floating_sequence3(0.0, 0.0, 0.0);
+//       floating_sequence3 m_seq3Albedo = constants::colorRed;
+//       float m_fMetallic = 1.0f;
+//       float m_fRoughness = 0.0f;
+//       float m_fAmbientOcclusion = 1.0f;
+//       floating_sequence3 m_seq3Emissive = floating_sequence3(0.0, 0.0, 0.0);
 
-      ::pointer<::gpu::texture> m_ptextureAlbedo;
-      ::pointer<::gpu::texture> m_ptextureMetallicRoughness;
-      ::pointer<::gpu::texture> m_ptextureNormal;
-      ::pointer<::gpu::texture> m_ptextureAmbientOcclusion;
-      ::pointer<::gpu::texture> m_ptextureEmissive;
-
-
-   };
-
-   } // namespace gltf
+//       ::pointer<::gpu::texture> m_ptextureAlbedo;
+//       ::pointer<::gpu::texture> m_ptextureMetallicRoughness;
+//       ::pointer<::gpu::texture> m_ptextureNormal;
+//       ::pointer<::gpu::texture> m_ptextureAmbientOcclusion;
+//       ::pointer<::gpu::texture> m_ptextureEmissive;
 
 
-} // namespace gpu_directx11
+//    };
+
+//    } // namespace gltf
+
+
+// } // namespace gpu_directx11

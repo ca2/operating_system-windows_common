@@ -82,6 +82,8 @@ namespace gpu_directx11
 
             auto m2 = uniformBlock.matrix;
 
+            auto pszName = pscenerenderable->m_strName.c_str();
+
             //// Remap Z (linear transformation)
             //projD3D[2][0] *= 0.5f; // column-major indexing: projD3D[col][row]
             //projD3D[2][1] *= 0.5f;
@@ -226,6 +228,7 @@ namespace gpu_directx11
             }
 
             ID3D11SamplerState *sampler = nullptr;
+            ID3D11ShaderResourceView *srv[5] = {};
                      // // albedo
                      // 
             // shader.setBool("material.useTextureAlbedo", m_pmaterial->useTextureAlbedo);
@@ -235,8 +238,8 @@ namespace gpu_directx11
                ::cast<::gpu_directx11::texture> ptexture = m_pmaterial->m_ptextureAlbedo;
                if (ptexture)
                {
-                  ID3D11ShaderResourceView *srv[] = {ptexture->m_pshaderresourceview};
-                  pcontext->m_pcontext->PSSetShaderResources(3, 1, srv);
+                  srv[0] = ptexture->m_pshaderresourceview;
+                  //pcontext->m_pcontext->PSSetShaderResources(3, 1, srv);
                   // glActiveTexture(GL_TEXTURE0 + e_gltf_texture_albedo);
                   // shader.setInt("material.textureAlbedo", e_gltf_texture_albedo);
                   // glBindTexture(GL_TEXTURE_2D, m_pmaterial->textureAlbedo->mId);
@@ -258,8 +261,8 @@ namespace gpu_directx11
                ::cast<::gpu_directx11::texture> ptexture = m_pmaterial->m_ptextureMetallicRoughness;
                if (ptexture)
                {
-                  ID3D11ShaderResourceView *srv[] = {ptexture->m_pshaderresourceview};
-                  pcontext->m_pcontext->PSSetShaderResources(4, 1, srv);
+                  srv[1] = ptexture->m_pshaderresourceview;
+                  //pcontext->m_pcontext->PSSetShaderResources(4, 1, srv);
                   // glActiveTexture(GL_TEXTURE0 + e_gltf_texture_albedo);
                   // shader.setInt("material.textureAlbedo", e_gltf_texture_albedo);
                   // glBindTexture(GL_TEXTURE_2D, m_pmaterial->textureAlbedo->mId);
@@ -275,8 +278,8 @@ namespace gpu_directx11
                ::cast<::gpu_directx11::texture> ptexture = m_pmaterial->m_ptextureNormal;
                if (ptexture)
                {
-                  ID3D11ShaderResourceView *srv[] = {ptexture->m_pshaderresourceview};
-                  pcontext->m_pcontext->PSSetShaderResources(5, 1, srv);
+                  srv[2] = ptexture->m_pshaderresourceview;
+                  //pcontext->m_pcontext->PSSetShaderResources(5, 1, srv);
                   // glActiveTexture(GL_TEXTURE0 + e_gltf_texture_albedo);
                   // shader.setInt("material.textureAlbedo", e_gltf_texture_albedo);
                   // glBindTexture(GL_TEXTURE_2D, m_pmaterial->textureAlbedo->mId);
@@ -293,8 +296,8 @@ namespace gpu_directx11
                ::cast<::gpu_directx11::texture> ptexture = m_pmaterial->m_ptextureAmbientOcclusion;
                if (ptexture)
                {
-                  ID3D11ShaderResourceView *srv[] = {ptexture->m_pshaderresourceview};
-                  pcontext->m_pcontext->PSSetShaderResources(6, 1, srv);
+                  srv[3] = ptexture->m_pshaderresourceview;
+                  //pcontext->m_pcontext->PSSetShaderResources(6, 1, srv);
                   // glActiveTexture(GL_TEXTURE0 + e_gltf_texture_albedo);
                   // shader.setInt("material.textureAlbedo", e_gltf_texture_albedo);
                   // glBindTexture(GL_TEXTURE_2D, m_pmaterial->textureAlbedo->mId);
@@ -311,8 +314,8 @@ namespace gpu_directx11
                ::cast<::gpu_directx11::texture> ptexture = m_pmaterial->m_ptextureEmissive;
                if (ptexture)
                {
-                  ID3D11ShaderResourceView *srv[] = {ptexture->m_pshaderresourceview};
-                  pcontext->m_pcontext->PSSetShaderResources(7, 1, srv);
+                  srv[4] = ptexture->m_pshaderresourceview;
+                  //pcontext->m_pcontext->PSSetShaderResources(7, 1, srv);
                   // glActiveTexture(GL_TEXTURE0 + e_gltf_texture_albedo);
                   // shader.setInt("material.textureAlbedo", e_gltf_texture_albedo);
                   // glBindTexture(GL_TEXTURE_2D, m_pmaterial->textureAlbedo->mId);
@@ -325,6 +328,7 @@ namespace gpu_directx11
             {
                ID3D11SamplerState *samplers[1] = {sampler};
                pcontext->m_pcontext->PSSetSamplers(1, 1, samplers);
+               pcontext->m_pcontext->PSSetShaderResources(3, 5, srv);
             }
 
          }

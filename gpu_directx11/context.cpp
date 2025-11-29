@@ -10,7 +10,6 @@
 #include "texture.h"
 #include "swap_chain.h"
 #include "swap_chain_render_target_view.h"
-
 #include "offscreen_render_target_view.h"
 #include "acme/platform/application.h"
 #include "aura/graphics/image/image.h"
@@ -23,12 +22,10 @@
 #include "bred/gpu/types.h"
 #include "bred/graphics3d/types.h"
 #include "gpu_directx11/descriptors.h"
-//
-//
-
 #include "initializers.h"
 #include "acme_windows_common/dxgi_surface_bindable.h"
 #include <DirectXMath.h>
+
 
 using namespace directx11;
 
@@ -42,31 +39,9 @@ namespace gpu_directx11
    context::context()
    {
 
-
-      //m_vksampler001 = nullptr;
-      //m_bOffscreen = true;
-      //      m_emode = e_mode_none;
-            //m_itaskGpu = 0;
-            //m_iLastBitmap1Scan = -1;
-
-            //m_gluTextureBitmap1 = 0;
-            //m_VAO = 0;
-            //m_VBO = 0;
-
       m_bMesa = false;
 
-      //m_emode = e_mode_system;
-
       m_estatus = error_not_initialized;
-
-      //m_physicaldevicefeaturesCreate = {};
-      //m_physicaldevicefeaturesEnabled = {};
-      //this->logicalDevice() = VK_NULL_HANDLE;
-      //m_vkcommandpool = VK_NULL_HANDLE;
-
-      //m_vkqueuePresent = nullptr;
-      //m_vkqueueGraphics = nullptr;
-
 
 
    }
@@ -74,6 +49,7 @@ namespace gpu_directx11
 
    context::~context()
    {
+
 
    }
 
@@ -2604,208 +2580,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    void context::layout_push_constants(::gpu::properties & properties, bool bGlobalUbo)
    {
     
-      auto pproperty = properties.m_pproperties;
-
-   ::collection::index i = 0;
-
-   int iSizeWithSamplers = 0;
-
-   int iSizeWithoutSamplers = 0;
-
-   while (pproperty->m_pszName)
-   {
-
-      int iItemSize;
-
-      			if (pproperty->m_etype == ::gpu::e_type_array)
-      {
-                  ::gpu::properties propertiesNested;
-
-                  propertiesNested.m_pproperties = pproperty->m_pproperties;
-
-                  layout_push_constants(propertiesNested, bGlobalUbo);
-
-         iItemSize = propertiesNested.m_blockWithoutSamplers.size();
-                  iItemSize *= pproperty->m_iArraySize;
-      }
-      else
-      {
-         iItemSize= ::gpu::get_type_size(pproperty->m_etype);
-      }
-
-       
-
-      int iSize = iItemSize;
-
-      if (iItemSize == 4)
-      {
-
-         if (iSizeWithSamplers % 16 != 0)
-         {
-
-            iSizeWithSamplers += 16 - iSizeWithSamplers % 16;
-         }
-
-         //iSize = (iSize + 15) & ~15;
-         
-
-
-         ::gpu::property_data data;
-
-         data.m_iOffset = iSizeWithSamplers;
-
-         properties.m_propertydataa.set_at_grow(i, data);
-
-         i++;
-
-         iSizeWithSamplers += 4;
-
-         if (!pproperty[1].m_pszName)
-         {
-            break;
-         }
-         if (pproperty[1].m_etype != ::gpu::e_type_array && ::gpu::get_type_size(pproperty[1].m_etype) != 4)
-         {
-            goto iteration1;
-         }
-
-         pproperty++;
-
-//         ::gpu::property_data data;
-
-         data.m_iOffset = iSizeWithSamplers;
-
-         properties.m_propertydataa.set_at_grow(i, data);
-
-         i++;
-
-         iSizeWithSamplers += 4;
-
-         if (!pproperty[1].m_pszName)
-         {
-            break;
-         }
-         if (pproperty[1].m_etype != ::gpu::e_type_array && ::gpu::get_type_size(pproperty[1].m_etype) != 4)
-         {
-            goto iteration1;
-         }
-
-         pproperty++;
-
-         //::gpu::property_data data;
-
-         data.m_iOffset = iSizeWithSamplers;
-
-         properties.m_propertydataa.set_at_grow(i, data);
-
-         i++;
-
-         iSizeWithSamplers += 4;
-
-         if (!pproperty[1].m_pszName)
-         {
-            break;
-         }
-         if (pproperty[1].m_etype != ::gpu::e_type_array && ::gpu::get_type_size(pproperty[1].m_etype) != 4)
-         {
-            goto iteration1;
-         }
-
-         pproperty++;
-
-         //::gpu::property_data data;
-
-         data.m_iOffset = iSizeWithSamplers;
-
-         properties.m_propertydataa.set_at_grow(i, data);
-
-         i++;
-
-         iSizeWithSamplers += 4;
-
-      }
-      else if (iItemSize == 8)
-      {
-
-                  if (iSizeWithSamplers % 16 != 0)
-         {
-
-            iSizeWithSamplers += 16 - iSizeWithSamplers % 16;
-         }
-
-         ::gpu::property_data data;
-
-         data.m_iOffset = iSizeWithSamplers;
-
-         properties.m_propertydataa.set_at_grow(i, data);
-
-         i++;
-
-         iSizeWithSamplers += 8;
-
-         if (!pproperty[1].m_pszName)
-         {
-            break;
-         }
-         if (pproperty[1].m_etype != ::gpu::e_type_array && ::gpu::get_type_size(pproperty[1].m_etype) != 8)
-         {
-            goto iteration1;
-         }
-
-         pproperty++;
-
- //::gpu::property_data data;
-
-         data.m_iOffset = iSizeWithSamplers;
-
-         properties.m_propertydataa.set_at_grow(i, data);
-
-         i++;
-
-         iSizeWithSamplers += 8;
-
-      }
-      else
-      {
-
-                   if (iSizeWithSamplers % 16 != 0)
-         {
-
-            iSizeWithSamplers += 16 - iSizeWithSamplers % 16;
-         }
-
-         iSize = (iSize + 15) & ~15;
-         
-
-
-         ::gpu::property_data data;
-
-         data.m_iOffset = iSizeWithSamplers;
-
-         properties.m_propertydataa.set_at_grow(i, data);
-
-         i++;
-
-         iSizeWithSamplers += iSize;
-
-      }
-
-      iteration1:
-
-      ::string strName(pproperty->m_pszName);
-
-      if (!strName.begins("sampler:"))
-      {
-
-         iSizeWithoutSamplers = iSizeWithSamplers;
-      }
-
-      pproperty++;
-   }
-
-   properties.m_memory.set_size(iSizeWithSamplers);
-   properties.m_blockWithoutSamplers = properties.m_memory(0, iSizeWithoutSamplers);
-   properties.m_blockWithSamplers = properties.m_memory;
+      _layout_hlsl(properties);
 
    }
 
@@ -2896,27 +2671,34 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    }
 
 
-      void context::set_viewport(::gpu::command_buffer *pgpucommandbuffer, const ::int_rectangle &rectangle)
-      {
+   void context::set_viewport(::gpu::command_buffer *pgpucommandbuffer, const ::int_rectangle &rectangle)
+   {
       
-      D3D11_VIEWPORT vp = {};
-         vp.TopLeftX = rectangle.left;
-      vp.TopLeftY = rectangle.top;
-         vp.Width = (float)rectangle.width();
-         vp.Height = (float)rectangle.height();
-         vp.MinDepth = 0.0f;
-         vp.MaxDepth = 1.0f;
-         m_pcontext->RSSetViewports(1, &vp);
-      }
+      D3D11_VIEWPORT viewport = {};
+
+      viewport.TopLeftX = (float) rectangle.left;
+      viewport.TopLeftY = (float) rectangle.top;
+      viewport.Width = (float)rectangle.width();
+      viewport.Height = (float)rectangle.height();
+      viewport.MinDepth = 0.0f;
+      viewport.MaxDepth = 1.0f;
+
+      m_pcontext->RSSetViewports(1, &viewport);
+
+   }
 
 
-         void context::clear(::gpu::texture * pgputexture, const ::color::color &color)
-         {
-            ::cast<::gpu_directx11::texture> ptexture = pgputexture;
-            float clearColor[4] = {color.f32_red(), color.f32_green(), color.f32_blue(), color.f32_opacity()};
-            m_pcontext->ClearRenderTargetView(ptexture->m_prendertargetview, clearColor);
+   void context::clear(::gpu::texture * pgputexture, const ::color::color &color)
+   {
+
+      ::cast<::gpu_directx11::texture> ptexture = pgputexture;
+
+      float clearColor[4] = {color.f32_red(), color.f32_green(), color.f32_blue(), color.f32_opacity()};
+
+      m_pcontext->ClearRenderTargetView(ptexture->m_prendertargetview, clearColor);
          
-         }
+   }
+
 
    void context::engine_on_frame_context_initialization()
    {
@@ -3024,7 +2806,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    }
 
 
-      floating_sequence3 context::front(const ::graphics3d::floating_rotation &rotation)
+   floating_sequence3 context::front(const ::graphics3d::floating_rotation &rotation)
    {
 
       //throw ::interface_only();
@@ -3042,6 +2824,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       front.x = rotation.m_anglePitch.cos() * rotation.m_angleYaw.cos();
       front.y = rotation.m_anglePitch.sin();
       front.z = rotation.m_anglePitch.cos() * rotation.m_angleYaw.sin();
+      front.z = -front.z;
       front.normalize();
 
       return front;

@@ -155,12 +155,20 @@ namespace gpu_directx11
          srvDesc.TextureCube.MipLevels = desc.MipLevels;
          srvDesc.TextureCube.MostDetailedMip = 0;
 
-         hr = pgpudevice->m_pdevice->CreateShaderResourceView(ptexture->m_ptextureOffscreen, &srvDesc,
-                                                              &ptexture->m_pshaderresourceview);
+         hr = pgpudevice->m_pdevice->CreateShaderResourceView(
+            ptexture->m_ptextureOffscreen, 
+            &srvDesc,
+            &ptexture->m_pshaderresourceview);
+
          if (FAILED(hr) || !ptexture->m_pshaderresourceview)
          {
+            
             OutputDebugStringA("Failed CreateShaderResourceView for cubemap.\n");
+            
+            defer_throw_hresult(hr);
+
             return;
+
          }
 
          // Create RTVs: one per face per mip level
@@ -169,9 +177,12 @@ namespace gpu_directx11
 
          for (int iFace = 0; iFace < 6; ++iFace)
          {
+            
             for (int iMip = 0; iMip < ptexture->m_iMipCount; ++iMip)
             {
+               
                D3D11_RENDER_TARGET_VIEW_DESC rtvDesc = {};
+
                rtvDesc.Format = desc.Format;
                // We create RTV for a single array slice (face) and a single mip slice
                rtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2DARRAY;
@@ -182,16 +193,24 @@ namespace gpu_directx11
                auto iRenderTargetView = ptexture->render_target_view_index(iFace, iMip);
 
                auto &rtv = ptexture->m_rendertargetviewa[iRenderTargetView];
+
                HRESULT hr = pgpudevice->m_pdevice->CreateRenderTargetView(
                   ptexture->m_ptextureOffscreen, &rtvDesc, &rtv);
+
                ::defer_throw_hresult(hr);
+
             }
+
          }
+
       }
+
       
       void mipmap_cubemap_framebuffer::createDepthForCurrentMip()
       {
+
          ::gpu::context_lock contextlock(m_pgpucontext);
+
          ::cast<::gpu_directx11::texture> ptexture = m_ptexture;
                ::cast<::gpu_directx11::context> pgpucontext = m_pgpucontext;
 
@@ -241,19 +260,15 @@ namespace gpu_directx11
             return;
          }
       }
+
+
       void mipmap_cubemap_framebuffer::bind()
       {
+      
          ::gpu::context_lock contextlock(m_pgpucontext);
 
-         //ID3D11DeviceContext *context = m_pgpucontext->m_pd3dDeviceContext;
-         //if (!context)
-         //{
-         //   OutputDebugStringA("bind: device context null\n");
-         //   return;
-         //}
+         ::cast<::gpu_directx11::texture> ptexture = m_ptexture;
 
-
-                  ::cast<::gpu_directx11::texture> ptexture = m_ptexture;
          ::cast<::gpu_directx11::context> pgpucontext = m_pgpucontext;
 
          ::cast<device> pgpudevice = pgpucontext->m_pgpudevice;
@@ -262,8 +277,13 @@ namespace gpu_directx11
          size_t idx = ptexture->current_render_target_view_index();
 
          ID3D11RenderTargetView *rtvPtr = nullptr;
+
          if (idx < ptexture->m_rendertargetviewa.size() && ptexture->m_rendertargetviewa[idx])
+         {
+
             rtvPtr = ptexture->m_rendertargetviewa[idx];
+
+         }
 
          // Bind the single RTV and the current DSV
          pgpucontext->m_pcontext->OMSetRenderTargets(rtvPtr ? 1 : 0, rtvPtr ? &rtvPtr : nullptr, ptexture->m_pdepthstencilview);

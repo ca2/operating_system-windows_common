@@ -175,7 +175,7 @@ namespace gpu_directx11
 
       if (m_bRenderTarget)
       {
-      {
+      //{
 
          create_render_target_view();
       }
@@ -470,8 +470,8 @@ namespace gpu_directx11
       auto size = m_rectangleTarget.size();
 
       D3D11_TEXTURE2D_DESC depthDesc = {};
-      depthDesc.Width = size.cx();
-      depthDesc.Height = size.cy();
+      depthDesc.Width = size.cx;
+      depthDesc.Height = size.cy;
       depthDesc.MipLevels = 1;
       depthDesc.ArraySize = 1;
       int MorePrecisionNoStencil = 1;
@@ -661,11 +661,11 @@ namespace gpu_directx11
 
       // Define the box region to update (in texel coordinates)
       D3D11_BOX box{};
-      box.left = rectangle.left();
-      box.top = rectangle.top();
+      box.left = rectangle.left;
+      box.top = rectangle.top;
       box.front = 0;
-      box.right = rectangle.right();
-      box.bottom = rectangle.bottom();
+      box.right = rectangle.right;
+      box.bottom = rectangle.bottom;
       ;
       box.back = 1;
 

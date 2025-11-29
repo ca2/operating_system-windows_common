@@ -5739,8 +5739,8 @@ namespace draw2d_directx11
 
       ::double_size sizeWinExt = GetWindowExt();
       ::double_size sizeVpExt = get_extents();
-      psize->cx() = psize->cx() * abs(sizeVpExt.cx) / abs(sizeWinExt.cx);
-      psize->cy() = psize->cy() * abs(sizeVpExt.cy) / abs(sizeWinExt.cy);
+      psize->cx = psize->cx * abs(sizeVpExt.cx) / abs(sizeWinExt.cx);
+      psize->cy = psize->cy * abs(sizeVpExt.cy) / abs(sizeWinExt.cy);
 
    }
 
@@ -5752,8 +5752,8 @@ namespace draw2d_directx11
 
       ::double_size sizeWinExt = GetWindowExt();
       ::double_size sizeVpExt = get_extents();
-      psize->cx() = psize->cx() * abs(sizeWinExt.cx) / abs(sizeVpExt.cx);
-      psize->cy() = psize->cy() * abs(sizeWinExt.cy) / abs(sizeVpExt.cy);
+      psize->cx = psize->cx * abs(sizeWinExt.cx) / abs(sizeVpExt.cx);
+      psize->cy = psize->cy * abs(sizeWinExt.cy) / abs(sizeVpExt.cy);
 
    }
 
