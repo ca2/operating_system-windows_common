@@ -24,7 +24,7 @@ namespace acme_windows_common
    }
 
 
-   ::file::path directory_system::get_current()
+   ::file::path directory_system::current()
    {
 
       auto size = GetCurrentDirectoryW(0, nullptr);

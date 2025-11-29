@@ -19,9 +19,10 @@ namespace acme_windows_common
       ~directory_system() override;
 
 
-      ::file::path get_current() override;
+      ::file::path current() override;
 
       ::file::path tool() override;
+
 
    };
 
