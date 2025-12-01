@@ -78,7 +78,7 @@ namespace gpu_directx11
 
             auto pscenerenderable = prendersystem->m_pscenerenderableCurrent;
 
-            auto m1 = pscenerenderable->transform().getMatrix();
+            auto m1 = pscenerenderable->model_matrix();
 
             auto m2 = uniformBlock.matrix;
 
