@@ -405,13 +405,13 @@ namespace directx11
       //inline VkPipelineInputAssemblyStateCreateInfo pipelineInputAssemblyStateCreateInfo(
       //   VkPrimitiveTopology topology,
       //   VkPipelineInputAssemblyStateCreateFlags flags,
-      //   VkBool32 primitiveRestartEnable)
+      //   VkBool32 prototypeRestartEnable)
       //{
       //   VkPipelineInputAssemblyStateCreateInfo pipelineInputAssemblyStateCreateInfo{};
       //   pipelineInputAssemblyStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
       //   pipelineInputAssemblyStateCreateInfo.topology = topology;
       //   pipelineInputAssemblyStateCreateInfo.flags = flags;
-      //   pipelineInputAssemblyStateCreateInfo.primitiveRestartEnable = primitiveRestartEnable;
+      //   pipelineInputAssemblyStateCreateInfo.prototypeRestartEnable = prototypeRestartEnable;
       //   return pipelineInputAssemblyStateCreateInfo;
       //}
 

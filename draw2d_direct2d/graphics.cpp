@@ -4059,7 +4059,7 @@ namespace draw2d_direct2d
    }*/
 
    /////////////////////////////////////////////////////////////////////////////
-   // special graphics drawing primitives/helpers
+   // special graphics drawing prototypes/helpers
 
    ::draw2d::brush * graphics::GetHalftoneBrush(::particle * pparticle)
    {

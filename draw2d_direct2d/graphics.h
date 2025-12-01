@@ -336,7 +336,7 @@ namespace draw2d_direct2d
       //int SelectClipRgn(::draw2d::region* pRgn) override;
       //int ExcludeClipRect(double x1, double y1, double x2, double y2) override;
       //int ExcludeClipRect(const ::double_rectangle & rectangle) override;
-      ////int ExcludeUpdateRgn(::user::primitive * pwindow) override;
+      ////int ExcludeUpdateRgn(::user::prototype * pwindow) override;
       //int IntersectClipRect(double x1, double y1, double x2, double y2) override;
       //int IntersectClipRect(const ::double_rectangle & rectangle) override;
       //int OffsetClipRgn(double x, double y) override;

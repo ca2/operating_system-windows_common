@@ -58,7 +58,7 @@
 
 
 
-//bool context::_os_resolve_alias(::file::path & path, const char * psz, ::user::primitive * pinteraction, bool bNoUI, bool bNoMount)
+//bool context::_os_resolve_alias(::file::path & path, const char * psz, ::user::prototype * pinteraction, bool bNoUI, bool bNoMount)
 //{
 //
 //   if (os_is_alias(psz))
