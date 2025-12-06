@@ -13,7 +13,7 @@
 #include "bred/graphics3d/scene_base.h"
 #include "bred/graphics3d/skybox.h"
 #include "gpu/gltf/_constant.h"
-#include "gpu/cube.h"
+//#include "gpu/cube.h"
 #include "gpu/timer.h"
 #include "gpu_directx11/_gpu_directx11.h"
 #include "gpu_directx11/context.h"
@@ -90,9 +90,9 @@ namespace gpu_directx11
             1.0f, // its a square
             0.1f, 2.0f);
 
-         auto pcube = øcreate<::gpu::cube>();
+         auto prenderableCube = m_pgpucontext->m_pengine->shape_factory()->create_cube_001(m_pgpucontext, 32.f);
 
-         pcube->initialize_gpu_cube(m_pgpucontext);
+         //pcube->initialize_gpu_cube(m_pgpucontext);
 
          auto pskybox = m_pscene->current_skybox();
 
@@ -119,11 +119,11 @@ namespace gpu_directx11
 
             m_pshaderDiffuseIrradiance->push_properties(pgpucommandbuffer);
 
-            pcube->bind(pgpucommandbuffer);
+            prenderableCube->bind(pgpucommandbuffer);
 
-            pcube->draw(pgpucommandbuffer);
+            prenderableCube->draw(pgpucommandbuffer);
 
-            pcube->unbind(pgpucommandbuffer);
+            prenderableCube->unbind(pgpucommandbuffer);
 
          }
 

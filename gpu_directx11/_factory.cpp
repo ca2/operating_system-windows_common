@@ -1,7 +1,7 @@
 #include "framework.h"
 #include "approach.h"
 #include "cpu_buffer.h"
-#include "cube.h"
+//#include "cube.h"
 #include "frame.h"
 #include "frame_storage.h"
 //#include "full_screen_quad.h"
@@ -29,7 +29,7 @@
 #include "ibl/specular_map.h"
 #include "ibl/cubemap_framebuffer.h"
 #include "ibl/mipmap_cubemap_framebuffer.h"
-#include "ibl/hdri_cube.h"
+//#include "ibl/hdri_cube.h"
 
 
 // #include "bred/gpu/model_buffer.h"
@@ -76,7 +76,7 @@ __FACTORY_EXPORT void gpu_directx11_factory(::factory::factory * pfactory)
 
 
    //pfactory->add_factory_item<::gpu_directx11::cube, ::gpu::cube>();
-   pfactory->add_factory_item< ::gpu::cube>();
+   //pfactory->add_factory_item< ::gpu::cube>();
    pfactory->add_factory_item<::gpu::full_screen_quad>();
 
 
@@ -88,7 +88,7 @@ __FACTORY_EXPORT void gpu_directx11_factory(::factory::factory * pfactory)
    pfactory->add_factory_item<::gpu_directx11::ibl::cubemap_framebuffer, ::gpu::ibl::cubemap_framebuffer>();
    pfactory->add_factory_item<::gpu_directx11::ibl::equirectangular_cubemap, ::gpu::ibl::equirectangular_cubemap>();
    pfactory->add_factory_item<::gpu_directx11::ibl::brdf_convolution_framebuffer, ::gpu::ibl::brdf_convolution_framebuffer>();
-   pfactory->add_factory_item<::gpu_directx11::ibl::hdri_cube, ::gpu::ibl::hdri_cube>();
+   //pfactory->add_factory_item<::gpu_directx11::ibl::hdri_cube, ::gpu::ibl::hdri_cube>();
 }
 
 

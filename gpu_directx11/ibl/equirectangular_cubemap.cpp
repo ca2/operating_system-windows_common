@@ -14,7 +14,7 @@
 #include "gpu_directx11/_gpu_directx11.h"
 #include "gpu_directx11/context.h"
 #include "cubemap_framebuffer.h"
-#include "hdri_cube.h"
+#include "bred/gpu/command_buffer.h"
 #include "gpu/ibl/_hlsl.h"
 
 
@@ -70,10 +70,10 @@ namespace gpu_directx11
          floating_matrix4 cameraAngles[] = {
             lookAt(origin, unitX, -unitY),
             lookAt(origin, -unitX, -unitY),
-            lookAt(origin, unitY, -unitZ),
-            lookAt(origin, -unitY, unitZ),
-            lookAt(origin, -unitZ, -unitY),
-            lookAt(origin, unitZ, -unitY)};
+            lookAt(origin, -unitY, -unitZ),
+            lookAt(origin, unitY, unitZ),
+            lookAt(origin, unitZ, -unitY),
+            lookAt(origin, -unitZ, -unitY)};
 
          floating_matrix4 projection =
             m_pgpucontext->m_pengine->perspective(
@@ -83,9 +83,15 @@ namespace gpu_directx11
          
          ::cast<::gpu_directx11::context> pcontext = m_pgpucontext;
 
+         ID3D11DeviceContext *pcontextImmediate1 = nullptr;
+            
+         pcontext->m_pgpudevice->m_pdevice1->GetImmediateContext(&pcontextImmediate1);
+
+         auto pcontext2 = pcontext->m_pcontext;
+
          m_pshaderHdri->_bind(nullptr, ::gpu::e_scene_none);
 
-         m_pshaderHdri->bind_source(nullptr, m_phdricube->m_ptextureHdr);
+         m_pshaderHdri->bind_source(nullptr, m_ptextureHdr);
 
          // render to each side of the cubemap
          for (auto i = 0; i < 6; i++)
@@ -106,7 +112,11 @@ namespace gpu_directx11
 
             m_pgpucontext->set_viewport(pgpucommandbuffer, rectangle);
 
-            m_phdricube->draw(pgpucommandbuffer);
+            m_prenderableCube->bind(pgpucommandbuffer);
+
+            m_prenderableCube->draw(pgpucommandbuffer);
+
+            m_prenderableCube->unbind(pgpucommandbuffer);
 
             pcontext->end_debug_happening(pgpucommandbuffer);
 
@@ -120,29 +130,7 @@ namespace gpu_directx11
 
          pcontext->end_debug_happening(pgpucommandbuffer);
 
-         // timer.logDifference("Rendered equirectangular cubemap");
-
-         //GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-
-         //if (status != GL_FRAMEBUFFER_COMPLETE)
-         //{
-
-         //   printf("Framebuffer incomplete!\n");
-         //}
-
-         // timer.logDifference("Rendered specular brdf convolution map");
-
-         //glBindFramebuffer(GL_FRAMEBUFFER, 0);
-         //GLCheckError("");
       }
-
-
-      //unsigned int equirectangular_cubemap::getCubemapId()
-      //{
-
-      //   ::cast<cubemap_framebuffer> pframebuffer = m_pframebuffer;
-      //   return pframebuffer->getCubemapTextureId();
-      //}
 
 
    } // namespace ibl

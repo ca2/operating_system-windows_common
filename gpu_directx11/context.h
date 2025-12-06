@@ -306,7 +306,7 @@ namespace gpu_directx11
       //virtual VkDescriptorSet getGlobalDescriptorSet(::gpu::context* pgpucontext, ::gpu_directx11::renderer* prenderer);
 
       //::gpu_directx11::descriptor_pool* get_global_pool(::gpu::context* pgpucontext, int iFrameCount);
-
+      void layout_global_ubo(::gpu::properties *pproperties) override;
 
       void create_global_ubo(int iSize, int iFrameCount) override;
       void update_global_ubo(const ::block& block) override;

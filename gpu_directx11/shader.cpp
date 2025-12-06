@@ -809,7 +809,8 @@ namespace gpu_directx11
    {
        
       set_matrix4("model", model);
-      set_matrix4("view", m_pgpurenderer->m_pgpucontext->defer_remap_impact_matrix(view));
+      //set_matrix4("view", m_pgpurenderer->m_pgpucontext->defer_remap_impact_matrix(view));
+      set_matrix4("view", view);
       set_matrix4("projection", projection);
       // set_matrix4("view", m_pgpurenderer->m_pgpucontext->defer_remap_impact_matrix(view));
       //set_matrix4("projection", m_pgpurenderer->m_pgpucontext->defer_clip_remap_projection(projection));

@@ -140,9 +140,6 @@
     <ClInclude Include="ibl\mipmap_cubemap_framebuffer.h">
       <Filter>Header Files\ibl</Filter>
     </ClInclude>
-    <ClInclude Include="ibl\hdri_cube.h">
-      <Filter>Header Files\ibl</Filter>
-    </ClInclude>
     <ClInclude Include="ibl\equirectangular_cubemap.h">
       <Filter>Header Files\ibl</Filter>
     </ClInclude>
@@ -154,9 +151,6 @@
     </ClInclude>
     <ClInclude Include="ibl\brdf_convolution_framebuffer.h">
       <Filter>Header Files\ibl</Filter>
-    </ClInclude>
-    <ClInclude Include="cube.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -277,17 +271,11 @@
     <ClCompile Include="ibl\equirectangular_cubemap.cpp">
       <Filter>Source Files\ibl</Filter>
     </ClCompile>
-    <ClCompile Include="ibl\hdri_cube.cpp">
-      <Filter>Source Files\ibl</Filter>
-    </ClCompile>
     <ClCompile Include="ibl\mipmap_cubemap_framebuffer.cpp">
       <Filter>Source Files\ibl</Filter>
     </ClCompile>
     <ClCompile Include="ibl\specular_map.cpp">
       <Filter>Source Files\ibl</Filter>
-    </ClCompile>
-    <ClCompile Include="cube.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

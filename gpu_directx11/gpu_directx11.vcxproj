@@ -691,7 +691,6 @@
   <ItemGroup>
     <ClInclude Include="aaa_accumulation_render_pass.h" />
     <ClInclude Include="assimp.h" />
-    <ClInclude Include="cube.h" />
     <ClInclude Include="frame_storage.h" />
     <ClInclude Include="gltf\material.h" />
     <ClInclude Include="gltf\mesh.h" />
@@ -702,7 +701,6 @@
     <ClInclude Include="ibl\cubemap_framebuffer.h" />
     <ClInclude Include="ibl\diffuse_irradiance_map.h" />
     <ClInclude Include="ibl\equirectangular_cubemap.h" />
-    <ClInclude Include="ibl\hdri_cube.h" />
     <ClInclude Include="ibl\mipmap_cubemap_framebuffer.h" />
     <ClInclude Include="ibl\specular_map.h" />
     <ClInclude Include="memory_buffer.h" />
@@ -755,7 +753,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="assimp.cpp" />
-    <ClCompile Include="cube.cpp" />
     <ClCompile Include="frame_storage.cpp" />
     <ClCompile Include="gltf\mesh.cpp" />
     <ClCompile Include="gltf\model.cpp" />
@@ -763,7 +760,6 @@
     <ClCompile Include="ibl\cubemap_framebuffer.cpp" />
     <ClCompile Include="ibl\diffuse_irradiance_map.cpp" />
     <ClCompile Include="ibl\equirectangular_cubemap.cpp" />
-    <ClCompile Include="ibl\hdri_cube.cpp" />
     <ClCompile Include="ibl\mipmap_cubemap_framebuffer.cpp" />
     <ClCompile Include="ibl\specular_map.cpp" />
     <ClCompile Include="memory_buffer.cpp" />

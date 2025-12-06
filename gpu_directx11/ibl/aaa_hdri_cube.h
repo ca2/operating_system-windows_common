@@ -9,10 +9,10 @@
 
  //#include "stb_image/stb_image.h"
 
- #include "gpu/cube.h"
+ //#include "gpu/cube.h"
  #include "gpu/hdr_texture.h"
  #include "bred/gpu/shader.h"
- #include "gpu/ibl/hdri_cube.h"
+ //#include "gpu/ibl/hdri_cube.h"
 
 
  namespace gpu_directx11

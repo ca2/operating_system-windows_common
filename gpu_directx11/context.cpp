@@ -616,7 +616,6 @@ namespace gpu_directx11
             {
 
                auto ptexture = cubemap_from_hdr(scopedstrFileName);
-
                return ptexture;
             }
             catch (const ::exception &e)
@@ -2585,6 +2584,14 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    }
 
 
+   void context::layout_global_ubo(::gpu::properties *pproperties)
+   {
+      
+      _layout_hlsl(*pproperties); 
+   
+   }
+
+
    void context::create_global_ubo(int iGlobalUboSize, int iFrameCount)
    {
 
@@ -2824,12 +2831,36 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       front.x = rotation.m_anglePitch.cos() * rotation.m_angleYaw.cos();
       front.y = rotation.m_anglePitch.sin();
       front.z = rotation.m_anglePitch.cos() * rotation.m_angleYaw.sin();
-      front.z = -front.z;
+      // front.z = rotation.m_anglePitch.cos() * rotation.m_angleYaw.cos();
+      //front.z = -front.z;
       front.normalize();
 
       return front;
    }
 
+
+
+   //floating_sequence3 context::front(const ::graphics3d::floating_rotation &rotation)
+   //{
+
+   //   auto &anglePitch = rotation.m_anglePitch;
+
+   //   auto &angleYaw = rotation.m_angleYaw;
+
+   //   floating_sequence3 front;
+
+   //   front.x = anglePitch.cos() * angleYaw.cos();
+   //   front.y = anglePitch.sin();
+   //   front.z = anglePitch.cos() * angleYaw.sin();
+
+   //   front.normalize();
+
+   //   return front;
+   //   //}
+   //   //
+   //   //
+   //   //   return {};
+   //}
 
 
 } // namespace gpu_directx11

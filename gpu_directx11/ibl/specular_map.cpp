@@ -16,7 +16,7 @@
 #include "gpu_directx11/_gpu_directx11.h"
 #include "gpu_directx11/context.h"
 #include "gpu_directx11/texture.h"
-#include "gpu/cube.h"
+//#include "gpu/cube.h"
 #include "gpu/gltf/_constant.h"
 #include "gpu/context.h"
 #include "gpu/timer.h"
@@ -114,9 +114,9 @@ namespace gpu_directx11
 
          auto ptexture = pskybox->m_ptexture;
 
-         auto pcube = øcreate<::gpu::cube>();
-         
-         pcube->initialize_gpu_cube(m_pgpucontext);
+         auto prenderableCube = m_pgpucontext->m_pengine->shape_factory()->create_cube_001(m_pgpucontext,  32.f);
+         //
+         //pcube->initialize_gpu_cube(m_pgpucontext);
 
          ::cast<::gpu_directx11::texture> ptextureSkybox = ptexture;
 
@@ -170,11 +170,11 @@ namespace gpu_directx11
 
                m_pshaderPrefilteredEnvMap->push_properties(pgpucommandbuffer);
 
-               pcube->bind(pgpucommandbuffer);
+               prenderableCube->bind(pgpucommandbuffer);
 
-               pcube->draw(pgpucommandbuffer);
+               prenderableCube->draw(pgpucommandbuffer);
 
-               pcube->unbind(pgpucommandbuffer);
+               prenderableCube->unbind(pgpucommandbuffer);
 
                pgpucommandbuffer->m_prendersystem = nullptr;
 
