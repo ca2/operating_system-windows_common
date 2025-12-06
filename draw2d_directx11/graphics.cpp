@@ -4121,7 +4121,7 @@ namespace draw2d_directx11
    }*/
 
    /////////////////////////////////////////////////////////////////////////////
-   // special graphics drawing primitives/helpers
+   // special graphics drawing prototypes/helpers
 
    ::draw2d::brush * graphics::GetHalftoneBrush(::particle * pparticle)
    {

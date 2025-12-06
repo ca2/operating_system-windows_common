@@ -2,7 +2,7 @@
 
 
 
-template < primitive_payload PAYLOAD >
+template < prototype_payload PAYLOAD >
 inline void copy(PAYLOAD * ppayload, const DWORD * pdw)
 {
 
@@ -11,7 +11,7 @@ inline void copy(PAYLOAD * ppayload, const DWORD * pdw)
 }
 
 
-template < primitive_payload PAYLOAD >
+template < prototype_payload PAYLOAD >
 inline void copy(PAYLOAD * ppayload, const long * pl)
 {
 
@@ -36,7 +36,7 @@ inline void copy(PAYLOAD * ppayload, const long * pl)
 //}
 
 
-template < primitive_payload PAYLOAD >
+template < prototype_payload PAYLOAD >
 inline void copy(long * pl, const PAYLOAD * ppayload)
 {
 
@@ -45,7 +45,7 @@ inline void copy(long * pl, const PAYLOAD * ppayload)
 }
 
 
-template < primitive_payload PAYLOAD >
+template < prototype_payload PAYLOAD >
 inline void copy(DWORD * pdw, const PAYLOAD * ppayload)
 {
 

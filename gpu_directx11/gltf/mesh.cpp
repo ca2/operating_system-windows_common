@@ -504,7 +504,7 @@ namespace gpu_directx11
          //m_pImmediateContext->IASetIndexBuffer(m_pIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
          //m_pImmediateContext->IASetInputLayout(m_pInputLayout);
 
-         //// Set primitive topology
+         //// Set prototype topology
          //m_pImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
          //// // create our data structures
          //// glGenVertexArrays(1, &mVAO);
