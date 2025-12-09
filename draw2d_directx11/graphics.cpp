@@ -5510,7 +5510,7 @@ namespace draw2d_directx11
          if (!ptexture->m_prendertargetview)
          {
 
-            ptexture->create_render_target_view();
+            ptexture->create_render_target();
 
          }
          float clearColor[4] = { 0, 0, 0, 0 }; // Clear to transparent

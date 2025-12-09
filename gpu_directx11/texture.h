@@ -85,17 +85,19 @@ namespace gpu_directx11
 
 
       //virtual int render_target_view_index(int iFace, int iMip) const;
+      void create_texture(const pointer_array<image::image>* pimagea) override;
 
-
-      void initialize_image_texture(::gpu::renderer* prenderer, const ::int_rectangle& rectangleTarget, bool bWithDepth, const ::pointer_array < ::image::image >& imagea = {}, enum_type type = e_type_image) override;
+      // void initialize_texture(::gpu::renderer* prenderer,
+      //    const ::int_rectangle& rectangleTarget, bool bWithDepth,
+      //    const ::pointer_array < ::image::image > * imagea = nullptr, enum_type type = e_type_image) override;
       virtual void _initialize_gpu_texture(::gpu::renderer* prenderer, IDXGISwapChain1 * pdxgiswapchain);
 
 
-      virtual void create_render_target_view();
-      virtual void create_shader_resource_view();
+      void create_render_target() override;
+      void create_shader_resource_view() override;
 
 
-      virtual void create_depth_resources();
+      void create_depth_resources() override;
 
       //void _new_state(ID3D12GraphicsCommandList* pcommandlist, D3D12_RESOURCE_STATES estate);
 

@@ -60,10 +60,10 @@ namespace gpu_directx11
 
 
 
-         ::block embedded_prefiltered_env_map_vert() override;
-         ::block embedded_prefiltered_env_map_frag() override;
-         ::block embedded_brdf_convolution_vert() override;
-         ::block embedded_brdf_convolution_frag() override;
+         ::memory prefiltered_environment_map_vert_memory() override;
+         ::memory prefiltered_environment_map_frag_memory() override;
+         ::memory brdf_convolution_vert_memory() override;
+         ::memory brdf_convolution_frag_memory() override;
 
 
          //virtual void initialize_specular_map(const ::string &engineRoot, const unsigned int environmentCubemapId);

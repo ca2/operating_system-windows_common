@@ -2,7 +2,7 @@
 // camilo on 2025-09-26 19:54 <3ThomasBorregaardSorensen!!
 // From gpu_directx11 by camilo on 2025-10-16 17:37 <3ThomasBorregaardSorensen!!
 #pragma once
-#include "gpu/ibl/aaa_mipmap_cubemap_framebuffer.h"
+#include "gpu/ibl/mipmap_cubemap_framebuffer.h"
 
 
 namespace gpu_directx11
@@ -15,7 +15,7 @@ namespace gpu_directx11
        * Framebuffer for rendering to faces of a cubemap. The faces themselves are mipmapped.
        */
       class CLASS_DECL_GPU_DIRECTX11 mipmap_cubemap_framebuffer :
-         virtual public ::gpu::ibl::aaa_mipmap_cubemap_framebuffer
+         virtual public ::gpu::ibl::mipmap_cubemap_framebuffer
       {
       public:
 

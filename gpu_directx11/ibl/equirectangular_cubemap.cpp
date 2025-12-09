@@ -101,7 +101,7 @@ namespace gpu_directx11
             
             m_pshaderHdri->setModelViewProjection(model, cameraAngles[i], projection);
             
-            m_pframebuffer->setCubeFace(i, m_pshaderHdri);
+            m_pframebuffer->set_cube_face(i, m_pshaderHdri);
 
             m_pshaderHdri->push_properties(pgpucommandbuffer);
 

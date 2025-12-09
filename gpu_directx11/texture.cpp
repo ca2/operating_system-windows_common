@@ -24,29 +24,10 @@ namespace gpu_directx11
    texture::~texture() {}
 
 
-   void texture::initialize_image_texture(::gpu::renderer *prenderer, const ::int_rectangle &rectangleTarget,
-                                          bool bWithDepth, const ::pointer_array<::image::image> &imagea,
-                                          enum_type etype)
+   void texture::create_texture(const pointer_array<image::image>* pimagea)
    {
 
-      if (m_ptextureOffscreen && m_rectangleTarget == rectangleTarget && m_pgpurenderer == prenderer)
-      {
-
-         return;
-      }
-
-      auto sizeCurrent = m_rectangleTarget.size();
-
-      ::gpu::texture::initialize_image_texture(prenderer, rectangleTarget, bWithDepth, imagea, etype);
-
-      if (m_ptextureOffscreen && sizeCurrent == m_rectangleTarget.size())
-      {
-
-         return;
-      }
-
-
-      m_texture2ddesc = {};
+            m_texture2ddesc = {};
       // 1. Create offscreen render target texture
       m_texture2ddesc.Width = m_rectangleTarget.width();
       m_texture2ddesc.Height = m_rectangleTarget.height();
@@ -133,13 +114,13 @@ namespace gpu_directx11
 
       D3D11_SUBRESOURCE_DATA data[6]{};
 
-      if (imagea.has_element())
+      if (::is_set(pimagea) && pimagea->has_element())
       {
 
          if (m_etype == e_type_cube_map)
          {
 
-            if (imagea.size() != 6)
+            if (pimagea->size() != 6)
             {
 
                throw ::exception(error_wrong_state);
@@ -148,7 +129,7 @@ namespace gpu_directx11
             for (int i = 0; i < 6; ++i)
             {
 
-               auto pimage = imagea[i];
+               auto pimage = (*pimagea)[i];
 
                data[i].pSysMem = pimage->data(); // Your RGBA image data per face
 
@@ -158,10 +139,12 @@ namespace gpu_directx11
          else
          {
 
-            auto pimage = imagea.first();
+            auto pimage = pimagea->first();
             data[0].pSysMem = pimage->data();
             data[0].SysMemPitch = pimage->m_iScan;
+
          }
+
       }
 
       HRESULT hrCreateTexture =
@@ -171,107 +154,142 @@ namespace gpu_directx11
       {
 
          throw ::hresult_exception(hrCreateTexture, "Failed to create offscreen texture");
+
       }
 
-      if (m_bRenderTarget)
-      {
-      //{
-
-         create_render_target_view();
-      }
-
-      if (m_bShaderResourceView)
-      {
-
-         create_shader_resource_view();
-      }
-
-      if (m_etype & ::gpu::texture::e_type_depth)
-      {
-
-         create_depth_resources();
-      }
-
-      // HRESULT hrCreateRenderTargetView = pdevice->CreateRenderTargetView(m_ptextureOffscreen, nullptr,
-      // &m_prendertargetview);
-
-      // if (FAILED(hrCreateRenderTargetView))
-      //{
-
-      //   throw ::hresult_exception(hrCreateRenderTargetView, "Failed to create offscreen render target view");
-
-      //}
-
-      // HRESULT hrCreateShaderResourceView = pdevice->CreateShaderResourceView(m_ptextureOffscreen, nullptr,
-      // &m_pshaderresourceview);
-
-      // if (FAILED(hrCreateShaderResourceView))
-      //{
-
-      //   throw ::hresult_exception(hrCreateShaderResourceView, "Failed to create offscreen shader resource view");
-
-      //}
-      D3D11_SAMPLER_DESC samp = {};
-      samp.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-      samp.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
-      samp.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
-      samp.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
-      samp.ComparisonFunc = D3D11_COMPARISON_NEVER;
-      samp.MinLOD = 0;
-      samp.MaxLOD = D3D11_FLOAT32_MAX;
-      pdevice->CreateSamplerState(&samp, &m_psamplerstate);
-
-      new_texture.set_new_texture();
-
-      // if (bCreateRenderTargetView)
-      //{
-
-      //   //// 2. Create RTV descriptor heap
-      //   //D3D12_DESCRIPTOR_HEAP_DESC rtvHeapDesc = {};
-      //   //rtvHeapDesc.NumDescriptors = 1;
-      //   //rtvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
-      //   //rtvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
-      //   //HRESULT hrCreateDescriptorHeap = pdevice->m_pdevice->CreateDescriptorHeap(&rtvHeapDesc,
-      //   __interface_of(m_pheapRenderTargetView));
-
-      //   //pdevice->defer_throw_hresult(hrCreateDescriptorHeap);
-
-      //   //// 3. Create RTV
-      //   //m_handleRenderTargetView = m_pheapRenderTargetView->GetCPUDescriptorHandleForHeapStart();
-      //   CD3DX12_CPU_DESCRIPTOR_HANDLE rtvHandle(m_rtvHeap->GetCPUDescriptorHandleForHeapStart());
-
-      //   pdevice->m_pdevice->CreateRenderTargetView(m_presource, nullptr, m_handleRenderTargetView);
-
-      //}
-
-      // if (bCreateShaderResourceView)
-      //{
-
-      //   //// 4. Create SRV descriptor heap
-      //   //D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc = {};
-      //   //srvHeapDesc.NumDescriptors = 1;
-      //   //srvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
-      //   //srvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
-      //   //
-      //   //HRESULT hrCreateDescriptorHeap = pdevice->m_pdevice->CreateDescriptorHeap(&srvHeapDesc,
-      //   __interface_of(m_pheapShaderResourceView));
-
-      //   //pdevice->defer_throw_hresult(hrCreateDescriptorHeap);
-
-      //   //// 5. Create SRV
-      //   //D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
-      //   //srvDesc.Format = format;
-      //   //srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
-      //   //srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-      //   //srvDesc.Texture2D.MostDetailedMip = 0;
-      //   //srvDesc.Texture2D.MipLevels = 1;
-
-      //   //m_handleShaderResourceView = m_pheapShaderResourceView->GetCPUDescriptorHandleForHeapStart();
-
-      //   //pdevice->m_pdevice->CreateShaderResourceView(m_presource, &srvDesc, m_handleShaderResourceView);
-
-      //}
    }
+
+
+   // void texture::initialize_texture(::gpu::renderer *prenderer, const ::int_rectangle &rectangleTarget,
+   //                                        bool bWithDepth, const ::pointer_array<::image::image> * pimagea,
+   //                                        enum_type etype)
+   // {
+   //
+   //    if (m_ptextureOffscreen && m_rectangleTarget == rectangleTarget && m_pgpurenderer == prenderer)
+   //    {
+   //
+   //       return;
+   //    }
+   //
+   //    auto sizeCurrent = m_rectangleTarget.size();
+   //
+   //    ::gpu::texture::initialize_image_texture(prenderer, rectangleTarget, bWithDepth, pimagea, etype);
+   //
+   //    if (m_ptextureOffscreen && sizeCurrent == m_rectangleTarget.size())
+   //    {
+   //
+   //       return;
+   //    }
+   //
+   //
+   //    create_image(pimagea);
+   //
+   //    if (m_bRenderTarget)
+   //    {
+   //
+   //       create_render_target();
+   //
+   //    }
+   //
+   //    if (m_bShaderResourceView)
+   //    {
+   //
+   //       create_shader_resource_view();
+   //
+   //    }
+   //
+   //    if (m_etype & ::gpu::texture::e_type_depth)
+   //    {
+   //
+   //       create_depth_resources();
+   //
+   //    }
+   //
+   //    // HRESULT hrCreateRenderTargetView = pdevice->CreateRenderTargetView(m_ptextureOffscreen, nullptr,
+   //    // &m_prendertargetview);
+   //
+   //    // if (FAILED(hrCreateRenderTargetView))
+   //    //{
+   //
+   //    //   throw ::hresult_exception(hrCreateRenderTargetView, "Failed to create offscreen render target view");
+   //
+   //    //}
+   //
+   //    // HRESULT hrCreateShaderResourceView = pdevice->CreateShaderResourceView(m_ptextureOffscreen, nullptr,
+   //    // &m_pshaderresourceview);
+   //
+   //    // if (FAILED(hrCreateShaderResourceView))
+   //    //{
+   //
+   //    //   throw ::hresult_exception(hrCreateShaderResourceView, "Failed to create offscreen shader resource view");
+   //
+   //    //}
+   //
+   //    ::cast<::gpu_directx11::device> pgpudevice = m_pgpurenderer->m_pgpucontext->m_pgpudevice;
+   //
+   //    auto pdevice = pgpudevice->m_pdevice;
+   //
+   //    D3D11_SAMPLER_DESC samp = {};
+   //    samp.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+   //    samp.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
+   //    samp.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+   //    samp.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+   //    samp.ComparisonFunc = D3D11_COMPARISON_NEVER;
+   //    samp.MinLOD = 0;
+   //    samp.MaxLOD = D3D11_FLOAT32_MAX;
+   //    pdevice->CreateSamplerState(&samp, &m_psamplerstate);
+   //
+   //    new_texture.set_new_texture();
+   //
+   //    // if (bCreateRenderTargetView)
+   //    //{
+   //
+   //    //   //// 2. Create RTV descriptor heap
+   //    //   //D3D12_DESCRIPTOR_HEAP_DESC rtvHeapDesc = {};
+   //    //   //rtvHeapDesc.NumDescriptors = 1;
+   //    //   //rtvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
+   //    //   //rtvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
+   //    //   //HRESULT hrCreateDescriptorHeap = pdevice->m_pdevice->CreateDescriptorHeap(&rtvHeapDesc,
+   //    //   __interface_of(m_pheapRenderTargetView));
+   //
+   //    //   //pdevice->defer_throw_hresult(hrCreateDescriptorHeap);
+   //
+   //    //   //// 3. Create RTV
+   //    //   //m_handleRenderTargetView = m_pheapRenderTargetView->GetCPUDescriptorHandleForHeapStart();
+   //    //   CD3DX12_CPU_DESCRIPTOR_HANDLE rtvHandle(m_rtvHeap->GetCPUDescriptorHandleForHeapStart());
+   //
+   //    //   pdevice->m_pdevice->CreateRenderTargetView(m_presource, nullptr, m_handleRenderTargetView);
+   //
+   //    //}
+   //
+   //    // if (bCreateShaderResourceView)
+   //    //{
+   //
+   //    //   //// 4. Create SRV descriptor heap
+   //    //   //D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc = {};
+   //    //   //srvHeapDesc.NumDescriptors = 1;
+   //    //   //srvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
+   //    //   //srvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
+   //    //   //
+   //    //   //HRESULT hrCreateDescriptorHeap = pdevice->m_pdevice->CreateDescriptorHeap(&srvHeapDesc,
+   //    //   __interface_of(m_pheapShaderResourceView));
+   //
+   //    //   //pdevice->defer_throw_hresult(hrCreateDescriptorHeap);
+   //
+   //    //   //// 5. Create SRV
+   //    //   //D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
+   //    //   //srvDesc.Format = format;
+   //    //   //srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
+   //    //   //srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+   //    //   //srvDesc.Texture2D.MostDetailedMip = 0;
+   //    //   //srvDesc.Texture2D.MipLevels = 1;
+   //
+   //    //   //m_handleShaderResourceView = m_pheapShaderResourceView->GetCPUDescriptorHandleForHeapStart();
+   //
+   //    //   //pdevice->m_pdevice->CreateShaderResourceView(m_presource, &srvDesc, m_handleShaderResourceView);
+   //
+   //    //}
+   // }
 
 
    void texture::_initialize_gpu_texture(::gpu::renderer *prenderer, IDXGISwapChain1 *pdxgiswapchain1)
@@ -294,7 +312,8 @@ namespace gpu_directx11
       if (m_bRenderTarget)
       {
 
-         create_render_target_view();
+         create_render_target();
+
       }
 
       if (m_bShaderResourceView)
@@ -364,7 +383,7 @@ namespace gpu_directx11
    }
 
 
-   void texture::create_render_target_view()
+   void texture::create_render_target()
    {
 
       // m_bRenderTarget = true;
@@ -779,7 +798,7 @@ namespace gpu_directx11
       if (m_bRenderTarget)
       {
 
-         create_render_target_view();
+         create_render_target();
       }
 
       if (m_bShaderResourceView)

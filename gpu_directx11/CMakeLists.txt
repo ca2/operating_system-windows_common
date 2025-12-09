@@ -20,8 +20,8 @@ list(APPEND library_source
    ibl/diffuse_irradiance_map.h
    ibl/equirectangular_cubemap.cpp
    ibl/equirectangular_cubemap.h
-   ibl/hdri_cube.cpp
-   ibl/hdri_cube.h
+   #ibl/hdri_cube.cpp
+   #ibl/hdri_cube.h
    ibl/mipmap_cubemap_framebuffer.cpp
    ibl/mipmap_cubemap_framebuffer.h
    ibl/specular_map.cpp

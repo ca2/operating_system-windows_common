@@ -49,7 +49,7 @@ namespace gpu_directx11
          ptexture->m_bTransferSrc = true;
          ptexture->m_bWithDepth = false;
          ptexture->m_bSrgb = true;
-         ptexture->initialize_image_texture(m_pgpucontext->m_pgpurenderer, ptexture->m_rectangleTarget, true, {},
+         ptexture->initialize_texture(m_pgpucontext->m_pgpurenderer, ptexture->m_rectangleTarget, true, {},
                                             ::gpu::texture::e_type_cube_map);
 
         
@@ -152,7 +152,7 @@ namespace gpu_directx11
       }
 
 
-      void cubemap_framebuffer::setCubeFace(unsigned int index, ::gpu::shader * pgpushader)
+      void cubemap_framebuffer::set_cube_face(unsigned int index, ::gpu::shader * pgpushader)
       {
          ::cast < gpu_directx11::texture>ptexture = m_ptexture;
          ::cast<gpu_directx11::context> pcontext = m_pgpucontext;

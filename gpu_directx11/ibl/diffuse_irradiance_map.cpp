@@ -102,7 +102,7 @@ namespace gpu_directx11
 
          ::cast<::gpu_directx11::texture> ptextureSkybox = ptexture;
 
-         ::cast<::gpu_directx11::texture> ptextureIrradiance = m_pdiffuseIrradianceFramebuffer->m_ptexture;
+         ::cast<::gpu_directx11::texture> ptextureIrradiance = m_pframebufferDiffuseIrradiance->m_ptexture;
 
          m_pshaderDiffuseIrradiance->_bind(pgpucommandbuffer, ::gpu::e_scene_none);
 
@@ -115,7 +115,7 @@ namespace gpu_directx11
 
             m_pshaderDiffuseIrradiance->setModelViewProjection(model, cameraAngles[i], projection);
 
-            m_pdiffuseIrradianceFramebuffer->setCubeFace(i, m_pshaderDiffuseIrradiance);
+            m_pframebufferDiffuseIrradiance->set_cube_face(i, m_pshaderDiffuseIrradiance);
 
             m_pshaderDiffuseIrradiance->push_properties(pgpucommandbuffer);
 

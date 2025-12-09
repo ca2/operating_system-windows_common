@@ -47,34 +47,34 @@ namespace gpu_directx11
 
 
 
-      ::block specular_map::embedded_prefiltered_env_map_vert()
+      ::memory specular_map::prefiltered_environment_map_vert_memory()
       {
 
-         return hlsl_embedded_prefiltered_env_map_vert();
+         return hlsl_prefiltered_environment_map_vert_memory();
 
       }
 
 
-      ::block specular_map::embedded_prefiltered_env_map_frag()
+      ::memory specular_map::prefiltered_environment_map_frag_memory()
       {
          
-         return hlsl_embedded_prefiltered_env_map_frag();
+         return hlsl_prefiltered_environment_map_frag_memory();
 
       }
 
 
-      ::block specular_map::embedded_brdf_convolution_frag()
+      ::memory specular_map::brdf_convolution_frag_memory()
       {
 
-         return hlsl_embedded_brdf_convolution_frag();
+         return hlsl_brdf_convolution_frag_memory();
 
       }
 
 
-      ::block specular_map::embedded_brdf_convolution_vert()
+      ::memory specular_map::brdf_convolution_vert_memory()
       {
          
-         return hlsl_embedded_brdf_convolution_vert(); 
+         return hlsl_brdf_convolution_vert_memory();
       
       }
 
@@ -206,7 +206,7 @@ namespace gpu_directx11
 
          ::cast<::gpu_directx11::device> pdevice = m_pgpucontext->m_pgpudevice;
 
-         ::cast<::gpu_directx11::texture> ptexture = m_pbrdfconvolutionframebuffer->m_ptexture;
+         ::cast<::gpu_directx11::texture> ptexture = m_pframebufferBrdfConvolution->m_ptexture;
 
          ID3D11RenderTargetView *rtvs[8];
          UINT numRTVs = 8;

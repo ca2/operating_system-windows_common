@@ -519,7 +519,7 @@ namespace gpu_directx11
          if (!ptextureDst->m_prendertargetview)
          {
 
-            ptextureDst->create_render_target_view();
+            ptextureDst->create_render_target();
 
          }
 

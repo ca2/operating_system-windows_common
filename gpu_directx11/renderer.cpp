@@ -990,7 +990,7 @@ HRESULT hrCreateDepthStencilState = pgpudevice->m_pdevice->CreateDepthStencilSta
                if (!ptexture->m_prendertargetview)
                {
 
-                  ptexture->create_render_target_view();
+                  ptexture->create_render_target();
 
                }
 
@@ -1001,7 +1001,7 @@ HRESULT hrCreateDepthStencilState = pgpudevice->m_pdevice->CreateDepthStencilSta
                if (!ptexture->m_prendertargetview)
                {
 
-                  ptexture->create_render_target_view();
+                  ptexture->create_render_target();
 
 
                }
@@ -1134,7 +1134,7 @@ HRESULT hrCreateDepthStencilState = pgpudevice->m_pdevice->CreateDepthStencilSta
       if (!ptexture->m_prendertargetview)
       {
 
-         ptexture->create_render_target_view();
+         ptexture->create_render_target();
 
       }
 

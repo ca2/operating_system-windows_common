@@ -52,7 +52,7 @@ namespace gpu_directx11
           * Set which cube face texture to render to.
           * @param index
           */
-         void setCubeFace(unsigned int index, ::gpu::shader * pgpushader) override;
+         void set_cube_face(unsigned int index, ::gpu::shader * pgpushader) override;
 
 
          //unsigned int getCubemapTextureId();
