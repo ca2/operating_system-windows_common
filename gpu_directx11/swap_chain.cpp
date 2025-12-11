@@ -188,9 +188,10 @@ namespace gpu_directx11
 
          øconstruct_new(m_ptextureSwapChain);
 
-         m_ptextureSwapChain->m_bRenderTarget= true;
 
-         m_ptextureSwapChain->m_bShaderResourceView = false;
+         m_ptextureSwapChain->m_textureflags.m_bRenderTarget= true;
+
+         m_ptextureSwapChain->m_textureflags.m_bShaderResource = false;
 
          m_ptextureSwapChain->_initialize_gpu_texture(
             pgpurenderer,

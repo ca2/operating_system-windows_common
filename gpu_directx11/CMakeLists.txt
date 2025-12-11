@@ -12,18 +12,18 @@ list(APPEND library_source
    gltf/mesh.h
    gltf/model.cpp
    gltf/model.h
-   ibl/brdf_convolution_framebuffer.cpp
-   ibl/brdf_convolution_framebuffer.h
-   ibl/cubemap_framebuffer.cpp
-   ibl/cubemap_framebuffer.h
+   #ibl/brdf_convolution_framebuffer.cpp
+   #ibl/brdf_convolution_framebuffer.h
+   ##ibl/cubemap_framebuffer.cpp
+   ##ibl/cubemap_framebuffer.h
    ibl/diffuse_irradiance_map.cpp
    ibl/diffuse_irradiance_map.h
    ibl/equirectangular_cubemap.cpp
    ibl/equirectangular_cubemap.h
    #ibl/hdri_cube.cpp
    #ibl/hdri_cube.h
-   ibl/mipmap_cubemap_framebuffer.cpp
-   ibl/mipmap_cubemap_framebuffer.h
+   ##ibl/mipmap_cubemap_framebuffer.cpp
+   ##ibl/mipmap_cubemap_framebuffer.h
    ibl/specular_map.cpp
    ibl/specular_map.h
         _.cpp

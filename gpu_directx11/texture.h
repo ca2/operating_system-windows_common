@@ -85,7 +85,7 @@ namespace gpu_directx11
 
 
       //virtual int render_target_view_index(int iFace, int iMip) const;
-      void create_texture(const pointer_array<image::image>* pimagea) override;
+      void _create_texture(const ::gpu::texture_data & texturedata = {}) override;
 
       // void initialize_texture(::gpu::renderer* prenderer,
       //    const ::int_rectangle& rectangleTarget, bool bWithDepth,
@@ -110,7 +110,7 @@ namespace gpu_directx11
 
       void set_pixels(const ::int_rectangle& rectangle, const void* data) override;
       void initialize_with_image_data(::gpu::renderer *pgpurenderer, const ::int_rectangle &rectangleTarget,
-                                      int numChannels, bool bSrgb, const void *pdata, enum_type etype) override;
+                                      int numChannels, bool bSrgb, const void *pdata, ::gpu::enum_texture etexture) override;
 
 
       void initialize_hdr_texture_on_memory(::gpu::renderer *pgpurenderer, const ::block &block) override;

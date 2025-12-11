@@ -47,9 +47,9 @@ namespace gpu_directx11
          //////glBindFramebuffer(GL_FRAMEBUFFER, ptexture->m_gluFbo);
          //////GLCheckError("");
 
-         ////auto w = ptexture->m_rectangleTarget.width();
+         ////auto w = ptexture->rectangle().width();
 
-         ////auto h = ptexture->m_rectangleTarget.height();
+         ////auto h = ptexture->rectangle().height();
 
          ////// depth buffer
          ////glGenRenderbuffers(1, &ptexture->m_gluDepthStencilRBO);

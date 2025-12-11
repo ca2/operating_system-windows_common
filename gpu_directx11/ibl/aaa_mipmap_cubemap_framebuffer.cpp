@@ -77,31 +77,31 @@ namespace gpu_directx11
 
          //// Query base texture size from your texture wrapper. ADAPT if your texture member names differ.
          //// I assume ptexture has m_rectangleTarget.width()/height() like your GL code.
-         //m_baseWidth = static_cast<UINT>(ptexture->m_rectangleTarget.width());
-         //m_baseHeight = static_cast<UINT>(ptexture->m_rectangleTarget.height());
+         //m_baseWidth = static_cast<UINT>(ptexture->rectangle().width());
+         //m_baseHeight = static_cast<UINT>(ptexture->rectangle().height());
 
-         //// compute mip count: you may already have ptexture->m_iMipCount or similar
+         //// compute mip count: you may already have ptexture->m_textureattributes.m_iMipCount or similar
          // We'll compute full mip chain if not provided
 
-         if (ptexture->m_iMipCount <= 1)
+         if (ptexture->m_textureattributes.m_iMipCount <= 1)
          {
-            ptexture->m_iMipCount =
+            ptexture->m_textureattributes.m_iMipCount =
                1u + static_cast<UINT>(std::floor(std::log2(static_cast<float>(
-                       std::max(ptexture->m_rectangleTarget.width(), ptexture->m_rectangleTarget.height())))));
+                       std::max(ptexture->rectangle().width(), ptexture->rectangle().height())))));
          }
-         if (ptexture->m_iMipCount < 1)
-            ptexture->m_iMipCount = 1;
+         if (ptexture->m_textureattributes.m_iMipCount < 1)
+            ptexture->m_textureattributes.m_iMipCount = 1;
 
          // Create the cubemap texture + SRV + RTVs
          createCubemapTextureAndViews();
 
          // set current mip to what base class may have (if any). We'll default to 0.
          //m_uCurrentMip = static_cast<unsigned int>(
-           // ptexture->m_iMipCount); // ADAPT if your texture class stores current mip differently
-         if (ptexture->m_iCurrentMip >= ptexture->m_iMipCount)
+           // ptexture->m_textureattributes.m_iMipCount); // ADAPT if your texture class stores current mip differently
+         if (ptexture->m_iCurrentMip >= ptexture->m_textureattributes.m_iMipCount)
             ptexture->m_iCurrentMip = 0;
 
-         if (m_ptexture->m_bWithDepth)
+         if (m_ptexture->m_textureflags.m_bWithDepth)
          {
 
             // create depth for the current mip level
@@ -131,7 +131,7 @@ namespace gpu_directx11
          D3D11_TEXTURE2D_DESC desc = {};
          desc.Width = ptexture->width();
          desc.Height = ptexture->height();
-         desc.MipLevels = ptexture->m_iMipCount;
+         desc.MipLevels = ptexture->m_textureattributes.m_iMipCount;
          desc.ArraySize = 6; // cube
          desc.Format = DXGI_FORMAT_R16G16B16A16_FLOAT; // use 16-bit float RGBA similar to GL_RGB16F (use RGBA because
                                                        // DX doesn't have RGB)
@@ -173,12 +173,12 @@ namespace gpu_directx11
 
          // Create RTVs: one per face per mip level
          ptexture->m_rendertargetviewa.clear();
-         ptexture->m_rendertargetviewa.set_size(6 * ptexture->m_iMipCount);
+         ptexture->m_rendertargetviewa.set_size(6 * ptexture->m_textureattributes.m_iMipCount);
 
          for (int iFace = 0; iFace < 6; ++iFace)
          {
             
-            for (int iMip = 0; iMip < ptexture->m_iMipCount; ++iMip)
+            for (int iMip = 0; iMip < ptexture->m_textureattributes.m_iMipCount; ++iMip)
             {
                
                D3D11_RENDER_TARGET_VIEW_DESC rtvDesc = {};
@@ -308,7 +308,7 @@ namespace gpu_directx11
 
          ::cast<::gpu_directx11::texture> ptexture = m_ptexture;
 
-         if (iMip >= m_ptexture->m_iMipCount)
+         if (iMip >= m_ptexture->m_textureattributes.m_iMipCount)
          {
 
             iMip = 0;

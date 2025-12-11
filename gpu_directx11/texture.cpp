@@ -17,21 +17,21 @@ namespace gpu_directx11
 
       new_texture.set_new_texture();
       // m_bCreateRenderTargetView = false;
-      m_bShaderResourceView = false;
+      //m_bShaderResourceView = false;
    }
 
 
    texture::~texture() {}
 
 
-   void texture::create_texture(const pointer_array<image::image>* pimagea)
+   void texture::_create_texture(const ::gpu::texture_data & texturedata)
    {
 
             m_texture2ddesc = {};
       // 1. Create offscreen render target texture
-      m_texture2ddesc.Width = m_rectangleTarget.width();
-      m_texture2ddesc.Height = m_rectangleTarget.height();
-      if (m_etype == e_type_cube_map)
+      m_texture2ddesc.Width = this->width();
+      m_texture2ddesc.Height = this->height();
+      if (m_textureattributes.m_etexture == ::gpu::e_texture_cube_map)
       {
 
          if (m_texture2ddesc.Width != m_texture2ddesc.Height)
@@ -40,7 +40,7 @@ namespace gpu_directx11
             throw ::exception(error_wrong_state, "width and height should be the same for a cube map_base texture");
          }
       }
-      if (m_etype == e_type_cube_map)
+      if (m_textureattributes.m_etexture == ::gpu::e_texture_cube_map)
       {
          m_texture2ddesc.ArraySize = 6;
       }
@@ -48,9 +48,9 @@ namespace gpu_directx11
       {
          m_texture2ddesc.ArraySize = 1;
       }
-      if (m_bRedGreen)
+      if (m_textureattributes.m_iChannelCount == 2)
       {
-         if (m_bFloat)
+         if (m_textureattributes.m_iFloat >= 1)
          {
 
             m_texture2ddesc.Format = DXGI_FORMAT_R32G32_FLOAT;
@@ -60,7 +60,7 @@ namespace gpu_directx11
             m_texture2ddesc.Format = DXGI_FORMAT_R8G8_UNORM;
          }
       }
-      else if (m_bSrgb || m_bFloat)
+      else if (m_textureattributes.m_iFloat >= 1)
       {
          m_texture2ddesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
       }
@@ -70,22 +70,22 @@ namespace gpu_directx11
       }
       m_texture2ddesc.SampleDesc.Count = 1;
       m_texture2ddesc.Usage = D3D11_USAGE_DEFAULT;
-      if (m_etype == e_type_cube_map)
+      if (m_textureattributes.m_etexture == ::gpu::e_texture_cube_map)
       {
 
          m_texture2ddesc.MiscFlags = D3D11_RESOURCE_MISC_TEXTURECUBE;
       }
-      if (m_iMipCount < 0)
+      if (m_textureattributes.m_iMipCount < 0)
       {
 
 
          m_texture2ddesc.MipLevels = 0;
          m_texture2ddesc.MiscFlags |= D3D11_RESOURCE_MISC_GENERATE_MIPS;
       }
-      else if (m_iMipCount > 1)
+      else if (m_textureattributes.m_iMipCount > 1)
       {
 
-         m_texture2ddesc.MipLevels = m_iMipCount;
+         m_texture2ddesc.MipLevels = m_textureattributes.m_iMipCount;
          m_texture2ddesc.MiscFlags |= D3D11_RESOURCE_MISC_GENERATE_MIPS;
       }
       else
@@ -95,7 +95,7 @@ namespace gpu_directx11
       }
 
       m_texture2ddesc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
-      if (m_bRenderTarget)
+      if (m_textureflags.m_bRenderTarget)
       {
          m_texture2ddesc.BindFlags |= D3D11_BIND_RENDER_TARGET;
       }
@@ -112,15 +112,17 @@ namespace gpu_directx11
 
       auto pdevice = pgpudevice->m_pdevice;
 
-      D3D11_SUBRESOURCE_DATA data[6]{};
+      D3D11_SUBRESOURCE_DATA subresourcedata[6]{};
 
-      if (::is_set(pimagea) && pimagea->has_element())
+      if (texturedata.is_image_array())
       {
 
-         if (m_etype == e_type_cube_map)
+         const auto &imagea = texturedata.imagea();
+
+         if (m_textureattributes.m_etexture == ::gpu::e_texture_cube_map)
          {
 
-            if (pimagea->size() != 6)
+            if (imagea.size() != 6)
             {
 
                throw ::exception(error_wrong_state);
@@ -129,26 +131,26 @@ namespace gpu_directx11
             for (int i = 0; i < 6; ++i)
             {
 
-               auto pimage = (*pimagea)[i];
+               auto pimage = imagea[i];
 
-               data[i].pSysMem = pimage->data(); // Your RGBA image data per face
+               subresourcedata[i].pSysMem = pimage->data(); // Your RGBA image data per face
 
-               data[i].SysMemPitch = pimage->m_iScan;
+               subresourcedata[i].SysMemPitch = pimage->m_iScan;
             }
          }
          else
          {
 
-            auto pimage = pimagea->first();
-            data[0].pSysMem = pimage->data();
-            data[0].SysMemPitch = pimage->m_iScan;
+            auto pimage = imagea.first();
+            subresourcedata[0].pSysMem = pimage->data();
+            subresourcedata[0].SysMemPitch = pimage->m_iScan;
 
          }
 
       }
 
       HRESULT hrCreateTexture =
-         pdevice->CreateTexture2D(&m_texture2ddesc, data[0].pSysMem ? data : nullptr, &m_ptextureOffscreen);
+         pdevice->CreateTexture2D(&m_texture2ddesc, subresourcedata[0].pSysMem ? subresourcedata : nullptr, &m_ptextureOffscreen);
 
       if (FAILED(hrCreateTexture))
       {
@@ -198,7 +200,7 @@ namespace gpu_directx11
    //
    //    }
    //
-   //    if (m_etype & ::gpu::texture::e_type_depth)
+   //    if (m_etexture & ::gpu::e_texture_depth)
    //    {
    //
    //       create_depth_resources();
@@ -309,14 +311,14 @@ namespace gpu_directx11
          throw ::hresult_exception(hrCreateTexture, "Failed to create offscreen texture");
       }
 
-      if (m_bRenderTarget)
+      if (m_textureflags.m_bRenderTarget)
       {
 
          create_render_target();
 
       }
 
-      if (m_bShaderResourceView)
+      if (m_textureflags.m_bShaderResource)
       {
 
          create_shader_resource_view();
@@ -389,11 +391,11 @@ namespace gpu_directx11
       // m_bRenderTarget = true;
       ::cast<::gpu_directx11::device> pgpudevice = m_pgpurenderer->m_pgpucontext->m_pgpudevice;
 
-      if (m_bRenderTarget)
+      if (m_textureflags.m_bRenderTarget)
       {
 
 
-         if (m_etype == e_type_cube_map && m_rendertargetviewa.is_empty())
+         if (m_textureattributes.m_etexture == ::gpu::e_texture_cube_map && m_rendertargetviewa.is_empty())
          {
             m_rendertargetviewa.set_size(6);
             for (int i = 0; i < 6; i++)
@@ -448,7 +450,7 @@ namespace gpu_directx11
       D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
       // srvDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM; // Must match or be compatible
       srvDesc.Format = m_texture2ddesc.Format; // Must match or be compatible
-      if (m_etype == e_type_cube_map)
+      if (m_textureattributes.m_etexture == ::gpu::e_texture_cube_map)
       {
          srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURECUBE;
       }
@@ -457,7 +459,7 @@ namespace gpu_directx11
          srvDesc.ViewDimension = D3D_SRV_DIMENSION_TEXTURE2D;
       }
       srvDesc.Texture2D.MostDetailedMip = 0;
-      if (m_iMipCount < 0)
+      if (m_textureattributes.m_iMipCount < 0)
          srvDesc.Texture2D.MipLevels = -1;
       else
          srvDesc.Texture2D.MipLevels = 1;
@@ -486,57 +488,61 @@ namespace gpu_directx11
    void texture::create_depth_resources()
    {
 
-      auto size = m_rectangleTarget.size();
-
-      D3D11_TEXTURE2D_DESC depthDesc = {};
-      depthDesc.Width = size.cx;
-      depthDesc.Height = size.cy;
-      depthDesc.MipLevels = 1;
-      depthDesc.ArraySize = 1;
-      int MorePrecisionNoStencil = 1;
-      if (MorePrecisionNoStencil)
+      if (!m_ptextureDepthStencil)
       {
+         auto size = m_textureattributes.m_rectangleTarget.size();
 
-         depthDesc.Format = DXGI_FORMAT_D32_FLOAT;
-      }
-      else
-      {
+         D3D11_TEXTURE2D_DESC depthDesc = {};
+         depthDesc.Width = size.cx;
+         depthDesc.Height = size.cy;
+         depthDesc.MipLevels = 1;
+         depthDesc.ArraySize = 1;
+         int MorePrecisionNoStencil = 1;
+         if (MorePrecisionNoStencil)
+         {
 
-         depthDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
-      }
+            depthDesc.Format = DXGI_FORMAT_D32_FLOAT;
+         }
+         else
+         {
 
-      depthDesc.SampleDesc.Count = 1;
-      depthDesc.Usage = D3D11_USAGE_DEFAULT;
-      depthDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+            depthDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+         }
 
-      ::cast<::gpu_directx11::device> pgpudevice = m_pgpurenderer->m_pgpucontext->m_pgpudevice;
+         depthDesc.SampleDesc.Count = 1;
+         depthDesc.Usage = D3D11_USAGE_DEFAULT;
+         depthDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
 
-      auto pdevice = pgpudevice->m_pdevice;
+         ::cast<::gpu_directx11::device> pgpudevice = m_pgpurenderer->m_pgpucontext->m_pgpudevice;
 
-      HRESULT hrCreateTexture = pdevice->CreateTexture2D(&depthDesc, nullptr, &m_ptextureDepthStencil);
+         auto pdevice = pgpudevice->m_pdevice;
 
-      if (FAILED(hrCreateTexture))
-      {
+         HRESULT hrCreateTexture = pdevice->CreateTexture2D(&depthDesc, nullptr, &m_ptextureDepthStencil);
 
-         throw ::hresult_exception(hrCreateTexture);
-      }
+         if (FAILED(hrCreateTexture))
+         {
 
-      D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
+            throw ::hresult_exception(hrCreateTexture);
+         }
 
-      if (MorePrecisionNoStencil)
-      {
+         D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
 
-         dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;
-         dsvDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
-      }
+         if (MorePrecisionNoStencil)
+         {
 
-      HRESULT hrCreateDepthStencilView = pdevice->CreateDepthStencilView(
-         m_ptextureDepthStencil, MorePrecisionNoStencil ? &dsvDesc : nullptr, &m_pdepthstencilview);
+            dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;
+            dsvDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+         }
 
-      if (FAILED(hrCreateDepthStencilView))
-      {
+         HRESULT hrCreateDepthStencilView = pdevice->CreateDepthStencilView(
+            m_ptextureDepthStencil, MorePrecisionNoStencil ? &dsvDesc : nullptr, &m_pdepthstencilview);
 
-         throw ::hresult_exception(hrCreateDepthStencilView);
+         if (FAILED(hrCreateDepthStencilView))
+         {
+
+            throw ::hresult_exception(hrCreateDepthStencilView);
+         }
+
       }
 
       // ID3D11DepthStencilState* depthStencilState = nullptr;
@@ -722,17 +728,17 @@ namespace gpu_directx11
 
 
    void texture::initialize_with_image_data(::gpu::renderer *pgpurenderer, const ::int_rectangle &rectangleTarget,
-                                            int channels, bool bSrgb, const void *pdata, enum_type etype)
+                                            int channels, bool bSrgb, const void *pdata, ::gpu::enum_texture etexture)
    {
       m_pgpurenderer = pgpurenderer;
       auto width = rectangleTarget.width();
       auto height = rectangleTarget.height();
       auto imagedata = (unsigned char *)pdata;
 
-      // m_etype = etype;
-      m_rectangleTarget = rectangleTarget;
+      // m_etexture = etype;
+      m_textureattributes.m_rectangleTarget = rectangleTarget;
 
-      m_bWithDepth = false;
+      m_textureflags.m_bWithDepth = false;
 
       ::cast<::gpu_directx11::context> pgpucontext = m_pgpurenderer->m_pgpucontext;
       ::cast<::gpu_directx11::device> pgpudevice = pgpucontext->m_pgpudevice;
@@ -795,19 +801,19 @@ namespace gpu_directx11
       HRESULT hr = pdevice->CreateTexture2D(&texDesc, &initData, &m_ptextureOffscreen);
       defer_throw_hresult(hr);
 
-      if (m_bRenderTarget)
+      if (m_textureflags.m_bRenderTarget)
       {
 
          create_render_target();
       }
 
-      if (m_bShaderResourceView)
+      if (m_textureflags.m_bShaderResource)
       {
 
          create_shader_resource_view();
       }
 
-      if (m_etype & ::gpu::texture::e_type_depth)
+      if (m_textureattributes.m_etexture & ::gpu::e_texture_depth)
       {
 
          create_depth_resources();
@@ -877,10 +883,10 @@ namespace gpu_directx11
 
       //stbi_set_flip_vertically_on_load(0);
 
-      // m_etype = etype;
-      m_rectangleTarget = ::int_rectangle(::int_size(width, height));
+      // m_textureattributes.m_etexture = etype;
+      m_textureattributes.m_rectangleTarget = ::int_rectangle(::int_size(width, height));
 
-      m_bWithDepth = false;
+      m_textureflags.m_bWithDepth = false;
 
       ::cast<::gpu_directx11::context> pgpucontext = m_pgpurenderer->m_pgpucontext;
       ::cast<::gpu_directx11::device> pgpudevice = pgpucontext->m_pgpudevice;

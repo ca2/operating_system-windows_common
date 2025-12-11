@@ -42,15 +42,25 @@ namespace gpu_directx11
 
          ::cast<gpu_directx11::context> pcontext = m_pgpucontext;
 
-         //ptexture->m_iMipCount = (uint32_t)(floor(::log2((double)::maximum(ptexture->m_rectangleTarget.width(),
-                                                                           //ptexture->m_rectangleTarget.height()))) +
+         //ptexture->m_textureattributes.m_iMipCount = (uint32_t)(floor(::log2((double)::maximum(ptexture->rectangle().width(),
+                                                                           //ptexture->rectangle().height()))) +
            //                                 1.0);
-         ptexture->m_iMipCount = -1;
-         ptexture->m_bTransferSrc = true;
-         ptexture->m_bWithDepth = false;
-         ptexture->m_bSrgb = true;
-         ptexture->initialize_texture(m_pgpucontext->m_pgpurenderer, ptexture->m_rectangleTarget, true, {},
-                                            ::gpu::texture::e_type_cube_map);
+
+         ::gpu::texture_attributes textureattributes(ptexture->rectangle());
+         textureattributes.m_iMipCount = -1;
+         textureattributes.m_iFloat = 1;
+
+         ::gpu::texture_flags textureflags;
+
+         textureflags.m_bTransferSource = true;
+         textureflags.m_bWithDepth = true;
+         //ptexture->m_bSrgb = true;
+
+         //ptexture->initialize_texture(m_pgpucontext->m_pgpurenderer, ptexture->rectangle(), true, {},
+           //                                 ::gpu::e_texture_cube_map);
+
+         ptexture->initialize_texture(m_pgpucontext->m_pgpurenderer,
+            textureattributes, textureflags);
 
         
 
@@ -66,7 +76,7 @@ namespace gpu_directx11
          //ptexture->m_gluType = GL_TEXTURE_CUBE_MAP;
          //glBindRenderbuffer(GL_RENDERBUFFER, ptexture->m_gluDepthStencilRBO);
          //GLCheckError("");
-         //glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, ptexture->m_rectangleTarget.width(), ptexture->m_rectangleTarget.height());
+         //glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, ptexture->rectangle().width(), ptexture->rectangle().height());
          //GLCheckError("");
 
          //// attach the depth buffer
@@ -79,8 +89,8 @@ namespace gpu_directx11
          //glBindTexture(ptexture->m_gluType, ptexture->m_gluTextureID);
          //GLCheckError("");
 
-         //int width = ptexture->m_rectangleTarget.width();
-         //int height = ptexture->m_rectangleTarget.height();
+         //int width = ptexture->rectangle().width();
+         //int height = ptexture->rectangle().height();
 
          //// specify/allocate each face for the cubemap
          //for (auto i = 0; i < 6; i++)

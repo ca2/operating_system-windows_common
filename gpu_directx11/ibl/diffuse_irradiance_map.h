@@ -6,7 +6,7 @@
 //#include <memory>
 
 #include "gpu/ibl/diffuse_irradiance_map.h"
-#include "gpu_directx11/ibl/cubemap_framebuffer.h"
+//#include "gpu_directx11/ibl/cubemap_framebuffer.h"
 #include "bred/gpu/shader.h"
 
 

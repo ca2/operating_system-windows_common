@@ -4,7 +4,7 @@
 #pragma once
 
 
-#include "gpu/ibl/brdf_convolution_framebuffer.h"
+//#include "gpu/ibl/brdf_convolution_framebuffer.h"
 
 
 namespace gpu_directx11
