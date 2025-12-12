@@ -1,5 +1,5 @@
 // Created by camilo on 2025-06-04 23:11 <3ThomasBorregaardSørensen!!
-#include "framework.h"
+#include "../framework.h"
 //#include "direct2d_draw2d_swap_chain_device.h"
 //#include "draw2d_direct2d/graphics.h"
 //#include "direct2d/direct2d.h"

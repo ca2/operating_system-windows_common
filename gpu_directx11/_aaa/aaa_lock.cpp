@@ -1,7 +1,7 @@
 // Created by camilo on 2025-06-25 14:44 <3ThomasBorregaardSørensen!!
-#include "framework.h"
-#include "context.h"
-#include "device.h"
+#include "../framework.h"
+#include "../context.h"
+#include "../device.h"
 #include "lock.h"
 
 

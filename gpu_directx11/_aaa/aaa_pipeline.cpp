@@ -1,6 +1,6 @@
-#include "framework.h"
+#include "../framework.h"
 #include "pipeline.h"
-#include "renderer.h"
+#include "../renderer.h"
 #include "acme/platform/application.h"
 #include "acme/filesystem/filesystem/directory_context.h"
 #include "acme/filesystem/filesystem/file_context.h"

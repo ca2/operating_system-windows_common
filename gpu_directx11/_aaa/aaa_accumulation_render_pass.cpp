@@ -1,10 +1,10 @@
 // From vk_swapchain by camilo on 2025-05-09 <3ThomasBorregaardSorensen!!
-#include "framework.h"
+#include "../framework.h"
 #include "accumulation_render_pass.h"
-#include "frame.h"
-#include "initializers.h"
-#include "physical_device.h"
-#include "renderer.h"
+#include "../frame.h"
+#include "../initializers.h"
+#include "../physical_device.h"
+#include "../renderer.h"
 using namespace directx11;
 
 

@@ -94,10 +94,10 @@
 
 #include "buffer.h"
 
-#include "context.h"
+#include "../context.h"
 
-#include "shader.h"
-#include "program.h"
+#include "../shader.h"
+#include "../program.h"
 
 #include "directx11.h"
 

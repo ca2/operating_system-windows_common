@@ -1,0 +1,8 @@
+//
+// Created by camilo on 2025-12-11.
+//
+
+#ifndef SCENEFOUNDRY_BINDING_H
+#define SCENEFOUNDRY_BINDING_H
+
+#endif //SCENEFOUNDRY_BINDING_H
