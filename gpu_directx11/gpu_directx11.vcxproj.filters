@@ -155,6 +155,9 @@
     <ClInclude Include="ibl\aaa_brdf_convolution_framebuffer.h">
       <Filter>Header Files\ibl</Filter>
     </ClInclude>
+    <ClInclude Include="block.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="framework.cpp">
@@ -282,6 +285,9 @@
     </ClCompile>
     <ClCompile Include="ibl\aaa_mipmap_cubemap_framebuffer.cpp">
       <Filter>Source Files\ibl</Filter>
+    </ClCompile>
+    <ClCompile Include="block.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

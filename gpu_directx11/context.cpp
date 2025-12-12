@@ -26,6 +26,8 @@
 #include "acme_windows_common/dxgi_surface_bindable.h"
 #include <DirectXMath.h>
 
+#include "block.h"
+
 
 using namespace directx11;
 
@@ -2592,49 +2594,49 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    }
 
 
-   void context::create_global_ubo(int iGlobalUboSize, int iFrameCount)
-   {
+   // void context::create_global_ubo(int iGlobalUboSize, int iFrameCount)
+   // {
+   //
+   //    m_uboBuffers.set_size(iFrameCount);
+   //
+   //    D3D11_BUFFER_DESC cbd = {};
+   //    cbd.Usage = D3D11_USAGE_DYNAMIC;
+   //    cbd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+   //    cbd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+   //    ::cast < device > pgpudevice = m_pgpudevice;
+   //
+   //    // GlobalUbo
+   //    cbd.ByteWidth = (iGlobalUboSize+15)&~15;
+   //    pgpudevice->m_pdevice->CreateBuffer(&cbd, nullptr, &m_pbufferGlobalUbo);
+   //
+   //    //for (int i = 0; i < m_uboBuffers.size(); i++)
+   //    //{
+   //
+   //    //   m_uboBuffers[i] = øallocate buffer();
+   //
+   //    //   m_uboBuffers[i]->initialize_buffer(
+   //    //      this,
+   //    //      iGlobalUboSize,
+   //    //      1,
+   //    //      VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
+   //    //      VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
+   //
+   //    //   m_uboBuffers[i]->map();
+   //
+   //    //   auto bufferInfo = m_uboBuffers[i]->descriptorInfo();
+   //
+   //    //   descriptor_writer(*m_psetdescriptorlayoutGlobal, *m_pdescriptorpoolGlobal)
+   //    //      .writeBuffer(0, &bufferInfo)
+   //    //      .build(m_descriptorsetsGlobal[i]);
+   //
+   //    //}
+   //
+   //    //auto globalSetLayout = m_psetdescriptorlayoutGlobal->getDescriptorSetLayout();
+   //
+   // }
 
-      m_uboBuffers.set_size(iFrameCount);
 
-      D3D11_BUFFER_DESC cbd = {};
-      cbd.Usage = D3D11_USAGE_DYNAMIC;
-      cbd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-      cbd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-      ::cast < device > pgpudevice = m_pgpudevice;
-
-      // GlobalUbo
-      cbd.ByteWidth = (iGlobalUboSize+15)&~15;
-      pgpudevice->m_pdevice->CreateBuffer(&cbd, nullptr, &m_pbufferGlobalUbo);
-
-      //for (int i = 0; i < m_uboBuffers.size(); i++)
-      //{
-
-      //   m_uboBuffers[i] = øallocate buffer();
-
-      //   m_uboBuffers[i]->initialize_buffer(
-      //      this,
-      //      iGlobalUboSize,
-      //      1,
-      //      VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
-      //      VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
-
-      //   m_uboBuffers[i]->map();
-
-      //   auto bufferInfo = m_uboBuffers[i]->descriptorInfo();
-
-      //   descriptor_writer(*m_psetdescriptorlayoutGlobal, *m_pdescriptorpoolGlobal)
-      //      .writeBuffer(0, &bufferInfo)
-      //      .build(m_descriptorsetsGlobal[i]);
-
-      //}
-
-      //auto globalSetLayout = m_psetdescriptorlayoutGlobal->getDescriptorSetLayout();
-
-   }
-
-
-   void context::update_global_ubo(const ::block& block)
+   void context::update_global_ubo1(::gpu::block *pgpublockGlobalUbo1)
    {
 
       ::gpu::context_lock context_lock(this);
@@ -2651,18 +2653,20 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       //cbd.ByteWidth = block;
       //cbd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
       //cbd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-
+      ::cast < ::gpu_directx11::block > pblockGlobalUbo1 = pgpublockGlobalUbo1;
       //device->CreateBuffer(&cbd, nullptr, &globalUBOBuffer);
-      if (m_pbufferGlobalUbo)
+      if (pblockGlobalUbo1->m_pbuffer)
       {
+
+         auto pbuffer = pblockGlobalUbo1->m_pbuffer;
 
          D3D11_MAPPED_SUBRESOURCE mapped;
 
-         m_pcontext->Map(m_pbufferGlobalUbo, 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
+         m_pcontext->Map(pbuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
 
-         memcpy(mapped.pData, block.data(), block.size());
+         memcpy(mapped.pData, pgpublockGlobalUbo1->data(false), pgpublockGlobalUbo1->size(false));
 
-         m_pcontext->Unmap(m_pbufferGlobalUbo, 0);
+         m_pcontext->Unmap(pbuffer, 0);
 
                //auto pVS = m_pbufferGlobalUbo.m_p;
          //m_pcontext->VSSetConstantBuffers(0, 1, &pVS);

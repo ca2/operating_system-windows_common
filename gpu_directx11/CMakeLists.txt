@@ -34,6 +34,8 @@ list(APPEND library_source
         approach.h
         assimp.cpp
         assimp.h
+   block.cpp
+   block.h
         cpu_buffer.cpp
         cpu_buffer.h
         context.cpp
@@ -131,7 +133,8 @@ else()
 endif ()
 
 
-add_library(${PROJECT_NAME} SHARED ${library_source})
+add_library(${PROJECT_NAME} SHARED ${library_source}
+   binding.h)
 add_library(static_${PROJECT_NAME} STATIC ${library_source})
 
 if (NOT ${NO_PRECOMPILED_HEADER})

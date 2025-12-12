@@ -15,6 +15,11 @@
 #include "bred/gpu/types.h"
 #include "acme/operating_system/windows_common/com/hresult_exception.h"
 #include <d3dcompiler.h>
+
+#include "block.h"
+#include "bred/graphics3d/engine.h"
+#include "bred/graphics3d/immersion_layer.h"
+#include "bred/graphics3d/scene_base.h"
 //#include "bred/user/user/graphics3d.h"
 
 
@@ -646,8 +651,12 @@ namespace gpu_directx11
 
       pgpucontext->m_pcontext->IASetPrimitiveTopology(etopology);
 
-      pgpucontext->m_pcontext->VSSetConstantBuffers(0, 1, pgpucontext->m_pbufferGlobalUbo.pp());
-      pgpucontext->m_pcontext->PSSetConstantBuffers(0, 1, pgpucontext->m_pbufferGlobalUbo.pp());
+      ::cast < ::gpu_directx11::block >  pblockGlobalUbo1 = pgpucontext->m_pengine->m_pimmersionlayer->m_pscene->global_ubo1(pgpucontext);
+
+      auto pbuffer = pblockGlobalUbo1->m_pbuffer.m_p;
+
+      pgpucontext->m_pcontext->VSSetConstantBuffers(0, 1, &pbuffer);
+      pgpucontext->m_pcontext->PSSetConstantBuffers(0, 1, &pbuffer);
 
 
    }

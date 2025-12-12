@@ -691,6 +691,7 @@
   <ItemGroup>
     <ClInclude Include="aaa_accumulation_render_pass.h" />
     <ClInclude Include="assimp.h" />
+    <ClInclude Include="block.h" />
     <ClInclude Include="frame_storage.h" />
     <ClInclude Include="gltf\material.h" />
     <ClInclude Include="gltf\mesh.h" />
@@ -790,6 +791,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="assimp.cpp" />
+    <ClCompile Include="block.cpp" />
     <ClCompile Include="frame_storage.cpp" />
     <ClCompile Include="gltf\mesh.cpp" />
     <ClCompile Include="gltf\model.cpp" />

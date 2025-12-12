@@ -5,6 +5,8 @@
 #include "frame.h"
 #include "frame_storage.h"
 //#include "full_screen_quad.h"
+#include "binding.h"
+#include "block.h"
 #include "input_layout.h"
 #include "memory_buffer.h"
 #include "model_buffer.h"
@@ -27,6 +29,7 @@
 #include "ibl/diffuse_irradiance_map.h"
 #include "ibl/equirectangular_cubemap.h"
 #include "ibl/specular_map.h"
+
 //#include "ibl/cubemap_framebuffer.h"
 //#include "ibl/mipmap_cubemap_framebuffer.h"
 //#include "ibl/hdri_cube.h"
@@ -89,6 +92,10 @@ __FACTORY_EXPORT void gpu_directx11_factory(::factory::factory * pfactory)
    pfactory->add_factory_item<::gpu_directx11::ibl::equirectangular_cubemap, ::gpu::ibl::equirectangular_cubemap>();
 //   pfactory->add_factory_item<::gpu_directx11::ibl::brdf_convolution_framebuffer, ::gpu::ibl::brdf_convolution_framebuffer>();
    //pfactory->add_factory_item<::gpu_directx11::ibl::hdri_cube, ::gpu::ibl::hdri_cube>();
+   pfactory->add_factory_item<::gpu_directx11::binding, ::gpu::binding>();
+   pfactory->add_factory_item<::gpu_directx11::binding_set, ::gpu::binding_set>();
+   pfactory->add_factory_item<::gpu_directx11::block, ::gpu::block>();
+
 }
 
 

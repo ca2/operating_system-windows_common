@@ -19,7 +19,7 @@ namespace gpu_directx11
    public:
 
 
-      comptr < ID3D11Buffer>              m_pbufferGlobalUbo;
+//      comptr < ID3D11Buffer>              m_pbufferGlobalUbo;
       comptr<ID3D11DeviceContext>         m_pcontext;
       comptr<ID3D11DeviceContext1>        m_pcontext1;
 
@@ -107,7 +107,7 @@ namespace gpu_directx11
 
       ::pointer<::gpu_directx11::descriptor_set_layout>           m_psetdescriptorlayoutGlobal;
       //::array<VkDescriptorSet>                                 m_descriptorsetsGlobal;
-      ::pointer_array<::gpu_directx11::buffer>							m_uboBuffers;
+      //::pointer_array<::gpu_directx11::buffer>							m_uboBuffers;
       ::pointer <::gpu_directx11::descriptor_pool>                m_pdescriptorpoolGlobal;
 
       ::pointer <::gpu_directx11::shader>                m_pshaderBlend3;
@@ -308,10 +308,10 @@ namespace gpu_directx11
       //::gpu_directx11::descriptor_pool* get_global_pool(::gpu::context* pgpucontext, int iFrameCount);
       void layout_global_ubo(::gpu::properties *pproperties) override;
 
-      void create_global_ubo(int iSize, int iFrameCount) override;
-      void update_global_ubo(const ::block& block) override;
+      //void create_global_ubo(int iSize, int iFrameCount) override;
+      void update_global_ubo1(::gpu::block * pblockGlobalUbo1) override;
 
-            void set_viewport(::gpu::command_buffer *pgpucommandbuffer, const ::int_rectangle &rectangle) override;
+      void set_viewport(::gpu::command_buffer *pgpucommandbuffer, const ::int_rectangle &rectangle) override;
       void clear(::gpu::texture * pgputexture, const ::color::color &color) override; 
       void engine_on_frame_context_initialization() override;
 
