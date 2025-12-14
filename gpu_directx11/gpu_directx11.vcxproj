@@ -693,10 +693,10 @@
     <ClInclude Include="assimp.h" />
     <ClInclude Include="block.h" />
     <ClInclude Include="frame_storage.h" />
+    <ClInclude Include="gltf\aaa_vertex.h" />
     <ClInclude Include="gltf\material.h" />
     <ClInclude Include="gltf\mesh.h" />
     <ClInclude Include="gltf\model.h" />
-    <ClInclude Include="gltf\aaa_vertex.h" />
     <ClInclude Include="gltf\_constant.h" />
     <ClInclude Include="ibl\aaa_brdf_convolution_framebuffer.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>

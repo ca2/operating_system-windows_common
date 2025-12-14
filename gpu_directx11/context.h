@@ -133,7 +133,7 @@ namespace gpu_directx11
       string _001GetIntroFragment() override;
 
       void draw() override;
-      void start_drawing() override;
+      //void start_drawing() override;
       void global_transform() override;
       void render() override;
 

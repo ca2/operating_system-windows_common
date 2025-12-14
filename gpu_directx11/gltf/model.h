@@ -23,7 +23,7 @@ namespace gpu_directx11
       /**
        * A collection of meshes.
        */
-      class model :
+      class CLASS_DECL_GPU_DIRECTX11 model :
          virtual public ::gpu::gltf::model
       {
       public:

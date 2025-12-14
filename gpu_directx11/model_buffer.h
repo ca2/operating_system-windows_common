@@ -31,9 +31,9 @@ namespace gpu_directx11
       void on_initialize_gpu_context_object() override;
 
 
-      void bind(::gpu::command_buffer* pcommandbuffer) override;
+      void bind2(::gpu::command_buffer* pcommandbuffer) override;
 
-      void draw(::gpu::command_buffer* pcommandbuffer) override;
+      void draw2(::gpu::command_buffer* pcommandbuffer) override;
 
       void draw_lines(::gpu::command_buffer* pcommandbuffer) override;
 

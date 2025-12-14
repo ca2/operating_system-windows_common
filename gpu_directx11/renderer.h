@@ -194,7 +194,7 @@ namespace gpu_directx11
       void endDraw(::gpu::graphics * pgraphics, ::user::interaction * puserinteraction) override;
 
 
-      void copy(::gpu::texture* pgputextureTarget, ::gpu::texture* pgputextureSource) override;
+      //void copy(::gpu::texture* pgputextureTarget, ::gpu::texture* pgputextureSource) override;
 
       //void _set_image(VkImage image, const ::int_rectangle& rectangle, bool bYSwap);
 

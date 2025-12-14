@@ -416,15 +416,15 @@ namespace gpu_directx11
    //}
 
 
-   void shader::bind(::gpu::command_buffer *pgpucommandbuffer, ::gpu::texture *pgputextureTarget,
-                     ::gpu::texture *pgputextureSource)
-   {
+   //void shader::bind(::gpu::command_buffer *pgpucommandbuffer, ::gpu::texture *pgputextureTarget,
+   //                  ::gpu::texture *pgputextureSource)
+   //{
 
-      bind(pgpucommandbuffer, pgputextureTarget);
+   //   bind(pgpucommandbuffer, pgputextureTarget);
 
-      bind_source(pgpucommandbuffer, pgputextureSource, 0);
+   //   bind_source(pgpucommandbuffer, pgputextureSource, 0);
 
-   }
+   //}
 
 
    void shader::bind_source(::gpu::command_buffer *pgpucommandbuffer, ::gpu::texture *pgputextureSource, int iSlot)
@@ -485,13 +485,72 @@ namespace gpu_directx11
    void shader::bind(::gpu::command_buffer *pgpucommandbuffer, ::gpu::texture *pgputextureTarget)
    {
 
-      _bind(pgpucommandbuffer, ::gpu::e_scene_none);
 
-      ::cast <context> pgpucontext = m_pgpurenderer->m_pgpucontext;
+        ::cast<context> pgpucontext = m_pgpurenderer->m_pgpucontext;
 
       ::gpu::context_lock context_lock(pgpucontext);
 
-      ::cast <device> pgpudevice = pgpucontext->m_pgpudevice;
+      ::cast<device> pgpudevice = pgpucontext->m_pgpudevice;
+
+
+      // defer_throw_hresult(hr1);
+
+      pgpucontext->m_pcontext->VSSetShader(m_pvertexshader, nullptr, 0);
+
+      /// defer_throw_hresult(hr2);
+
+      pgpucontext->m_pcontext->PSSetShader(m_ppixelshader, nullptr, 0);
+
+
+      if (m_pinputlayout)
+      {
+
+         if (!m_pd3d11inputlayout)
+         {
+
+            throw ::exception(error_wrong_state);
+         }
+
+         pgpucontext->m_pcontext->IASetInputLayout(m_pd3d11inputlayout);
+      }
+      else
+      {
+
+         pgpucontext->m_pcontext->IASetInputLayout(nullptr);
+      }
+
+      if (m_pdepthstencilstate2)
+      {
+
+         // Bind the new depth-stencil state
+         pgpucontext->m_pcontext->OMSetDepthStencilState(m_pdepthstencilstate2, 0);
+      }
+
+      if (m_prasterizerstate2)
+      {
+
+         pgpucontext->m_pcontext->RSSetState(m_prasterizerstate2);
+      }
+
+      auto etopology = ::directx11::as_d3d11_topology(m_etopology);
+
+      pgpucontext->m_pcontext->IASetPrimitiveTopology(etopology);
+
+      ::cast<::gpu_directx11::block> pblockGlobalUbo1 =
+         pgpucontext->m_pengine->m_pimmersionlayer->m_pscene->global_ubo1(pgpucontext);
+
+      auto pbuffer = pblockGlobalUbo1->m_pbuffer.m_p;
+
+      pgpucontext->m_pcontext->VSSetConstantBuffers(0, 1, &pbuffer);
+      pgpucontext->m_pcontext->PSSetConstantBuffers(0, 1, &pbuffer);
+
+      //_bind(pgpucommandbuffer, ::gpu::e_scene_none);
+
+      ///::cast <context> pgpucontext = m_pgpurenderer->m_pgpucontext;
+
+      //::gpu::context_lock context_lock(pgpucontext);
+
+      //::cast <device> pgpudevice = pgpucontext->m_pgpudevice;
 
       if (!pgputextureTarget)
       {
@@ -549,117 +608,117 @@ namespace gpu_directx11
    }
 
 
-   void shader::bind(::gpu::command_buffer *pgpucommandbuffer)
-   {
+   //void shader::bind(::gpu::command_buffer *pgpucommandbuffer)
+   //{
 
-      ::cast <texture> ptexture = m_pgpurenderer->current_render_target_texture(::gpu::current_frame());
+   //   ::cast <texture> ptexture = m_pgpurenderer->current_render_target_texture(::gpu::current_frame());
 
-      bind(pgpucommandbuffer, ptexture);
+   //   bind(pgpucommandbuffer, ptexture);
 
-      //::gpu::context_lock context_lock(pgpucontext);
+   //   //::gpu::context_lock context_lock(pgpucontext);
 
-      //::cast <device> pgpudevice = pgpucontext->m_pgpudevice;
-
-
-      ////defer_throw_hresult(hr1);
-
-      //pgpucontext->m_pcontext->VSSetShader(m_pvertexshader, nullptr, 0);
-
-      /////defer_throw_hresult(hr2);
-
-      //pgpucontext->m_pcontext->PSSetShader(m_ppixelshader, nullptr, 0);
+   //   //::cast <device> pgpudevice = pgpucontext->m_pgpudevice;
 
 
-      //if (m_pinputlayout)
-      //{
+   //   ////defer_throw_hresult(hr1);
 
-      //   if (!m_pd3d11inputlayout)
-      //   {
+   //   //pgpucontext->m_pcontext->VSSetShader(m_pvertexshader, nullptr, 0);
 
-      //      throw ::exception(error_wrong_state);
+   //   /////defer_throw_hresult(hr2);
 
-      //   }
-
-      //   pgpucontext->m_pcontext->IASetInputLayout(m_pd3d11inputlayout);
-
-      //}
-      //else
-      //{
-
-      //   pgpucontext->m_pcontext->IASetInputLayout(nullptr);
-
-      //}
-
-   }
+   //   //pgpucontext->m_pcontext->PSSetShader(m_ppixelshader, nullptr, 0);
 
 
-   void shader::_bind(::gpu::command_buffer *pgpucommandbuffer, ::gpu::enum_scene escene)
-   {
+   //   //if (m_pinputlayout)
+   //   //{
 
-      ::cast <context> pgpucontext = m_pgpurenderer->m_pgpucontext;
+   //   //   if (!m_pd3d11inputlayout)
+   //   //   {
 
-      ::gpu::context_lock context_lock(pgpucontext);
+   //   //      throw ::exception(error_wrong_state);
 
-      ::cast <device> pgpudevice = pgpucontext->m_pgpudevice;
+   //   //   }
 
+   //   //   pgpucontext->m_pcontext->IASetInputLayout(m_pd3d11inputlayout);
 
-      //defer_throw_hresult(hr1);
+   //   //}
+   //   //else
+   //   //{
 
-      pgpucontext->m_pcontext->VSSetShader(m_pvertexshader, nullptr, 0);
+   //   //   pgpucontext->m_pcontext->IASetInputLayout(nullptr);
 
-      ///defer_throw_hresult(hr2);
+   //   //}
 
-      pgpucontext->m_pcontext->PSSetShader(m_ppixelshader, nullptr, 0);
-
-
-      if (m_pinputlayout)
-      {
-
-         if (!m_pd3d11inputlayout)
-         {
-
-            throw ::exception(error_wrong_state);
-
-         }
-
-         pgpucontext->m_pcontext->IASetInputLayout(m_pd3d11inputlayout);
-
-      }
-      else
-      {
-
-         pgpucontext->m_pcontext->IASetInputLayout(nullptr);
-
-      }
-
-      if (m_pdepthstencilstate2)
-      {
-
-         // Bind the new depth-stencil state
-         pgpucontext->m_pcontext->OMSetDepthStencilState(m_pdepthstencilstate2, 0);
-
-      }
-
-      if (m_prasterizerstate2)
-      {
-       
-         pgpucontext->m_pcontext->RSSetState(m_prasterizerstate2);
-
-      }
-
-      auto etopology = ::directx11::as_d3d11_topology(m_etopology);
-
-      pgpucontext->m_pcontext->IASetPrimitiveTopology(etopology);
-
-      ::cast < ::gpu_directx11::block >  pblockGlobalUbo1 = pgpucontext->m_pengine->m_pimmersionlayer->m_pscene->global_ubo1(pgpucontext);
-
-      auto pbuffer = pblockGlobalUbo1->m_pbuffer.m_p;
-
-      pgpucontext->m_pcontext->VSSetConstantBuffers(0, 1, &pbuffer);
-      pgpucontext->m_pcontext->PSSetConstantBuffers(0, 1, &pbuffer);
+   //}
 
 
-   }
+   //void shader::_bind(::gpu::command_buffer *pgpucommandbuffer, ::gpu::enum_scene escene)
+   //{
+
+   //   ::cast <context> pgpucontext = m_pgpurenderer->m_pgpucontext;
+
+   //   ::gpu::context_lock context_lock(pgpucontext);
+
+   //   ::cast <device> pgpudevice = pgpucontext->m_pgpudevice;
+
+
+   //   //defer_throw_hresult(hr1);
+
+   //   pgpucontext->m_pcontext->VSSetShader(m_pvertexshader, nullptr, 0);
+
+   //   ///defer_throw_hresult(hr2);
+
+   //   pgpucontext->m_pcontext->PSSetShader(m_ppixelshader, nullptr, 0);
+
+
+   //   if (m_pinputlayout)
+   //   {
+
+   //      if (!m_pd3d11inputlayout)
+   //      {
+
+   //         throw ::exception(error_wrong_state);
+
+   //      }
+
+   //      pgpucontext->m_pcontext->IASetInputLayout(m_pd3d11inputlayout);
+
+   //   }
+   //   else
+   //   {
+
+   //      pgpucontext->m_pcontext->IASetInputLayout(nullptr);
+
+   //   }
+
+   //   if (m_pdepthstencilstate2)
+   //   {
+
+   //      // Bind the new depth-stencil state
+   //      pgpucontext->m_pcontext->OMSetDepthStencilState(m_pdepthstencilstate2, 0);
+
+   //   }
+
+   //   if (m_prasterizerstate2)
+   //   {
+   //    
+   //      pgpucontext->m_pcontext->RSSetState(m_prasterizerstate2);
+
+   //   }
+
+   //   auto etopology = ::directx11::as_d3d11_topology(m_etopology);
+
+   //   pgpucontext->m_pcontext->IASetPrimitiveTopology(etopology);
+
+   //   ::cast < ::gpu_directx11::block >  pblockGlobalUbo1 = pgpucontext->m_pengine->m_pimmersionlayer->m_pscene->global_ubo1(pgpucontext);
+
+   //   auto pbuffer = pblockGlobalUbo1->m_pbuffer.m_p;
+
+   //   pgpucontext->m_pcontext->VSSetConstantBuffers(0, 1, &pbuffer);
+   //   pgpucontext->m_pcontext->PSSetConstantBuffers(0, 1, &pbuffer);
+
+
+   //}
 
 
    void shader::unbind(::gpu::command_buffer *pgpucommandbuffer)

@@ -290,7 +290,8 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
       //pgpucontext->m_pcontext->OMSetDepthStencilState(pgpucontext->depth_stencil_state_disabled(), 0);
 
-      m_pshaderPresent->bind(nullptr, m_ptextureSwapChain, pgputexture);
+      m_pshaderPresent->bind(nullptr, m_ptextureSwapChain);
+      m_pshaderPresent->bind_source(nullptr, pgputexture, 0);
       //pgpucontext->m_pcontext->VSSetShader(m_pvertexshaderFullscreen, nullptr, 0);
       //pgpucontext->m_pcontext->PSSetShader(m_ppixelshaderFullscreen, nullptr, 0);
 

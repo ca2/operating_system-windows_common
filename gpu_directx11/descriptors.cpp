@@ -110,10 +110,6 @@ namespace gpu_directx11
    //}
 
    descriptor_pool::~descriptor_pool() {
-      //if (descriptorPool != VK_NULL_HANDLE) {
-      //   vkDestroyDescriptorPool(m_pgpucontext->logicalDevice(), descriptorPool, nullptr);
-      //   descriptorPool = VK_NULL_HANDLE;
-      //}
    }
 
    //bool descriptor_pool::allocateDescriptor(
@@ -133,7 +129,7 @@ namespace gpu_directx11
    //}
 
    //void descriptor_pool::freeDescriptors(::array<VkDescriptorSet> & descriptors) const {
-   //   vkFreeDescriptorSets(
+   //   aaavkFreeDescriptorSets(
    //       m_pgpucontext->logicalDevice(),
    //       descriptorPool,
    //       static_cast<uint32_t>(descriptors.size()),
@@ -141,7 +137,7 @@ namespace gpu_directx11
    //}
 
    void descriptor_pool::resetPool() {
-   //   vkResetDescriptorPool(m_pgpucontext->logicalDevice(), descriptorPool, 0);
+   //   aaavkResetDescriptorPool(m_pgpucontext->logicalDevice(), descriptorPool, 0);
    }
 
    // *************** Descriptor Writer *********************

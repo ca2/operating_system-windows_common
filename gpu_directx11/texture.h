@@ -103,7 +103,7 @@ namespace gpu_directx11
 
       //class d3d11* d3d11();
 
-      void blend(::gpu::texture* ptexture) override;
+      //void blend(::gpu::texture* ptexture) override;
 
 
       virtual IDXGISurface* __get_dxgi_surface();

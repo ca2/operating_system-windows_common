@@ -655,7 +655,7 @@ namespace gpu_directx11
    //}
 
 
-   void texture::blend(::gpu::texture *ptexture) {}
+   //void texture::blend(::gpu::texture *ptexture) {}
 
 
    IDXGISurface *texture::__get_dxgi_surface()

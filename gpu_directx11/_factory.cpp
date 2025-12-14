@@ -1,4 +1,5 @@
 #include "framework.h"
+#include "bred/gltf/vertex.h"
 #include "approach.h"
 #include "cpu_buffer.h"
 //#include "cube.h"

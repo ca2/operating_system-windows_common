@@ -10,7 +10,7 @@
 #include "bred/gpu/context.h"
 #include "bred/gpu/render_target.h"
 #include "bred/gpu/renderer.h"
-#include "bred/graphics3d/render_systems/gltf_render_system.h"
+#include "bred/graphics3d/render_system/pbr_with_ibl_render_system_base.h"
 #include "bred/graphics3d/render_system.h"
 #include "bred/graphics3d/scene_renderable.h"
 
@@ -53,7 +53,7 @@ namespace gpu_directx11
       //}
 
 
-      void mesh::draw(::gpu::command_buffer *pcommandbuffer)
+      void mesh::draw2(::gpu::command_buffer *pcommandbuffer)
       {
          ::cast<::gpu_directx11::context> pcontext = m_pgpucontext;
          //
@@ -74,9 +74,9 @@ namespace gpu_directx11
          else  if (erendersystem == ::graphics3d::e_render_system_gltf_ibl)
          {
             // albedo
-            ::cast<::graphics3d::gltf_render_system> prendersystem = pcommandbuffer->m_prendersystem;
+            ::cast<::graphics3d::pbr_with_ibl_render_system_base> prendersystem = pcommandbuffer->m_prendersystem;
 
-            auto pscenerenderable = prendersystem->m_pscenerenderableCurrent;
+            auto pscenerenderable = prendersystem->current_scene_renderable();
 
             auto m1 = pscenerenderable->model_matrix();
 
@@ -235,7 +235,7 @@ namespace gpu_directx11
             //pshader->set_sequence3("albedo", m_pmaterial->m_seq3Albedo);
             if (bAlbedo)
             {
-               ::cast<::gpu_directx11::texture> ptexture = m_pmaterial->m_ptextureAlbedo;
+               ::cast<::gpu_directx11::texture> ptexture = m_pmaterial->m_texturea[::gpu::gltf::e_texture_albedo];
                if (ptexture)
                {
                   srv[0] = ptexture->m_pshaderresourceview;
@@ -258,7 +258,7 @@ namespace gpu_directx11
                // glActiveTexture(GL_TEXTURE0 + e_gltf_texture_metallic_roughness);
                // shader.setInt("material.textureMetallicRoughness", e_gltf_texture_metallic_roughness);
                // glBindTexture(GL_TEXTURE_2D, m_pmaterial->textureMetallicRoughness->mId);
-               ::cast<::gpu_directx11::texture> ptexture = m_pmaterial->m_ptextureMetallicRoughness;
+               ::cast<::gpu_directx11::texture> ptexture = m_pmaterial->m_texturea[::gpu::gltf::e_texture_metallic_roughness];
                if (ptexture)
                {
                   srv[1] = ptexture->m_pshaderresourceview;
@@ -275,7 +275,7 @@ namespace gpu_directx11
                //    glActiveTexture(GL_TEXTURE0 + e_gltf_texture_normal);
                //    shader.setInt("material.textureNormal", e_gltf_texture_normal);
                //    glBindTexture(GL_TEXTURE_2D, m_pmaterial->textureNormal->mId);
-               ::cast<::gpu_directx11::texture> ptexture = m_pmaterial->m_ptextureNormal;
+               ::cast<::gpu_directx11::texture> ptexture = m_pmaterial->m_texturea[::gpu::gltf::e_texture_normal];
                if (ptexture)
                {
                   srv[2] = ptexture->m_pshaderresourceview;
@@ -293,7 +293,7 @@ namespace gpu_directx11
                //    glActiveTexture(GL_TEXTURE0 + e_gltf_texture_ambient_occlusion);
                //    shader.setInt("material.textureAmbientOcclusion", e_gltf_texture_ambient_occlusion);
                //    glBindTexture(GL_TEXTURE_2D, m_pmaterial->textureAmbientOcclusion->mId);
-               ::cast<::gpu_directx11::texture> ptexture = m_pmaterial->m_ptextureAmbientOcclusion;
+               ::cast<::gpu_directx11::texture> ptexture = m_pmaterial->m_texturea[::gpu::gltf::e_texture_ambient_occlusion];
                if (ptexture)
                {
                   srv[3] = ptexture->m_pshaderresourceview;
@@ -311,7 +311,7 @@ namespace gpu_directx11
                //    glActiveTexture(GL_TEXTURE0 + e_gltf_texture_emissive);
                //    shader.setInt("material.textureEmissive", e_gltf_texture_emissive);
                //    glBindTexture(GL_TEXTURE_2D, m_pmaterial->textureEmissive->mId);
-               ::cast<::gpu_directx11::texture> ptexture = m_pmaterial->m_ptextureEmissive;
+               ::cast<::gpu_directx11::texture> ptexture = m_pmaterial->m_texturea[::gpu::gltf::e_texture_emissive];
                if (ptexture)
                {
                   srv[4] = ptexture->m_pshaderresourceview;
@@ -421,13 +421,13 @@ namespace gpu_directx11
          pgpucontext->m_pcontext->IASetVertexBuffers(0, 1, m_pVertexBuffer.pp(), &stride, &offset);
          pgpucontext->m_pcontext->IASetIndexBuffer(m_pIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
          //pgpucontext->m_pcontext->IASetInputLayout(m_pInputLayout);
-         auto iIndexCount = m_indexa.size();
+         auto iIndexCount = m_modeldata.m_indexes.size();
          pgpucontext->m_pcontext->DrawIndexed(iIndexCount, 0, 0);
 
       }
 
 
-      void mesh::init()
+      void mesh::on_initialize_gpu_gltf_mesh()
       {
 
          // Assume:
@@ -445,12 +445,12 @@ namespace gpu_directx11
          // --- Create Vertex Buffer ---
          D3D11_BUFFER_DESC bd = {};
          bd.Usage = D3D11_USAGE_DEFAULT;
-         bd.ByteWidth = static_cast<UINT>(m_vertexa.size() * sizeof(::gpu::gltf::vertex));
+         bd.ByteWidth = static_cast<UINT>(m_modeldata.m_vertexes.size() * sizeof(::gpu::gltf::vertex));
          bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
          bd.CPUAccessFlags = 0;
 
          D3D11_SUBRESOURCE_DATA initData = {};
-         initData.pSysMem = m_vertexa.data();
+         initData.pSysMem = m_modeldata.m_vertexes.data();
 
          HRESULT hr = pd3d11device->CreateBuffer(&bd, &initData, &m_pVertexBuffer);
          defer_throw_hresult(hr);
@@ -461,10 +461,10 @@ namespace gpu_directx11
 
          // --- Create Index Buffer ---
          bd.Usage = D3D11_USAGE_DEFAULT;
-         bd.ByteWidth = static_cast<UINT>(m_indexa.size() * sizeof(unsigned int));
+         bd.ByteWidth = static_cast<UINT>(m_modeldata.m_indexes.size() * sizeof(unsigned int));
          bd.BindFlags = D3D11_BIND_INDEX_BUFFER;
          bd.CPUAccessFlags = 0;
-         initData.pSysMem = m_indexa.data();
+         initData.pSysMem = m_modeldata.m_indexes.data();
 
          hr = pd3d11device->CreateBuffer(&bd, &initData, &m_pIndexBuffer);
          defer_throw_hresult(hr);

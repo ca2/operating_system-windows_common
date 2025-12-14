@@ -1237,14 +1237,14 @@ HRESULT hrCreateDepthStencilState = pgpudevice->m_pdevice->CreateDepthStencilSta
    }
 
 
-   void renderer::copy(::gpu::texture* pgputextureTarget, ::gpu::texture* pgputextureSource)
-   {
+   //void renderer::copy(::gpu::texture* pgputextureTarget, ::gpu::texture* pgputextureSource)
+   //{
 
-      ::cast < context > pgpucontext = m_pgpucontext;
+   //   ::cast < context > pgpucontext = m_pgpucontext;
 
-      pgpucontext->copy(pgputextureTarget, pgputextureSource);
+   //   pgpucontext->copy(pgputextureTarget, pgputextureSource);
 
-   }
+   //}
 
 
    void renderer::_on_graphics_end_draw(::gpu_directx11::renderer* prendererSrc)
