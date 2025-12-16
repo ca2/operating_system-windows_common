@@ -113,7 +113,7 @@ namespace gpu_directx11
    }
 
    //bool descriptor_pool::allocateDescriptor(
-   //    const VkDescriptorSetLayout descriptorSetLayout, VkDescriptorSet & descriptor) const {
+   //    const aaaVkDescriptorSetLayout descriptorSetLayout, VkDescriptorSet & descriptor) const {
    //   VkDescriptorSetAllocateInfo allocInfo{};
    //   allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
    //   allocInfo.descriptorPool = descriptorPool;

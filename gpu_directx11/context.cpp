@@ -1207,10 +1207,10 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
          m_pshaderCopyUsingShader->initialize_shader_with_block(
             m_pgpurenderer,
             ::as_block(copy_using_shader_vertex_shader),
-            ::as_block(copy_using_shader_pixel_shader),
-            {},
-            {},
-            {}//,
+            ::as_block(copy_using_shader_pixel_shader)//,
+            //{},
+            //{},
+            //{}//,
             //input_layout<::graphics3d::sequence2_uv>()
 
          );

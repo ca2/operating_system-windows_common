@@ -881,7 +881,7 @@ namespace gpu_directx11
 
          pshaderImageBlend->initialize_shader_with_block(
             this, as_block(g_uaImageBlendVertexShader), as_block(g_uaImageBlendFragmentShader),
-            {::gpu::shader::e_descriptor_set_slot_local}, m_psetdescriptorlayoutImageBlend, 
+            //{::gpu::shader::e_descriptor_set_slot_local}, m_psetdescriptorlayoutImageBlend, 
             //{},
             pinputlayoutEmpty);
 
@@ -920,8 +920,8 @@ namespace gpu_directx11
             this,
             as_memory_block(g_uaImageBlendVertexShader),
             as_memory_block(g_uaImageBlendFragmentShader),
-            { ::gpu::shader::e_descriptor_set_slot_local },
-            m_psetdescriptorlayoutImageBlend,
+            //{ ::gpu::shader::e_descriptor_set_slot_local },
+            //m_psetdescriptorlayoutImageBlend,
             pinputlayoutEmpty);
 
       }

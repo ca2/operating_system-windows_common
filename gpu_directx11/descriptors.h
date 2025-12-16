@@ -35,10 +35,10 @@ namespace gpu_directx11
       descriptor_set_layout();
       ~descriptor_set_layout();
 
-      //VkDescriptorSetLayout getDescriptorSetLayout() const { return descriptorSetLayout; }
+      //aaaVkDescriptorSetLayout getDescriptorSetLayout() const { return descriptorSetLayout; }
 
       ::pointer < context > m_pgpucontext;
-      //VkDescriptorSetLayout descriptorSetLayout;
+      //aaaVkDescriptorSetLayout descriptorSetLayout;
       //::map_base<unsigned int, VkDescriptorSetLayoutBinding> bindings;
 
    };
@@ -85,7 +85,7 @@ namespace gpu_directx11
       //descriptor_pool & operator=(const descriptor_pool &) = delete;
 
       //bool allocateDescriptor(
-      //    const VkDescriptorSetLayout descriptorSetLayout, VkDescriptorSet & descriptor) const;
+      //    const aaaVkDescriptorSetLayout descriptorSetLayout, VkDescriptorSet & descriptor) const;
 
       //void freeDescriptors(::array<VkDescriptorSet> & descriptors) const;
 

@@ -280,7 +280,7 @@ namespace directx11
       //}
 
       //inline VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo(
-      //   const VkDescriptorSetLayout * pSetLayouts,
+      //   const aaaVkDescriptorSetLayout * pSetLayouts,
       //   uint32_t setLayoutCount = 1)
       //{
       //   VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo{};
@@ -301,7 +301,7 @@ namespace directx11
 
       //inline VkDescriptorSetAllocateInfo descriptorSetAllocateInfo(
       //   VkDescriptorPool descriptorPool,
-      //   const VkDescriptorSetLayout * pSetLayouts,
+      //   const aaaVkDescriptorSetLayout * pSetLayouts,
       //   uint32_t descriptorSetCount)
       //{
       //   VkDescriptorSetAllocateInfo descriptorSetAllocateInfo{};
