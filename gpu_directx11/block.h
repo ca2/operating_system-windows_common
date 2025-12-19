@@ -25,7 +25,7 @@ namespace gpu_directx11
       ~block() override;
 
 
-      void initialize_gpu_block(::gpu::context *pgpucontext);
+      void create_gpu_block(::gpu::context *pgpucontext) override;
 
 
       ID3D11Buffer * buffer();

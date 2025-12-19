@@ -102,10 +102,15 @@ namespace gpu_directx11
       //void _bind(::gpu::command_buffer *pgpucommandbuffer, ::gpu::enum_scene escene) override;
       void unbind(::gpu::command_buffer *pgpucommandbuffer) override;
       
+      void on_bind_already_bound(::gpu::command_buffer *pgpucommandbuffer,
+                                         ::gpu::texture *pgputextureTarget) override;
 
-
+      virtual void defer_bind_frame_buffer_layer(::gpu::command_buffer *pgpucommandbuffer,
+                                                 ::gpu::texture *pgputextureTarget);
       void push_properties(::gpu::command_buffer * pgpucommandbuffer) override;
       void setModelViewProjection(const floating_matrix4 &model, const floating_matrix4 &view, const floating_matrix4 &projection) override;
+      void bind_slot_set(::gpu::command_buffer *pgpucommandbuffer, int iSet,
+                         ::gpu::binding_slot_set *pgpubindingslotset) override;
 
    };
 
@@ -114,81 +119,3 @@ namespace gpu_directx11
 
 
 
-
-//#pragma once
-//
-//
-//#include "bred/gpu/shader.h"
-//
-//
-//namespace gpu_directx11
-//{
-//   //enum enum_type
-//   //{
-//   //   e_type_int,
-//   //   e_type_float,
-//
-//   //};
-//
-//   class CLASS_DECL_GPU_DIRECTX11 shader :
-//      virtual public ::gpu::shader
-//   {
-//   public:
-//
-//      //struct payload
-//      //{
-//
-//      //   int m_iOffset;
-//      //   enum_type m_etype;
-//
-//      //};
-//
-//      memory   m_memoryPushConstants;
-//      //__creatable_from_base(shader, ::gpu::shader);
-//      
-//      shader();
-//      ~shader() override;
-//
-//      
-//      virtual void create_shader(const ::scoped_string & scopedstrVertex, const ::scoped_string & scopedstrFragment, const ::scoped_string & scopedstrGeometry = nullptr) override;
-//
-//      virtual void use() override;
-//
-//      virtual void setBool(const ::scoped_string & scopedstrName, bool value) override;
-//
-//      virtual void setInt(const ::scoped_string & scopedstrName, int value) override;
-//
-//      virtual void setFloat(const ::scoped_string & scopedstrName, float value) override;
-//
-//      //virtual void setVec2(const ::scoped_string & scopedstrName, const floating_sequence2& value) override;
-//      virtual void setVec2(const ::scoped_string & scopedstrName, float x, float y) override;
-//
-//      //virtual void setVec3(const ::scoped_string & scopedstrName, const floating_sequence3& value) override;
-//      virtual void setVec3(const ::scoped_string & scopedstrName, float x, float y, float z) override;
-//
-//      //virtual void setVec4(const ::scoped_string & scopedstrName, const floating_sequence4& value) override;
-//      virtual void setVec4(const ::scoped_string & scopedstrName, float x, float y, float z, float w) override;
-//
-//      //virtual void setMat2(const ::scoped_string & scopedstrName, const floating_matrix2& mat) override;
-//      //virtual void setMat3(const ::scoped_string & scopedstrName, const floating_matrix3& mat) override;
-//      //virtual void setMat4(const ::scoped_string & scopedstrName, const floating_matrix4& mat) override;
-//      virtual void setMat2(const ::scoped_string & scopedstrName, const float p[2*2]) override;
-//      virtual void setMat3(const ::scoped_string & scopedstrName, const float p[3*3]) override;
-//      virtual void setMat4(const ::scoped_string & scopedstrName, const float p[4*4]) override;
-//
-//
-//
-//      unsigned int create_shader(const ::scoped_string & scopedstrVertex, VkShaderStageFlagBits type);
-//
-//      virtual void shader_compile_errors(int shader, VkShaderStageFlagBits type, string & strSummary);
-//
-//      virtual void program_compile_errors(int program, string & strSummary);
-//      //::gpu::uniform get_uniform(const ::scoped_string & scopedstrUniform) override;
-//
-//   };
-//
-//
-//} // namespace gpu_directx11
-//
-//
-//

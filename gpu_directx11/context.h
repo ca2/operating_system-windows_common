@@ -181,12 +181,12 @@ namespace gpu_directx11
 
       //virtual void make_current();
 
-      ::pointer<::gpu::texture> load_cube_map(const ::scoped_string &scopedstrName, const ::file::path &path,
-                                              bool b32) override;
+      //::pointer<::gpu::texture> load_cube_map(const ::scoped_string &scopedstrName, const ::file::path &path,
+        //                                      bool b32) override;
 
 
-      ::pointer<::gpu::texture> loadCubemap(const ::scoped_string &name, const ::scoped_string &scopedstrFileName,
-                                            bool b32);
+      //::pointer<::gpu::texture> loadCubemap(const ::scoped_string &name, const ::scoped_string &scopedstrFileName,
+        //                                    bool b32);
 
       // virtual string load_fragment(const ::scoped_string & scopedstrPath, enum_shader_source& eshadersource);
 
@@ -321,6 +321,11 @@ namespace gpu_directx11
       floating_matrix4 defer_clip_remap_projection(const floating_matrix4 &m) override;
       floating_matrix4 defer_remap_impact_matrix(const floating_matrix4 &m) override;
       floating_sequence3 front(const ::graphics3d::floating_rotation &rotation) override;
+
+
+      void load_ktxTexture_cube_map(::pointer<::gpu::texture> &ptexture, void *p_ktxTexture) override;
+      void load_ktxTexture(::pointer<::gpu::texture> &ptexture, void *p_ktxTexture) override;
+
    };
 
 

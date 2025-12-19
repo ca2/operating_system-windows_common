@@ -197,12 +197,12 @@ namespace gpu_directx11
       }
 
 
-      void specular_map::computeBrdfConvolutionMap()
+      void specular_map::computeBrdfConvolutionMap(::gpu::command_buffer *pgpucommandbuffer)
       {
 
       //   ::gpu::Timer timer;
 
-         ::gpu::ibl::specular_map::computeBrdfConvolutionMap();
+         ::gpu::ibl::specular_map::computeBrdfConvolutionMap(pgpucommandbuffer);
 
       //   ::cast<::gpu_directx11::context> pcontext = m_pgpucontext;
 

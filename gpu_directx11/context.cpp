@@ -554,92 +554,92 @@ namespace gpu_directx11
    }
 
    
-::pointer<::gpu::texture> context::load_cube_map(const ::scoped_string &scopedstrName, const ::file::path &path,
-                                                    bool b32)
-   {
-
-      /*VkFormat vkformat;
-
-      if (!b32)
-      {
-
-         vkformat = VK_FORMAT_R16G16B16A16_SFLOAT;
-      }
-      else
-      {
-
-         vkformat = VK_FORMAT_R32G32B32A32_SFLOAT;
-      }*/
-
-      ::cast<gpu_directx11::context> pcontext = m_pgpurenderer->m_pgpucontext;
-
-      ///::cast<gpu_directx11::queue> pqueueCopy = pcontext->m_pgpudevice->transfer_queue();
-
-      //auto vkqueueCopy = pqueueCopy->m_vkqueue;
-
-      //VkImageUsageFlags usageFlags = VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT;
-
-      //VkImageLayout initialLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-
-      //auto ptexture = loadCubemap(scopedstrName, path, vkformat, vkqueueCopy, usageFlags, initialLayout);
-      auto ptexture = loadCubemap(scopedstrName, path, b32);
-
-      return ptexture;
-   }
-
-
-
-::pointer<::gpu::texture> context::loadCubemap(const ::scoped_string &name, const ::scoped_string &scopedstrFileName,bool b32)
-   {
-
-      auto pgputexture = øcreate<::gpu::texture>();
-
-      ::cast<::gpu_directx11::texture> ptexture = pgputexture;
-
-      ptexture->m_pgpurenderer = m_pgpurenderer;
-
-      try
-      {
-
-         if (scopedstrFileName.case_insensitive_ends(".ktx"))
-         {
-
-            //::cast<::gpu_directx11::queue> pqueueGraphics = m_pgpudevice->graphics_queue();
-
-            throw "todoKtxLoadCubemapFromFile";
-
-            //ptexture->KtxLoadCubemapFromFile(name, scopedstrFileName, format, pqueueGraphics->m_vkqueue, usageFlags,
-                                             //initialLayout);
-         }
-         else if (scopedstrFileName.case_insensitive_ends(".hdr"))
-         {
-
-            try
-            {
-
-               auto ptexture = cubemap_from_hdr(scopedstrFileName);
-               return ptexture;
-            }
-            catch (const ::exception &e)
-            {
-
-               throw ::exception(e.m_estatus, "Failed to load HDR cubemap '" + name + "': " + e.get_message());
-            }
-         }
-         else
-         {
-
-            warning() << "not implemented loadCubemap case";
-         }
-      }
-      catch (const ::exception &e)
-      {
-
-         throw ::exception(e.m_estatus, "Failed to load HDR cubemap '" + name + "': " + e.get_message());
-      }
-
-      return pgputexture;
-   }
+//::pointer<::gpu::texture> context::load_cube_map(const ::scoped_string &scopedstrName, const ::file::path &path,
+//                                                    bool b32)
+//   {
+//
+//      /*VkFormat vkformat;
+//
+//      if (!b32)
+//      {
+//
+//         vkformat = VK_FORMAT_R16G16B16A16_SFLOAT;
+//      }
+//      else
+//      {
+//
+//         vkformat = VK_FORMAT_R32G32B32A32_SFLOAT;
+//      }*/
+//
+//      ::cast<gpu_directx11::context> pcontext = m_pgpurenderer->m_pgpucontext;
+//
+//      ///::cast<gpu_directx11::queue> pqueueCopy = pcontext->m_pgpudevice->transfer_queue();
+//
+//      //auto vkqueueCopy = pqueueCopy->m_vkqueue;
+//
+//      //VkImageUsageFlags usageFlags = VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT;
+//
+//      //VkImageLayout initialLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+//
+//      //auto ptexture = loadCubemap(scopedstrName, path, vkformat, vkqueueCopy, usageFlags, initialLayout);
+//      auto ptexture = loadCubemap(scopedstrName, path, b32);
+//
+//      return ptexture;
+//   }
+//
+//
+//
+//::pointer<::gpu::texture> context::loadCubemap(const ::scoped_string &name, const ::scoped_string &scopedstrFileName,bool b32)
+//   {
+//
+//      auto pgputexture = øcreate<::gpu::texture>();
+//
+//      ::cast<::gpu_directx11::texture> ptexture = pgputexture;
+//
+//      ptexture->m_pgpurenderer = m_pgpurenderer;
+//
+//      try
+//      {
+//
+//         if (scopedstrFileName.case_insensitive_ends(".ktx"))
+//         {
+//
+//            //::cast<::gpu_directx11::queue> pqueueGraphics = m_pgpudevice->graphics_queue();
+//
+//            throw "todoKtxLoadCubemapFromFile";
+//
+//            //ptexture->KtxLoadCubemapFromFile(name, scopedstrFileName, format, pqueueGraphics->m_vkqueue, usageFlags,
+//                                             //initialLayout);
+//         }
+//         else if (scopedstrFileName.case_insensitive_ends(".hdr"))
+//         {
+//
+//            try
+//            {
+//
+//               auto ptexture = cubemap_from_hdr(scopedstrFileName);
+//               return ptexture;
+//            }
+//            catch (const ::exception &e)
+//            {
+//
+//               throw ::exception(e.m_estatus, "Failed to load HDR cubemap '" + name + "': " + e.get_message());
+//            }
+//         }
+//         else
+//         {
+//
+//            warning() << "not implemented loadCubemap case";
+//         }
+//      }
+//      catch (const ::exception &e)
+//      {
+//
+//         throw ::exception(e.m_estatus, "Failed to load HDR cubemap '" + name + "': " + e.get_message());
+//      }
+//
+//      return pgputexture;
+//   }
 
 
 
@@ -2867,6 +2867,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    //   //
    //   //   return {};
    //}
+
 
 
 } // namespace gpu_directx11

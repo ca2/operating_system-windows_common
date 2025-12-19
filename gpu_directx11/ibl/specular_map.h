@@ -85,7 +85,7 @@ namespace gpu_directx11
          /**
           * Render the BRDF convolution map.
           */
-         void computeBrdfConvolutionMap() override;
+         void computeBrdfConvolutionMap(::gpu::command_buffer *pgpucommandbuffer) override;
 
 
          /**

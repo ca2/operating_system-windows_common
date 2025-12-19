@@ -4,6 +4,7 @@
 #include <stb/stb_image.h>
 #include "acme/graphics/image/pixmap.h"
 #include "aura/graphics/image/image.h"
+#include "bred/gpu/command_buffer.h"
 #include "bred/gpu/context_lock.h"
 #include "renderer.h"
 
@@ -75,18 +76,25 @@ namespace gpu_directx11
 
          m_texture2ddesc.MiscFlags = D3D11_RESOURCE_MISC_TEXTURECUBE;
       }
-      if (m_textureattributes.m_iMipCount < 0)
+      if (m_textureattributes.m_iMipCount < 0 
+         || 
+         (m_textureattributes.maximum_mip_count() > 1
+            && m_textureattributes.m_iMipCount == m_textureattributes.maximum_mip_count()))
       {
 
 
          m_texture2ddesc.MipLevels = 0;
          m_texture2ddesc.MiscFlags |= D3D11_RESOURCE_MISC_GENERATE_MIPS;
+         m_texture2ddesc.BindFlags |= D3D11_BIND_RENDER_TARGET;
+         m_texture2ddesc.BindFlags |= D3D11_BIND_SHADER_RESOURCE;
       }
       else if (m_textureattributes.m_iMipCount > 1)
       {
 
          m_texture2ddesc.MipLevels = m_textureattributes.m_iMipCount;
          m_texture2ddesc.MiscFlags |= D3D11_RESOURCE_MISC_GENERATE_MIPS;
+         m_texture2ddesc.BindFlags |= D3D11_BIND_RENDER_TARGET;
+         m_texture2ddesc.BindFlags |= D3D11_BIND_SHADER_RESOURCE;
       }
       else
       {
@@ -395,25 +403,34 @@ namespace gpu_directx11
       {
 
 
-         if (m_textureattributes.m_etexture == ::gpu::e_texture_cube_map && m_rendertargetviewa.is_empty())
+         if (m_textureattributes.m_etexture == ::gpu::e_texture_cube_map)
          {
-            m_rendertargetviewa.set_size(6);
-            for (int i = 0; i < 6; i++)
-            {
-               D3D11_RENDER_TARGET_VIEW_DESC rtvDesc = {};
-               rtvDesc.Format = m_texture2ddesc.Format;
-               rtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2DARRAY;
-               rtvDesc.Texture2DArray.MipSlice = 0;
-               rtvDesc.Texture2DArray.FirstArraySlice = i;
-               rtvDesc.Texture2DArray.ArraySize = 1;
 
-               HRESULT hr =
-                  pgpudevice->m_pdevice->CreateRenderTargetView(m_ptextureOffscreen, &rtvDesc, &m_rendertargetviewa[i]);
-               ::defer_throw_hresult(hr);
-               // if (FAILED(hr))
-               //{
-               //    OutputDebugStringA("CreateRenderTargetView failed!\n");
-               // }
+            if (m_rendertargetview2a.is_empty())
+            {
+               m_rendertargetview2a.set_size(m_textureattributes.m_iMipCount);
+               for (int iMip = 0; iMip < m_textureattributes.m_iMipCount; iMip++)
+               {
+                  m_rendertargetview2a[iMip].set_size(6);
+
+                  for (int i = 0; i < 6; i++)
+                  {
+                     D3D11_RENDER_TARGET_VIEW_DESC rtvDesc = {};
+                     rtvDesc.Format = m_texture2ddesc.Format;
+                     rtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2DARRAY;
+                     rtvDesc.Texture2DArray.MipSlice = iMip;
+                     rtvDesc.Texture2DArray.FirstArraySlice = i;
+                     rtvDesc.Texture2DArray.ArraySize = 1;
+
+                     HRESULT hr = pgpudevice->m_pdevice->CreateRenderTargetView(m_ptextureOffscreen, &rtvDesc,
+                                                                                &m_rendertargetview2a[iMip][i]);
+                     ::defer_throw_hresult(hr);
+                     // if (FAILED(hr))
+                     //{
+                     //    OutputDebugStringA("CreateRenderTargetView failed!\n");
+                     // }
+                  }
+               }
             }
          }
          else
@@ -459,7 +476,7 @@ namespace gpu_directx11
          srvDesc.ViewDimension = D3D_SRV_DIMENSION_TEXTURE2D;
       }
       srvDesc.Texture2D.MostDetailedMip = 0;
-      if (m_textureattributes.m_iMipCount < 0)
+      if (m_texture2ddesc.MiscFlags & D3D11_RESOURCE_MISC_GENERATE_MIPS)
          srvDesc.Texture2D.MipLevels = -1;
       else
          srvDesc.Texture2D.MipLevels = 1;
@@ -800,6 +817,7 @@ namespace gpu_directx11
 
       HRESULT hr = pdevice->CreateTexture2D(&texDesc, &initData, &m_ptextureOffscreen);
       defer_throw_hresult(hr);
+      set_ok_flag();
 
       if (m_textureflags.m_bRenderTarget)
       {
@@ -950,7 +968,7 @@ namespace gpu_directx11
 
       HRESULT hr = pgpudevice->m_pdevice->CreateTexture2D(&texDesc, &initData, &m_ptextureOffscreen);
       defer_throw_hresult(hr);
-
+      set_ok_flag();
 
       // m_gluType = GL_TEXTURE_2D;
 
@@ -1002,15 +1020,34 @@ namespace gpu_directx11
    ID3D11RenderTargetView *texture::render_target_view(int iFace, int iMip)
    {
 
-      auto iIndex = render_target_view_index(iFace, iMip);
+      //auto iIndex = render_target_view_index(iFace, iMip);
 
-      if (iIndex < 0 || iIndex >= m_rendertargetviewa.count())
+      if (iMip < 0 || iMip >= m_rendertargetview2a.count())
+      {
+
+         throw ::exception(error_wrong_state);
+      }
+      if (iFace < 0 || iFace >= m_rendertargetview2a[iMip].count())
       {
 
          throw ::exception(error_wrong_state);
       }
 
-      return m_rendertargetviewa[iIndex];
+      return m_rendertargetview2a[iMip][iFace];
    }
+
+
+   void texture::generate_mipmap(::gpu::command_buffer *pgpucommandbuffer)
+   {
+
+      ::cast<gpu_directx11::context> pcontext = pgpucommandbuffer->m_pgpurendertarget->m_pgpurenderer->m_pgpucontext;
+
+      pcontext->m_pcontext->Flush();
+
+      // Now generate mipmaps using DirectX
+      pcontext->m_pcontext->GenerateMips(m_pshaderresourceview);
+
+   }
+
 
 } // namespace gpu_directx11

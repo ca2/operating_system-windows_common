@@ -105,7 +105,7 @@ namespace gpu_directx11
    void approach::initialize_gpu_approach()
    {
 
-      ::gpu::approach::initialize_gpu_approach();
+      ::gpu::bred_approach::initialize_gpu_approach();
 
       // Instead of checking for the command line switch, validation can be forced via a define
 #if defined(_VALIDATION)

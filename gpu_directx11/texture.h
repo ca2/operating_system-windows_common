@@ -47,7 +47,7 @@ namespace gpu_directx11
       comptr< ID3D11SamplerState> m_psamplerstate;
       comptr<ID3D11ShaderResourceView>m_pshaderresourceview;
 
-      ::array_base <::comptr<ID3D11RenderTargetView>> m_rendertargetviewa;
+      ::array_base < ::array_base <::comptr<ID3D11RenderTargetView>>> m_rendertargetview2a;
 
       comptr<ID3D11Texture2D> m_ptextureDepthStencil;
       comptr<ID3D11DepthStencilView>m_pdepthstencilview;
@@ -115,6 +115,8 @@ namespace gpu_directx11
 
       void initialize_hdr_texture_on_memory(::gpu::renderer *pgpurenderer, const ::block &block) override;
       virtual ID3D11RenderTargetView * render_target_view(int iFace, int iMip);
+
+      void generate_mipmap(::gpu::command_buffer *pgpucommandbuffer) override;
 
    };
 

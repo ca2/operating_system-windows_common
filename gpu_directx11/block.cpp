@@ -18,10 +18,21 @@ namespace gpu_directx11
    block::~block() {}
 
 
-   void block::initialize_gpu_block(::gpu::context *pgpucontext)
+   void block::create_gpu_block(::gpu::context *pgpucontext)
    {
 
-      ::gpu::block::initialize_gpu_block(pgpucontext);
+      ::gpu::block::create_gpu_block(pgpucontext);
+
+      D3D11_BUFFER_DESC cbd = {};
+      cbd.Usage = D3D11_USAGE_DYNAMIC;
+      cbd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+      cbd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+      ::cast<device> pgpudevice = m_pgpucontext->m_pgpudevice;
+      int iSize = this->size(false);
+      // GlobalUbo
+      cbd.ByteWidth = (iSize + 15) & ~15;
+      pgpudevice->m_pdevice->CreateBuffer(&cbd, nullptr, &m_pbuffer);
+
 
    }
 
@@ -29,22 +40,6 @@ namespace gpu_directx11
    ID3D11Buffer * block::buffer()
    {
 
-      if (m_pbuffer)
-      {
-
-         return m_pbuffer;
-
-      }
-
-      D3D11_BUFFER_DESC cbd = {};
-      cbd.Usage = D3D11_USAGE_DYNAMIC;
-      cbd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-      cbd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-      ::cast < device > pgpudevice = m_pgpucontext->m_pgpudevice;
-      int iSize = this->size(false);
-      // GlobalUbo
-      cbd.ByteWidth = (iSize+15)&~15;
-      pgpudevice->m_pdevice->CreateBuffer(&cbd, nullptr, &m_pbuffer);
 
       return m_pbuffer;
 
