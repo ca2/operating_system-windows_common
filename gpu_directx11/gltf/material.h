@@ -16,7 +16,7 @@
  namespace gltf
  {
     class CLASS_DECL_GPU_DIRECTX11 material :
-    virtual public ::gpu::gltf::material
+    virtual public ::gpu::model::material
     {
 
     public:

@@ -4,7 +4,7 @@
 #pragma once
 
 
-#include "gpu/gltf/mesh.h"
+#include "gpu/model/mesh.h"
 
 // #include "bred/gpu/context_object.h"
 // #include "bred/graphics3d/renderable.h"
@@ -32,7 +32,7 @@ namespace gpu_directx11
        * A gltf_mesh is a collection of geometry paired with a material.
        */
       class CLASS_DECL_GPU_DIRECTX11 mesh :
-         virtual public ::gpu::gltf::mesh
+         virtual public ::gpu::model::mesh
       {
       public:
 
@@ -54,10 +54,10 @@ namespace gpu_directx11
 
 
          //void initialize_gpu_gltf_mesh(const ::array_base<::gpu::gltf::vertex> &vertexa,
-         //                          const ::unsigned_int_array &indexa, ::gpu::gltf::material *pmaterial) override;
+         //                          const ::unsigned_int_array &indexa, ::gpu::model::material *pmaterial) override;
 
 
-         void on_initialize_gpu_gltf_mesh() override;
+         void on_initialize_gpu_mesh() override;
 
          void draw2(::gpu::command_buffer *pcommandbuffer) override;
          // private:

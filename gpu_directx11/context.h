@@ -323,8 +323,9 @@ namespace gpu_directx11
       floating_sequence3 front(const ::graphics3d::floating_rotation &rotation) override;
 
 
-      void load_ktxTexture_cube_map(::pointer<::gpu::texture> &ptexture, void *p_ktxTexture) override;
-      void load_ktxTexture(::pointer<::gpu::texture> &ptexture, void *p_ktxTexture) override;
+      void load_ktxTexture_cube_map(::gpu::texture * ptexture, void *p_ktxTexture) override;
+      void load_ktxTexture(::gpu::texture * ptexture, void *p_ktxTexture) override;
+
 
    };
 

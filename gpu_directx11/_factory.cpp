@@ -84,8 +84,8 @@ __FACTORY_EXPORT void gpu_directx11_factory(::factory::factory * pfactory)
    pfactory->add_factory_item<::gpu::full_screen_quad>();
 
 
-   pfactory->add_factory_item<::gpu_directx11::gltf::mesh, ::gpu::gltf::mesh>();
-   pfactory->add_factory_item<::gpu_directx11::gltf::model, ::gpu::gltf::model>();
+   pfactory->add_factory_item<::gpu_directx11::gltf::mesh, ::gpu::model::mesh>();
+   pfactory->add_factory_item<::gpu_directx11::gltf::model, ::gpu::model::model>();
    pfactory->add_factory_item<::gpu_directx11::ibl::diffuse_irradiance_map, ::gpu::ibl::diffuse_irradiance_map>();
    pfactory->add_factory_item<::gpu_directx11::ibl::specular_map, ::gpu::ibl::specular_map>();
 //   pfactory->add_factory_item<::gpu_directx11::ibl::mipmap_cubemap_framebuffer, ::gpu::ibl::mipmap_cubemap_framebuffer>();

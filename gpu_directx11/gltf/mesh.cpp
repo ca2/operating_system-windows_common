@@ -41,7 +41,7 @@ namespace gpu_directx11
 
 
       //void mesh::initialize_gpu_gltf_mesh(const ::array_base<::gpu::gltf::vertex> &vertexa,
-      //                             const ::unsigned_int_array &indexa, ::gpu::gltf::material *pmaterial)
+      //                             const ::unsigned_int_array &indexa, ::gpu::model::material *pmaterial)
       //{
 
       //   m_vertexa = vertexa;
@@ -235,7 +235,7 @@ namespace gpu_directx11
             //pshader->set_sequence3("albedo", m_pmaterial->m_seq3Albedo);
             if (bAlbedo)
             {
-               ::cast<::gpu_directx11::texture> ptexture = m_pmaterial->m_textureaPbr[::gpu::gltf::e_texture_albedo];
+               ::cast<::gpu_directx11::texture> ptexture = m_pmaterial->m_textureaPbr[::gpu::model::e_texture_albedo];
                if (ptexture)
                {
                   srv[0] = ptexture->m_pshaderresourceview;
@@ -258,7 +258,7 @@ namespace gpu_directx11
                // glActiveTexture(GL_TEXTURE0 + e_gltf_texture_metallic_roughness);
                // shader.setInt("material.textureMetallicRoughness", e_gltf_texture_metallic_roughness);
                // glBindTexture(GL_TEXTURE_2D, m_pmaterial->textureMetallicRoughness->mId);
-               ::cast<::gpu_directx11::texture> ptexture = m_pmaterial->m_textureaPbr[::gpu::gltf::e_texture_metallic_roughness];
+               ::cast<::gpu_directx11::texture> ptexture = m_pmaterial->m_textureaPbr[::gpu::model::e_texture_metallic_roughness];
                if (ptexture)
                {
                   srv[1] = ptexture->m_pshaderresourceview;
@@ -275,7 +275,7 @@ namespace gpu_directx11
                //    glActiveTexture(GL_TEXTURE0 + e_gltf_texture_normal);
                //    shader.setInt("material.textureNormal", e_gltf_texture_normal);
                //    glBindTexture(GL_TEXTURE_2D, m_pmaterial->textureNormal->mId);
-               ::cast<::gpu_directx11::texture> ptexture = m_pmaterial->m_textureaPbr[::gpu::gltf::e_texture_normal];
+               ::cast<::gpu_directx11::texture> ptexture = m_pmaterial->m_textureaPbr[::gpu::model::e_texture_normal];
                if (ptexture)
                {
                   srv[2] = ptexture->m_pshaderresourceview;
@@ -293,7 +293,7 @@ namespace gpu_directx11
                //    glActiveTexture(GL_TEXTURE0 + e_gltf_texture_ambient_occlusion);
                //    shader.setInt("material.textureAmbientOcclusion", e_gltf_texture_ambient_occlusion);
                //    glBindTexture(GL_TEXTURE_2D, m_pmaterial->textureAmbientOcclusion->mId);
-               ::cast<::gpu_directx11::texture> ptexture = m_pmaterial->m_textureaPbr[::gpu::gltf::e_texture_ambient_occlusion];
+               ::cast<::gpu_directx11::texture> ptexture = m_pmaterial->m_textureaPbr[::gpu::model::e_texture_ambient_occlusion];
                if (ptexture)
                {
                   srv[3] = ptexture->m_pshaderresourceview;
@@ -311,7 +311,7 @@ namespace gpu_directx11
                //    glActiveTexture(GL_TEXTURE0 + e_gltf_texture_emissive);
                //    shader.setInt("material.textureEmissive", e_gltf_texture_emissive);
                //    glBindTexture(GL_TEXTURE_2D, m_pmaterial->textureEmissive->mId);
-               ::cast<::gpu_directx11::texture> ptexture = m_pmaterial->m_textureaPbr[::gpu::gltf::e_texture_emissive];
+               ::cast<::gpu_directx11::texture> ptexture = m_pmaterial->m_textureaPbr[::gpu::model::e_texture_emissive];
                if (ptexture)
                {
                   srv[4] = ptexture->m_pshaderresourceview;
