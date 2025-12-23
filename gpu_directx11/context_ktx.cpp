@@ -226,7 +226,7 @@ namespace gpu_directx11
    }
 
 
-   void context::load_ktxTexture(::pointer<::gpu::texture> & pgputexture, void * p_ktxTexture)
+   void context::load_ktxTexture(::gpu::texture * pgputexture, void * p_ktxTexture)
    {
 
       auto pktxtexture = (ktxTexture *)p_ktxTexture;
@@ -367,7 +367,7 @@ namespace gpu_directx11
    //   return out;
    //}
 
-   void context::load_ktxTexture_cube_map(::pointer<::gpu::texture> & pgputexture, void * p_ktxTexture)
+   void context::load_ktxTexture_cube_map(::gpu::texture * pgputexture, void * p_ktxTexture)
    {
       auto pktxtexture = (ktxTexture *)p_ktxTexture;
 

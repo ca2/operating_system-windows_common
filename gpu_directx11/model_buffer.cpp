@@ -22,9 +22,9 @@ namespace gpu_directx11
 
       m_pMap = nullptr;
 
-      m_iVertexCount = 0;
+      //m_iVertexCount = 0;
 
-      m_iIndexCount = 0;
+      //m_iIndexCount = 0;
 
       //m_gluVao = 0;
 
@@ -748,7 +748,7 @@ namespace gpu_directx11
          //}
 
       }
-      else if(m_bDummy)
+      else if(m_pmodeldatabase2->is_dummy())
       {
 
          ::cast <::gpu_directx11::context> pcontext = m_pgpucontext;
@@ -779,7 +779,7 @@ namespace gpu_directx11
             
             ::cast < ::gpu_directx11::context > pcontext = m_pgpucontext;
 
-            pcontext->m_pcontext->DrawIndexed(m_iIndexCount, 0, 0);
+            pcontext->m_pcontext->DrawIndexed(m_pmodeldatabase2->index_count(), 0, 0);
 
          }
          else
@@ -787,7 +787,7 @@ namespace gpu_directx11
 
             ::cast < ::gpu_directx11::context > pcontext = m_pgpucontext;
 
-            pcontext->m_pcontext->Draw(m_iVertexCount, 0); 
+            pcontext->m_pcontext->Draw(m_pmodeldatabase2->vertex_count(), 0); 
 
          }
 
@@ -797,7 +797,7 @@ namespace gpu_directx11
 
          ::cast < ::gpu_directx11::context > pcontext = m_pgpucontext;
 
-         pcontext->m_pcontext->Draw(m_iVertexCount, 0);
+         pcontext->m_pcontext->Draw(m_pmodeldatabase2->vertex_count(), 0);
 
       }
 

@@ -10,7 +10,7 @@
 #include "bred/gpu/texture.h"
 #include "bred/graphics3d/engine.h"
 #include "gpu/timer.h"
-#include "gpu/gltf/_constant.h"
+#include "gpu/model/_constant.h"
 #include "gpu_directx11/_gpu_directx11.h"
 #include "gpu_directx11/context.h"
 //#include "cubemap_framebuffer.h"

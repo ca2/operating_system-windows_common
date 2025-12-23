@@ -421,13 +421,13 @@ namespace gpu_directx11
          pgpucontext->m_pcontext->IASetVertexBuffers(0, 1, m_pVertexBuffer.pp(), &stride, &offset);
          pgpucontext->m_pcontext->IASetIndexBuffer(m_pIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
          //pgpucontext->m_pcontext->IASetInputLayout(m_pInputLayout);
-         auto iIndexCount = m_modeldata.m_indexes.size();
+         auto iIndexCount = m_pmodeldata->index_count();
          pgpucontext->m_pcontext->DrawIndexed(iIndexCount, 0, 0);
 
       }
 
 
-      void mesh::on_initialize_gpu_gltf_mesh()
+      void mesh::on_initialize_gpu_mesh()
       {
 
          // Assume:
@@ -445,12 +445,12 @@ namespace gpu_directx11
          // --- Create Vertex Buffer ---
          D3D11_BUFFER_DESC bd = {};
          bd.Usage = D3D11_USAGE_DEFAULT;
-         bd.ByteWidth = static_cast<UINT>(m_modeldata.m_vertexes.size() * sizeof(::gpu::gltf::vertex));
+         bd.ByteWidth = static_cast<UINT>(m_pmodeldata->vertex_bytes());
          bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
          bd.CPUAccessFlags = 0;
 
          D3D11_SUBRESOURCE_DATA initData = {};
-         initData.pSysMem = m_modeldata.m_vertexes.data();
+         initData.pSysMem = m_pmodeldata->vertex_data().data();
 
          HRESULT hr = pd3d11device->CreateBuffer(&bd, &initData, &m_pVertexBuffer);
          defer_throw_hresult(hr);
@@ -461,10 +461,10 @@ namespace gpu_directx11
 
          // --- Create Index Buffer ---
          bd.Usage = D3D11_USAGE_DEFAULT;
-         bd.ByteWidth = static_cast<UINT>(m_modeldata.m_indexes.size() * sizeof(unsigned int));
+         bd.ByteWidth = static_cast<UINT>(m_pmodeldata->index_bytes());
          bd.BindFlags = D3D11_BIND_INDEX_BUFFER;
          bd.CPUAccessFlags = 0;
-         initData.pSysMem = m_modeldata.m_indexes.data();
+         initData.pSysMem = m_pmodeldata->index_data().data();
 
          hr = pd3d11device->CreateBuffer(&bd, &initData, &m_pIndexBuffer);
          defer_throw_hresult(hr);

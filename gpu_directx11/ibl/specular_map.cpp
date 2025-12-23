@@ -17,7 +17,7 @@
 #include "gpu_directx11/context.h"
 #include "gpu_directx11/texture.h"
 //#include "gpu/cube.h"
-#include "gpu/gltf/_constant.h"
+#include "gpu/model/_constant.h"
 #include "gpu/context.h"
 #include "gpu/timer.h"
 //#include "mipmap_cubemap_framebuffer.h"

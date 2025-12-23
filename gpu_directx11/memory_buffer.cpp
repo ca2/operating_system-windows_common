@@ -33,7 +33,7 @@ namespace gpu_directx11
    }
 
 
-   void memory_buffer::on_initialize_memory_buffer(const void* dataStatic, memsize sizeStatic)
+   void memory_buffer::on_initialize_memory_buffer(const ::block &block)
    {
 
       auto etype = m_etype;
@@ -53,9 +53,9 @@ namespace gpu_directx11
       {
 
          bufferdesc.ByteWidth = (UINT)total_size_in_bytes();
-         bufferdesc.Usage = dataStatic ? D3D11_USAGE_DEFAULT : D3D11_USAGE_DYNAMIC;
+         bufferdesc.Usage = block.data() ? D3D11_USAGE_DEFAULT : D3D11_USAGE_DYNAMIC;
          bufferdesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-         if (!dataStatic)
+         if (!block.data())
             bufferdesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 
       }
@@ -63,9 +63,9 @@ namespace gpu_directx11
       {
 
          bufferdesc.ByteWidth = (UINT)total_size_in_bytes();
-         bufferdesc.Usage = dataStatic ? D3D11_USAGE_DEFAULT : D3D11_USAGE_DYNAMIC;
+         bufferdesc.Usage = block.data() ? D3D11_USAGE_DEFAULT : D3D11_USAGE_DYNAMIC;
          bufferdesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
-         if (!dataStatic)
+         if (!block.data())
             bufferdesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 
       }
@@ -99,12 +99,12 @@ namespace gpu_directx11
 
       D3D11_SUBRESOURCE_DATA data{};
 
-      data.pSysMem = dataStatic;
+      data.pSysMem = block.data();
 
-      if (dataStatic || etype == e_type_shared_dynamic_vertex_buffer)
+      if (block.data() || etype == e_type_shared_dynamic_vertex_buffer)
       {
 
-         if (dataStatic)
+         if (block.data())
          {
             m_bStatic = true;
          }
@@ -116,7 +116,7 @@ namespace gpu_directx11
 
 
          auto hresult = pd3d11device->CreateBuffer(
-            &bufferdesc, dataStatic ? &data : nullptr, &m_pbuffer);
+            &bufferdesc, block.data() ? &data : nullptr, &m_pbuffer);
 
          if (FAILED(hresult))
          {
@@ -368,10 +368,10 @@ namespace gpu_directx11
    }
 
 
-   void memory_buffer::on_set_memory_buffer(const void* data, memsize size)
+   void memory_buffer::on_set_memory_buffer(const ::block &block)
    {
 
-      gpu::memory_buffer::on_set_memory_buffer(data, size);
+      gpu::memory_buffer::on_set_memory_buffer(block);
 
    }
 

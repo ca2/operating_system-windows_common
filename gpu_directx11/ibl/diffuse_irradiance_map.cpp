@@ -12,7 +12,7 @@
 #include "bred/graphics3d/renderable.h"
 #include "bred/graphics3d/scene_base.h"
 #include "bred/graphics3d/skybox.h"
-#include "gpu/gltf/_constant.h"
+#include "gpu/model/_constant.h"
 //#include "gpu/cube.h"
 #include "gpu/timer.h"
 #include "gpu_directx11/_gpu_directx11.h"
