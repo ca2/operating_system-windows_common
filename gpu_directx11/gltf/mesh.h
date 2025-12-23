@@ -44,8 +44,8 @@ namespace gpu_directx11
          // ::pointer<gltf_material> m_pmaterial;
          //
 
-         ::comptr <ID3D11Buffer >m_pVertexBuffer;
-         ::comptr < ID3D11Buffer >m_pIndexBuffer;
+         //::comptr <ID3D11Buffer >m_pVertexBuffer;
+         //::comptr < ID3D11Buffer >m_pIndexBuffer;
          //::comptr < ID3D11InputLayout >m_pInputLayout;
 
 

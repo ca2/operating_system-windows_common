@@ -8,6 +8,7 @@
 #include "gpu_directx11/texture.h"
 #include "bred/gpu/command_buffer.h"
 #include "bred/gpu/context.h"
+#include "bred/gpu/model_buffer.h"
 #include "bred/gpu/render_target.h"
 #include "bred/gpu/renderer.h"
 #include "bred/graphics3d/render_system/pbr_with_ibl_render_system_base.h"
@@ -411,18 +412,20 @@ namespace gpu_directx11
 
          }
 
-            // draw mesh
-         //glBindVertexArray(m_uVAO);
-         //glDrawElements(GL_TRIANGLES, m_indexa.size(), GL_UNSIGNED_INT, 0);
-         //glBindVertexArray(0);
-         ::cast<::gpu_directx11::context> pgpucontext = m_pgpucontext;
-         UINT stride = sizeof(::gpu::gltf::vertex);
-         UINT offset = 0;
-         pgpucontext->m_pcontext->IASetVertexBuffers(0, 1, m_pVertexBuffer.pp(), &stride, &offset);
-         pgpucontext->m_pcontext->IASetIndexBuffer(m_pIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
-         //pgpucontext->m_pcontext->IASetInputLayout(m_pInputLayout);
-         auto iIndexCount = m_pmodeldata->index_count();
-         pgpucontext->m_pcontext->DrawIndexed(iIndexCount, 0, 0);
+         //   // draw mesh
+         ////glBindVertexArray(m_uVAO);
+         ////glDrawElements(GL_TRIANGLES, m_indexa.size(), GL_UNSIGNED_INT, 0);
+         ////glBindVertexArray(0);
+         //::cast<::gpu_directx11::context> pgpucontext = m_pgpucontext;
+         //UINT stride = sizeof(::gpu::gltf::vertex);
+         //UINT offset = 0;
+         //pgpucontext->m_pcontext->IASetVertexBuffers(0, 1, m_pVertexBuffer.pp(), &stride, &offset);
+         //pgpucontext->m_pcontext->IASetIndexBuffer(m_pIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
+         ////pgpucontext->m_pcontext->IASetInputLayout(m_pInputLayout);
+         //auto iIndexCount = m_pmodeldata->index_count();
+         //pgpucontext->m_pcontext->DrawIndexed(iIndexCount, 0, 0);
+
+         pcommandbuffer->draw(m_pmodelbuffer);
 
       }
 
@@ -436,160 +439,160 @@ namespace gpu_directx11
          // std::vector<::gpu::gltf::vertex> m_vertexa;
          // std::vector<unsigned int> m_indexa;
 
-               ::cast<::gpu_directx11::context> pgpucontext = m_pgpucontext;
+         //      ::cast<::gpu_directx11::context> pgpucontext = m_pgpucontext;
 
-         ::cast<::gpu_directx11::device> pgpudevice = pgpucontext->m_pgpudevice;
+         //::cast<::gpu_directx11::device> pgpudevice = pgpucontext->m_pgpudevice;
 
-         auto pd3d11device = pgpudevice->m_pdevice;
+         //auto pd3d11device = pgpudevice->m_pdevice;
 
-         // --- Create Vertex Buffer ---
-         D3D11_BUFFER_DESC bd = {};
-         bd.Usage = D3D11_USAGE_DEFAULT;
-         bd.ByteWidth = static_cast<UINT>(m_pmodeldata->vertex_bytes());
-         bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-         bd.CPUAccessFlags = 0;
+         //// --- Create Vertex Buffer ---
+         //D3D11_BUFFER_DESC bd = {};
+         //bd.Usage = D3D11_USAGE_DEFAULT;
+         //bd.ByteWidth = static_cast<UINT>(m_pmodeldata->vertex_bytes());
+         //bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+         //bd.CPUAccessFlags = 0;
 
-         D3D11_SUBRESOURCE_DATA initData = {};
-         initData.pSysMem = m_pmodeldata->vertex_data().data();
+         //D3D11_SUBRESOURCE_DATA initData = {};
+         //initData.pSysMem = m_pmodeldata->vertex_data().data();
 
-         HRESULT hr = pd3d11device->CreateBuffer(&bd, &initData, &m_pVertexBuffer);
-         defer_throw_hresult(hr);
-         //if (FAILED(hr))
-         //{
-           // // handle error
-         //}
+         //HRESULT hr = pd3d11device->CreateBuffer(&bd, &initData, &m_pVertexBuffer);
+         //defer_throw_hresult(hr);
+         ////if (FAILED(hr))
+         ////{
+         //  // // handle error
+         ////}
 
-         // --- Create Index Buffer ---
-         bd.Usage = D3D11_USAGE_DEFAULT;
-         bd.ByteWidth = static_cast<UINT>(m_pmodeldata->index_bytes());
-         bd.BindFlags = D3D11_BIND_INDEX_BUFFER;
-         bd.CPUAccessFlags = 0;
-         initData.pSysMem = m_pmodeldata->index_data().data();
+         //// --- Create Index Buffer ---
+         //bd.Usage = D3D11_USAGE_DEFAULT;
+         //bd.ByteWidth = static_cast<UINT>(m_pmodeldata->index_bytes());
+         //bd.BindFlags = D3D11_BIND_INDEX_BUFFER;
+         //bd.CPUAccessFlags = 0;
+         //initData.pSysMem = m_pmodeldata->index_data().data();
 
-         hr = pd3d11device->CreateBuffer(&bd, &initData, &m_pIndexBuffer);
-         defer_throw_hresult(hr);
-         //if (FAILED(hr))
-         //{
-         //   // handle error
-         //}
+         //hr = pd3d11device->CreateBuffer(&bd, &initData, &m_pIndexBuffer);
+         //defer_throw_hresult(hr);
+         ////if (FAILED(hr))
+         ////{
+         ////   // handle error
+         ////}
 
-         //// --- Create Input Layout ---
-         //// Define the vertex input layout matching your ::gpu::gltf::vertex structure
-         //D3D11_INPUT_ELEMENT_DESC layoutDesc[] = {
-         //   {"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, offsetof(::gpu::gltf::vertex, position),
-         //    D3D11_INPUT_PER_VERTEX_DATA, 0},
-         //   {"NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, offsetof(::gpu::gltf::vertex, normal),
-         //    D3D11_INPUT_PER_VERTEX_DATA, 0},
-         //   {"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, offsetof(::gpu::gltf::vertex, uv), D3D11_INPUT_PER_VERTEX_DATA,
-         //    0},
-         //   {"COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, offsetof(::gpu::gltf::vertex, color),
-         //    D3D11_INPUT_PER_VERTEX_DATA, 0},
-         //   {"TANGENT", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, offsetof(::gpu::gltf::vertex, tangent),
-         //    D3D11_INPUT_PER_VERTEX_DATA, 0},
-         //};
+         ////// --- Create Input Layout ---
+         ////// Define the vertex input layout matching your ::gpu::gltf::vertex structure
+         ////D3D11_INPUT_ELEMENT_DESC layoutDesc[] = {
+         ////   {"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, offsetof(::gpu::gltf::vertex, position),
+         ////    D3D11_INPUT_PER_VERTEX_DATA, 0},
+         ////   {"NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, offsetof(::gpu::gltf::vertex, normal),
+         ////    D3D11_INPUT_PER_VERTEX_DATA, 0},
+         ////   {"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, offsetof(::gpu::gltf::vertex, uv), D3D11_INPUT_PER_VERTEX_DATA,
+         ////    0},
+         ////   {"COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, offsetof(::gpu::gltf::vertex, color),
+         ////    D3D11_INPUT_PER_VERTEX_DATA, 0},
+         ////   {"TANGENT", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, offsetof(::gpu::gltf::vertex, tangent),
+         ////    D3D11_INPUT_PER_VERTEX_DATA, 0},
+         ////};
 
-         //// Assume you have a compiled vertex shader bytecode in "pVSBlob" with size "vsBlobSize"
-         //hr = pd3d11device->CreateInputLayout(layoutDesc, _countof(layoutDesc), 
-         //   pVSBlob->GetBufferPointer(),
-         //                                     pVSBlob->GetBufferSize(), &m_pInputLayout);
-         //if (FAILED(hr))
-         //{
-         //   // handle error
-         //}
+         ////// Assume you have a compiled vertex shader bytecode in "pVSBlob" with size "vsBlobSize"
+         ////hr = pd3d11device->CreateInputLayout(layoutDesc, _countof(layoutDesc), 
+         ////   pVSBlob->GetBufferPointer(),
+         ////                                     pVSBlob->GetBufferSize(), &m_pInputLayout);
+         ////if (FAILED(hr))
+         ////{
+         ////   // handle error
+         ////}
 
-         //// --- Binding for rendering ---
-         //UINT stride = sizeof(::gpu::gltf::vertex);
-         //UINT offset = 0;
-         //m_pImmediateContext->IASetVertexBuffers(0, 1, &m_pVertexBuffer, &stride, &offset);
-         //m_pImmediateContext->IASetIndexBuffer(m_pIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
-         //m_pImmediateContext->IASetInputLayout(m_pInputLayout);
+         ////// --- Binding for rendering ---
+         ////UINT stride = sizeof(::gpu::gltf::vertex);
+         ////UINT offset = 0;
+         ////m_pImmediateContext->IASetVertexBuffers(0, 1, &m_pVertexBuffer, &stride, &offset);
+         ////m_pImmediateContext->IASetIndexBuffer(m_pIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
+         ////m_pImmediateContext->IASetInputLayout(m_pInputLayout);
 
-         //// Set prototype topology
-         //m_pImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-         //// // create our data structures
-         //// glGenVertexArrays(1, &mVAO);
-         //// glGenBuffers(1, &mVBO);
-         //// glGenBuffers(1, &mEBO);
-         ////
-         //// glBindVertexArray(mVAO); // use this VAO for subsequent calls
-         ////
-         //// glBindBuffer(GL_ARRAY_BUFFER, mVBO); // use this VBO for subsequent calls
-         //// glBufferData(GL_ARRAY_BUFFER, mVertices.size() * sizeof(::gpu::gltf::vertex), &mVertices[0],
-         ////              GL_STATIC_DRAW); // copy over the vertex data
-         ////
-         //// glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO); // use this EBO for subsequent calls
-         //// glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indexa.size() * sizeof(unsigned int), &m_indexa[0],
-         ////              GL_STATIC_DRAW); // copy over the index data
-         ////
-         //// // setup the locations of vertex data
-         //// // positions
-         //// glEnableVertexAttribArray(0);
-         //// glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(::gpu::gltf::vertex), (void *)0);
-         ////
-         //// // normals
-         //// glEnableVertexAttribArray(1);
-         //// glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(::gpu::gltf::vertex), (void *)offsetof(::gpu::gltf::vertex, mNormal));
-         ////
-         //// // texture coordinates
-         //// glEnableVertexAttribArray(2);
-         //// glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(::gpu::gltf::vertex),
-         ////                       (void *)offsetof(::gpu::gltf::vertex, mTextureCoordinates));
-         ////
-         //// // tangents
-         //// glEnableVertexAttribArray(3);
-         //// glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(::gpu::gltf::vertex),
-         ////                       (void *)offsetof(::gpu::gltf::vertex, mTangent));
-         ////
-         //// // bitangents
-         //// glEnableVertexAttribArray(4);
-         //// glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(::gpu::gltf::vertex),
-         ////                       (void *)offsetof(::gpu::gltf::vertex, mBitangent));
-         ////
-         //// glBindVertexArray(0);
-         ////
-         //// create our data structures
-         ////glGenVertexArrays(1, &m_uVAO);
-         ////glGenBuffers(1, &m_uVBO);
-         ////glGenBuffers(1, &m_uEBO);
+         ////// Set prototype topology
+         ////m_pImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+         ////// // create our data structures
+         ////// glGenVertexArrays(1, &mVAO);
+         ////// glGenBuffers(1, &mVBO);
+         ////// glGenBuffers(1, &mEBO);
+         //////
+         ////// glBindVertexArray(mVAO); // use this VAO for subsequent calls
+         //////
+         ////// glBindBuffer(GL_ARRAY_BUFFER, mVBO); // use this VBO for subsequent calls
+         ////// glBufferData(GL_ARRAY_BUFFER, mVertices.size() * sizeof(::gpu::gltf::vertex), &mVertices[0],
+         //////              GL_STATIC_DRAW); // copy over the vertex data
+         //////
+         ////// glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO); // use this EBO for subsequent calls
+         ////// glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indexa.size() * sizeof(unsigned int), &m_indexa[0],
+         //////              GL_STATIC_DRAW); // copy over the index data
+         //////
+         ////// // setup the locations of vertex data
+         ////// // positions
+         ////// glEnableVertexAttribArray(0);
+         ////// glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(::gpu::gltf::vertex), (void *)0);
+         //////
+         ////// // normals
+         ////// glEnableVertexAttribArray(1);
+         ////// glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(::gpu::gltf::vertex), (void *)offsetof(::gpu::gltf::vertex, mNormal));
+         //////
+         ////// // texture coordinates
+         ////// glEnableVertexAttribArray(2);
+         ////// glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(::gpu::gltf::vertex),
+         //////                       (void *)offsetof(::gpu::gltf::vertex, mTextureCoordinates));
+         //////
+         ////// // tangents
+         ////// glEnableVertexAttribArray(3);
+         ////// glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(::gpu::gltf::vertex),
+         //////                       (void *)offsetof(::gpu::gltf::vertex, mTangent));
+         //////
+         ////// // bitangents
+         ////// glEnableVertexAttribArray(4);
+         ////// glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(::gpu::gltf::vertex),
+         //////                       (void *)offsetof(::gpu::gltf::vertex, mBitangent));
+         //////
+         ////// glBindVertexArray(0);
+         //////
+         ////// create our data structures
+         //////glGenVertexArrays(1, &m_uVAO);
+         //////glGenBuffers(1, &m_uVBO);
+         //////glGenBuffers(1, &m_uEBO);
 
-         ////glBindVertexArray(m_uVAO); // use this VAO for subsequent calls
+         //////glBindVertexArray(m_uVAO); // use this VAO for subsequent calls
 
-         ////auto vertexSize =m_vertexa.size();
-         ////auto vertexData = m_vertexa.data();
+         //////auto vertexSize =m_vertexa.size();
+         //////auto vertexData = m_vertexa.data();
 
-         ////glBindBuffer(GL_ARRAY_BUFFER, m_uVBO); // use this VBO for subsequent calls
-         ////glBufferData(GL_ARRAY_BUFFER, vertexSize * sizeof(::gpu::gltf::vertex),
-         ////   vertexData,GL_STATIC_DRAW); // copy over the vertex data
+         //////glBindBuffer(GL_ARRAY_BUFFER, m_uVBO); // use this VBO for subsequent calls
+         //////glBufferData(GL_ARRAY_BUFFER, vertexSize * sizeof(::gpu::gltf::vertex),
+         //////   vertexData,GL_STATIC_DRAW); // copy over the vertex data
 
-         ////auto indexSize = m_indexa.size();
-         ////auto indexData = m_indexa.data();
+         //////auto indexSize = m_indexa.size();
+         //////auto indexData = m_indexa.data();
 
-         ////glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_uEBO); // use this EBO for subsequent calls
-         ////glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexSize * sizeof(unsigned int),
-         ////   indexData,GL_STATIC_DRAW); // copy over the index data
+         //////glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_uEBO); // use this EBO for subsequent calls
+         //////glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexSize * sizeof(unsigned int),
+         //////   indexData,GL_STATIC_DRAW); // copy over the index data
 
-         ////// setup the locations of vertex data
-         ////// positions
-         ////glEnableVertexAttribArray(0);
-         ////glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(::gpu::gltf::vertex), (void *)0);
+         //////// setup the locations of vertex data
+         //////// positions
+         //////glEnableVertexAttribArray(0);
+         //////glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(::gpu::gltf::vertex), (void *)0);
 
-         ////// normals
-         ////glEnableVertexAttribArray(1);
-         ////glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(::gpu::gltf::vertex), (void *)offsetof(::gpu::gltf::vertex, mNormal));
+         //////// normals
+         //////glEnableVertexAttribArray(1);
+         //////glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(::gpu::gltf::vertex), (void *)offsetof(::gpu::gltf::vertex, mNormal));
 
-         ////// texture coordinates
-         ////glEnableVertexAttribArray(2);
-         ////glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(::gpu::gltf::vertex), (void *)offsetof(::gpu::gltf::vertex, mTextureCoordinates));
+         //////// texture coordinates
+         //////glEnableVertexAttribArray(2);
+         //////glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(::gpu::gltf::vertex), (void *)offsetof(::gpu::gltf::vertex, mTextureCoordinates));
 
-         ////// tangents
-         ////glEnableVertexAttribArray(3);
-         ////glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(::gpu::gltf::vertex), (void *)offsetof(::gpu::gltf::vertex, mColor));
+         //////// tangents
+         //////glEnableVertexAttribArray(3);
+         //////glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(::gpu::gltf::vertex), (void *)offsetof(::gpu::gltf::vertex, mColor));
 
-         ////// bitangents
-         ////glEnableVertexAttribArray(4);
-         ////glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(::gpu::gltf::vertex), (void *)offsetof(::gpu::gltf::vertex, mTangent));
+         //////// bitangents
+         //////glEnableVertexAttribArray(4);
+         //////glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(::gpu::gltf::vertex), (void *)offsetof(::gpu::gltf::vertex, mTangent));
 
-         ////glBindVertexArray(0);
+         //////glBindVertexArray(0);
       }
 
    } // namespace gltf
