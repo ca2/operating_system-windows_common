@@ -19,7 +19,7 @@
 //#include "gpu/cube.h"
 #include "gpu/model/_constant.h"
 #include "gpu/context.h"
-#include "gpu/timer.h"
+#include "bred/platform/timer.h"
 //#include "mipmap_cubemap_framebuffer.h"
 #include "gpu/full_screen_quad.h"
 #include "gpu/ibl/_hlsl.h"
@@ -84,7 +84,7 @@ namespace gpu_directx11
 
          ::gpu::ibl::specular_map::computePrefilteredEnvMap(pgpucommandbuffer);
 
-      //   ::gpu::Timer timer;
+      //   ::bred::Timer timer;
 
       //   ::gpu::context_lock contextlock(m_pgpucontext);
 
@@ -200,7 +200,7 @@ namespace gpu_directx11
       void specular_map::computeBrdfConvolutionMap(::gpu::command_buffer *pgpucommandbuffer)
       {
 
-      //   ::gpu::Timer timer;
+      //   ::bred::Timer timer;
 
          ::gpu::ibl::specular_map::computeBrdfConvolutionMap(pgpucommandbuffer);
 

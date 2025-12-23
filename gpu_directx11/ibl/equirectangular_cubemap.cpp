@@ -9,7 +9,7 @@
 #include "bred/gpu/device.h"
 #include "bred/gpu/texture.h"
 #include "bred/graphics3d/engine.h"
-#include "gpu/timer.h"
+#include "bred/platform/timer.h"
 #include "gpu/model/_constant.h"
 #include "gpu_directx11/_gpu_directx11.h"
 #include "gpu_directx11/context.h"
@@ -61,7 +61,7 @@ namespace gpu_directx11
 
          ::gpu::ibl::equirectangular_cubemap::compute();
          
-         //::gpu::Timer timer;
+         //::bred::Timer timer;
 
          //auto pgpucommandbuffer = m_pgpucontext->beginSingleTimeCommands(m_pgpucontext->m_pgpudevice->graphics_queue());
          //

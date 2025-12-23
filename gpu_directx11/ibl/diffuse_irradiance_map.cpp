@@ -14,7 +14,7 @@
 #include "bred/graphics3d/skybox.h"
 #include "gpu/model/_constant.h"
 //#include "gpu/cube.h"
-#include "gpu/timer.h"
+#include "bred/platform/timer.h"
 #include "gpu_directx11/_gpu_directx11.h"
 #include "gpu_directx11/context.h"
 #include "gpu_directx11/texture.h"
@@ -69,7 +69,7 @@ namespace gpu_directx11
 
          //::gpu::context_lock contextlock(m_pgpucontext);
 
-         //::gpu::Timer timer;
+         //::bred::Timer timer;
 
          ////auto pgpucommandbuffer = m_pgpucontext->beginSingleTimeCommands(m_pgpucontext->m_pgpudevice->graphics_queue());
          //
