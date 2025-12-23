@@ -748,7 +748,7 @@ namespace gpu_directx11
          //}
 
       }
-      else if(m_pmodeldatabase2->is_dummy())
+      else if (m_pmodeldatabase2 && m_pmodeldatabase2->is_dummy())
       {
 
          ::cast <::gpu_directx11::context> pcontext = m_pgpucontext;
