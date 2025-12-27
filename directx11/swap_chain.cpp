@@ -163,7 +163,7 @@ namespace directx11
    }
 
 
-   void swap_chain::initialize_swap_chain_window(::gpu::context* pgpucontext, ::windowing::window* pwindow)
+   void swap_chain::initialize_swap_chain_window(::gpu::context* pgpucontext, ::acme::windowing::window* pwindow)
    {
 
       ::gpu::swap_chain::initialize_swap_chain_window(pgpucontext, pwindow);
