@@ -118,12 +118,12 @@ namespace imaging_wic
 
       //}
 
-#ifdef WINDOWS
-
-      m_pmanagerImageLoadSlowQueue->m_bUseDedicatedThread = true;
-      m_pmanagerImageLoadFastQueue->m_bUseDedicatedThread = true;
-
-#endif
+//#ifdef WINDOWS
+//
+//      m_pmanagerImageLoadSlowQueue->m_bUseDedicatedThread = true;
+//      m_pmanagerImageLoadFastQueue->m_bUseDedicatedThread = true;
+//
+//#endif
 
       //return estatus;
 

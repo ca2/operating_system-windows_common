@@ -70,21 +70,16 @@ namespace imaging_wic
 
       //}
 
-      if (filepath.case_insensitive_begins("http:/")
-         || filepath.case_insensitive_begins("https:/"))
+      if (filepath.case_insensitive_begins("http:/") || filepath.case_insensitive_begins("https:/"))
       {
 
-         m_pmanagerImageLoadSlowQueue->handle(
-   { e_timeout, 1_minute, ploadimage },
-   loadoptions.sync);
+         m_pmanagerImageLoadSlowQueue->handle(loadoptions.sync, { e_timeout, 1_minute, ploadimage});
 
       }
       else
       {
 
-         m_pmanagerImageLoadFastQueue->handle(
-            { e_timeout, 15_s, ploadimage },
-               loadoptions.sync);
+         m_pmanagerImageLoadFastQueue->handle(loadoptions.sync, { e_timeout, 15_s, ploadimage });
 
       }
 
