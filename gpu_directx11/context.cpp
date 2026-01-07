@@ -868,7 +868,8 @@ namespace gpu_directx11
    }
 
 
-   void context::on_create_context(::gpu::device* pgpudevice, const ::gpu::enum_output& eoutput, ::windowing::window* pwindow, const ::int_size& size)
+   void context::on_create_context(::gpu::device *pgpudevice, const ::gpu::enum_output &eoutput, ::acme ::
+                                   windowing::window * pwindow, const ::int_size &size)
    {
 
       m_pgpudevice = pgpudevice;
