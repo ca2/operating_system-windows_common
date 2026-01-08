@@ -322,6 +322,8 @@ namespace gpu_directx11
 
       m_commandbuffera.set_size(m_iDefaultFrameCount);
 
+      auto pgpurendertarget = render
+
       for(auto & pcommandbuffer : m_commandbuffera)
       {
          

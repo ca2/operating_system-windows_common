@@ -158,6 +158,9 @@
     <ClInclude Include="gltf\_constant.h">
       <Filter>Header Files\gltf</Filter>
     </ClInclude>
+    <ClInclude Include="binding.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="framework.cpp">

@@ -691,6 +691,7 @@
   <ItemGroup>
     <ClInclude Include="aaa_accumulation_render_pass.h" />
     <ClInclude Include="assimp.h" />
+    <ClInclude Include="binding.h" />
     <ClInclude Include="block.h" />
     <ClInclude Include="frame_storage.h" />
     <ClInclude Include="gltf\aaa_vertex.h" />
