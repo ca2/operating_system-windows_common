@@ -568,7 +568,7 @@ namespace gpu_directx11
 
 
 
-   void approach::on_create_window(::windowing::window* pwindow)
+   void approach::on_create_window(::acme::windowing::window* pwindow)
    {
 
       ::gpu::bred_approach::on_create_window(pwindow);

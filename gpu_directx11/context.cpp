@@ -847,7 +847,7 @@ namespace gpu_directx11
    }
 
 
-   void context::_create_context_directx11(::gpu::device* pgpudeviceParam, const ::gpu::enum_output& eoutput, ::windowing::window* pwindow, const ::int_size& size)
+   void context::_create_context_directx11(::gpu::device* pgpudeviceParam, const ::gpu::enum_output& eoutput, ::acme::windowing::window* pwindow, const ::int_size& size)
    {
 
       ::cast < device > pgpudevice = pgpudeviceParam;
@@ -868,8 +868,8 @@ namespace gpu_directx11
    }
 
 
-   void context::on_create_context(::gpu::device *pgpudevice, const ::gpu::enum_output &eoutput, ::acme ::
-                                   windowing::window * pwindow, const ::int_size &size)
+   void context::on_create_context(::gpu::device *pgpudevice, const ::gpu::enum_output &eoutput, 
+                                   ::acme::windowing::window * pwindow, const ::int_size &size)
    {
 
       m_pgpudevice = pgpudevice;
@@ -895,7 +895,7 @@ namespace gpu_directx11
    }
 
 
-   void context::_create_window_context(::windowing::window* pwindowParam)
+   void context::_create_window_context(::acme::windowing::window* pwindowParam)
    {
 
       //m_itaskGpu = ::current_itask();
@@ -1769,7 +1769,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    }
 
 
-   void context::defer_create_window_context(::windowing::window* pwindow)
+   void context::defer_create_window_context(::acme::windowing::window* pwindow)
    {
 
       //if (m_hrc)
@@ -1784,7 +1784,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    }
 
 
-   void context::_defer_create_window_context(::windowing::window* pwindow)
+   void context::_defer_create_window_context(::acme::windowing::window* pwindow)
    {
 
       _create_window_context(pwindow);

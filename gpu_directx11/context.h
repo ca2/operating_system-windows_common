@@ -198,7 +198,7 @@ namespace gpu_directx11
       bool create_offscreen_graphics_for_swap_chain_blitting(::gpu::graphics* pgraphics, const ::int_size& size) override;
 
 
-      virtual void _create_context_directx11(::gpu::device* pgpudevice, const ::gpu::enum_output& eoutput, ::windowing::window* pwindow, const ::int_size& size);
+      virtual void _create_context_directx11(::gpu::device* pgpudevice, const ::gpu::enum_output& eoutput, ::acme::windowing::window* pwindow, const ::int_size& size);
 
       void on_create_context(::gpu::device* pgpudevice, const ::gpu::enum_output& eoutput, ::acme::windowing::window* pwindow, const ::int_size& size) override;
 
@@ -221,7 +221,7 @@ namespace gpu_directx11
 
       void defer_create_window_context(::acme::windowing::window * pwindow) override;
       void _defer_create_window_context(::acme::windowing::window * pwindow) override;
-      virtual void _create_window_context(::windowing::window * pwindow);
+      virtual void _create_window_context(::acme::windowing::window * pwindow);
 
       //virtual void _create_window_buffer();
       void _create_cpu_buffer(const ::int_size & size) override;
