@@ -884,9 +884,12 @@ namespace gpu_directx11
 
       ::cast < ::dxgi_surface_bindable > pdxgisurfacebindable = pgpucompositor;
 
-      ::cast < ::gpu_directx11::texture > ptexture = get_gpu_renderer()->m_pgpurendertarget->current_texture(::gpu::current_frame());
+      auto pgpurendertarget = get_gpu_renderer()->render_target();
 
-      auto iFrameIndex = m_pgpurenderer->m_pgpurendertarget->get_frame_index();
+      ::cast<::gpu_directx11::texture> ptexture =
+         pgpurendertarget->current_texture(::gpu::current_frame());
+
+      auto iFrameIndex = pgpurendertarget->get_frame_index();
 
       auto pdxgisurface = ptexture->__get_dxgi_surface();
 
@@ -2644,7 +2647,9 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
       ::gpu::context_lock context_lock(this);
 
-      auto iFrameIndex = m_pgpurenderer->m_pgpurendertarget->get_frame_index();
+      auto pgpurendertarget = m_pgpurenderer->render_target();
+
+      auto iFrameIndex = pgpurendertarget->get_frame_index();
 
       //m_uboBuffers[iFrameIndex]->writeToBuffer(block.data());
 

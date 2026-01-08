@@ -517,7 +517,9 @@ namespace gpu_directx11
          if (prenderer)
          {
 
-            ::cast<render_target_view> pgpurendertargetview = prenderer->m_pgpurendertarget;
+            auto pgpurendertarget = m_pgpurenderer->render_target();
+
+            ::cast<render_target_view> pgpurendertargetview = pgpurendertarget;
 
             if (pgpurendertargetview)
             {
@@ -753,7 +755,7 @@ namespace gpu_directx11
       if (prenderer)
       {
 
-         ::cast<render_target_view> pgpurendertargetview = prenderer->m_pgpurendertarget;
+         ::cast<render_target_view> pgpurendertargetview = prenderer->render_target();
 
          if (pgpurendertargetview)
          {

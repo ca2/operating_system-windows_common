@@ -322,15 +322,15 @@ namespace gpu_directx11
 
       m_commandbuffera.set_size(m_iDefaultFrameCount);
 
-      auto pgpurendertarget = render
+      auto pgpurendertarget = render_target();
 
       for(auto & pcommandbuffer : m_commandbuffera)
       {
          
          ødefer_construct(pcommandbuffer);
-         
+
          pcommandbuffer->initialize_command_buffer(
-            m_pgpurendertarget,
+            pgpurendertarget,
             m_pgpucontext->m_pgpudevice->graphics_queue(),
             ::gpu::e_command_buffer_graphics);
 
@@ -382,7 +382,7 @@ namespace gpu_directx11
       //if (m_bOffScreen)
       {
 
-         ::cast < render_target_view > pgpurendertargetview = m_pgpurendertarget;
+         ::cast < render_target_view > pgpurendertargetview = render_target();
 
          auto result = pgpurendertargetview->acquireNextImage();
 
@@ -710,7 +710,7 @@ namespace gpu_directx11
 
       ::cast< renderer > prenderer = this;
 
-      ::cast < render_target_view > prendertargetview = prenderer->m_pgpurendertarget;
+      ::cast < render_target_view > prendertargetview = prenderer->render_target();
 
       ::cast < offscreen_render_target_view > poffscreenrendertargetview = prendertargetview;
 
@@ -760,7 +760,7 @@ namespace gpu_directx11
       //if (m_bOffScreen)
       {
 
-         ::cast < render_target_view > prendertargetview = m_pgpurendertarget;
+         ::cast < render_target_view > prendertargetview = ((renderer*)this)->render_target();
 
          return prendertargetview->extentAspectRatio();
 
@@ -953,7 +953,7 @@ namespace gpu_directx11
 
       auto pcontext = pgpucontext->m_pcontext;
 
-      ::cast < render_target_view > pgpurendertargetview = m_pgpurendertarget;
+      ::cast < render_target_view > pgpurendertargetview = render_target();
 
       auto size = pgpucontext->m_rectangle.size();
 

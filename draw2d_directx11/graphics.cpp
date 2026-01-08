@@ -5505,7 +5505,7 @@ namespace draw2d_directx11
 
          ::cast < ::gpu_directx11::renderer > prenderer = pcontext->m_pgpurenderer;
 
-         auto prendertarget = prenderer->m_pgpurendertarget;
+         auto prendertarget = prenderer->render_target();
 
          ::cast < ::gpu_directx11::texture > ptexture = prendertarget->current_texture(::gpu::current_frame());
 
