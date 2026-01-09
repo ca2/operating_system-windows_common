@@ -5778,45 +5778,27 @@ namespace draw2d_directx11
    void graphics::draw_text(const ::scoped_string & scopedstr, const ::double_rectangle & rectangle, const ::e_align & ealign, const ::e_draw_text & edrawtext)
    {
 
-      if (scopedstr.is_empty())
-      {
+      ::gpu::graphics::draw_text(scopedstr, rectangle, ealign, edrawtext);
 
-         //return true;
+      //if (scopedstr.is_empty())
+      //{
 
-         return;
+      //   //return true;
 
-      }
+      //   return;
 
-      if (scopedstr.is_empty())
-      {
+      //}
 
-         //return false;
+      //if (scopedstr.is_empty())
+      //{
 
-         throw ::exception(error_invalid_empty_argument);
+      //   //return false;
 
-      }
+      //   throw ::exception(error_invalid_empty_argument);
 
-      if (m_pfont.is_null())
-      {
+      //}
 
-         //return false;
-
-         throw ::exception(error_null_pointer);
-
-      }
-
-      if (m_pbrush.is_null())
-      {
-
-         //return false;
-
-         throw ::exception(error_null_pointer);
-
-      }
-
-      //ID2D1Brush * pbrush = m_pbrush->get_os_data < ID2D1Brush * >(this);
-
-      //if (::is_null(pbrush))
+      //if (m_pfont.is_null())
       //{
 
       //   //return false;
@@ -5825,9 +5807,7 @@ namespace draw2d_directx11
 
       //}
 
-      //IDWriteTextFormat * pfont = m_pfont->get_os_data < IDWriteTextFormat * >(this);
-
-      //if (::is_null(pfont))
+      //if (m_pbrush.is_null())
       //{
 
       //   //return false;
@@ -5836,92 +5816,114 @@ namespace draw2d_directx11
 
       //}
 
-      //if (ealign & e_align_right)
-      //{
+      ////ID2D1Brush * pbrush = m_pbrush->get_os_data < ID2D1Brush * >(this);
 
-      //   pfont->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_TRAILING);
+      ////if (::is_null(pbrush))
+      ////{
 
-      //}
-      //else if (ealign & e_align_horizontal_center)
-      //{
+      ////   //return false;
 
-      //   pfont->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
+      ////   throw ::exception(error_null_pointer);
 
-      //}
-      //else
-      //{
+      ////}
 
-      //   pfont->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
+      ////IDWriteTextFormat * pfont = m_pfont->get_os_data < IDWriteTextFormat * >(this);
 
-      //}
+      ////if (::is_null(pfont))
+      ////{
 
-      //if (ealign & e_align_bottom)
-      //{
+      ////   //return false;
 
-      //   pfont->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_FAR);
+      ////   throw ::exception(error_null_pointer);
 
-      //}
-      //else if (ealign & e_align_vertical_center)
-      //{
+      ////}
 
-      //   pfont->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
+      ////if (ealign & e_align_right)
+      ////{
 
-      //}
-      //else
-      //{
+      ////   pfont->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_TRAILING);
 
-      //   pfont->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
+      ////}
+      ////else if (ealign & e_align_horizontal_center)
+      ////{
 
-      //}
+      ////   pfont->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
 
-      //synchronous_lock synchronouslock(this->synchronization());
+      ////}
+      ////else
+      ////{
 
-      //synchronous_lock synchronouslockFontTextMap(system()->draw2d()->write_text()->m_pparticleFontTextMapSynchronization);
+      ////   pfont->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
 
-      //auto & text = m_pfont->m_mapFontText[str];
+      ////}
 
-      //if (text.m_wstr.is_empty())
-      //{
+      ////if (ealign & e_align_bottom)
+      ////{
 
-      //   text.m_wstr = str;
+      ////   pfont->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_FAR);
 
-      //}
+      ////}
+      ////else if (ealign & e_align_vertical_center)
+      ////{
 
-      //defer_text_primitive_blend();
+      ////   pfont->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
 
-      //defer_text_rendering_hint();
+      ////}
+      ////else
+      ////{
 
-      //if (m_pfont->m_dFontWidth == 1.0)
-      //{
+      ////   pfont->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
 
-      //   D2D1_RECT_F float_rectangle = D2D1::RectF((FLOAT)rectangle.left, (FLOAT)rectangle.top, (FLOAT)rectangle.right, (FLOAT)rectangle.bottom);
+      ////}
 
-      //   m_pd2d1rendertarget->DrawText(text.m_wstr, (unsigned int)text.m_wstr.length(), pfont, &float_rectangle, pbrush);
+      ////synchronous_lock synchronouslock(this->synchronization());
 
-      //}
-      //else
-      //{
-      //   D2D1::Matrix3x2F m;
+      ////synchronous_lock synchronouslockFontTextMap(system()->draw2d()->write_text()->m_pparticleFontTextMapSynchronization);
 
-      //   m_pd2d1rendertarget->GetTransform(&m);
+      ////auto & text = m_pfont->m_mapFontText[str];
 
-      //   D2D1::Matrix3x2F mOriginal(m);
+      ////if (text.m_wstr.is_empty())
+      ////{
 
-      //   D2D1_RECT_F float_rectangle = D2D1::RectF((FLOAT)0, (FLOAT)0, (FLOAT)width(rectangle), (FLOAT)height(rectangle));
+      ////   text.m_wstr = str;
 
-      //   m = m * D2D1::Matrix3x2F::Translation((FLOAT)rectangle.left, (FLOAT)rectangle.top);
+      ////}
 
-      //   m = m * D2D1::Matrix3x2F::Scale((FLOAT)m_pfont->m_dFontWidth, 1.f);
+      ////defer_text_primitive_blend();
 
-      //   m_pd2d1rendertarget->SetTransform(&m);
+      ////defer_text_rendering_hint();
 
-      //   m_pd2d1rendertarget->DrawText(text.m_wstr, (unsigned int)text.m_wstr.length(), pfont, &float_rectangle, pbrush);
+      ////if (m_pfont->m_dFontWidth == 1.0)
+      ////{
 
-      //   m_pd2d1rendertarget->SetTransform(&mOriginal);
+      ////   D2D1_RECT_F float_rectangle = D2D1::RectF((FLOAT)rectangle.left, (FLOAT)rectangle.top, (FLOAT)rectangle.right, (FLOAT)rectangle.bottom);
 
-      //}
+      ////   m_pd2d1rendertarget->DrawText(text.m_wstr, (unsigned int)text.m_wstr.length(), pfont, &float_rectangle, pbrush);
 
-      ////return 1;
+      ////}
+      ////else
+      ////{
+      ////   D2D1::Matrix3x2F m;
+
+      ////   m_pd2d1rendertarget->GetTransform(&m);
+
+      ////   D2D1::Matrix3x2F mOriginal(m);
+
+      ////   D2D1_RECT_F float_rectangle = D2D1::RectF((FLOAT)0, (FLOAT)0, (FLOAT)width(rectangle), (FLOAT)height(rectangle));
+
+      ////   m = m * D2D1::Matrix3x2F::Translation((FLOAT)rectangle.left, (FLOAT)rectangle.top);
+
+      ////   m = m * D2D1::Matrix3x2F::Scale((FLOAT)m_pfont->m_dFontWidth, 1.f);
+
+      ////   m_pd2d1rendertarget->SetTransform(&m);
+
+      ////   m_pd2d1rendertarget->DrawText(text.m_wstr, (unsigned int)text.m_wstr.length(), pfont, &float_rectangle, pbrush);
+
+      ////   m_pd2d1rendertarget->SetTransform(&mOriginal);
+
+      ////}
+
+      //////return 1;
 
    }
 
