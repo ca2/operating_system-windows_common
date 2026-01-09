@@ -2136,35 +2136,37 @@ namespace draw2d_directx11
    void graphics::draw_rectangle(const ::double_rectangle & rectangleParam, ::draw2d::pen * ppen)
    {
 
-      if (ppen == nullptr)
-      {
+      ::gpu::graphics::draw_rectangle(rectangleParam, ppen);
 
-         //return false;
+      //if (ppen == nullptr)
+      //{
 
-         throw ::exception(error_null_pointer);
+      //   //return false;
 
-      }
+      //   throw ::exception(error_null_pointer);
 
-      if (ppen->m_epen == ::draw2d::e_pen_null)
-      {
+      //}
 
-         //return true;
+      //if (ppen->m_epen == ::draw2d::e_pen_null)
+      //{
 
-         return;
+      //   //return true;
 
-      }
+      //   return;
 
-      //D2D1_RECT_F rectangle;
+      //}
 
-      //copy(&rectangle, &rectangleParam);
+      ////D2D1_RECT_F rectangle;
 
-      //::draw2d_directx11::pen * ppen2 = dynamic_cast <::draw2d_directx11::pen *> (ppen);
+      ////copy(&rectangle, &rectangleParam);
 
-      //defer_primitive_blend();
+      ////::draw2d_directx11::pen * ppen2 = dynamic_cast <::draw2d_directx11::pen *> (ppen);
 
-      //m_pd2d1rendertarget->DrawRectangle(&rectangle, ppen2->get_os_data < ID2D1Brush * >(this), (FLOAT)ppen->m_dWidth);
+      ////defer_primitive_blend();
 
-      //return true;
+      ////m_pd2d1rendertarget->DrawRectangle(&rectangle, ppen2->get_os_data < ID2D1Brush * >(this), (FLOAT)ppen->m_dWidth);
+
+      ////return true;
 
    }
 

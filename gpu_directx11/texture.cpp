@@ -1017,6 +1017,9 @@ namespace gpu_directx11
       //}
    }
 
+
+
+
    ID3D11RenderTargetView *texture::render_target_view(int iFace, int iMip)
    {
 
