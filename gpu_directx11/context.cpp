@@ -2707,6 +2707,23 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    }
 
 
+   void context::set_scissor(::gpu::command_buffer *pgpucommandbuffer,
+                              const ::int_rectangle &rectangle)
+   {
+         D3D11_RECT scissorRect;
+   // scissorRect.left = pgputextureSource->m_rectangleTarget.left;
+   // scissorRect.top = pgputextureSource->m_rectangleTarget.top;
+   // scissorRect.right = pgputextureSource->m_rectangleTarget.right;
+   // scissorRect.bottom = pgputextureSource->m_rectangleTarget.bottom;
+   scissorRect.left = rectangle.left;
+   scissorRect.top = rectangle.top;
+   scissorRect.right = rectangle.right;
+   scissorRect.bottom = rectangle.bottom;
+
+   m_pcontext->RSSetScissorRects(1, &scissorRect);
+
+    }
+
    void context::clear(::gpu::texture * pgputexture, const ::color::color &color)
    {
 

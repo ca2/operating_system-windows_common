@@ -312,6 +312,8 @@ namespace gpu_directx11
       void update_global_ubo1(::gpu::block * pblockGlobalUbo1) override;
 
       void set_viewport(::gpu::command_buffer *pgpucommandbuffer, const ::int_rectangle &rectangle) override;
+      void set_scissor(::gpu::command_buffer *pgpucommandbuffer, const ::int_rectangle &rectangle) override;
+
       void clear(::gpu::texture * pgputexture, const ::color::color &color) override; 
       void engine_on_frame_context_initialization() override;
 
