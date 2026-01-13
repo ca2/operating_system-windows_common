@@ -57,7 +57,7 @@
 //
 //          ::cast < ::gpu_directx11::device > pgpudevice = m_pgpudevice;
 //
-//          auto pd3d11device = pgpudevice->m_pdevice;
+//          auto pd3d11device = pgpudevice->m_pd3d11device;
 //
 //          UINT bufSize = m_iBufferSize; // number of vertices the buffer can hold
 //

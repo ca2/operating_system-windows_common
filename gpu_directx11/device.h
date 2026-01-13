@@ -20,12 +20,12 @@ namespace gpu_directx11
    public:
 
 
-      comptr<ID3D11Device>                            m_pdevice;
-      comptr<ID3D11Device1>                           m_pdevice1;
+      comptr<ID3D11Device>                            m_pd3d11device;
+      comptr<ID3D11Device1>                           m_pd3d11device1;
       comptr<IDXGIDevice>                             m_pdxgidevice;
       comptr<IDXGIFactory2>                           m_pdxgifactory2;
       //comptr<IDXGISwapChain1>                         m_pdxgiswapchain1;
-      comptr<ID3D11DeviceContext>                     m_pdevicecontext;
+      comptr<ID3D11DeviceContext>                     m_pd3d11devicecontext;
       ::pointer<::windowing::window>                  m_pimpl;
 
 
@@ -121,6 +121,9 @@ namespace gpu_directx11
       ~device() override;
 
 
+      bool _is_ok() const override;
+
+
       virtual void initialize_cpu_buffer(const ::int_rectangle& rectanglePlacement);
 
       virtual void initialize_d3d11_device();
@@ -212,7 +215,7 @@ namespace gpu_directx11
 
       //void make_current() override;
 
-      bool is_mesa() override;
+      //bool is_mesa() override;
 
       //void render();
 

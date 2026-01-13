@@ -95,7 +95,7 @@ namespace gpu_directx11
 
       ::cast < ::gpu_directx11::device > pgpudevice = pgpucontext->m_pgpudevice;
 
-      auto pd3d11device = pgpudevice->m_pdevice;
+      auto pd3d11device = pgpudevice->m_pd3d11device;
 
       D3D11_SUBRESOURCE_DATA data{};
 
@@ -207,7 +207,7 @@ namespace gpu_directx11
 
          //   ::cast < ::gpu_directx11::device > pgpudevice = pgpucontext->m_pgpudevice;
 
-         //   auto pd3d11device = pgpudevice->m_pdevice;
+         //   auto pd3d11device = pgpudevice->m_pd3d11device;
 
          //   UINT bufSize = pframestorage->m_iBufferSize; // number of vertices the buffer can hold
 

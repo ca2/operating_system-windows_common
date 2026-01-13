@@ -627,7 +627,7 @@ namespace gpu_directx11
 
          ::cast < ::gpu_directx11::device > pdevice = pcontext->m_pgpudevice;
 
-         if (FAILED(pdevice->m_pdevice->CreateTexture2D(
+         if (FAILED(pdevice->m_pd3d11device->CreateTexture2D(
             &texture2ddescStaging, NULL, &m_ptextureStaging)))
          {
             
@@ -716,7 +716,7 @@ namespace gpu_directx11
 
       ::cast< device > pgpudevice = pgpucontext->m_pgpudevice;
 
-      ID3D11Device* device = pgpudevice->m_pdevice;
+      ID3D11Device* device = pgpudevice->m_pd3d11device;
 
       ID3D11DeviceContext* context = pgpucontext->m_pcontext;
 
@@ -975,7 +975,7 @@ dsDesc.DepthEnable = TRUE;
 dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
 dsDesc.DepthFunc = D3D11_COMPARISON_LESS;
 
-HRESULT hrCreateDepthStencilState = pgpudevice->m_pdevice->CreateDepthStencilState(&dsDesc,
+HRESULT hrCreateDepthStencilState = pgpudevice->m_pd3d11device->CreateDepthStencilState(&dsDesc,
    &m_pdepthstencilstateForCleaning);
 ::defer_throw_hresult(hrCreateDepthStencilState);
 
@@ -1105,7 +1105,7 @@ HRESULT hrCreateDepthStencilState = pgpudevice->m_pdevice->CreateDepthStencilSta
       //   //rasterizerDesc.FrontCounterClockwise = true;
       //   rasterizerDesc.DepthClipEnable = TRUE;
 
-      //   HRESULT hr = pgpucontext->m_pgpudevice->m_pdevice->CreateRasterizerState(
+      //   HRESULT hr = pgpucontext->m_pgpudevice->m_pd3d11device->CreateRasterizerState(
       //      &rasterizerDesc,
       //      &pgpucontext->m_prasterizerstate);
 

@@ -57,7 +57,10 @@ namespace gpu_directx11
          //                          const ::unsigned_int_array &indexa, ::gpu::model::material *pmaterial) override;
 
 
-         void on_initialize_gpu_mesh() override;
+         ///void on_initialize_gpu_mesh() override;
+
+         void initialize_gpu_mesh(::gpu::context *pgpucontext, ::gpu::model::material *pmaterial,
+                                          ::gpu::model_data_base *pmodeldata) override;
 
          void draw2(::gpu::command_buffer *pcommandbuffer) override;
          // private:

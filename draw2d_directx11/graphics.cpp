@@ -185,7 +185,7 @@ namespace draw2d_directx11
 
       auto pgpuapproach = m_papplication->get_gpu_approach();
 
-      auto pgpudevice = pgpuapproach->get_gpu_device();
+      auto pgpudevice = pgpuapproach->get_gpu_device(m_puserinteraction->m_pacmewindowingwindow);
 
       //m_pdirectx11 = ::directx11::from_gpu_device(pgpudevice);
 
@@ -319,7 +319,7 @@ namespace draw2d_directx11
 
       auto pgpuapproach = m_papplication->get_gpu_approach();
 
-      auto pgpudevice = pgpuapproach->get_gpu_device();
+      auto pgpudevice = pgpuapproach->get_gpu_device(pwindow);
 
       auto pgpucontextNew = pgpudevice->create_draw2d_context(
          ::gpu::e_output_gpu_buffer,
@@ -6682,7 +6682,7 @@ namespace draw2d_directx11
 
                ::cast < ::gpu_directx11::device > pgpudevice = pcontext->m_pgpudevice;
 
-               HRESULT hr = pgpudevice->m_pdevice->CreateBlendState(
+               HRESULT hr = pgpudevice->m_pd3d11device->CreateBlendState(
                   &blendDesc,
                   &m_pblendstateAlphaMode);
                ::defer_throw_hresult(hr);
@@ -6716,7 +6716,7 @@ namespace draw2d_directx11
 
                ::cast < ::gpu_directx11::device > pgpudevice = pcontext->m_pgpudevice;
 
-               HRESULT hr = pgpudevice->m_pdevice->CreateBlendState(
+               HRESULT hr = pgpudevice->m_pd3d11device->CreateBlendState(
                   &blendDesc,
                   &m_pblendstateSetMode);
                ::defer_throw_hresult(hr);

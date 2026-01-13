@@ -43,7 +43,7 @@
 //
 //      ::cast < ::gpu_directx11::device > pgpudevice = pgpurenderer->m_pgpucontext->m_pgpudevice;
 //
-//      auto pdevice = pgpudevice->m_pdevice;
+//      auto pdevice = pgpudevice->m_pd3d11device;
 //
 //      HRESULT hrCreateTexture = pdevice->CreateTexture2D(&texture2ddesc, nullptr, &m_ptexture);
 //
@@ -61,7 +61,7 @@
 //      srvDesc.Texture2D.MostDetailedMip = 0;
 //      srvDesc.Texture2D.MipLevels = 1;
 //
-//      HRESULT hrCreateShaderResourceView = pgpudevice->m_pdevice->CreateShaderResourceView(
+//      HRESULT hrCreateShaderResourceView = pgpudevice->m_pd3d11device->CreateShaderResourceView(
 //         m_ptexture,
 //         &srvDesc, &m_pshaderresourceview);
 //

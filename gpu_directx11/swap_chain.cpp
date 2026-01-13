@@ -210,7 +210,7 @@ namespace gpu_directx11
          blendDesc.RenderTarget[0].BlendEnable = FALSE;  // Disable blending
          blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
-         HRESULT hr = pgpudevice->m_pdevice->CreateBlendState(&blendDesc, &m_pblendstateDisabled);
+         HRESULT hr = pgpudevice->m_pd3d11device->CreateBlendState(&blendDesc, &m_pblendstateDisabled);
          ::defer_throw_hresult(hr);
 
       }
@@ -228,7 +228,7 @@ namespace gpu_directx11
       // 
       //   ::cast < ::gpu_directx11::device > pgpudevice = pgpucontext->m_pgpudevice;
 
-      //   pgpudevice->m_pdevice->CreateRenderTargetView(
+      //   pgpudevice->m_pd3d11device->CreateRenderTargetView(
       //      m_ptextureSwapChain, nullptr, &m_prendertargetviewSwapChain);
 
       //}

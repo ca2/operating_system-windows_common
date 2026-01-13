@@ -172,7 +172,7 @@ namespace draw2d_direct2d
 
       auto pgpuapproach = m_papplication->get_gpu_approach();
 
-      auto pgpudevice = pgpuapproach->get_gpu_device();
+      auto pgpudevice = pgpuapproach->get_gpu_device(m_puserinteraction->m_pacmewindowingwindow);
 
       m_pdirect2d = ::direct2d::from_gpu_device(pgpudevice);
 
@@ -317,7 +317,7 @@ namespace draw2d_direct2d
 
       auto pgpuapproach = m_papplication->get_gpu_approach();
 
-      auto pgpudevice = pgpuapproach->get_gpu_device();
+      auto pgpudevice = pgpuapproach->get_gpu_device(m_puserinteraction->m_pacmewindowingwindow);
 
       auto pgpucontextNew = pgpudevice->create_draw2d_context(
          ::gpu::e_output_gpu_buffer,

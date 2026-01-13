@@ -31,7 +31,7 @@ namespace gpu_directx11
       int iSize = this->size(false);
       // GlobalUbo
       cbd.ByteWidth = (iSize + 15) & ~15;
-      pgpudevice->m_pdevice->CreateBuffer(&cbd, nullptr, &m_pbuffer);
+      pgpudevice->m_pd3d11device->CreateBuffer(&cbd, nullptr, &m_pbuffer);
 
 
    }

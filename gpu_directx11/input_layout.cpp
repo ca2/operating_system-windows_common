@@ -172,7 +172,7 @@ namespace gpu_directx11
 
          ::cast < device > pdevice = pcontext->m_pgpudevice;
 
-         auto pd3d11device = pdevice->m_pdevice;
+         auto pd3d11device = pdevice->m_pd3d11device;
 
          //ID3D11InputLayout* inputLayout = nullptr;
          HRESULT hresult = pd3d11device->CreateInputLayout(

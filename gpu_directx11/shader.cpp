@@ -134,7 +134,7 @@ namespace gpu_directx11
 
       ::cast<device> pgpudevice = m_pgpurenderer->m_pgpucontext->m_pgpudevice;
 
-      auto hresult = pgpudevice->m_pdevice->CreateVertexShader(pblobShader->GetBufferPointer(),
+      auto hresult = pgpudevice->m_pd3d11device->CreateVertexShader(pblobShader->GetBufferPointer(),
                                                                pblobShader->GetBufferSize(), nullptr, &m_pvertexshader);
 
       if (FAILED(hresult))
@@ -219,7 +219,7 @@ namespace gpu_directx11
 
       ::cast<device> pgpudevice = m_pgpurenderer->m_pgpucontext->m_pgpudevice;
 
-      pgpudevice->m_pdevice->CreatePixelShader(pblobShader->GetBufferPointer(), pblobShader->GetBufferSize(), nullptr,
+      pgpudevice->m_pd3d11device->CreatePixelShader(pblobShader->GetBufferPointer(), pblobShader->GetBufferSize(), nullptr,
                                                &m_ppixelshader);
    }
 
@@ -281,7 +281,7 @@ namespace gpu_directx11
       //::cast < device > pgpudevice = pgpucontext->m_pgpudevice;
 
       HRESULT hrCreateDepthStencilState =
-         pgpudevice->m_pdevice->CreateDepthStencilState(&dsDesc, &m_pdepthstencilstate2);
+         pgpudevice->m_pd3d11device->CreateDepthStencilState(&dsDesc, &m_pdepthstencilstate2);
 
       ::defer_throw_hresult(hrCreateDepthStencilState);
 
@@ -308,7 +308,7 @@ namespace gpu_directx11
          // rasterizerDesc.DepthClipEnable = TRUE;
 
          HRESULT hr =
-            pgpucontext->m_pgpudevice->m_pdevice->CreateRasterizerState(&rasterizerDesc, &m_prasterizerstate2);
+            pgpucontext->m_pgpudevice->m_pd3d11device->CreateRasterizerState(&rasterizerDesc, &m_prasterizerstate2);
 
          ::defer_throw_hresult(hr);
       }
@@ -821,7 +821,7 @@ namespace gpu_directx11
          cbDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
          cbDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 
-         auto pdevice = pgpudevice->m_pdevice;
+         auto pdevice = pgpudevice->m_pd3d11device;
 
          HRESULT hr = pdevice->CreateBuffer(&cbDesc, nullptr, &m_pbufferSharedPushConstants);
 

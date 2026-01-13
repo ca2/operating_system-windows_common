@@ -859,7 +859,7 @@ namespace gpu_directx11
 
       }
 
-      auto& pdevicecontext = pgpudevice->m_pdevicecontext;
+      auto& pdevicecontext = pgpudevice->m_pd3d11devicecontext;
 
       ::defer_throw_hresult(pdevicecontext.as(m_pcontext));
 
@@ -1242,7 +1242,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
          //D3D11_SUBRESOURCE_DATA subresourceddata = {};
          //subresourceddata.pSysMem = vertices;
 
-         //HRESULT hr = pgpudevice->m_pdevice->CreateBuffer(
+         //HRESULT hr = pgpudevice->m_pd3d11device->CreateBuffer(
          //   &bufferdesc,
          //   &subresourceddata,
          //   &m_pd3d11bufferVertexCopyUsingShader);
@@ -1433,7 +1433,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
          ::cast < ::gpu_directx11::device > pgpudevice = m_pgpudevice;
 
-         HRESULT hr = pgpudevice->m_pdevice->CreateBlendState(
+         HRESULT hr = pgpudevice->m_pd3d11device->CreateBlendState(
             &blendDesc, 
             &m_pd3d11blendstateBlend3);
          ::defer_throw_hresult(hr);
@@ -1494,7 +1494,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
          ::cast < ::gpu_directx11::device > pgpudevice = m_pgpudevice;
 
-         HRESULT hrCreateRasterizerState = pgpudevice->m_pdevice->CreateRasterizerState(&rasterDesc, 
+         HRESULT hrCreateRasterizerState = pgpudevice->m_pd3d11device->CreateRasterizerState(&rasterDesc, 
             &m_prasterizerstateMergeLayers);
 
          ::defer_throw_hresult(hrCreateRasterizerState);
@@ -1722,7 +1722,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
    //      ::cast < device > pgpudevice = m_pgpudevice;
 
-   //      HRESULT hrCreateDepthStencilState = pgpudevice->m_pdevice->CreateDepthStencilState(
+   //      HRESULT hrCreateDepthStencilState = pgpudevice->m_pd3d11device->CreateDepthStencilState(
    //         &dsDesc, &m_pdepthstencilstateDisabled);
 
    //      ::defer_throw_hresult(hrCreateDepthStencilState);
@@ -2613,7 +2613,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    //
    //    // GlobalUbo
    //    cbd.ByteWidth = (iGlobalUboSize+15)&~15;
-   //    pgpudevice->m_pdevice->CreateBuffer(&cbd, nullptr, &m_pbufferGlobalUbo);
+   //    pgpudevice->m_pd3d11device->CreateBuffer(&cbd, nullptr, &m_pbufferGlobalUbo);
    //
    //    //for (int i = 0; i < m_uboBuffers.size(); i++)
    //    //{

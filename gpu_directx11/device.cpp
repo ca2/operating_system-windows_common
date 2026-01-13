@@ -84,12 +84,12 @@ namespace gpu_directx11
    }
 
 
-   bool device::is_mesa()
-   {
+   //bool device::is_mesa()
+   //{
 
-      return m_bMesa;
+   //   return m_bMesa;
 
-   }
+   //}
 
 
    void device::_create_offscreen_window(const ::int_size& size)
@@ -139,16 +139,16 @@ namespace gpu_directx11
          featureLevels, 
          ARRAYSIZE(featureLevels), // Highest available feature level
          D3D11_SDK_VERSION,
-         &m_pdevice,
+         &m_pd3d11device,
          &featureLevelActual,    // Actual feature level
-         &m_pdevicecontext));  // Device context
+         &m_pd3d11devicecontext));  // Device context
 
       //preempt(5_s);
 
 
-      ::defer_throw_hresult(m_pdevice.as(m_pdevice1));
+      ::defer_throw_hresult(m_pd3d11device.as(m_pd3d11device1));
 
-      ::defer_throw_hresult(m_pdevice.as(m_pdxgidevice));
+      ::defer_throw_hresult(m_pd3d11device.as(m_pdxgidevice));
 
       //m_pdevice->GetImmediateContext();
 
@@ -1888,6 +1888,29 @@ namespace gpu_directx11
 //   }
 
 
+bool device::_is_ok() const
+{
+
+
+   if (!m_pd3d11device)
+   {
+
+      return false;
+
+   }
+
+   if (!m_pdxgidevice)
+   {
+
+      return false;
+
+   }
+
+   return true;
+
+}
+
+
    void device::initialize_cpu_buffer(const ::int_rectangle & rectanglePlacement)
    {
 
@@ -1940,15 +1963,15 @@ namespace gpu_directx11
       ::defer_throw_hresult(hr);
 
       // Get the Direct3D 11.1 API device and context interfaces.
-      ::defer_throw_hresult(pdevice.as(m_pdevice));
+      ::defer_throw_hresult(pdevice.as(m_pd3d11device));
 
-      ::defer_throw_hresult(pdevice.as(m_pdevice1));
+      ::defer_throw_hresult(pdevice.as(m_pd3d11device1));
 
-      ::defer_throw_hresult(pdevicecontext.as(m_pdevicecontext));
+      ::defer_throw_hresult(pdevicecontext.as(m_pd3d11devicecontext));
 
 
       // Get the underlying DXGI device of the Direct3D device.
-      ::defer_throw_hresult(m_pdevice.as(m_pdxgidevice));
+      ::defer_throw_hresult(m_pd3d11device.as(m_pdxgidevice));
 
 #if defined(_DEBUG)
 
@@ -1964,7 +1987,7 @@ namespace gpu_directx11
    ID3D11Device* device::draw_get_d3d11_device()
    {
 
-      return m_pdevice;
+      return m_pd3d11device;
 
    }
 
@@ -1972,7 +1995,7 @@ namespace gpu_directx11
    ID3D11Device1* device::draw_get_d3d11_device1()
    {
 
-      return m_pdevice1;
+      return m_pd3d11device1;
 
    }
 

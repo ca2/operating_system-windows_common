@@ -430,8 +430,12 @@ namespace gpu_directx11
       }
 
 
-      void mesh::on_initialize_gpu_mesh()
+
+         void mesh::initialize_gpu_mesh(::gpu::context *pgpucontext, ::gpu::model::material *pmaterial,
+                               ::gpu::model_data_base *pmodeldata) 
       {
+
+            ::gpu::model::mesh::initialize_gpu_mesh(pgpucontext, pmaterial, pmodeldata);
 
          // Assume:
          // ID3D11Device*           m_pd3dDevice;
@@ -443,7 +447,7 @@ namespace gpu_directx11
 
          //::cast<::gpu_directx11::device> pgpudevice = pgpucontext->m_pgpudevice;
 
-         //auto pd3d11device = pgpudevice->m_pdevice;
+         //auto pd3d11device = pgpudevice->m_pd3d11device;
 
          //// --- Create Vertex Buffer ---
          //D3D11_BUFFER_DESC bd = {};

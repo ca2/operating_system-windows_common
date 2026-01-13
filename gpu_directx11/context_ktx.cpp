@@ -237,7 +237,7 @@ namespace gpu_directx11
 
 
 
-      auto tex = CreateDx11TextureFromKtx(pdevice->m_pdevice1, pktxtexture);
+      auto tex = CreateDx11TextureFromKtx(pdevice->m_pd3d11device1, pktxtexture);
 
       ptexture->m_ptextureOffscreen = tex.texture;
       ptexture->m_pshaderresourceview = tex.srv;
@@ -376,7 +376,7 @@ namespace gpu_directx11
       ::cast<device> pdevice = m_pgpudevice;
 
 
-      auto tex = CreateDx11TextureFromKtx(pdevice->m_pdevice1, pktxtexture);
+      auto tex = CreateDx11TextureFromKtx(pdevice->m_pd3d11device1, pktxtexture);
 
       ptexture->m_ptextureOffscreen = tex.texture;
       ptexture->m_pshaderresourceview = tex.srv;

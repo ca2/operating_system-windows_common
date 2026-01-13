@@ -118,7 +118,7 @@ namespace gpu_directx11
 
       ::cast<::gpu_directx11::device> pgpudevice = m_pgpurenderer->m_pgpucontext->m_pgpudevice;
 
-      auto pdevice = pgpudevice->m_pdevice;
+      auto pdevice = pgpudevice->m_pd3d11device;
 
       D3D11_SUBRESOURCE_DATA subresourcedata[6]{};
 
@@ -237,7 +237,7 @@ namespace gpu_directx11
    //
    //    ::cast<::gpu_directx11::device> pgpudevice = m_pgpurenderer->m_pgpucontext->m_pgpudevice;
    //
-   //    auto pdevice = pgpudevice->m_pdevice;
+   //    auto pdevice = pgpudevice->m_pd3d11device;
    //
    //    D3D11_SAMPLER_DESC samp = {};
    //    samp.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
@@ -309,7 +309,7 @@ namespace gpu_directx11
 
       ::cast<::gpu_directx11::device> pgpudevice = m_pgpurenderer->m_pgpucontext->m_pgpudevice;
 
-      auto pdevice = pgpudevice->m_pdevice;
+      auto pdevice = pgpudevice->m_pd3d11device;
 
       HRESULT hrCreateTexture = pdxgiswapchain1->GetBuffer(0, __interface_of(m_ptextureOffscreen));
 
@@ -422,7 +422,7 @@ namespace gpu_directx11
                      rtvDesc.Texture2DArray.FirstArraySlice = i;
                      rtvDesc.Texture2DArray.ArraySize = 1;
 
-                     HRESULT hr = pgpudevice->m_pdevice->CreateRenderTargetView(m_ptextureOffscreen, &rtvDesc,
+                     HRESULT hr = pgpudevice->m_pd3d11device->CreateRenderTargetView(m_ptextureOffscreen, &rtvDesc,
                                                                                 &m_rendertargetview2a[iMip][i]);
                      ::defer_throw_hresult(hr);
                      // if (FAILED(hr))
@@ -444,11 +444,11 @@ namespace gpu_directx11
 
 
             //            HRESULT hrCreateRenderTargetView =
-            //             pgpudevice->m_pdevice->CreateRenderTargetView(m_ptextureOffscreen, &rtvDesc,
+            //             pgpudevice->m_pd3d11device->CreateRenderTargetView(m_ptextureOffscreen, &rtvDesc,
             //             &m_prendertargetview);
 
             HRESULT hrCreateRenderTargetView =
-               pgpudevice->m_pdevice->CreateRenderTargetView(m_ptextureOffscreen, nullptr, &m_prendertargetview);
+               pgpudevice->m_pd3d11device->CreateRenderTargetView(m_ptextureOffscreen, nullptr, &m_prendertargetview);
             if (FAILED(hrCreateRenderTargetView))
             {
 
@@ -483,7 +483,7 @@ namespace gpu_directx11
 
 
       HRESULT hrCreateShaderResourceView =
-         pgpudevice->m_pdevice->CreateShaderResourceView(m_ptextureOffscreen, &srvDesc, &m_pshaderresourceview);
+         pgpudevice->m_pd3d11device->CreateShaderResourceView(m_ptextureOffscreen, &srvDesc, &m_pshaderresourceview);
 
       if (FAILED(hrCreateShaderResourceView))
       {
@@ -496,7 +496,7 @@ namespace gpu_directx11
       sampDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
       sampDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
       sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
-      pgpudevice->m_pdevice->CreateSamplerState(&sampDesc, &m_psamplerstate);
+      pgpudevice->m_pd3d11device->CreateSamplerState(&sampDesc, &m_psamplerstate);
 
       new_texture.set_new_texture();
    }
@@ -532,7 +532,7 @@ namespace gpu_directx11
 
          ::cast<::gpu_directx11::device> pgpudevice = m_pgpurenderer->m_pgpucontext->m_pgpudevice;
 
-         auto pdevice = pgpudevice->m_pdevice;
+         auto pdevice = pgpudevice->m_pd3d11device;
 
          HRESULT hrCreateTexture = pdevice->CreateTexture2D(&depthDesc, nullptr, &m_ptextureDepthStencil);
 
@@ -760,7 +760,7 @@ namespace gpu_directx11
       ::cast<::gpu_directx11::context> pgpucontext = m_pgpurenderer->m_pgpucontext;
       ::cast<::gpu_directx11::device> pgpudevice = pgpucontext->m_pgpudevice;
 
-      auto pdevice = pgpudevice->m_pdevice;
+      auto pdevice = pgpudevice->m_pd3d11device;
 
       // --- Create Texture2D ---
       m_texture2ddesc = {};
@@ -966,7 +966,7 @@ namespace gpu_directx11
       initData.SysMemPitch = width * 4 * sizeof(float); // 4 floats per pixel
       initData.SysMemSlicePitch = 0;
 
-      HRESULT hr = pgpudevice->m_pdevice->CreateTexture2D(&texDesc, &initData, &m_ptextureOffscreen);
+      HRESULT hr = pgpudevice->m_pd3d11device->CreateTexture2D(&texDesc, &initData, &m_ptextureOffscreen);
       defer_throw_hresult(hr);
       set_ok_flag();
 
