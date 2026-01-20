@@ -568,10 +568,10 @@ namespace gpu_directx11
 
 
 
-   void approach::on_create_window(::acme::windowing::window* pwindow)
+   void approach::gpu_on_create_window(::acme::windowing::window* pwindow)
    {
 
-      ::gpu::bred_approach::on_create_window(pwindow);
+      ::gpu::bred_approach::gpu_on_create_window(pwindow);
 
       ///auto rectangleWindow = pwindow->get_window_rectangle();
 
