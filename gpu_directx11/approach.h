@@ -274,7 +274,7 @@ namespace gpu_directx11
 
 //      void engine_on_frame_context_initialization(::gpu::context* pgpucontext) override;
 
-      void on_create_window(::acme::windowing::window* pwindow) override;
+      void on_create_window(const ::atom & atom, ::acme::windowing::window* pwindow) override;
 
    };
 
