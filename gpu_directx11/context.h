@@ -140,11 +140,14 @@ namespace gpu_directx11
       void set_bitmap_1(::image::image *pimage) override;
 
       
-      void copy(::gpu::texture* pgputextureTarget, ::gpu::texture* pgputextureSource) override;
+      void copy(::gpu::texture *pgputextureTarget, ::gpu::texture *pgputextureSource,
+                ::pointer<::gpu::fence> *pgpufence) override;
 
       virtual void copy_using_shader(::gpu::texture* pgputextureTarget, ::gpu::texture* pgputextureSource);
 
-      void merge_layers(::gpu::texture* ptextureTarget, ::pointer_array < ::gpu::layer >* playera) override;
+      virtual void merge_layers(::gpu::command_buffer *pgpucommandbuffer,
+                                                 ::gpu::texture *ptextureTarget,
+                                                 ::pointer_array<::gpu::layer> *playera);
 
 
       void on_start_layer(::gpu::layer* player) override;
