@@ -76,7 +76,7 @@ namespace draw2d_directx11
    {
       float fFontSize;
 
-      //oswindow oswindow = nullptr;
+      //::acme::windowing::window * pacmewindowingwindow = nullptr;
       //
       //if (::is_set(pgraphics))
       //{

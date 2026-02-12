@@ -69,7 +69,7 @@ namespace universal_windows
 
                float fFontSize;
 
-               //oswindow oswindow = nullptr;
+               //::acme::windowing::window * pacmewindowingwindow = nullptr;
                //
                //if (::is_set(pgraphics))
                //{

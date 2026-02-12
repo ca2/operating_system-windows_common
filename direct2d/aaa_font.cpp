@@ -65,7 +65,7 @@ namespace draw2d_direct2d
 
          float fFontSize;
 
-         oswindow oswindow = nullptr;
+         ::acme::windowing::window * pacmewindowingwindow = nullptr;
          
          if (::is_set(pgraphics))
          {

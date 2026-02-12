@@ -8,7 +8,7 @@
 //#if defined(LINUX) // || defined(ANDROID)
 //
 //
-//bool apex_defer_process_x_message(htask htask,MESSAGE * pMsg,oswindow oswindow,bool bPeek);
+//bool apex_defer_process_x_message(htask htask,MESSAGE * pMsg,::acme::windowing::window * pacmewindowingwindow,bool bPeek);
 //
 //
 //#endif
@@ -32,7 +32,7 @@
 //}
 //
 //
-//int_bool message_queue::post_message(oswindow oswindow, ::enum_message emessage, ::wparam wparam, ::lparam lparam)
+//int_bool message_queue::post_message(::acme::windowing::window * pacmewindowingwindow, ::enum_message emessage, ::wparam wparam, ::lparam lparam)
 //{
 //
 //   if (m_bQuit)
@@ -77,7 +77,7 @@
 //
 //
 //
-//int_bool message_queue::get_message(MESSAGE * pMsg, oswindow oswindow, unsigned int wMsgFilterMin, unsigned int wMsgFilterMax)
+//int_bool message_queue::get_message(MESSAGE * pMsg, ::acme::windowing::window * pacmewindowingwindow, unsigned int wMsgFilterMin, unsigned int wMsgFilterMax)
 //{
 //
 //   if (wMsgFilterMax == 0)
@@ -164,7 +164,7 @@
 //}
 //
 //
-//int_bool message_queue::peek_message(MESSAGE * pMsg, oswindow oswindow,unsigned int wMsgFilterMin,unsigned int wMsgFilterMax,unsigned int wRemoveMsg)
+//int_bool message_queue::peek_message(MESSAGE * pMsg, ::acme::windowing::window * pacmewindowingwindow,unsigned int wMsgFilterMin,unsigned int wMsgFilterMax,unsigned int wRemoveMsg)
 //{
 //
 //   if(wMsgFilterMax == 0)
@@ -305,7 +305,7 @@
 ////}
 //
 //
-////CLASS_DECL_APEX int_bool mq_erase_window_from_all_queues(oswindow oswindow)
+////CLASS_DECL_APEX int_bool mq_erase_window_from_all_queues(::acme::windowing::window * pacmewindowingwindow)
 ////{
 ////
 //////   ::user::interaction * pinteraction = oswindow_interaction(oswindow);
@@ -390,7 +390,7 @@
 //   return pmq->post_message(nullptr, atom.m_emessage, wparam, lparam);
 //
 //}
-//CLASS_DECL_ACME int_bool mq_peek_message(MESSAGE * pMsg, oswindow oswindow, unsigned int wMsgFilterMin, unsigned int wMsgFilterMax, unsigned int wRemoveMsg)
+//CLASS_DECL_ACME int_bool mq_peek_message(MESSAGE * pMsg, ::acme::windowing::window * pacmewindowingwindow, unsigned int wMsgFilterMin, unsigned int wMsgFilterMax, unsigned int wRemoveMsg)
 //{
 //
 //   auto pmq = ::aaa_get_message_queue(::current_itask(), false);
@@ -414,7 +414,7 @@
 //}
 //
 //
-//CLASS_DECL_ACME int_bool mq_get_message(MESSAGE * pMsg, oswindow oswindow, unsigned int wMsgFilterMin, unsigned int wMsgFilterMax)
+//CLASS_DECL_ACME int_bool mq_get_message(MESSAGE * pMsg, ::acme::windowing::window * pacmewindowingwindow, unsigned int wMsgFilterMin, unsigned int wMsgFilterMax)
 //{
 //
 //   auto pmq = ::aaa_get_message_queue(::current_itask(), true);
