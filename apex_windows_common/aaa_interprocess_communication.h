@@ -39,14 +39,14 @@ namespace windows
 
 
 #if defined(UNIVERSAL_WINDOWS)
-      bool open(const ::string & pszChannel);
+      bool open(const ::scoped_string & scopedstrChannel);
 #else
-      bool open(const ::string & pszChannel, launcher * plauncher = nullptr);
+      bool open(const ::scoped_string & scopedstrChannel, launcher * plauncher = nullptr);
 #endif
       bool close();
 
 
-      bool send(const ::string & pszMessage, duration durationTimeout);
+      bool send(const ::scoped_string & scopedstrMessage, duration durationTimeout);
       bool send(int message, void * pdata, int len, duration durationTimeout);
 
 
@@ -69,11 +69,11 @@ namespace windows
       virtual ~interprocess_handler();
 
 
-      bool create(const ::string & pszChannel);
+      bool create(const ::scoped_string & scopedstrChannel);
       bool destroy();
 
 
-      virtual void * on_interprocess_receive(::inteprocess::handler * prx, const ::string & pszMessage);
+      virtual void * on_interprocess_receive(::inteprocess::handler * prx, const ::scoped_string & scopedstrMessage);
       virtual void * on_interprocess_receive(::inteprocess::handler * prx, int message, void * pdata, memsize len);
       virtual void * on_interprocess_post(::inteprocess::handler * prx, long long a, long long b);
 
@@ -102,14 +102,14 @@ namespace windows
 //
 //
 //#if defined(UNIVERSAL_WINDOWS)
-//      bool open_ab(const ::string & pszChannel, const ::string & pszModule);
-//      bool open_ba(const ::string & pszChannel, const ::string & pszModule);
+//      bool open_ab(const ::scoped_string & scopedstrChannel, const ::scoped_string & scopedstrModule);
+//      bool open_ba(const ::scoped_string & scopedstrChannel, const ::scoped_string & scopedstrModule);
 //#elif defined(WINDOWS)
-//      bool open_ab(const ::string & pszChannel, const ::string & pszModule, launcher * plauncher = nullptr);
-//      bool open_ba(const ::string & pszChannel, const ::string & pszModule, launcher * plauncher = nullptr);
+//      bool open_ab(const ::scoped_string & scopedstrChannel, const ::scoped_string & scopedstrModule, launcher * plauncher = nullptr);
+//      bool open_ba(const ::scoped_string & scopedstrChannel, const ::scoped_string & scopedstrModule, launcher * plauncher = nullptr);
 //#else
-//      bool open_ab(const ::string & pszChannel, launcher * plauncher = nullptr);
-//      bool open_ba(const ::string & pszChannel, launcher * plauncher = nullptr);
+//      bool open_ab(const ::scoped_string & scopedstrChannel, launcher * plauncher = nullptr);
+//      bool open_ba(const ::scoped_string & scopedstrChannel, launcher * plauncher = nullptr);
 //#endif
 //
 //
@@ -118,7 +118,7 @@ namespace windows
 //
 //      virtual void restart_apex_ipc();
 //
-//      //bool ensure_tx(const ::string & pszMessage, duration durationTimeout = one_hour());
+//      //bool ensure_tx(const ::scoped_string & scopedstrMessage, duration durationTimeout = one_hour());
 //      //bool ensure_tx(int message, void * pdata, int len, duration durationTimeout = one_hour());
 //
 //

@@ -12,9 +12,9 @@ extern CLASS_DECL_ACME const unichar gen_WndMDIFrame[];
 extern CLASS_DECL_ACME const unichar gen_WndFrameOrView[];
 extern CLASS_DECL_ACME const unichar gen_WndOleControl[];
 CLASS_DECL_ACME bool __is_combo_box_control(::windowing::window * pwindow, unsigned int nStyle);
-CLASS_DECL_ACME bool __check_center_dialog(const ::string & pszResource);
+CLASS_DECL_ACME bool __check_center_dialog(const ::scoped_string & scopedstrResource);
 
-CLASS_DECL_ACME bool __compare_class_name(::windowing::window * pwindow, const ::string & pszClassName);
+CLASS_DECL_ACME bool __compare_class_name(::windowing::window * pwindow, const ::scoped_string & scopedstrClassName);
 
 //CLASS_DECL_ACME oswindow __child_window_from_point(oswindow, const int_point &);
 //CLASS_DECL_ACME bool hook_window_create(::windows::interaction_impl * pwindow);

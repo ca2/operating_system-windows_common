@@ -110,7 +110,7 @@ namespace windows
 
 
 
-   //string directory_context::path(const ::string & pszFolder, character_count iLenFolder, const ::string & pszRelative, character_count iLenRelative, const ::string & psz2, character_count iLen2, bool bUrl)
+   //string directory_context::path(const ::scoped_string & scopedstrFolder, character_count iLenFolder, const ::scoped_string & scopedstrRelative, character_count iLenRelative, const ::scoped_string & scopedstr2, character_count iLen2, bool bUrl)
    //{
 
    //   bool bEmptyRelative = iLenRelative == 0 || pszRelative == nullptr || *pszRelative == '\0';
@@ -250,7 +250,7 @@ namespace windows
    //   return strPath;
    //}
 
-   //string directory_context::relpath(const string & pcszSource,const string & lpcszRelative)
+   //string directory_context::relpath(const ::scoped_string & scopedstrSource,const ::scoped_string & scopedstrRelative)
 
    //{
    //   const char * pszRequest;
@@ -292,7 +292,7 @@ namespace windows
    //}
 
 
-   //string directory_context::relpath(const string & pcszSource, const string & lpcszRelative, const string & psz2)
+   //string directory_context::relpath(const ::scoped_string & scopedstrSource, const ::scoped_string & scopedstrRelative, const ::scoped_string & scopedstr2)
 
    //{
    //   const char * pszRequest;
@@ -872,7 +872,7 @@ namespace windows
    }
 
 
-   ::file::path directory_context::time_square(const ::string & strPrefix, const ::string & strSuffix)
+   ::file::path directory_context::time_square(const ::scoped_string & scopedstrPrefix, const ::scoped_string & scopedstrSuffix)
    {
 
       __UNREFERENCED_PARAMETER(strPrefix);
@@ -1228,7 +1228,7 @@ namespace windows
 
    }
 
-   //bool file::GetStatus(const ::string & pszFileName,::file::file_status& rStatus)
+   //bool file::GetStatus(const ::scoped_string & scopedstrFileName,::file::file_status& rStatus)
 
    //{
    //   // attempt to fully qualify path first

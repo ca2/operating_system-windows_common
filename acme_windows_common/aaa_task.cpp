@@ -65,7 +65,7 @@ const char * task::get_task_tag()
 //}
 
 
-bool task::set_thread_name(const ::string & pszThreadName)
+bool task::set_thread_name(const ::scoped_string & scopedstrThreadName)
 {
 
    m_strTaskName = pszThreadName;
@@ -497,7 +497,7 @@ void task::begin_task(
 
 
 //
-//bool task::set_task_name(const ::string & pszThreadName)
+//bool task::set_task_name(const ::scoped_string & scopedstrThreadName)
 //{
 //
 //   if (!::set_task_name(m_htask, pszThreadName))

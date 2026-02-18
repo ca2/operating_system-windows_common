@@ -161,7 +161,7 @@ namespace windows
       return true;
    }
 
-   void os_context::terminate_processes_by_title(const ::string & lpszName)
+   void os_context::terminate_processes_by_title(const ::scoped_string & scopedstrName)
    {
 
       unsigned int uPid;
@@ -192,7 +192,7 @@ namespace windows
       }
    }
 
-   bool os_context::get_pid_by_path(const ::string & lpszName, unsigned int & dwPid)
+   bool os_context::get_pid_by_path(const ::scoped_string & scopedstrName, unsigned int & dwPid)
    {
       unsigned_int_array dwa;
       get_all_processes(dwa);
@@ -207,7 +207,7 @@ namespace windows
       return false;
    }
 
-   bool os_context::get_pid_by_title(const ::string & lpszName, unsigned int & dwPid)
+   bool os_context::get_pid_by_title(const ::scoped_string & scopedstrName, unsigned int & dwPid)
    {
       unsigned_int_array dwa;
       get_all_processes(dwa);
@@ -355,7 +355,7 @@ namespace windows
    }
 
 
-   bool os_context::local_machine_set_run(const ::string & pszKey, const ::string & pszCommand, bool bSet)
+   bool os_context::local_machine_set_run(const ::scoped_string & scopedstrKey, const ::scoped_string & scopedstrCommand, bool bSet)
    {
 
       try
@@ -390,7 +390,7 @@ namespace windows
    }
 
 
-   bool os_context::local_machine_set_run_once(const ::string & pszKey, const ::string & pszCommand, bool bSet)
+   bool os_context::local_machine_set_run_once(const ::scoped_string & scopedstrKey, const ::scoped_string & scopedstrCommand, bool bSet)
    {
 
       try
@@ -424,7 +424,7 @@ namespace windows
    }
 
 
-   bool os_context::current_user_set_run(const ::string & pszKey, const ::string & pszCommand, bool bSet)
+   bool os_context::current_user_set_run(const ::scoped_string & scopedstrKey, const ::scoped_string & scopedstrCommand, bool bSet)
    {
 
       try
@@ -460,7 +460,7 @@ namespace windows
    }
 
 
-   bool os_context::current_user_set_run_once(const ::string & pszKey, const ::string & pszCommand, bool bSet)
+   bool os_context::current_user_set_run_once(const ::scoped_string & scopedstrKey, const ::scoped_string & scopedstrCommand, bool bSet)
    {
 
       try
@@ -526,7 +526,7 @@ namespace windows
       return true;
    }
 
-   bool os_context::file_extension_get_open_with_list_keys(string_array_base & straKey, const ::string & pszExtension)
+   bool os_context::file_extension_get_open_with_list_keys(string_array_base & straKey, const ::scoped_string & scopedstrExtension)
    {
 
       try
@@ -557,7 +557,7 @@ namespace windows
    }
 
 
-   bool os_context::file_extension_get_open_with_list_commands(string_array_base & straCommand, const ::string & pszExtension)
+   bool os_context::file_extension_get_open_with_list_commands(string_array_base & straCommand, const ::scoped_string & scopedstrExtension)
    {
 
       string_array_base straKey;
@@ -575,7 +575,7 @@ namespace windows
    }
 
 
-   bool os_context::file_association_set_default_icon(const ::string & pszExtension, const ::string & pszExtensionNamingClass, const ::string & pszIconPath)
+   bool os_context::file_association_set_default_icon(const ::scoped_string & scopedstrExtension, const ::scoped_string & scopedstrExtensionNamingClass, const ::scoped_string & scopedstrIconPath)
    {
 
       try
@@ -601,7 +601,7 @@ namespace windows
    }
 
 
-   bool os_context::file_association_set_shell_open_command(const ::string & pszExtension, const ::string & pszExtensionNamingClass,  const char * pszCommand, const ::string & pszParam)
+   bool os_context::file_association_set_shell_open_command(const ::scoped_string & scopedstrExtension, const ::scoped_string & scopedstrExtensionNamingClass,  const char * pszCommand, const ::scoped_string & scopedstrParam)
    {
 
       ::e_status estatus = ::success;
@@ -688,7 +688,7 @@ namespace windows
    }
 
 
-   bool os_context::file_association_get_shell_open_command(const ::string & pszExtension, string & strExtensionNamingClass, string & strCommand, string & strParam)
+   bool os_context::file_association_get_shell_open_command(const ::scoped_string & scopedstrExtension, string & strExtensionNamingClass, string & strCommand, string & strParam)
    {
 
       try
@@ -739,7 +739,7 @@ namespace windows
    }
 
 
-   bool os_context::open_in_ie(const ::string & pcsz)
+   bool os_context::open_in_ie(const ::scoped_string & scopedstr)
    {
 
       try
@@ -955,7 +955,7 @@ namespace windows
    }
 
 
-   bool os_context::_getCredentialsForService(const ::string & strService,WCHAR * szUsername,WCHAR *szPassword)
+   bool os_context::_getCredentialsForService(const ::scoped_string & scopedstrService,WCHAR * szUsername,WCHAR *szPassword)
    {
 
       HRESULT hr = S_OK;
@@ -1326,7 +1326,7 @@ retry:
    }
 
 
-   bool os_context::enable_service(const ::string & strServiceName,const ::string & strDisplayName,const ::string & strCommand,const ::string & strUser,const ::string & strPass)
+   bool os_context::enable_service(const ::scoped_string & scopedstrServiceName,const ::scoped_string & scopedstrDisplayName,const ::scoped_string & scopedstrCommand,const ::scoped_string & scopedstrUser,const ::scoped_string & scopedstrPass)
    {
 
       if (strServiceName.is_empty())
@@ -1392,7 +1392,7 @@ retry:
    }
 
 
-   bool os_context::disable_service(const ::string & strServiceName)
+   bool os_context::disable_service(const ::scoped_string & scopedstrServiceName)
    {
 
       if (strServiceName.is_empty())
@@ -1453,7 +1453,7 @@ retry:
    }
 
 
-   bool os_context::start_service(const ::string & strServiceName)
+   bool os_context::start_service(const ::scoped_string & scopedstrServiceName)
    {
 
       if(strServiceName.is_empty())
@@ -1488,7 +1488,7 @@ retry:
       return bOk != false;
    }
 
-   bool os_context::stop_service(const ::string & strServiceName)
+   bool os_context::stop_service(const ::scoped_string & scopedstrServiceName)
    {
 
       if(strServiceName.is_empty())
@@ -1545,7 +1545,7 @@ retry:
 
 
 
-   void os_context::set_file_status(const ::string & pszFileName, const ::file::file_status& status)
+   void os_context::set_file_status(const ::scoped_string & scopedstrFileName, const ::file::file_status& status)
 
    {
 
@@ -1658,7 +1658,7 @@ retry:
    }
 
 
-   bool os_context::resolve_link(::file::path & path, const ::string & strSource, string * pstrDirectory, string * pstrParams)
+   bool os_context::resolve_link(::file::path & path, const ::scoped_string & scopedstrSource, string * pstrDirectory, string * pstrParams)
    {
 
       if (::os_context::resolve_link(path, strSource, pstrDirectory, pstrParams))
@@ -1685,7 +1685,7 @@ retry:
    }
 
 
-   bool os_context::resolve_lnk_link(::file::path & path, const ::string & strSource, string * pstrDirectory, string * pstrParams)
+   bool os_context::resolve_lnk_link(::file::path & path, const ::scoped_string & scopedstrSource, string * pstrDirectory, string * pstrParams)
    {
 
       ASSERT(strSource.case_insensitive_ends(".lnk"));
@@ -2159,7 +2159,7 @@ retry:
 
    }
 
-   ::file::path os_context::get_app_path(const ::string & strApp)
+   ::file::path os_context::get_app_path(const ::scoped_string & scopedstrApp)
    {
 
       string str(strApp);

@@ -507,7 +507,7 @@ mutexmutex(const ::mutex & m):
 #elif defined(MUTEX_NAMED_FD)
 
 
-::mutex::mutex(enum_create_new, const ::string & lpszName, int iFd, bool bOwner)
+::mutex::mutex(enum_create_new, const ::scoped_string & scopedstrName, int iFd, bool bOwner)
 {
 
    m_strName = lpszName;
@@ -1496,7 +1496,7 @@ bool ::mutex::unlock()
 
 
 
-::pointer<::mutex>open_mutex(const ::string & lpszName)
+::pointer<::mutex>open_mutex(const ::scoped_string & scopedstrName)
 {
 
 #ifdef WINDOWS
@@ -1647,7 +1647,7 @@ pacmedir->create(path.folder());
 }
 
 
-void wait_until_mutex_does_not_exist(const ::string & lpszName)
+void wait_until_mutex_does_not_exist(const ::scoped_string & scopedstrName)
 {
 
    ::pointer<::mutex>pmutex = øallocate ::mutex(e_create_new, false, "Global\\::ca::account::ca2_spa::7807e510-5579-11dd-ae16-0800200c7784");

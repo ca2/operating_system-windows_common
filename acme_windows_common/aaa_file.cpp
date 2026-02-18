@@ -189,7 +189,7 @@ namespace windows_common
    }
 
 
-   file::file(const ::string & pszFileName, ::file::e_open eopen)
+   file::file(const ::scoped_string & scopedstrFileName, ::file::e_open eopen)
    {
 
       //m_iCharacterPutBack = I32_MINIMUM;

@@ -28,7 +28,7 @@ task_pointer & task_pool::defer_start(const ::atom& atom, const ::procedure & pr
    if (!estatus)
    {
 
-      pthread = __create_new < ::task >();
+      pthread = øcreate_new < ::task >();
 
    }
 

@@ -50,7 +50,7 @@ namespace windows
 
       virtual ::file::path module();
       virtual ::file::path ca2module();
-      virtual ::file::path time_square(const ::string & strPrefix = nullptr, const ::string & strSuffix = nullptr);
+      virtual ::file::path time_square(const ::scoped_string & scopedstrPrefix = nullptr, const ::scoped_string & scopedstrSuffix = nullptr);
       virtual ::file::path time_log();
 
 
@@ -61,17 +61,17 @@ namespace windows
       virtual ::file::path appdata();
       virtual ::file::path commonappdata_root();
 
-      //virtual ::file::path usersystemappdata(const ::string & pcszPrefix);
+      //virtual ::file::path usersystemappdata(const ::scoped_string & scopedstrPrefix);
 
       //virtual ::file::path userappdata();
       //virtual ::file::path userdata();
       //virtual ::file::path userfolder();
       //virtual ::file::path default_os_user_path_prefix();
-      //virtual ::file::path default_userappdata(const string & pcszPrefix,const string & lpcszLogin );
+      //virtual ::file::path default_userappdata(const ::scoped_string & scopedstrPrefix,const ::scoped_string & scopedstrLogin );
 
-      //virtual ::file::path default_userdata(const string & pcszPrefix,const string & lpcszLogin);
+      //virtual ::file::path default_userdata(const ::scoped_string & scopedstrPrefix,const ::scoped_string & scopedstrLogin);
 
-      //virtual ::file::path default_userfolder(const string & pcszPrefix,const string & lpcszLogin);
+      //virtual ::file::path default_userfolder(const ::scoped_string & scopedstrPrefix,const ::scoped_string & scopedstrLogin);
 
       virtual ::file::path userquicklaunch();
       virtual ::file::path userprograms();

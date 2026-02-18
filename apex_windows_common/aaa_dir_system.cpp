@@ -155,7 +155,7 @@ pacmedir->create(m_strTimeFolder / "time");
 
 
 
-   ::file::path directory_system::application_installer_folder(const ::file::path& pathExe, string strAppId, const ::string & pszPlatform, const ::string & pszConfiguration, const ::string & pszLocale, const ::string & pszSchema)
+   ::file::path directory_system::application_installer_folder(const ::file::path& pathExe, string strAppId, const ::scoped_string & scopedstrPlatform, const ::scoped_string & scopedstrConfiguration, const ::scoped_string & scopedstrLocale, const ::scoped_string & scopedstrSchema)
    {
 
       string strFolder = pathExe.folder();
@@ -169,7 +169,7 @@ pacmedir->create(m_strTimeFolder / "time");
 
 
 
-   ::file::path directory_system::get_application_path(string strAppId, const ::string & pszPlatform, const ::string & pszConfiguration)
+   ::file::path directory_system::get_application_path(string strAppId, const ::scoped_string & scopedstrPlatform, const ::scoped_string & scopedstrConfiguration)
    {
 
       ::file::path pathFolder;

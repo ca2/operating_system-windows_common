@@ -39,10 +39,10 @@ namespace windows
 
 
 
-      virtual bool FullPath(string & str, const ::string & pszFileIn);
+      virtual bool FullPath(string & str, const ::scoped_string & scopedstrFileIn);
 
       virtual bool FullPath(wstring & wstrFullPath, const wstring & wstrPath);
-      virtual unsigned int GetFileName(const ::string & pszPathName, string & str);
+      virtual unsigned int GetFileName(const ::scoped_string & scopedstrPathName, string & str);
 
       virtual void GetModuleShortFileName(HINSTANCE hInst, string & strShortName);
       
@@ -57,7 +57,7 @@ namespace windows
 
       virtual ::extended::transport < ::file::file > resource_get_file(const ::file::path & path) override;
 
-      virtual bool get_last_write_time(FILETIME * pfiletime, const ::string & strFilename);
+      virtual bool get_last_write_time(FILETIME * pfiletime, const ::scoped_string & scopedstrFilename);
 
       virtual void update_module_path() override;
 

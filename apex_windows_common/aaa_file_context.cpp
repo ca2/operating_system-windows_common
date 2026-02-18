@@ -60,7 +60,7 @@ namespace windows
    }
 
 
-   bool file_context::FullPath(string & str, const ::string & pszFileIn)
+   bool file_context::FullPath(string & str, const ::scoped_string & scopedstrFileIn)
 
    {
 
@@ -122,7 +122,7 @@ namespace windows
    }
 
 
-   unsigned int file_context::GetFileName(const ::string & pszPathName, string & str)
+   unsigned int file_context::GetFileName(const ::scoped_string & scopedstrPathName, string & str)
 
    {
       int nMax = MAX_PATH * 8;
@@ -443,7 +443,7 @@ namespace windows
    }
 
 
-   bool file_context::get_last_write_time(FILETIME * pfiletime, const ::string & strFilename)
+   bool file_context::get_last_write_time(FILETIME * pfiletime, const ::scoped_string & scopedstrFilename)
    {
 
       WIN32_FILE_ATTRIBUTE_DATA data;
@@ -591,7 +591,7 @@ namespace windows
    //}
 
 
-   //void file::SetStatus(const ::string & pszFileName,const ::file::file_status& status)
+   //void file::SetStatus(const ::scoped_string & scopedstrFileName,const ::file::file_status& status)
 
    //{
    //   unsigned int wAttr;

@@ -1,7 +1,7 @@
 #include "framework.h"
 
 
-//synchronization_object::synchronization_object(const ::string & lpszName)
+//synchronization_object::synchronization_object(const ::scoped_string & scopedstrName)
 //{
 //
 //   m_bOwner = true;
@@ -31,7 +31,7 @@
 //#ifdef WINDOWS
 //
 //
-//synchronization_object::synchronization_object(HSYNC hsyncobject, const ::string & lpszName) :
+//synchronization_object::synchronization_object(HSYNC hsyncobject, const ::scoped_string & scopedstrName) :
 //   m_hsync(hsyncobject)
 //{
 //

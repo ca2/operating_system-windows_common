@@ -121,9 +121,9 @@ namespace directx
       //virtual double get_dpix() override;
 
       //// Constructors
-      //bool CreateDC(const ::string & lpszDriverName, const ::string & lpszDeviceName,
+      //bool CreateDC(const ::scoped_string & scopedstrDriverName, const ::scoped_string & scopedstrDeviceName,
       //              const char * lpszOutput, const void * lpInitData) override;
-      //bool CreateIC(const ::string & lpszDriverName, const ::string & lpszDeviceName,
+      //bool CreateIC(const ::scoped_string & scopedstrDriverName, const ::scoped_string & scopedstrDeviceName,
       //              const char * lpszOutput, const void * lpInitData) override;
       //bool CreateCompatibleDC(::draw2d::graphics * pgraphics) override;
 
@@ -323,9 +323,9 @@ namespace directx
 ////                     HBRUSH hBrush = nullptr) override;
 ////      bool DrawState(const ::double_point & point, const ::double_size & size, HICON hIcon, unsigned int nFlags,
 ////                     ::draw2d::brush* pBrush = nullptr) override;
-////      bool DrawState(const ::double_point & point, const ::double_size & size, const ::string & lpszText, unsigned int nFlags,
+////      bool DrawState(const ::double_point & point, const ::double_size & size, const ::scoped_string & scopedstrText, unsigned int nFlags,
 ////                     bool bPrefixText = true, int nTextLen = 0, HBRUSH hBrush = nullptr) override;
-////      bool DrawState(const ::double_point & point, const ::double_size & size, const ::string & lpszText, unsigned int nFlags,
+////      bool DrawState(const ::double_point & point, const ::double_size & size, const ::scoped_string & scopedstrText, unsigned int nFlags,
 ////                     bool bPrefixText = true, int nTextLen = 0, ::draw2d::brush* pBrush = nullptr) override;
 ////      bool DrawState(const ::double_point & point, const ::double_size & size, DRAWSTATEPROC lpDrawProc,
 //      //       LPARAM lData, unsigned int nFlags, HBRUSH hBrush = nullptr) override;
@@ -402,33 +402,33 @@ namespace directx
 //        BLENDFUNCTION blend) override;*/
 //
 //      // Text Functions
-//      //virtual bool text_out(double x, double y, const ::string & lpszString, character_count nCount) override;
+//      //virtual bool text_out(double x, double y, const ::scoped_string & scopedstrString, character_count nCount) override;
 //      //virtual bool text_out(double x, double y, const block & block) override;
 //      virtual bool TextOutRaw(double x, double y, const block & block) override;
-//      //virtual bool text_out(double x, double y, const ::string & str) override;
-//      //virtual bool ExtTextOut(double x, double y, unsigned int nOptions, const ::double_rectangle & rectangle, const ::string & lpszString, character_count nCount, LPINT lpDxWidths) override;
-//      //virtual bool ExtTextOut(double x, double y, unsigned int nOptions, const ::double_rectangle & rectangle, const ::string & str, LPINT lpDxWidths) override;
-//      //virtual ::double_size TabbedTextOut(double x, double y, const ::string & lpszString, character_count nCount, ::collection::count nTabPositions, LPINT lpnTabStopPositions, int nTabOrigin) override;
-//      //virtual ::double_size TabbedTextOut(double x, double y, const ::string & str, ::collection::count nTabPositions, LPINT lpnTabStopPositions, int nTabOrigin) override;
+//      //virtual bool text_out(double x, double y, const ::scoped_string & scopedstr) override;
+//      //virtual bool ExtTextOut(double x, double y, unsigned int nOptions, const ::double_rectangle & rectangle, const ::scoped_string & scopedstrString, character_count nCount, LPINT lpDxWidths) override;
+//      //virtual bool ExtTextOut(double x, double y, unsigned int nOptions, const ::double_rectangle & rectangle, const ::scoped_string & scopedstr, LPINT lpDxWidths) override;
+//      //virtual ::double_size TabbedTextOut(double x, double y, const ::scoped_string & scopedstrString, character_count nCount, ::collection::count nTabPositions, LPINT lpnTabStopPositions, int nTabOrigin) override;
+//      //virtual ::double_size TabbedTextOut(double x, double y, const ::scoped_string & scopedstr, ::collection::count nTabPositions, LPINT lpnTabStopPositions, int nTabOrigin) override;
 //
-//      //virtual bool draw_text(const ::string & lpszString, character_count nCount, const ::double_rectangle & rectangle, const ::e_align & ealign = e_align_top_left, const ::e_draw_text & edrawtext = e_draw_text_none) override;
-//      virtual bool draw_text(const ::string & str,const ::double_rectangle & rectangle, const ::e_align & ealign = e_align_top_left, const ::e_draw_text & edrawtext = e_draw_text_none) override;
+//      //virtual bool draw_text(const ::scoped_string & scopedstrString, character_count nCount, const ::double_rectangle & rectangle, const ::e_align & ealign = e_align_top_left, const ::e_draw_text & edrawtext = e_draw_text_none) override;
+//      virtual bool draw_text(const ::scoped_string & scopedstr,const ::double_rectangle & rectangle, const ::e_align & ealign = e_align_top_left, const ::e_draw_text & edrawtext = e_draw_text_none) override;
 //
 ////      virtual int draw_text_ex(char * lpszString, int nCount, ::double_rectangle * prectangle, const ::e_align & ealign = e_align_top_left, const ::e_draw_text & edrawtext = e_draw_text_none, LPDRAWTEXTPARAMS lpDTParams) override;
-//      //    virtual int draw_text_ex(const ::string & str, ::double_rectangle * prectangle, const ::e_align & ealign = e_align_top_left, const ::e_draw_text & edrawtext = e_draw_text_none, LPDRAWTEXTPARAMS lpDTParams) override;
+//      //    virtual int draw_text_ex(const ::scoped_string & scopedstr, ::double_rectangle * prectangle, const ::e_align & ealign = e_align_top_left, const ::e_draw_text & edrawtext = e_draw_text_none, LPDRAWTEXTPARAMS lpDTParams) override;
 //
-//      virtual double_size get_text_extent(const ::string & lpszString, character_count nCount, character_count iIndex) override;
-//      //virtual double_size get_text_extent(const ::string & lpszString, character_count nCount) override;
-//      virtual double_size get_text_extent(const ::string & str) override;
-//      virtual bool get_text_extent(double_size & size, const ::string & lpszString, character_count nCount, character_count iIndex) override;
-//      virtual bool get_text_extent(double_size & size, const ::string & lpszString, character_count nCount) override;
-//      virtual bool get_text_extent(double_size & size, const ::string & str) override;
-//      virtual ::double_size GetOutputTextExtent(const ::string & lpszString, character_count nCount) override;
-//      virtual ::double_size GetOutputTextExtent(const ::string & str) override;
-//      //virtual ::double_size GetTabbedTextExtent(const ::string & lpszString, character_count nCount, ::collection::count nTabPositions, LPINT lpnTabStopPositions) override;
-//      //virtual ::double_size GetTabbedTextExtent(const ::string & str, ::collection::count nTabPositions, LPINT lpnTabStopPositions) override;
-//      virtual ::double_size GetOutputTabbedTextExtent(const ::string & lpszString, character_count nCount, ::collection::count nTabPositions, LPINT lpnTabStopPositions) override;
-//      virtual ::double_size GetOutputTabbedTextExtent(const ::string & str, count  nTabPositions, LPINT lpnTabStopPositions) override;
+//      virtual double_size get_text_extent(const ::scoped_string & scopedstrString, character_count nCount, character_count iIndex) override;
+//      //virtual double_size get_text_extent(const ::scoped_string & scopedstrString, character_count nCount) override;
+//      virtual double_size get_text_extent(const ::scoped_string & scopedstr) override;
+//      virtual bool get_text_extent(double_size & size, const ::scoped_string & scopedstrString, character_count nCount, character_count iIndex) override;
+//      virtual bool get_text_extent(double_size & size, const ::scoped_string & scopedstrString, character_count nCount) override;
+//      virtual bool get_text_extent(double_size & size, const ::scoped_string & scopedstr) override;
+//      virtual ::double_size GetOutputTextExtent(const ::scoped_string & scopedstrString, character_count nCount) override;
+//      virtual ::double_size GetOutputTextExtent(const ::scoped_string & scopedstr) override;
+//      //virtual ::double_size GetTabbedTextExtent(const ::scoped_string & scopedstrString, character_count nCount, ::collection::count nTabPositions, LPINT lpnTabStopPositions) override;
+//      //virtual ::double_size GetTabbedTextExtent(const ::scoped_string & scopedstr, ::collection::count nTabPositions, LPINT lpnTabStopPositions) override;
+//      virtual ::double_size GetOutputTabbedTextExtent(const ::scoped_string & scopedstrString, character_count nCount, ::collection::count nTabPositions, LPINT lpnTabStopPositions) override;
+//      virtual ::double_size GetOutputTabbedTextExtent(const ::scoped_string & scopedstr, count  nTabPositions, LPINT lpnTabStopPositions) override;
 //      //virtual bool GrayString(::draw2d::brush* pBrush, bool (CALLBACK* lpfnOutput)(HDC, LPARAM, int), LPARAM lpData, int nCount, double x, double y, double nWidth, double nHeight) override;
 //      virtual unsigned int GetTextAlign() override;
 //      virtual unsigned int SetTextAlign(unsigned int nFlags) override;
@@ -488,12 +488,12 @@ namespace directx
 ////#endif
 //
 //      //// Printer/Device Escape Functions
-//      //virtual int Escape(int nEscape, int nCount, const ::string & lpszInData, LPVOID lpOutData) override;
-//      //virtual int Escape(int nEscape, int nInputSize, const ::string & lpszInputData, int nOutputSize, char * lpszOutputData) override;
-//      //virtual int DrawEscape(int nEscape, int nInputSize, const ::string & lpszInputData) override;
+//      //virtual int Escape(int nEscape, int nCount, const ::scoped_string & scopedstrInData, LPVOID lpOutData) override;
+//      //virtual int Escape(int nEscape, int nInputSize, const ::scoped_string & scopedstrInputData, int nOutputSize, char * lpszOutputData) override;
+//      //virtual int DrawEscape(int nEscape, int nInputSize, const ::scoped_string & scopedstrInputData) override;
 //
 //      // Escape helpers
-//      //int StartDoc(const ::string & lpszDocName) override;  // old Win3.0 version
+//      //int StartDoc(const ::scoped_string & scopedstrDocName) override;  // old Win3.0 version
 ////      int StartDoc(LPDOCINFO lpDocInfo) override;
 //      int StartPage() override;
 //      int EndPage() override;

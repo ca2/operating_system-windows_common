@@ -50,7 +50,7 @@ namespace windows
    }
 
 
-   bool interprocess_caller::open(const ::string & pszKey, ::launcher * plauncher)
+   bool interprocess_caller::open(const ::scoped_string & scopedstrKey, ::launcher * plauncher)
    {
 
       if (get_hwnd() != nullptr)
@@ -133,7 +133,7 @@ namespace windows
    }
 
 
-   bool interprocess_caller::send(const ::string & pszMessage, duration durationTimeout)
+   bool interprocess_caller::send(const ::scoped_string & scopedstrMessage, duration durationTimeout)
    {
 
       if (!is_tx_ok())
@@ -256,7 +256,7 @@ namespace windows
    }
 
 
-   bool interprocess_handler::create(const ::string & pszKey)
+   bool interprocess_handler::create(const ::scoped_string & scopedstrKey)
    {
 
 
@@ -330,7 +330,7 @@ namespace windows
 
 
 
-   void * interprocess_handler::on_interprocess_receive(::inteprocess::handler * prx, const ::string & pszMessage)
+   void * interprocess_handler::on_interprocess_receive(::inteprocess::handler * prx, const ::scoped_string & scopedstrMessage)
    {
 
       string strMessage(pszMessage);
@@ -539,7 +539,7 @@ namespace windows
    //}
 
 
-   //bool inteprocess_channel::open_ab(const ::string & pszKey, const ::string & pszModule, launcher * plauncher)
+   //bool inteprocess_channel::open_ab(const ::scoped_string & scopedstrKey, const ::scoped_string & scopedstrModule, launcher * plauncher)
    //{
 
    //   m_strChannel = pszKey;
@@ -573,7 +573,7 @@ namespace windows
    //}
 
 
-   //bool inteprocess_channel::open_ba(const ::string & pszKey, const ::string & pszModule, launcher * plauncher)
+   //bool inteprocess_channel::open_ba(const ::scoped_string & scopedstrKey, const ::scoped_string & scopedstrModule, launcher * plauncher)
    //{
 
    //   m_strChannel = pszKey;

@@ -41,7 +41,7 @@ namespace windows
    }
 
 
-   bool crypto::decrypt(memory & storageDecrypt, const memory & storageEncrypt, const ::string & pszSalt)
+   bool crypto::decrypt(memory & storageDecrypt, const memory & storageEncrypt, const ::scoped_string & scopedstrSalt)
    {
 
       return ::crypto::crypto::decrypt(storageDecrypt, storageEncrypt, pszSalt);
@@ -128,7 +128,7 @@ namespace windows
    }
 
 
-   bool crypto::encrypt(memory & storageEncrypt, const memory & storageDecrypt, const ::string & pszSalt)
+   bool crypto::encrypt(memory & storageEncrypt, const memory & storageDecrypt, const ::scoped_string & scopedstrSalt)
    {
 
       return ::crypto::crypto::encrypt(storageEncrypt, storageDecrypt, pszSalt);

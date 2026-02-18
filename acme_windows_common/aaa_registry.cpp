@@ -19,7 +19,7 @@ namespace windows
    }
 
    
-   ::payload registry::key::get(const ::string & pcszValueName)
+   ::payload registry::key::get(const ::scoped_string & scopedstrValueName)
    {
 
       unsigned int dwType;
@@ -119,7 +119,7 @@ namespace windows
    }
 
 
-   void registry::key::open(HKEY hkey, const ::string & pcszSubKey, bool bCreate)
+   void registry::key::open(HKEY hkey, const ::scoped_string & scopedstrSubKey, bool bCreate)
    { 
       
       __defer_throw_estatus(_open(hkey, pcszSubKey, bCreate));
@@ -127,7 +127,7 @@ namespace windows
    }
 
 
-   void registry::key::_open(HKEY hkey, const ::string & pcszSubKey, bool bCreate)
+   void registry::key::_open(HKEY hkey, const ::scoped_string & scopedstrSubKey, bool bCreate)
    {
 
       LSTATUS lstatus;
@@ -164,7 +164,7 @@ namespace windows
    }
 
 
-   void registry::key::value(void * pvalue, const ::string & pcszValueName, unsigned int & dwType, unsigned int & cbValue)
+   void registry::key::value(void * pvalue, const ::scoped_string & scopedstrValueName, unsigned int & dwType, unsigned int & cbValue)
    { 
       
       auto estatus = _value(pvalue, pcszValueName, dwType, cbValue); 
@@ -174,7 +174,7 @@ namespace windows
    }
 
 
-   void registry::key::defer_create(HKEY hkey, const ::string & pcszSubKey) 
+   void registry::key::defer_create(HKEY hkey, const ::scoped_string & scopedstrSubKey) 
    { 
       
       __defer_throw_estatus(_defer_create(hkey, pcszSubKey));
@@ -201,7 +201,7 @@ namespace windows
 
 
 
-   void registry::key::_value(void* pvalue, const ::string & pcszValueName, unsigned int& dwType, unsigned int& cbValue)
+   void registry::key::_value(void* pvalue, const ::scoped_string & scopedstrValueName, unsigned int& dwType, unsigned int& cbValue)
    {
 
       if (ERROR_SUCCESS != ::RegQueryValueExW(m_hkey, wstring(pcszValueName), nullptr, (LPDWORD) &dwType, (unsigned char*)pvalue, (LPDWORD) &cbValue))
@@ -216,7 +216,7 @@ namespace windows
    }
 
 
-   void registry::key::_get(const ::string & pcszValueName, unsigned int & dwValue)
+   void registry::key::_get(const ::scoped_string & scopedstrValueName, unsigned int & dwValue)
    {
       
       unsigned int dwType;
@@ -255,7 +255,7 @@ namespace windows
    }
 
 
-   void registry::key::_get(const ::string & pcszValueName, string &str)
+   void registry::key::_get(const ::scoped_string & scopedstrValueName, string &str)
    {
 
       unsigned int dwType;
@@ -300,7 +300,7 @@ namespace windows
    }
 
 
-   void registry::key::_get(const ::string & pcszValueName, memory & mem)
+   void registry::key::_get(const ::scoped_string & scopedstrValueName, memory & mem)
    {
 
       unsigned int dwType;
@@ -341,7 +341,7 @@ namespace windows
    }
 
    
-   void registry::key::_set_value(const void* pvalue, const ::string & pcszValueName, unsigned int dwType, unsigned int cbValue)
+   void registry::key::_set_value(const void* pvalue, const ::scoped_string & scopedstrValueName, unsigned int dwType, unsigned int cbValue)
    {
 
       auto lstatus = RegSetValueExW(m_hkey, wstring(pcszValueName), 0, dwType, (const unsigned char *) pvalue, cbValue);
@@ -358,7 +358,7 @@ namespace windows
    }
 
 
-   void registry::key::value_type_and_size(const ::string & pcszValueName, unsigned int & dwType, unsigned int & cbValue)
+   void registry::key::value_type_and_size(const ::scoped_string & scopedstrValueName, unsigned int & dwType, unsigned int & cbValue)
    {
 
       auto estatus = _value_type_and_size(pcszValueName, dwType, cbValue);
@@ -368,7 +368,7 @@ namespace windows
    }
 
 
-   void registry::key::_set(const ::string & pcszValueName, const ::string & strValue)
+   void registry::key::_set(const ::scoped_string & scopedstrValueName, const ::scoped_string & scopedstrValue)
    {
 
       wstring wstr(strValue);
@@ -378,7 +378,7 @@ namespace windows
    }
 
 
-   void registry::key::_set(const ::string & pcszValueName, const ::string & pszValue)
+   void registry::key::_set(const ::scoped_string & scopedstrValueName, const ::scoped_string & scopedstrValue)
    {
 
       return _set(pcszValueName, string(pszValue));
@@ -386,7 +386,7 @@ namespace windows
    }
 
 
-   void registry::key::_set(const ::string & pcszValueName, const memory & memValue)
+   void registry::key::_set(const ::scoped_string & scopedstrValueName, const memory & memValue)
    {
 
       return _set_value(memValue.get_data(), pcszValueName, REG_BINARY, (unsigned int) memValue.get_size());
@@ -394,7 +394,7 @@ namespace windows
    }
 
 
-   void registry::key::_set(const ::string & pcszValueName, unsigned int dwValue)
+   void registry::key::_set(const ::scoped_string & scopedstrValueName, unsigned int dwValue)
    {
 
       return _set_value(&dwValue, pcszValueName, REG_DWORD, sizeof(dwValue));
@@ -402,7 +402,7 @@ namespace windows
    }
 
 
-   void registry::key::get(const ::string & pcszValueName, unsigned int & dwValue)
+   void registry::key::get(const ::scoped_string & scopedstrValueName, unsigned int & dwValue)
    { 
       
       auto estatus = _get(pcszValueName, dwValue); 
@@ -412,7 +412,7 @@ namespace windows
    }
 
 
-   void registry::key::get(const ::string & pcszValueName, string & strValue)
+   void registry::key::get(const ::scoped_string & scopedstrValueName, string & strValue)
    { 
       
       auto estatus = _get(pcszValueName, strValue); 
@@ -422,7 +422,7 @@ namespace windows
    }
 
 
-   void registry::key::get(const ::string & pcszValueName, memory & mem)
+   void registry::key::get(const ::scoped_string & scopedstrValueName, memory & mem)
    { 
       
       auto estatus = _get(pcszValueName, mem); 
@@ -432,7 +432,7 @@ namespace windows
    }
 
 
-   void registry::key::set(const ::string & pcszValueName, unsigned int dwValue)
+   void registry::key::set(const ::scoped_string & scopedstrValueName, unsigned int dwValue)
    {
       
       auto estatus = _set(pcszValueName, dwValue); 
@@ -443,7 +443,7 @@ namespace windows
    }
 
 
-   void registry::key::set(const ::string & pcszValueName, const ::string & strValue)
+   void registry::key::set(const ::scoped_string & scopedstrValueName, const ::scoped_string & scopedstrValue)
    { 
 
       auto estatus = _set(pcszValueName, strValue);
@@ -453,7 +453,7 @@ namespace windows
    }
 
 
-   void registry::key::set(const ::string & pcszValueName, const ::string & pszValue)
+   void registry::key::set(const ::scoped_string & scopedstrValueName, const ::scoped_string & scopedstrValue)
    {
 
       auto estatus = _set(pcszValueName, pszValue);
@@ -463,7 +463,7 @@ namespace windows
    }
 
 
-   void registry::key::set(const ::string & pcszValueName, const memory & mem)
+   void registry::key::set(const ::scoped_string & scopedstrValueName, const memory & mem)
    { 
 
       auto estatus = _set(pcszValueName, mem);
@@ -473,7 +473,7 @@ namespace windows
    }
 
 
-   void registry::key::delete_value(const ::string & pcszValueName)
+   void registry::key::delete_value(const ::scoped_string & scopedstrValueName)
    { 
       
       auto estatus = _delete_value(pcszValueName); 
@@ -513,7 +513,7 @@ namespace windows
    }
 
 
-   void registry::key::_delete_value(const ::string & pcszValueName)
+   void registry::key::_delete_value(const ::scoped_string & scopedstrValueName)
    {
 
       wstring wstr(pcszValueName);

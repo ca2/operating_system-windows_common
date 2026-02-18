@@ -43,7 +43,7 @@ namespace draw2d_directx
       virtual ~printer();
 
 
-      virtual bool open(const ::string & pszDeviceName);
+      virtual bool open(const ::scoped_string & scopedstrDeviceName);
       virtual ::draw2d::graphics * create_graphics();
       virtual bool is_opened();
       virtual bool close();

@@ -33,7 +33,7 @@ public:
 #endif
 
 
-   happening(char * sz = nullptr,bool bInitiallyOwn = false, bool bManualReset = false, const ::string & pszNAme = nullptr, sync_options * psyncoptions = nullptr);
+   happening(char * sz = nullptr,bool bInitiallyOwn = false, bool bManualReset = false, const ::scoped_string & scopedstrNAme = nullptr, sync_options * psyncoptions = nullptr);
 
    virtual ~happening();
 

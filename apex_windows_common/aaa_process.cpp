@@ -39,7 +39,7 @@ namespace windows
    }
 
 
-   bool process::create_child_process(const ::string & pszCmdLine, bool bPiped, const ::string & pszDir, ::enum_priority epriority)
+   bool process::create_child_process(const ::scoped_string & scopedstrCmdLine, bool bPiped, const ::scoped_string & scopedstrDir, ::enum_priority epriority)
    {
 
       if (!::operating_system::process::create_child_process(pszCmdLine, bPiped, pszDir, epriority))
@@ -221,7 +221,7 @@ namespace windows
    }
 
 
-   bool process::synch_elevated(const ::string & pszCmdLine,int iShow,const ::duration & durationTimeOut,bool * pbTimeOut)
+   bool process::synch_elevated(const ::scoped_string & scopedstrCmdLine,int iShow,const ::duration & durationTimeOut,bool * pbTimeOut)
    {
 
       DWORD dwExitCode = 0;
