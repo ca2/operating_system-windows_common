@@ -125,7 +125,7 @@ namespace directx
       //              const char * lpszOutput, const void * lpInitData) override;
       //bool CreateIC(const ::scoped_string & scopedstrDriverName, const ::scoped_string & scopedstrDeviceName,
       //              const char * lpszOutput, const void * lpInitData) override;
-      //bool CreateCompatibleDC(::draw2d::graphics * pgraphics) override;
+      //bool create_compatible_graphics(::draw2d::graphics * pgraphics) override;
 
       //bool DeleteDC() override;
 
