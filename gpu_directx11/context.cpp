@@ -1098,7 +1098,7 @@ namespace gpu_directx11
       //      //BIH.biPlanes = 1;          // один план
       //      //BIH.biBitCount = 32;       // 24 bits per pixel
       //      //BIH.biCompression = BI_RGB;// без сжатия// создаем новый DC в памяти
-      //      ////pdcDIB = CreateCompatibleDC(NULL);
+      //      ////pdcDIB = create_compatible_graphics(NULL);
       //      ////void * pBits = nullptr;
       //      //// создаем DIB-секцию
       //      //pwindow->m_hbitmapProto = CreateDIBSection(

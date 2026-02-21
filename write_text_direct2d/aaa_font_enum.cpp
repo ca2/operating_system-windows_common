@@ -55,7 +55,7 @@ wingdi_font_enum::~wingdi_font_enum()
       if (m_hdc == nullptr)
       {
 
-         m_hdc = ::CreateCompatibleDC(nullptr);
+         m_hdc = ::create_compatible_graphics(nullptr);
 
       }
 
