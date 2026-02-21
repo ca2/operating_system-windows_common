@@ -90,7 +90,7 @@ namespace gpu_directx11
       // void initialize_texture(::gpu::renderer* prenderer,
       //    const ::int_rectangle& rectangleTarget, bool bWithDepth,
       //    const ::pointer_array < ::image::image > * imagea = nullptr, enum_type type = e_type_image) override;
-      virtual void _initialize_gpu_texture(::gpu::renderer* prenderer, IDXGISwapChain1 * pdxgiswapchain);
+      virtual void _initialize_gpu_texture(::gpu::context *pgpucontext, IDXGISwapChain1 *pdxgiswapchain);
 
 
       void create_render_target() override;
@@ -109,11 +109,11 @@ namespace gpu_directx11
       virtual IDXGISurface* __get_dxgi_surface();
 
       void set_pixels(const ::int_rectangle& rectangle, const void* data) override;
-      void initialize_with_image_data(::gpu::renderer *pgpurenderer, const ::int_rectangle &rectangleTarget,
+      void initialize_with_image_data(::gpu::context *pgpucontext, const ::int_rectangle &rectangleTarget,
                                       int numChannels, bool bSrgb, const void *pdata, ::gpu::enum_texture etexture) override;
 
 
-      void initialize_hdr_texture_on_memory(::gpu::renderer *pgpurenderer, const ::block &block) override;
+      void initialize_hdr_texture_on_memory(::gpu::context *pgpucontext, const ::block &block) override;
       virtual ID3D11RenderTargetView * render_target_view(int iFace, int iMip);
 
       void generate_mipmap(::gpu::command_buffer *pgpucommandbuffer) override;

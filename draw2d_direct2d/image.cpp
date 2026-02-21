@@ -104,7 +104,7 @@ namespace draw2d_direct2d
 
       }
 
-      pgraphics->create_memory_graphics();
+      pgraphics->create_memory_graphics(size);
 
       pbitmap->create_bitmap(pgraphics, size, (void**)&pimage32, &iScan);
 

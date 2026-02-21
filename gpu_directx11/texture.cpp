@@ -116,7 +116,7 @@ namespace gpu_directx11
 
       //}
 
-      ::cast<::gpu_directx11::device> pgpudevice = m_pgpurenderer->m_pgpucontext->m_pgpudevice;
+      ::cast<::gpu_directx11::device> pgpudevice = m_pgpucontext->m_pgpudevice;
 
       auto pdevice = pgpudevice->m_pd3d11device;
 
@@ -302,12 +302,14 @@ namespace gpu_directx11
    // }
 
 
-   void texture::_initialize_gpu_texture(::gpu::renderer *prenderer, IDXGISwapChain1 *pdxgiswapchain1)
+   void texture::_initialize_gpu_texture(::gpu::context *pgpucontext, IDXGISwapChain1 *pdxgiswapchain1)
    {
 
-      m_pgpurenderer = prenderer;
+      //m_pgpurenderer = prenderer;
 
-      ::cast<::gpu_directx11::device> pgpudevice = m_pgpurenderer->m_pgpucontext->m_pgpudevice;
+      m_pgpucontext = pgpucontext;
+
+      ::cast<::gpu_directx11::device> pgpudevice = m_pgpucontext->m_pgpudevice;
 
       auto pdevice = pgpudevice->m_pd3d11device;
 
@@ -397,7 +399,7 @@ namespace gpu_directx11
    {
 
       // m_bRenderTarget = true;
-      ::cast<::gpu_directx11::device> pgpudevice = m_pgpurenderer->m_pgpucontext->m_pgpudevice;
+      ::cast<::gpu_directx11::device> pgpudevice = m_pgpucontext->m_pgpudevice;
 
       if (m_textureflags.m_bRenderTarget)
       {
@@ -462,7 +464,7 @@ namespace gpu_directx11
    void texture::create_shader_resource_view()
    {
 
-      ::cast<::gpu_directx11::device> pgpudevice = m_pgpurenderer->m_pgpucontext->m_pgpudevice;
+      ::cast<::gpu_directx11::device> pgpudevice = m_pgpucontext->m_pgpudevice;
 
       D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
       // srvDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM; // Must match or be compatible
@@ -530,7 +532,7 @@ namespace gpu_directx11
          depthDesc.Usage = D3D11_USAGE_DEFAULT;
          depthDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
 
-         ::cast<::gpu_directx11::device> pgpudevice = m_pgpurenderer->m_pgpucontext->m_pgpudevice;
+         ::cast<::gpu_directx11::device> pgpudevice = m_pgpucontext->m_pgpudevice;
 
          auto pdevice = pgpudevice->m_pd3d11device;
 
@@ -699,7 +701,7 @@ namespace gpu_directx11
 
       //::cast < ::gpu_directx11::device > pgpudevice = m_pgpurenderer->m_pgpucontext->m_pgpudevice;
 
-      ::cast<::gpu_directx11::context> pgpucontext = m_pgpurenderer->m_pgpucontext;
+      ::cast<::gpu_directx11::context> pgpucontext = m_pgpucontext;
 
       // Define the box region to update (in texel coordinates)
       D3D11_BOX box{};
@@ -744,10 +746,10 @@ namespace gpu_directx11
    }
 
 
-   void texture::initialize_with_image_data(::gpu::renderer *pgpurenderer, const ::int_rectangle &rectangleTarget,
+   void texture::initialize_with_image_data(::gpu::context *pgpucontext, const ::int_rectangle &rectangleTarget,
                                             int channels, bool bSrgb, const void *pdata, ::gpu::enum_texture etexture)
    {
-      m_pgpurenderer = pgpurenderer;
+      m_pgpucontext = pgpucontext;
       auto width = rectangleTarget.width();
       auto height = rectangleTarget.height();
       auto imagedata = (unsigned char *)pdata;
@@ -757,7 +759,7 @@ namespace gpu_directx11
 
       m_textureflags.m_bWithDepth = false;
 
-      ::cast<::gpu_directx11::context> pgpucontext = m_pgpurenderer->m_pgpucontext;
+      ::cast<::gpu_directx11::context> pcontext = m_pgpucontext;
       ::cast<::gpu_directx11::device> pgpudevice = pgpucontext->m_pgpudevice;
 
       auto pdevice = pgpudevice->m_pd3d11device;
@@ -870,12 +872,12 @@ namespace gpu_directx11
    }
 
 
-   void texture::initialize_hdr_texture_on_memory(::gpu::renderer *pgpurenderer, const ::block &block)
+   void texture::initialize_hdr_texture_on_memory(::gpu::context *pgpucontext, const ::block &block)
    {
 
-      ::gpu::context_lock contextlock(pgpurenderer->m_pgpucontext);
+      ::gpu::context_lock contextlock(pgpucontext);
 
-      m_pgpurenderer = pgpurenderer;
+      m_pgpucontext = pgpucontext;
 
       auto data = block.data();
 
@@ -906,7 +908,7 @@ namespace gpu_directx11
 
       m_textureflags.m_bWithDepth = false;
 
-      ::cast<::gpu_directx11::context> pgpucontext = m_pgpurenderer->m_pgpucontext;
+      ::cast<::gpu_directx11::context> pcontext = pgpucontext;
       ::cast<::gpu_directx11::device> pgpudevice = pgpucontext->m_pgpudevice;
       // --- Create Texture2D ---
       D3D11_TEXTURE2D_DESC texDesc = {};

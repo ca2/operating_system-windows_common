@@ -194,7 +194,7 @@ namespace gpu_directx11
          m_ptextureSwapChain->m_textureflags.m_bShaderResource = false;
 
          m_ptextureSwapChain->_initialize_gpu_texture(
-            pgpurenderer,
+            pgpucontext,
             m_pdxgiswapchain1);
 
          //m_pdxgiswapchain1->GetBuffer(0, __interface_of(m_ptextureSwapChain));

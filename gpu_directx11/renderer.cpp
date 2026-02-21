@@ -377,7 +377,7 @@ namespace gpu_directx11
 
       }
 
-      assert(!isFrameStarted && "Can't call beginFrame while already in progress");
+      assert(!m_bFrameStarted && "Can't call beginFrame while already in progress");
 
       //if (m_bOffScreen)
       {
@@ -400,7 +400,7 @@ namespace gpu_directx11
          //   throw ::exception(error_failed, "Failed to aquire swap chain image");
          //}
 
-         isFrameStarted = true;
+         m_bFrameStarted = true;
 
          //auto commandBuffer = getCurrentCommandBuffer();
 
@@ -823,7 +823,7 @@ namespace gpu_directx11
 
 
       }
-      isFrameStarted = false;
+      m_bFrameStarted = false;
       //currentFrameIndex = (currentFrameIndex + 1) % render_target_view::MAX_FRAMES_IN_FLIGHT;
 
       //}
@@ -1234,7 +1234,7 @@ HRESULT hrCreateDepthStencilState = pgpudevice->m_pd3d11device->CreateDepthStenc
 
       }
 
-      isFrameStarted = false;
+      m_bFrameStarted = false;
 
    }
 

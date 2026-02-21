@@ -101,7 +101,7 @@ namespace draw2d_directx11
       if (::is_set(pgraphics))
       {
 
-         fFontSize *= (float)pgraphics->m_dFontFactor;
+         fFontSize *= (float)pgraphics->m_dSizeScaler;
 
       }
 

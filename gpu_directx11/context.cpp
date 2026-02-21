@@ -1123,7 +1123,8 @@ namespace gpu_directx11
    }
 
 
-   void context::copy(::gpu::texture* pgputextureTarget, ::gpu::texture* pgputextureSource)
+   void context::copy(::gpu::texture *pgputextureTarget, ::gpu::texture *pgputextureSource,
+                      ::pointer<::gpu::fence> *pgpufence)
    {
 
       ::gpu::context_lock context_lock(this);
@@ -1358,7 +1359,8 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    }
 
 
-   void context::merge_layers(::gpu::texture* ptextureTarget, ::pointer_array < ::gpu::layer >* playera)
+   void context::merge_layers(::gpu::command_buffer *pgpucommandbuffer, ::gpu::texture *ptextureTarget,
+                              ::pointer_array<::gpu::layer> *playera)
    {
 
       ::gpu::context_lock context_lock(this);
