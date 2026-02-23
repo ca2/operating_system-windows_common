@@ -79,7 +79,7 @@ namespace gpu_directx11
          //DXGI_SWAP_CHAIN_DESC sd = {};
          //sd.BufferCount = 1;
          RECT rect = {};
-         GetWindowRect(pwin32window->m_hwnd, &rect);
+         GetWindowRect(pwin32window->_HWND(), &rect);
          //sd.BufferDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
          //sd.BufferDesc.RefreshRate.Numerator = 60;
          //sd.BufferDesc.RefreshRate.Denominator = 1;
@@ -103,8 +103,7 @@ namespace gpu_directx11
          // Create the swap chain for an HWND
          //ComPtr<IDXGISwapChain1> swapChain1;
          HRESULT hrCreateSwapChainForHwnd = pdx11gpudevice->m_pdxgifactory2->CreateSwapChainForHwnd(
-            m_pdxgidevice_2,
-            pwin32window->m_hwnd,
+            m_pdxgidevice_2, pwin32window->_HWND(),
             &desc,
             nullptr,       // No fullscreen desc
             nullptr,       // No output restriction
@@ -125,7 +124,7 @@ namespace gpu_directx11
          dxgiswapchaindesc1.AlphaMode = DXGI_ALPHA_MODE_PREMULTIPLIED;
 
          RECT rect = {};
-         GetWindowRect(pwin32window->m_hwnd, &rect);
+         GetWindowRect(pwin32window->_HWND(), &rect);
          dxgiswapchaindesc1.Width = rect.right - rect.left;
          dxgiswapchaindesc1.Height = rect.bottom - rect.top;
 

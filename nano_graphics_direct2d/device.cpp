@@ -32,7 +32,7 @@ namespace universal_windows
          device::device()
          {
 
-            //m_hdc = ::create_compatible_graphics(nullptr);
+            //m_hdc = ::CreateCompatibleDC(nullptr);
             //m_bDelete = true;
 
          }
@@ -171,7 +171,7 @@ namespace universal_windows
             //g.DrawImage(pwindowsicon->m_pimage, r);
             ////)
 
-            //HDC hdcMem = ::create_compatible_graphics(m_hdc);
+            //HDC hdcMem = ::CreateCompatibleDC(m_hdc);
 
             //HBITMAP hOldBitmap = (HBITMAP)SelectObject(hdcMem, pwindowsicon->m_hgdiobj);
 

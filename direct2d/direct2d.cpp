@@ -214,7 +214,7 @@ namespace direct2d
       if (FAILED(hr))
       {
 
-         warning() << "graphics::create_compatible_graphics, CreateDeviceContext (1) " << hresult_text(hr);
+         warning() << "graphics::CreateCompatibleDC, CreateDeviceContext (1) " << hresult_text(hr);
 
          //return false;
 

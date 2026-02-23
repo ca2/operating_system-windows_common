@@ -28,11 +28,11 @@
 #include <Dwrite_1.h>
 
 
-CLASS_DECL_AURA float point_dpi(oswindow hwnd, float points);
-CLASS_DECL_AURA float dpiy(oswindow hwnd, float y);
-CLASS_DECL_AURA float dpix(oswindow hwnd, float y);
-CLASS_DECL_AURA float y_dpi(oswindow hwnd, float y);
-CLASS_DECL_AURA float x_dpi(oswindow hwnd, float y);
+CLASS_DECL_AURA float point_dpi(const ::operating_system::window & operatingsystemwindow, float points);
+CLASS_DECL_AURA float dpiy(const ::operating_system::window &operatingsystemwindow, float y);
+CLASS_DECL_AURA float dpix(const ::operating_system::window &operatingsystemwindow, float y);
+CLASS_DECL_AURA float y_dpi(const ::operating_system::window &operatingsystemwindow, float y);
+CLASS_DECL_AURA float x_dpi(const ::operating_system::window &operatingsystemwindow, float y);
 
 
 CLASS_DECL_DIRECT2D DWRITE_FONT_WEIGHT dwrite_font_weight(const write_text::font_weight & fontweight);

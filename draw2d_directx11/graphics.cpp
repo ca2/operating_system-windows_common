@@ -402,7 +402,7 @@ namespace draw2d_directx11
             ////if (FAILED(hr))
             ////{
 
-            ////   warning() << "graphics::create_compatible_graphics, CreateDeviceContext (1) " << hresult_text(hr);
+            ////   warning() << "graphics::CreateCompatibleDC, CreateDeviceContext (1) " << hresult_text(hr);
 
             ////   //return false;
 
@@ -440,7 +440,7 @@ namespace draw2d_directx11
             ////if (FAILED(hr))
             ////{
 
-            ////   warning() << "graphics::create_compatible_graphics, QueryInterface (2) " << hresult_text(hr);
+            ////   warning() << "graphics::CreateCompatibleDC, QueryInterface (2) " << hresult_text(hr);
 
             ////   throw ::exception(error_failed);
 
@@ -505,7 +505,7 @@ namespace draw2d_directx11
             ////if (FAILED(hr))
             ////{
 
-            ////   warning() << "graphics::create_compatible_graphics, CreateCompatibleRenderTarget (3) " << hresult_text(hr);
+            ////   warning() << "graphics::CreateCompatibleDC, CreateCompatibleRenderTarget (3) " << hresult_text(hr);
 
             ////   throw ::exception(error_failed);
 
@@ -1641,7 +1641,7 @@ namespace draw2d_directx11
 //
 //         HBITMAP hbitmap = ::CreateDIBSection(nullptr, &info, DIB_RGB_COLORS, (void **) &pimage32, nullptr, 0);
 //
-//         HDC hdc = ::create_compatible_graphics(nullptr);
+//         HDC hdc = ::CreateCompatibleDC(nullptr);
 //
 //         HBITMAP hbitmapOld = (HBITMAP) ::SelectObject(hdc, hbitmap);
 //
