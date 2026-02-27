@@ -20,7 +20,7 @@ namespace gpu_directx11
       ::pointer < ::gpu_directx11::shader > m_pshaderPresent;
       //::comptr<ID3D11Texture2D> m_ptextureSwapChain;
       //::comptr<ID3D11RenderTargetView> m_prendertargetviewSwapChain;
-      ::pointer < texture > m_ptextureSwapChain;
+      ::pointer<::gpu_directx11::texture> m_ptextureSwapChain;
       ::comptr <ID3D11BlendState > m_pblendstateDisabled;
 
 

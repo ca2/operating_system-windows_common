@@ -382,9 +382,9 @@ namespace gpu_directx11
       //if (m_bOffScreen)
       {
 
-         ::cast < render_target_view > pgpurendertargetview = render_target();
+         //::cast < render_target_view > pgpurendertargetview = render_target();
 
-         auto result = pgpurendertargetview->acquireNextImage();
+         //auto result = pgpurendertargetview->acquireNextImage();
 
          //if (result == VK_ERROR_OUT_OF_DATE_KHR
          //   || m_prendertargetview->m_bNeedRebuild)

@@ -203,21 +203,6 @@ namespace draw2d_directx11
 
       //m_pdevicecontext.as(m_pd2d1rendertarget);
 
-      if (m_papplication->m_gpu.m_bUseSwapChainWindow)
-      {
-
-         auto pcontextMain = pgpudevice->main_context();
-
-         auto pswapchain = pcontextMain->get_swap_chain();
-
-         if (!pswapchain->m_bSwapChainInitialized)
-         {
-
-            pswapchain->initialize_swap_chain_window(pcontextMain, puserinteraction->window());
-
-         }
-
-      }
 
       //// for now create a "fake" memory graphics
 
