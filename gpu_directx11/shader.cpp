@@ -229,7 +229,7 @@ namespace gpu_directx11
 
       //_create_pipeline_layout(m_properties.m_memory.size());
 
-      // øconstruct_new(m_ppipeline);
+      // construct_newø(m_ppipeline);
 
       ::cast<context> pgpucontext = m_pgpurenderer->m_pgpucontext;
 

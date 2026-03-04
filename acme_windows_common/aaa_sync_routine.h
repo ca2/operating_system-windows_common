@@ -66,7 +66,7 @@ namespace promise
    inline ::pointer<sync_routine>___sync_routine(const ::procedure & procedure)
    {
 
-      return øallocate sync_routine(routine);
+      return allocateø sync_routine(routine);
 
    }
 

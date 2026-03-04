@@ -54,7 +54,7 @@ public:
 inline ::pointer<sync_future>__sync_future()
 {
 
-   return øallocate sync_future();
+   return allocateø sync_future();
 
 }
 

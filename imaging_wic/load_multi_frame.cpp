@@ -183,7 +183,7 @@ namespace imaging_wic
 
             //auto estatus =
             
-            øconstruct(pframe->m_pimage);
+            constructø(pframe->m_pimage);
 
             //if (!estatus)
             //{

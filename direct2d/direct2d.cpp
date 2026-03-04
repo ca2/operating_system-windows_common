@@ -325,7 +325,7 @@ namespace direct2d
 
          ::pointer < direct2d > pdirect2dNew;
 
-         pgpudevice->øconstruct_new(pdirect2dNew);
+         pgpudevice->construct_newø(pdirect2dNew);
 
          ::cast < ::dxgi_device_source > pdxgidevicesource = pgpudevice;
 

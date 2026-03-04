@@ -25,7 +25,7 @@
 //inline auto __sync_method(PRED pred)
 //{
 //
-//   return øallocate sync_method(method(pred));
+//   return allocateø sync_method(method(pred));
 //
 //}
 

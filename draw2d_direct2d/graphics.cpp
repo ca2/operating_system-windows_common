@@ -157,9 +157,9 @@ namespace draw2d_direct2d
    void graphics::defer_set_size(const ::int_size& size)
    {
       _create_memory_graphics(size);
-      /*m_pgpucontextCompositor->_send([this, size]()
+      /*m_pgpucontextCompositor->sendø() << [this, size]()
          {
-            m_pgpucontextCompositor->_send([this, size]()
+            m_pgpucontextCompositor->sendø() << [this, size]()
                {
          });*/
    }
@@ -238,7 +238,7 @@ namespace draw2d_direct2d
 
       /*_create_memory_graphics(size);
 
-      m_pgpucontextCompositor->_send([this, size]()
+      m_pgpucontextCompositor->sendø() << [this, size]()
          {
 
             m_pgpucontextCompositor->create_offscreen_graphics_for_swap_chain_blitting(this, size);
@@ -357,13 +357,13 @@ namespace draw2d_direct2d
 
       //auto pcontext = gpu_context();
 
-      pcontext->_send([this, size]()
+      pcontext->sendø() << [this, size]()
          {
 
             auto pcontext = gpu_context();
 
             ::gpu::context_lock context_lock(pcontext);
-            /*::direct2d::direct2d() = øallocate ::draw2d_direct2d::plugin();
+            /*::direct2d::direct2d() = allocateø ::draw2d_direct2d::plugin();
 
             ::direct2d::get()->initialize();*/
 
@@ -2843,7 +2843,7 @@ namespace draw2d_direct2d
       if (m_pfont.is_null())
       {
 
-         øconstruct(((graphics *)this)->m_pfont);
+         constructø(((graphics *)this)->m_pfont);
 
       }
 
@@ -6409,7 +6409,7 @@ namespace draw2d_direct2d
 
    //   }
 
-   //   m_penddraw = øallocate swap_chain_end_draw();
+   //   m_penddraw = allocateø swap_chain_end_draw();
 
    //   m_penddraw->initialize(this);
 

@@ -107,7 +107,7 @@ namespace gpu_directx11
 
          pgpucontext->create_cpu_buffer(pgpucontext->rectangle().size());
 
-         øconstruct_new(m_pcpubuffersampler);
+         construct_newø(m_pcpubuffersampler);
 
          m_pcpubuffersampler->initialize_cpu_buffer_sampler(pgpucontext);
 
@@ -215,8 +215,8 @@ namespace gpu_directx11
    //      || eoutput == ::gpu::e_output_gpu_buffer)
    //   {
 
-   //      //auto poffscreenrendertargetview = øallocate offscreen_render_target_view(this, size, m_pgpurendertarget);
-   //      auto poffscreenrendertargetview = øallocate offscreen_render_target_view();
+   //      //auto poffscreenrendertargetview = allocateø offscreen_render_target_view(this, size, m_pgpurendertarget);
+   //      auto poffscreenrendertargetview = allocateø offscreen_render_target_view();
 
    //      //#ifdef WINDOWS_DESKTOP
    //      //         poffscreenrendertargetview->m_formatImage = VK_FORMAT_B8G8R8A8_UNORM;
@@ -234,14 +234,14 @@ namespace gpu_directx11
 
    //      m_pgpurendertarget = pswapchain;
 
-   //      //m_prendertargetview = øallocate swap_chain_render_target_view(this, size, m_prendertargetview);
+   //      //m_prendertargetview = allocateø swap_chain_render_target_view(this, size, m_prendertargetview);
    //      //m_prendererResolve.release();
 
    //   }
    //   //      else if (eoutput == ::gpu::e_output_gpu_buffer)
    //   //      {
    //   //
-   //   //         auto poffscreenrendertargetview = øallocate offscreen_render_target_view(this, m_extentRenderer, m_prendertargetview);
+   //   //         auto poffscreenrendertargetview = allocateø offscreen_render_target_view(this, m_extentRenderer, m_prendertargetview);
    //   //#ifdef WINDOWS_DESKTOP
    //   //         poffscreenrendertargetview->m_formatImage = VK_FORMAT_B8G8R8A8_UNORM;
    //   //#else
@@ -254,18 +254,18 @@ namespace gpu_directx11
    //   //      else if (eoutput == ::gpu::e_output_color_and_alpha_accumulation_buffers)
    //   //      {
    //   //
-   //   //         auto paccumulationrendertargetview = øallocate accumulation_render_target_view(this, m_extentRenderer, m_prendertargetview);
+   //   //         auto paccumulationrendertargetview = allocateø accumulation_render_target_view(this, m_extentRenderer, m_prendertargetview);
    //   //         paccumulationrendertargetview->m_formatImage = VK_FORMAT_R32G32B32A32_SFLOAT;
    //   //         paccumulationrendertargetview->m_formatAlphaAccumulation = VK_FORMAT_R32_SFLOAT;
    //   //         m_prendertargetview = paccumulationrendertargetview;
    //   //
-   //   //         //øconstruct_new(m_prendererResolve);
+   //   //         //construct_newø(m_prendererResolve);
    //   //
    //   //         //m_prendererResolve->initialize_renderer(m_pgpucontext, ::gpu::e_output_resolve_color_and_alpha_accumulation_buffers);
    //   //
    //   //         //m_prendererResolve->set_placement(m_pgpucontext->rectangle);
    //   //         //
-   //   //         //            auto poffscreenrendertargetview = øallocate offscreen_render_target_view(m_pgpucontext, m_extentRenderer, m_prendertargetviewResolve);
+   //   //         //            auto poffscreenrendertargetview = allocateø offscreen_render_target_view(m_pgpucontext, m_extentRenderer, m_prendertargetviewResolve);
    //   //         //#ifdef WINDOWS_DESKTOP
    //   //         //            poffscreenrendertargetview->m_formatImage = VK_FORMAT_B8G8R8A8_UNORM;
    //   //         //#else
@@ -276,7 +276,7 @@ namespace gpu_directx11
    //   //      else if (eoutput == ::gpu::e_output_resolve_color_and_alpha_accumulation_buffers)
    //   //      {
    //   //
-   //   //         auto poffscreenrendertargetview = øallocate offscreen_render_target_view(this, m_extentRenderer, m_prendertargetview);
+   //   //         auto poffscreenrendertargetview = allocateø offscreen_render_target_view(this, m_extentRenderer, m_prendertargetview);
    //   //#ifdef WINDOWS_DESKTOP
    //   //         poffscreenrendertargetview->m_formatImage = VK_FORMAT_B8G8R8A8_UNORM;
    //   //#else
@@ -310,7 +310,7 @@ namespace gpu_directx11
    ::pointer < ::gpu::render_target > renderer::allocate_offscreen_render_target()
    {
 
-      auto poffscreenrendertargetview = øallocate offscreen_render_target_view();
+      auto poffscreenrendertargetview = allocateø offscreen_render_target_view();
 
       return poffscreenrendertargetview;
 

@@ -75,7 +75,7 @@ namespace imaging_wic
       ::image::image_context::initialize(pparticle);
 
 
-      //øconstruct(m_pparticleImageSynchronization);
+      //constructø(m_pparticleImageSynchronization);
 
       //if (!estatus)
       //{
@@ -87,15 +87,15 @@ namespace imaging_wic
 
 #ifdef UNIVERSAL_WINDOWS
 
-      m_pmanagerImageLoadSlowQueue = øallocate multi_threaded_handler_manager();
+      m_pmanagerImageLoadSlowQueue = allocateø multi_threaded_handler_manager();
 
-      m_pmanagerImageLoadFastQueue = øallocate multi_threaded_handler_manager();
+      m_pmanagerImageLoadFastQueue = allocateø multi_threaded_handler_manager();
 
 #else
 
-      m_pmanagerImageLoadSlowQueue = øallocate single_threaded_handler_manager();
+      m_pmanagerImageLoadSlowQueue = allocateø single_threaded_handler_manager();
 
-      m_pmanagerImageLoadFastQueue = øallocate single_threaded_handler_manager();
+      m_pmanagerImageLoadFastQueue = allocateø single_threaded_handler_manager();
 
 #endif
 

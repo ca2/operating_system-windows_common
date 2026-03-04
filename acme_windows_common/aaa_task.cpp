@@ -487,7 +487,7 @@ void task::begin_task(
 ::task_pointer task::launch(::matter * pmatter, ::enum_priority epriority, unsigned int nStackSize, unsigned int uCreateFlags)
 {
 
-   auto ptask = øallocate task();
+   auto ptask = allocateø task();
 
    ptask->start(pmatter, epriority, nStackSize, uCreateFlags);
 
@@ -578,7 +578,7 @@ CLASS_DECL_ACME bool __task_sleep(task* pthread, const class ::wait & wait)
          if (pthread->m_pevSleep.is_null())
          {
 
-            pthread->m_pevSleep = øallocate manual_reset_happening();
+            pthread->m_pevSleep = allocateø manual_reset_happening();
 
             pthread->m_pevSleep->reset_happening();
 
