@@ -327,7 +327,7 @@ namespace gpu_directx11
       for(auto & pcommandbuffer : m_commandbuffera)
       {
          
-         ødefer_construct(pcommandbuffer);
+         defer_constructø(pcommandbuffer);
 
          pcommandbuffer->initialize_command_buffer(
             pgpurendertarget,
@@ -412,7 +412,7 @@ namespace gpu_directx11
          //}
 
          //m_
-         //auto pframe = øcreate_new < frame >();
+         //auto pframe = create_newø < frame >();
          //pframe->commandBuffer = commandBuffer;
          //m_pframe = pframe;
          //return m_pframe;
@@ -860,7 +860,7 @@ namespace gpu_directx11
       if (!m_pshaderImageBlend)
       {
 
-         auto pinputlayoutEmpty = øcreate <::gpu::input_layout >();
+         auto pinputlayoutEmpty = createø <::gpu::input_layout >();
 
          //pshadervertexinput->m_bindings.add(
          //   {
@@ -872,7 +872,7 @@ namespace gpu_directx11
          //pshadervertexinput->m_attribs.add({ .location = 0, .binding = 0, .format = VK_FORMAT_R32G32_SFLOAT, .offset = 0 });
          //pshadervertexinput->m_attribs.add({ .location = 1, .binding = 0, .format = VK_FORMAT_R32G32_SFLOAT, .offset = sizeof(float) * 2 });
 
-         auto pshaderImageBlend = øcreate_new<::gpu_directx11::shader>();
+         auto pshaderImageBlend = create_newø<::gpu_directx11::shader>();
 
          m_pshaderImageBlend = pshaderImageBlend;
 
@@ -900,7 +900,7 @@ namespace gpu_directx11
       if (!m_pshaderImageBlend)
       {
 
-         auto pinputlayoutEmpty = øcreate< ::gpu::input_layout >();
+         auto pinputlayoutEmpty = createø< ::gpu::input_layout >();
 
          //pshadervertexinput->m_bindings.add(
          //   {
@@ -912,7 +912,7 @@ namespace gpu_directx11
          //pshadervertexinput->m_attribs.add({ .location = 0, .binding = 0, .format = VK_FORMAT_R32G32_SFLOAT, .offset = 0 });
          //pshadervertexinput->m_attribs.add({ .location = 1, .binding = 0, .format = VK_FORMAT_R32G32_SFLOAT, .offset = sizeof(float) * 2 });
 
-         auto pshaderImageBlend = øcreate_new<::gpu_directx11::shader>();
+         auto pshaderImageBlend = create_newø<::gpu_directx11::shader>();
 
          m_pshaderImageBlend = pshaderImageBlend;
 
@@ -1201,7 +1201,7 @@ HRESULT hrCreateDepthStencilState = pgpudevice->m_pd3d11device->CreateDepthStenc
 
       //assert(!isFrameStarted && "Can't call beginFrame while already in progress");
 
-      //ødefer_construct(m_pgpurendertarget->m_pgpuframe);
+      //defer_constructø(m_pgpurendertarget->m_pgpuframe);
       //
       //m_prenderstate->on_happening(::gpu::e_happening_begin_frame);
 

@@ -56,7 +56,7 @@ namespace directx11
 
    //   //}
 
-   //   pwindow->ødefer_construct(directx11::s_pdirectx11);
+   //   pwindow->defer_constructø(directx11::s_pdirectx11);
 
    //}
 
@@ -121,7 +121,7 @@ namespace directx11
       if (!pdirectx11)
       {
 
-         pdirectx11 = pgpudevice->øcreate_new < directx11>();
+         pdirectx11 = pgpudevice->create_newø < directx11>();
 
          pgpudevice->payload("directx11") = pdirectx11;
 

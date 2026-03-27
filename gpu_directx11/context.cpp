@@ -592,7 +592,7 @@ namespace gpu_directx11
 //::pointer<::gpu::texture> context::loadCubemap(const ::scoped_string &name, const ::scoped_string &scopedstrFileName,bool b32)
 //   {
 //
-//      auto pgputexture = øcreate<::gpu::texture>();
+//      auto pgputexture = createø<::gpu::texture>();
 //
 //      ::cast<::gpu_directx11::texture> ptexture = pgputexture;
 //
@@ -754,7 +754,7 @@ namespace gpu_directx11
    ::pointer < ::gpu::context > allocate_system_context(::particle* pparticle)
    {
 
-      return pparticle->øcreate_new <context>();
+      return pparticle->create_newø <context>();
 
    }
 
@@ -1204,7 +1204,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 }
 )hlsl";
 
-         ødefer_construct_new(m_pshaderCopyUsingShader);
+         defer_construct_newø(m_pshaderCopyUsingShader);
 
          m_pshaderCopyUsingShader->m_bDisableDepthTest = true;
          m_pshaderCopyUsingShader->m_bEnableBlend = false;
@@ -1401,7 +1401,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 }
 )hlsl";
 
-         ødefer_construct_new(m_pshaderBlend3);
+         defer_construct_newø(m_pshaderBlend3);
 
          m_pshaderBlend3->initialize_shader_with_block(
             m_pgpurenderer,

@@ -45,7 +45,7 @@ namespace write_text_direct2d
    void font_enumeration::on_enumerate_fonts()
    {
 
-      ødefer_construct_new(m_pfontenumerationitema);
+      defer_construct_newø(m_pfontenumerationitema);
 
       m_pfontenumerationitema->erase_all();
 

@@ -522,7 +522,7 @@ namespace draw2d_directx11
 
             ////}
 
-            ////ødefer_construct(m_pbitmap);
+            ////defer_constructø(m_pbitmap);
 
             ////ID2D1Bitmap* pbitmap;
 
@@ -1434,7 +1434,7 @@ namespace draw2d_directx11
    //void graphics::Arc(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4)
    //{
 
-   //   auto ppath = øcreate < ::draw2d::path > ();
+   //   auto ppath = createø < ::draw2d::path > ();
 
    //   double pi = 3.1415927f;
 
@@ -1460,7 +1460,7 @@ namespace draw2d_directx11
    void graphics::arc(double x1, double y1, double w, double h, ::double_angle start, ::double_angle extends)
    {
 
-      auto ppath = øcreate < ::draw2d::path >();
+      auto ppath = createø < ::draw2d::path >();
 
       ::int_rectangle rectangle((int)x1, (int)y1, (int)(x1 + w), (int)(y1 + h));
 
@@ -1478,7 +1478,7 @@ namespace draw2d_directx11
    void graphics::arc(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4)
    {
 
-      auto ppath = øcreate < ::draw2d::path >();
+      auto ppath = createø < ::draw2d::path >();
 
       double pi = 3.1415927f;
 
@@ -1520,7 +1520,7 @@ namespace draw2d_directx11
    void graphics::polyline(const ::double_point * ppoints, ::collection::count nCount)
    {
 
-      auto ppath = øcreate < ::draw2d::path >();
+      auto ppath = createø < ::draw2d::path >();
 
       //ppath->begin_figure(false, ::draw2d::e_fill_mode_winding);
 
@@ -2570,7 +2570,7 @@ namespace draw2d_directx11
 
             auto & pframeaTarget = m_pimage->get_extension()->m_pframea;
 
-            ødefer_construct_new(pframeaTarget);
+            defer_construct_newø(pframeaTarget);
 
             if (pframeaTarget->get_size() != pframeaSource->get_size())
             {
@@ -2584,7 +2584,7 @@ namespace draw2d_directx11
 
                   auto & pframeTarget = pframeaTarget->element_at(i);
 
-                  ødefer_construct_new(pframeTarget);
+                  defer_construct_newø(pframeTarget);
 
                   pframeTarget->m_time = pframeSource->m_time;
 
@@ -2596,7 +2596,7 @@ namespace draw2d_directx11
 
                   auto & pimageTarget = pframeTarget->m_pimage;
 
-                  ødefer_construct(pimageTarget);
+                  defer_constructø(pimageTarget);
 
                   pimageTarget->create(m_pimage->size());
 
@@ -4835,7 +4835,7 @@ namespace draw2d_directx11
 
    //   {
 
-   //      auto pregion = øcreate < ::draw2d::region > ();
+   //      auto pregion = createø < ::draw2d::region > ();
 
    //      auto rectangleClip = int_rectangle + m_pointAddShapeTranslate;
 
@@ -4908,7 +4908,7 @@ namespace draw2d_directx11
    //   //if (!shaperegion.holdee())
    //   //{
 
-   //   //   auto pregion = øcreate < ::draw2d::region >();
+   //   //   auto pregion = createø < ::draw2d::region >();
 
    //   //   auto rectangleClip = rectangle + m_pointAddShapeTranslate;
 
@@ -4956,7 +4956,7 @@ namespace draw2d_directx11
 
    ////   {
 
-   ////      auto pregion = øcreate < ::draw2d::region > ();
+   ////      auto pregion = createø < ::draw2d::region > ();
 
    ////      pregion->create_oval(oval);
 
@@ -4992,7 +4992,7 @@ namespace draw2d_directx11
    //      //if (!shaperegion.holdee())
    //      //{
 
-   //      //   auto pregion = øcreate < ::draw2d::region >();
+   //      //   auto pregion = createø < ::draw2d::region >();
 
    //      //   auto rectangleClip = ellipse + m_pointAddShapeTranslate;
 
@@ -5102,7 +5102,7 @@ namespace draw2d_directx11
 
    //   {
 
-   //      auto pregion = øcreate < ::draw2d::region > ();
+   //      auto pregion = createø < ::draw2d::region > ();
 
    //      pregion->create_polygon(int_polygon.get_data(), (int) int_polygon.get_count(), ::draw2d::e_fill_mode_winding);
 
@@ -5138,7 +5138,7 @@ namespace draw2d_directx11
    //      //if (!shaperegion.holdee())
    //      //{
 
-   //      //   auto pregion = øcreate < ::draw2d::region >();
+   //      //   auto pregion = createø < ::draw2d::region >();
 
    //      //   pregion->m_pointOffset = m_pointAddShapeTranslate;
 
@@ -5651,7 +5651,7 @@ namespace draw2d_directx11
 //      case META_SETBKCOLOR:
 //      {
 //
-//         auto pbrush = pgraphics->øcreate < ::draw2d::brush >();
+//         auto pbrush = pgraphics->createø < ::draw2d::brush >();
 //
 //         pbrush->create_solid(*(UNALIGNED::color::color *)&pMetaRec->rdParm[0]);
 //
@@ -5661,7 +5661,7 @@ namespace draw2d_directx11
 //      break;
 //      case META_SETTEXTCOLOR:
 //      {
-//         auto pbrush = pgraphics->øcreate < ::draw2d::brush >();
+//         auto pbrush = pgraphics->createø < ::draw2d::brush >();
 //         pbrush->create_solid(*(UNALIGNED::color::color *)&pMetaRec->rdParm[0]);
 //         (dynamic_cast<::draw2d_directx11::graphics *>(pgraphics))->set(pbrush);
 //      }
@@ -7982,7 +7982,7 @@ namespace draw2d_directx11
    //   if (!pdirectx11region)
    //   {
 
-   //      pdirectx11region = øcreate_new < region >();
+   //      pdirectx11region = create_newø < region >();
 
    //      //pdirectx11region->m_eregion = pregion->m_eregion;
 

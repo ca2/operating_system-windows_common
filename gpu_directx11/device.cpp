@@ -79,7 +79,7 @@ namespace gpu_directx11
    ::pointer < ::gpu::device > allocate_system_context(::particle* pparticle)
    {
 
-      return pparticle->øcreate_new <device>();
+      return pparticle->create_newø <device>();
 
    }
 
@@ -2199,7 +2199,7 @@ bool device::_is_ok() const
       //if (!pframestorage)
       //{
 
-      //   ødefer_construct_new(pframestorage);
+      //   defer_construct_newø(pframestorage);
 
       //}
 

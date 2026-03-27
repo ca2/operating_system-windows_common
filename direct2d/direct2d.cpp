@@ -295,7 +295,7 @@ namespace direct2d
    //   //}
 
 
-   //   pwindow->ødefer_construct(direct2d::s_pdirect2d);
+   //   pwindow->defer_constructø(direct2d::s_pdirect2d);
 
    //   //direct2d::s_pdirect2d->initialize(pwindow);
 
