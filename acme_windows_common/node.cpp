@@ -1114,6 +1114,34 @@ namespace acme_windows_common
    }
 
 
+   ::string node::system_architecture()
+   {
+
+      SYSTEM_INFO si;
+      ZeroMemory(&si, sizeof(si));
+
+      // IMPORTANT: this returns the *native* system architecture
+      GetNativeSystemInfo(&si);
+
+      switch (si.wProcessorArchitecture)
+      {
+      case PROCESSOR_ARCHITECTURE_ARM64:
+         return "arm64";
+
+      case PROCESSOR_ARCHITECTURE_AMD64:
+         return "x64";
+
+      case PROCESSOR_ARCHITECTURE_INTEL:
+         return "x86";
+
+      default:
+         break;
+      }
+
+      return "(unknown)";
+
+   }
+
 
    
 } // namespace acme_windows_common

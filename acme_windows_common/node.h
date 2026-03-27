@@ -106,6 +106,9 @@ namespace acme_windows_common
       ::string dynamic_library_suffix() override;
 
 
+      ::string system_architecture() override;
+
+
    };
 
 
