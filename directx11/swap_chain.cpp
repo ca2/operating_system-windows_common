@@ -190,7 +190,7 @@ namespace directx11
       ::defer_throw_hresult(hrDCompositionCreateDevice);
 
       ::defer_throw_hresult(
-         pdcompositiondevice->CreateTargetForHwnd(pwin32window->_HWND(),
+         pdcompositiondevice->CreateTargetForHwnd((HWND) pwin32window->_HWND(),
          true,
          &pdcompositiontarget));
 
