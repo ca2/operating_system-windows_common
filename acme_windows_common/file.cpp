@@ -13,7 +13,7 @@
 #include "acme/operating_system/windows_common/_string.h"
 #include "acme/platform/system.h"
 #include "acme/prototype/datetime/system_time.h"
-#include "acme/windowing/windowing.h"
+#include "acme/operating_system/time.h"
 
 
 #include <intsafe.h>
