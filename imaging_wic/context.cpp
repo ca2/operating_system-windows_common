@@ -133,9 +133,9 @@ namespace imaging_wic
    void image_context::destroy()
    {
 
-      m_pmanagerImageLoadSlowQueue.defer_destroy();
+      m_pmanagerImageLoadSlowQueue.defer_destroy_and_release();
 
-      m_pmanagerImageLoadFastQueue.defer_destroy();
+      m_pmanagerImageLoadFastQueue.defer_destroy_and_release();
 
       ::image::image_context::destroy();
 
