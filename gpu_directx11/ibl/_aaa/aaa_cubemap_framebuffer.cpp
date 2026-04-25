@@ -64,7 +64,7 @@ namespace gpu_directx11
 
         
 
-         //// framebuffer
+         //// pframebuffer
          //glGenFramebuffers(1, &ptexture->m_gluFbo);
          //GLCheckError("");
          //glBindFramebuffer(GL_FRAMEBUFFER, ptexture->m_gluFbo);

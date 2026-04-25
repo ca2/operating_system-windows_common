@@ -29,7 +29,7 @@ namespace gpu_directx11
          //
          // ::pointer<Shader> hdriShader;
          // ::pointer<hdri_cube> hdri_cube;
-         // ::pointer<cubemap_framebuffer> framebuffer;
+         // ::pointer<cubemap_framebuffer> pframebuffer;
 
          /**
           * Initialize an equirectangular_cubemap.

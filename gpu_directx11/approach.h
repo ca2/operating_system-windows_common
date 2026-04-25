@@ -56,7 +56,7 @@ namespace gpu_directx11
       //// Global render pass for frame buffer writes
       //VkRenderPass                     m_vkrendertargetview;
       //// List of available frame buffers (same as number of swap chain images)
-      //::array<VkFramebuffer>           m_frameBuffera;
+      //::array<VkFramebuffer>           m_framebuffera;
       // Active frame buffer index
       uint32_t                         m_uCurrentBuffer;
       // Descriptor set pool

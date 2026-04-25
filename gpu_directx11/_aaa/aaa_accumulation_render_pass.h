@@ -35,7 +35,7 @@ namespace gpu_directx11
 		void on_before_begin_render(frame* pframe) override;
 
 
-		//VkFramebuffer getFrameBuffer(int index) { return swapChainFramebuffers[index]; }
+		//VkFramebuffer getFramebuffer(int index) { return swapChainFramebuffers[index]; }
 		//VkRenderPass getRenderPass() { return m_vkrendertargetview; }
 		//VkImageView getImageView(int index) { return m_imageview[index]; }
 		//size_t imageCount() { return m_images.size(); }

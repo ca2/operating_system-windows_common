@@ -103,7 +103,7 @@ namespace gpu_directx11
          //   
          //   m_pshaderHdri->setModelViewProjection(model, cameraAngles[i], projection);
          //   
-         //   //m_pframebuffer->set_cube_face(i, m_pshaderHdri);
+         //   //m_pframebuffer.set_cube_face(i, m_pshaderHdri);
 
          //   m_ptextureCubemap->set_cube_face(i, m_pshaderHdri);
 
@@ -130,7 +130,7 @@ namespace gpu_directx11
 
          //pcontext->m_pcontext->Flush();
 
-         //m_pframebuffer->generateMipmap();
+         //m_pframebuffer.generateMipmap();
 
          //pcontext->end_debug_happening(pgpucommandbuffer);
 

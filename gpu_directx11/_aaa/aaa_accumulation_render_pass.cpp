@@ -80,8 +80,8 @@ namespace gpu_directx11
 
       }*/
 
-      //for (auto framebuffer : m_framebuffers) {
-      //   vkDestroyFramebuffer(m_pgpucontext->logicalDevice(), framebuffer, nullptr);
+      //for (auto pframebuffer : m_framebuffers) {
+      //   vkDestroyFramebuffer(m_pgpucontext->logicalDevice(), pframebuffer, nullptr);
       //}
 
       //vkDestroyRenderPass(m_pgpucontext->logicalDevice(), renderPass, nullptr);
@@ -668,7 +668,7 @@ namespace gpu_directx11
       ////      &framebufferInfo,
       ////      nullptr,
       ////      &m_framebuffers[i]) != VK_SUCCESS) {
-      ////      throw ::exception(error_failed,"failed to create framebuffer!");
+      ////      throw ::exception(error_failed,"failed to create pframebuffer!");
       ////   }
       //}
    }
@@ -817,8 +817,8 @@ namespace gpu_directx11
 } // namespace gpu_directx11
 
 
-//// Setup the offscreen framebuffer for rendering the mirrored scene
-//	// The color attachment of this framebuffer will then be used to sample from in the fragment shader of the final pass
+//// Setup the offscreen pframebuffer for rendering the mirrored scene
+//	// The color attachment of this pframebuffer will then be used to sample from in the fragment shader of the final pass
 //void prepareOffscreen()
 //{
 //	offscreenPass.width = FB_DIM;
@@ -981,7 +981,7 @@ namespace gpu_directx11
 //	//fbufCreateInfo.height = offscreenPass.height;
 //	//fbufCreateInfo.layers = 1;
 //
-//	//VK_CHECK_RESULT(vkCreateFramebuffer(context, &fbufCreateInfo, nullptr, &offscreenPass.frameBuffer));
+//	//VK_CHECK_RESULT(vkCreateFramebuffer(context, &fbufCreateInfo, nullptr, &offscreenPass.pframebuffer));
 //
 //	//// Fill a descriptor for later use in a descriptor set
 //	//offscreenPass.descriptor.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;

@@ -57,8 +57,8 @@ namespace gpu_directx11
 
       virtual void on_before_begin_render(frame* pframe);
 
-      //VkFramebuffer getFrameBuffer(int index) { return m_framebuffers[index]; }
-      //VkFramebuffer getCurrentFrameBuffer() { return m_framebuffers[get_image_index()]; }
+      //VkFramebuffer getFramebuffer(int index) { return m_framebuffers[index]; }
+      //VkFramebuffer getCurrentFramebuffer() { return m_framebuffers[get_image_index()]; }
       void initialize_render_target(::gpu::renderer* prenderer, const ::int_size& size, ::pointer <::gpu::render_target>previous) override;
       //virtual int get_image_index() const;
       //VkRenderPass getRenderPass() { return m_vkrendertargetview; }

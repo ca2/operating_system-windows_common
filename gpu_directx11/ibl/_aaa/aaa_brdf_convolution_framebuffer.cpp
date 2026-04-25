@@ -41,7 +41,7 @@ namespace gpu_directx11
          //::cast < gpu_directx11::texture>ptexture = m_ptexture;
 
 
-         //////// framebuffer
+         //////// pframebuffer
          //////glGenFramebuffers(1, &ptexture->m_gluFbo);
          //////GLCheckError("");
          //////glBindFramebuffer(GL_FRAMEBUFFER, ptexture->m_gluFbo);

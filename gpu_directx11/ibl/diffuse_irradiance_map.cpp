@@ -146,7 +146,7 @@ namespace gpu_directx11
 
       //   ::cast <cubemap_framebuffer > pframebuffer = m_pdiffuseIrradianceFramebuffer;
 
-      //   return pframebuffer->getCubemapTextureId();
+      //   return pframebuffer.getCubemapTextureId();
 
       //}
 
