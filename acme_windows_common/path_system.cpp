@@ -41,7 +41,7 @@ namespace acme_windows_common
 
          }
 
-         throw_last_error_exception(nullptr, lasterror);
+         ::windows::throw_file_last_error_exception(path, ::file::_e_open_stat, lasterror, "acme_windows_common::path_system::get_type: Failed to GetFileAttributesW");
 
          return ::file::e_type_unknown;
 

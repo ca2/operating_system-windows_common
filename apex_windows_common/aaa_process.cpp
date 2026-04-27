@@ -148,7 +148,7 @@ namespace windows
       if (!bSuccess)
       {
 
-         DWORD dwLastError = ::GetLastError();
+         auto lasterror = ::windows::get_last_error();
 
          string strMessage = get_last_error_message(dwLastError);
 

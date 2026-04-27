@@ -387,7 +387,7 @@ directory_system()create(path.folder());
       if (handleFile == INVALID_HANDLE_VALUE)
       {
 
-         DWORD dwLastError = ::GetLastError();
+         auto lasterror = ::windows::get_last_error();
 
          if (!(eopen & ::file::e_open_no_share_violation_wait))
          {
@@ -417,7 +417,7 @@ directory_system()create(path.folder());
 
          }
 
-         ::e_status estatus = ::windows::last_error_status(dwLastError);
+         ::e_status estatus = ::windows::last_error_status(lasterror);
 
          //if (::file::should_ignore_file_exception_callstack(estatus))
          //{
@@ -552,7 +552,7 @@ directory_system()create(path.folder());
       if (!::WriteFile((HANDLE)m_handleFile, pdata, (unsigned int)nCount, &nWritten, nullptr))
       {
 
-         DWORD dwLastError = ::GetLastError();
+         auto lasterror = ::windows::get_last_error();
 
          throw ::file_exception(::error_io, dwLastError, m_path);
 
@@ -599,7 +599,7 @@ directory_system()create(path.folder());
       if (posNew == (filesize)-1)
       {
 
-         DWORD dwLastError = ::GetLastError();
+         auto lasterror = ::windows::get_last_error();
 
          throw ::file_exception(::error_io, dwLastError, m_path);
 
@@ -669,7 +669,7 @@ directory_system()create(path.folder());
       if (pos == (filesize)-1)
       {
 
-         DWORD dwLastError = ::GetLastError();
+         auto lasterror = ::windows::get_last_error();
 
          throw ::file_exception(::error_io, dwLastError, m_path);
 
@@ -694,7 +694,7 @@ directory_system()create(path.folder());
       if (!::FlushFileBuffers((HANDLE)m_handleFile))
       {
 
-         DWORD dwLastError = ::GetLastError();
+         auto lasterror = ::windows::get_last_error();
 
          if (dwLastError == ERROR_INVALID_HANDLE
             || dwLastError == ERROR_ACCESS_DENIED)
@@ -769,7 +769,7 @@ directory_system()create(path.folder());
       if (!::LockFile((HANDLE)m_handleFile, lower_unsigned_int(dwPos), upper_unsigned_int(dwPos), lower_unsigned_int(dwCount), upper_unsigned_int(dwCount)))
       {
 
-         DWORD dwLastError = ::GetLastError();
+         auto lasterror = ::windows::get_last_error();
 
          throw ::file_exception(::error_io, dwLastError, m_path);
 
@@ -785,7 +785,7 @@ directory_system()create(path.folder());
       if (!::UnlockFile((HANDLE)m_handleFile, lower_unsigned_int(dwPos), upper_unsigned_int(dwPos), lower_unsigned_int(dwCount), upper_unsigned_int(dwCount)))
       {
 
-         DWORD dwLastError = ::GetLastError();
+         auto lasterror = ::windows::get_last_error();
 
          throw ::file_exception(::error_io, dwLastError, m_path);
 
@@ -805,7 +805,7 @@ directory_system()create(path.folder());
       if (!::SetEndOfFile((HANDLE)m_handleFile))
       {
 
-         DWORD dwLastError = ::GetLastError();
+         auto lasterror = ::windows::get_last_error();
 
          throw ::file_exception(::error_io, dwLastError, m_path);
 

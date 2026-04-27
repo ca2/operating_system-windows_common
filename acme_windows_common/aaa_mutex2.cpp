@@ -41,7 +41,7 @@ static int g_iMutex = 0;
 
    m_hsync = ::CreateMutexExW(nullptr, nullptr, bInitiallyOwn ? CREATE_MUTEX_INITIAL_OWNER : 0, MUTEX_ALL_ACCESS);
 
-   DWORD dwLastError = ::GetLastError();
+   auto lasterror = ::windows::get_last_error();
 
    m_bAlreadyExists = dwLastError == ERROR_ALREADY_EXISTS;
 
@@ -104,7 +104,7 @@ static int g_iMutex = 0;
 
    m_hsync = ::CreateMutexExW(psaAttribute, pwszName, bInitiallyOwn ?  CREATE_MUTEX_INITIAL_OWNER : 0, MUTEX_ALL_ACCESS);
 
-   DWORD dwLastError = ::GetLastError();
+   auto lasterror = ::windows::get_last_error();
 
    m_bAlreadyExists = dwLastError == ERROR_ALREADY_EXISTS;
 

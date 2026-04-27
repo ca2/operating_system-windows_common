@@ -46,9 +46,9 @@ namespace acme_windows_common
          pwszName,
          bInitiallyOwn ? CREATE_MUTEX_INITIAL_OWNER : 0, MUTEX_ALL_ACCESS);
 
-      DWORD dwLastError = ::GetLastError();
+      auto lasterror = ::windows::get_last_error();
 
-      set_already_exists_flag(dwLastError == ERROR_ALREADY_EXISTS);
+      set_already_exists_flag(lasterror == ERROR_ALREADY_EXISTS);
 
       if (m_handle == nullptr)
       {

@@ -111,11 +111,11 @@ namespace acme_windows_common
       if ((wAttr = ::windows::get_file_attributes(path)) == (unsigned int)INVALID_FILE_ATTRIBUTES)
       {
 
-         DWORD dwLastError = ::GetLastError();
+         auto lasterror = ::windows::get_last_error();
 
-         auto estatus = ::windows::last_error_status(dwLastError);
+         auto estatus = ::windows::last_error_status(lasterror);
 
-         auto errorcode = ::windows::last_error_error_code(dwLastError);
+         auto errorcode = ::windows::last_error_error_code(lasterror);
 
          throw ::file::exception(estatus, errorcode, path, ::file::e_open_none, "!windows_get_file_attributes");
 
@@ -131,11 +131,11 @@ namespace acme_windows_common
          ::windows::set_file_attributes(path, status.m_attribute);
          //{
 
-         //   DWORD dwLastError = ::GetLastError();
+         //   auto lasterror = ::windows::get_last_error();
 
-         //   auto estatus = ::windows::last_error_status(dwLastError);
+         //   auto estatus = ::windows::last_error_status(lasterror);
 
-         //   auto errorcode = ::windows::last_error_error_code(dwLastError);
+         //   auto errorcode = ::windows::last_error_error_code(lasterror);
 
          //   throw ::file::exception(estatus, errorcode, ::string(pszFileName), ::file::e_open_none, "!SetFileAttributesW");
 
@@ -178,9 +178,9 @@ namespace acme_windows_common
             nullptr))
          {
 
-            DWORD dwLastError = ::GetLastError();
+            auto lasterror = ::windows::get_last_error();
 
-            throw_last_error_exception(path, ::file::e_open_read | ::file::e_open_write, dwLastError, "apex_windows::file_context::set_status safe_create_file failed");
+            ::windows::throw_file_last_error_exception(path, ::file::e_open_read | ::file::e_open_write, lasterror, "apex_windows::file_context::set_status safe_create_file failed");
 
          }
 

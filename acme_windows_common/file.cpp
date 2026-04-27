@@ -298,11 +298,11 @@ namespace acme_windows_common
       m_file.write(p, s);
       //{
 
-      //   auto dwLastError = ::GetLastError();
+      //   auto lasterror = ::windows::get_last_error();
 
-      //   auto estatus = ::windows::last_error_status(dwLastError);
+      //   auto estatus = ::windows::last_error_status(lasterror);
 
-      //   auto errorcode = ::windows::last_error_error_code(dwLastError);
+      //   auto errorcode = ::windows::last_error_error_code(lasterror);
 
       //   throw ::file::exception(estatus, errorcode, m_path, "!WriteFile", m_eopen);
 
@@ -324,11 +324,11 @@ namespace acme_windows_common
       if (m_file.nok())
       {
 
-         auto dwLastError = ::GetLastError();
+         auto lasterror = ::windows::get_last_error();
 
-         auto estatus = ::windows::last_error_status(dwLastError);
+         auto estatus = ::windows::last_error_status(lasterror);
 
-         auto errorcode = ::windows::last_error_error_code(dwLastError);
+         auto errorcode = ::windows::last_error_error_code(lasterror);
 
          throw ::file::exception(estatus, errorcode, m_path, m_eopen, "m_file.nok()");
 
@@ -344,11 +344,11 @@ namespace acme_windows_common
       //if (posNew == (filesize)-1)
       //{
 
-      //   auto dwLastError = ::GetLastError();
+      //   auto lasterror = ::windows::get_last_error();
 
-      //   auto estatus = ::windows::last_error_status(dwLastError);
+      //   auto estatus = ::windows::last_error_status(lasterror);
 
-      //   auto errorcode = ::windows::last_error_error_code(dwLastError);
+      //   auto errorcode = ::windows::last_error_error_code(lasterror);
 
       //   throw ::file::exception(estatus, errorcode, m_path, "SetFilePointer == -1", m_eopen);
 
@@ -478,11 +478,11 @@ namespace acme_windows_common
       //if (bError)
       //{
 
-      //   auto dwLastError = ::GetLastError();
+      //   auto lasterror = ::windows::get_last_error();
 
-      //   auto estatus = ::windows::last_error_status(dwLastError);
+      //   auto estatus = ::windows::last_error_status(lasterror);
 
-      //   auto errorcode = ::windows::last_error_error_code(dwLastError);
+      //   auto errorcode = ::windows::last_error_error_code(lasterror);
 
       //   throw ::file::exception(estatus, errorcode, m_path, "file::close", m_eopen);
 

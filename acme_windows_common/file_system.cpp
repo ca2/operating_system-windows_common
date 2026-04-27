@@ -349,9 +349,9 @@ namespace acme_windows_common
       if (!file.safe_create_file(path, GENERIC_READ, FILE_SHARE_WRITE | FILE_SHARE_READ | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr))
       {
 
-         DWORD dwLastError = ::GetLastError();
+         auto lasterror = ::windows::get_last_error();
 
-         throw_last_error_exception(path, ::file::e_open_read, dwLastError, "acme_windows_common::file_system::get_size safe_create_file failed");
+         ::windows::throw_file_last_error_exception(path, ::file::e_open_read, lasterror, "acme_windows_common::file_system::get_size safe_create_file failed");
 
       }
 
@@ -428,7 +428,7 @@ namespace acme_windows_common
    //   if (::is_null(pfile))
    //   {
 
-   //      DWORD dwLastError = ::GetLastError();
+   //      auto lasterror = ::windows::get_last_error();
 
    //      TRACELASTERROR();
 
@@ -632,9 +632,9 @@ namespace acme_windows_common
       if (!::DeleteFileW(wstrFilePath))
       {
 
-         auto dwLastError = ::GetLastError();
+         auto lasterror = ::windows::get_last_error();
 
-         auto estatus = ::windows::last_error_status(dwLastError);
+         auto estatus = ::windows::last_error_status(lasterror);
 
          return estatus;
 
@@ -664,9 +664,9 @@ namespace acme_windows_common
       if (!file.safe_create_file(path, GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr))
       {
 
-         DWORD dwLastError = ::GetLastError();
+         auto lasterror = ::windows::get_last_error();
 
-         throw_last_error_exception(path, ::file::e_open_write, dwLastError, "acme_windows_common::file_system::put_block safe_create_file failed");
+         ::windows::throw_file_last_error_exception(path, ::file::e_open_write, lasterror, "acme_windows_common::file_system::put_block safe_create_file failed");
 
       }
 //#endif
