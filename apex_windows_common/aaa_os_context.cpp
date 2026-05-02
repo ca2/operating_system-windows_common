@@ -152,7 +152,7 @@ namespace windows
       /*if (!ExitWindowsEx(EWX_REBOOT | EWX_FORCE,
       SHTDN_REASON_MAJOR_SOFTWARE | SHTDN_REASON_MINOR_INSTALLATION))
       {
-      unsigned int dwLastError = ::GetLastError();
+      auto lasterror = ::windows::get_last_error();
       return false;
       }*/
       //reset the previlages
@@ -1235,7 +1235,7 @@ retry:
       if(hdlSCM == 0)
       {
 
-         unsigned int dwLastError = ::GetLastError();
+         auto lasterror = ::windows::get_last_error();
 
          return false;
 
@@ -2060,7 +2060,7 @@ retry:
 
          ShellExecuteExW(&si);
 
-         //unsigned int dwLastError = ::GetLastError();
+         //auto lasterror = ::windows::get_last_error();
 
          //int iResult = (int) si.hInstApp;
 

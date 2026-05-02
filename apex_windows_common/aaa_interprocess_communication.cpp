@@ -290,7 +290,7 @@ namespace windows
 
       if (get_hwnd() == nullptr)
       {
-         unsigned int dwLastError = ::GetLastError();
+         auto lasterror = ::windows::get_last_error();
          return false;
       }
 
