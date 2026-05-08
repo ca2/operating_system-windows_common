@@ -34,8 +34,8 @@ namespace acme_windows_common
       void destroy() override;
 
 
-      virtual void get_status(const ::file::path & path, ::file::file_status & status);
-      virtual void set_status(const ::file::path & path, const ::file::file_status & status);
+      void get_status(::file::file_status& status, const ::file::path & path) override;
+      void set_status(const ::file::path & path, const ::file::file_status & status) override;
 
 
       //virtual bool win32_file_system_item_exists(const ::file::path & path);

@@ -242,21 +242,19 @@ namespace acme_windows_common
 
 
 
-   void file_context::get_status(const ::file::path & path, ::file::file_status & rStatus)
+   void file_context::get_status(::file::file_status& rStatus, const ::file::path & path)
    {
 
       wstring wstrFullName(path);
 
       ::windows::find_file findfile;
 
-      findfile.find_first_file(path);
+      if(!findfile.find_first_file(path))
+      {
 
-      //if (hFind == INVALID_HANDLE_VALUE)
-      //{
+         throw ::exception(error_failed);
 
-      //   throw ::exception(error_failed);
-
-      //}
+      }
 
       //FindClose(hFind);
 
