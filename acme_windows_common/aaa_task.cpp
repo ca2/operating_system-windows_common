@@ -531,7 +531,7 @@ void task::kick_idle()
 CLASS_DECL_ACME bool __task_sleep(task* task)
 {
 
-   while (task->task_get_run())
+   while (task->should_run())
    {
 
       sleep(100_ms);
@@ -549,7 +549,7 @@ CLASS_DECL_ACME bool __task_sleep(task* pthread, const class ::wait & wait)
    if (wait.m_iMillisecond < 1000)
    {
 
-      if (!pthread->task_get_run())
+      if (!pthread->should_run())
       {
 
          return false;
@@ -558,7 +558,7 @@ CLASS_DECL_ACME bool __task_sleep(task* pthread, const class ::wait & wait)
 
       sleep(::duration(wait.m_iMillisecond));
 
-      return pthread->task_get_run();
+      return pthread->should_run();
 
    }
 
@@ -588,7 +588,7 @@ CLASS_DECL_ACME bool __task_sleep(task* pthread, const class ::wait & wait)
 
       }
 
-      if (!pthread->task_get_run())
+      if (!pthread->should_run())
       {
 
          return false;
@@ -600,7 +600,7 @@ CLASS_DECL_ACME bool __task_sleep(task* pthread, const class ::wait & wait)
 
       pthread->m_pevSleep->wait(wait);
 
-      if (!pthread->task_get_run())
+      if (!pthread->should_run())
       {
 
          return false;
@@ -617,7 +617,7 @@ CLASS_DECL_ACME bool __task_sleep(task* pthread, const class ::wait & wait)
 
    }
 
-   return pthread->task_get_run();
+   return pthread->should_run();
 
 }
 
@@ -628,7 +628,7 @@ CLASS_DECL_ACME bool __task_sleep(::task* pthread, synchronization_object* psync
    try
    {
 
-      while (pthread->task_get_run())
+      while (pthread->should_run())
       {
 
          if (psync->wait(100).succeeded())
@@ -646,7 +646,7 @@ CLASS_DECL_ACME bool __task_sleep(::task* pthread, synchronization_object* psync
 
    }
 
-   return pthread->task_get_run();
+   return pthread->should_run();
 
 }
 
@@ -657,7 +657,7 @@ CLASS_DECL_ACME bool __task_sleep(task* pthread, const class ::wait & wait, sync
    if (wait.m_iMillisecond < 1000)
    {
 
-      if (!pthread->task_get_run())
+      if (!pthread->should_run())
       {
 
          return false;
@@ -666,7 +666,7 @@ CLASS_DECL_ACME bool __task_sleep(task* pthread, const class ::wait & wait, sync
 
       psync->wait(::duration(wait.m_iMillisecond));
 
-      return pthread->task_get_run();
+      return pthread->should_run();
 
    }
 
@@ -681,7 +681,7 @@ CLASS_DECL_ACME bool __task_sleep(task* pthread, const class ::wait & wait, sync
 
          pthread->m_pevSleep->wait(100);
 
-         if (!pthread->task_get_run())
+         if (!pthread->should_run())
          {
 
             return false;
@@ -698,7 +698,7 @@ CLASS_DECL_ACME bool __task_sleep(task* pthread, const class ::wait & wait, sync
 
    }
 
-   return pthread->task_get_run();
+   return pthread->should_run();
 
 }
 
