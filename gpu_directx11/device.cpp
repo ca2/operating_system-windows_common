@@ -92,7 +92,7 @@ namespace gpu_directx11
    //}
 
 
-   void device::_create_offscreen_window(const ::int_size& size)
+   void device::_create_offscreen_window(const ::i32_size& size)
    {
 
 
@@ -174,7 +174,7 @@ namespace gpu_directx11
    }
 
 
-   void device::initialize_gpu_device_for_off_screen(::gpu::approach* pgpuapproachParam, const ::int_rectangle& rectanglePlacement)
+   void device::initialize_gpu_device_for_off_screen(::gpu::approach* pgpuapproachParam, const ::i32_rectangle& rectanglePlacement)
    {
 
       ::gpu::device::initialize_gpu_device_for_off_screen(pgpuapproachParam, rectanglePlacement);
@@ -831,7 +831,7 @@ namespace gpu_directx11
 
    //   //   ::GetClientRect(m_hwnd, &rectClient);
 
-   //   //   ::int_size sizeNew = { rectClient.right - rectClient.left,
+   //   //   ::i32_size sizeNew = { rectClient.right - rectClient.left,
    //   //rectClient.bottom - rectClient.top };
    //   //   
    //   //   if (m_size != sizeNew)
@@ -875,7 +875,7 @@ namespace gpu_directx11
    //}
 
 
-   //void device::_create_offscreen_buffer(const ::int_size& size)
+   //void device::_create_offscreen_buffer(const ::i32_size& size)
    //{
 
    //   _create_offscreen_window(size);
@@ -910,7 +910,7 @@ namespace gpu_directx11
    //}
 
 
-   //void device::resize_offscreen_buffer(const ::int_size& sizeParam)
+   //void device::resize_offscreen_buffer(const ::i32_size& sizeParam)
    //{
 
    //   if (m_papplication->m_bUseSwapChainWindow)
@@ -1911,7 +1911,7 @@ bool device::_is_ok() const
 }
 
 
-   void device::initialize_cpu_buffer(const ::int_rectangle & rectanglePlacement)
+   void device::initialize_cpu_buffer(const ::i32_rectangle & rectanglePlacement)
    {
 
       // This flag adds support for surfaces with a different color channel ordering

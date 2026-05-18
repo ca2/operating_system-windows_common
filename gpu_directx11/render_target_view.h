@@ -22,7 +22,7 @@ namespace gpu_directx11
 
       //VkFormat m_formatImage;
       //VkFormat m_formatDepth;
-      //::int_size m_size;
+      //::i32_size m_size;
 
       //::array<VkFramebuffer> m_framebuffers;
       //VkRenderPass m_vkrendertargetview;
@@ -51,15 +51,15 @@ namespace gpu_directx11
       bool                 m_bNeedRebuild;
 
       render_target_view();
-      //render_target_view(renderer* prenderer, const ::int_size & size);
-      //render_target_view(renderer* prenderer, const ::int_size& size, ::pointer <render_target_view>previous);
+      //render_target_view(renderer* prenderer, const ::i32_size & size);
+      //render_target_view(renderer* prenderer, const ::i32_size& size, ::pointer <render_target_view>previous);
       ~render_target_view();
 
       virtual void on_before_begin_render(frame* pframe);
 
       //VkFramebuffer getFramebuffer(int index) { return m_framebuffers[index]; }
       //VkFramebuffer getCurrentFramebuffer() { return m_framebuffers[get_image_index()]; }
-      void initialize_render_target(::gpu::renderer* prenderer, const ::int_size& size, ::pointer <::gpu::render_target>previous) override;
+      void initialize_render_target(::gpu::renderer* prenderer, const ::i32_size& size, ::pointer <::gpu::render_target>previous) override;
       //virtual int get_image_index() const;
       //VkRenderPass getRenderPass() { return m_vkrendertargetview; }
       //VkImageView getImageView(int index) { return m_imageviews[index]; }

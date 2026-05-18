@@ -43,7 +43,7 @@ namespace directx11
    }
 
 
-   void context_cgl::_create_offscreen_buffer(const ::int_size & size)
+   void context_cgl::_create_offscreen_buffer(const ::i32_size & size)
    {
 
       auto pgpu = system()->get_gpu();

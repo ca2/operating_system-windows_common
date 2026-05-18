@@ -331,13 +331,13 @@ namespace Platform {
 //         );
 //   }
 //
-//   // Draw the outline of the int_rectangle
+//   // Draw the outline of the i32_rectangle
 //   m_prendertarget->DrawGeometry(
 //      pTransformedGeometry,
 //      m_pbrushOutline
 //      );
 //
-//   // Fill in the int_rectangle
+//   // Fill in the i32_rectangle
 //   m_prendertarget->FillGeometry(
 //      pTransformedGeometry,
 //      m_pbrushFill
@@ -396,13 +396,13 @@ namespace Platform {
 //         );
 //   }
 //
-//   // Draw the outline of the int_rectangle
+//   // Draw the outline of the i32_rectangle
 //   m_prendertarget->DrawGeometry(
 //      pTransformedGeometry,
 //      m_pbrushOutline
 //      );
 //
-//   // Fill in the int_rectangle
+//   // Fill in the i32_rectangle
 //   m_prendertarget->FillGeometry(
 //      pTransformedGeometry,
 //      m_pbrushFill

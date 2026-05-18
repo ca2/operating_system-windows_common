@@ -458,7 +458,7 @@ void task::begin_task(
    if (nStackSize > 0)
    {
 
-      pthread_attr_setstacksize(&taskAttr, nStackSize); // Set the stack int_size of the task
+      pthread_attr_setstacksize(&taskAttr, nStackSize); // Set the stack i32_size of the task
 
    }
 

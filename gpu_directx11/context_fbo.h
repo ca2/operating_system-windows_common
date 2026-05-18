@@ -33,8 +33,8 @@ namespace directx11
       void lock_context() override;
       void unlock_context() override;
       void run() override;
-      void _create_offscreen_buffer(const ::int_size& size) override;
-      //virtual void resize_offscreen_buffer(const ::int_size& size) override;
+      void _create_offscreen_buffer(const ::i32_size& size) override;
+      //virtual void resize_offscreen_buffer(const ::i32_size& size) override;
       void destroy_offscreen_buffer() override;
 
       void make_current() override;
@@ -49,7 +49,7 @@ namespace directx11
       
       void prepare_for_gpu_read() override;
       
-      void resize_offscreen_buffer(const ::int_size& size) override;
+      void resize_offscreen_buffer(const ::i32_size& size) override;
       
 
    };

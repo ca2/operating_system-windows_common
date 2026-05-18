@@ -23,7 +23,7 @@
 //{
 //
 //
-//   //inline D2D1_RECT_F float_rectangle(const ::int_rectangle & rectangle)
+//   //inline D2D1_RECT_F float_rectangle(const ::i32_rectangle & rectangle)
 //   //{
 //
 //   //   return D2D1::Rect<FLOAT>(

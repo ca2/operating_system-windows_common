@@ -41,7 +41,7 @@ namespace gpu_directx11
 
       //int                           m_gluTextureBitmap1;
       //int                              m_iLastBitmap1Scan;
-      //::int_size                       m_sizeBitmap1;
+      //::i32_size                       m_sizeBitmap1;
 
       //memory                           m_memorySwap;
 
@@ -172,10 +172,10 @@ namespace gpu_directx11
 
       //void clear(const ::color::color& color);
 
-      //virtual void create_offscreen_buffer(const ::int_size& size);
-      //virtual void _create_offscreen_buffer(const ::int_size& size);
+      //virtual void create_offscreen_buffer(const ::i32_size& size);
+      //virtual void _create_offscreen_buffer(const ::i32_size& size);
 
-      //virtual void resize_offscreen_buffer(const ::int_size& size);
+      //virtual void resize_offscreen_buffer(const ::i32_size& size);
       //virtual void destroy_offscreen_buffer();
 
    /*   virtual void translate_shader(string & str);
@@ -198,12 +198,12 @@ namespace gpu_directx11
       void set_matrix_uniform(const ::gpu::payload & uniformMatrix) override;
 
 
-      bool create_offscreen_graphics_for_swap_chain_blitting(::gpu::graphics* pgraphics, const ::int_size& size) override;
+      bool create_offscreen_graphics_for_swap_chain_blitting(::gpu::graphics* pgraphics, const ::i32_size& size) override;
 
 
-      virtual void _create_context_directx11(::gpu::device* pgpudevice, const ::gpu::enum_output& eoutput, ::acme::windowing::window* pwindow, const ::int_size& size);
+      virtual void _create_context_directx11(::gpu::device* pgpudevice, const ::gpu::enum_output& eoutput, ::acme::windowing::window* pwindow, const ::i32_size& size);
 
-      void on_create_context(::gpu::device* pgpudevice, const ::gpu::enum_output& eoutput, ::acme::windowing::window* pwindow, const ::int_size& size) override;
+      void on_create_context(::gpu::device* pgpudevice, const ::gpu::enum_output& eoutput, ::acme::windowing::window* pwindow, const ::i32_size& size) override;
 
 
       void __bind_draw2d_compositor(::gpu::compositor* pgpucompositor, ::gpu::layer* player) override;
@@ -220,15 +220,15 @@ namespace gpu_directx11
       //virtual VkCommandPool createCommandPool(uint32_t queueFamilyIndex, VkCommandPoolCreateFlags createFlags = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT);
       //virtual bool isExtensionSupported(const ::scoped_string & scopedstrExtension);
 
-      virtual void _create_offscreen_window(const ::int_size & size);
+      virtual void _create_offscreen_window(const ::i32_size & size);
 
       void defer_create_window_context(::acme::windowing::window * pwindow) override;
       void _defer_create_window_context(::acme::windowing::window * pwindow) override;
       virtual void _create_window_context(::acme::windowing::window * pwindow);
 
       //virtual void _create_window_buffer();
-      void _create_cpu_buffer(const ::int_size & size) override;
-      void resize_cpu_buffer(const ::int_size & size) override;
+      void _create_cpu_buffer(const ::i32_size & size) override;
+      void resize_cpu_buffer(const ::i32_size & size) override;
       void destroy_cpu_buffer() override;
 
       //void make_current() override;
@@ -314,8 +314,8 @@ namespace gpu_directx11
       //void create_global_ubo(int iSize, int iFrameCount) override;
       void update_global_ubo1(::gpu::block * pblockGlobalUbo1) override;
 
-      void set_viewport(::gpu::command_buffer *pgpucommandbuffer, const ::int_rectangle &rectangle) override;
-      void set_scissor(::gpu::command_buffer *pgpucommandbuffer, const ::int_rectangle &rectangle) override;
+      void set_viewport(::gpu::command_buffer *pgpucommandbuffer, const ::i32_rectangle &rectangle) override;
+      void set_scissor(::gpu::command_buffer *pgpucommandbuffer, const ::i32_rectangle &rectangle) override;
 
       void clear(::gpu::texture * pgputexture, const ::color::color &color) override; 
       void engine_on_frame_context_initialization() override;

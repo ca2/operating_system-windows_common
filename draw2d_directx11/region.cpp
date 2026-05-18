@@ -45,7 +45,7 @@ namespace draw2d_directx11
       //ASSERT(get_os_data() != nullptr); ::SetRectRgn((HRGN)get_os_data(), x1, y1, x2, y2);
    }
 
-   void region::SetRectRgn(const ::int_rectangle & rectangle)
+   void region::SetRectRgn(const ::i32_rectangle & rectangle)
    {
 
       throw ::exception(todo);
@@ -89,7 +89,7 @@ namespace draw2d_directx11
 
    //   //ASSERT(get_os_data() != nullptr); return ::OffsetRgn((HRGN)get_os_data(), x, y);
    //}
-   //int region::OffsetRgn(const ::int_point & point)
+   //int region::OffsetRgn(const ::i32_point & point)
    //{
 
    //   throw ::exception(todo);
@@ -97,7 +97,7 @@ namespace draw2d_directx11
 
    //   //ASSERT(get_os_data() != nullptr); return ::OffsetRgn((HRGN)get_os_data(), point.x, point.y);
    //}
-   //int region::GetRgnBox(::int_rectangle * prectangle) const
+   //int region::GetRgnBox(::i32_rectangle * prectangle) const
    //{
 
    //   throw ::exception(todo);
@@ -130,7 +130,7 @@ namespace draw2d_directx11
    }
 
 
-   bool region::contains(::draw2d::graphics* pgraphics, const ::int_point & point) const
+   bool region::contains(::draw2d::graphics* pgraphics, const ::i32_point & point) const
    {
 
       return contains(pgraphics, point.x, point.y);
@@ -148,7 +148,7 @@ namespace draw2d_directx11
    }
 
 
-   bool region::RectInRegion(const ::int_rectangle & rectangle) const
+   bool region::RectInRegion(const ::i32_rectangle & rectangle) const
    {
 
       throw ::exception(todo);

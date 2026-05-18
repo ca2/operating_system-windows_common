@@ -9,7 +9,7 @@
 #include "acme/filesystem/filesystem/path_system.h"
 #include "acme/prototype/prototype/memory.h"
 #include "acme/_operating_system.h"
-#include "acme/operating_system/shared_posix/c_error_number.h"
+#include "acme/operating_system/shared_posix/c_errno.h"
 #include "acme/operating_system/shared_posix/stdio_file.h"
 #include <stdio.h>
 #include <fcntl.h>
@@ -273,9 +273,9 @@ namespace acme_windows_common
          if (rc)
          {
 
-            auto cerrornumber = c_error_number();
+            auto cerrno = c_errno();
 
-            auto estatus = cerrornumber.failed_estatus();
+            auto estatus = cerrno.failed_estatus();
 
             throw ::exception(estatus);
 
@@ -290,9 +290,9 @@ namespace acme_windows_common
          if (fd < 0)
          {
 
-            auto cerrornumber = c_error_number();
+            auto cerrno = c_errno();
 
-            auto estatus = cerrornumber.failed_estatus();
+            auto estatus = cerrno.failed_estatus();
 
             throw ::exception(estatus);
 

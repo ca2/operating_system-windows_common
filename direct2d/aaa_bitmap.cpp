@@ -20,7 +20,7 @@ namespace draw2d_direct2d
    }
 
 
-   bool bitmap::CreateBitmap(::draw2d::graphics* pgraphics, const ::int_size& sizeParam, unsigned int nPlanes, unsigned int nBitcount, const void * lpBits, int stride)
+   bool bitmap::CreateBitmap(::draw2d::graphics* pgraphics, const ::i32_size& sizeParam, unsigned int nPlanes, unsigned int nBitcount, const void * lpBits, int stride)
    {
 
       ::draw2d::lock draw2dlock;
@@ -86,7 +86,7 @@ namespace draw2d_direct2d
    }
 
 
-   bool bitmap::create_bitmap(::draw2d::graphics* pgraphics, const ::int_size & size, void **ppvBits, int * stride)
+   bool bitmap::create_bitmap(::draw2d::graphics* pgraphics, const ::i32_size & size, void **ppvBits, int * stride)
    {
 
       ::draw2d::lock draw2dlock;
@@ -210,25 +210,25 @@ namespace draw2d_direct2d
 
    }
 
-   //int_size bitmap::SetBitmapDimension(int nWidth, int nHeight)
+   //i32_size bitmap::SetBitmapDimension(int nWidth, int nHeight)
    //{
 
 
    //   throw ::interface_only();
 
-   //   return ::int_size(0, 0);
+   //   return ::i32_size(0, 0);
 
    //}
 
-   int_size bitmap::GetBitmapDimension() const
+   i32_size bitmap::GetBitmapDimension() const
    {
 
       if (m_pbitmap == nullptr)
-         return ::int_size(0, 0);
+         return ::i32_size(0, 0);
 
       D2D1_SIZE_U size = m_pbitmap->GetPixelSize();
 
-      return ::int_size(size.width, size.height);
+      return ::i32_size(size.width, size.height);
 
    }
 

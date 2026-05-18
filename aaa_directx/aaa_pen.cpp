@@ -142,7 +142,7 @@ namespace draw2d_directx
               pCommandList,&props,nullptr,&pImageBrush);
       }
 
-      // Fill a int_rectangle with the image brush.
+      // Fill a i32_rectangle with the image brush.
       /*if (SUCCEEDED(hr))
       {
       pDeviceContext->fill_rectangle(

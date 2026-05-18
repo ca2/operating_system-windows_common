@@ -170,7 +170,7 @@ namespace gpu_directx11
    }
 
 
-   // void texture::initialize_texture(::gpu::renderer *prenderer, const ::int_rectangle &rectangleTarget,
+   // void texture::initialize_texture(::gpu::renderer *prenderer, const ::i32_rectangle &rectangleTarget,
    //                                        bool bWithDepth, const ::pointer_array<::image::image> * pimagea,
    //                                        enum_type etype)
    // {
@@ -694,7 +694,7 @@ namespace gpu_directx11
    }
 
 
-   void texture::set_pixels(const ::int_rectangle &rectangle, const void *data)
+   void texture::set_pixels(const ::i32_rectangle &rectangle, const void *data)
    {
 
       // D3D11_MAPPED_SUBRESOURCE mapped{};
@@ -746,7 +746,7 @@ namespace gpu_directx11
    }
 
 
-   void texture::initialize_with_image_data(::gpu::context *pgpucontext, const ::int_rectangle &rectangleTarget,
+   void texture::initialize_with_image_data(::gpu::context *pgpucontext, const ::i32_rectangle &rectangleTarget,
                                             int channels, bool bSrgb, const void *pdata, ::gpu::enum_texture etexture)
    {
       m_pgpucontext = pgpucontext;
@@ -904,7 +904,7 @@ namespace gpu_directx11
       //stbi_set_flip_vertically_on_load(0);
 
       // m_textureattributes.m_etexture = etype;
-      m_textureattributes.m_rectangleTarget = ::int_rectangle(::int_size(width, height));
+      m_textureattributes.m_rectangleTarget = ::i32_rectangle(::i32_size(width, height));
 
       m_textureflags.m_bWithDepth = false;
 

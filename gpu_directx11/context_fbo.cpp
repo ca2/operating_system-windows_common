@@ -65,7 +65,7 @@ void context_fbo::run()
    
 }
 
-   void context_fbo::_create_offscreen_buffer(const ::int_size & sizeParam)
+   void context_fbo::_create_offscreen_buffer(const ::i32_size & sizeParam)
    {
       
       
@@ -414,7 +414,7 @@ informationf(string(#x) + ": " + ::as_string(value) + "\n");     \
    }
 
 
-   void context_fbo::resize_offscreen_buffer(const ::int_size& sizeParam)
+   void context_fbo::resize_offscreen_buffer(const ::i32_size& sizeParam)
    {
       
       auto size = sizeParam;

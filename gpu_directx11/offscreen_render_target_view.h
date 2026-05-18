@@ -23,8 +23,8 @@ namespace gpu_directx11
 
 		offscreen_render_target_view();
 		//offscreen_render_target_view();
-		//offscreen_render_target_view(renderer* pgpurenderer, const ::int_size & size);
-		//offscreen_render_target_view(renderer * pgpurenderer, const ::int_size& size, ::pointer <render_target_view>previous);
+		//offscreen_render_target_view(renderer* pgpurenderer, const ::i32_size & size);
+		//offscreen_render_target_view(renderer * pgpurenderer, const ::i32_size& size, ::pointer <render_target_view>previous);
 		~offscreen_render_target_view();
 
 
@@ -43,7 +43,7 @@ namespace gpu_directx11
 //		VkFormat findDepthFormat();
 
 
-		void initialize_render_target(::gpu::renderer* pgpurenderer, const ::int_size& size, ::pointer <::gpu::render_target> previous) override;
+		void initialize_render_target(::gpu::renderer* pgpurenderer, const ::i32_size& size, ::pointer <::gpu::render_target> previous) override;
 
 
 		HRESULT acquireNextImage() override;
@@ -67,7 +67,7 @@ namespace gpu_directx11
 		//HRESULT submitSamplingWork(const VkCommandBuffer buffer);
 
 
-		virtual void defer_resize(const ::int_size& size);
+		virtual void defer_resize(const ::i32_size& size);
 
 		//// Helper functions
 		//VkSurfaceFormatKHR chooseSwapSurfaceFormat(

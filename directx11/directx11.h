@@ -43,18 +43,18 @@ namespace directx11
       void initialize(::particle * pparticle) override;
 
    //protected:
-   //   virtual comptr<ID2D1Device> create_device(::windowing::window* pwindow, const ::int_rectangle& rectanglePlacement);
+   //   virtual comptr<ID2D1Device> create_device(::windowing::window* pwindow, const ::i32_rectangle& rectanglePlacement);
    //public:
 
       //IDWriteFactory * dwrite_factory(bool bCreate = true);
       //ID2D1Factory1 * d2d1_factory1(bool bCreate = true);
 
 
-      //ID2D1Device* d2d1_device(::windowing::window* pwindow, const ::int_rectangle& rectanglePlacement);
+      //ID2D1Device* d2d1_device(::windowing::window* pwindow, const ::i32_rectangle& rectanglePlacement);
 
-      //comptr<ID2D1DeviceContext> create_d2d1_device_context(::windowing::window* pwindow, const ::int_rectangle& rectanglePlacement);
+      //comptr<ID2D1DeviceContext> create_d2d1_device_context(::windowing::window* pwindow, const ::i32_rectangle& rectanglePlacement);
 
-      //ID2D1DeviceContext * default_d2d1_device_context(::windowing::window* pwindow, const ::int_rectangle& rectanglePlacement);
+      //ID2D1DeviceContext * default_d2d1_device_context(::windowing::window* pwindow, const ::i32_rectangle& rectanglePlacement);
 
       //ID2D1DeviceContext* default_d2d1_device_context();
 
@@ -88,7 +88,7 @@ namespace directx11
 
 
 
-   CLASS_DECL_DIRECTX11 void defer_initialize(::windowing::window * pwindow, const ::int_rectangle & rectanglePlacement);
+   CLASS_DECL_DIRECTX11 void defer_initialize(::windowing::window * pwindow, const ::i32_rectangle & rectanglePlacement);
    CLASS_DECL_DIRECTX11 void finalize();
 
 

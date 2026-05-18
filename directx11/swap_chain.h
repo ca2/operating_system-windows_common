@@ -64,7 +64,7 @@ namespace directx11
 
       virtual IDXGIDevice* _get_dxgi_device();
 
-      virtual comptr < IDXGISurface> _create_dxgi_surface(const ::int_size & size);
+      virtual comptr < IDXGISurface> _create_dxgi_surface(const ::i32_size & size);
 
 
 

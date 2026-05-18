@@ -16,7 +16,7 @@ CLASS_DECL_ACME bool __check_center_dialog(const ::scoped_string & scopedstrReso
 
 CLASS_DECL_ACME bool __compare_class_name(::windowing::window * pwindow, const ::scoped_string & scopedstrClassName);
 
-//CLASS_DECL_ACME oswindow __child_window_from_point(oswindow, const int_point &);
+//CLASS_DECL_ACME oswindow __child_window_from_point(oswindow, const i32_point &);
 //CLASS_DECL_ACME bool hook_window_create(::windows::interaction_impl * pwindow);
 //CLASS_DECL_ACME bool unhook_window_create();
 CLASS_DECL_ACME void reset_message_cache();

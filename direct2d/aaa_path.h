@@ -26,7 +26,7 @@ namespace draw2d_direct2d
       comptr<ID2D1PathGeometry>          m_ppath;
       comptr<ID2D1GeometrySink>          m_psink;
       bool                                               m_bFigureOpened;
-      ::int_point                                            m_point;
+      ::i32_point                                            m_point;
       D2D1_FIGURE_BEGIN                                  m_d2d2figurebegin;
 
 
@@ -44,7 +44,7 @@ namespace draw2d_direct2d
 
       //virtual bool is_empty();
       //virtual bool has_current_point();
-      //virtual int_point current_point();
+      //virtual i32_point current_point();
 
       virtual bool internal_add_arc(::draw2d::graphics * pgraphics, const ::arc & arc);
 
@@ -69,7 +69,7 @@ namespace draw2d_direct2d
       //virtual bool _set(::draw2d::graphics* pgraphics, ::draw2d::path::begin * pbegin) override;
       //virtual bool _set(::draw2d::graphics* pgraphics, ::draw2d::path::arc * parc) override;
       ////virtual bool _set(::draw2d::graphics* pgraphics, const ::draw2d::path::move & move);
-      //virtual bool _set(::draw2d::graphics* pgraphics, ::draw2d::path::int_rectangle* prectangle) override;
+      //virtual bool _set(::draw2d::graphics* pgraphics, ::draw2d::path::i32_rectangle* prectangle) override;
       //virtual bool _set(::draw2d::graphics* pgraphics, ::draw2d::path::line * pline) override;
       //virtual bool _set(::draw2d::graphics* pgraphics, ::draw2d::path::lines* plines) override;
       //virtual bool _set(::draw2d::graphics* pgraphics, ::draw2d::path::int_polygon* pline) override;
@@ -90,7 +90,7 @@ namespace draw2d_direct2d
 
       virtual bool _set(::draw2d::graphics* pgraphics, const ::linesd& pline);
 
-      virtual bool _set(::draw2d::graphics* pgraphics, const ::int_rectangle& prectangle);
+      virtual bool _set(::draw2d::graphics* pgraphics, const ::i32_rectangle& prectangle);
 
       virtual bool _set(::draw2d::graphics* pgraphics, const ::double_rectangle& prectangle);
 

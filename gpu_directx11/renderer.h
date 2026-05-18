@@ -41,7 +41,7 @@ namespace gpu_directx11
          ::pointer < context >      m_pgpucontext;
          ::pointer < renderer >     m_prenderer;
          comptr<ID3D11Texture2D>    m_ptextureStaging;
-         ::int_size                 m_sizeStaging;
+         ::i32_size                 m_sizeStaging;
 
 
          cpu_buffer_sampler();
@@ -114,7 +114,7 @@ namespace gpu_directx11
       //::collection::index m_iCurrentFrame2 = -1;
       //::collection::index m_iFrameSerial2 = -1;
 
-      //::int_size m_sizeRenderer;
+      //::i32_size m_sizeRenderer;
 
 
       renderer();
@@ -161,7 +161,7 @@ namespace gpu_directx11
       //int get_frame_count() const override;
 
       //void defer_update_renderer() override;
-      //void on_defer_update_renderer_allocate_render_target(::gpu::enum_output eoutput, const ::int_size& size, ::gpu::render_target* previous) override;
+      //void on_defer_update_renderer_allocate_render_target(::gpu::enum_output eoutput, const ::i32_size& size, ::gpu::render_target* previous) override;
 
       //::pointer < ::graphics3d::frame> beginFrame() override;
       //void endFrame() override;
@@ -181,7 +181,7 @@ namespace gpu_directx11
 
       void free_command_buffers() override;
       //void recreateSwapchain();
-      //void set_size(const ::int_size & size) override;
+      //void set_size(const ::i32_size & size) override;
 
       //void prepareOffScreen();
 
@@ -196,17 +196,17 @@ namespace gpu_directx11
 
       //void copy(::gpu::texture* pgputextureTarget, ::gpu::texture* pgputextureSource) override;
 
-      //void _set_image(VkImage image, const ::int_rectangle& rectangle, bool bYSwap);
+      //void _set_image(VkImage image, const ::i32_rectangle& rectangle, bool bYSwap);
 
-      //void _blend_image(VkImage image, const ::int_rectangle& rectangle, bool bYSwap);
-      //void _on_graphics_end_draw(VkImage image, const ::int_rectangle& rectangle);
+      //void _blend_image(VkImage image, const ::i32_rectangle& rectangle, bool bYSwap);
+      //void _on_graphics_end_draw(VkImage image, const ::i32_rectangle& rectangle);
 
       void _blend_renderer(::gpu_directx11::renderer* prendererSrc, bool bYSwap);
       void _on_graphics_end_draw(::gpu_directx11::renderer * prendererSrc);
 
       //void _on_frame_draw(::gpu_directx11::renderer* prendererUpper);
 
-      //void _copy_image(VkImage image, const ::int_rectangle& rectangle, bool bYSwap);
+      //void _copy_image(VkImage image, const ::i32_rectangle& rectangle, bool bYSwap);
 
       ::gpu::shader * get_image_blend_shader();
 

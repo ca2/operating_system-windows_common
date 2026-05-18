@@ -154,7 +154,7 @@ namespace draw2d_direct2d
 
    }
 
-   void graphics::defer_set_size(const ::int_size& size)
+   void graphics::defer_set_size(const ::i32_size& size)
    {
       _create_memory_graphics(size);
       /*m_pgpucontextCompositor->sendø() << [this, size]()
@@ -165,7 +165,7 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::create_for_window_draw2d(::user::interaction * puserinteraction, const ::int_size& size)
+   void graphics::create_for_window_draw2d(::user::interaction * puserinteraction, const ::i32_size& size)
    {
 
       ::gpu::graphics::create_for_window_draw2d(puserinteraction, size);
@@ -274,7 +274,7 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::_create_memory_graphics(const ::int_size & size)
+   void graphics::_create_memory_graphics(const ::i32_size & size)
    {
 
       auto pcontext = gpu_context();
@@ -670,7 +670,7 @@ namespace draw2d_direct2d
 
       //   // Reference implementation
 
-      //   ::int_rectangle rectangleAlphaBlend(m_pointAlphaBlend, m_pimageAlphaBlend->size());
+      //   ::i32_rectangle rectangleAlphaBlend(m_pointAlphaBlend, m_pimageAlphaBlend->size());
 
       //   if (x < 0)
       //   {
@@ -694,13 +694,13 @@ namespace draw2d_direct2d
 
       //   }
 
-      //   int_point ::double_point(x, y);
+      //   i32_point ::double_point(x, y);
 
       //   ::double_size size(nWidth, nHeight);
 
-      //   ::int_rectangle rectangleBlend(point, ::double_size);
+      //   ::i32_rectangle rectangleBlend(point, ::double_size);
 
-      //   ::int_rectangle rectangleIntersect;
+      //   ::i32_rectangle rectangleIntersect;
 
       //   if (rectangleIntersect.intersect(rectangleAlphaBlend, rectangleBlend))
       //   {
@@ -709,7 +709,7 @@ namespace draw2d_direct2d
 
       //      pimage1 = create_image(::double_size);
 
-      //      ::int_rectangle rectangleDib1(::double_point(), pimage1->m_size);
+      //      ::i32_rectangle rectangleDib1(::double_point(), pimage1->m_size);
 
       //      pimage1->get_graphics()->set_alpha_mode(::draw2d::e_alpha_mode_set);
 
@@ -730,7 +730,7 @@ namespace draw2d_direct2d
 
       //      pimage2->get_graphics()->fill_rectangle(rectangleDib1, argb(255, 0, 0, 0));
 
-      //      if (!pimage2->from(::double_point(), m_pimageAlphaBlend, int_point - m_pointAlphaBlend, rectangleIntersect.size()))
+      //      if (!pimage2->from(::double_point(), m_pimageAlphaBlend, i32_point - m_pointAlphaBlend, rectangleIntersect.size()))
       //      {
 
       //         return false;
@@ -837,7 +837,7 @@ namespace draw2d_direct2d
 
             //   y += pointOff.y;
 
-            //   return m_pimage->blend(::double_point(x, y), pgraphicsSrc->m_pimage, ::double_point(xSrc, ySrc), m_pimageAlphaBlend, int_point(m_pointAlphaBlend.x - x, m_pointAlphaBlend.y - y), rectangleBlt.size());
+            //   return m_pimage->blend(::double_point(x, y), pgraphicsSrc->m_pimage, ::double_point(xSrc, ySrc), m_pimageAlphaBlend, i32_point(m_pointAlphaBlend.x - x, m_pointAlphaBlend.y - y), rectangleBlt.size());
 
             //}
             //else
@@ -1040,7 +1040,7 @@ namespace draw2d_direct2d
 
       //   m_iType = 11;
 
-      //   ::int_size size = pbitmap->GetBitmapDimension();
+      //   ::i32_size size = pbitmap->GetBitmapDimension();
 
       //   D2D1_SIZE_U sizeu = D2D1::SizeU(size.cx, size.cy);
 
@@ -1420,7 +1420,7 @@ namespace draw2d_direct2d
    //} // call virtual
 
 
-   //void graphics::rectVisible(const ::int_rectangle & rectangle)
+   //void graphics::rectVisible(const ::i32_rectangle & rectangle)
    //{
 
    //   throw ::exception(todo);
@@ -1477,7 +1477,7 @@ namespace draw2d_direct2d
 
       auto ppath = createø < ::draw2d::path >();
 
-      ::int_rectangle rectangle((int)x1, (int)y1, (int)(x1 + w), (int)(y1 + h));
+      ::i32_rectangle rectangle((int)x1, (int)y1, (int)(x1 + w), (int)(y1 + h));
 
       //ppath->begin_figure(false, ::draw2d::e_fill_mode_winding);
       ppath->begin_figure();
@@ -1497,7 +1497,7 @@ namespace draw2d_direct2d
 
       double pi = 3.1415927f;
 
-      ::int_rectangle rectangle((int)x1, (int)y1, (int)x2, (int)y2);
+      ::i32_rectangle rectangle((int)x1, (int)y1, (int)x2, (int)y2);
 
       double centerx = (x2 + x1) / 2.0;
       double centery = (y2 + y1) / 2.0;
@@ -1660,10 +1660,10 @@ namespace draw2d_direct2d
 //
 //               b->CreateBitmap(this, rectangleTarget.size(), 1, 32, pimage32, rectangleTarget.width() * sizeof(::color32_t));
 //
-//               D2D1_RECT_F int_rectangle;
+//               D2D1_RECT_F i32_rectangle;
 //
 //               __copy(rectangle, rectangleTarget);
-//               //rectangle.left   = (FLOAT) int_rectangle;
+//               //rectangle.left   = (FLOAT) i32_rectangle;
 //               //rectangle.top    = (FLOAT) y;
 //               //rectangle.right  = rectangle.left    + cx;
 //               //rectangle.bottom = rectangle.top     + cy;
@@ -2994,7 +2994,7 @@ namespace draw2d_direct2d
    //
    //   }
    //
-   //   void graphics::ScrollDC(int dx, int dy, const ::int_rectangle & rectangleScroll, const ::int_rectangle & rectangleClip, ::draw2d::region* pRgnUpdate, ::int_rectangle * lpRectUpdate)
+   //   void graphics::ScrollDC(int dx, int dy, const ::i32_rectangle & rectangleScroll, const ::i32_rectangle & rectangleClip, ::draw2d::region* pRgnUpdate, ::i32_rectangle * lpRectUpdate)
    //   {
    //
    //      throw ::exception(todo);
@@ -3581,7 +3581,7 @@ namespace draw2d_direct2d
    // Create a Metafile object from an existing disk metafile.
    Metafile* pMeta = ___new Metafile(L"SampleMetafile.emf", hdc);
    {
-   // Fill a int_rectangle and an ellipse in pMeta.
+   // Fill a i32_rectangle and an ellipse in pMeta.
    Graphics metaGraphics(pMeta);
    metaGraphics.fill_rectangle(&SolidBrush(Color(255, 0, 0, 0)), 0, 0, 100, 100);
    metaGraphics.FillEllipse(&SolidBrush(Color(255, 255, 0, 0)), 100, 0, 200, 100);
@@ -3601,7 +3601,7 @@ namespace draw2d_direct2d
 
    //   throw ::exception(todo);
 
-   //   //Gdiplus::RectF int_rectangle((Gdiplus::REAL) lpBounds->left, (Gdiplus::REAL) lpBounds->top, (Gdiplus::REAL) width(lpBounds), (Gdiplus::REAL) height(lpBounds));
+   //   //Gdiplus::RectF i32_rectangle((Gdiplus::REAL) lpBounds->left, (Gdiplus::REAL) lpBounds->top, (Gdiplus::REAL) width(lpBounds), (Gdiplus::REAL) height(lpBounds));
 
    //   //Gdiplus::Metafile* pMeta = ___new Gdiplus::Metafile(hEnhMF, false);
 
@@ -3763,7 +3763,7 @@ namespace draw2d_direct2d
    {
 
 
-   ::int_rectangle rectangleIntersect(m_pointAlphaBlend, m_pimageAlphaBlend->size());
+   ::i32_rectangle rectangleIntersect(m_pointAlphaBlend, m_pimageAlphaBlend->size());
 
 
    ::image::image_pointer pimageWork = nullptr;
@@ -3816,8 +3816,8 @@ namespace draw2d_direct2d
 
    imageWork4.Fill(255, 0, 0, 0);
 
-   imageWork4.from(int_point(maximum(0, m_pointAlphaBlend.x - xDest), maximum(0, m_pointAlphaBlend.y - yDest)),
-   m_pimageAlphaBlend->get_graphics(), int_point(maximum(0, xDest - m_pointAlphaBlend.x), maximum(0, yDest - m_pointAlphaBlend.y)), ::double_size);
+   imageWork4.from(i32_point(maximum(0, m_pointAlphaBlend.x - xDest), maximum(0, m_pointAlphaBlend.y - yDest)),
+   m_pimageAlphaBlend->get_graphics(), i32_point(maximum(0, xDest - m_pointAlphaBlend.x), maximum(0, yDest - m_pointAlphaBlend.y)), ::double_size);
 
    imageWork.channel_multiply(::color::e_channel_opacity, imageWork4);
 
@@ -4044,7 +4044,7 @@ namespace draw2d_direct2d
 
    /*void graphics::LPtoHIMETRIC(LPSIZE32 LPSIZE32)
    {
-      ASSERT(is_memory_segment_ok(LPSIZE32, sizeof(::int_size)));
+      ASSERT(is_memory_segment_ok(LPSIZE32, sizeof(::i32_size)));
 
       LPtoDP(LPSIZE32);
       DPtoHIMETRIC(LPSIZE32);
@@ -4052,7 +4052,7 @@ namespace draw2d_direct2d
 
    void graphics::HIMETRICtoLP(LPSIZE32 LPSIZE32)
    {
-      ASSERT(is_memory_segment_ok(LPSIZE32, sizeof(::int_size)));
+      ASSERT(is_memory_segment_ok(LPSIZE32, sizeof(::i32_size)));
 
       HIMETRICtoDP(LPSIZE32);
       DPtoLP(LPSIZE32);
@@ -4086,7 +4086,7 @@ namespace draw2d_direct2d
    }
 
 
-   //void graphics::DrawDragRect(const ::int_rectangle & rectangle, const ::double_size& ::double_size, const ::int_rectangle & rectangleLast, const ::double_size& sizeLast, ::draw2d::brush* pBrush, ::draw2d::brush* pBrushLast)
+   //void graphics::DrawDragRect(const ::i32_rectangle & rectangle, const ::double_size& ::double_size, const ::i32_rectangle & rectangleLast, const ::double_size& sizeLast, ::draw2d::brush* pBrush, ::draw2d::brush* pBrushLast)
    //{
 
    //   throw ::interface_only();
@@ -4100,7 +4100,7 @@ namespace draw2d_direct2d
    //   ::draw2d::region rgnNew;
    //   ::draw2d::region rgnOutside, rgnInside;
    //   rgnOutside.CreateRectRgnIndirect(rectangle);
-   //   const ::int_rectangle & rectangle = *rectangle;
+   //   const ::i32_rectangle & rectangle = *rectangle;
    //   rectangle.inflate(-size.cx, -size.cy);
    //   rectangle.intersect(rectangle, rectangle);
    //   rgnInside.CreateRectRgnIndirect(rectangle);
@@ -4744,7 +4744,7 @@ namespace draw2d_direct2d
    //            switch (shapea[i]->eshape())
    //            {
    //            //case e_shape_rect:
-   //            //   intersect_clip(shapea[i]->shape < ::int_rectangle>());
+   //            //   intersect_clip(shapea[i]->shape < ::i32_rectangle>());
    //            //   break;
    //            case e_shape_rectangle:
    //               intersect_clip(shapea[i]->shape < ::rectangle >());
@@ -4786,7 +4786,7 @@ namespace draw2d_direct2d
 
    //      auto pregion = createø < ::draw2d::region > ();
 
-   //      auto rectangleClip = int_rectangle + m_pointAddShapeTranslate;
+   //      auto rectangleClip = i32_rectangle + m_pointAddShapeTranslate;
 
    //      pregion->create_rect(rectangleClip);
 
@@ -5230,7 +5230,7 @@ namespace draw2d_direct2d
 
    //}
 
-   //int graphics::ExcludeClipRect(const ::int_rectangle & rectangle)
+   //int graphics::ExcludeClipRect(const ::i32_rectangle & rectangle)
    //{
 
    //   return ExcludeClipRect(rectangle.left, rectangle.top, rectangle.right, rectangle.bottom);
@@ -5676,7 +5676,7 @@ namespace draw2d_direct2d
    }
 
 
-   //void graphics::draw_text(const ::scoped_string & scopedstrString, character_count nCount, const ::int_rectangle & rectangle, const ::e_align & ealign, const ::e_draw_text & edrawtext)
+   //void graphics::draw_text(const ::scoped_string & scopedstrString, character_count nCount, const ::i32_rectangle & rectangle, const ::e_align & ealign, const ::e_draw_text & edrawtext)
    //{
 
    //   if (nCount < 0)
@@ -6756,7 +6756,7 @@ namespace draw2d_direct2d
    //
    //      }
    //
-   //      ::int_rectangle rectangleX;
+   //      ::i32_rectangle rectangleX;
    //
    //      ::GetClientRect(hwnd, rectangleX);
    //
@@ -7649,7 +7649,7 @@ namespace draw2d_direct2d
 
       D2D1_LINEAR_GRADIENT_BRUSH_PROPERTIES prop{};
 
-      ::int_point pointViewport(0, 0);
+      ::i32_point pointViewport(0, 0);
 
       prop.startPoint.x = (FLOAT)p1.x + pointViewport.x;
       prop.startPoint.y = (FLOAT)p1.y + pointViewport.y;

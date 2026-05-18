@@ -109,7 +109,7 @@ namespace gpu_directx11
 
          //   m_pshaderHdri->push_properties(pgpucommandbuffer);
 
-         //   ::int_rectangle rectangle;
+         //   ::i32_rectangle rectangle;
 
          //   rectangle.right = m_ptextureCubemap->width();
          //   rectangle.bottom = m_ptextureCubemap->height();

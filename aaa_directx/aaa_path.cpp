@@ -572,7 +572,7 @@ namespace draw2d_directx
    }
 
 
-   bool path::_set(::draw2d::graphics* pgraphics, const ::int_rectangle & rectangle)
+   bool path::_set(::draw2d::graphics* pgraphics, const ::i32_rectangle & rectangle)
    {
 
       return internal_add_rect(pgraphics, rectangle.left, rectangle.top, rectangle.width(), rectangle.height());

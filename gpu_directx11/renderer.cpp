@@ -204,7 +204,7 @@ namespace gpu_directx11
    }
 
 
-   //void renderer::on_defer_update_renderer_allocate_render_target(::gpu::enum_output eoutput, const ::int_size& size, ::gpu::render_target* previous)
+   //void renderer::on_defer_update_renderer_allocate_render_target(::gpu::enum_output eoutput, const ::i32_size& size, ::gpu::render_target* previous)
    //{
 
    //   //auto eoutput = m_pgpucontext->m_eoutput;

@@ -46,7 +46,7 @@ namespace gpu_directx11
 
       //int                           m_gluTextureBitmap1;
       //int                              m_iLastBitmap1Scan;
-      //::int_size                       m_sizeBitmap1;
+      //::i32_size                       m_sizeBitmap1;
 
       //memory                           m_memorySwap;
 
@@ -124,14 +124,14 @@ namespace gpu_directx11
       bool _is_ok() const override;
 
 
-      virtual void initialize_cpu_buffer(const ::int_rectangle& rectanglePlacement);
+      virtual void initialize_cpu_buffer(const ::i32_rectangle& rectanglePlacement);
 
       virtual void initialize_d3d11_device();
 
       //svirtual void initialize_swap_chain(::windowing::window * pwindow);
       
       void initialize_gpu_device_for_swap_chain(::gpu::approach* pgpuapproach, ::windowing::window *pwindow) override;
-      void initialize_gpu_device_for_off_screen(::gpu::approach* pgpuapproach, const ::int_rectangle& rectanglePlacement) override;
+      void initialize_gpu_device_for_off_screen(::gpu::approach* pgpuapproach, const ::i32_rectangle& rectanglePlacement) override;
 
       //string _001GetIntroProjection() override;
       //string _001GetIntroFragment() override;
@@ -157,10 +157,10 @@ namespace gpu_directx11
 
       //void clear(const ::color::color& color);
 
-      //virtual void create_offscreen_buffer(const ::int_size& size);
-      //virtual void _create_offscreen_buffer(const ::int_size& size);
+      //virtual void create_offscreen_buffer(const ::i32_size& size);
+      //virtual void _create_offscreen_buffer(const ::i32_size& size);
 
-      //virtual void resize_offscreen_buffer(const ::int_size& size);
+      //virtual void resize_offscreen_buffer(const ::i32_size& size);
       //virtual void destroy_offscreen_buffer();
 
    /*   virtual void translate_shader(string & str);
@@ -202,15 +202,15 @@ namespace gpu_directx11
       //virtual VkCommandPool createCommandPool(uint32_t queueFamilyIndex, VkCommandPoolCreateFlags createFlags = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT);
       virtual bool isExtensionSupported(const ::scoped_string& scopedstrExtension);
 
-      virtual void _create_offscreen_window(const ::int_size& size);
+      virtual void _create_offscreen_window(const ::i32_size& size);
 
       //void defer_create_window_context(::windowing::window* pwindow) override;
       //void _defer_create_window_context(::windowing::window* pwindow) override;
       //virtual void _create_window_context(::windowing::window* pwindow);
 
       //virtual void _create_window_buffer();
-      //void _create_offscreen_buffer(const ::int_size& size) override;
-      //void resize_offscreen_buffer(const ::int_size& size) override;
+      //void _create_offscreen_buffer(const ::i32_size& size) override;
+      //void resize_offscreen_buffer(const ::i32_size& size) override;
       //void destroy_offscreen_buffer() override;
 
       //void make_current() override;

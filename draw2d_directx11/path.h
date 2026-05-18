@@ -52,7 +52,7 @@ namespace draw2d_directx11
 
       //virtual bool is_empty();
       //virtual bool has_current_point();
-      //virtual int_point current_point();
+      //virtual i32_point current_point();
 
       //ID2D1GeometryRealization * _get_stroked_geometry_realization(::draw2d::graphics * pgraphics, int iWidth);
       //ID2D1GeometryRealization * _get_filled_geometry_realization(::draw2d::graphics * pgraphics);
@@ -84,7 +84,7 @@ namespace draw2d_directx11
       //virtual bool _set(::draw2d::graphics* pgraphics, ::draw2d::path::begin * pbegin) override;
       //virtual bool _set(::draw2d::graphics* pgraphics, ::draw2d::path::arc * parc) override;
       ////virtual bool _set(::draw2d::graphics* pgraphics, const ::draw2d::path::move & move);
-      //virtual bool _set(::draw2d::graphics* pgraphics, ::draw2d::path::int_rectangle* prectangle) override;
+      //virtual bool _set(::draw2d::graphics* pgraphics, ::draw2d::path::i32_rectangle* prectangle) override;
       //virtual bool _set(::draw2d::graphics* pgraphics, ::draw2d::path::line * pline) override;
       //virtual bool _set(::draw2d::graphics* pgraphics, ::draw2d::path::lines* plines) override;
       //virtual bool _set(::draw2d::graphics* pgraphics, ::draw2d::path::int_polygon* pline) override;

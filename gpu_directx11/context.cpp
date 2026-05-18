@@ -439,7 +439,7 @@ namespace gpu_directx11
 
 
 
-   //void context::create_offscreen_buffer(const ::int_size& size)
+   //void context::create_offscreen_buffer(const ::i32_size& size)
    //{
 
    //   auto pgpu = application()->get_gpu();
@@ -483,7 +483,7 @@ namespace gpu_directx11
    //}
 
 
-   //void context::_create_offscreen_buffer(const ::int_size& size)
+   //void context::_create_offscreen_buffer(const ::i32_size& size)
    //{
 
    //   return ::success_none;
@@ -491,7 +491,7 @@ namespace gpu_directx11
    //}
 
 
-   //void context::resize_offscreen_buffer(const ::int_size& size)
+   //void context::resize_offscreen_buffer(const ::i32_size& size)
    //{
 
    //   return ::success_none;
@@ -781,7 +781,7 @@ namespace gpu_directx11
    }
 
 
-   void context::_create_offscreen_window(const ::int_size& size)
+   void context::_create_offscreen_window(const ::i32_size& size)
    {
       //if (::IsWindow(m_hwnd))
       //{
@@ -847,7 +847,7 @@ namespace gpu_directx11
    }
 
 
-   void context::_create_context_directx11(::gpu::device* pgpudeviceParam, const ::gpu::enum_output& eoutput, ::acme::windowing::window* pwindow, const ::int_size& size)
+   void context::_create_context_directx11(::gpu::device* pgpudeviceParam, const ::gpu::enum_output& eoutput, ::acme::windowing::window* pwindow, const ::i32_size& size)
    {
 
       ::cast < device > pgpudevice = pgpudeviceParam;
@@ -869,7 +869,7 @@ namespace gpu_directx11
 
 
    void context::on_create_context(::gpu::device *pgpudevice, const ::gpu::enum_output &eoutput, 
-                                   ::acme::windowing::window * pwindow, const ::int_size &size)
+                                   ::acme::windowing::window * pwindow, const ::i32_size &size)
    {
 
       m_pgpudevice = pgpudevice;
@@ -1079,7 +1079,7 @@ namespace gpu_directx11
 
       //   ::GetClientRect(m_hwnd, &rectClient);
 
-      //   ::int_size sizeNew = { rectClient.right - rectClient.left,
+      //   ::i32_size sizeNew = { rectClient.right - rectClient.left,
       //rectClient.bottom - rectClient.top };
       //   
       //   if (m_size != sizeNew)
@@ -1762,7 +1762,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
 
 
-   void context::_create_cpu_buffer(const ::int_size& size)
+   void context::_create_cpu_buffer(const ::i32_size& size)
    {
 
       _create_offscreen_window(size);
@@ -1797,7 +1797,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    }
 
 
-   void context::resize_cpu_buffer(const ::int_size& sizeParam)
+   void context::resize_cpu_buffer(const ::i32_size& sizeParam)
    {
 
       if (m_papplication->m_gpu.m_bUseSwapChainWindow)
@@ -2692,7 +2692,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    }
 
 
-   void context::set_viewport(::gpu::command_buffer *pgpucommandbuffer, const ::int_rectangle &rectangle)
+   void context::set_viewport(::gpu::command_buffer *pgpucommandbuffer, const ::i32_rectangle &rectangle)
    {
       
       D3D11_VIEWPORT viewport = {};
@@ -2710,7 +2710,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
 
    void context::set_scissor(::gpu::command_buffer *pgpucommandbuffer,
-                              const ::int_rectangle &rectangle)
+                              const ::i32_rectangle &rectangle)
    {
          D3D11_RECT scissorRect;
    // scissorRect.left = pgputextureSource->m_rectangleTarget.left;
@@ -2827,7 +2827,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    }
 
 
-   bool context::create_offscreen_graphics_for_swap_chain_blitting(::gpu::graphics* pgraphics, const ::int_size& size)
+   bool context::create_offscreen_graphics_for_swap_chain_blitting(::gpu::graphics* pgraphics, const ::i32_size& size)
    {
 
       ::cast < swap_chain > pswapchain = get_swap_chain();

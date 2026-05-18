@@ -105,7 +105,7 @@ namespace directx11
    }
 
 
-   ::comptr < IDXGISurface> swap_chain::_create_dxgi_surface(const ::int_size& size)
+   ::comptr < IDXGISurface> swap_chain::_create_dxgi_surface(const ::i32_size& size)
    {
 
       ::comptr < IDXGISurface> pdxgisurface;

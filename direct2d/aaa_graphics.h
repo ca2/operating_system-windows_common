@@ -457,7 +457,7 @@ namespace draw2d_direct2d
 
 //      // Scrolling Functions
 //      bool ScrollDC(int dx, int dy, const ::double_rectangle & rectangleScroll, const ::double_rectangle & rectangleClip,
-//                    ::draw2d::region* pRgnUpdate, ::int_rectangle * lpRectUpdate) override;
+//                    ::draw2d::region* pRgnUpdate, ::i32_rectangle * lpRectUpdate) override;
 //
 //      // font Functions
 //      bool GetCharWidth(unsigned int nFirstChar, unsigned int nLastChar, LPINT lpBuffer) override;

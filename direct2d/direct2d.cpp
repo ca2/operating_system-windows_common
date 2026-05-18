@@ -273,7 +273,7 @@ namespace direct2d
 
 
 
-   //CLASS_DECL_DIRECT2D void defer_initialize(::windowing::window* pwindow, const ::int_rectangle& rectanglePlacement)
+   //CLASS_DECL_DIRECT2D void defer_initialize(::windowing::window* pwindow, const ::i32_rectangle& rectanglePlacement)
    //{
 
    //   if (::is_set(direct2d::s_pdirect2d))

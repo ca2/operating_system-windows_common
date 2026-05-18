@@ -46,7 +46,7 @@ namespace directx11
    }
 
 
-   //CLASS_DECL_DIRECTX11 void defer_initialize(::windowing::window* pwindow, const ::int_rectangle& rectanglePlacement)
+   //CLASS_DECL_DIRECTX11 void defer_initialize(::windowing::window* pwindow, const ::i32_rectangle& rectanglePlacement)
    //{
 
    //   //if (::is_set(directx11::s_pdirectx11))
@@ -70,7 +70,7 @@ namespace directx11
 
 
 
-   //::comptr < IDXGISurface> directx11::_create_dxgi_surface(const ::int_size& size)
+   //::comptr < IDXGISurface> directx11::_create_dxgi_surface(const ::i32_size& size)
    //{
    //   ::comptr < IDXGISurface> pdxgisurface;
    //   //auto r = m_pwindow->get_window_rectangle();

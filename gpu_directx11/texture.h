@@ -88,7 +88,7 @@ namespace gpu_directx11
       void _create_texture(const ::gpu::texture_data & texturedata = {}) override;
 
       // void initialize_texture(::gpu::renderer* prenderer,
-      //    const ::int_rectangle& rectangleTarget, bool bWithDepth,
+      //    const ::i32_rectangle& rectangleTarget, bool bWithDepth,
       //    const ::pointer_array < ::image::image > * imagea = nullptr, enum_type type = e_type_image) override;
       virtual void _initialize_gpu_texture(::gpu::context *pgpucontext, IDXGISwapChain1 *pdxgiswapchain);
 
@@ -108,8 +108,8 @@ namespace gpu_directx11
 
       virtual IDXGISurface* __get_dxgi_surface();
 
-      void set_pixels(const ::int_rectangle& rectangle, const void* data) override;
-      void initialize_with_image_data(::gpu::context *pgpucontext, const ::int_rectangle &rectangleTarget,
+      void set_pixels(const ::i32_rectangle& rectangle, const void* data) override;
+      void initialize_with_image_data(::gpu::context *pgpucontext, const ::i32_rectangle &rectangleTarget,
                                       int numChannels, bool bSrgb, const void *pdata, ::gpu::enum_texture etexture) override;
 
 

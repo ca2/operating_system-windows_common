@@ -540,7 +540,7 @@ namespace imaging_wic
 
             pframe->GetSize(&width, &height);
 
-            pimage->create(::int_size(width, height));
+            pimage->create(::i32_size(width, height));
 
             pimage->map();
 

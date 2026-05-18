@@ -47,7 +47,7 @@ namespace gpu_directx11
    }
 
 
-   void render_target_view::initialize_render_target(::gpu::renderer* pgpurenderer, const ::int_size& size, ::pointer <::gpu::render_target>previous)
+   void render_target_view::initialize_render_target(::gpu::renderer* pgpurenderer, const ::i32_size& size, ::pointer <::gpu::render_target>previous)
    {
 
       ::gpu::render_target::initialize_render_target(pgpurenderer, size, previous);

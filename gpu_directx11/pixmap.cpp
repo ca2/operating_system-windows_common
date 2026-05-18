@@ -22,7 +22,7 @@
 //   }
 //
 //
-//   void pixmap::initialize_gpu_pixmap(::gpu::renderer* pgpurenderer, const ::int_size& size)
+//   void pixmap::initialize_gpu_pixmap(::gpu::renderer* pgpurenderer, const ::i32_size& size)
 //   {
 //
 //      m_pgpurenderer = pgpurenderer;
@@ -92,7 +92,7 @@
 //
 //      image32_t* pimage32 = (image32_t*) mapped.pData;
 //
-//      pimage32->copy(::int_size(w, h), mapped.RowPitch,(const ::image32_t*) data, w * 4);
+//      pimage32->copy(::i32_size(w, h), mapped.RowPitch,(const ::image32_t*) data, w * 4);
 //      //// Fill the buffer
 //      //for (int y = 0; y < height; ++y)
 //      //{

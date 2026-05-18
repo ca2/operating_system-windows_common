@@ -163,11 +163,11 @@ namespace draw2d_directx11
       //bool CreateIC(const ::scoped_string & scopedstrDriverName, const ::scoped_string & scopedstrDeviceName,
       //              const_char_pointer lpszOutput, const void * lpInitData) override;
       void create_compatible_graphics(::draw2d::graphics * pgraphics) override;
-      void _create_memory_graphics(const ::int_size& size = {}) override;
-      void defer_set_size(const ::int_size& size = {}) override;
+      void _create_memory_graphics(const ::i32_size& size = {}) override;
+      void defer_set_size(const ::i32_size& size = {}) override;
 
-      //void create_offscreen_graphics_for_swap_chain_blitting(const ::int_size& size) override;
-      void create_for_window_draw2d(::user::interaction* puserinteraction, const ::int_size & size) override;
+      //void create_offscreen_graphics_for_swap_chain_blitting(const ::i32_size& size) override;
+      void create_for_window_draw2d(::user::interaction* puserinteraction, const ::i32_size & size) override;
       //void create_connector() override;
 
       void DeleteDC() override;
@@ -536,7 +536,7 @@ namespace draw2d_directx11
 
 //      // Scrolling Functions
 //      bool ScrollDC(int dx, int dy, const ::double_rectangle & rectangleScroll, const ::double_rectangle & rectangleClip,
-//                    ::draw2d::region* pRgnUpdate, ::int_rectangle * lpRectUpdate) override;
+//                    ::draw2d::region* pRgnUpdate, ::i32_rectangle * lpRectUpdate) override;
 //
 //      // font Functions
 //      bool GetCharWidth(unsigned int nFirstChar, unsigned int nLastChar, LPINT lpBuffer) override;

@@ -150,7 +150,7 @@ namespace gpu_directx11
       //         
       //         m_pframebufferPrefilteredEnvMap->set_cube_face(iFace);
 
-      //         ::int_rectangle rectangle;
+      //         ::i32_rectangle rectangle;
 
       //         rectangle.set(0, 0, 
       //            m_pframebufferPrefilteredEnvMap->m_ptexture->m_sizeMip.cx,
