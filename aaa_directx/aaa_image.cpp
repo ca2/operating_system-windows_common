@@ -1480,7 +1480,7 @@ namespace draw2d_directx
    //bool image::update_window(::aura::draw_interface * puserinteraction, ::message::message * pmessage, bool bTransferBuffer)
    //{
 
-   //   long_long_rectangle rectangleWindow;
+   //   i64_rectangle rectangleWindow;
 
    //   puserinteraction->window_rectangle(rectangleWindow);
 
