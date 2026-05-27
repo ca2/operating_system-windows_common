@@ -42,7 +42,7 @@ namespace gpu_directx11
 
 
       //void mesh::initialize_gpu_gltf_mesh(const ::array_base<::gpu::gltf::vertex> &vertexa,
-      //                             const ::unsigned_int_array &indexa, ::gpu::model::material *pmaterial)
+      //                             const ::u32_array &indexa, ::gpu::model::material *pmaterial)
       //{
 
       //   m_vertexa = vertexa;

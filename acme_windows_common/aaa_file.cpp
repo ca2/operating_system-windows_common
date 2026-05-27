@@ -766,7 +766,7 @@ directory_system()create(path.folder());
       ASSERT_VALID(this);
       ASSERT(m_handleFile != INVALID_HANDLE_VALUE);
 
-      if (!::LockFile((HANDLE)m_handleFile, lower_unsigned_int(dwPos), upper_unsigned_int(dwPos), lower_unsigned_int(dwCount), upper_unsigned_int(dwCount)))
+      if (!::LockFile((HANDLE)m_handleFile, lower_u32(dwPos), upper_u32(dwPos), lower_u32(dwCount), upper_u32(dwCount)))
       {
 
          auto lasterror = ::windows::get_last_error();
@@ -782,7 +782,7 @@ directory_system()create(path.folder());
       ASSERT_VALID(this);
       ASSERT(m_handleFile != INVALID_HANDLE_VALUE);
 
-      if (!::UnlockFile((HANDLE)m_handleFile, lower_unsigned_int(dwPos), upper_unsigned_int(dwPos), lower_unsigned_int(dwCount), upper_unsigned_int(dwCount)))
+      if (!::UnlockFile((HANDLE)m_handleFile, lower_u32(dwPos), upper_u32(dwPos), lower_u32(dwCount), upper_u32(dwCount)))
       {
 
          auto lasterror = ::windows::get_last_error();
