@@ -26,7 +26,7 @@
 
 
 
-static int g_iMutex = 0;
+static ::i32 g_iMutex = 0;
 
 
 
@@ -181,7 +181,7 @@ pacmedir->create(::file::path(strName).folder());
 
       string strTest = file_system()->as_string(strName);
 
-      //int isCreator = 0;
+      //::i32 isCreator = 0;
 
       if ((m_psem = sem_open(strName, O_CREAT|O_EXCL, 0644, 1)) != SEM_FAILED)
       {
@@ -194,7 +194,7 @@ pacmedir->create(::file::path(strName).folder());
       else
       {
 
-         int err = errno;
+         ::i32 err = errno;
 
          if (err != EEXIST)
          {
@@ -292,9 +292,9 @@ pacmedir->create(path.folder());
       if(m_iFd < 0)
       {
 
-         int iErr = errno;
+         ::i32 iErr = errno;
 
-         const char * pszError = strerror(iErr);
+         const ::i8 * pszError = strerror(iErr);
 
          throw ::exception(error_resource);
 
@@ -507,10 +507,10 @@ mutexmutex(const ::mutex & m):
 #elif defined(MUTEX_NAMED_FD)
 
 
-::mutex::mutex(enum_create_new, const ::scoped_string & scopedstrName, int iFd, bool bOwner)
+::mutex::mutex(enum_create_new, const ::scoped_string & scopedstrName, ::i32 iFd, bool bOwner)
 {
 
-   m_strName = lpszName;
+   m_strName = pszName;
    m_bOwner = bOwner;
    m_iFd = iFd;
 
@@ -531,7 +531,7 @@ mutexmutex(const ::mutex & m):
 
 #elif defined(MUTEX_NAMED_VSEM)
 
-mutexmutex(e_create_new enew, const ::string & pstrName, key_t key, int semid, bool bOwner):
+mutexmutex(e_create_new enew, const ::string & pstrName, key_t key, ::i32 semid, bool bOwner):
    ::matter(pobject),
    synchronization_object(pstrName)
 {
@@ -639,7 +639,7 @@ bool ::mutex::already_exists()
 }
 
 //      ANDROID
-//      int irc = pthread_mutex_lock_timeout_np(&m_mutex, duration.get_total_milliseconds());
+//      ::i32 irc = pthread_mutex_lock_timeout_np(&m_mutex, duration.get_total_milliseconds());
 //
 //      if (!irc)
 //      {
@@ -679,7 +679,7 @@ synchronization_result ::mutex::wait(const duration & duration)
 
       delay.tv_nsec = duration.m_i;
 
-      int ret = sem_timedwait(m_psem, &delay);
+      ::i32 ret = sem_timedwait(m_psem, &delay);
 
       if(ret == 0)
       {
@@ -710,7 +710,7 @@ synchronization_result ::mutex::wait(const duration & duration)
    if (m_strName.has_character())
    {
 
-      int rc = pthread_mutex_lock(&m_mutex);
+      ::i32 rc = pthread_mutex_lock(&m_mutex);
 
       if (rc < 0)
       {
@@ -734,7 +734,7 @@ synchronization_result ::mutex::wait(const duration & duration)
 
                m_count++;
 
-               int iError = pthread_mutex_unlock(&m_mutex);
+               ::i32 iError = pthread_mutex_unlock(&m_mutex);
 
                ASSERT(iError == 0);
 
@@ -746,7 +746,7 @@ synchronization_result ::mutex::wait(const duration & duration)
          else
          {
 
-            int rc = lockf(m_iFd, F_LOCK, 0);
+            ::i32 rc = lockf(m_iFd, F_LOCK, 0);
 
             if (rc == 0)
             {
@@ -755,7 +755,7 @@ synchronization_result ::mutex::wait(const duration & duration)
 
                m_thread = pthread_self();
 
-               int iError = pthread_mutex_unlock(&m_mutex);
+               ::i32 iError = pthread_mutex_unlock(&m_mutex);
 
                ASSERT(iError == 0);
 
@@ -770,7 +770,7 @@ synchronization_result ::mutex::wait(const duration & duration)
                if (rc != EAGAIN && rc != EACCES)
                {
 
-                  int iError = pthread_mutex_unlock(&m_mutex);
+                  ::i32 iError = pthread_mutex_unlock(&m_mutex);
 
                   ASSERT(iError == 0);
 
@@ -780,7 +780,7 @@ synchronization_result ::mutex::wait(const duration & duration)
 
             }
 
-            int iError = pthread_mutex_unlock(&m_mutex);
+            ::i32 iError = pthread_mutex_unlock(&m_mutex);
 
             if (iError < 0)
             {
@@ -815,7 +815,7 @@ synchronization_result ::mutex::wait(const duration & duration)
 
       }
 
-//      int iError = pthread_mutex_unlock(&m_mutex);
+//      ::i32 iError = pthread_mutex_unlock(&m_mutex);
 //
 //      ASSERT(iError == 0);
 //
@@ -841,7 +841,7 @@ synchronization_result ::mutex::wait(const duration & duration)
       operation[0].sem_num = 0;
       operation[0].sem_flg = 0;
 
-      int ret = semtimedop(m_semid, operation, 1, &timeout);
+      ::i32 ret = semtimedop(m_semid, operation, 1, &timeout);
 
       if(ret == 0)
       {
@@ -871,7 +871,7 @@ synchronization_result ::mutex::wait(const duration & duration)
 #if defined(MUTEX_COND_TIMED)
    {
 
-      int rc = pthread_mutex_lock(&m_mutex);
+      ::i32 rc = pthread_mutex_lock(&m_mutex);
 
       if(rc < 0)
       {
@@ -962,7 +962,7 @@ synchronization_result ::mutex::wait(const duration & duration)
          if(rc == ETIMEDOUT)
          {
 
-            int iError = pthread_mutex_unlock(&m_mutex);
+            ::i32 iError = pthread_mutex_unlock(&m_mutex);
 
             ASSERT(iError == 0);
 
@@ -972,7 +972,7 @@ synchronization_result ::mutex::wait(const duration & duration)
          else if(rc != 0)
          {
 
-            int iError = pthread_mutex_unlock(&m_mutex);
+            ::i32 iError = pthread_mutex_unlock(&m_mutex);
 
             ASSERT(iError == 0);
 
@@ -991,7 +991,7 @@ synchronization_result ::mutex::wait(const duration & duration)
 
       m_count++;
 
-      int iError = pthread_mutex_unlock(&m_mutex);
+      ::i32 iError = pthread_mutex_unlock(&m_mutex);
 
       ASSERT(iError == 0);
 
@@ -1019,7 +1019,7 @@ synchronization_result ::mutex::wait(const duration & duration)
 
       abs_time.tv_nsec = d.m_i;
 
-      int rc = pthread_mutex_timedlock (&m_mutex, &abs_time);
+      ::i32 rc = pthread_mutex_timedlock (&m_mutex, &abs_time);
 
       if (!rc)
       {
@@ -1057,7 +1057,7 @@ bool ::mutex::lock()
 
       timespec delay;
 
-      int ret = sem_wait(m_psem);
+      ::i32 ret = sem_wait(m_psem);
 
       if (ret == 0)
       {
@@ -1087,7 +1087,7 @@ bool ::mutex::lock()
    if (m_strName.has_character())
    {
 
-      int rc = pthread_mutex_lock(&m_mutex);
+      ::i32 rc = pthread_mutex_lock(&m_mutex);
 
       if (rc < 0)
       {
@@ -1101,7 +1101,7 @@ bool ::mutex::lock()
 
          m_count++;
 
-         int iError = pthread_mutex_unlock(&m_mutex);
+         ::i32 iError = pthread_mutex_unlock(&m_mutex);
 
          ASSERT(iError == 0);
 
@@ -1120,7 +1120,7 @@ bool ::mutex::lock()
 
                m_count++;
 
-               int iError = pthread_mutex_unlock(&m_mutex);
+               ::i32 iError = pthread_mutex_unlock(&m_mutex);
 
                ASSERT(iError == 0);
 
@@ -1154,7 +1154,7 @@ bool ::mutex::lock()
                if (rc != EAGAIN && rc != EACCES)
                {
 
-                  int iError = pthread_mutex_unlock(&m_mutex);
+                  ::i32 iError = pthread_mutex_unlock(&m_mutex);
 
                   ASSERT(iError == 0);
 
@@ -1166,7 +1166,7 @@ bool ::mutex::lock()
 
          }
 
-         int iError = pthread_mutex_unlock(&m_mutex);
+         ::i32 iError = pthread_mutex_unlock(&m_mutex);
 
          if (iError < 0)
          {
@@ -1190,7 +1190,7 @@ bool ::mutex::lock()
 
       }
 
-//      int iError = pthread_mutex_unlock(&m_mutex);
+//      ::i32 iError = pthread_mutex_unlock(&m_mutex);
 //
 //      ASSERT(iError == 0);
 //
@@ -1210,7 +1210,7 @@ bool ::mutex::lock()
       operation[0].sem_num = 0;
       operation[0].sem_flg = 0;
 
-      int ret = semop(m_semid, operation, 1);
+      ::i32 ret = semop(m_semid, operation, 1);
 
       if(ret < 0)
       {
@@ -1227,7 +1227,7 @@ bool ::mutex::lock()
 #ifdef MUTEX_COND_TIMED
    {
 
-      int rc = pthread_mutex_lock(&m_mutex);
+      ::i32 rc = pthread_mutex_lock(&m_mutex);
 
       if(rc < 0)
       {
@@ -1244,7 +1244,7 @@ bool ::mutex::lock()
          if(rc < 0)
          {
 
-            int iError = pthread_mutex_unlock(&m_mutex);
+            ::i32 iError = pthread_mutex_unlock(&m_mutex);
 
             ASSERT(iError == 0);
 
@@ -1263,7 +1263,7 @@ bool ::mutex::lock()
 
       m_count++;
 
-      int iError = pthread_mutex_unlock(&m_mutex);
+      ::i32 iError = pthread_mutex_unlock(&m_mutex);
 
       ASSERT(iError == 0);
 
@@ -1275,7 +1275,7 @@ bool ::mutex::lock()
 
    {
 
-      int irc = pthread_mutex_lock(&m_mutex);
+      ::i32 irc = pthread_mutex_lock(&m_mutex);
 
       if (irc)
       {
@@ -1351,7 +1351,7 @@ bool ::mutex::unlock()
    if (m_strName.has_character())
    {
 
-      int rc = pthread_mutex_lock(&m_mutex);
+      ::i32 rc = pthread_mutex_lock(&m_mutex);
 
       if (rc < 0)
       {
@@ -1365,7 +1365,7 @@ bool ::mutex::unlock()
 
          ASSERT(false);
 
-         int iError = pthread_mutex_unlock(&m_mutex);
+         ::i32 iError = pthread_mutex_unlock(&m_mutex);
 
          ASSERT(iError == 0);
 
@@ -1395,7 +1395,7 @@ bool ::mutex::unlock()
 
       }
 
-      int iError = pthread_mutex_unlock(&m_mutex);
+      ::i32 iError = pthread_mutex_unlock(&m_mutex);
 
       ASSERT(iError == 0);
 
@@ -1426,7 +1426,7 @@ bool ::mutex::unlock()
 
    {
 
-      int rc = pthread_mutex_lock(&m_mutex);
+      ::i32 rc = pthread_mutex_lock(&m_mutex);
 
       if(rc < 0)
       {
@@ -1440,7 +1440,7 @@ bool ::mutex::unlock()
 
          ASSERT(false);
 
-         int iError = pthread_mutex_unlock(&m_mutex);
+         ::i32 iError = pthread_mutex_unlock(&m_mutex);
 
          ASSERT(iError == 0);
 
@@ -1472,7 +1472,7 @@ bool ::mutex::unlock()
 
       }
 
-      int iError = pthread_mutex_unlock(&m_mutex);
+      ::i32 iError = pthread_mutex_unlock(&m_mutex);
 
       ASSERT(iError == 0);
 
@@ -1501,7 +1501,7 @@ bool ::mutex::unlock()
 
 #ifdef WINDOWS
 
-   HANDLE h = ::OpenMutexW(SYNCHRONIZE, false, utf8_to_unicode(lpszName));
+   HANDLE h = ::OpenMutexW(SYNCHRONIZE, false, utf8_to_unicode(pszName));
 
    if (h == nullptr || h == INVALID_HANDLE_VALUE)
    {
@@ -1510,7 +1510,7 @@ bool ::mutex::unlock()
 
    }
 
-   auto pmutex  = allocateø ::mutex(e_create_new, lpszName, h);
+   auto pmutex  = allocateø ::mutex(e_create_new, pszName, h);
 
    return pmutex;
 
@@ -1520,7 +1520,7 @@ bool ::mutex::unlock()
 
    sem_t * psem;
 
-   int isCreator = 0;
+   ::i32 isCreator = 0;
 
    if ((psem = sem_open(strName, O_CREAT | O_EXCL, 0666, 1)) != SEM_FAILED)
    {
@@ -1549,7 +1549,7 @@ bool ::mutex::unlock()
 
 #elif defined(MUTEX_NAMED_FD)
 
-   if (lpszName == nullptr || *lpszName == '\0')
+   if (pszName == nullptr || *pszName == '\0')
    {
 
       return nullptr;
@@ -1560,7 +1560,7 @@ bool ::mutex::unlock()
 
    ::file::path path;
 
-   if (lpszName.case_insensitive_begins("Global"))
+   if (pszName.case_insensitive_begins("Global"))
    {
 
       path = "/::payload/tmp/ca2/lock/::mutex/named";
@@ -1585,7 +1585,7 @@ bool ::mutex::unlock()
 
    }
 
-   path /= lpszName;
+   path /= pszName;
 
             auto psystem = system();
 
@@ -1593,7 +1593,7 @@ bool ::mutex::unlock()
 
 pacmedir->create(path.folder());
 
-   int iFd = open(path, O_RDWR, S_IRWXU);
+   ::i32 iFd = open(path, O_RDWR, S_IRWXU);
 
    if (iFd < 0)
    {
@@ -1612,7 +1612,7 @@ pacmedir->create(path.folder());
 
    //pthread_mutex_init(&m_mutex, &attr);
 
-   auto pmutex = allocateø ::mutex(e_create_new, lpszName, iFd, false);
+   auto pmutex = allocateø ::mutex(e_create_new, pszName, iFd, false);
 
    return pmutex;
 
@@ -1625,7 +1625,7 @@ pacmedir->create(path.folder());
 
    key_t key = ftok(strName, 0); //Generate a unique key or supply a value
 
-   int semid = semget(
+   ::i32 semid = semget(
                key, // a unique identifier to identify semaphore set
                1,  // number of semaphore in the semaphore set
                0666 // permissions (rwxrwxrwx) on the ___new

@@ -34,7 +34,7 @@ namespace multimedia
       {
          void     mmrc;
          m_bHasV001Controls = false;
-         int iControlCount = m_mixerline.cControls;
+         ::i32 iControlCount = m_mixerline.cControls;
          if (0 == iControlCount)
          {
             //        message_box(nullptr, ::user::e_message_box_ok | ::user::e_message_box_icon_exclamation,
@@ -55,7 +55,7 @@ namespace multimedia
          m_mixerlinecontrols.cbmxctrl       = sizeof(*m_mixerlinecontrols.pamxctrl);
          m_mixerlinecontrols.pamxctrl       = ___new MIXERCONTROL[m_mixerline.cControls];
 
-         for (int i = 0; i < iControlCount; i++)
+         for (::i32 i = 0; i < iControlCount; i++)
          {
             m_mixerlinecontrols.pamxctrl[i].cbStruct = sizeof(MIXERCONTROL);
          }
@@ -72,10 +72,10 @@ namespace multimedia
          }
          else
          {
-            //        char       ach[128];
-            //      char       szControlType[64];
-            //        unsigned int        u;
-            //    int         nIndex;
+            //        ::i8       ach[128];
+            //      ::i8       szControlType[64];
+            //        ::u32        u;
+            //    ::i32         nIndex;
             PMIXERCONTROL       pamxctrl;
             //        LPMIXERCONTROLDETAILS lpmcd;
             ::pointer<::audio_mixer_mmsystem::control>    lpMixerControl;
@@ -83,7 +83,7 @@ namespace multimedia
             //        if (0 != (APP_OPTF_DEBUGLOG & gfuAppOptions))
             //          MixAppDebugLog(nullptr);
 
-            for (int i = 0; (unsigned int) i < m_mixerlinecontrols.cControls; i++)
+            for (::i32 i = 0; (::u32) i < m_mixerlinecontrols.cControls; i++)
             {
                lpMixerControl = m_mixercontrola(i);
                lpMixerControl->m_pmixersource = this;
@@ -118,11 +118,11 @@ namespace multimedia
                //
                //            wsprintf(ach, gszLineControlsFormatList,
                //                  u,
-               //                (char *)szControlType,
+               //                (::i8 *)szControlType,
                //              pamxctrl[u].dwControlID,
                //            pamxctrl[u].fdwControl,
                //          pamxctrl[u].cMultipleItems,
-               //        (char *)pamxctrl[u].szName);
+               //        (::i8 *)pamxctrl[u].szName);
 
                //            if (0 != (APP_OPTF_DEBUGLOG & gfuAppOptions))
                //          {
@@ -145,14 +145,14 @@ namespace multimedia
 
       }
 
-      /*void     source::GetControl(unsigned int dwControlType, unsigned int dwControlFlags,  ::audio_mixer::control ** ppControl)
+      /*void     source::GetControl(::u32 dwControlType, ::u32 dwControlFlags,  ::audio_mixer::control ** ppControl)
       {
       ::audio_mixer::control_array & controla = m_mixercontrola;
       if(controla.get_size() <= 0)
       GetLineControls();
       if(controla.get_size() <= 0)
       return MMSYSERR_ERROR;
-      for(int i = 0; i < controla.get_size(); i++)
+      for(::i32 i = 0; i < controla.get_size(); i++)
       {
       if((dwControlType != 0 && controla[i].GetControlType() == dwControlType)
       || (dwControlType == 0 && ((controla[i].GetControlType() & dwControlFlags) != 0)))
@@ -179,7 +179,7 @@ namespace multimedia
       void source::update_all_controls()
       {
          ::audio_mixer::control_array & controla = get_control_array();
-         for(int i = 0; i < controla.get_size(); i++)
+         for(::i32 i = 0; i < controla.get_size(); i++)
          {
             controla[i].OnMixerControlChange();
          }
@@ -201,7 +201,7 @@ namespace multimedia
       }
 
 
-      unsigned int source::GetLineID()
+      ::u32 source::GetLineID()
       {
          return m_mixerline.dwLineID;
       }
@@ -218,7 +218,7 @@ namespace multimedia
       }
 
 
-      void     source::mixerGetLineInfo(unsigned int dwSource, unsigned int dwDestination, unsigned int fdwInfo)
+      void     source::mixerGetLineInfo(::u32 dwSource, ::u32 dwDestination, ::u32 fdwInfo)
       {
 
          m_mixerline.cbStruct       = sizeof(MIXERLINE);
@@ -242,7 +242,7 @@ namespace multimedia
 
       }
 
-      void     source::mixerGetLineInfo(unsigned int dwSource, ::audio_mixer::destination * pdestination)
+      void     source::mixerGetLineInfo(::u32 dwSource, ::audio_mixer::destination * pdestination)
       {
 
          ::pointer<::audio_mixer_mmsystem::destination>destination = pdestination;

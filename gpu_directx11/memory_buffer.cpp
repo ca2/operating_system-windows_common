@@ -174,7 +174,7 @@ namespace gpu_directx11
 
          auto pframestorage = pdevice->current_frame_storage();
 
-         pframestorage->map_allocate(this, (int) count);
+         pframestorage->map_allocate(this, (::i32) count);
 
          //if (count > pframestorage->m_iBufferSize)
          //{
@@ -251,7 +251,7 @@ namespace gpu_directx11
 
             D3D11_MAP_WRITE_NO_OVERWRITE, 0, &mapped);
          //      memcpy(mapped.pData, &myData, sizeof(MyConstants));
-         m_pMap = ((unsigned char*)mapped.pData) + m_iBufferOffset;
+         m_pMap = ((::u8*)mapped.pData) + m_iBufferOffset;
 
 
       }
@@ -267,7 +267,7 @@ namespace gpu_directx11
 
             D3D11_MAP_WRITE_NO_OVERWRITE, 0, &mapped);
          //      memcpy(mapped.pData, &myData, sizeof(MyConstants));
-         m_pMap = ((char*)mapped.pData) + m_iBufferOffset;
+         m_pMap = ((::i8*)mapped.pData) + m_iBufferOffset;
 
       }
 
@@ -375,7 +375,7 @@ namespace gpu_directx11
 
    }
 
-   void memory_buffer::_complete_map_allocate(::gpu::memory_buffer* pmemorybufferSource, ::gpu::frame_storage* pgpuframestorage, int size)
+   void memory_buffer::_complete_map_allocate(::gpu::memory_buffer* pmemorybufferSource, ::gpu::frame_storage* pgpuframestorage, ::i32 size)
    {
 
       gpu::memory_buffer::_complete_map_allocate(pmemorybufferSource, pgpuframestorage, size);
@@ -386,7 +386,7 @@ namespace gpu_directx11
 
       m_bDynamic = true;
 
-      m_pMap = ((unsigned char *) pbufferSource->m_pMap) + m_iBufferOffset;
+      m_pMap = ((::u8 *) pbufferSource->m_pMap) + m_iBufferOffset;
 
    }
 

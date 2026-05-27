@@ -47,7 +47,7 @@ namespace windows
 
 
       bool send(const ::scoped_string & scopedstrMessage, duration durationTimeout);
-      bool send(int message, void * pdata, int len, duration durationTimeout);
+      bool send(::i32 message, void * pdata, ::i32 len, duration durationTimeout);
 
 
       bool is_tx_ok();
@@ -74,8 +74,8 @@ namespace windows
 
 
       virtual void * on_interprocess_receive(::inteprocess::handler * prx, const ::scoped_string & scopedstrMessage);
-      virtual void * on_interprocess_receive(::inteprocess::handler * prx, int message, void * pdata, memsize len);
-      virtual void * on_interprocess_post(::inteprocess::handler * prx, long long a, long long b);
+      virtual void * on_interprocess_receive(::inteprocess::handler * prx, ::i32 message, void * pdata, memsize len);
+      virtual void * on_interprocess_post(::inteprocess::handler * prx, ::i64 a, ::i64 b);
 
 
       virtual bool on_idle();
@@ -119,7 +119,7 @@ namespace windows
 //      virtual void restart_apex_ipc();
 //
 //      //bool ensure_tx(const ::scoped_string & scopedstrMessage, duration durationTimeout = one_hour());
-//      //bool ensure_tx(int message, void * pdata, int len, duration durationTimeout = one_hour());
+//      //bool ensure_tx(::i32 message, void * pdata, ::i32 len, duration durationTimeout = one_hour());
 //
 //
 //      bool is_rx_tx_ok();

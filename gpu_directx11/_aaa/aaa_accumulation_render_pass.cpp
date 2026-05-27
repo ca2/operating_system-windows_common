@@ -8,7 +8,7 @@
 using namespace directx11;
 
 
-#define VK_CHECK(x) do { HRESULT err = x; if (err) { warning() << "Detected DirectX11 error: " << (int) err; abort(); } } while (0)
+#define VK_CHECK(x) do { HRESULT err = x; if (err) { warning() << "Detected DirectX11 error: " << (::i32) err; abort(); } } while (0)
 
 
 namespace gpu_directx11
@@ -71,7 +71,7 @@ namespace gpu_directx11
       //   swapChain = nullptr;
       //}
 
-  /*    for (int i = 0; i < depthImages.size(); i++)
+  /*    for (::i32 i = 0; i < depthImages.size(); i++)
       {
 
          vkDestroyImageView(m_pgpucontext->logicalDevice(), depthImageViews[i], nullptr);
@@ -338,7 +338,7 @@ namespace gpu_directx11
       //m_images.resize(MAX_FRAMES_IN_FLIGHT);
       //m_imagememories.resize(MAX_FRAMES_IN_FLIGHT);
 
-      //for (int i = 0; i < m_images.size(); i++)
+      //for (::i32 i = 0; i < m_images.size(); i++)
       //{
 
       //   m_pgpucontext->createImageWithInfo(
@@ -408,7 +408,7 @@ namespace gpu_directx11
       //m_imagesAlphaAccumulation.resize(MAX_FRAMES_IN_FLIGHT);
       //m_imagememoriesAlphaAccumulation.resize(MAX_FRAMES_IN_FLIGHT);
 
-      //for (int i = 0; i < m_imagesAlphaAccumulation.size(); i++)
+      //for (::i32 i = 0; i < m_imagesAlphaAccumulation.size(); i++)
       //{
 
       //   m_pgpucontext->createImageWithInfo(
@@ -684,7 +684,7 @@ namespace gpu_directx11
       //depthImageMemorys.resize(imageCount());
       //depthImageViews.resize(imageCount());
 
-      //for (int i = 0; i < depthImages.size(); i++) {
+      //for (::i32 i = 0; i < depthImages.size(); i++) {
       //   VkImageCreateInfo imageInfo{};
       //   imageInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
       //   imageInfo.imageType = VK_IMAGE_TYPE_2D;

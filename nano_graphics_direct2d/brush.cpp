@@ -33,7 +33,7 @@ namespace universal_windows
          }
 
 
-         void brush::update(::nano::graphics::device* pnanodevice)
+         void brush::update(::nano::graphics::context* pgraphicscontext)
          {
 
             if (m_bModified)
@@ -45,7 +45,7 @@ namespace universal_windows
 
                copy(color, m_color);
 
-               ::cast < ::universal_windows::nano::graphics::device > pdevice = pnanodevice;
+               ::cast < ::universal_windows::nano::graphics::context > pdevice = pnanodevice;
 
                pdevice->m_prendertarget->CreateSolidColorBrush(color, &m_psolidbrush);
 

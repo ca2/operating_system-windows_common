@@ -13,7 +13,7 @@ namespace assimp
 {
 
 
-   bool load_obj(const void * data, memsize size, array<unsigned short> & indices, array<::floating_sequence3> & vertices, array<::floating_sequence2> & uvs, array<::floating_sequence3> & normals);
+   bool load_obj(const void * data, memsize size, array<::u16> & indices, array<::floating_sequence3> & vertices, array<::floating_sequence2> & uvs, array<::floating_sequence3> & normals);
 
 
 } // namespace assimp

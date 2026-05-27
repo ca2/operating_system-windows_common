@@ -65,11 +65,11 @@ bool PreventSetUnhandledExceptionFilter()
    void *pOrgEntry = GetProcAddress(hKernel32, "SetUnhandledExceptionFilter");
    if(pOrgEntry ==  nullptr) return false;
    uchar newJump[ 100 ];
-   unsigned int dwOrgEntryAddr = (unsigned int) pOrgEntry;
+   ::u32 dwOrgEntryAddr = (::u32) pOrgEntry;
    dwOrgEntryAddr += 5; // add 5 for 5 op-codes for jmp far
    void *pNewFunc = &MyDummySetUnhandledExceptionFilter;
-   unsigned int dwNewEntryAddr = (unsigned int) pNewFunc;
-   unsigned int dwRelativeAddr = dwNewEntryAddr - dwOrgEntryAddr;
+   ::u32 dwNewEntryAddr = (::u32) pNewFunc;
+   ::u32 dwRelativeAddr = dwNewEntryAddr - dwOrgEntryAddr;
    newJump[ 0 ] = 0xE9;  // JMP absolute
    ::memory_copy(&newJump[ 1 ], &dwRelativeAddr, sizeof(pNewFunc));
    SIZE_T bytesWritten;
@@ -109,7 +109,7 @@ bool PreventSetUnhandledExceptionFilter()
 //#else
 
 #ifdef LINUX
-   void filter_sigsegv(int signal, siginfo_t * psiginfo, void * pc)
+   void filter_sigsegv(::i32 signal, siginfo_t * psiginfo, void * pc)
    {
 
       //      sigset_t set;
@@ -122,7 +122,7 @@ bool PreventSetUnhandledExceptionFilter()
    }
 
 
-   void filter_sigfpe(int signal, siginfo_t * psiginfo, void * pc)
+   void filter_sigfpe(::i32 signal, siginfo_t * psiginfo, void * pc)
    {
 
       //sigset_t set;
@@ -135,7 +135,7 @@ bool PreventSetUnhandledExceptionFilter()
    }
 
 
-   void filter_sigpipe(int signal, siginfo_t * psiginfo, void * pc)
+   void filter_sigpipe(::i32 signal, siginfo_t * psiginfo, void * pc)
    {
 
       //      sigset_t set;
@@ -201,7 +201,7 @@ void standard_exception::siginfofree(void * psiginfo)
 }
 
 
-unsigned int standard_exception::code() const
+::u32 standard_exception::code() const
 {
 
    return ((siginfo_t *)m_psiginfo)->si_code;
@@ -225,7 +225,7 @@ const void * standard_exception::info() const
 }
 
 
-const char * standard_exception::name() const
+const ::i8 * standard_exception::name() const
 {
 
    //return ::exception_translator::name(code());
@@ -234,7 +234,7 @@ const char * standard_exception::name() const
 }
 
 
-const char * standard_exception::description() const
+const ::i8 * standard_exception::description() const
 {
 
    //return ::exception_translator::description(code());

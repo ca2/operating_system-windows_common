@@ -79,7 +79,7 @@ namespace gpu_directx11
          //::gpu::texture *loadMaterialTexture(aiMaterial *material, aiTextureType type);
 
 
-         //unsigned int textureFromFile(const char *fileName, ::string directory, aiTextureType type);
+         //::u32 textureFromFile(const ::i8 *fileName, ::string directory, aiTextureType type);
 
       };
 

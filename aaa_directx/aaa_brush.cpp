@@ -29,7 +29,7 @@ namespace draw2d_directx
    }
 
 
-   bool brush::create(::draw2d::graphics* pgraphicsParam, char iCreate)
+   bool brush::create(::draw2d::graphics* pgraphicsParam, ::i8 iCreate)
    {
 
       auto pgraphics = __graphics(pgraphicsParam);
@@ -155,12 +155,12 @@ namespace draw2d_directx
             if(SUCCEEDED(hr))
             {
 
-               double centerx = m_size.cx - m_point.x;
-               double centery = m_size.cy - m_point.y;
-               double originx = m_size.cx / 2 -m_point.x;
-               double originy = m_size.cy / 2 -m_point.y;
-               double radiusx = m_size.cx / 2;
-               double radiusy = m_size.cy / 2;
+               ::f64 centerx = m_size.cx - m_point.x;
+               ::f64 centery = m_size.cy - m_point.y;
+               ::f64 originx = m_size.cx / 2 -m_point.x;
+               ::f64 originy = m_size.cy / 2 -m_point.y;
+               ::f64 radiusx = m_size.cx / 2;
+               ::f64 radiusy = m_size.cy / 2;
 
                hr = pgraphics->m_prendertarget->CreateRadialGradientBrush(
                     D2D1::RadialGradientBrushProperties(
@@ -205,7 +205,7 @@ namespace draw2d_directx
          {
 
             auto imagebrushproperties = D2D1::ImageBrushProperties(
-               D2D1::RectF(0, 0,(float) m_pimage->width(),(float) m_pimage->height()),
+               D2D1::RectF(0, 0,(::f32) m_pimage->width(),(::f32) m_pimage->height()),
                D2D1_EXTEND_MODE_WRAP,
                D2D1_EXTEND_MODE_WRAP,
                D2D1_INTERPOLATION_MODE_LINEAR

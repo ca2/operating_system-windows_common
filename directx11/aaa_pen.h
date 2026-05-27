@@ -23,14 +23,14 @@ namespace draw2d_directx11
 
 
       virtual void destroy() override;
-      virtual bool create(::draw2d::graphics * pgraphics, char iCreate) override;
+      virtual bool create(::draw2d::graphics * pgraphics, ::i8 iCreate) override;
 
-      /*virtual void construct(int nPenStyle, double nWidth, color32_t crColor);
-      virtual void construct(int nPenStyle, double nWidth, const LOGBRUSH* pLogBrush, int nStyleCount = 0, const unsigned int* lpStyle = nullptr);
-      bool CreatePen(int nPenStyle, double nWidth, color32_t crColor);
-      bool CreatePen(int nPenStyle, double nWidth, const LOGBRUSH* pLogBrush, int nStyleCount = 0, const unsigned int* lpStyle = nullptr);*/
+      /*virtual void construct(::i32 nPenStyle, ::f64 nWidth, color32_t crColor);
+      virtual void construct(::i32 nPenStyle, ::f64 nWidth, const LOGBRUSH* pLogBrush, ::i32 nStyleCount = 0, const ::u32* lpStyle = nullptr);
+      bool CreatePen(::i32 nPenStyle, ::f64 nWidth, color32_t crColor);
+      bool CreatePen(::i32 nPenStyle, ::f64 nWidth, const LOGBRUSH* pLogBrush, ::i32 nStyleCount = 0, const ::u32* lpStyle = nullptr);*/
 
-      //virtual bool create_solid(::draw2d::graphics * pgraphics, double dWidth, color32_t crColor);
+      //virtual bool create_solid(::draw2d::graphics * pgraphics, ::f64 dWidth, color32_t crColor);
 
       //virtual ID2D1Brush * get_os_pen_brush(::draw2d_directx11::graphics * pgraphics) const;
 

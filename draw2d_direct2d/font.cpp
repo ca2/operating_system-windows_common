@@ -72,9 +72,9 @@ namespace draw2d_direct2d
    }
 
 
-   float font::_dwrite_font_size(::draw2d::graphics * pgraphics)
+   ::f32 font::_dwrite_font_size(::draw2d::graphics * pgraphics)
    {
-      float fFontSize;
+      ::f32 fFontSize;
 
       //::acme::windowing::window * pacmewindowingwindow = nullptr;
       //
@@ -88,20 +88,20 @@ namespace draw2d_direct2d
       if (m_fontsize.eunit() == ::e_unit_point)
       {
 
-         fFontSize = (float)pgraphics->m_pdraw2dhost->point_dpi(m_fontsize.as_double());
+         fFontSize = (::f32)pgraphics->m_pdraw2dhost->point_dpi(m_fontsize.as_f64());
 
       }
       else
       {
 
-         fFontSize = (float)pgraphics->m_pdraw2dhost->dpiy(m_fontsize.as_double());
+         fFontSize = (::f32)pgraphics->m_pdraw2dhost->dpiy(m_fontsize.as_f64());
 
       }
 
       if (::is_set(pgraphics))
       {
 
-         fFontSize *= (float)pgraphics->m_dSizeScaler;
+         fFontSize *= (::f32)pgraphics->m_dSizeScaler;
 
       }
 
@@ -119,7 +119,7 @@ namespace draw2d_direct2d
    }
 
 
-   void font::create(::draw2d::graphics * pgraphics, char iCreate)
+   void font::create(::draw2d::graphics * pgraphics, ::i8 iCreate)
    {
 
       if(m_pformat == nullptr || is_modified(::draw2d::e_default_object))
@@ -177,7 +177,7 @@ namespace draw2d_direct2d
    {
 
       WCHAR name[256];
-      unsigned int findex;
+      ::u32 findex;
       BOOL exists;
 
       if (::is_null(m_pformat))
@@ -185,7 +185,7 @@ namespace draw2d_direct2d
 
          m_textmetric2.m_dAscent = 0;
          m_textmetric2.m_dDescent = 0;
-         m_textmetric2.m_dHeight = m_fontsize.as_double();
+         m_textmetric2.m_dHeight = m_fontsize.as_f64();
          m_textmetric2.m_dInternalLeading = 0;
          m_textmetric2.m_dExternalLeading = 0;
 
@@ -207,7 +207,7 @@ namespace draw2d_direct2d
 
             m_textmetric2.m_dAscent = 0;
             m_textmetric2.m_dDescent = 0;
-            m_textmetric2.m_dHeight = m_fontsize.as_double();
+            m_textmetric2.m_dHeight = m_fontsize.as_f64();
             m_textmetric2.m_dInternalLeading = 0;
             m_textmetric2.m_dExternalLeading = 0;
 
@@ -236,7 +236,7 @@ namespace draw2d_direct2d
 
                m_textmetric2.m_dAscent = 0;
                m_textmetric2.m_dDescent = 0;
-               m_textmetric2.m_dHeight = m_fontsize.as_double();
+               m_textmetric2.m_dHeight = m_fontsize.as_f64();
                m_textmetric2.m_dInternalLeading = 0;
                m_textmetric2.m_dExternalLeading = 0;
 
@@ -255,7 +255,7 @@ namespace draw2d_direct2d
 
             m_textmetric2.m_dAscent = 0;
             m_textmetric2.m_dDescent = 0;
-            m_textmetric2.m_dHeight = m_fontsize.as_double();
+            m_textmetric2.m_dHeight = m_fontsize.as_f64();
             m_textmetric2.m_dInternalLeading = 0;
             m_textmetric2.m_dExternalLeading = 0;
 
@@ -350,7 +350,7 @@ namespace draw2d_direct2d
 
          m_textmetric2.m_dAscent = 0;
          m_textmetric2.m_dDescent = 0;
-         m_textmetric2.m_dHeight = m_fontsize.as_double();
+         m_textmetric2.m_dHeight = m_fontsize.as_f64();
          m_textmetric2.m_dInternalLeading = 0;
          m_textmetric2.m_dExternalLeading = 0;
 
@@ -364,13 +364,13 @@ namespace draw2d_direct2d
 
       m_pfont->GetMetrics(&metrics);
 
-      double ratio = m_pformat->GetFontSize() / (float)metrics.designUnitsPerEm;
+      ::f64 ratio = m_pformat->GetFontSize() / (::f32)metrics.designUnitsPerEm;
 
-      m_textmetric2.m_dAscent = (double) (metrics.ascent * ratio);
-      m_textmetric2.m_dDescent = (double)(metrics.descent * ratio);
-      m_textmetric2.m_dInternalLeading = (double)0;
-      m_textmetric2.m_dExternalLeading = (double)(metrics.lineGap * ratio);
-      m_textmetric2.m_dHeight = (double)((metrics.ascent + metrics.descent + metrics.lineGap) * ratio);
+      m_textmetric2.m_dAscent = (::f64) (metrics.ascent * ratio);
+      m_textmetric2.m_dDescent = (::f64)(metrics.descent * ratio);
+      m_textmetric2.m_dInternalLeading = (::f64)0;
+      m_textmetric2.m_dExternalLeading = (::f64)(metrics.lineGap * ratio);
+      m_textmetric2.m_dHeight = (::f64)((metrics.ascent + metrics.descent + metrics.lineGap) * ratio);
 
    }
 

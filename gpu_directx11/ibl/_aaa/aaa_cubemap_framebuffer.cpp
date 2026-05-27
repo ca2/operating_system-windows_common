@@ -42,7 +42,7 @@ namespace gpu_directx11
 
          ::cast<gpu_directx11::context> pcontext = m_pgpucontext;
 
-         //ptexture->m_textureattributes.m_iMipCount = (uint32_t)(floor(::log2((double)::maximum(ptexture->rectangle().width(),
+         //ptexture->m_textureattributes.m_iMipCount = (uint32_t)(floor(::log2((::f64)::maximum(ptexture->rectangle().width(),
                                                                            //ptexture->rectangle().height()))) +
            //                                 1.0);
 
@@ -89,8 +89,8 @@ namespace gpu_directx11
          //glBindTexture(ptexture->m_gluType, ptexture->m_gluTextureID);
          //GLCheckError("");
 
-         //int width = ptexture->rectangle().width();
-         //int height = ptexture->rectangle().height();
+         //::i32 width = ptexture->rectangle().width();
+         //::i32 height = ptexture->rectangle().height();
 
          //// specify/allocate each face for the cubemap
          //for (auto i = 0; i < 6; i++)
@@ -162,7 +162,7 @@ namespace gpu_directx11
       }
 
 
-      void cubemap_framebuffer::set_cube_face(unsigned int index, ::gpu::shader * pgpushader)
+      void cubemap_framebuffer::set_cube_face(::u32 index, ::gpu::shader * pgpushader)
       {
          ::cast < gpu_directx11::texture>ptexture = m_ptexture;
          ::cast<gpu_directx11::context> pcontext = m_pgpucontext;
@@ -201,7 +201,7 @@ namespace gpu_directx11
       }
 
 
-      //unsigned int cubemap_framebuffer::getCubemapTextureId()
+      //::u32 cubemap_framebuffer::getCubemapTextureId()
       //{
       //   ::cast < gpu_directx11::texture>ptexture = m_ptexture;
       //   return ptexture->m_gluTextureID;

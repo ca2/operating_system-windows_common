@@ -13,9 +13,9 @@ namespace windows
       m_bWinsockInitialized = false;
 
       //Initialise the winsock stack
-      unsigned short wVersionRequested = MAKEWORD(1, 1);
+      ::u16 wVersionRequested = MAKEWORD(1, 1);
       WSADATA wsaData;
-      int err = WSAStartup(wVersionRequested, &wsaData);
+      ::i32 err = WSAStartup(wVersionRequested, &wsaData);
       if (err != 0)
       {
          informationf("Failed in call to WSAStartup, return value was %d\n", err);
@@ -45,7 +45,7 @@ namespace windows
    /*   ::collection::count ip_enum::enumerate(ip_array & ipa)
    {
    //get this machines host name
-   char szHostname[256];
+   ::i8 szHostname[256];
    if (gethostname(szHostname, sizeof(szHostname)))
    {
    informationf("Failed in call to gethostname, WSAGetLastError returns %d\n", WSAGetLastError());
@@ -69,7 +69,7 @@ namespace windows
 
    //call the virtual callback function in a loop
 
-   int nAdapter = 0;
+   ::i32 nAdapter = 0;
 
    while(pHostEnt->h_addr_list[nAdapter])
    {
@@ -91,7 +91,7 @@ namespace windows
    {
 
       //get this machines host name
-      char szHostname[256];
+      ::i8 szHostname[256];
       if (gethostname(szHostname, sizeof(szHostname)))
       {
          informationf("Failed in call to gethostname, WSAGetLastError returns %d\n", WSAGetLastError());
@@ -106,11 +106,11 @@ namespace windows
          hints.ai_socktype = SOCK_STREAM;
          hints.ai_protocol = IPPROTO_TCP;
          //hints.ai_flags = AI_NUMERICHOST;
-         int i = 0;
+         ::i32 i = 0;
 
          string str;
 
-         unsigned int dwRetval = getaddrinfo(szHostname, nullptr, &hints, &result);
+         ::u32 dwRetval = getaddrinfo(szHostname, nullptr, &hints, &result);
          if (dwRetval != 0)
          {
             printf("getaddrinfo failed with error: %d\n", dwRetval);
@@ -158,7 +158,7 @@ namespace windows
                //// The buffer length is changed by each call to WSAAddresstoString
                //// So we need to set it for each iteration through the loop for safety
                //ipbufferlength = 46;
-               //iRetval = WSAAddressToString(sockaddr_ip, (unsigned int)ptr->ai_addrlen, nullptr,
+               //iRetval = WSAAddressToString(sockaddr_ip, (::u32)ptr->ai_addrlen, nullptr,
                // ipstringbuffer, &ipbufferlength);
                //if (iRetval)
                // printf("WSAAddressToString failed with %u\n", WSAGetLastError());
@@ -185,9 +185,9 @@ namespace windows
          hints.ai_socktype = SOCK_STREAM;
          hints.ai_protocol = IPPROTO_TCP;
          //hints.ai_flags = AI_NUMERICHOST;
-         int i = 0;
+         ::i32 i = 0;
 
-         unsigned int dwRetval = getaddrinfo(szHostname, nullptr, &hints, &result);
+         ::u32 dwRetval = getaddrinfo(szHostname, nullptr, &hints, &result);
          if (dwRetval != 0)
          {
             printf("getaddrinfo failed with error: %d\n", dwRetval);
@@ -223,7 +223,7 @@ namespace windows
 
                {
                   auto ipv6 = (struct sockaddr_in6 *) ptr->ai_addr;
-                  ipa.add(::networking::address(*ipv6, (int)ptr->ai_addrlen));
+                  ipa.add(::networking::address(*ipv6, (::i32)ptr->ai_addrlen));
                }
 
 
@@ -238,7 +238,7 @@ namespace windows
                //// The buffer length is changed by each call to WSAAddresstoString
                //// So we need to set it for each iteration through the loop for safety
                //ipbufferlength = 46;
-               //iRetval = WSAAddressToString(sockaddr_ip, (unsigned int)ptr->ai_addrlen, nullptr,
+               //iRetval = WSAAddressToString(sockaddr_ip, (::u32)ptr->ai_addrlen, nullptr,
                // ipstringbuffer, &ipbufferlength);
                //if (iRetval)
                // printf("WSAAddressToString failed with %u\n", WSAGetLastError());

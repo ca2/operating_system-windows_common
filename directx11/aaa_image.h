@@ -36,7 +36,7 @@ namespace draw2d_directx11
 
 
       using ::image::create;
-      virtual void create(const ::i32_size & size, ::eobject eobjectCreate = DEFAULT_CREATE_IMAGE_OBJECT_FLAG, int iStride = -1, bool bPreserver = false) override;
+      virtual void create(const ::i32_size & size, ::eobject eobjectCreate = DEFAULT_CREATE_IMAGE_OBJECT_FLAG, ::i32 iStride = -1, bool bPreserver = false) override;
       bool _create(::draw2d::graphics * pgraphics);
       bool destroy();
 
@@ -44,7 +44,7 @@ namespace draw2d_directx11
       virtual bool _draw_raw(const ::i32_rectangle & rectangleTarget, ::image::image * pimage, const ::i32_point & pointSrc) override;
 
 
-      virtual void SetIconMask(::image::icon * picon, int cx, int cy) override;
+      virtual void SetIconMask(::image::icon * picon, ::i32 cx, ::i32 cy) override;
 
 
       virtual bool defer_realize(::draw2d::graphics * pgraphics) const;
@@ -53,7 +53,7 @@ namespace draw2d_directx11
       virtual bool is_realized() const;
 
       using ::image::blend;
-      virtual bool blend(const ::i32_point & pointDst, ::image::image * pimageSrc, const ::i32_point & pointSrc, const ::i32_size & size, unsigned char bA) override;
+      virtual bool blend(const ::i32_point & pointDst, ::image::image * pimageSrc, const ::i32_point & pointSrc, const ::i32_size & size, ::u8 bA) override;
 
       using ::image::tint;
       virtual bool tint(::image::image * pimage, const ::color::color & color32) override;

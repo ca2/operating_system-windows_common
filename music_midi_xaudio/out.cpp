@@ -35,7 +35,7 @@ namespace music
 
             //MMRESULT estatus;
 
-            //unsigned int uDeviceID = 0;
+            //::u32 uDeviceID = 0;
 
             //m_hmidiout = nullptr;
 
@@ -65,10 +65,10 @@ namespace music
          }
 
 
-         void out::send_short_message(::music::midi::enum_midi_message emessage, int iChannel, int iData1, int iData2)
+         void out::send_short_message(::music::midi::enum_midi_message emessage, ::i32 iChannel, ::i32 iData1, ::i32 iData2)
          {
 
-            // return midiOutShortMsg(m_hmidiout, MIDIMSG(((int)etype) >> 4, iChannel, iData1, iData2));
+            // return midiOutShortMsg(m_hmidiout, MIDIMSG(((::i32)etype) >> 4, iChannel, iData1, iData2));
             //return error_not_implemented;
 
          }

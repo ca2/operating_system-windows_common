@@ -132,7 +132,7 @@ void context_fbo::run()
             
          }
          
-         for(int iFormat = 0; iFormat < NumFormats; iFormat++)
+         for(::i32 iFormat = 0; iFormat < NumFormats; iFormat++)
          {
             
             informationf("\nFormat " + ::as_string(iFormat) + "\n");
@@ -346,13 +346,13 @@ informationf(string(#x) + ": " + ::as_string(value) + "\n");     \
       if(iFindPrecision >= 0)
       {
 
-         stra[iFindPrecision] = "precision highp float;";
+         stra[iFindPrecision] = "precision highp ::f32;";
 
       }
       else
       {
 
-         stra.insert_at(1, "precision highp float;");
+         stra.insert_at(1, "precision highp ::f32;");
 
          iFindPrecision = 1;
 

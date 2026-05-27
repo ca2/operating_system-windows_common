@@ -25,9 +25,9 @@ namespace gpu_directx11
       comptr < ID3D11Buffer> m_pbufferSharedPushConstants;
       comptr<ID3D11Buffer> m_pbufferVertexPushConstants;
       comptr<ID3D11Buffer> m_pbufferFragmentPushConstants;
-      int m_iSizeSharedPushConstants = -1;
-      int m_iSizeVertexPushConstants = -1;
-      int m_iSizeFragmentPushConstants = -1;
+      ::i32 m_iSizeSharedPushConstants = -1;
+      ::i32 m_iSizeVertexPushConstants = -1;
+      ::i32 m_iSizeFragmentPushConstants = -1;
 
       ::comptr < ID3D11DepthStencilState > m_pdepthstencilstate2;
       ::comptr < ID3D11RasterizerState> m_prasterizerstate2;
@@ -45,7 +45,7 @@ namespace gpu_directx11
       //bool m_bDepthTestButNoDepthWrite = false;
       //bool m_bEnableBlend = false;
       //bool m_bAccumulationEnable = false;
-      //int m_iColorAttachmentCount = 1;
+      //::i32 m_iColorAttachmentCount = 1;
       //VkPrimitiveTopology m_vktopology;
 
       //s::comparable_array<VkDynamicState> m_dynamicstateaEnable;
@@ -62,7 +62,7 @@ namespace gpu_directx11
 
       ///static void defaultPipelineConfigInfo(PipelineConfigInfo& configInfo);
    ///private:
-///		static ::array<char> readFile(const ::string& filepath);
+///		static ::array<::i8> readFile(const ::string& filepath);
 
       /*void createGraphicsPipeline(
          const ::string& vertFilepath,
@@ -78,7 +78,7 @@ namespace gpu_directx11
       //VkPipelineLayout		m_vkpipelinelayout;
 
 
-      //void _create_pipeline_layout(int iSize);
+      //void _create_pipeline_layout(::i32 iSize);
 
       //void draw() override;
 
@@ -97,7 +97,7 @@ namespace gpu_directx11
       void bind(::gpu::command_buffer *pgpucommandbuffer, ::gpu::texture *pgputextureTarget) override;
       //void bind(::gpu::command_buffer *pgpucommandbuffer, ::gpu::texture *pgputextureTarget,
                 //::gpu::texture *pgputextureSource) override;
-      void bind_source(::gpu::command_buffer *pgpucommandbuffer, ::gpu::texture *pgputextureSource, int iSlot) override;
+      void bind_source(::gpu::command_buffer *pgpucommandbuffer, ::gpu::texture *pgputextureSource, ::i32 iSlot) override;
       //void bind(::gpu::command_buffer *pgpucommandbuffer) override;
       //void _bind(::gpu::command_buffer *pgpucommandbuffer, ::gpu::enum_scene escene) override;
       void unbind(::gpu::command_buffer *pgpucommandbuffer) override;
@@ -109,7 +109,7 @@ namespace gpu_directx11
                                                  ::gpu::texture *pgputextureTarget);
       void push_properties(::gpu::command_buffer * pgpucommandbuffer) override;
       void setModelViewProjection(const floating_matrix4 &model, const floating_matrix4 &view, const floating_matrix4 &projection) override;
-      void bind_slot_set(::gpu::command_buffer *pgpucommandbuffer, int iSet,
+      void bind_slot_set(::gpu::command_buffer *pgpucommandbuffer, ::i32 iSet,
                          ::gpu::binding_slot_set *pgpubindingslotset) override;
 
    };

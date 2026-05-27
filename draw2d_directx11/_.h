@@ -23,7 +23,7 @@
 //{
 //
 //
-//   //inline D2D1_RECT_F float_rectangle(const ::i32_rectangle & rectangle)
+//   //inline D2D1_RECT_F ::f32_rectangle(const ::i32_rectangle & rectangle)
 //   //{
 //
 //   //   return D2D1::Rect<FLOAT>(
@@ -36,7 +36,7 @@
 //   //}
 //
 //
-//   //inline D2D1_POINT_2F Point2F(double x = 0.0, double y = 0.0)
+//   //inline D2D1_POINT_2F Point2F(::f64 x = 0.0, ::f64 y = 0.0)
 //   //{
 //
 //   //   return Point2F(

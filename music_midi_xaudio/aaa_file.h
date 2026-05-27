@@ -24,13 +24,13 @@ namespace music
             virtual ~buffer();
 
 
-            double GetTempoShiftRate();
+            ::f64 GetTempoShiftRate();
 
-            bool IsTrackMute(int iIndex);
+            bool IsTrackMute(::i32 iIndex);
 
-            void MuteAll(bool bMute = true, int iExcludeTrack = -1);
+            void MuteAll(bool bMute = true, ::i32 iExcludeTrack = -1);
 
-            void MuteTrack(int iIndex, bool bMute = true);
+            void MuteTrack(::i32 iIndex, bool bMute = true);
 
             void     WorkSeekBegin();
 
@@ -44,7 +44,7 @@ namespace music
 
             void OnStop();
 
-            unsigned int GetImageSize();
+            ::u32 GetImageSize();
 
             LPBYTE GetImage();
 
@@ -54,17 +54,17 @@ namespace music
 
             ::music::midi::tempo_map_entry * GetTempoMapEntry(const ::duration & position);
 
-            int GetTempoShift();
+            ::i32 GetTempoShift();
 
-            void     SetTempoShift(int iTempoShift);
+            void     SetTempoShift(::i32 iTempoShift);
 
             void ToWorkStorage();
 
             void FromWorkStorage();
 
-            int GetKeyShift();
+            ::i32 GetKeyShift();
 
-            int SetKeyShift(int iKeyShift);
+            ::i32 SetKeyShift(::i32 iKeyShift);
 
             bool IsSoftKaraokeFile(bool bWork = false, string_array_base * pstra = nullptr);
 
@@ -88,17 +88,17 @@ namespace music
 
             void     WorkWriteXFTracks(string_array_base & tokena, imedia_position_array & positiona, ::music::xf::info_header & xfinfoheader);
 
-            //int CalcMelodyTrack(::music::midi::happenings ** ppEvents, imedia_position_array & ticka);
+            //::i32 CalcMelodyTrack(::music::midi::happenings ** ppEvents, imedia_position_array & ticka);
 
-            //int WorkCalcMelodyTrack(::music::midi::happenings ** ppEvents, imedia_position_array & positiona, ::i32_array & iaTokenLine);
+            //::i32 WorkCalcMelodyTrack(::music::midi::happenings ** ppEvents, imedia_position_array & positiona, ::i32_array & iaTokenLine);
 
-            int GetFormat();
+            ::i32 GetFormat();
 
             void     MergeTracks();
 
             void     WorkMergeTracks();
 
-            void     WorkStreamRender(LPMIDIHDR lpmh, ::duration tickMax, unsigned int cbPrerollNomimalMax);
+            void     WorkStreamRender(LPMIDIHDR lpmh, ::duration tickMax, ::u32 cbPrerollNomimalMax);
 
             void     WorkGetNextEvent(::music::midi::happening * & pevent, ::duration tickMax, bool bTkMaxInclusive);
 
@@ -110,7 +110,7 @@ namespace music
 
             void delete_contents();
 
-            int GetDivision();
+            ::i32 GetDivision();
 
             ::duration GetPosition();
 
@@ -120,11 +120,11 @@ namespace music
 
             void WorkSeekEnd();
 
-            void     OpenFile(::music::midi::file::buffer &file, int openMode);
+            void     OpenFile(::music::midi::file::buffer &file, ::i32 openMode);
 
-            void     OpenFile(::file::file & file, int openMode);
+            void     OpenFile(::file::file & file, ::i32 openMode);
 
-            void     OpenFile(memory * pmemstorage, int openMode, ::music::e_storage);
+            void     OpenFile(memory * pmemstorage, ::i32 openMode, ::music::e_storage);
 
             void     OpenFile(memory * pmemstorage, ::music::midi::file::e_open eopenmode, ::music::e_storage estorage);
 
@@ -154,11 +154,11 @@ namespace music
 
             void TimeToPosition(imedia_position_array & positiona, duration_array & timea, ::duration msOffset);
 
-            void     StreamRender(LPMIDIHDR lpmh, ::duration tickMax, unsigned int cbPrerollNomimalMax);
+            void     StreamRender(LPMIDIHDR lpmh, ::duration tickMax, ::u32 cbPrerollNomimalMax);
 
-            void     StreamEvent(::duration tickDelta, ::music::midi::happening * Event, LPMIDIHDR lpmh, ::duration tickMax, unsigned int cbPrerollNomimalMax);
+            void     StreamEvent(::duration tickDelta, ::music::midi::happening * Event, LPMIDIHDR lpmh, ::duration tickMax, ::u32 cbPrerollNomimalMax);
 
-            void     StreamEventF1(::duration tickDelta, array < ::music::midi::happening *, ::music::midi::happening * > & eventptra, LPMIDIHDR lpmh, ::duration tickMax, unsigned int cbPrerollNomimalMax);
+            void     StreamEventF1(::duration tickDelta, array < ::music::midi::happening *, ::music::midi::happening * > & eventptra, LPMIDIHDR lpmh, ::duration tickMax, ::u32 cbPrerollNomimalMax);
 
             void     seek(::duration tickPosition, LPMIDIHDR lpmh);
 

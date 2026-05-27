@@ -43,14 +43,14 @@ namespace acme
    }
 
 
-   void system::system_construct(int argc, char** argv, char** envp)
+   void system::system_construct(::i32 argc, ::i8** argv, ::i8** envp)
    {
 
 
    }
 
 
-   void system::system_construct(int argc, wchar_t** argv, wchar_t** envp)
+   void system::system_construct(::i32 argc, wchar_t** argv, wchar_t** envp)
    {
 
 

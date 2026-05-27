@@ -64,10 +64,10 @@ namespace draw2d_directx11
    }
 
 
-   bool path::internal_add_arc(::draw2d::graphics* pgraphics, const ::double_arc & arc)
+   bool path::internal_add_arc(::draw2d::graphics* pgraphics, const ::f64_arc & arc)
    {
 
-      ::double_point point;
+      ::f64_point point;
 
       //D2D1_ARC_SEGMENT arcseg;
 
@@ -112,7 +112,7 @@ namespace draw2d_directx11
    }
 
 
-   bool path::internal_add_rectangle(::draw2d::graphics* pgraphics, double x, double y, double cx, double cy)
+   bool path::internal_add_rectangle(::draw2d::graphics* pgraphics, ::f64 x, ::f64 y, ::f64 cx, ::f64 cy)
    {
 
       internal_start_figure(pgraphics, x, y);
@@ -128,12 +128,12 @@ namespace draw2d_directx11
    }
 
 
-   bool path::internal_add_ellipse(::draw2d::graphics * pgraphics, double x, double y, double cx, double cy)
+   bool path::internal_add_ellipse(::draw2d::graphics * pgraphics, ::f64 x, ::f64 y, ::f64 cx, ::f64 cy)
    {
 
       internal_start_figure(pgraphics, x + cx, y + cy / 2.0);
 
-      ::double_arc arc{};
+      ::f64_arc arc{};
 
       arc.left = x;
       arc.top = y;
@@ -170,7 +170,7 @@ namespace draw2d_directx11
    }
 
 
-   bool path::internal_add_lines(::draw2d::graphics* pgraphics, const ::int_point_array& pointa, bool bClose)
+   bool path::internal_add_lines(::draw2d::graphics* pgraphics, const ::i32_point_array& pointa, bool bClose)
    {
 
       if (pointa.get_count() < 1)
@@ -196,7 +196,7 @@ namespace draw2d_directx11
    }
 
 
-   bool path::internal_add_lines(::draw2d::graphics* pgraphics, const ::double_point_array& pointa, bool bClose)
+   bool path::internal_add_lines(::draw2d::graphics* pgraphics, const ::f64_point_array& pointa, bool bClose)
    {
 
       if (pointa.get_count() < 1)
@@ -222,7 +222,7 @@ namespace draw2d_directx11
    }
 
 
-   bool path::internal_add_string(::draw2d_directx11::graphics * pgraphics, double x, double y, const ::scoped_string & scopedstrText, ::write_text::font * pfont)
+   bool path::internal_add_string(::draw2d_directx11::graphics * pgraphics, ::f64 x, ::f64 y, const ::scoped_string & scopedstrText, ::write_text::font * pfont)
    {
 
       if(!internal_start_figure(pgraphics))
@@ -242,7 +242,7 @@ namespace draw2d_directx11
 
       //HRESULT hr = pfactory->CreateTextLayout(
       //   wstr,      // The string to be laid out and formatted.
-      //   (unsigned int)wstr.length(),  // The length of the string.
+      //   (::u32)wstr.length(),  // The length of the string.
       //   pformat,  // The text format to apply to the string (contains font information, etc).
       //   4096,         // The width of the on_layout box.
       //   4096,        // The height of the on_layout box.
@@ -291,7 +291,7 @@ namespace draw2d_directx11
    }
 
 
-   bool path::internal_add_line(::draw2d::graphics* pgraphics, double x, double y)
+   bool path::internal_add_line(::draw2d::graphics* pgraphics, ::f64 x, ::f64 y)
    {
 
       /*if (::is_null(m_psink))
@@ -349,7 +349,7 @@ namespace draw2d_directx11
    }
 
 
-   bool path::internal_start_figure(::draw2d::graphics * pgraphics, double x, double y)
+   bool path::internal_start_figure(::draw2d::graphics * pgraphics, ::f64 x, ::f64 y)
    {
 
       if (!internal_start_figure(pgraphics))
@@ -384,7 +384,7 @@ namespace draw2d_directx11
 
 
 
-   //bool path::internal_get_arc(::double_point & pointStart,D2D1_ARC_SEGMENT & arcseg, const ::double_arc & arc)
+   //bool path::internal_get_arc(::f64_point & pointStart,D2D1_ARC_SEGMENT & arcseg, const ::f64_arc & arc)
    //{
 
    //   //D2D1_POINT_2F pointCenter;
@@ -392,8 +392,8 @@ namespace draw2d_directx11
    //   //pointCenter.x = (FLOAT)arc.center().x;
    //   //pointCenter.y = (FLOAT)arc.center().y;
 
-   //   //double rx = arc.radius().cx;
-   //   //double ry = arc.radius().cy;
+   //   //::f64 rx = arc.radius().cx;
+   //   //::f64 ry = arc.radius().cy;
 
    //   //pointStart.x = arc.m_pointBegin.x;
    //   //pointStart.y = arc.m_pointBegin.y;
@@ -438,7 +438,7 @@ namespace draw2d_directx11
    //}
 
 
-   void path::create(::draw2d::graphics* pgraphicsParam, char iCreate)
+   void path::create(::draw2d::graphics* pgraphicsParam, ::i8 iCreate)
    {
 
       auto pgraphics = __graphics(pgraphicsParam);
@@ -495,7 +495,7 @@ namespace draw2d_directx11
 
       _set_create(pgraphics);
 
-      /*for(int i = 0; i < m_elementa.get_count(); i++)
+      /*for(::i32 i = 0; i < m_elementa.get_count(); i++)
       {
 
          if (m_elementa.ptr_at(i))
@@ -547,7 +547,7 @@ namespace draw2d_directx11
    }
 
 
-   //ID2D1GeometryRealization * path::_get_stroked_geometry_realization(::draw2d::graphics * pgraphicsParam, int iWidth)
+   //ID2D1GeometryRealization * path::_get_stroked_geometry_realization(::draw2d::graphics * pgraphicsParam, ::i32 iWidth)
    //{
 
    //   auto & prealization = m_mapGeometryHollowRealization[iWidth];
@@ -677,15 +677,15 @@ namespace draw2d_directx11
    //}
 
 
-   bool path::_set(::draw2d::graphics * pgraphics, const ::double_arc & arc)
+   bool path::_set(::draw2d::graphics * pgraphics, const ::f64_arc & arc)
    {
 
-      //::double_rectangle rectangle;
+      //::f64_rectangle rectangle;
 
-      //rectangle.left      = (int) (arc.m_pointCenter.x - arc.m_sizeRadius.cx);
-      //rectangle.right     = (int) (arc.m_pointCenter.x + arc.m_sizeRadius.cx);
-      //rectangle.top       = (int) (arc.m_pointCenter.y - arc.m_sizeRadius.cy);
-      //rectangle.bottom    = (int) (arc.m_pointCenter.y + arc.m_sizeRadius.cy);
+      //rectangle.left      = (::i32) (arc.m_pointCenter.x - arc.m_sizeRadius.cx);
+      //rectangle.right     = (::i32) (arc.m_pointCenter.x + arc.m_sizeRadius.cx);
+      //rectangle.top       = (::i32) (arc.m_pointCenter.y - arc.m_sizeRadius.cy);
+      //rectangle.bottom    = (::i32) (arc.m_pointCenter.y + arc.m_sizeRadius.cy);
 
       //bool bOk = internal_add_arc(pgraphics, parc);
 
@@ -753,12 +753,12 @@ namespace draw2d_directx11
    //bool path::_set(const ::draw2d::path::move & move)
    //{
 
-   //   return internal_add_move((int) move.m_x, (int) move.m_y);
+   //   return internal_add_move((::i32) move.m_x, (::i32) move.m_y);
 
    //}
 
 
-   bool path::_set(::draw2d::graphics* pgraphics, const ::double_line & line)
+   bool path::_set(::draw2d::graphics* pgraphics, const ::f64_line & line)
    {
 
       //if (line.m_p1 != m_pointEnd || ::is_null(m_psink))
@@ -800,7 +800,7 @@ namespace draw2d_directx11
    //}
 
 
-   bool path::_set(::draw2d::graphics* pgraphics, const ::double_rectangle & rectangle)
+   bool path::_set(::draw2d::graphics* pgraphics, const ::f64_rectangle & rectangle)
    {
 
       return internal_add_rectangle(pgraphics, rectangle.left, rectangle.top, rectangle.width(), rectangle.height());
@@ -808,7 +808,7 @@ namespace draw2d_directx11
    }
 
 
-   //bool path::_set(::draw2d::graphics* pgraphics, const ::double_rectangle& rectangle)
+   //bool path::_set(::draw2d::graphics* pgraphics, const ::f64_rectangle& rectangle)
    //{
 
    //   return internal_add_rect(pgraphics, rectangle.left, rectangle.top, rectangle.width(), rectangle.height());
@@ -816,7 +816,7 @@ namespace draw2d_directx11
    //}
 
 
-   bool path::_set(::draw2d::graphics * pgraphics, const ::double_ellipse & ellipse)
+   bool path::_set(::draw2d::graphics * pgraphics, const ::f64_ellipse & ellipse)
    {
 
       return internal_add_ellipse(pgraphics, ellipse.left, ellipse.top, ellipse.width(), ellipse.height());
@@ -825,10 +825,10 @@ namespace draw2d_directx11
 
 
 
-   bool path::_set(::draw2d::graphics* pgraphics, const ::double_lines & lines)
+   bool path::_set(::draw2d::graphics* pgraphics, const ::f64_lines & lines)
    {
 
-      return internal_add_lines(pgraphics, (const ::int_point_array &) lines, false);
+      return internal_add_lines(pgraphics, (const ::i32_point_array &) lines, false);
 
    }
 
@@ -836,22 +836,22 @@ namespace draw2d_directx11
    //bool path::_set(::draw2d::graphics* pgraphics, const ::linesd& lines)
    //{
 
-   //   return internal_add_lines(pgraphics, (const ::double_point_array&) lines, false);
+   //   return internal_add_lines(pgraphics, (const ::f64_point_array&) lines, false);
 
    //}
 
 
-   bool path::_set(::draw2d::graphics* pgraphics, const ::double_polygon & polygon)
+   bool path::_set(::draw2d::graphics* pgraphics, const ::f64_polygon & polygon)
    {
 
-      return internal_add_lines(pgraphics, (const ::double_point_array&)polygon, true);
+      return internal_add_lines(pgraphics, (const ::f64_point_array&)polygon, true);
 
    }
 
-   //bool path::_set(::draw2d::graphics* pgraphics, const ::double_polygon& int_polygon)
+   //bool path::_set(::draw2d::graphics* pgraphics, const ::f64_polygon& i32_polygon)
    //{
 
-   //   return internal_add_lines(pgraphics, (const ::double_point_array&)int_polygon, true);
+   //   return internal_add_lines(pgraphics, (const ::f64_point_array&)i32_polygon, true);
 
    //}
 
@@ -887,7 +887,7 @@ namespace draw2d_directx11
 
       //HRESULT hr = pfactory->CreateTextLayout(
       //   wstr,      // The string to be laid out and formatted.
-      //   (unsigned int)wstr.length(),  // The length of the string.
+      //   (::u32)wstr.length(),  // The length of the string.
       //   pformat,  // The text format to apply to the string (contains font information, etc).
       //   4096,         // The width of the on_layout box.
       //   4096,        // The height of the on_layout box.
@@ -957,12 +957,12 @@ namespace draw2d_directx11
    //bool path::_set(::draw2d::graphics* pgraphics, ::draw2d::path::close* pclose)
    //{
 
-   //   //::double_rectangle rectangle;
+   //   //::f64_rectangle rectangle;
 
-   //   //rectangle.left      = (int) (arc.m_pointCenter.x - arc.m_sizeRadius.cx);
-   //   //rectangle.right     = (int) (arc.m_pointCenter.x + arc.m_sizeRadius.cx);
-   //   //rectangle.top       = (int) (arc.m_pointCenter.y - arc.m_sizeRadius.cy);
-   //   //rectangle.bottom    = (int) (arc.m_pointCenter.y + arc.m_sizeRadius.cy);
+   //   //rectangle.left      = (::i32) (arc.m_pointCenter.x - arc.m_sizeRadius.cx);
+   //   //rectangle.right     = (::i32) (arc.m_pointCenter.x + arc.m_sizeRadius.cx);
+   //   //rectangle.top       = (::i32) (arc.m_pointCenter.y - arc.m_sizeRadius.cy);
+   //   //rectangle.bottom    = (::i32) (arc.m_pointCenter.y + arc.m_sizeRadius.cy);
 
    //   //bool bOk = internal_add_arc(pgraphics, parc);
 
@@ -1059,7 +1059,7 @@ namespace draw2d_directx11
 //private:
 //   DWORD cRefCount_;
 //   FLOAT m_pixelsPerDip;   // Number of pixels per DIP.
-//   unsigned int m_ref;
+//   ::u32 m_ref;
 //};
 //
 //

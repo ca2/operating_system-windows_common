@@ -68,7 +68,7 @@ namespace apex_windows_common
 
       //   key.open(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize");
 
-      //   unsigned int dw;
+      //   ::u32 dw;
 
       //   auto estatus = key._get("AppsUseLightTheme", dw);
 
@@ -111,7 +111,7 @@ namespace apex_windows_common
 
       //   key.open(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize");
 
-      //   unsigned int dw;
+      //   ::u32 dw;
 
       //   auto estatus = key._get("SystemUseLightTheme", dw);
 
@@ -144,7 +144,7 @@ namespace apex_windows_common
    }
 
 
-   ::color::color node::get_default_color(unsigned long long u)
+   ::color::color node::get_default_color(::u64 u)
    {
 
       switch (u)
@@ -170,7 +170,7 @@ namespace apex_windows_common
    }
 
 
-   void node::set_console_colors(unsigned int dwScreenColors, unsigned int dwPopupColors, unsigned int dwWindowAlpha)
+   void node::set_console_colors(::u32 dwScreenColors, ::u32 dwPopupColors, ::u32 dwWindowAlpha)
    {
 
       //::acme_windows::registry::key key(HKEY_CURRENT_USER, "Console", true);
@@ -188,7 +188,7 @@ namespace apex_windows_common
 
       //::acme_windows::registry::key key(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", true);
 
-      //unsigned int dwSystemUseLightTheme;
+      //::u32 dwSystemUseLightTheme;
       //if (bSet)
       //{
       //   dwSystemUseLightTheme = 0;
@@ -209,7 +209,7 @@ namespace apex_windows_common
 
       //::acme_windows::registry::key key(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", true);
 
-      //unsigned int dwAppsUseLightTheme;
+      //::u32 dwAppsUseLightTheme;
       //if (bSet)
       //{
       //   dwAppsUseLightTheme = 0;
@@ -226,10 +226,10 @@ namespace apex_windows_common
    }
 
 
-   double node::get_time_zone()
+   ::f64 node::get_time_zone()
    {
 
-      double dTimeZone = 0.;
+      ::f64 dTimeZone = 0.;
 
 #ifdef WINDOWS
       {
@@ -239,24 +239,24 @@ namespace apex_windows_common
 
          DYNAMIC_TIME_ZONE_INFORMATION i = {};
 
-         unsigned int dw = GetDynamicTimeZoneInformation(&i);
+         ::u32 dw = GetDynamicTimeZoneInformation(&i);
 
          if (dw == TIME_ZONE_ID_STANDARD)
          {
 
-            dTimeZone = -((double)(i.Bias + i.StandardBias) / 60.0);
+            dTimeZone = -((::f64)(i.Bias + i.StandardBias) / 60.0);
 
          }
          else if (dw == TIME_ZONE_ID_DAYLIGHT)
          {
 
-            dTimeZone = -((double)(i.Bias + i.DaylightBias) / 60.0);
+            dTimeZone = -((::f64)(i.Bias + i.DaylightBias) / 60.0);
 
          }
          else
          {
 
-            dTimeZone = -((double)i.Bias / 60.0);
+            dTimeZone = -((::f64)i.Bias / 60.0);
 
          }
 
@@ -274,7 +274,7 @@ namespace apex_windows_common
 
          //printf("The time zone is '%s'.\n", lt.tm_zone);
 
-         dTimeZone = +((double)lt.tm_gmtoff / (60.0 * 60.0));
+         dTimeZone = +((::f64)lt.tm_gmtoff / (60.0 * 60.0));
 
       }
 #endif
@@ -336,7 +336,7 @@ namespace apex_windows_common
       ::property_set set;
 
       set["privileged"] = true;
-      int iExitCode = -1;
+      ::i32 iExitCode = -1;
       //if (!call_sync(path, strParam, path.folder(), ::e_display_none, 3_minute, set))
       call_sync(path, strParam, path.folder(), ::e_display_none, 3_minute, set, &iExitCode);
       //{

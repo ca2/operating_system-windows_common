@@ -124,7 +124,7 @@ namespace gpu_directx11
             pshader->set_sequence3("albedo", seq3Albedo);
             if (bAlbedo)
             {
-               int iTextureIndex = ::gpu::e_gltf_texture_albedo;
+               ::i32 iTextureIndex = ::gpu::e_gltf_texture_albedo;
                //GLenum textureIndex = GL_TEXTURE0 + iTextureIndex;
                //glActiveTexture(textureIndex);
                //pshader->set_int("material.textureAlbedo", iTextureIndex);
@@ -137,7 +137,7 @@ namespace gpu_directx11
                !prendersystem->m_bDisableMetallicRoughness && m_pmaterial->useTextureMetallicRoughness;
 
             pshader->set_int("useTextureMetallicRoughness", bMetallicRoughness);
-            float fMetallic = 0.0f;
+            ::f32 fMetallic = 0.0f;
             if (prendersystem->m_bForceDefaultMetallicFactor)
             {
 
@@ -150,7 +150,7 @@ namespace gpu_directx11
                fMetallic = m_pmaterial->m_fMetallic;
 
             }
-            float fRoughness = 0.0f;
+            ::f32 fRoughness = 0.0f;
             if (prendersystem->m_bForceDefaultRoughnessFactor)
             {
 
@@ -165,7 +165,7 @@ namespace gpu_directx11
             pshader->set_float("roughness", fRoughness);
             if (bMetallicRoughness)
             {
-               int iTextureIndex = ::gpu::e_gltf_texture_metallic_roughness;
+               ::i32 iTextureIndex = ::gpu::e_gltf_texture_metallic_roughness;
                //GLenum textureIndex = GL_TEXTURE0 + iTextureIndex;
                //glActiveTexture(textureIndex);
                //pshader->set_int("material.textureMetallicRoughness", iTextureIndex);
@@ -186,7 +186,7 @@ namespace gpu_directx11
             bool bAmbientOcclusion =
                !prendersystem->m_bDisableAmbientOcclusion && m_pmaterial->useTextureAmbientOcclusion;
             pshader->set_int("useTextureAmbientOcclusion", bAmbientOcclusion);
-            float fAmbientOcclusion = 0.0f;
+            ::f32 fAmbientOcclusion = 0.0f;
             if (prendersystem->m_bForceDefaultAmbientOcclusionFactor)
             {
 
@@ -341,7 +341,7 @@ namespace gpu_directx11
             //pshader->set_sequence3("material.albedo", m_pmaterial->m_seq3Albedo);
             if (m_pmaterial->useTextureAlbedo)
             {
-               int iTextureIndex = ::gpu::e_gltf_texture_albedo;
+               ::i32 iTextureIndex = ::gpu::e_gltf_texture_albedo;
                //GLenum textureIndex = GL_TEXTURE0 + iTextureIndex;
                //glActiveTexture(textureIndex);
                //pshader->set_int("material.textureAlbedo", iTextureIndex);
@@ -355,7 +355,7 @@ namespace gpu_directx11
             //pshader->set_float("material.roughness", m_pmaterial->m_fRoughness);
             //if (m_pmaterial->useTextureMetallicRoughness)
             //{
-            //   int iTextureIndex = ::gpu::e_gltf_texture_metallic_roughness;
+            //   ::i32 iTextureIndex = ::gpu::e_gltf_texture_metallic_roughness;
             //   GLenum textureIndex = GL_TEXTURE0 + iTextureIndex;
             //   glActiveTexture(textureIndex);
             //   pshader->set_int("material.textureMetallicRoughness", iTextureIndex);
@@ -441,7 +441,7 @@ namespace gpu_directx11
          // ID3D11Device*           m_pd3dDevice;
          // ID3D11DeviceContext*    m_pImmediateContext;
          // std::vector<::gpu::gltf::vertex> m_vertexa;
-         // std::vector<unsigned int> m_indexa;
+         // std::vector<::u32> m_indexa;
 
          //      ::cast<::gpu_directx11::context> pgpucontext = m_pgpucontext;
 
@@ -525,7 +525,7 @@ namespace gpu_directx11
          //////              GL_STATIC_DRAW); // copy over the vertex data
          //////
          ////// glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO); // use this EBO for subsequent calls
-         ////// glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indexa.size() * sizeof(unsigned int), &m_indexa[0],
+         ////// glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indexa.size() * sizeof(::u32), &m_indexa[0],
          //////              GL_STATIC_DRAW); // copy over the index data
          //////
          ////// // setup the locations of vertex data
@@ -572,7 +572,7 @@ namespace gpu_directx11
          //////auto indexData = m_indexa.data();
 
          //////glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_uEBO); // use this EBO for subsequent calls
-         //////glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexSize * sizeof(unsigned int),
+         //////glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexSize * sizeof(::u32),
          //////   indexData,GL_STATIC_DRAW); // copy over the index data
 
          //////// setup the locations of vertex data

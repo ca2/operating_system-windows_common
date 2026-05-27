@@ -164,10 +164,10 @@ namespace directx11
       //}
 
       //inline VkViewport viewport(
-      //   float width,
-      //   float height,
-      //   float minDepth,
-      //   float maxDepth)
+      //   ::f32 width,
+      //   ::f32 height,
+      //   ::f32 minDepth,
+      //   ::f32 maxDepth)
       //{
       //   VkViewport viewport{};
       //   viewport.width = width;

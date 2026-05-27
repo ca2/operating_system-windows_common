@@ -10,7 +10,7 @@
 #include "framework.h"
 
 
-manual_reset_happening::manual_reset_happening(char * sz, bool bInitiallyOwn) :
+manual_reset_happening::manual_reset_happening(::i8 * sz, bool bInitiallyOwn) :
    ::happening(sz, bInitiallyOwn, true)
 {
 

@@ -13,10 +13,10 @@ class CLASS_DECL_ACME task :
 public:
 
 
-   int                                 m_bAvoidProcedureFork : 1;
-   int                                 m_bitIsRunning : 1;
-   int                                 m_bIsPredicate : 1; // Is helper thread (as opposite to a "main" thread)
-   int                                 m_bitCoInitialize : 1;
+   ::i32                                 m_bAvoidProcedureFork : 1;
+   ::i32                                 m_bitIsRunning : 1;
+   ::i32                                 m_bIsPredicate : 1; // Is helper thread (as opposite to a "main" thread)
+   ::i32                                 m_bitCoInitialize : 1;
 
 
    htask                           m_htask;
@@ -42,7 +42,7 @@ public:
 
 
    virtual ::task * get_task() override;
-   virtual const char * get_task_tag() override;
+   virtual const ::i8 * get_task_tag() override;
 
 
    virtual bool set_thread_name(const ::scoped_string & scopedstrName);
@@ -74,15 +74,15 @@ public:
 
    virtual void begin_task(
       ::enum_priority epriority = e_priority_normal,
-      unsigned int nStackSize = 0,
-      unsigned int dwCreateFlags = 0);
+      ::u32 nStackSize = 0,
+      ::u32 dwCreateFlags = 0);
 
 
    virtual void start(
       ::matter* pmatter,
       ::enum_priority epriority = e_priority_normal,
-      unsigned int nStackSize = 0,
-      unsigned int dwCreateFlags = 0);
+      ::u32 nStackSize = 0,
+      ::u32 dwCreateFlags = 0);
 
 
 
@@ -103,8 +103,8 @@ public:
    static ::task_pointer launch(
       ::matter* pmatter,
       ::enum_priority epriority = e_priority_normal,
-      unsigned int nStackSize = 0,
-      unsigned int dwCreateFlags = 0);
+      ::u32 nStackSize = 0,
+      ::u32 dwCreateFlags = 0);
 
 
    virtual ::object * thread_parent();

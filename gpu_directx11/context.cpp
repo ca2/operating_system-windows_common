@@ -102,13 +102,13 @@ namespace gpu_directx11
       //
       //      }
       //      //glGenBuffers(1, &VAO);
-      ////      float vertices[] = {f
+      ////      ::f32 vertices[] = {f
       //         // positions         // colors
       //  //        0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   // bottom right
       //    //     -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   // bottom left
       //      //    0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f    // top
       //      //};
-      //      float vertices[] = {
+      //      ::f32 vertices[] = {
       //         // first triangle
       //          1.f,  1.f, 0.0f,  // top right
       //          1.f, -1.f, 0.0f,  // bottom right
@@ -146,10 +146,10 @@ namespace gpu_directx11
       ////      glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
       ////
       ////      // position attribute
-      ////      glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
+      ////      glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(::f32), (void *)0);
       ////      glEnableVertexAttribArray(0);
       ////      // color attribute
-      ////      //glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+      ////      //glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(::f32), (void*)(3 * sizeof(::f32)));
       ////      //glEnableVertexAttribArray(1);
       ////
       ////      //return ::success;
@@ -161,14 +161,14 @@ namespace gpu_directx11
 //
 //
 //      //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo_elements);
-////int iError16 = glGetError();
+////::i32 iError16 = glGetError();
 //
-////int size = 0; 
+////::i32 size = 0; 
 ////glGetBufferParameteriv(GL_ELEMENT_ARRAY_BUFFER, GL_BUFFER_SIZE, &size);
-////int iError17 = glGetError();
+////::i32 iError17 = glGetError();
 //
 ////glDrawElements(GL_TRIANGLES, size / sizeof(GLushort), GL_UNSIGNED_SHORT, 0);
-////int iError18 = glGetError();
+////::i32 iError18 = glGetError();
 //
 //
 //
@@ -195,9 +195,9 @@ namespace gpu_directx11
 //      ////glUseProgram(shaderProgram);
 //
 //      //// update the uniform color
-//      ////float timeValue = glfwGetTime();
-//      ////float greenValue = sin(timeValue) / 2.0f + 0.5f;
-//      ////int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
+//      ////::f32 timeValue = glfwGetTime();
+//      ////::f32 greenValue = sin(timeValue) / 2.0f + 0.5f;
+//      ////::i32 vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
 //      ////glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
 //
 //      ////return ::success;
@@ -240,14 +240,14 @@ namespace gpu_directx11
       ////// Initial position : on +Z
       ////floating_sequence3 position = floating_sequence3(0, 0, 5);
       ////// Initial horizontal angle : toward -Z
-      ////float horizontalAngle = 3.14f;
+      ////::f32 horizontalAngle = 3.14f;
       ////// Initial vertical angle : none
-      ////float verticalAngle = 0.0f;
+      ////::f32 verticalAngle = 0.0f;
       ////// Initial Field of View
-      ////float initialFoV = 45.0f;
+      ////::f32 initialFoV = 45.0f;
 
-      ////float speed = 3.0f; // 3 units / second
-      ////float mouseSpeed = 0.005f;
+      ////::f32 speed = 3.0f; // 3 units / second
+      ////::f32 mouseSpeed = 0.005f;
 
 
 
@@ -535,17 +535,17 @@ namespace gpu_directx11
 
       string strFragment =
          "uniform vec2 resolution;\n"
-         "uniform float time;\n"
+         "uniform ::f32 time;\n"
          "uniform vec2 mouse;\n"
          "uniform sampler2D backbuffer;\n"
          "\n"
          "void main(void) {\n"
-         "float base_res = min(resolution.x, resolution.y);\n"
+         "::f32 base_res = min(resolution.x, resolution.y);\n"
          "vec2 uv = (gl_FragCoord.xy * 2.0 - resolution.xy) / base_res;\n"
          "\n"
          //"gl_FragColor = vec4(uv, (uv.x * uv.x) / 2.0, ((uv.x + (base_res - uv.y)) *(uv.x + (base_res - uv.y))) / 2.0);\n"
-         "float posx = max(0.f, uv.x);\n"
-         "float posy = max(0.f, uv.y);\n"
+         "::f32 posx = max(0.f, uv.x);\n"
+         "::f32 posy = max(0.f, uv.y);\n"
          "gl_FragColor = vec4(uv, (posx * posx) / 4.0, ((posx + posy) * (posx + posy)) / 4.0);\n"
          "}\n";
 
@@ -666,10 +666,10 @@ namespace gpu_directx11
    //         strFragment =
    //            //"#" + strVersion + "\n"
    //            //"\n"
-   //            //"precision highp float;\n"
+   //            //"precision highp ::f32;\n"
    //            "\n"
    //            "uniform vec2 iResolution;\n"
-   //            "uniform float iTime;\n"
+   //            "uniform ::f32 iTime;\n"
    //            "uniform vec2 iMouse;\n"
    //            "uniform sampler2D backbuffer;\n"
    //            "\n"
@@ -807,9 +807,9 @@ namespace gpu_directx11
 
       //   LPCTSTR lpClassName = L"draw2d_directx11_offscreen_buffer_window";
       //   LPCTSTR lpWindowName = L"draw2d_directx11_offscreen_buffer_window";
-      //   //unsigned int dwStyle = WS_CAPTION | WS_POPUPWINDOW; // | WS_VISIBLE
-      //   unsigned int dwExStyle = 0;
-      //   unsigned int dwStyle = WS_OVERLAPPEDWINDOW;
+      //   //::u32 dwStyle = WS_CAPTION | WS_POPUPWINDOW; // | WS_VISIBLE
+      //   ::u32 dwExStyle = 0;
+      //   ::u32 dwStyle = WS_OVERLAPPEDWINDOW;
       //   dwStyle |= WS_POPUP;
       //   //dwStyle |= WS_VISIBLE;
       //   //dwStyle |= WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX;
@@ -817,10 +817,10 @@ namespace gpu_directx11
       //   //dwStyle = 0;
       //   dwStyle &= ~WS_THICKFRAME;
       //   dwStyle &= ~WS_BORDER;
-      //   int x = 0;
-      //   int y = 0;
-      //   int nWidth = size.cx;
-      //   int nHeight = size.cy;
+      //   ::i32 x = 0;
+      //   ::i32 y = 0;
+      //   ::i32 nWidth = size.cx;
+      //   ::i32 nHeight = size.cy;
       //   HWND hWndParent = nullptr;
       //   HMENU hMenu = nullptr;
       //   HINSTANCE hInstance = ::GetModuleHandleW(L"gpu_directx11.dll");
@@ -938,7 +938,7 @@ namespace gpu_directx11
 
       //         //PIXELFORMATDESCRIPTOR pixformat;
 
-      //         //int chosenformat;
+      //         //::i32 chosenformat;
 
       //         HDC hdc = GetDC(m_hwnd);
 
@@ -1001,7 +1001,7 @@ namespace gpu_directx11
 
       ////         pwindow->m_hglrcProto = hglrc;
 
-      //////         int context_attribs[] = {
+      //////         ::i32 context_attribs[] = {
       //////WGL_CONTEXT_MAJOR_VERSION_ARB, 2,
       //////WGL_CONTEXT_MINOR_VERSION_ARB, 1,
       //////0, 0
@@ -1088,7 +1088,7 @@ namespace gpu_directx11
 
 
       //      //HDC pdcDIB;                      // контекст устройства в памяти
-      //      //HBITMAP hbmpDIB;                 // и его текущий битмапvoid *pBitsDIB(NULL);            // содержимое битмапаint cxDIB(200); int cyDIB(300);  // его размеры (например для окна 200х300)
+      //      //HBITMAP hbmpDIB;                 // и его текущий битмапvoid *pBitsDIB(NULL);            // содержимое битмапаint cxDIB(200); ::i32 cyDIB(300);  // его размеры (например для окна 200х300)
       //      //auto &BIH=pwindow->m_bitmapinfoheaderProto;            // и заголовок// …// создаем DIB section// создаем структуру BITMAPINFOHEADER, описывающую наш DIBint iSize = sizeof(BITMAPINFOHEADER);  // размер
       //      //memset(&BIH, 0, sizeof(pwindow->m_bitmapinfoheaderProto));
 
@@ -1284,8 +1284,8 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
 
       ::cast <::gpu_directx11::texture > ptextureDst = pgputextureTarget;
-      //float clearColor[4] = { 0.4*0.5, 0.35*0.5, 0.2*0.5, 0.5 }; // Clear to transparent
-      float clearColor[4] = { 0.f, 0.f, 0.f, 0.f }; // Clear to transparent
+      //::f32 clearColor[4] = { 0.4*0.5, 0.35*0.5, 0.2*0.5, 0.5 }; // Clear to transparent
+      ::f32 clearColor[4] = { 0.f, 0.f, 0.f, 0.f }; // Clear to transparent
       m_pcontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor);
 
       //UINT stride = sizeof(Vertex);
@@ -1318,7 +1318,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       m_pshaderCopyUsingShader->unbind(nullptr);
 
 
-      //float clearColor2[4] = { 0.45f * 0.5f, 0.99f * 0.5f, 0.45f * 0.5f, 0.5f }; // Clear to transparent
+      //::f32 clearColor2[4] = { 0.45f * 0.5f, 0.99f * 0.5f, 0.45f * 0.5f, 0.5f }; // Clear to transparent
       //m_pcontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor2);
 
 
@@ -1451,8 +1451,8 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
          D3D11_VIEWPORT vp = {};
          vp.TopLeftX = 0;
          vp.TopLeftY = 0;
-         vp.Width = static_cast<float>(m_rectangle.width());
-         vp.Height = static_cast<float>(m_rectangle.height());
+         vp.Width = static_cast<::f32>(m_rectangle.width());
+         vp.Height = static_cast<::f32>(m_rectangle.height());
          vp.MinDepth = 0.0f;
          vp.MaxDepth = 1.0f;
          m_pcontext->RSSetViewports(1, &vp);
@@ -1469,8 +1469,8 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
 
       ::cast <::gpu_directx11::texture > ptextureDst = ptextureTarget;
-      //float clearColor[4] = { 0.95f * 0.5f, 0.95f * 0.5f, 0.25f * 0.5f, 0.5f }; // Translucent Yellow
-      float clearColor[4] = { 0.f, 0.f, 0.f, 0.f }; // Clear to transparent
+      //::f32 clearColor[4] = { 0.95f * 0.5f, 0.95f * 0.5f, 0.25f * 0.5f, 0.5f }; // Translucent Yellow
+      ::f32 clearColor[4] = { 0.f, 0.f, 0.f, 0.f }; // Clear to transparent
       m_pcontext->ClearRenderTargetView(
          ptextureDst->m_prendertargetview, clearColor);
 
@@ -1480,7 +1480,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
 
       {
-         float blendFactor[4] = { 0, 0, 0, 0 }; // Ignored with this blend mode
+         ::f32 blendFactor[4] = { 0, 0, 0, 0 }; // Ignored with this blend mode
          UINT sampleMask = 0xFFFFFFFF;
          m_pcontext->OMSetBlendState(m_pd3d11blendstateBlend3, blendFactor, sampleMask);
       }
@@ -1505,7 +1505,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
       m_pcontext->RSSetState(m_prasterizerstateMergeLayers);
 
-      //float clearColor[4] = { 0.f, 0.f, 0.f, 0.f }; // Clear to transparent
+      //::f32 clearColor[4] = { 0.f, 0.f, 0.f, 0.f }; // Clear to transparent
       //m_pcontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor);
 
 
@@ -1539,8 +1539,8 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
          D3D11_VIEWPORT vp = {};
          vp.TopLeftX = (FLOAT) ptexture->rectangle().left;
          vp.TopLeftY = (FLOAT) ptexture->rectangle().top;
-         vp.Width = static_cast<float>(ptexture->rectangle().width());
-         vp.Height = static_cast<float>(ptexture->rectangle().height());
+         vp.Width = static_cast<::f32>(ptexture->rectangle().width());
+         vp.Height = static_cast<::f32>(ptexture->rectangle().height());
          vp.MinDepth = 0.0f;
          vp.MaxDepth = 1.0f;
          m_pcontext->RSSetViewports(1, &vp);
@@ -1578,8 +1578,8 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       //   D3D11_VIEWPORT vp = {};
       //   vp.TopLeftX = 0;
       //   vp.TopLeftY = 0;
-      //   vp.Width = static_cast<float>(m_rectangle.width());
-      //   vp.Height = static_cast<float>(m_rectangle.height());
+      //   vp.Width = static_cast<::f32>(m_rectangle.width());
+      //   vp.Height = static_cast<::f32>(m_rectangle.height());
       //   vp.MinDepth = 0.0f;
       //   vp.MaxDepth = 1.0f;
       //   m_pcontext->RSSetViewports(1, &vp);
@@ -1593,7 +1593,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       //   m_pcontext->RSSetScissorRects(1, &rectScissor);
 
       //   //::cast <texture > ptextureDst = ptextureTarget;
-      //   float clearColor2[4] = { 0.95f * 0.5f, 0.75f * 0.5f, 0.95f * 0.5f, 0.5f };
+      //   ::f32 clearColor2[4] = { 0.95f * 0.5f, 0.75f * 0.5f, 0.95f * 0.5f, 0.5f };
       //   m_pcontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor2);
 
       //}
@@ -1606,7 +1606,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       //   rect.right = 300;
       //   rect.bottom = 200;
 
-      //   float clearColor[4] = { 0.95f * 0.5f, 0.75f * 0.5f, 0.95f * 0.5f, 0.5f };
+      //   ::f32 clearColor[4] = { 0.95f * 0.5f, 0.75f * 0.5f, 0.95f * 0.5f, 0.5f };
 
       //   m_pcontext1->ClearView(ptextureDst->m_prendertargetview, clearColor, &rect, 1);
 
@@ -1657,7 +1657,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
          ////::defer_throw_hresult(ptexture->d3d11()->wrappedResource.as(pdxgisurface)); // Get IDXGISurface
 
-         ////int iFrameIndex = m_pgpurenderer->m_pgpurendertarget->get_frame_index();
+         ////::i32 iFrameIndex = m_pgpurenderer->m_pgpurendertarget->get_frame_index();
 
          ////pdxgisurfacebindable->_bind(iFrameIndex, pdxgisurface);
 
@@ -1917,7 +1917,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
       return hlsl_context::rectangle_shader_vert();
 
-//      const char proto_vert[] = R"vert(
+//      const ::i8 proto_vert[] = R"vert(
 //// Vertex input structure
 //struct VSInput {
 //    float2 inPos   : POSITION; // matches location=0 in GLSL
@@ -1951,7 +1951,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       return hlsl_context::rectangle_shader_frag();
 
 //
-//      const char proto_frag[] = R"frag(
+//      const ::i8 proto_frag[] = R"frag(
 //struct PSInput {
 //   float4 pos   : SV_Position; // required for position in HLSL
 //   float4 color : COLOR0; // Matches VS output COLOR0
@@ -1979,13 +1979,13 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       if (iFindPrecision >= 0)
       {
 
-         stra[iFindPrecision] = "precision highp float;";
+         stra[iFindPrecision] = "precision highp ::f32;";
 
       }
       else
       {
 
-         stra.insert_at(1, "precision highp float;");
+         stra.insert_at(1, "precision highp ::f32;");
 
          iFindPrecision = 1;
 
@@ -2137,7 +2137,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    //      uniqueQueueFamilies.insert(indices.presentFamily);
    //   }
 
-   //   float queuePriority = 1.0f;
+   //   ::f32 queuePriority = 1.0f;
    //   for (uint32_t queueFamily : uniqueQueueFamilies)
    //   {
    //      VkDeviceQueueCreateInfo queueCreateInfo = {};
@@ -2578,7 +2578,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    //   vkDestroyFence(this->logicalDevice(), fence, nullptr);
    //}
 
-   ::gpu_directx11::descriptor_pool* context::get_global_pool(int iFrameCount)
+   ::gpu_directx11::descriptor_pool* context::get_global_pool(::i32 iFrameCount)
    {
 
       return m_pdescriptorpoolGlobal;
@@ -2602,7 +2602,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    }
 
 
-   // void context::create_global_ubo(int iGlobalUboSize, int iFrameCount)
+   // void context::create_global_ubo(::i32 iGlobalUboSize, ::i32 iFrameCount)
    // {
    //
    //    m_uboBuffers.set_size(iFrameCount);
@@ -2617,7 +2617,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    //    cbd.ByteWidth = (iGlobalUboSize+15)&~15;
    //    pgpudevice->m_pd3d11device->CreateBuffer(&cbd, nullptr, &m_pbufferGlobalUbo);
    //
-   //    //for (int i = 0; i < m_uboBuffers.size(); i++)
+   //    //for (::i32 i = 0; i < m_uboBuffers.size(); i++)
    //    //{
    //
    //    //   m_uboBuffers[i] = allocateø buffer();
@@ -2697,10 +2697,10 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       
       D3D11_VIEWPORT viewport = {};
 
-      viewport.TopLeftX = (float) rectangle.left;
-      viewport.TopLeftY = (float) rectangle.top;
-      viewport.Width = (float)rectangle.width();
-      viewport.Height = (float)rectangle.height();
+      viewport.TopLeftX = (::f32) rectangle.left;
+      viewport.TopLeftY = (::f32) rectangle.top;
+      viewport.Width = (::f32)rectangle.width();
+      viewport.Height = (::f32)rectangle.height();
       viewport.MinDepth = 0.0f;
       viewport.MaxDepth = 1.0f;
 
@@ -2731,7 +2731,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
       ::cast<::gpu_directx11::texture> ptexture = pgputexture;
 
-      float clearColor[4] = {color.f32_red(), color.f32_green(), color.f32_blue(), color.f32_opacity()};
+      ::f32 clearColor[4] = {color.f32_red(), color.f32_green(), color.f32_blue(), color.f32_opacity()};
 
       m_pcontext->ClearRenderTargetView(ptexture->m_prendertargetview, clearColor);
          

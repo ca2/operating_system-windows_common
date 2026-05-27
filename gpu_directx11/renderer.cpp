@@ -47,7 +47,7 @@ namespace gpu_directx11
    // void main() {
    //     outColor = texture(srcImage, fragUV);
    // }
-    static const char * g_uaImageBlendFragmentShader = R"(
+    static const ::i8 * g_uaImageBlendFragmentShader = R"(
 #include "shader/image_blend.frag"
 )";
  //   //
@@ -59,13 +59,13 @@ namespace gpu_directx11
  //   //     fragUV = inUV;
  //   //     gl_Position = vec4(inPos, 0.0, 1.0);
  //   // }
-   static const char * g_uaImageBlendVertexShader = R"(
+   static const ::i8 * g_uaImageBlendVertexShader = R"(
 #include "shader/image_blend.vertr"
 )";
 
 
 
- //   static unsigned int g_uaResolveFragmentShader[] = {
+ //   static ::u32 g_uaResolveFragmentShader[] = {
  // #include "shader/resolve.frag.spv.inl"
  //   };
 
@@ -78,14 +78,14 @@ namespace gpu_directx11
    }
 
 
-   //int renderer::width()
+   //::i32 renderer::width()
    //{
 
    //   return m_prendertargetview->width();
 
    //}
 
-   //int renderer::height()
+   //::i32 renderer::height()
    //{
 
    //   return m_prendertargetview->height();
@@ -132,7 +132,7 @@ namespace gpu_directx11
    }
 
 
-   //int renderer::get_frame_index() const
+   //::i32 renderer::get_frame_index() const
    //{
 
    //   assert(m_iFrameSerial2 >= 0
@@ -140,7 +140,7 @@ namespace gpu_directx11
    //      && m_estate != e_state_initial
    //      && "Cannot get frame index when frame not in progress");
 
-   //   return (int)m_iCurrentFrame2;
+   //   return (::i32)m_iCurrentFrame2;
 
    //}
 
@@ -165,7 +165,7 @@ namespace gpu_directx11
 
 
 
-   //int renderer::get_frame_count() const
+   //::i32 renderer::get_frame_count() const
    //{
 
    //   return ::gpu_directx11::render_target_view::MAX_FRAMES_IN_FLIGHT;
@@ -674,8 +674,8 @@ namespace gpu_directx11
 
       m_ptextureStaging->GetDesc(&desc);
 
-      int width = desc.Width;
-      int height = desc.Height;
+      ::i32 width = desc.Width;
+      ::i32 height = desc.Height;
       UINT rowPitch = mapped.RowPitch;
       auto data = mapped.pData;
 
@@ -693,7 +693,7 @@ namespace gpu_directx11
          data,
          width,
          height,
-         (int)rowPitch,
+         (::i32)rowPitch,
          false);
 
       pcontext->m_pcontext->Unmap((ID3D11Resource*)m_ptextureStaging, 0);
@@ -754,7 +754,7 @@ namespace gpu_directx11
    }
 
 
-   float renderer::getAspectRatio() const
+   ::f32 renderer::getAspectRatio() const
    {
 
       //if (m_bOffScreen)
@@ -865,12 +865,12 @@ namespace gpu_directx11
          //pshadervertexinput->m_bindings.add(
          //   {
          //      .binding = 0,
-         //      .stride = sizeof(float) * 4,
+         //      .stride = sizeof(::f32) * 4,
          //      .inputRate = VK_VERTEX_INPUT_RATE_VERTEX,
          //   });
 
          //pshadervertexinput->m_attribs.add({ .location = 0, .binding = 0, .format = VK_FORMAT_R32G32_SFLOAT, .offset = 0 });
-         //pshadervertexinput->m_attribs.add({ .location = 1, .binding = 0, .format = VK_FORMAT_R32G32_SFLOAT, .offset = sizeof(float) * 2 });
+         //pshadervertexinput->m_attribs.add({ .location = 1, .binding = 0, .format = VK_FORMAT_R32G32_SFLOAT, .offset = sizeof(::f32) * 2 });
 
          auto pshaderImageBlend = create_newø<::gpu_directx11::shader>();
 
@@ -905,12 +905,12 @@ namespace gpu_directx11
          //pshadervertexinput->m_bindings.add(
          //   {
          //      .binding = 0,
-         //      .stride = sizeof(float) * 4,
+         //      .stride = sizeof(::f32) * 4,
          //      .inputRate = VK_VERTEX_INPUT_RATE_VERTEX,
          //   });
 
          //pshadervertexinput->m_attribs.add({ .location = 0, .binding = 0, .format = VK_FORMAT_R32G32_SFLOAT, .offset = 0 });
-         //pshadervertexinput->m_attribs.add({ .location = 1, .binding = 0, .format = VK_FORMAT_R32G32_SFLOAT, .offset = sizeof(float) * 2 });
+         //pshadervertexinput->m_attribs.add({ .location = 1, .binding = 0, .format = VK_FORMAT_R32G32_SFLOAT, .offset = sizeof(::f32) * 2 });
 
          auto pshaderImageBlend = create_newø<::gpu_directx11::shader>();
 
@@ -1058,8 +1058,8 @@ HRESULT hrCreateDepthStencilState = pgpudevice->m_pd3d11device->CreateDepthStenc
          D3D11_VIEWPORT vp = {};
          vp.TopLeftX = 0;
          vp.TopLeftY = 0;
-         vp.Width = static_cast<float>(size.width());
-         vp.Height = static_cast<float>(size.height());
+         vp.Width = static_cast<::f32>(size.width());
+         vp.Height = static_cast<::f32>(size.height());
          vp.MinDepth = 0.0f;
          vp.MaxDepth = 1.0f;
 
@@ -1123,7 +1123,7 @@ HRESULT hrCreateDepthStencilState = pgpudevice->m_pd3d11device->CreateDepthStenc
 
       ::color::color colorClear(::color::transparent);
 
-      float clear[4] = {
+      ::f32 clear[4] = {
          colorClear.f32_red() * colorClear.f32_opacity(),
          colorClear.f32_green() * colorClear.f32_opacity(),
          colorClear.f32_blue() * colorClear.f32_opacity(),
@@ -1155,7 +1155,7 @@ HRESULT hrCreateDepthStencilState = pgpudevice->m_pd3d11device->CreateDepthStenc
 
    //   ::color::color colorClear = m_hlsClear;
    //   
-   //   float clear[4] = { 
+   //   ::f32 clear[4] = { 
    //      colorClear.f32_red() * .5f, 
    //      colorClear.f32_green() * .5f, 
    //      colorClear.f32_blue() * .5f, .5f };

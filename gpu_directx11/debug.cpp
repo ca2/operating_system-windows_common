@@ -137,7 +137,7 @@ namespace directx11
 //         VkDebugUtilsLabelEXT labelInfo{};
 //         labelInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_LABEL_EXT;
 //         labelInfo.pLabelName = caption.c_str();
-//         memcpy(labelInfo.color, &color[0], sizeof(float) * 4);
+//         memcpy(labelInfo.color, &color[0], sizeof(::f32) * 4);
 //         vkCmdBeginDebugUtilsLabelEXT(cmdbuffer, &labelInfo);
 //      }
 //

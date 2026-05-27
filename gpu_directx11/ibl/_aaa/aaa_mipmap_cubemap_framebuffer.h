@@ -20,13 +20,13 @@ namespace gpu_directx11
       public:
 
 
-         // unsigned int m_iWidth, m_iHeight;
-         // unsigned int m_iMipWidth, m_iMipHeight;
+         // ::u32 m_iWidth, m_iHeight;
+         // ::u32 m_iMipWidth, m_iMipHeight;
           
 
-         // unsigned int m_uFramebufferId;
-         // unsigned int m_uDepthRenderbufferId;
-         // unsigned int m_uCubemapTextureId;
+         // ::u32 m_uFramebufferId;
+         // ::u32 m_uDepthRenderbufferId;
+         // ::u32 m_uCubemapTextureId;
 
          //::array_base<::array_base<::comptr<ID3D11RenderTargetView>>> m_rendertargetviewa;
 
@@ -37,7 +37,7 @@ namespace gpu_directx11
          ~mipmap_cubemap_framebuffer() override;
 
 
-         //virtual void initialize_mipmap_cubemap_framebuffer(unsigned int width, unsigned int height);
+         //virtual void initialize_mipmap_cubemap_framebuffer(::u32 width, ::u32 height);
 
          void on_initialize_mipmap_cubemap_framebuffer() override;
 
@@ -47,33 +47,33 @@ namespace gpu_directx11
           * Set the mip level to render with.
           * @param mipLevel
           */
-         void set_current_mip(int iCurrentMip) override;
+         void set_current_mip(::i32 iCurrentMip) override;
 
 
          // /**
          //  * Get the current width based on the mip level.
          //  * @return
          //  */
-         // unsigned int getWidth();
+         // ::u32 getWidth();
          //
          //
          // /**
          //  * Get the current height based on the mip level.
          //  * @return
          //  */
-         // unsigned int getHeight();
+         // ::u32 getHeight();
 
 
          /**
           * Set which cube face texture to render to.
           * @param index
           */
-         void set_cube_face(int iFace) override;
+         void set_cube_face(::i32 iFace) override;
 
 
          //;
          //;
-         //unsigned int getCubemapTextureId();
+         //::u32 getCubemapTextureId();
 
          void createCubemapTextureAndViews();
          void createDepthForCurrentMip();

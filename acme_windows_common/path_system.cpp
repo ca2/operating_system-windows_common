@@ -64,7 +64,7 @@ namespace acme_windows_common
 
       WCHAR wszPath[8192];
 
-      unsigned int dw = GetFullPathNameW(path.windows_path().path(), sizeof(wszPath) / sizeof(WCHAR), wszPath, nullptr);
+      ::u32 dw = GetFullPathNameW(path.windows_path().path(), sizeof(wszPath) / sizeof(WCHAR), wszPath, nullptr);
 
       return wszPath;
 

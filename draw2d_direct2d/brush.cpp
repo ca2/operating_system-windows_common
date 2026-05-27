@@ -32,7 +32,7 @@ namespace draw2d_direct2d
    //}
 
 
-   void brush::create(::draw2d::graphics* pgraphicsParam, char iCreate)
+   void brush::create(::draw2d::graphics* pgraphicsParam, ::i8 iCreate)
    {
 
       auto pgraphics = __graphics(pgraphicsParam);
@@ -156,12 +156,12 @@ namespace draw2d_direct2d
             if(SUCCEEDED(hr))
             {
 
-               double centerx = m_point.x;
-               double centery = m_point.y;
-               double offsetx = 0.0;
-               double offsety = 0.0;
-               double radiusx = m_size.cx;
-               double radiusy = m_size.cy;
+               ::f64 centerx = m_point.x;
+               ::f64 centery = m_point.y;
+               ::f64 offsetx = 0.0;
+               ::f64 offsety = 0.0;
+               ::f64 radiusx = m_size.cx;
+               ::f64 radiusy = m_size.cy;
 
                hr = pgraphics->m_pd2d1rendertarget->CreateRadialGradientBrush(
                     D2D1::RadialGradientBrushProperties(
@@ -207,11 +207,11 @@ namespace draw2d_direct2d
 
             m_pimage->unmap();
 
-            int cx = m_pimage->width();
+            ::i32 cx = m_pimage->width();
 
-            int cy = m_pimage->height();
+            ::i32 cy = m_pimage->height();
 
-            auto rect = D2D1::RectF(0, 0, (float)cx, (float)cy);
+            auto rect = D2D1::RectF(0, 0, (::f32)cx, (::f32)cy);
 
             auto imagebrushproperties = D2D1::ImageBrushProperties(
                rect,

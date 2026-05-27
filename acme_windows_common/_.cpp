@@ -7,7 +7,7 @@
 //CLASS_DECL_ACME_WINDOWS_COMMON HRESULT defer_co_initialize_ex(bool bMultiThread, bool bDisableOleDDE = false);
 
 
-CLASS_DECL_ACME_WINDOWS_COMMON int trace_hr(const_char_pointer psz, HRESULT hr);
+CLASS_DECL_ACME_WINDOWS_COMMON ::i32 trace_hr(const_char_pointer psz, HRESULT hr);
 CLASS_DECL_ACME_WINDOWS_COMMON void throw_if_failed(HRESULT hr);
 
 
@@ -39,7 +39,7 @@ namespace windows_common
    }
 
 
-   unsigned int get_current_directory(string& str)
+   ::u32 get_current_directory(string& str)
    {
 
       return ::GetCurrentDirectoryW(MAX_PATH * 8, wstring_adaptor(str, MAX_PATH * 8));
@@ -47,7 +47,7 @@ namespace windows_common
    }
 
 
-   unsigned int get_temp_path(string& str)
+   ::u32 get_temp_path(string& str)
    {
 
       return ::GetTempPathW(MAX_PATH * 8, wstring_adaptor(str, MAX_PATH * 8));

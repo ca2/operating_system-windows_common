@@ -53,11 +53,11 @@ interface IDXGIDevice;
 
 
 
-CLASS_DECL_AURA float point_dpi(oswindow hwnd, float points);
-CLASS_DECL_AURA float dpiy(oswindow hwnd, float y);
-CLASS_DECL_AURA float dpix(oswindow hwnd, float y);
-CLASS_DECL_AURA float y_dpi(oswindow hwnd, float y);
-CLASS_DECL_AURA float x_dpi(oswindow hwnd, float y);
+CLASS_DECL_AURA ::f32 point_dpi(oswindow hwnd, ::f32 points);
+CLASS_DECL_AURA ::f32 dpiy(oswindow hwnd, ::f32 y);
+CLASS_DECL_AURA ::f32 dpix(oswindow hwnd, ::f32 y);
+CLASS_DECL_AURA ::f32 y_dpi(oswindow hwnd, ::f32 y);
+CLASS_DECL_AURA ::f32 x_dpi(oswindow hwnd, ::f32 y);
 
 //
 //namespace direct2d

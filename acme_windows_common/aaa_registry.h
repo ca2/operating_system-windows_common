@@ -37,18 +37,18 @@ namespace windows
          void close();
 
          
-         void value(void * pvalue, const ::scoped_string & scopedstrValueName, unsigned int & dwType, unsigned int & cbValue);
-         void _value(void * pvalue, const ::scoped_string & scopedstrValueName, unsigned int& dwType, unsigned int& cbValue);
+         void value(void * pvalue, const ::scoped_string & scopedstrValueName, ::u32 & dwType, ::u32 & cbValue);
+         void _value(void * pvalue, const ::scoped_string & scopedstrValueName, ::u32& dwType, ::u32& cbValue);
 
-         void _set_value(const void* pvalue, const ::scoped_string & scopedstrValueName, unsigned int dwType, unsigned int cbValue);
-
-
-         void value_type_and_size(const ::scoped_string & scopedstrValueName, unsigned int & dwType, unsigned int & cbValue);
-         void _value_type_and_size(const ::scoped_string & scopedstrValueName, unsigned int& dwType, unsigned int& cbValue) { return _value(nullptr, pcszValueName, dwType, cbValue); }
+         void _set_value(const void* pvalue, const ::scoped_string & scopedstrValueName, ::u32 dwType, ::u32 cbValue);
 
 
-         void get(const ::scoped_string & scopedstrValueName, unsigned int & dwValue);
-         void _get(const ::scoped_string & scopedstrValueName, unsigned int & dwValue);
+         void value_type_and_size(const ::scoped_string & scopedstrValueName, ::u32 & dwType, ::u32 & cbValue);
+         void _value_type_and_size(const ::scoped_string & scopedstrValueName, ::u32& dwType, ::u32& cbValue) { return _value(nullptr, pcszValueName, dwType, cbValue); }
+
+
+         void get(const ::scoped_string & scopedstrValueName, ::u32 & dwValue);
+         void _get(const ::scoped_string & scopedstrValueName, ::u32 & dwValue);
 
          
          void get(const ::scoped_string & scopedstrValueName, string & strValue);
@@ -62,8 +62,8 @@ namespace windows
          inline ::payload get(const ::scoped_string & scopedstrValueName);
 
 
-         void set(const ::scoped_string & scopedstrValueName, unsigned int dwValue);
-         void _set(const ::scoped_string & scopedstrValueName, unsigned int dwValue);
+         void set(const ::scoped_string & scopedstrValueName, ::u32 dwValue);
+         void _set(const ::scoped_string & scopedstrValueName, ::u32 dwValue);
 
 
          void set(const ::scoped_string & scopedstrValueName, const ::scoped_string & scopedstrValue);

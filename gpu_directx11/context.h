@@ -34,13 +34,13 @@ namespace gpu_directx11
       //itask									m_itaskGpu;
       //VkSampler m_vksampler001;
 
-      //unsigned int                     m_VAO;
-      //unsigned int                     m_VBO;
+      //::u32                     m_VAO;
+      //::u32                     m_VBO;
 
-      //int                            m_iMatrixUniform;
+      //::i32                            m_iMatrixUniform;
 
-      //int                           m_gluTextureBitmap1;
-      //int                              m_iLastBitmap1Scan;
+      //::i32                           m_gluTextureBitmap1;
+      //::i32                              m_iLastBitmap1Scan;
       //::i32_size                       m_sizeBitmap1;
 
       //memory                           m_memorySwap;
@@ -116,7 +116,7 @@ namespace gpu_directx11
       ::pointer <::gpu_directx11::shader>                m_pshaderCopyUsingShader;
       ::comptr <ID3D11Buffer >                           m_pd3d11bufferVertexCopyUsingShader;
 
-      int m_iVertexBufferSizeCopyUsingShader;
+      ::i32 m_iVertexBufferSizeCopyUsingShader;
 
       context();
       ~context() override;
@@ -165,9 +165,9 @@ namespace gpu_directx11
       //descriptor_set_layout* get_set_descriptor_layout();
       //virtual VkDescriptorSet getCurrentDescriptorSet(::gpu_directx11::renderer* prenderer);
 
-      //::gpu_directx11::descriptor_pool* get_global_pool(int iFrameCount);
+      //::gpu_directx11::descriptor_pool* get_global_pool(::i32 iFrameCount);
 
-      //virtual void create_global_ubo(int iSize, int iFrameCount);
+      //virtual void create_global_ubo(::i32 iSize, ::i32 iFrameCount);
       //virtual void update_global_ubo(const ::block& block);
 
       //void clear(const ::color::color& color);
@@ -267,7 +267,7 @@ namespace gpu_directx11
       //   VkDeviceMemory & bufferMemory);
       //VkCommandBuffer beginSingleTimeCommands();
       //void endSingleTimeCommands(VkCommandBuffer commandBuffer);
-      //void endSingleTimeCommands(VkCommandBuffer commandBuffer, int iSubmitCount, VkSubmitInfo * psubmitinfo);
+      //void endSingleTimeCommands(VkCommandBuffer commandBuffer, ::i32 iSubmitCount, VkSubmitInfo * psubmitinfo);
       //void copyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size);
       //void copyBufferToImage(
       //   VkBuffer buffer, VkImage image, uint32_t width, uint32_t height, uint32_t layerCount);
@@ -302,16 +302,16 @@ namespace gpu_directx11
       //      //descriptor_set_layout* get_set_descriptor_layout(::gpu::context * pgpucontext);
       //virtual VkDescriptorSet getGlobalDescriptorSet(::gpu_directx11::renderer* prenderer);
 
-      ::gpu_directx11::descriptor_pool* get_global_pool(int iFrameCount);
+      ::gpu_directx11::descriptor_pool* get_global_pool(::i32 iFrameCount);
 
       void layout_push_constants(::gpu::properties &properties, bool bGlobalUbo) override;
       ////descriptor_set_layout* get_set_descriptor_layout(::gpu::context * pgpucontext);
       //virtual VkDescriptorSet getGlobalDescriptorSet(::gpu::context* pgpucontext, ::gpu_directx11::renderer* prenderer);
 
-      //::gpu_directx11::descriptor_pool* get_global_pool(::gpu::context* pgpucontext, int iFrameCount);
+      //::gpu_directx11::descriptor_pool* get_global_pool(::gpu::context* pgpucontext, ::i32 iFrameCount);
       void layout_global_ubo(::gpu::properties *pproperties) override;
 
-      //void create_global_ubo(int iSize, int iFrameCount) override;
+      //void create_global_ubo(::i32 iSize, ::i32 iFrameCount) override;
       void update_global_ubo1(::gpu::block * pblockGlobalUbo1) override;
 
       void set_viewport(::gpu::command_buffer *pgpucommandbuffer, const ::i32_rectangle &rectangle) override;

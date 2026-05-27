@@ -25,9 +25,9 @@ namespace draw2d_direct2d
       void initialize_draw2d_direct2d_object(::draw2d_direct2d::graphics* pgraphics);
 
 
-      int get_object(int nCount, LPVOID lpObject) const;
-      unsigned int GetObjectType() const;
-      bool CreateStockObject(int nIndex);
+      ::i32 get_object(::i32 nCount, LPVOID lpObject) const;
+      ::u32 GetObjectType() const;
+      bool CreateStockObject(::i32 nIndex);
       bool UnrealizeObject();
       bool operator==(const object& obj) const;
       bool operator!=(const object& obj) const;
@@ -44,7 +44,7 @@ namespace draw2d_direct2d
       }
 
 
-      void defer_update(::draw2d::graphics* pgraphics, char i) const override;
+      void defer_update(::draw2d::graphics* pgraphics, ::i8 i) const override;
 
 
    };

@@ -33,7 +33,7 @@ namespace music
             virtual void close();
 
 
-            void send_short_message(::music::midi::enum_midi_message emessage, int iChannel, int iData1, int iData2) override;
+            void send_short_message(::music::midi::enum_midi_message emessage, ::i32 iChannel, ::i32 iData1, ::i32 iData2) override;
 
 
          };

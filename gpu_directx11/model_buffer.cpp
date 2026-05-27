@@ -78,8 +78,8 @@ namespace gpu_directx11
 
    //   initialize_gpu_context_object(pcontext);
 
-   //   float y0;
-   //   float y1;
+   //   ::f32 y0;
+   //   ::f32 y1;
 
    //   if (bYSwap)
    //   {
@@ -199,7 +199,7 @@ namespace gpu_directx11
    //}
 
 
-   ////void model_buffer::vec3_color_create_rectangle(::gpu_vulkan::context* pcontext, int iIndexCount)
+   ////void model_buffer::vec3_color_create_rectangle(::gpu_vulkan::context* pcontext, ::i32 iIndexCount)
    ////{
 
    ////   m_iVertexCount = 6;
@@ -213,7 +213,7 @@ namespace gpu_directx11
 
    ////      m_iIndexCount = iIndexCount;
 
-   ////      pcontext->defer_construct_new(m_pbufferIndex, iIndexCount * sizeof(unsigned short));
+   ////      pcontext->defer_construct_new(m_pbufferIndex, iIndexCount * sizeof(::u16));
 
    ////   }
 
@@ -257,18 +257,18 @@ namespace gpu_directx11
 
 
    //void model_buffer::sequence3_color_set_rectangle(
-   //   const ::double_point points1[4],
+   //   const ::f64_point points1[4],
    //   const  ::color::color& color,
-   //   const ::double_size& size)
+   //   const ::f64_size& size)
    //{
 
 
    //   //void editQuadVertexBuffer(
    //   //   VkDevice device,
    //   //   VkDeviceMemory outMemory,
-   //   //   const ::double_point points1[4],
+   //   //   const ::f64_point points1[4],
    //   //   const  ::color::color & color,
-   //   //   const ::double_size & size)
+   //   //   const ::f64_size & size)
    //   //{
    //   //   VkBuffer vertexBuffer;
 
@@ -282,7 +282,7 @@ namespace gpu_directx11
    //   m.scale(2.0 / size.cx, 2.0 / size.cy);
    //   m.translate(-1.0, -1.0);
 
-   //   ::double_point points[4];
+   //   ::f64_point points[4];
 
    //   points[0] = points1[0]; // top-left
    //   points[1] = points1[1]; // top-right
@@ -294,15 +294,15 @@ namespace gpu_directx11
    //   m.transform(points[2]);
    //   m.transform(points[3]);
 
-   //   float fA = color.f32_opacity();
-   //   //float fR = color.f32_red();
-   //   //float fG = color.f32_green();
-   //   //float fB = color.f32_blue();
-   //   float fR = color.f32_red() * fA;
-   //   float fG = color.f32_green() * fA;
-   //   float fB = color.f32_blue() * fA;
+   //   ::f32 fA = color.f32_opacity();
+   //   //::f32 fR = color.f32_red();
+   //   //::f32 fG = color.f32_green();
+   //   //::f32 fB = color.f32_blue();
+   //   ::f32 fR = color.f32_red() * fA;
+   //   ::f32 fG = color.f32_green() * fA;
+   //   ::f32 fB = color.f32_blue() * fA;
 
-   //   float g_z = 0.0f; // Assuming z is 0 for 2D rendering, adjust as needed
+   //   ::f32 g_z = 0.0f; // Assuming z is 0 for 2D rendering, adjust as needed
 
    //   auto data = this->map_base < graphics3d::sequence3_color > ();
 
@@ -317,13 +317,13 @@ namespace gpu_directx11
 
    //   //graphics3d::sequence3_color quadVertices[] = {
    //   //   // Triangle 1
-   //   //   {{(float)points[0].x, (float)points[0].y, g_z}, {fR, fG, fB, fA}}, // Red
-   //   //   {{(float)points[1].x, (float)points[1].y, g_z}, {fR, fG, fB, fA}}, // Green
-   //   //   {{(float)points[2].x, (float)points[2].y, g_z}, {fR, fG, fB, fA}}, // Blue
+   //   //   {{(::f32)points[0].x, (::f32)points[0].y, g_z}, {fR, fG, fB, fA}}, // Red
+   //   //   {{(::f32)points[1].x, (::f32)points[1].y, g_z}, {fR, fG, fB, fA}}, // Green
+   //   //   {{(::f32)points[2].x, (::f32)points[2].y, g_z}, {fR, fG, fB, fA}}, // Blue
    //   //   // Triangle 2
-   //   //   {{(float)points[0].x, (float)points[0].y, g_z}, {fR, fG, fB, fA}}, // Green
-   //   //   {{(float)points[2].x, (float)points[2].y, g_z}, {fR, fG, fB, fA}}, // Yellow
-   //   //   {{(float)points[3].x, (float)points[3].y, g_z}, {fR, fG, fB, fA}}, // Blue
+   //   //   {{(::f32)points[0].x, (::f32)points[0].y, g_z}, {fR, fG, fB, fA}}, // Green
+   //   //   {{(::f32)points[2].x, (::f32)points[2].y, g_z}, {fR, fG, fB, fA}}, // Yellow
+   //   //   {{(::f32)points[3].x, (::f32)points[3].y, g_z}, {fR, fG, fB, fA}}, // Blue
    //   //};
 
    //   //m_pbufferVertex->assign(::as_memory_block(quadVertices));
@@ -332,18 +332,18 @@ namespace gpu_directx11
 
 
    //void model_buffer::sequence2_color_set_rectangle(
-   //   const ::double_point points1[4],
+   //   const ::f64_point points1[4],
    //   const  ::color::color& color,
-   //   const ::double_size& size)
+   //   const ::f64_size& size)
    //{
 
 
    //   //void editQuadVertexBuffer(
    //   //   VkDevice device,
    //   //   VkDeviceMemory outMemory,
-   //   //   const ::double_point points1[4],
+   //   //   const ::f64_point points1[4],
    //   //   const  ::color::color & color,
-   //   //   const ::double_size & size)
+   //   //   const ::f64_size & size)
    //   //{
    //   //   VkBuffer vertexBuffer;
 
@@ -357,7 +357,7 @@ namespace gpu_directx11
    //   m.scale(2.0 / size.cx, 2.0 / size.cy);
    //   m.translate(-1.0, -1.0);
 
-   //   ::double_point points[4];
+   //   ::f64_point points[4];
 
    //   points[0] = points1[0]; // top-left
    //   points[1] = points1[1]; // top-right
@@ -369,25 +369,25 @@ namespace gpu_directx11
    //   m.transform(points[2]);
    //   m.transform(points[3]);
 
-   //   float fA = color.f32_opacity();
-   //   //float fR = color.f32_red();
-   //   //float fG = color.f32_green();
-   //   //float fB = color.f32_blue();
-   //   float fR = color.f32_red() * fA;
-   //   float fG = color.f32_green() * fA;
-   //   float fB = color.f32_blue() * fA;
+   //   ::f32 fA = color.f32_opacity();
+   //   //::f32 fR = color.f32_red();
+   //   //::f32 fG = color.f32_green();
+   //   //::f32 fB = color.f32_blue();
+   //   ::f32 fR = color.f32_red() * fA;
+   //   ::f32 fG = color.f32_green() * fA;
+   //   ::f32 fB = color.f32_blue() * fA;
 
-   //   float g_z = 0.0f; // Assuming z is 0 for 2D rendering, adjust as needed
+   //   ::f32 g_z = 0.0f; // Assuming z is 0 for 2D rendering, adjust as needed
 
    //   ::graphics3d::sequence2_color quadVertices[] = {
    //      // Triangle 1
-   //      {{(float)points[0].x, (float)points[0].y}, {fR, fG, fB, fA}}, // Red
-   //      {{(float)points[1].x, (float)points[1].y}, {fR, fG, fB, fA}}, // Green
-   //      {{(float)points[2].x, (float)points[2].y}, {fR, fG, fB, fA}}, // Blue
+   //      {{(::f32)points[0].x, (::f32)points[0].y}, {fR, fG, fB, fA}}, // Red
+   //      {{(::f32)points[1].x, (::f32)points[1].y}, {fR, fG, fB, fA}}, // Green
+   //      {{(::f32)points[2].x, (::f32)points[2].y}, {fR, fG, fB, fA}}, // Blue
    //      // Triangle 2
-   //      {{(float)points[0].x, (float)points[0].y}, {fR, fG, fB, fA}}, // Green
-   //      {{(float)points[2].x, (float)points[2].y}, {fR, fG, fB, fA}}, // Yellow
-   //      {{(float)points[3].x, (float)points[3].y}, {fR, fG, fB, fA}}, // Blue
+   //      {{(::f32)points[0].x, (::f32)points[0].y}, {fR, fG, fB, fA}}, // Green
+   //      {{(::f32)points[2].x, (::f32)points[2].y}, {fR, fG, fB, fA}}, // Yellow
+   //      {{(::f32)points[3].x, (::f32)points[3].y}, {fR, fG, fB, fA}}, // Blue
    //   };
 
 
@@ -397,10 +397,10 @@ namespace gpu_directx11
 
 //
 //   void model_buffer::sequence3_color_set_line(
-//      const ::double_point& pointA,
-//      const ::double_point& pointB,
+//      const ::f64_point& pointA,
+//      const ::f64_point& pointB,
 //      const  ::color::color& color,
-//      const ::double_size& size)
+//      const ::f64_size& size)
 //   {
 ////      VkBuffer vertexBuffer;
 //      //static const graphics::RectangleVertex quadVertices[] = {
@@ -414,23 +414,23 @@ namespace gpu_directx11
 //      //   {{-0.5f,  0.5f}, {0.0f, 0.0f, 1.0f, 0.5f}}, // Blue
 //      //};
 //
-//      float fA = color.f32_opacity();
-//      ////float fR = color.f32_red();
-//      ////float fG = color.f32_green();
-//      ////float fB = color.f32_blue();
-//      float fR = color.f32_red() * fA;
-//      float fG = color.f32_green() * fA;
-//      float fB = color.f32_blue() * fA;
+//      ::f32 fA = color.f32_opacity();
+//      ////::f32 fR = color.f32_red();
+//      ////::f32 fG = color.f32_green();
+//      ////::f32 fB = color.f32_blue();
+//      ::f32 fR = color.f32_red() * fA;
+//      ::f32 fG = color.f32_green() * fA;
+//      ::f32 fB = color.f32_blue() * fA;
 //
 //
 //      //rectangle is x0 y0 w100 h100;
 //      // size(100, 100) l = (0 - 100 / 2) / 100 = -0.5
 //      // size(100, 100) r = (100 - 100 / 2) / 100 = 0.5
 //
-//      //float l = (float)(2. * (rectangle.left - size.cx/2.)/ (size.cx));
-//      //float r = (float)(2. * (rectangle.right - size.cx/2.) / (size.cx));
-//      //float t = (float)(2. * (rectangle.bottom - size.cy/2.) / (size.cy));
-//      //float b = (float)(2. * (rectangle.top - size.cy/2.) / (size.cy));
+//      //::f32 l = (::f32)(2. * (rectangle.left - size.cx/2.)/ (size.cx));
+//      //::f32 r = (::f32)(2. * (rectangle.right - size.cx/2.) / (size.cx));
+//      //::f32 t = (::f32)(2. * (rectangle.bottom - size.cy/2.) / (size.cy));
+//      //::f32 b = (::f32)(2. * (rectangle.top - size.cy/2.) / (size.cy));
 //
 //      //  0 l,t
 //      //  1 r,t
@@ -441,7 +441,7 @@ namespace gpu_directx11
 //      m.scale(2.0 / size.cx, 2.0 / size.cy);
 //      m.translate(-1.0, -1.0);
 //
-//      ::double_point points[2];
+//      ::f64_point points[2];
 //
 //      points[0] = pointA;
 //      points[1] = pointB;
@@ -450,11 +450,11 @@ namespace gpu_directx11
 //      m.transform(points[1]);
 //
 //
-//      float g_z = 0.f;
+//      ::f32 g_z = 0.f;
 //
 //      graphics3d::sequence3_color lineVertices[] = {
-//         {{(float)points[0].x, (float)points[0].y, g_z}, {fR, fG, fB, fA}},
-//         {{(float)points[1].x, (float)points[1].y, g_z}, {fR, fG, fB, fA}},
+//         {{(::f32)points[0].x, (::f32)points[0].y, g_z}, {fR, fG, fB, fA}},
+//         {{(::f32)points[1].x, (::f32)points[1].y, g_z}, {fR, fG, fB, fA}},
 //      };
 //
 //
@@ -524,10 +524,10 @@ namespace gpu_directx11
 
 
    //void model_buffer::sequence2_color_set_line(
-   //   const ::double_point& pointA,
-   //   const ::double_point& pointB,
+   //   const ::f64_point& pointA,
+   //   const ::f64_point& pointB,
    //   const  ::color::color& color,
-   //   const ::double_size& size)
+   //   const ::f64_size& size)
    //{
    //   //      VkBuffer vertexBuffer;
 
@@ -545,23 +545,23 @@ namespace gpu_directx11
    //         //   {{-0.5f,  0.5f}, {0.0f, 0.0f, 1.0f, 0.5f}}, // Blue
    //         //};
 
-   //   float fA = color.f32_opacity();
-   //   ////float fR = color.f32_red();
-   //   ////float fG = color.f32_green();
-   //   ////float fB = color.f32_blue();
-   //   float fR = color.f32_red() * fA;
-   //   float fG = color.f32_green() * fA;
-   //   float fB = color.f32_blue() * fA;
+   //   ::f32 fA = color.f32_opacity();
+   //   ////::f32 fR = color.f32_red();
+   //   ////::f32 fG = color.f32_green();
+   //   ////::f32 fB = color.f32_blue();
+   //   ::f32 fR = color.f32_red() * fA;
+   //   ::f32 fG = color.f32_green() * fA;
+   //   ::f32 fB = color.f32_blue() * fA;
 
 
    //   //rectangle is x0 y0 w100 h100;
    //   // size(100, 100) l = (0 - 100 / 2) / 100 = -0.5
    //   // size(100, 100) r = (100 - 100 / 2) / 100 = 0.5
 
-   //   //float l = (float)(2. * (rectangle.left - size.cx/2.)/ (size.cx));
-   //   //float r = (float)(2. * (rectangle.right - size.cx/2.) / (size.cx));
-   //   //float t = (float)(2. * (rectangle.bottom - size.cy/2.) / (size.cy));
-   //   //float b = (float)(2. * (rectangle.top - size.cy/2.) / (size.cy));
+   //   //::f32 l = (::f32)(2. * (rectangle.left - size.cx/2.)/ (size.cx));
+   //   //::f32 r = (::f32)(2. * (rectangle.right - size.cx/2.) / (size.cx));
+   //   //::f32 t = (::f32)(2. * (rectangle.bottom - size.cy/2.) / (size.cy));
+   //   //::f32 b = (::f32)(2. * (rectangle.top - size.cy/2.) / (size.cy));
 
    //   //  0 l,t
    //   //  1 r,t
@@ -572,7 +572,7 @@ namespace gpu_directx11
    //   m.scale(2.0 / size.cx, 2.0 / size.cy);
    //   m.translate(-1.0, -1.0);
 
-   //   ::double_point points[2];
+   //   ::f64_point points[2];
 
    //   points[0] = pointA;
    //   points[1] = pointB;
@@ -581,11 +581,11 @@ namespace gpu_directx11
    //   m.transform(points[1]);
 
 
-   //   float g_z = 0.f;
+   //   ::f32 g_z = 0.f;
 
    //   graphics3d::sequence2_color lineVertices[] = {
-   //      {{(float)points[0].x, (float)points[0].y}, {fR, fG, fB, fA}},
-   //      {{(float)points[1].x, (float)points[1].y}, {fR, fG, fB, fA}},
+   //      {{(::f32)points[0].x, (::f32)points[0].y}, {fR, fG, fB, fA}},
+   //      {{(::f32)points[1].x, (::f32)points[1].y}, {fR, fG, fB, fA}},
    //   };
 
 
@@ -717,7 +717,7 @@ namespace gpu_directx11
          //   2,              // size (number of components per vertex: x, y)
          //   GL_FLOAT,       // type
          //   GL_FALSE,       // normalized?
-         //   2 * sizeof(float), // stride (bytes per vertex)
+         //   2 * sizeof(::f32), // stride (bytes per vertex)
          //   (void*)0        // offset
          //);
 

@@ -23,7 +23,7 @@
 //    }
 //
 //
-//    void frame_storage::map_allocate(::gpu::memory_buffer* pgpumemorybuffer, int size)
+//    void frame_storage::map_allocate(::gpu::memory_buffer* pgpumemorybuffer, ::i32 size)
 //    {
 //
 //       if (size > m_iBufferSize)
@@ -104,7 +104,7 @@
 //          pbuffer, 0, bDiscard ? D3D11_MAP_WRITE_DISCARD :
 //          D3D11_MAP_WRITE_NO_OVERWRITE, 0, &mapped);
 //       //      memcpy(mapped.pData, &myData, sizeof(MyConstants));
-//       pmemorybuffer->m_pMap = ((char*)mapped.pData) + m_iBufferOffset;
+//       pmemorybuffer->m_pMap = ((::i8*)mapped.pData) + m_iBufferOffset;
 //
 //       m_iBufferOffset += size;
 //

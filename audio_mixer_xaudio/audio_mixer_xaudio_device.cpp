@@ -40,7 +40,7 @@ namespace multimedia
 
       }
 
-      void     device::open(unsigned int uiMixerId, unsigned int dwCallback, unsigned int dwInstance, unsigned int fdwOpen)
+      void     device::open(::u32 uiMixerId, ::u32 dwCallback, ::u32 dwInstance, ::u32 fdwOpen)
       {
 
          void                mmrc;
@@ -90,7 +90,7 @@ namespace multimedia
 
          m_uiMixerID = uiMixerId;
 
-         //    Appset_window_text(oswindow, "::audio_mixer::audio_mixer Device: %s", (char *)mxcaps.szPname);
+         //    Appset_window_text(oswindow, "::audio_mixer::audio_mixer Device: %s", (::i8 *)mxcaps.szPname);
 
          return mmrc;
 
@@ -102,7 +102,7 @@ namespace multimedia
 
          void     mmrc;
 
-         mmrc = mmsystem::translate(mixerGetDevCaps((unsigned int) m_hMixer, &m_mixercaps, sizeof(MIXERCAPS)));
+         mmrc = mmsystem::translate(mixerGetDevCaps((::u32) m_hMixer, &m_mixercaps, sizeof(MIXERCAPS)));
 
          if(::success != mmrc)
          {
@@ -125,7 +125,7 @@ namespace multimedia
 
          m_mixerdestinationa.set_size_create(m_mixercaps.cDestinations);
 
-         for (int i = 0; (unsigned int) i < m_mixercaps.cDestinations; i++)
+         for (::i32 i = 0; (::u32) i < m_mixercaps.cDestinations; i++)
          {
             lpDestination = m_mixerdestinationa(i);
             lpDestination->set_device(this);
@@ -136,14 +136,14 @@ namespace multimedia
             //      //
             //    //
             //  wsprintf(ach, gszLineFormatList,
-            //         (char *)szLineTypeDst,
+            //         (::i8 *)szLineTypeDst,
             //       (MIXERLINE_LINEF_ACTIVE & mxl.fdwLine) ? '*' : ' ',
-            //     (char *)szComponent,
+            //     (::i8 *)szComponent,
             //   mxl.dwLineID,
             //   mxl.fdwLine,
             // mxl.cControls,
             // mxl.cConnections,
-            //(char *)mxl.szName);
+            //(::i8 *)mxl.szName);
 
             //        if (0 != (APP_OPTF_DEBUGLOG & gfuAppOptions))
             //      {
@@ -168,7 +168,7 @@ namespace multimedia
       void     device::get_destination(::audio_mixer::e_destination edestination, ::audio_mixer::destination **ppDestination)
       {
 
-         unsigned int dwComponentType;
+         ::u32 dwComponentType;
 
          switch(edestination)
          {
@@ -187,12 +187,12 @@ namespace multimedia
          if(m_mixerdestinationa.get_size() <= 0)
             return error_failed;
 
-         for(int i = 0; i < m_mixerdestinationa.get_size(); i++)
+         for(::i32 i = 0; i < m_mixerdestinationa.get_size(); i++)
          {
 
             ::pointer<::audio_mixer_mmsystem::destination>destination = m_mixerdestinationa(i);
 
-            unsigned int dw = destination->m_mixerline.dwComponentType;
+            ::u32 dw = destination->m_mixerline.dwComponentType;
 
             if(dw == dwComponentType)
             {
@@ -214,7 +214,7 @@ namespace multimedia
 
          m_mapIDToControl.erase_all();
 
-         for(int i = 0; i < m_mixerdestinationa.get_size(); i++)
+         for(::i32 i = 0; i < m_mixerdestinationa.get_size(); i++)
          {
 
             ::pointer<::audio_mixer_mmsystem::destination>destination = m_mixerdestinationa(i);
@@ -223,7 +223,7 @@ namespace multimedia
 
             ::audio_mixer::source_array & sourcea = destination->get_source_info();
 
-            for(int j = 0; j < sourcea.get_size(); j++)
+            for(::i32 j = 0; j < sourcea.get_size(); j++)
             {
 
                ::pointer<::audio_mixer::source>source = sourcea(j);
@@ -242,7 +242,7 @@ namespace multimedia
 
          m_mapIDToLine.erase_all();
 
-         for(int i = 0; i < m_mixerdestinationa.get_size(); i++)
+         for(::i32 i = 0; i < m_mixerdestinationa.get_size(); i++)
          {
 
             ::pointer<::audio_mixer_mmsystem::destination>destination = m_mixerdestinationa(i);
@@ -251,7 +251,7 @@ namespace multimedia
 
             ::audio_mixer::source_array & sourcea = destination->get_source_info();
 
-            for(int j = 0; j < sourcea.get_size(); j++)
+            for(::i32 j = 0; j < sourcea.get_size(); j++)
             {
 
                ::pointer<::audio_mixer_mmsystem::source>source = sourcea(j);
@@ -264,7 +264,7 @@ namespace multimedia
 
       }
 
-      void device::OnMixerLineChange(unsigned int dwLineID)
+      void device::OnMixerLineChange(::u32 dwLineID)
       {
          ::audio_mixer::source * pSource;
          if(m_mapIDToLine.find(dwLineID, pSource))
@@ -273,7 +273,7 @@ namespace multimedia
          }
       }
 
-      void device::OnMixerControlChange(unsigned int dwControlID)
+      void device::OnMixerControlChange(::u32 dwControlID)
       {
          ::audio_mixer::control * pControl;
          if(m_mapIDToControl.find(dwControlID, pControl))
@@ -285,11 +285,11 @@ namespace multimedia
       void device::MapLineControls(::audio_mixer::source * psource)
       {
          ::audio_mixer::control_array & controla = psource->get_control_array();
-         for(int k = 0; k < controla.get_size(); k++)
+         for(::i32 k = 0; k < controla.get_size(); k++)
          {
             ::pointer<::audio_mixer_mmsystem::control>control = controla(k);
             m_mapIDToControl.set_at(control->GetMixerControl().dwControlID, control);
-            for(int l = 0; l < control->get_size(); l++)
+            for(::i32 l = 0; l < control->get_size(); l++)
             {
                ::pointer<::audio_mixer::user_control>pinteraction = control->operator ()(l);
                m_mapDlgItemIDToControl.set_at(pinteraction->_GetDlgCtrlID(), control);
@@ -302,12 +302,12 @@ namespace multimedia
          m_mapDlgItemIDToControl.erase_all();
 
          ::audio_mixer::destination_array & destinationa = m_mixerdestinationa;
-         for(int i = 0; i < destinationa.get_size(); i++)
+         for(::i32 i = 0; i < destinationa.get_size(); i++)
          {
             ::pointer<::audio_mixer_mmsystem::destination>destination = destinationa(i);
             MapDlgCtrlIDToLineControls(destination);
             ::audio_mixer::source_array & sourcea = destination->get_source_info();
-            for(int j = 0; j < sourcea.get_size(); j++)
+            for(::i32 j = 0; j < sourcea.get_size(); j++)
             {
                ::audio_mixer::source & source = sourcea[j];
                MapDlgCtrlIDToLineControls(&source);
@@ -319,10 +319,10 @@ namespace multimedia
       void device::MapDlgCtrlIDToLineControls(::audio_mixer::source * psource)
       {
          ::audio_mixer::control_array & controla = psource->get_control_array();
-         for(int k = 0; k < controla.get_size(); k++)
+         for(::i32 k = 0; k < controla.get_size(); k++)
          {
             ::pointer<::audio_mixer::control>control = controla(k);
-            for(int l = 0; l < control->get_size(); l++)
+            for(::i32 l = 0; l < control->get_size(); l++)
             {
                ::pointer<::audio_mixer::user_control>pinteraction = control->operator()(l);
                m_mapDlgItemIDToControl.set_at(pinteraction->_GetDlgCtrlID(), control);
@@ -360,7 +360,7 @@ namespace multimedia
       bool device::OnCommand(wparam wparam, lparam lparam)
       {
 
-         unsigned int uiID = LOWORD(wparam);
+         ::u32 uiID = LOWORD(wparam);
 
          ::audio_mixer::control * pinteraction;
 

@@ -34,7 +34,7 @@ namespace draw2d_direct2d
       virtual ~path();
 
 
-      virtual bool create(::draw2d::graphics * pgraphics, char iCreate) override;
+      virtual bool create(::draw2d::graphics * pgraphics, ::i8 iCreate) override;
       virtual void destroy() override;
 
 
@@ -48,19 +48,19 @@ namespace draw2d_direct2d
 
       virtual bool internal_add_arc(::draw2d::graphics * pgraphics, const ::arc & arc);
 
-      virtual bool internal_add_line(::draw2d::graphics* pgraphics, double x, double y);
+      virtual bool internal_add_line(::draw2d::graphics* pgraphics, ::f64 x, ::f64 y);
 
-      virtual bool internal_add_rect(::draw2d::graphics* pgraphics, double x, double y, double cx, double cy);
+      virtual bool internal_add_rect(::draw2d::graphics* pgraphics, ::f64 x, ::f64 y, ::f64 cx, ::f64 cy);
 
-      virtual bool internal_add_lines(::draw2d::graphics* pgraphics, const ::int_point_array & pointa, bool bClose);
+      virtual bool internal_add_lines(::draw2d::graphics* pgraphics, const ::i32_point_array & pointa, bool bClose);
 
-      virtual bool internal_add_lines(::draw2d::graphics* pgraphics, const ::double_point_array& pointa, bool bClose);
+      virtual bool internal_add_lines(::draw2d::graphics* pgraphics, const ::f64_point_array& pointa, bool bClose);
 
-      virtual bool internal_add_string(::draw2d_direct2d::graphics * pgraphics, double x, double y, const ::scoped_string & scopedstrText, ::write_text::font * pfont);
+      virtual bool internal_add_string(::draw2d_direct2d::graphics * pgraphics, ::f64 x, ::f64 y, const ::scoped_string & scopedstrText, ::write_text::font * pfont);
 
-      virtual bool internal_start_figure(::draw2d::graphics* pgraphics, double x, double y);
+      virtual bool internal_start_figure(::draw2d::graphics* pgraphics, ::f64 x, ::f64 y);
 
-      virtual bool internal_get_arc(::double_point & pointStart, D2D1_ARC_SEGMENT & arcseg, const ::arc & arc);
+      virtual bool internal_get_arc(::f64_point & pointStart, D2D1_ARC_SEGMENT & arcseg, const ::arc & arc);
 
       virtual void * detach(::draw2d::graphics * pgraphics);
 
@@ -72,7 +72,7 @@ namespace draw2d_direct2d
       //virtual bool _set(::draw2d::graphics* pgraphics, ::draw2d::path::i32_rectangle* prectangle) override;
       //virtual bool _set(::draw2d::graphics* pgraphics, ::draw2d::path::line * pline) override;
       //virtual bool _set(::draw2d::graphics* pgraphics, ::draw2d::path::lines* plines) override;
-      //virtual bool _set(::draw2d::graphics* pgraphics, ::draw2d::path::int_polygon* pline) override;
+      //virtual bool _set(::draw2d::graphics* pgraphics, ::draw2d::path::i32_polygon* pline) override;
       //virtual bool _set(::draw2d::graphics * pgraphics, ::draw2d::path::text_out * ptextout) override;
       //virtual bool _set(::draw2d::graphics* pgraphics, ::draw2d::path::draw_text * pdrawtext) override;
       //virtual bool _set(::draw2d::graphics* pgraphics, ::draw2d::path::close* pclose) override;
@@ -92,11 +92,11 @@ namespace draw2d_direct2d
 
       virtual bool _set(::draw2d::graphics* pgraphics, const ::i32_rectangle& prectangle);
 
-      virtual bool _set(::draw2d::graphics* pgraphics, const ::double_rectangle& prectangle);
+      virtual bool _set(::draw2d::graphics* pgraphics, const ::f64_rectangle& prectangle);
 
-      virtual bool _set(::draw2d::graphics* pgraphics, const ::int_polygon& ppolygon);
+      virtual bool _set(::draw2d::graphics* pgraphics, const ::i32_polygon& ppolygon);
 
-      virtual bool _set(::draw2d::graphics* pgraphics, const ::double_polygon& ppolygond);
+      virtual bool _set(::draw2d::graphics* pgraphics, const ::f64_polygon& ppolygond);
 
       virtual bool _set(::draw2d::graphics* pgraphics, const ::text_out& ptextout);
 

@@ -33,7 +33,7 @@ namespace SDKSample
 
          void EnableMessageBuilding();
          void ResetMessageBuilding(bool resetMessageType);
-         MidiMessageType GetMessageTypeFromIndex(int index);
+         MidiMessageType GetMessageTypeFromIndex(::i32 index);
 
          void InPortsListSelectionChanged(Object^ sender, SelectionChangedEventArgs^ e);
          void OutPortsListSelectionChanged(Object^ sender, SelectionChangedEventArgs^ e);
@@ -79,9 +79,9 @@ namespace SDKSample
          Platform::Collections::Vector<IMidiOutPort^> _midiOutPortArray;
          Platform::Collections::Map<MidiMessageType, String ^>^ _messageTypeMap;
          MidiMessageType _messageType;
-         int _field1IntValue;
-         int _field2IntValue;
-         int _field3IntValue;
+         ::i32 _field1IntValue;
+         ::i32 _field2IntValue;
+         ::i32 _field3IntValue;
 
          ref class MidiDeviceWatcher sealed
          {

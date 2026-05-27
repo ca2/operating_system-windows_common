@@ -26,11 +26,11 @@
 
 DirectX::XMMATRIX GLMToDX_Transposed(const floating_matrix4& m) {
    return DirectX::XMMatrixTranspose(
-      DirectX::XMMATRIX(reinterpret_cast<const float*>(&m))
+      DirectX::XMMATRIX(reinterpret_cast<const ::f32*>(&m))
    );
 }
 DirectX::XMMATRIX GLMToDX(const floating_matrix4& m) {
-   return DirectX::XMMATRIX(reinterpret_cast<const float*>(&m));
+   return DirectX::XMMATRIX(reinterpret_cast<const ::f32*>(&m));
 }
 using namespace directx11;
 
@@ -104,7 +104,7 @@ namespace gpu_directx11
 
       // This flag adds support for surfaces with a different color channel ordering
       // than the API default. It is required for compatibility with Direct2D.
-      unsigned int creationFlags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
+      ::u32 creationFlags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
 
 #if defined(_DEBUG)
 
@@ -320,7 +320,7 @@ namespace gpu_directx11
 //      // Get queue family indices for the requested queue family types
 //      // Note that the indices may overlap depending on the implementation
 //
-//      const float defaultQueuePriority(0.0f);
+//      const ::f32 defaultQueuePriority(0.0f);
 //
 //      m_queuefamilyindices = pphysicaldevice->findQueueFamilies();
 //
@@ -515,7 +515,7 @@ namespace gpu_directx11
 
    //      //xxxopengl>>>>directx11 PIXELFORMATDESCRIPTOR pixformat;
 
-   //      int chosenformat;
+   //      ::i32 chosenformat;
 
    //      HDC hdc = GetDC(m_hwnd);
 
@@ -690,7 +690,7 @@ namespace gpu_directx11
 
    //   //         //PIXELFORMATDESCRIPTOR pixformat;
 
-   //   //         //int chosenformat;
+   //   //         //::i32 chosenformat;
 
    //   //         HDC hdc = GetDC(m_hwnd);
 
@@ -753,7 +753,7 @@ namespace gpu_directx11
 
    //   ////         pwindow->m_hglrcProto = hglrc;
 
-   //   //////         int context_attribs[] = {
+   //   //////         ::i32 context_attribs[] = {
    //   //////WGL_CONTEXT_MAJOR_VERSION_ARB, 2,
    //   //////WGL_CONTEXT_MINOR_VERSION_ARB, 1,
    //   //////0, 0
@@ -840,7 +840,7 @@ namespace gpu_directx11
 
 
    //   //      //HDC pdcDIB;                      // контекст устройства в памяти
-   //   //      //HBITMAP hbmpDIB;                 // и его текущий битмапvoid *pBitsDIB(NULL);            // содержимое битмапаint cxDIB(200); int cyDIB(300);  // его размеры (например для окна 200х300)
+   //   //      //HBITMAP hbmpDIB;                 // и его текущий битмапvoid *pBitsDIB(NULL);            // содержимое битмапаint cxDIB(200); ::i32 cyDIB(300);  // его размеры (например для окна 200х300)
    //   //      //auto &BIH=pwindow->m_bitmapinfoheaderProto;            // и заголовок// …// создаем DIB section// создаем структуру BITMAPINFOHEADER, описывающую наш DIBint iSize = sizeof(BITMAPINFOHEADER);  // размер
    //   //      //memset(&BIH, 0, sizeof(pwindow->m_bitmapinfoheaderProto));
 
@@ -1052,13 +1052,13 @@ namespace gpu_directx11
       if (iFindPrecision >= 0)
       {
 
-         stra[iFindPrecision] = "precision highp float;";
+         stra[iFindPrecision] = "precision highp ::f32;";
 
       }
       else
       {
 
-         stra.insert_at(1, "precision highp float;");
+         stra.insert_at(1, "precision highp ::f32;");
 
          iFindPrecision = 1;
 
@@ -1248,7 +1248,7 @@ namespace gpu_directx11
    //      uniqueQueueFamilies.insert(indices.presentFamily);
    //   }
 
-   //   float queuePriority = 1.0f;
+   //   ::f32 queuePriority = 1.0f;
    //   for (uint32_t queueFamily : uniqueQueueFamilies)
    //   {
    //      VkDeviceQueueCreateInfo queueCreateInfo = {};
@@ -1684,7 +1684,7 @@ namespace gpu_directx11
    //   ::array<VkQueueFamilyProperties> queueFamilies(queueFamilyCount);
    //   vkGetPhysicalDeviceQueueFamilyProperties(m_physicaldevice, &queueFamilyCount, queueFamilies.data());
 
-   //   int i = 0;
+   //   ::i32 i = 0;
    //   for (const auto& queueFamily : queueFamilies)
    //   {
    //      if (queueFamily.queueCount > 0 && queueFamily.queueFlags & VK_QUEUE_GRAPHICS_BIT)
@@ -1916,7 +1916,7 @@ bool device::_is_ok() const
 
       // This flag adds support for surfaces with a different color channel ordering
       // than the API default. It is required for compatibility with Direct2D.
-      unsigned int creationFlags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
+      ::u32 creationFlags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
 
 #if defined(__DEBUG)
 
@@ -2039,13 +2039,13 @@ bool device::_is_ok() const
 
    //}
 
-   int device::get_type_size(::gpu::enum_type etype)
+   ::i32 device::get_type_size(::gpu::enum_type etype)
    {
 
       switch (etype)
       {
-      case ::gpu::e_type_int: return sizeof(int);
-      case ::gpu::e_type_float: return sizeof(float);
+      case ::gpu::e_type_int: return sizeof(::i32);
+      case ::gpu::e_type_f32: return sizeof(::f32);
       case ::gpu::e_type_seq4: return sizeof(::floating_sequence4);
       case ::gpu::e_type_mat4: return sizeof(floating_matrix4);
       case ::gpu::e_type_seq3: return sizeof(::floating_sequence3);
@@ -2093,7 +2093,7 @@ bool device::_is_ok() const
 
       //auto fp = file()->get_reader(scopedstrImagePath);
 
-      //unsigned char header[124];
+      //::u8 header[124];
 
       ////FILE * fp;
 
@@ -2105,7 +2105,7 @@ bool device::_is_ok() const
       ////}
 
       ///* verify the type of file */
-      //char filecode[4];
+      //::i8 filecode[4];
       //fread(filecode, 1, 4, fp);
       //if (::string(filecode, 4).case_insensitive_order("DDS ") != 0) {
       //   //fclose(fp);
@@ -2115,26 +2115,26 @@ bool device::_is_ok() const
       ///* get the surface desc */
       //fread(&header, 124, 1, fp);
 
-      //unsigned int height = *(unsigned int*)&(header[8]);
-      //unsigned int width = *(unsigned int*)&(header[12]);
-      //unsigned int linearSize = *(unsigned int*)&(header[16]);
-      //unsigned int mipMapCount = *(unsigned int*)&(header[24]);
-      //unsigned int fourCC = *(unsigned int*)&(header[80]);
+      //::u32 height = *(::u32*)&(header[8]);
+      //::u32 width = *(::u32*)&(header[12]);
+      //::u32 linearSize = *(::u32*)&(header[16]);
+      //::u32 mipMapCount = *(::u32*)&(header[24]);
+      //::u32 fourCC = *(::u32*)&(header[80]);
 
 
-      //unsigned char* buffer;
-      //unsigned int bufsize;
+      //::u8* buffer;
+      //::u32 bufsize;
       ///* how big is it going to be including all mipmaps? */
       //bufsize = mipMapCount > 1 ? linearSize * 2 : linearSize;
-      //buffer = (unsigned char*)malloc(bufsize * sizeof(unsigned char));
+      //buffer = (::u8*)malloc(bufsize * sizeof(::u8));
       //fread(buffer, 1, bufsize, fp);
       ///* close the file pointer */
       ////fclose(fp);
 
 
 
-      //////unsigned int components = (fourCC == FOURCC_DXT1) ? 3 : 4;
-      ////unsigned int format;
+      //////::u32 components = (fourCC == FOURCC_DXT1) ? 3 : 4;
+      ////::u32 format;
       ////switch (fourCC)
       ////{
       ////case FOURCC_DXT1:
@@ -2159,13 +2159,13 @@ bool device::_is_ok() const
       ////glBindTexture(GL_TEXTURE_2D, textureID);
       ////glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-      ////unsigned int blockSize = (format == GL_COMPRESSED_RGBA_S3TC_DXT1_EXT) ? 8 : 16;
-      ////unsigned int offset = 0;
+      ////::u32 blockSize = (format == GL_COMPRESSED_RGBA_S3TC_DXT1_EXT) ? 8 : 16;
+      ////::u32 offset = 0;
 
       /////* load the mipmaps */
-      ////for (unsigned int level = 0; level < mipMapCount && (width || height); ++level)
+      ////for (::u32 level = 0; level < mipMapCount && (width || height); ++level)
       ////{
-      ////   unsigned int size = ((width + 3) / 4) * ((height + 3) / 4) * blockSize;
+      ////   ::u32 size = ((width + 3) / 4) * ((height + 3) / 4) * blockSize;
       ////   glCompressedTexImage2D(GL_TEXTURE_2D, level, format, width, height,
       ////      0, size, buffer + offset);
 

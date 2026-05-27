@@ -50,7 +50,7 @@ namespace music
                return true;
             }
 
-            int player::exit_thread()
+            ::i32 player::exit_thread()
             {
                // TODO:  perform any per-thread cleanup here
                //   if(!get_sequence()->IsNull())
@@ -72,7 +72,7 @@ namespace music
                USER_MESSAGE_LINK(MM_MOM_POSITIONCB, pchannel, this, &player::OnMultimediaMidiOutputMessagePositionCB);
             }
 
-            bool player::Play(::time tickStart, unsigned int dwEllapse)
+            bool player::Play(::time tickStart, ::u32 dwEllapse)
             {
 
                ::music::midi::player::command * pcommand = ___new ::music::midi::player::command(this);
@@ -91,7 +91,7 @@ namespace music
                return bFinished;
             }
 
-            bool player::Play(double dRate, unsigned int dwEllapse)
+            bool player::Play(::f64 dRate, ::u32 dwEllapse)
             {
 
                ::music::midi::player::command * pcommand = ___new ::music::midi::player::command(this);
@@ -111,11 +111,11 @@ namespace music
 
             }
 
-            ::time player::RateToTicks(double dRate)
+            ::time player::RateToTicks(::f64 dRate)
             {
                ASSERT(dRate >= 0.0);
                ASSERT(dRate <= 1.0);
-               return (::time) (int) (get_sequence()->m_tkLength * dRate);
+               return (::time) (::i32) (get_sequence()->m_tkLength * dRate);
             }
 
 
@@ -127,7 +127,7 @@ namespace music
 
             }
 
-            bool player::ExecuteCommand(::music::midi::player::enum_command ecommand, unsigned int dwEllapse)
+            bool player::ExecuteCommand(::music::midi::player::enum_command ecommand, ::u32 dwEllapse)
             {
 
                ::music::midi::player::command * pcommand = ___new ::music::midi::player::command(this);
@@ -177,7 +177,7 @@ namespace music
 
             }
 
-            void player::SetPosition(double dRate)
+            void player::SetPosition(::f64 dRate)
             {
                if (::music::midi::sequence::e_state_playing != get_sequence()->GetState() &&
                      ::music::midi::sequence::e_state_stopping != get_sequence()->GetState() &&
@@ -330,7 +330,7 @@ namespace music
             }
 
 
-            bool player::SetMidiOutDevice(unsigned int uiDevice)
+            bool player::SetMidiOutDevice(::u32 uiDevice)
             {
                __UNREFERENCED_PARAMETER(uiDevice);
                OnMidiOutDeviceChange();
@@ -339,7 +339,7 @@ namespace music
 
 
 
-            bool player::SetTempoShift(int iTempoShift)
+            bool player::SetTempoShift(::i32 iTempoShift)
             {
                //   if(IsPlaying())
                {
@@ -396,7 +396,7 @@ namespace music
 
             }
 
-            unsigned int player::GetMidiOutDevice()
+            ::u32 player::GetMidiOutDevice()
             {
 
                return papplication->midi()->GetMidiOutDevice();
@@ -489,7 +489,7 @@ namespace music
             {
                HMIDIOUT hmidiout = nullptr;
                void     estatus;
-               unsigned int uDeviceID = 0;
+               ::u32 uDeviceID = 0;
                estatus = midiOutOpen(&hmidiout, uDeviceID,  0, 0, CALLBACK_NULL);
                if(estatus != MMSYSERR_NOERROR)
                   return;
@@ -513,7 +513,7 @@ namespace music
                //  0xf7, 0x00, 0x00, 0x00,};
                MIDIHDR mh;
                LPMIDIHDR lpmh = &mh;
-               lpmh->lpData = (char *) gmModeOn;
+               lpmh->lpData = (::i8 *) gmModeOn;
                lpmh->dwBufferLength = sizeof(gmModeOn);
                lpmh->dwBytesRecorded = 0;
                lpmh->dwFlags = 0;

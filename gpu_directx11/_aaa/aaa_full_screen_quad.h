@@ -11,7 +11,7 @@ namespace gpu_directx11
 {
 
 
-   //const unsigned int QUAD_NUM_TRIANGLES = 6;
+   //const ::u32 QUAD_NUM_TRIANGLES = 6;
 
    /**
     * A unit square that covers the whole screen.
@@ -24,8 +24,8 @@ namespace gpu_directx11
    public:
       
       
-      //unsigned int m_uVAO;
-      //unsigned int m_uVBO;
+      //::u32 m_uVAO;
+      //::u32 m_uVBO;
 
 
 
@@ -43,7 +43,7 @@ namespace gpu_directx11
 
    // private:
    //
-   //    std::vector<float> mVertices = {
+   //    std::vector<::f32> mVertices = {
    //       // positions   // textureCoordinates
    //       -1.0f,  1.0f,  0.0f, 1.0f,
    //       -1.0f, -1.0f,  0.0f, 0.0f,

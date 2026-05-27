@@ -246,7 +246,7 @@ namespace directx11
    //      if (errorBlob)
    //      {
 
-   //         OutputDebugStringA((char*)errorBlob->GetBufferPointer());
+   //         OutputDebugStringA((::i8*)errorBlob->GetBufferPointer());
 
    //      }
 
@@ -272,7 +272,7 @@ namespace directx11
    //      if (errorBlob)
    //      {
 
-   //         OutputDebugStringA((char*)errorBlob->GetBufferPointer());
+   //         OutputDebugStringA((::i8*)errorBlob->GetBufferPointer());
 
    //      }
 

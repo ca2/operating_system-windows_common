@@ -57,22 +57,22 @@ namespace gpu_directx11
 
       virtual void on_before_begin_render(frame* pframe);
 
-      //VkFramebuffer getFramebuffer(int index) { return m_framebuffers[index]; }
+      //VkFramebuffer getFramebuffer(::i32 index) { return m_framebuffers[index]; }
       //VkFramebuffer getCurrentFramebuffer() { return m_framebuffers[get_image_index()]; }
       void initialize_render_target(::gpu::renderer* prenderer, const ::i32_size& size, ::pointer <::gpu::render_target>previous) override;
-      //virtual int get_image_index() const;
+      //virtual ::i32 get_image_index() const;
       //VkRenderPass getRenderPass() { return m_vkrendertargetview; }
-      //VkImageView getImageView(int index) { return m_imageviews[index]; }
+      //VkImageView getImageView(::i32 index) { return m_imageviews[index]; }
       //size_t imageCount() { return m_images.size(); }
-      int imageCount() { return 0; }
+      ::i32 imageCount() { return 0; }
       //VkFormat getImageFormat() { return m_formatImage; }
       //VkExtent2D getExtent() { return m_extent; }
-      int width() { return 16; }
-      int height() { return 9; }
+      ::i32 width() { return 16; }
+      ::i32 height() { return 9; }
 
-      float extentAspectRatio() {
-         return (float) width() / (float) height();
-         //return static_cast<float>(m_extent.width) / static_cast<float>(m_extent.height);
+      ::f32 extentAspectRatio() {
+         return (::f32) width() / (::f32) height();
+         //return static_cast<::f32>(m_extent.width) / static_cast<::f32>(m_extent.height);
       }
       //virtual VkFormat findDepthFormat();
 

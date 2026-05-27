@@ -23,7 +23,7 @@ namespace gpu_directx11
 //	//	floating_matrix4 inverseView{ 1.f };
 //	//	floating_sequence4 ambientLightColor{ 1.f, 1.f, 1.f, .02f };
 //	//	PointLight pointLights[MAX_LIGHTS];
-//	//	int numLights;
+//	//	::i32 numLights;
 //	//};
 
 	class frame :
@@ -31,17 +31,17 @@ namespace gpu_directx11
 	{
 	public:
 
-		//int frameIndex;
-		//float frameTime;
+		//::i32 frameIndex;
+		//::f32 frameTime;
 		//VkCommandBuffer commandBuffer;
 		//::graphics3d::camera &camera;
 		//VkDescriptorSet globalDescriptorSet;
 		//::graphics3d::scene_object::map_base& gameObjects;
 
 		//array_base < ::comptr<ID3D11Buffer> > m_buffera;
-		//int m_iBuffer;
-		//int m_iBufferSize = 1_MiB;
-		//int m_iBufferOffset;
+		//::i32 m_iBuffer;
+		//::i32 m_iBufferSize = 1_MiB;
+		//::i32 m_iBufferOffset;
 	};
 
 

@@ -35,9 +35,9 @@ namespace music
 
             void PostNotifyEvent(::music::midi::player::e_notify_event ehappening);
 
-            void PrerollAndWait(double rate = 0.0);
+            void PrerollAndWait(::f64 rate = 0.0);
             void PrerollAndWait(::duration tickStart);
-            void Play(double dRate = 0.0);
+            void Play(::f64 dRate = 0.0);
             void Play(::duration tickStart);
             void PostGMReset();
             void PostTempoChange();
@@ -47,7 +47,7 @@ namespace music
             void _ExecuteCommand(::pointer<::music::midi::player::command>pcommand);
 
             virtual bool initialize_thread() override;
-            virtual int exit_instance();
+            virtual ::i32 exit_instance();
 
             DECLARE_MESSAGE_HANDLER(OnCommand)
             DECLARE_MESSAGE_HANDLER(OnMidiSequenceEvent)

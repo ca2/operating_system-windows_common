@@ -287,8 +287,8 @@ namespace direct2d
    //   D3D11_VIEWPORT vp = {};
    //   vp.TopLeftX = 0;
    //   vp.TopLeftY = 0;
-   //   vp.Width = static_cast<float>(texDesc.Width);
-   //   vp.Height = static_cast<float>(texDesc.Height);
+   //   vp.Width = static_cast<::f32>(texDesc.Width);
+   //   vp.Height = static_cast<::f32>(texDesc.Height);
    //   vp.MinDepth = 0.0f;
    //   vp.MaxDepth = 1.0f;
    //   m_pd3d11context->RSSetViewports(1, &vp);

@@ -4,7 +4,7 @@
 #include "windows_common_new_api.h"
 
 template < typename PFN >
-void get_proc_address(PFN & pfn, const char* pszModule, const char* lpszName)
+void get_proc_address(PFN & pfn, const ::i8* pszModule, const ::i8* pszName)
 {
 
    auto hmodule = ::GetModuleHandleW(L"kernel32.dll");

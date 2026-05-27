@@ -24,7 +24,7 @@ public:
 #if defined(MUTEX_COND_TIMED) || defined(MUTEX_NAMED_FD)
 
    pthread_t               m_thread;
-   int                     m_count;
+   ::i32                     m_count;
 
 #endif
 
@@ -34,12 +34,12 @@ public:
    // not implemented (err=38) on android-19
 #elif defined(MUTEX_NAMED_FD)
 
-   int                     m_iFd;
+   ::i32                     m_iFd;
 
 #elif defined(MUTEX_NAMED_VSEM)
 
    key_t                   m_key;
-   int                     m_semid;
+   ::i32                     m_semid;
 
 #endif
 
@@ -53,9 +53,9 @@ public:
 #elif defined(MUTEX_NAMED_POSIX)
    ::mutex(enum_create_new ecreatenew = create_new, const ::scoped_string & scopedstr = nullptr, const ::string & pstrName,sem_t * psem,bool bOwner = true);
 #elif defined(MUTEX_NAMED_FD)
-   ::mutex(enum_create_new ecreatenew, const ::string & pstrName, int iFd, bool bOwner = true);
+   ::mutex(enum_create_new ecreatenew, const ::string & pstrName, ::i32 iFd, bool bOwner = true);
 #elif defined(MUTEX_NAMED_VSEM)
-   ::mutex(enum_create_new ecreatenew, const ::string & pstrName,key_t key, int semid, bool bOwner = true);
+   ::mutex(enum_create_new ecreatenew, const ::string & pstrName,key_t key, ::i32 semid, bool bOwner = true);
 #endif
    ::mutex(enum_create_new ecreatenew, bool bInitiallyOwn, const ::scoped_string & scopedstrName, sync_options * psyncoptions = nullptr);
    ::mutex(enum_create_new ecreatenew = e_create_new, bool bInitiallyOwn = false);
@@ -81,7 +81,7 @@ public:
    bool already_exists();
 
 
-   static ::mutex open_mutex(const ::scoped_string & scopedstrName) {return ::open_mutex(lpszName);}
+   static ::mutex open_mutex(const ::scoped_string & scopedstrName) {return ::open_mutex(pszName);}
 
 
 };

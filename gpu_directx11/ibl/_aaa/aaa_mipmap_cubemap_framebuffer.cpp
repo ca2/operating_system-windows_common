@@ -86,7 +86,7 @@ namespace gpu_directx11
          if (ptexture->m_textureattributes.m_iMipCount <= 1)
          {
             ptexture->m_textureattributes.m_iMipCount =
-               1u + static_cast<UINT>(std::floor(std::log2(static_cast<float>(
+               1u + static_cast<UINT>(std::floor(std::log2(static_cast<::f32>(
                        std::max(ptexture->rectangle().width(), ptexture->rectangle().height())))));
          }
          if (ptexture->m_textureattributes.m_iMipCount < 1)
@@ -96,7 +96,7 @@ namespace gpu_directx11
          createCubemapTextureAndViews();
 
          // set current mip to what base class may have (if any). We'll default to 0.
-         //m_uCurrentMip = static_cast<unsigned int>(
+         //m_uCurrentMip = static_cast<::u32>(
            // ptexture->m_textureattributes.m_iMipCount); // ADAPT if your texture class stores current mip differently
          if (ptexture->m_iCurrentMip >= ptexture->m_textureattributes.m_iMipCount)
             ptexture->m_iCurrentMip = 0;
@@ -133,7 +133,7 @@ namespace gpu_directx11
          desc.Height = ptexture->height();
          desc.MipLevels = ptexture->m_textureattributes.m_iMipCount;
          desc.ArraySize = 6; // cube
-         desc.Format = DXGI_FORMAT_R16G16B16A16_FLOAT; // use 16-bit float RGBA similar to GL_RGB16F (use RGBA because
+         desc.Format = DXGI_FORMAT_R16G16B16A16_FLOAT; // use 16-bit ::f32 RGBA similar to GL_RGB16F (use RGBA because
                                                        // DX doesn't have RGB)
          desc.SampleDesc.Count = 1;
          desc.Usage = D3D11_USAGE_DEFAULT;
@@ -175,10 +175,10 @@ namespace gpu_directx11
          ptexture->m_rendertargetviewa.clear();
          ptexture->m_rendertargetviewa.set_size(6 * ptexture->m_textureattributes.m_iMipCount);
 
-         for (int iFace = 0; iFace < 6; ++iFace)
+         for (::i32 iFace = 0; iFace < 6; ++iFace)
          {
             
-            for (int iMip = 0; iMip < ptexture->m_textureattributes.m_iMipCount; ++iMip)
+            for (::i32 iMip = 0; iMip < ptexture->m_textureattributes.m_iMipCount; ++iMip)
             {
                
                D3D11_RENDER_TARGET_VIEW_DESC rtvDesc = {};
@@ -292,8 +292,8 @@ namespace gpu_directx11
          D3D11_VIEWPORT vp = {};
          vp.TopLeftX = 0.0f;
          vp.TopLeftY = 0.0f;
-         vp.Width = (float) ptexture->mip_width();
-         vp.Height = (float)ptexture->mip_height();
+         vp.Width = (::f32) ptexture->mip_width();
+         vp.Height = (::f32)ptexture->mip_height();
          vp.MinDepth = 0.0f;
          vp.MaxDepth = 1.0f;
          pgpucontext->m_pcontext->RSSetViewports(1, &vp);
@@ -301,7 +301,7 @@ namespace gpu_directx11
       }
 
 
-      void mipmap_cubemap_framebuffer::set_current_mip(int iMip)
+      void mipmap_cubemap_framebuffer::set_current_mip(::i32 iMip)
       {
          
          ::gpu::ibl::mipmap_cubemap_framebuffer::set_current_mip(iMip); // call base (as original)
@@ -323,7 +323,7 @@ namespace gpu_directx11
          // Optionally: if you want to change SRV/RTV usage or other states per mip, do it here.
       }
 
-      void mipmap_cubemap_framebuffer::set_cube_face(int iFace)
+      void mipmap_cubemap_framebuffer::set_cube_face(::i32 iFace)
       {
          ::gpu::ibl::mipmap_cubemap_framebuffer::set_cube_face(iFace);
          if (iFace >= 6)
@@ -332,10 +332,10 @@ namespace gpu_directx11
          // We don't actually rebind here — bind() will pick up current face & mip
       }
 
-      //unsigned int mipmap_cubemap_framebuffer::getCubemapTextureId()
+      //::u32 mipmap_cubemap_framebuffer::getCubemapTextureId()
       //{
       //   // There is no GLuint id in D3D11. You can return a pointer cast if you want:
-      //   // return static_cast<unsigned int>(reinterpret_cast<uintptr_t>(m_texCube.Get()));
+      //   // return static_cast<::u32>(reinterpret_cast<uintptr_t>(m_texCube.Get()));
       //   // But returning 0 to indicate "not applicable" keeps it safe.
       //   return 0u;
       //}

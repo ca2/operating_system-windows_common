@@ -44,7 +44,7 @@ namespace multimedia
          return true;
       }
 
-      int thread::exit_thread()
+      ::i32 thread::exit_thread()
       {
          // TODO:  perform any per-thread cleanup here
          //    CVMSApp * pApp = (CVMSApp *) System;
@@ -136,7 +136,7 @@ namespace multimedia
 
 
 
-      bool thread::on_idle(int lCount)
+      bool thread::on_idle(::i32 lCount)
       {
          // TODO: add your specialized code here and/or call the base class
          return ::thread::on_idle(lCount);

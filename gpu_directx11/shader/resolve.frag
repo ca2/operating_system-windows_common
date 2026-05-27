@@ -9,7 +9,7 @@ layout(location = 0) out vec4 outColor;
 
 void main() {
     vec3 accumColor = texture(uAccumTex, vTexCoord).rgb;
-    float accumAlpha = texture(uAlphaTex, vTexCoord).r;
+    ::f32 accumAlpha = texture(uAlphaTex, vTexCoord).r;
 
     if (accumAlpha > 0.0001)
         outColor = vec4(accumColor.rgb / accumAlpha, accumAlpha);

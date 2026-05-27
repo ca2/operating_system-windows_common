@@ -12,7 +12,7 @@ Author: Andrei Belogortseff [ http://www.winability.com ]
 
 TERMS OF USE: You are free to use this file in any way you like,
 for both the commercial and non-commercial purposes, royalty-free,
-AS int AS you agree with the warranty disclaimer above,
+AS ::i32 AS you agree with the warranty disclaimer above,
 EXCEPT that you may not remov or modify this or any of the
 preceeding paragraphs. If you make any changes, please document
 them in the MODIFICATIONS section below. If the changes are of general
@@ -149,10 +149,10 @@ namespace VistaTools
 
    bool
    MyShellExec(HWND hwnd,
-               const char * pszVerb,
-               const char * pszPath,
-               const char * pszParameters,   // = nullptr
-               const char * pszDirectory,   // = nullptr
+               const ::i8 * pszVerb,
+               const ::i8 * pszPath,
+               const ::i8 * pszParameters,   // = nullptr
+               const ::i8 * pszDirectory,   // = nullptr
                HANDLE * phProcess)   // = nullptr
    {
       SHELLEXECUTEINFOW shex;
@@ -324,9 +324,9 @@ namespace VistaTools
    bool
    RunElevated(
    __in      HWND hwnd,
-   __in      const char * pszPath,
-   __in_opt   const char * pszParameters,   //   = nullptr,
-   __in_opt   const char * pszDirectory,   //   = nullptr,
+   __in      const ::i8 * pszPath,
+   __in_opt   const ::i8 * pszParameters,   //   = nullptr,
+   __in_opt   const ::i8 * pszDirectory,   //   = nullptr,
    __out_opt   HANDLE *phProcess)      //   = nullptr );
    {
       return MyShellExec(
@@ -352,19 +352,19 @@ namespace VistaTools
    HHOOK   hVEHook                     = nullptr;
 
    __declspec(allocate("ve_shared"))
-   unsigned int   uVEMsg                     = 0;
+   ::u32   uVEMsg                     = 0;
 
    __declspec(allocate("ve_shared"))
    bool   bVESuccess                  = false;
 
    __declspec(allocate("ve_shared"))
-   char   szVE_Path[MAX_PATH]         = "";
+   ::i8   szVE_Path[MAX_PATH]         = "";
 
    __declspec(allocate("ve_shared"))
-   char   szVE_Parameters[MAX_PATH]      = "";
+   ::i8   szVE_Parameters[MAX_PATH]      = "";
 
    __declspec(allocate("ve_shared"))
-   char   szVE_Directory[MAX_PATH]      = "";
+   ::i8   szVE_Directory[MAX_PATH]      = "";
 
    __declspec(allocate("ve_shared"))
    bool    bVE_NeedProcessHandle         = false;
@@ -376,7 +376,7 @@ namespace VistaTools
    // the hook callback procedure, it is called in the context of th shell proces
 
    LRESULT CALLBACK
-   VistaEelevator_HookProc_MsgRet(int code,WPARAM wParam,LPARAM lParam)
+   VistaEelevator_HookProc_MsgRet(::i32 code,WPARAM wParam,LPARAM lParam)
    {
       if(code >= 0 && lParam)
       {
@@ -408,7 +408,7 @@ namespace VistaTools
    bool
    (WINAPI
     *PGetModuleHandleExW)(
-    __in        unsigned int    dwFlags,
+    __in        ::u32    dwFlags,
     __in_opt    const unichar * pModuleName,
 
     __out HMODULE* phModule
@@ -419,9 +419,9 @@ namespace VistaTools
    bool
    RunNonElevated(
    __in      HWND hwnd,
-   __in      const char * pszPath,
-   __in_opt   const char * pszParameters,   //   = nullptr,
-   __in_opt   const char * pszDirectory,   //   = nullptr,
+   __in      const ::i8 * pszPath,
+   __in_opt   const ::i8 * pszParameters,   //   = nullptr,
+   __in_opt   const ::i8 * pszDirectory,   //   = nullptr,
    __out_opt   HANDLE *phProcess)      //   = nullptr );
    {
       ASSERT(pszPath && *pszPath);   // other args are optional

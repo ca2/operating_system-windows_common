@@ -49,7 +49,7 @@ string task::thread_get_name() const
 }
 
 
-const char * task::get_task_tag()
+const ::i8 * task::get_task_tag()
 {
 
    return m_strTaskTag;
@@ -366,8 +366,8 @@ void task::on_task()
 void task::start(
    ::matter* pmatter,
    ::enum_priority epriority,
-   unsigned int nStackSize,
-   unsigned int uCreateFlags)
+   ::u32 nStackSize,
+   ::u32 uCreateFlags)
 {
 
    m_pmatter = pmatter;
@@ -381,8 +381,8 @@ void task::start(
 
 void task::begin_task(
    ::enum_priority epriority,
-   unsigned int nStackSize,
-   unsigned int uCreateFlags)
+   ::u32 nStackSize,
+   ::u32 uCreateFlags)
 {
 
    if (id().is_empty())
@@ -484,7 +484,7 @@ void task::begin_task(
 }
 
 
-::task_pointer task::launch(::matter * pmatter, ::enum_priority epriority, unsigned int nStackSize, unsigned int uCreateFlags)
+::task_pointer task::launch(::matter * pmatter, ::enum_priority epriority, ::u32 nStackSize, ::u32 uCreateFlags)
 {
 
    auto ptask = allocateø task();

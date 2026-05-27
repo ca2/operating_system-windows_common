@@ -14,7 +14,7 @@
 #endif
 
 
-semaphore::semaphore(int lInitialCount, int lMaxCount, const ::string & pstrName, LPSECURITY_ATTRIBUTES psaAttributes)
+semaphore::semaphore(::i32 lInitialCount, ::i32 lMaxCount, const ::string & pstrName, LPSECURITY_ATTRIBUTES psaAttributes)
 {
 
    ASSERT(lMaxCount > 0);
@@ -114,7 +114,7 @@ pacmedir->create(::file::path(strPath).folder());
 
    semctl_arg.val = lInitialCount;
 
-   semctl(static_cast < int > (m_hsync), 0, SETVAL, semctl_arg);
+   semctl(static_cast < ::i32 > (m_hsync), 0, SETVAL, semctl_arg);
 
 
 #endif
@@ -150,7 +150,7 @@ synchronization_result semaphore::wait(const duration & durationTimeout)
 synchronization_result semaphore::wait(const duration & durationTimeout)
 {
 
-   int iRet = 0;
+   ::i32 iRet = 0;
    sembuf sb;
 
    sb.sem_num = 0;
@@ -160,7 +160,7 @@ synchronization_result semaphore::wait(const duration & durationTimeout)
    if(durationTimeout.is_infinite())
    {
 
-      iRet = semop(static_cast < int > (m_hsync), &sb, 1);
+      iRet = semop(static_cast < ::i32 > (m_hsync), &sb, 1);
    }
    else
    {
@@ -172,7 +172,7 @@ synchronization_result semaphore::wait(const duration & durationTimeout)
       ts.tv_nsec = durationTimeout.m_nanos.m_i;
       ts.tv_sec = durationTimeout.m_secs.m_i;
 
-      iRet = semtimedop(static_cast < int > (m_hsync), &sb, 1, &ts);
+      iRet = semtimedop(static_cast < ::i32 > (m_hsync), &sb, 1, &ts);
 
       if(iRet == EINTR || iRet == EAGAIN)
       {
@@ -205,7 +205,7 @@ synchronization_result semaphore::wait(const duration & durationTimeout)
 //
 //comparable_array < pthread_t > * g_pthreadaSemaphore = nullptr;
 //
-//void semaphore_timer_handler (int signum)
+//void semaphore_timer_handler (::i32 signum)
 //{
 //
 //   synchronous_lock synchronouslock(g_pmutexSemaphore);
@@ -226,7 +226,7 @@ synchronization_result semaphore::wait(const duration & durationTimeout)
 //
 //}
 
-//void semaphore_user1_handler (int signum)
+//void semaphore_user1_handler (::i32 signum)
 //{
 //
 //}
@@ -254,7 +254,7 @@ synchronization_result semaphore::wait(const duration & durationTimeout)
       sb.sem_op   = -1;
       sb.sem_flg  = 0;
 
-      int i = semop(static_cast < int > (m_hsync), &sb, 1);
+      ::i32 i = semop(static_cast < ::i32 > (m_hsync), &sb, 1);
 
       return i == 0 ? e_synchronization_result_signaled_base : e_synchronization_result_error;
 
@@ -274,7 +274,7 @@ synchronization_result semaphore::wait(const duration & durationTimeout)
    while(true)
    {
 
-      int i = semop(static_cast < int > (m_hsync), &sb, 1);
+      ::i32 i = semop(static_cast < ::i32 > (m_hsync), &sb, 1);
 
       if(i == 0)
       {
@@ -316,7 +316,7 @@ synchronization_result semaphore::wait(const duration & durationTimeout)
 
 
 
-bool semaphore::unlock(int lCount, int * pPrevCount)
+bool semaphore::unlock(::i32 lCount, ::i32 * pPrevCount)
 {
 
 #ifdef WINDOWS
@@ -325,7 +325,7 @@ bool semaphore::unlock(int lCount, int * pPrevCount)
 
 #elif defined(ANDROID)
 
-   int val;
+   ::i32 val;
 
    if (sem_getvalue(m_psem, &val) != 0)
    {
@@ -371,7 +371,7 @@ bool semaphore::unlock(int lCount, int * pPrevCount)
    sb.sem_op   = 1;
    sb.sem_flg  = 0;
 
-   int i = semop(static_cast < int > (m_hsync), &sb, 1);
+   ::i32 i = semop(static_cast < ::i32 > (m_hsync), &sb, 1);
 
    return i == 0 ? true : false;
 
@@ -379,7 +379,7 @@ bool semaphore::unlock(int lCount, int * pPrevCount)
 
    semun semctl_arg;
 
-   semctl(static_cast < int > (m_hsync), 0, GETVAL, semctl_arg);
+   semctl(static_cast < ::i32 > (m_hsync), 0, GETVAL, semctl_arg);
 
    if(pPrevCount !=  nullptr)
 
@@ -399,7 +399,7 @@ bool semaphore::unlock(int lCount, int * pPrevCount)
 
    semctl_arg.val += lCount;
 
-   semctl(static_cast < int > (m_hsync), 0, SETVAL, semctl_arg);
+   semctl(static_cast < ::i32 > (m_hsync), 0, SETVAL, semctl_arg);
 
    return true;
 

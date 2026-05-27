@@ -25,7 +25,7 @@ IMPLEMENT_FACTORY(nano_graphics_direct2d)
    pfactory->add_factory_item < ::universal_windows::nano::graphics::font, ::nano::graphics::font >();
    pfactory->add_factory_item < ::universal_windows::nano::graphics::pen, ::nano::graphics::pen >();
    pfactory->add_factory_item < ::universal_windows::nano::graphics::icon, ::nano::graphics::icon >();
-   pfactory->add_factory_item < ::universal_windows::nano::graphics::device, ::nano::graphics::device >();
+   pfactory->add_factory_item < ::universal_windows::nano::graphics::context, ::nano::graphics::context >();
 
 
    pfactory->add_factory_item < ::universal_windows::nano::graphics::graphics, ::nano::graphics::graphics >();

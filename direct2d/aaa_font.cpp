@@ -29,7 +29,7 @@ namespace draw2d_direct2d
    }
 
 
-   bool font::create(::draw2d::graphics * pgraphics, char iCreate)
+   bool font::create(::draw2d::graphics * pgraphics, ::i8 iCreate)
    {
 
       if(m_pformat == nullptr || is_modified())
@@ -63,7 +63,7 @@ namespace draw2d_direct2d
 
          stretch = DWRITE_FONT_STRETCH_NORMAL;
 
-         float fFontSize;
+         ::f32 fFontSize;
 
          ::acme::windowing::window * pacmewindowingwindow = nullptr;
          
@@ -77,20 +77,20 @@ namespace draw2d_direct2d
          if(m_eunitFontSize == ::draw2d::e_unit_point)
          {
 
-            fFontSize = point_dpi(oswindow, (float)m_dFontSize);
+            fFontSize = point_dpi(oswindow, (::f32)m_dFontSize);
 
          }
          else
          {
 
-            fFontSize = dpiy(oswindow, (float)m_dFontSize);
+            fFontSize = dpiy(oswindow, (::f32)m_dFontSize);
 
          }
 
          if (::is_set(pgraphics))
          {
 
-            fFontSize *= (float)pgraphics->m_dFontFactor;
+            fFontSize *= (::f32)pgraphics->m_dFontFactor;
 
          }
 

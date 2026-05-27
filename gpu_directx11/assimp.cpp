@@ -18,7 +18,7 @@ namespace assimp
 {
 
 
-   bool load_obj(const void * data, memsize size, array<unsigned short> & indices, array<::floating_sequence3> & vertices, array<::floating_sequence2> & uvs, array<::floating_sequence3> & normals)
+   bool load_obj(const void * data, memsize size, array<::u16> & indices, array<::floating_sequence3> & vertices, array<::floating_sequence2> & uvs, array<::floating_sequence3> & normals)
    {
 
       Assimp::Importer importer;
@@ -38,28 +38,28 @@ namespace assimp
 
       // Fill vertices positions
       vertices.reserve(mesh->mNumVertices);
-      for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
+      for (::u32 i = 0; i < mesh->mNumVertices; i++) {
          aiVector3D pos = mesh->mVertices[i];
          vertices.add(floating_sequence3(pos.x, pos.y, pos.z));
       }
 
       // Fill vertices texture coordinates
       uvs.reserve(mesh->mNumVertices);
-      for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
+      for (::u32 i = 0; i < mesh->mNumVertices; i++) {
          aiVector3D UVW = mesh->mTextureCoords[0][i]; // Assume only 1 set of UV coords; AssImp supports 8 UV sets.
          uvs.add(floating_sequence2(UVW.x, UVW.y));
       }
 
       // Fill vertices normals
       normals.reserve(mesh->mNumVertices);
-      for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
+      for (::u32 i = 0; i < mesh->mNumVertices; i++) {
          aiVector3D n = mesh->mNormals[i];
          normals.add(floating_sequence3(n.x, n.y, n.z));
       }
 
       // Fill face indices
       indices.reserve(3 * mesh->mNumFaces);
-      for (unsigned int i = 0; i < mesh->mNumFaces; i++) {
+      for (::u32 i = 0; i < mesh->mNumFaces; i++) {
          // Assume the model has only triangles.
          indices.add(mesh->mFaces[i].mIndices[0]);
          indices.add(mesh->mFaces[i].mIndices[1]);

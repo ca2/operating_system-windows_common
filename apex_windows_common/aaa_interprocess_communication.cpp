@@ -60,8 +60,8 @@ namespace windows
 
       }
 
-      int jCount = 23;
-      int iCount;
+      ::i32 jCount = 23;
+      ::i32 iCount;
 
       if (plauncher != nullptr)
       {
@@ -78,9 +78,9 @@ namespace windows
 
       set_hwnd(nullptr);
 
-      for (int i = 0; i < iCount; i++)
+      for (::i32 i = 0; i < iCount; i++)
       {
-         for (int j = 0; j < jCount; j++)
+         for (::i32 j = 0; j < jCount; j++)
          {
             set_hwnd(::FindWindowW(nullptr, wstring(pszKey)));
             if (get_hwnd() != nullptr)
@@ -92,7 +92,7 @@ namespace windows
             {
                break;
             }
-            int k = 40;
+            ::i32 k = 40;
             while (k > 0)
             {
                if (!task_get_run())
@@ -142,7 +142,7 @@ namespace windows
       COPYDATASTRUCT cds;
 
       cds.dwData = I32_MINIMUM;
-      cds.cbData = (unsigned int)strlen(pszMessage);
+      cds.cbData = (::u32)strlen(pszMessage);
       cds.lpData = (void *)pszMessage;
 
 
@@ -157,14 +157,14 @@ namespace windows
 
          DWORD_PTR dwptr;
 
-         if (!::SendMessageTimeout((HWND)get_hwnd(), WM_COPYDATA, (WPARAM)0, (LPARAM)&cds, SMTO_ABORTIFHUNG, (unsigned int)(durationTimeout.u32_millis()), &dwptr))
+         if (!::SendMessageTimeout((HWND)get_hwnd(), WM_COPYDATA, (WPARAM)0, (LPARAM)&cds, SMTO_ABORTIFHUNG, (::u32)(durationTimeout.u32_millis()), &dwptr))
          {
 
             return false;
 
          }
 
-         unsigned int dwError = ::GetLastError();
+         ::u32 dwError = ::GetLastError();
 
          if (dwError == ERROR_TIMEOUT)
             return false;
@@ -174,7 +174,7 @@ namespace windows
       return true;
    }
 
-   bool interprocess_caller::send(int message, void * pdata, int len, duration durationTimeout)
+   bool interprocess_caller::send(::i32 message, void * pdata, ::i32 len, duration durationTimeout)
    {
 
       if (message == I32_MINIMUM)
@@ -185,8 +185,8 @@ namespace windows
 
       COPYDATASTRUCT cds;
 
-      cds.dwData = (unsigned int)message;
-      cds.cbData = (unsigned int)maximum(0, len);
+      cds.dwData = (::u32)message;
+      cds.cbData = (::u32)maximum(0, len);
       cds.lpData = (void *)pdata;
 
 
@@ -212,14 +212,14 @@ namespace windows
 
          DWORD_PTR dwptr;
 
-         if (!::SendMessageTimeout((HWND)get_hwnd(), WM_COPYDATA, (WPARAM)0, (LPARAM)&cds, SMTO_BLOCK, (unsigned int)(durationTimeout.u32_millis()), &dwptr))
+         if (!::SendMessageTimeout((HWND)get_hwnd(), WM_COPYDATA, (WPARAM)0, (LPARAM)&cds, SMTO_BLOCK, (::u32)(durationTimeout.u32_millis()), &dwptr))
          {
 
             return false;
 
          }
 
-         unsigned int dwError = ::GetLastError();
+         ::u32 dwError = ::GetLastError();
 
          if (dwError == ERROR_TIMEOUT)
             return false;
@@ -370,7 +370,7 @@ namespace windows
    }
 
 
-   void * interprocess_handler::on_interprocess_receive(::inteprocess::handler * prx, int message, void * pdata, memsize len)
+   void * interprocess_handler::on_interprocess_receive(::inteprocess::handler * prx, ::i32 message, void * pdata, memsize len)
    {
 
       if (m_preceiver != nullptr)
@@ -387,7 +387,7 @@ namespace windows
    }
 
 
-   void * interprocess_handler::on_interprocess_post(::inteprocess::handler * prx, long long int a, long long int b)
+   void * interprocess_handler::on_interprocess_post(::inteprocess::handler * prx, ::i64 ::i32 a, ::i64 ::i32 b)
    {
 
       if (m_preceiver != nullptr)
@@ -407,7 +407,7 @@ namespace windows
    LRESULT CALLBACK s_rx_message_queue_proc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam)
    {
 
-      int iRet = 0;
+      ::i32 iRet = 0;
 
       interprocess_handler * pchannel = (interprocess_handler *)GetWindowLongPtr((HWND)hwnd, GWLP_USERDATA);
 
@@ -485,7 +485,7 @@ namespace windows
          else
          {
 
-            on_interprocess_receive(this, (int)pcds->dwData, pcds->lpData, pcds->cbData);
+            on_interprocess_receive(this, (::i32)pcds->dwData, pcds->lpData, pcds->cbData);
 
          }
 

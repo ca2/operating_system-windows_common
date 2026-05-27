@@ -73,7 +73,7 @@ namespace acme_windows_common
    //
    //         key.open(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize");
    //
-   //         unsigned int dw;
+   //         ::u32 dw;
    //
    //         auto estatus = key._get("AppsUseLightTheme", dw);
    //
@@ -114,7 +114,7 @@ namespace acme_windows_common
    //
    //         key.open(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize");
    //
-   //         unsigned int dw;
+   //         ::u32 dw;
    //
    //         auto estatus = key._get("SystemUseLightTheme", dw);
    //
@@ -145,7 +145,7 @@ namespace acme_windows_common
    //   }
    //
    //
-   //   ::color::color node::get_default_color(unsigned long long u)
+   //   ::color::color node::get_default_color(::u64 u)
    //   {
    //
    //      switch (u)
@@ -171,7 +171,7 @@ namespace acme_windows_common
    //   }
    //
    //   
-   //   void node::set_console_colors(unsigned int dwScreenColors, unsigned int dwPopupColors, unsigned int dwWindowAlpha)
+   //   void node::set_console_colors(::u32 dwScreenColors, ::u32 dwPopupColors, ::u32 dwWindowAlpha)
    //   {
    //
    //      ::acme_windows::registry::key key(HKEY_CURRENT_USER, "Console", true);
@@ -189,7 +189,7 @@ namespace acme_windows_common
    //
    //      ::acme_windows::registry::key key(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", true);
    //
-   //      unsigned int dwSystemUseLightTheme;
+   //      ::u32 dwSystemUseLightTheme;
    //      if (bSet)
    //      {
    //         dwSystemUseLightTheme = 0;
@@ -210,7 +210,7 @@ namespace acme_windows_common
    //
    //      ::acme_windows::registry::key key(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", true);
    //
-   //      unsigned int dwAppsUseLightTheme;
+   //      ::u32 dwAppsUseLightTheme;
    //      if (bSet)
    //      {
    //         dwAppsUseLightTheme = 0;
@@ -227,10 +227,10 @@ namespace acme_windows_common
    //   }
    //
    //   
-   //   double node::get_time_zone()
+   //   ::f64 node::get_time_zone()
    //   {
    //
-   //      double dTimeZone = 0.;
+   //      ::f64 dTimeZone = 0.;
    //
    //#ifdef WINDOWS
    //      {
@@ -240,24 +240,24 @@ namespace acme_windows_common
    //
    //         DYNAMIC_TIME_ZONE_INFORMATION i = {};
    //
-   //         unsigned int dw = GetDynamicTimeZoneInformation(&i);
+   //         ::u32 dw = GetDynamicTimeZoneInformation(&i);
    //
    //         if (dw == TIME_ZONE_ID_STANDARD)
    //         {
    //
-   //            dTimeZone = -((double)(i.Bias + i.StandardBias) / 60.0);
+   //            dTimeZone = -((::f64)(i.Bias + i.StandardBias) / 60.0);
    //
    //         }
    //         else if (dw == TIME_ZONE_ID_DAYLIGHT)
    //         {
    //
-   //            dTimeZone = -((double)(i.Bias + i.DaylightBias) / 60.0);
+   //            dTimeZone = -((::f64)(i.Bias + i.DaylightBias) / 60.0);
    //
    //         }
    //         else
    //         {
    //
-   //            dTimeZone = -((double)i.Bias / 60.0);
+   //            dTimeZone = -((::f64)i.Bias / 60.0);
    //
    //         }
    //
@@ -275,7 +275,7 @@ namespace acme_windows_common
    //
    //         //printf("The time zone is '%s'.\n", lt.tm_zone);
    //
-   //         dTimeZone = +((double)lt.tm_gmtoff / (60.0 * 60.0));
+   //         dTimeZone = +((::f64)lt.tm_gmtoff / (60.0 * 60.0));
    //
    //      }
    //#endif
@@ -290,7 +290,7 @@ namespace acme_windows_common
    //
    //      wstring wstrFolder(pathFolder);
    //
-   //      int i = (int) (iptr) ::ShellExecuteW(nullptr, L"open", wstrFolder, nullptr, nullptr, SW_NORMAL);
+   //      ::i32 i = (::i32) (iptr) ::ShellExecuteW(nullptr, L"open", wstrFolder, nullptr, nullptr, SW_NORMAL);
    //
    //      if (i < 32)
    //      {
@@ -586,11 +586,11 @@ namespace acme_windows_common
       //{
       //   ::file::path str = directory_system()->system() / "CrashDumps" / strModuleNameWithTheExeExtension;
       //   wstring wstr = str;
-      //   RegSetValueExW(k.m_hkey, L"DumpFolder", 0, REG_EXPAND_SZ, (unsigned char*)wstr.c_str(), unsigned int((wcslen(wstr) + 1) * sizeof(wchar_t)));
-      //   unsigned int dw = 10;
-      //   RegSetValueExW(k.m_hkey, L"DumpCount", 0, REG_DWORD, (unsigned char*)&dw, sizeof(dw));
+      //   RegSetValueExW(k.m_hkey, L"DumpFolder", 0, REG_EXPAND_SZ, (::u8*)wstr.c_str(), ::u32((wcslen(wstr) + 1) * sizeof(wchar_t)));
+      //   ::u32 dw = 10;
+      //   RegSetValueExW(k.m_hkey, L"DumpCount", 0, REG_DWORD, (::u8*)&dw, sizeof(dw));
       //   dw = 2;
-      //   RegSetValueExW(k.m_hkey, L"DumpType", 0, REG_DWORD, (unsigned char*)&dw, sizeof(dw));
+      //   RegSetValueExW(k.m_hkey, L"DumpType", 0, REG_DWORD, (::u8*)&dw, sizeof(dw));
 
       //}
 
@@ -599,7 +599,7 @@ namespace acme_windows_common
    }
    //
    //
-   //   int g_iMemoryCountersStartable = 0;
+   //   ::i32 g_iMemoryCountersStartable = 0;
    //
    //   bool node::memcnts()
    //   {
@@ -912,11 +912,11 @@ namespace acme_windows_common
 
          ::output_debug_string("Failed to ::CoInitializeEx(nullptr, COINIT_MULTITHREADED) at __node_pre_init");
 
-         return { e_error_code_type_hresult, (long long) t_hresultCoInitialize };
+         return { e_error_code_type_hresult, (::i64) t_hresultCoInitialize };
 
       }
 
-      return { e_error_code_type_hresult, (long long)t_hresultCoInitialize };
+      return { e_error_code_type_hresult, (::i64)t_hresultCoInitialize };
 
    }
 

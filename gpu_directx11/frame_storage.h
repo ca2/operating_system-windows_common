@@ -20,8 +20,8 @@
 //       //public:
 //
 //       //   ID3D11Buffer * m_pbuffer;
-//       //   int m_iBufferOffset;
-//       //   int m_iSizeMapped;
+//       //   ::i32 m_iBufferOffset;
+//       //   ::i32 m_iSizeMapped;
 //
 //
 //
@@ -34,7 +34,7 @@
 //       ~frame_storage() override;
 //
 //
-//       void map_allocate(::gpu::memory_buffer* pbuffer, int size) override;
+//       void map_allocate(::gpu::memory_buffer* pbuffer, ::i32 size) override;
 //
 //
 //    };

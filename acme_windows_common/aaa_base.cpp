@@ -9,7 +9,7 @@
 //VOID
 //WINAPI
 //output_debug_string_a(
-//_In_opt_ const char * pOutputString
+//_In_opt_ const ::i8 * pOutputString
 //
 //)
 //{
@@ -63,7 +63,7 @@
 
 
 
-//string FormatMessageFromSystem(unsigned int dwError)
+//string FormatMessageFromSystem(::u32 dwError)
 //{
 //
 //   return ::get_last_error_message(dwError);

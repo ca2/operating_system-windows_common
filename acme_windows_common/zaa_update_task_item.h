@@ -9,7 +9,7 @@ public:
 
    ::pointer<matter>           m_pelement;
    ::update_task* m_pupdatenotificationtask;
-   long long                         m_iUpdateSerial;
+   ::i64                         m_iUpdateSerial;
    bool                          m_bForkUpdate;
 
 

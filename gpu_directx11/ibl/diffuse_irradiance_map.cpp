@@ -141,7 +141,7 @@ namespace gpu_directx11
       }
 
 
-      //unsigned int diffuse_irradiance_map::getCubemapId()
+      //::u32 diffuse_irradiance_map::getCubemapId()
       //{
 
       //   ::cast <cubemap_framebuffer > pframebuffer = m_pdiffuseIrradianceFramebuffer;

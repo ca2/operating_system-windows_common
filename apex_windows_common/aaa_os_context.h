@@ -1,7 +1,7 @@
 #pragma once
 
 
-//CLASS_DECL_APEX_WINDOWS_COMMON HRESULT os_create_link(::file::path pathObj, ::file::path pathLink, string strDesc, ::file::path pathIcon = nullptr, int iIcon = 0);
+//CLASS_DECL_APEX_WINDOWS_COMMON HRESULT os_create_link(::file::path pathObj, ::file::path pathLink, string strDesc, ::file::path pathIcon = nullptr, ::i32 iIcon = 0);
 
 namespace windows
 {
@@ -25,12 +25,12 @@ namespace windows
 
       virtual void terminate_processes_by_title(const ::scoped_string & scopedstrName) override;
       //virtual ::file::path get_module_path(HMODULE hmodule) override;
-      virtual bool get_pid_by_path(const ::scoped_string & scopedstrName, unsigned int & dwPid) override;
-      virtual bool get_pid_by_title(const ::scoped_string & scopedstrName, unsigned int & dwPid) override;
+      virtual bool get_pid_by_path(const ::scoped_string & scopedstrName, ::u32 & dwPid) override;
+      virtual bool get_pid_by_title(const ::scoped_string & scopedstrName, ::u32 & dwPid) override;
       virtual void get_all_processes(unsigned_int_array & dwa) override;
-      virtual ::file::path get_process_path(unsigned int dwPid) override;
+      virtual ::file::path get_process_path(::u32 dwPid) override;
 
-      virtual int get_pid() override;
+      virtual ::i32 get_pid() override;
 
 
       virtual ::payload connection_settings_get_auto_detect() override;
@@ -83,7 +83,7 @@ namespace windows
       virtual bool resolve_lnk_link(::file::path & path, const ::scoped_string & scopedstrSource, string * pstrDirectory = nullptr, string * pstrParams = nullptr);
 
 
-      DECLSPEC_NO_RETURN void raise_exception(unsigned int dwExceptionCode, unsigned int dwExceptionFlags);
+      DECLSPEC_NO_RETURN void raise_exception(::u32 dwExceptionCode, ::u32 dwExceptionFlags);
 
       virtual bool is_remote_session() override;
 

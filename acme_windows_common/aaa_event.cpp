@@ -42,7 +42,7 @@ void clock_getrealtime(struct timespec * pts)
 #endif
 
 
-happening::happening(char * sz, bool bInitiallyOwn, bool bManualReset, const ::string & pstrName,sync_options * psyncoptions)
+happening::happening(::i8 * sz, bool bInitiallyOwn, bool bManualReset, const ::string & pstrName,sync_options * psyncoptions)
 {
 
 #ifdef WINDOWS_DESKTOP
@@ -59,7 +59,7 @@ happening::happening(char * sz, bool bInitiallyOwn, bool bManualReset, const ::s
 
 #elif defined(UNIVERSAL_WINDOWS)
 
-   unsigned int dwFlags = 0;
+   ::u32 dwFlags = 0;
 
    if(bInitiallyOwn)
    {
@@ -99,7 +99,7 @@ happening::happening(char * sz, bool bInitiallyOwn, bool bManualReset, const ::s
       pthread_mutexattr_t  attr;
       pthread_mutexattr_init(&attr);
       pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
-      int rc;
+      ::i32 rc;
       m_mutex = ___new pthread_mutex_t;
       if((rc = pthread_mutex_init((pthread_mutex_t *) m_mutex,&attr)))
       {
@@ -168,7 +168,7 @@ happening::happening(char * sz, bool bInitiallyOwn, bool bManualReset, const ::s
 
       }
 
-      semctl((int) m_sem, 0, SETVAL, semctl_arg);
+      semctl((::i32) m_sem, 0, SETVAL, semctl_arg);
 
    }
 
@@ -285,7 +285,7 @@ bool happening::set_happening()
       sb.sem_num  = 0;
       sb.sem_flg  = m_bManualEvent ? 0 : SEM_UNDO;
 
-      return semop((int) m_sem, &sb, 1) == 0;
+      return semop((::i32) m_sem, &sb, 1) == 0;
 
    }
 
@@ -314,7 +314,7 @@ bool happening::set_happening()
 //   sb.sem_num  = 0;
 //   sb.sem_flg  = SEM_UNDO;
 //
-//   return semop((int) m_hsync, &sb, 1) == 0;
+//   return semop((::i32) m_hsync, &sb, 1) == 0;
 //
 //#endif
 //
@@ -400,7 +400,7 @@ synchronization_result happening::wait ()
    while (true)
    {
 
-      int iResult = ::WaitForSingleObjectEx(hsync(), 300, false);
+      ::i32 iResult = ::WaitForSingleObjectEx(hsync(), 300, false);
 
       if(iResult == WAIT_OBJECT_0)
       {
@@ -435,7 +435,7 @@ synchronization_result happening::wait ()
    if(m_bManualEvent)
    {
 
-      int iSignal = m_iSignalId;
+      ::i32 iSignal = m_iSignalId;
 
       while(!m_bSignaled && iSignal == m_iSignalId)
       {
@@ -461,7 +461,7 @@ synchronization_result happening::wait ()
 
       pthread_mutex_lock((pthread_mutex_t *) m_mutex);
 
-      int iSignal = m_iSignalId;
+      ::i32 iSignal = m_iSignalId;
 
       while(!m_bSignaled && iSignal == m_iSignalId)
       {
@@ -482,7 +482,7 @@ synchronization_result happening::wait ()
       sb.sem_num  = 0;
       sb.sem_flg  = 0;
 
-      semop((int) m_sem, &sb, 1);
+      semop((::i32) m_sem, &sb, 1);
 
    }
 
@@ -535,7 +535,7 @@ synchronization_result happening::wait (const duration & durationTimeout)
 
    auto osduration = durationTimeout.u32_millis();
 
-   result = synchronization_result((unsigned int) ::WaitForSingleObjectEx(hsync(), osduration,false));
+   result = synchronization_result((::u32) ::WaitForSingleObjectEx(hsync(), osduration,false));
 
 #elif defined(ANDROID)
 
@@ -555,7 +555,7 @@ synchronization_result happening::wait (const duration & durationTimeout)
    if(m_bManualEvent)
    {
 
-      int iSignal = m_iSignalId;
+      ::i32 iSignal = m_iSignalId;
 
       while(!m_bSignaled && iSignal == m_iSignalId)
       {
@@ -591,14 +591,14 @@ synchronization_result happening::wait (const duration & durationTimeout)
 
          pthread_mutex_lock((pthread_mutex_t *) m_mutex);
 
-         int iSignal = m_iSignalId;
+         ::i32 iSignal = m_iSignalId;
 
          //clock_gettime(CLOCK_REALTIME, &abstime);
 
          while(!m_bSignaled && iSignal == m_iSignalId)
          {
 
-            int error = pthread_cond_wait((pthread_cond_t *) m_pcond, (pthread_mutex_t *) m_mutex);
+            ::i32 error = pthread_cond_wait((pthread_cond_t *) m_pcond, (pthread_mutex_t *) m_mutex);
 
             if(error != 0)
             {
@@ -625,7 +625,7 @@ synchronization_result happening::wait (const duration & durationTimeout)
 
          pthread_mutex_lock((pthread_mutex_t *) m_mutex);
 
-         int iSignal = m_iSignalId;
+         ::i32 iSignal = m_iSignalId;
 
          //clock_gettime(CLOCK_REALTIME, &abstime);
 
@@ -647,7 +647,7 @@ synchronization_result happening::wait (const duration & durationTimeout)
          while(!m_bSignaled && iSignal == m_iSignalId)
          {
 
-            int error = pthread_cond_timedwait((pthread_cond_t *) m_pcond, (pthread_mutex_t *) m_mutex, &abstime);
+            ::i32 error = pthread_cond_timedwait((pthread_cond_t *) m_pcond, (pthread_mutex_t *) m_mutex, &abstime);
 
             if(error == EBUSY || error == ETIMEDOUT)
             {
@@ -679,7 +679,7 @@ synchronization_result happening::wait (const duration & durationTimeout)
 
       delay.tv_nsec = 1000 * 1000;
 
-      unsigned int timeout = durationTimeout.u32_millis();
+      ::u32 timeout = durationTimeout.u32_millis();
 
       auto start = ::duration::now();
 
@@ -693,7 +693,7 @@ synchronization_result happening::wait (const duration & durationTimeout)
          sb.sem_num  = 0;
          sb.sem_flg  = IPC_NOWAIT;
 
-         int ret = semop((int) m_sem, &sb, 1);
+         ::i32 ret = semop((::i32) m_sem, &sb, 1);
 
          if(ret < 0)
          {
@@ -795,7 +795,7 @@ bool happening::is_signaled() const
       sb.sem_num  = 0;
       sb.sem_flg  = IPC_NOWAIT;
 
-      int ret = semop((int) m_sem, &sb, 1);
+      ::i32 ret = semop((::i32) m_sem, &sb, 1);
 
       if(ret < 0)
       {
@@ -835,7 +835,7 @@ bool happening::lock(const duration & durationTimeout)
 
 //#ifdef WINDOWS
 //
-//   unsigned int dwRet = ::WaitForSingleObjectEx((HANDLE)m_hsync,durationTimeout.u32_millis(),false);
+//   ::u32 dwRet = ::WaitForSingleObjectEx((HANDLE)m_hsync,durationTimeout.u32_millis(),false);
 //
 //   if (dwRet == WAIT_OBJECT_0 || dwRet == WAIT_ABANDONED)
 //      return true;
@@ -852,7 +852,7 @@ bool happening::lock(const duration & durationTimeout)
 //   if(m_bManualEvent)
 //   {
 //
-//      int iSignal = m_iSignalId;
+//      ::i32 iSignal = m_iSignalId;
 //
 //      while(!m_bSignaled && iSignal == m_iSignalId)
 //      {
@@ -899,9 +899,9 @@ bool happening::lock(const duration & durationTimeout)
 //   else
 //   {
 //
-//      unsigned int timeout = durationTimeout.u32_millis();
+//      ::u32 timeout = durationTimeout.u32_millis();
 //
-//      unsigned int start= ::duration::now();
+//      ::u32 start= ::duration::now();
 //
 //      while(start.elapsed() < timeout)
 //      {
@@ -912,7 +912,7 @@ bool happening::lock(const duration & durationTimeout)
 //         sb.sem_num  = 0;
 //         sb.sem_flg  = IPC_NOWAIT;
 //
-//         int ret = semop((int) m_hsync, &sb, 1);
+//         ::i32 ret = semop((::i32) m_hsync, &sb, 1);
 //
 //         if(ret < 0)
 //         {

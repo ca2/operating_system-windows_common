@@ -28,7 +28,7 @@ namespace draw2d_direct2d
 
       //void on_create_window(::windowing::window* pwindow) override;
       
-      void adjust_composited_window_styles(unsigned int& nExStyle, unsigned int& nStyle) override;
+      void adjust_composited_window_styles(::u32& nExStyle, ::u32& nStyle) override;
       
 
    };

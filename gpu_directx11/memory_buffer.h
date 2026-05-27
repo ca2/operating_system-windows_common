@@ -29,8 +29,8 @@ namespace gpu_directx11
       //VkMemoryPropertyFlags m_memoryPropertyFlags;
 
       ::comptr<ID3D11Buffer> m_pbuffer;
-      int m_iBufferOffset;
-      int m_iSizeMapped;
+      ::i32 m_iBufferOffset;
+      ::i32 m_iSizeMapped;
 
 
       memory_buffer();
@@ -59,7 +59,7 @@ namespace gpu_directx11
 
       void on_set_memory_buffer(const ::block &block) override;
 
-      void _complete_map_allocate(::gpu::memory_buffer* pmemorybufferSource, ::gpu::frame_storage* pgpuframestorage, int size) override;
+      void _complete_map_allocate(::gpu::memory_buffer* pmemorybufferSource, ::gpu::frame_storage* pgpuframestorage, ::i32 size) override;
 
 
    };

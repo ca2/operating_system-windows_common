@@ -53,7 +53,7 @@ namespace write_text_direct2d
 
       HRESULT hr = m_pdirect2d->dwrite_factory()->GetSystemFontCollection(&pFontCollection);
 
-      unsigned int familyCount = 0;
+      ::u32 familyCount = 0;
 
       if (SUCCEEDED(hr))
       {
@@ -62,15 +62,15 @@ namespace write_text_direct2d
 
       }
 
-      unsigned int index = 0;
+      ::u32 index = 0;
 
       BOOL exists = false;
 
       wchar_t localeName[LOCALE_NAME_MAX_LENGTH];
 
-      int defaultLocaleSuccess = GetUserDefaultLocaleName(localeName, LOCALE_NAME_MAX_LENGTH);
+      ::i32 defaultLocaleSuccess = GetUserDefaultLocaleName(localeName, LOCALE_NAME_MAX_LENGTH);
 
-      for (unsigned int i = 0; i < familyCount; ++i)
+      for (::u32 i = 0; i < familyCount; ++i)
       {
 
          ::comptr<IDWriteFontFamily> pFontFamily;
@@ -116,7 +116,7 @@ namespace write_text_direct2d
             index = 0;
          }
 
-         unsigned int length = 0;
+         ::u32 length = 0;
 
          // Get the string length.
          if (SUCCEEDED(hr))

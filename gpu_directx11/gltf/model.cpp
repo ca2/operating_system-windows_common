@@ -58,14 +58,14 @@ namespace gpu_directx11
       // void model::processNode(aiNode *node, const aiScene *scene)
       // {
       //    // process all of this node's meshes if it has any
-      //    for (unsigned int i = 0; i < node->mNumMeshes; i++)
+      //    for (::u32 i = 0; i < node->mNumMeshes; i++)
       //    {
       //       aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
       //       mMeshes.push_back(processMesh(mesh, scene));
       //    }
       //
       //    // continue with children
-      //    for (unsigned int i = 0; i < node->mNumChildren; i++)
+      //    for (::u32 i = 0; i < node->mNumChildren; i++)
       //    {
       //       processNode(node->mChildren[i], scene);
       //    }
@@ -75,7 +75,7 @@ namespace gpu_directx11
       // Mesh model::processMesh(aiMesh *mesh, const aiScene *scene)
       // {
       //    ::array_base<gltf::vertex> vertices;
-      //    ::array_base<unsigned int> indices;
+      //    ::array_base<::u32> indices;
       //    Material material;
       //
       //    if (mMaterialOverride)
@@ -84,7 +84,7 @@ namespace gpu_directx11
       //    }
       //
       //    // vertices
-      //    for (unsigned int i = 0; i < mesh->mNumVertices; i++)
+      //    for (::u32 i = 0; i < mesh->mNumVertices; i++)
       //    {
       //       gltf::vertex vertex;
       //
@@ -135,11 +135,11 @@ namespace gpu_directx11
       //    }
       //
       //    // indices
-      //    for (unsigned int i = 0; i < mesh->mNumFaces; i++)
+      //    for (::u32 i = 0; i < mesh->mNumFaces; i++)
       //    {
       //       aiFace face = mesh->mFaces[i];
       //
-      //       for (unsigned int j = 0; j < face.mNumIndices; j++)
+      //       for (::u32 j = 0; j < face.mNumIndices; j++)
       //       {
       //          indices.push_back(face.m_indexa[j]);
       //       }
@@ -220,15 +220,15 @@ namespace gpu_directx11
       //    return texture;
       // }
       //
-      // ::pointer < ::gpu::texture >  model::textureFromFile(const char *fileName, ::string directory, aiTextureType
+      // ::pointer < ::gpu::texture >  model::textureFromFile(const ::i8 *fileName, ::string directory, aiTextureType
       // type)
       // {
-      //    int width, height, numChannels;
+      //    ::i32 width, height, numChannels;
       //
       //    ::string relativePath = fileName;
       //    ::string path = directory + '/' + relativePath;
       //
-      //    unsigned char *data = stbi_load(path.c_str(), &width, &height, &numChannels, 0);
+      //    ::u8 *data = stbi_load(path.c_str(), &width, &height, &numChannels, 0);
       //
       //    if (!data)
       //    {
@@ -270,7 +270,7 @@ namespace gpu_directx11
       //       }
       //    }
       //
-      //    unsigned int textureId;
+      //    ::u32 textureId;
       //    glGenTextures(1, &textureId);
       //    glBindTexture(GL_TEXTURE_2D, textureId);
       //

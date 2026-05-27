@@ -58,7 +58,7 @@ namespace gpu_directx11
 
       static void defaultPipelineConfigInfo(PipelineConfigInfo & configInfo);
    //private:
-      //static ::array<char> readFile(const ::string & filepath);
+      //static ::array<::i8> readFile(const ::string & filepath);
 
       void createGraphicsPipeline(
          const ::block & blockVertex,

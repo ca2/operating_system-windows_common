@@ -240,12 +240,12 @@ namespace imaging_wic
 
             memsize s = (memsize)stream.Size();
 
-            ::winrt::Windows::Storage::Streams::Buffer buffer((unsigned int)s);
+            ::winrt::Windows::Storage::Streams::Buffer buffer((::u32)s);
 
             if (buffer == nullptr)
                return;
 
-            stream.ReadAsync(buffer, (unsigned int)s, ::winrt::Windows::Storage::Streams::InputStreamOptions::ReadAhead).get();
+            stream.ReadAsync(buffer, (::u32)s, ::winrt::Windows::Storage::Streams::InputStreamOptions::ReadAhead).get();
 
             memory m;
 

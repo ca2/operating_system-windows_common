@@ -33,7 +33,7 @@ namespace draw2d_direct2d
 
       void destroy() override;
       void destroy_os_data() override;
-      void create(::draw2d::graphics * pgraphics, char iCreate) override;
+      void create(::draw2d::graphics * pgraphics, ::i8 iCreate) override;
       void create_text_metrics(::draw2d::graphics * pgraphics) override;
 
 
@@ -41,20 +41,20 @@ namespace draw2d_direct2d
       DWRITE_FONT_STYLE _dwrite_font_style();
       DWRITE_FONT_STRETCH _dwrite_font_stretch();
       DWRITE_FONT_WEIGHT _dwrite_font_weight();
-      float _dwrite_font_size(::draw2d::graphics * pgraphics);
+      ::f32 _dwrite_font_size(::draw2d::graphics * pgraphics);
 
       /*      virtual void construct(const ::write_text::font & pfontParam);
 
             virtual bool CreateFontIndirect(const LOGFONTW* lpLogFont);
-            virtual bool CreateFont(int nHeight, int nWidth, int nEscapement,
-                  int nOrientation, int nWeight, unsigned char bItalic, unsigned char bUnderline,
-                  unsigned char cStrikeOut, unsigned char nCharSet, unsigned char nOutPrecision,
-                  unsigned char nClipPrecision, unsigned char nQuality, unsigned char nPitchAndFamily,
-                  const_char_pointer lpszFacename);
-            virtual bool CreatePointFont(int nPointSize, const ::scoped_string & scopedstrFaceName, const ::draw2d::graphics * pgraphics = nullptr);
+            virtual bool CreateFont(::i32 nHeight, ::i32 nWidth, ::i32 nEscapement,
+                  ::i32 nOrientation, ::i32 nWeight, ::u8 bItalic, ::u8 bUnderline,
+                  ::u8 cStrikeOut, ::u8 nCharSet, ::u8 nOutPrecision,
+                  ::u8 nClipPrecision, ::u8 nQuality, ::u8 nPitchAndFamily,
+                  const_char_pointer pszFacename);
+            virtual bool CreatePointFont(::i32 nPointSize, const ::scoped_string & scopedstrFaceName, const ::draw2d::graphics * pgraphics = nullptr);
             virtual bool CreatePointFontIndirect(const LOGFONTW* lpLogFont, const ::draw2d::graphics * pgraphics = nullptr);
 
-            virtual int GetLogFont(LOGFONTW* pLogFont);*/
+            virtual ::i32 GetLogFont(LOGFONTW* pLogFont);*/
 
       
 

@@ -79,12 +79,12 @@ namespace windows
       si.cb = sizeof(si);
       si.dwFlags = STARTF_USESHOWWINDOW;
       si.wShowWindow = e_display_none; */
-      //         if(!::CreateProcess(nullptr, (char *) (const ::string &) m_papplication->dir().appdata("production\\build.bat"), nullptr, nullptr, false, CREATE_NEW_CONSOLE, nullptr, nullptr, &si, &pi))
+      //         if(!::CreateProcess(nullptr, (::i8 *) (const ::string &) m_papplication->dir().appdata("production\\build.bat"), nullptr, nullptr, false, CREATE_NEW_CONSOLE, nullptr, nullptr, &si, &pi))
       m_si.dwFlags |= STARTF_USESHOWWINDOW;
       m_si.wShowWindow = e_display_none;
 
 
-      unsigned int dwPriorityClass = ::get_os_priority_class(epriority);
+      ::u32 dwPriorityClass = ::get_os_priority_class(epriority);
 
       wstring wstrDir(pszDir);
 
@@ -127,7 +127,7 @@ namespace windows
       }
 
       unichar * pwszCommandLine = (unichar * ) (const unichar *) wstrCommandLine;
-      unsigned int dwFlags = 0;
+      ::u32 dwFlags = 0;
       if (is_true("inherit"))
       {
          dwFlags = CREATE_NEW_CONSOLE | CREATE_UNICODE_ENVIRONMENT;
@@ -156,7 +156,7 @@ namespace windows
          output_debug_string("\r\n");
          output_debug_string("CreateProcessW Error!!");
          output_debug_string("\r\n");
-         output_debug_string(strMessage + " (" + ::as_string((unsigned int) dwLastError) + ")");
+         output_debug_string(strMessage + " (" + ::as_string((::u32) dwLastError) + ")");
          output_debug_string("\r\n");
 
          return false;
@@ -221,7 +221,7 @@ namespace windows
    }
 
 
-   bool process::synch_elevated(const ::scoped_string & scopedstrCmdLine,int iShow,const ::duration & durationTimeOut,bool * pbTimeOut)
+   bool process::synch_elevated(const ::scoped_string & scopedstrCmdLine,::i32 iShow,const ::duration & durationTimeOut,bool * pbTimeOut)
    {
 
       DWORD dwExitCode = 0;
@@ -303,7 +303,7 @@ namespace windows
 
    bool process::kill()
    {
-      ::system(string("taskkill /F /T /PID " ) + ::as_string((int) m_pi.dwProcessId));
+      ::system(string("taskkill /F /T /PID " ) + ::as_string((::i32) m_pi.dwProcessId));
       return true;
       //return TerminateProcess(m_pi.hthread, -1) != false;
 

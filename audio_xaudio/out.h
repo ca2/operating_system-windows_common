@@ -26,7 +26,7 @@ namespace multimedia
 
          // Unused methods in this application
          STDMETHOD_(void,OnVoiceProcessingPassEnd());
-         STDMETHOD_(void,OnVoiceProcessingPassStart(unsigned int SamplesRequired)) ;
+         STDMETHOD_(void,OnVoiceProcessingPassStart(::u32 SamplesRequired)) ;
          STDMETHOD_(void,OnBufferEnd(void * pBufferContext))  ;
          STDMETHOD_(void,OnBufferStart(void * pBufferContext));
          STDMETHOD_(void,OnLoopEnd(void * pBufferContext));
@@ -40,7 +40,7 @@ namespace multimedia
 
          //   run_step_thread(out * pout);
 
-         //   virtual int run();
+         //   virtual ::i32 run();
 
          //};
 
@@ -51,7 +51,7 @@ namespace multimedia
 //         run_step_thread *                m_prunstepthread;
 
          class ::time                             m_timeLastBuffer;
-         int                              m_iBuffer;
+         ::i32                              m_iBuffer;
 
          WAVEFORMATEX                     m_waveformatex;
 
@@ -68,7 +68,7 @@ namespace multimedia
          //virtual void out_buffer_ready(LPWAVEHDR lpwavehdr);
 
 //         virtual void     out_open(::thread * pthreadCallback, ::collection::count iBufferCount, ::collection::count iBufferSampleCount) override;
-         void     out_open_ex(::thread * pthreadCallback, unsigned int uiSamplesPerSec, unsigned int uiChannelCount, unsigned int uiBitsPerSample,::wave::enum_purpose epurpose) override;
+         void     out_open_ex(::thread * pthreadCallback, ::u32 uiSamplesPerSec, ::u32 uiChannelCount, ::u32 uiBitsPerSample,::wave::enum_purpose epurpose) override;
          void     out_stop() override;
          void     out_close() override;
          void     out_pause() override;
@@ -81,21 +81,21 @@ namespace multimedia
          //virtual void out_free(LPWAVEHDR lpwavehdr);
 
          void init_task() override;
-         //virtual int exit_instance();
+         //virtual ::i32 exit_instance();
 
          ::collection::count out_get_buffered_buffer_count() override;
 
-         //virtual int run();
+         //virtual ::i32 run();
 
          //DECLARE_MESSAGE_HANDLER(OnMultimediaOpen);
          //DECLARE_MESSAGE_HANDLER(OnMultimediaDone);
          //DECLARE_MESSAGE_HANDLER(OnMultimediaClose);
 
-//         virtual void out_out_buffer_done(int iBuffer);
+//         virtual void out_out_buffer_done(::i32 iBuffer);
          //       virtual void out_out_buffer_done(LPWAVEHDR lpwavehdr);
 
          WAVEFORMATEX * wave_format();
-         //LPWAVEHDR wave_hdr(int iBuffer);
+         //LPWAVEHDR wave_hdr(::i32 iBuffer);
          //virtual void out_run_step();
          void out_prebuffer_eof() override;
 

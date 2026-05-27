@@ -24,8 +24,8 @@ namespace gpu_directx11
       public:
 
 
-         // const unsigned int cubemapWidth = 512;
-         // const unsigned int cubemapHeight = 512;
+         // const ::u32 cubemapWidth = 512;
+         // const ::u32 cubemapHeight = 512;
          //
          // ::pointer<Shader> hdriShader;
          // ::pointer<hdri_cube> hdri_cube;
@@ -58,7 +58,7 @@ namespace gpu_directx11
           * Get the GL texture ID of the computed cubemap.
           * @return
           */
-         //unsigned int getCubemapId();
+         //::u32 getCubemapId();
 
 
       };

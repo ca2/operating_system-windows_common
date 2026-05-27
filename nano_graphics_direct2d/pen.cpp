@@ -32,7 +32,7 @@ namespace universal_windows
          }
 
 
-         void pen::update(::nano::graphics::device* pnanodevice)
+         void pen::update(::nano::graphics::context* pgraphicscontext)
          {
 
             if (m_bModified)
@@ -40,7 +40,7 @@ namespace universal_windows
 
                destroy();
 
-               ::cast < ::universal_windows::nano::graphics::device > pdevice = pnanodevice;
+               ::cast < ::universal_windows::nano::graphics::context > pdevice = pnanodevice;
 
                D2D1_COLOR_F color;
 

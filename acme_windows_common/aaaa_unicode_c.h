@@ -5,29 +5,29 @@
 
 
 CLASS_DECL_ACME
-int
+::i32
 MultiByteToWideChar2(
-unsigned int     CodePage,
-unsigned int    dwFlags,
-const char *   pMultiByteStr,
+::u32     CodePage,
+::u32    dwFlags,
+const ::i8 *   pMultiByteStr,
 
-int      cbMultiByte,
+::i32      cbMultiByte,
 ::wide_character *  pWideCharStr,
 
-int      cchWideChar);
+::i32      cchWideChar);
 
 CLASS_DECL_ACME
-int
+::i32
 WideCharToMultiByte2(
-unsigned int     CodePage,
-unsigned int    dwFlags,
+::u32     CodePage,
+::u32    dwFlags,
 const ::wide_character *  pWideCharStr,
 
-int      cchWideChar,
-char *   pMultiByteStr,
+::i32      cchWideChar,
+::i8 *   pMultiByteStr,
 
-int      cbMultiByte,
-const char *   pDefaultChar,
+::i32      cbMultiByte,
+const ::i8 *   pDefaultChar,
 
 int_bool *  pUsedDefaultChar);
 

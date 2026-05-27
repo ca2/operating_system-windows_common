@@ -6,7 +6,7 @@ template < prototype_payload PAYLOAD >
 inline void copy(PAYLOAD * ppayload, const DWORD * pdw)
 {
 
-   ppayload->operator = ((const unsigned int &)*pdw);
+   ppayload->operator = ((const ::u32 &)*pdw);
 
 }
 
@@ -23,7 +23,7 @@ inline void copy(PAYLOAD * ppayload, const long * pl)
 //inline void copy(payload & payload, const DWORD & dw)
 //{
 //
-//   payload.operator = ((const unsigned int &)dw);
+//   payload.operator = ((const ::u32 &)dw);
 //
 //}
 
@@ -31,7 +31,7 @@ inline void copy(PAYLOAD * ppayload, const long * pl)
 //inline void __copy(LPDWORD * ppdw, const payload * ppayload)
 //{
 //
-//   *ppdw = (LPDWORD) (unsigned int*) *ppayload;
+//   *ppdw = (LPDWORD) (::u32*) *ppayload;
 //
 //}
 
@@ -49,7 +49,7 @@ template < prototype_payload PAYLOAD >
 inline void copy(DWORD * pdw, const PAYLOAD * ppayload)
 {
 
-   *pdw = ppayload->unsigned int();
+   *pdw = ppayload->::u32();
 
 }
 
@@ -57,12 +57,12 @@ inline void copy(DWORD * pdw, const PAYLOAD * ppayload)
 
 #ifdef WINDOWS
 
-typedef unsigned int itask;
-typedef unsigned int thread_data_index;
+typedef ::u32 itask;
+typedef ::u32 thread_data_index;
 
 #else
 
-using thread_data_index = unsigned int;
+using thread_data_index = ::u32;
 
 #endif
 
@@ -72,14 +72,14 @@ using thread_data_index = unsigned int;
 
 typedef iptr htask;
 
-//typedef unsigned int itask;
+//typedef ::u32 itask;
 
 
 #define null_hthread ((htask)0)
 #define null_ithread ((itask)0)
 
 
-inline int ithread_equals(itask a, itask b) { return a == b; }
+inline ::i32 ithread_equals(itask a, itask b) { return a == b; }
 
 #else
 
@@ -92,7 +92,7 @@ inline int ithread_equals(itask a, itask b) { return a == b; }
 #define null_hthread ((htask)0)
 #define null_ithread ((itask)0)
 
-inline int ithread_equals(itask a, itask b) { return pthread_equal(a, b); }
+inline ::i32 ithread_equals(itask a, itask b) { return pthread_equal(a, b); }
 
 
 #endif

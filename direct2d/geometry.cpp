@@ -15,7 +15,7 @@ namespace direct2d
    {
 
 
-      comptr<ID2D1RectangleGeometry> create_rectangle(::direct2d::direct2d * pdirect2d, const ::float_rectangle & rectangle)
+      comptr<ID2D1RectangleGeometry> create_rectangle(::direct2d::direct2d * pdirect2d, const ::f32_rectangle & rectangle)
       {
 
          comptr<ID2D1RectangleGeometry> pgeometry;
@@ -31,7 +31,7 @@ namespace direct2d
       }
 
 
-      comptr<ID2D1EllipseGeometry> create_ellipse(::direct2d::direct2d* pdirect2d, const ::float_ellipse & ellipse)
+      comptr<ID2D1EllipseGeometry> create_ellipse(::direct2d::direct2d* pdirect2d, const ::f32_ellipse & ellipse)
       {
 
          D2D1_ELLIPSE d2d1ellipse;
@@ -54,7 +54,7 @@ namespace direct2d
       }
 
 
-      comptr<ID2D1PathGeometry> create_polygon(::direct2d::direct2d* pdirect2d, const ::double_polygon & polygon, bool bFilled)
+      comptr<ID2D1PathGeometry> create_polygon(::direct2d::direct2d* pdirect2d, const ::f64_polygon & polygon, bool bFilled)
       {
 
          if (polygon.size() <= 2)
@@ -87,7 +87,7 @@ namespace direct2d
       }
 
 
-      comptr<ID2D1PathGeometry> create_poly_polygon(::direct2d::direct2d* pdirect2d, const ::double_poly_polygon & polypolygon, bool bFilled)
+      comptr<ID2D1PathGeometry> create_poly_polygon(::direct2d::direct2d* pdirect2d, const ::f64_poly_polygon & polypolygon, bool bFilled)
       {
 
          comptr<ID2D1PathGeometry> ppathgeometry;
@@ -113,10 +113,10 @@ namespace direct2d
       }
 
 
-      void add_rectangle(ID2D1GeometrySink * pgeometrysink, const ::double_rectangle & rectangle)
+      void add_rectangle(ID2D1GeometrySink * pgeometrysink, const ::f64_rectangle & rectangle)
       {
 
-         ::double_polygon polygon;
+         ::f64_polygon polygon;
 
          polygon = rectangle;
 
@@ -125,7 +125,7 @@ namespace direct2d
       }
 
 
-      void add_ellipse(ID2D1GeometrySink * pgeometrysink, const ::double_ellipse & ellipse, bool bFilled)
+      void add_ellipse(ID2D1GeometrySink * pgeometrysink, const ::f64_ellipse & ellipse, bool bFilled)
       {
          
          D2D1_ARC_SEGMENT arcsegment;
@@ -150,7 +150,7 @@ namespace direct2d
       }
 
 
-      void add_polygon(ID2D1GeometrySink * pgeometrysink, const ::double_polygon & polygon, bool bFilled)
+      void add_polygon(ID2D1GeometrySink * pgeometrysink, const ::f64_polygon & polygon, bool bFilled)
       {
 
          pgeometrysink->BeginFigure({ (FLOAT)polygon.first().x, (FLOAT)polygon.first().y }, bFilled ? D2D1_FIGURE_BEGIN_FILLED : D2D1_FIGURE_BEGIN_HOLLOW);
@@ -167,7 +167,7 @@ namespace direct2d
       }
 
 
-      void add_poly_polygon(ID2D1GeometrySink * pgeometrysink, const ::double_poly_polygon & polypolygon, bool bFilled)
+      void add_poly_polygon(ID2D1GeometrySink * pgeometrysink, const ::f64_poly_polygon & polypolygon, bool bFilled)
       {
 
          for(auto & ppolygon : polypolygon)

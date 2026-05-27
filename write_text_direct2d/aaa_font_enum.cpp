@@ -79,7 +79,7 @@ wingdi_font_enum::~wingdi_font_enum()
    }
 
 
-   BOOL CALLBACK wingdi_font_enum::callback(LPLOGFONTW plf, LPNEWTEXTMETRICW lpntm, unsigned int dwFontType, LPVOID p)
+   BOOL CALLBACK wingdi_font_enum::callback(LPLOGFONTW plf, LPNEWTEXTMETRICW lpntm, ::u32 dwFontType, LPVOID p)
    {
 
       wingdi_font_enum * penum = (wingdi_font_enum *)p;
@@ -127,7 +127,7 @@ wingdi_font_enum::~wingdi_font_enum()
    }
 
 
-   BOOL CALLBACK wingdi_font_enum::callback_cs(LPLOGFONTW plf, LPNEWTEXTMETRICW lpntm, unsigned int dwFontType, LPVOID p)
+   BOOL CALLBACK wingdi_font_enum::callback_cs(LPLOGFONTW plf, LPNEWTEXTMETRICW lpntm, ::u32 dwFontType, LPVOID p)
    {
 
       ::write_text::font_enumeration_item * pitem = (::write_text::font_enumeration_item *)p;
@@ -148,7 +148,7 @@ wingdi_font_enum::~wingdi_font_enum()
 
 
 
-   ::enum_character_set wingdi_get_cs(int iCs)
+   ::enum_character_set wingdi_get_cs(::i32 iCs)
    {
 
       if (iCs == CHINESEBIG5_CHARSET)
@@ -268,7 +268,7 @@ wingdi_font_enum::~wingdi_font_enum()
       else
       {
 
-         output_debug_string("OTHER char SET");
+         output_debug_string("OTHER ::i8 SET");
 
       }
 

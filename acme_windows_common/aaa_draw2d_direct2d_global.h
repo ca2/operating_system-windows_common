@@ -34,11 +34,11 @@ CLASS_DECL_ACME ID2D1Device * global_draw_get_d2d1_device();
 
 
 
-CLASS_DECL_ACME float point_dpi(oswindow hwnd, float points);
-CLASS_DECL_ACME float dpiy(oswindow hwnd, float y);
-CLASS_DECL_ACME float dpix(oswindow hwnd, float y);
-CLASS_DECL_ACME float y_dpi(oswindow hwnd, float y);
-CLASS_DECL_ACME float x_dpi(oswindow hwnd, float y);
+CLASS_DECL_ACME ::f32 point_dpi(oswindow hwnd, ::f32 points);
+CLASS_DECL_ACME ::f32 dpiy(oswindow hwnd, ::f32 y);
+CLASS_DECL_ACME ::f32 dpix(oswindow hwnd, ::f32 y);
+CLASS_DECL_ACME ::f32 y_dpi(oswindow hwnd, ::f32 y);
+CLASS_DECL_ACME ::f32 x_dpi(oswindow hwnd, ::f32 y);
 
 
 namespace draw2d_direct2d

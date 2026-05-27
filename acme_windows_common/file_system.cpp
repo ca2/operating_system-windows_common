@@ -146,7 +146,7 @@ namespace acme_windows_common
       
       wstring wstrPath(path);
       
-      int fd = _wopen(wstrPath, O_WRONLY | O_CREAT);
+      ::i32 fd = _wopen(wstrPath, O_WRONLY | O_CREAT);
 
       if (fd < 0) // Couldn't open that path.
       {
@@ -268,7 +268,7 @@ namespace acme_windows_common
 
          ut.modtime = time;
 
-         int rc = _wutime(wstrPath, &ut);
+         ::i32 rc = _wutime(wstrPath, &ut);
 
          if (rc)
          {
@@ -285,7 +285,7 @@ namespace acme_windows_common
       else
       {
 
-         int fd = _wopen(wstrPath, O_WRONLY | O_CREAT);
+         ::i32 fd = _wopen(wstrPath, O_WRONLY | O_CREAT);
 
          if (fd < 0)
          {
@@ -375,7 +375,7 @@ namespace acme_windows_common
 
    //   auto path2 = ::g_psystem->m_ppathsystem->defer_process_relative_path(psz2);
 
-   //   const int iBufSize = MAX_PATH * 8;
+   //   const ::i32 iBufSize = MAX_PATH * 8;
 
    //   wstring pwsz1 = utf8_to_unicode(path1);
 
@@ -389,7 +389,7 @@ namespace acme_windows_common
 
    //   unichar * pwszPath2 = ___new unichar[iBufSize];
 
-   //   int iCmp = -1;
+   //   ::i32 iCmp = -1;
 
    //   if (GetFullPathNameW(pwsz1, iBufSize, pwszPath1, &pwszFile1))
    //   {
@@ -442,7 +442,7 @@ namespace acme_windows_common
 
    //   iReadAtMostByteCount = iReadAtMostByteCount < 0 ? dwSize : minimum(iReadAtMostByteCount, (::character_count)dwSize);
 
-   //   char * psz = str.get_buffer(iReadAtMostByteCount);
+   //   ::i8 * psz = str.get_buffer(iReadAtMostByteCount);
 
    //   ::size_t iPos = 0;
 
@@ -492,7 +492,7 @@ namespace acme_windows_common
 
       //   }
 
-      //   int iErrNo = errno;
+      //   ::i32 iErrNo = errno;
 
       //   auto estatus = errno_status(iErrNo);
 
@@ -613,7 +613,7 @@ namespace acme_windows_common
 
    //   memory.set_size(iReadAtMostByteCount);
 
-   //   auto dwRead = ::fread(memory.data(), 1, (unsigned int)iReadAtMostByteCount, file);
+   //   auto dwRead = ::fread(memory.data(), 1, (::u32)iReadAtMostByteCount, file);
 
    //   memory.set_size(dwRead);
 

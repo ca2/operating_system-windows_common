@@ -26,7 +26,7 @@ namespace draw2d_directx11
       ::array < ::comptr < IDWriteFontFamily > >            m_familya;
       //auto_pointer < Gdiplus::PrivateFontCollection >    m_pcollection;
       //::raw_array < Gdiplus::FontFamily >                m_familya;
-      //int                                                m_iFamilyCount;
+      //::i32                                                m_iFamilyCount;
 
 
       internal_font();

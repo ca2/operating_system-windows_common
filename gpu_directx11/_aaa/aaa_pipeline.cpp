@@ -47,7 +47,7 @@ namespace gpu_directx11
    //   vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, graphicsPipeline);
    //}
 
-   //::array<char> pipeline::readFile(const ::string & filepath) {
+   //::array<::i8> pipeline::readFile(const ::string & filepath) {
 
 
    //   std::ifstream file{ filepath, std::ios::ate | std::ios::binary };
@@ -57,7 +57,7 @@ namespace gpu_directx11
    //   }
 
    //   size_t fileSize = static_cast<size_t>(file.tellg());
-   //   ::array<char> buffer(fileSize);
+   //   ::array<::i8> buffer(fileSize);
 
    //   file.seekg(0);
    //   file.read(buffer.data(), fileSize);

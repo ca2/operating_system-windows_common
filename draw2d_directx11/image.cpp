@@ -47,7 +47,7 @@ namespace draw2d_directx11
    }
 
 
-   void image::create_ex(const ::i32_size & size, ::image32_t * pimage32, int iScan, ::enum_flag eflagCreate, int iGoodStride, bool bPreserve)
+   void image::create_ex(const ::i32_size & size, ::image32_t * pimage32, ::i32 iScan, ::enum_flag eflagCreate, ::i32 iGoodStride, bool bPreserve)
    {
 
       //::draw2d::lock draw2dlock;
@@ -74,7 +74,7 @@ namespace draw2d_directx11
 
       }
 
-      int iStride = size.cx * 4;
+      ::i32 iStride = size.cx * 4;
 
       if (iGoodStride > iStride)
       {
@@ -156,7 +156,7 @@ namespace draw2d_directx11
    }
 
 
-   void image::create(const ::i32_size & size, ::enum_flag eflagCreate, int iGoodStride, bool bPreserve)
+   void image::create(const ::i32_size & size, ::enum_flag eflagCreate, ::i32 iGoodStride, bool bPreserve)
    {
 
       //auto estatus = 
@@ -175,7 +175,7 @@ namespace draw2d_directx11
    }
 
 
-   void image::initialize(const ::i32_size & size, ::image32_t * pimage32, int iScan, ::enum_flag eflagCreate)
+   void image::initialize(const ::i32_size & size, ::image32_t * pimage32, ::i32 iScan, ::enum_flag eflagCreate)
    {
 
       //auto estatus =
@@ -311,7 +311,7 @@ namespace draw2d_directx11
 
 
 
-   void image::SetIconMask(::image::icon * picon, int cx, int cy)
+   void image::SetIconMask(::image::icon * picon, ::i32 cx, ::i32 cy)
    {
 
       if (cx <= 0 || cy <= 0)
@@ -342,7 +342,7 @@ namespace draw2d_directx11
 
          ::image::image_source imagesource(picon);
 
-         ::image::image_drawing_options imagedrawingoptions(::double_size(cx, cy));
+         ::image::image_drawing_options imagedrawingoptions(::f64_size(cx, cy));
 
          ::image::image_drawing imagedrawing(imagedrawingoptions, imagesource);
 
@@ -359,7 +359,7 @@ namespace draw2d_directx11
 
          ::image::image_source imagesource(picon);
 
-         ::image::image_drawing_options imagedrawingoptions(::double_size(cx, cy));
+         ::image::image_drawing_options imagedrawingoptions(::f64_size(cx, cy));
 
          ::image::image_drawing imagedrawing(imagedrawingoptions, imagesource);
 
@@ -384,7 +384,7 @@ namespace draw2d_directx11
 
          ::image::image_source imagesource(picon);
 
-         ::image::image_drawing_options imagedrawingoptions(::double_size(cx, cy));
+         ::image::image_drawing_options imagedrawingoptions(::f64_size(cx, cy));
 
          ::image::image_drawing imagedrawing(imagedrawingoptions, imagesource);
 
@@ -392,14 +392,14 @@ namespace draw2d_directx11
 
       }
 
-      unsigned char * r1 = (unsigned char*) pimage1->image32();
-      unsigned char * r2 = (unsigned char*) pimage2->image32();
-      unsigned char * srcM = (unsigned char*) pimageM->image32();
-      unsigned char * dest = (unsigned char*) image32();
-      int iSize = cx * cy;
+      ::u8 * r1 = (::u8*) pimage1->image32();
+      ::u8 * r2 = (::u8*) pimage2->image32();
+      ::u8 * srcM = (::u8*) pimageM->image32();
+      ::u8 * dest = (::u8*) image32();
+      ::i32 iSize = cx * cy;
 
-      unsigned char b;
-      unsigned char bMax;
+      ::u8 b;
+      ::u8 bMax;
       while (iSize-- > 0)
       {
          if (srcM[0] == 255)
@@ -409,11 +409,11 @@ namespace draw2d_directx11
          else
          {
             bMax = 0;
-            b = (unsigned char)(r1[0] - r2[0]);
+            b = (::u8)(r1[0] - r2[0]);
             bMax = maximum(b, bMax);
-            b = (unsigned char)(r1[1] - r2[1]);
+            b = (::u8)(r1[1] - r2[1]);
             bMax = maximum(b, bMax);
-            b = (unsigned char)(r1[2] - r2[2]);
+            b = (::u8)(r1[2] - r2[2]);
             bMax = maximum(b, bMax);
             bMax = 255 - bMax;
          }
@@ -430,40 +430,40 @@ namespace draw2d_directx11
 
    }
 
-   //void image::rotate(image image, double dAngle, double dScale)
+   //void image::rotate(image image, ::f64 dAngle, ::f64 dScale)
    //{
    //   // image image(this);
    //   //   pimage->Paste(this);
 
-   //   /*      int cx = cx;
-   //   int cy = cy; */
+   //   /*      ::i32 cx = cx;
+   //   ::i32 cy = cy; */
 
-   //   int l = maximum(cx, cy);
-
-
-   //   int jmax = minimum(l, cy / 2);
-   //   int jmin = - jmax;
-   //   int imax = minimum(l, cx / 2);
-   //   int imin = - imax;
+   //   ::i32 l = maximum(cx, cy);
 
 
-   //   int joff = cy / 2;
-   //   int ioff = cx / 2;
+   //   ::i32 jmax = minimum(l, cy / 2);
+   //   ::i32 jmin = - jmax;
+   //   ::i32 imax = minimum(l, cx / 2);
+   //   ::i32 imin = - imax;
 
-   //   //int iAngle = iStep % 360;
-   //   //int iAngle = iStep;
-   //   //int iAngle = 1;
-   //   //int k = 0;
 
-   //   /*     for ( int j=jmin; j<jmax; j++ )
+   //   ::i32 joff = cy / 2;
+   //   ::i32 ioff = cx / 2;
+
+   //   //::i32 iAngle = iStep % 360;
+   //   //::i32 iAngle = iStep;
+   //   //::i32 iAngle = 1;
+   //   //::i32 k = 0;
+
+   //   /*     for ( ::i32 j=jmin; j<jmax; j++ )
    //   {
-   //   for ( int i=imin; i<imax; i++ )
+   //   for ( ::i32 i=imin; i<imax; i++ )
    //   {
-   //   int x, y;
+   //   ::i32 x, y;
 
    //   // A Combination of a 2d Translation/rotation/Scale Matrix
-   //   x=int(cos10(i, iAngle) - sin10(j, iAngle)) + ioff;
-   //   y=int(sin10(i, iAngle) + cos10(j, iAngle)) + joff;
+   //   x=::i32(cos10(i, iAngle) - sin10(j, iAngle)) + ioff;
+   //   y=::i32(sin10(i, iAngle) + cos10(j, iAngle)) + joff;
    //   m_pcolorref[(j+joff)*cx+(i+ioff)]=
    //   pimage->m_pcolorref[abs(y%cy)*cx+abs(x%cx)];
    //   //k++;
@@ -471,23 +471,23 @@ namespace draw2d_directx11
    //   (j+joff)*cx+(i+ioff)
    //   }*/
 
-   //   int k = 0;
-   //   double dCos = ::cos(dAngle * dPi / 180.0) * dScale;
-   //   double dSin = ::sin(dAngle * dPi / 180.0) * dScale;
-   //   int cx1 = cx - 1;
-   //   int cy1 = cy - 1;
-   //   for ( int j=jmin; j<jmax; j++ )
+   //   ::i32 k = 0;
+   //   ::f64 dCos = ::cos(dAngle * dPi / 180.0) * dScale;
+   //   ::f64 dSin = ::sin(dAngle * dPi / 180.0) * dScale;
+   //   ::i32 cx1 = cx - 1;
+   //   ::i32 cy1 = cy - 1;
+   //   for ( ::i32 j=jmin; j<jmax; j++ )
    //   {
-   //      for ( int i=imin; i<imax; i++ )
+   //      for ( ::i32 i=imin; i<imax; i++ )
    //      {
-   //         int x, y;
+   //         ::i32 x, y;
 
    //         // A Combination of a 2d Translation/rotation/Scale Matrix
-   //         //x=abs((int(dCos * i - dSin * j) + ioff) % cx);
-   //         //y=abs((int(dSin * i + dCos * j) + joff) % cy);
+   //         //x=abs((::i32(dCos * i - dSin * j) + ioff) % cx);
+   //         //y=abs((::i32(dSin * i + dCos * j) + joff) % cy);
 
-   //         x = (int) abs((dCos * i - dSin * j) + ioff);
-   //         y = (int) abs((dSin * i + dCos * j) + joff);
+   //         x = (::i32) abs((dCos * i - dSin * j) + ioff);
+   //         y = (::i32) abs((dSin * i + dCos * j) + joff);
 
    //         if((x / cx) % 2 == 0)
    //         {
@@ -517,19 +517,19 @@ namespace draw2d_directx11
    //}
 
 
-   //void image::Rotate034(image image, double dAngle, double dScale)
+   //void image::Rotate034(image image, ::f64 dAngle, ::f64 dScale)
    //{
 
-   //   /*      int cx = cx;
-   //   int cy = cy;*/
+   //   /*      ::i32 cx = cx;
+   //   ::i32 cy = cy;*/
 
-   //   int l = maximum(cx, cy);
+   //   ::i32 l = maximum(cx, cy);
 
 
-   //   int jmax = minimum(l, cy / 2);
-   //   int jmin = - jmax;
-   //   int imax = minimum(l, cx / 2);
-   //   int imin = - imax;
+   //   ::i32 jmax = minimum(l, cy / 2);
+   //   ::i32 jmin = - jmax;
+   //   ::i32 imax = minimum(l, cx / 2);
+   //   ::i32 imin = - imax;
 
 
    //   if((cy % 2) == 1)
@@ -538,27 +538,27 @@ namespace draw2d_directx11
    //   if((cx % 2) == 1)
    //      imax++;
 
-   //   int joff = cy / 2;
-   //   int ioff = cx / 2;
+   //   ::i32 joff = cy / 2;
+   //   ::i32 ioff = cx / 2;
 
 
-   //   int k = 0;
-   //   double dCos = ::cos(dAngle * dPi / 180.0) * dScale;
-   //   double dSin = ::sin(dAngle * dPi / 180.0) * dScale;
-   //   int cx1 = cx - 1;
-   //   int cy1 = cy - 1;
-   //   for ( int j=jmin; j<jmax; j++ )
+   //   ::i32 k = 0;
+   //   ::f64 dCos = ::cos(dAngle * dPi / 180.0) * dScale;
+   //   ::f64 dSin = ::sin(dAngle * dPi / 180.0) * dScale;
+   //   ::i32 cx1 = cx - 1;
+   //   ::i32 cy1 = cy - 1;
+   //   for ( ::i32 j=jmin; j<jmax; j++ )
    //   {
-   //      for ( int i=imin; i<imax; i++ )
+   //      for ( ::i32 i=imin; i<imax; i++ )
    //      {
-   //         int x, y;
+   //         ::i32 x, y;
 
    //         // A Combination of a 2d Translation/rotation/Scale Matrix
-   //         //x=abs((int(dCos * i - dSin * j) + ioff) % cx);
-   //         //y=abs((int(dSin * i + dCos * j) + joff) % cy);
+   //         //x=abs((::i32(dCos * i - dSin * j) + ioff) % cx);
+   //         //y=abs((::i32(dSin * i + dCos * j) + joff) % cy);
 
-   //         x = (int) abs((dCos * i - dSin * j) + ioff);
-   //         y = (int) abs((dSin * i + dCos * j) + joff);
+   //         x = (::i32) abs((dCos * i - dSin * j) + ioff);
+   //         y = (::i32) abs((dSin * i + dCos * j) + joff);
 
    //         if((x / cx) % 2 == 0)
    //         {
@@ -587,7 +587,7 @@ namespace draw2d_directx11
    //   }
    //}
 
-   //void image::rotate(image image, const ::i32_rectangle & rectangle, double dAngle, double dScale)
+   //void image::rotate(image image, const ::i32_rectangle & rectangle, ::f64 dAngle, ::f64 dScale)
    //{
    //   // image image(this);
    //   //   pimage->Paste(this);
@@ -596,34 +596,34 @@ namespace draw2d_directx11
 
    //   ::i32_rectangle rectangle(rectangle);
 
-   //   int cx = rectangle.width();
-   //   int cy = rectangle.height();
+   //   ::i32 cx = rectangle.width();
+   //   ::i32 cy = rectangle.height();
 
-   //   int l = maximum(cx, cy);
+   //   ::i32 l = maximum(cx, cy);
 
-   //   int jmax = minimum(l, cy / 2);
-   //   int jmin = - jmax;
-   //   int imax = minimum(l, cx / 2);
-   //   int imin = - imax;
+   //   ::i32 jmax = minimum(l, cy / 2);
+   //   ::i32 jmin = - jmax;
+   //   ::i32 imax = minimum(l, cx / 2);
+   //   ::i32 imin = - imax;
 
 
-   //   int joff = cy / 2 + rectangle.left;
-   //   int ioff = cx / 2 + rectangle.top;
+   //   ::i32 joff = cy / 2 + rectangle.left;
+   //   ::i32 ioff = cx / 2 + rectangle.top;
 
-   //   //int iAngle = iStep % 360;
-   //   //int iAngle = iStep;
-   //   //int iAngle = 1;
-   //   //int k = 0;
+   //   //::i32 iAngle = iStep % 360;
+   //   //::i32 iAngle = iStep;
+   //   //::i32 iAngle = 1;
+   //   //::i32 k = 0;
 
-   //   /*     for ( int j=jmin; j<jmax; j++ )
+   //   /*     for ( ::i32 j=jmin; j<jmax; j++ )
    //   {
-   //   for ( int i=imin; i<imax; i++ )
+   //   for ( ::i32 i=imin; i<imax; i++ )
    //   {
-   //   int x, y;
+   //   ::i32 x, y;
 
    //   // A Combination of a 2d Translation/rotation/Scale Matrix
-   //   x=int(cos10(i, iAngle) - sin10(j, iAngle)) + ioff;
-   //   y=int(sin10(i, iAngle) + cos10(j, iAngle)) + joff;
+   //   x=::i32(cos10(i, iAngle) - sin10(j, iAngle)) + ioff;
+   //   y=::i32(sin10(i, iAngle) + cos10(j, iAngle)) + joff;
    //   m_pcolorref[(j+joff)*cx+(i+ioff)]=
    //   pimage->m_pcolorref[abs(y%cy)*cx+abs(x%cx)];
    //   //k++;
@@ -631,23 +631,23 @@ namespace draw2d_directx11
    //   (j+joff)*cx+(i+ioff)
    //   }*/
 
-   //   int k = 0;
-   //   double dCos = ::cos(dAngle * dPi / 180.0) * dScale;
-   //   double dSin = ::sin(dAngle * dPi / 180.0) * dScale;
-   //   int cx1 = this->cx - 1;
-   //   int cy1 = this->cy - 1;
-   //   for ( int j=jmin; j<jmax; j++ )
+   //   ::i32 k = 0;
+   //   ::f64 dCos = ::cos(dAngle * dPi / 180.0) * dScale;
+   //   ::f64 dSin = ::sin(dAngle * dPi / 180.0) * dScale;
+   //   ::i32 cx1 = this->cx - 1;
+   //   ::i32 cy1 = this->cy - 1;
+   //   for ( ::i32 j=jmin; j<jmax; j++ )
    //   {
-   //      for ( int i=imin; i<imax; i++ )
+   //      for ( ::i32 i=imin; i<imax; i++ )
    //      {
-   //         int x, y;
+   //         ::i32 x, y;
 
    //         // A Combination of a 2d Translation/rotation/Scale Matrix
-   //         //x=abs((int(dCos * i - dSin * j) + ioff) % cx);
-   //         //y=abs((int(dSin * i + dCos * j) + joff) % cy);
+   //         //x=abs((::i32(dCos * i - dSin * j) + ioff) % cx);
+   //         //y=abs((::i32(dSin * i + dCos * j) + joff) % cy);
 
-   //         x = (int) abs((dCos * i - dSin * j) + ioff);
-   //         y = (int) abs((dSin * i + dCos * j) + joff);
+   //         x = (::i32) abs((dCos * i - dSin * j) + ioff);
+   //         y = (::i32) abs((dSin * i + dCos * j) + joff);
 
    //         if((x / cx) % 2 == 0)
    //         {
@@ -676,30 +676,30 @@ namespace draw2d_directx11
    //   }
    //}
 
-   /*int image::cos(int i, int iAngle)
+   /*::i32 image::cos(::i32 i, ::i32 iAngle)
    {
-   return (int) (((_int64) i * CosN[iAngle]) >> 32);
+   return (::i32) (((_int64) i * CosN[iAngle]) >> 32);
    }
 
-   int image::sin(int i, int iAngle)
+   ::i32 image::sin(::i32 i, ::i32 iAngle)
    {
-   return (int) (((_int64) i * SinN[iAngle]) >> 32);
+   return (::i32) (((_int64) i * SinN[iAngle]) >> 32);
    }*/
 
 
 
 
-   /*void image::Fill (int A, int R, int G, int B )
+   /*void image::Fill (::i32 A, ::i32 R, ::i32 G, ::i32 B )
    {
    ::color::color color = rgb ( B, G, R ) | (A << 24);
-   int i32_size=stride*cy;
+   ::i32 i32_size=stride*cy;
 
    ::color::color * pcr;
 
    map();
 
-   int iSize32 = size / 32;
-   int i;
+   ::i32 iSize32 = size / 32;
+   ::i32 i;
    for (i=0; i < iSize32; i+=32 )
    {
    pcr = &m_pcolorref[i];
@@ -747,22 +747,22 @@ namespace draw2d_directx11
 
    //::color::color image::GetAverageColor()
    //{
-   //   double dR = 0.0;
-   //   double dG = 0.0;
-   //   double dB = 0.0;
-   //   int iRLine;
-   //   int iGLine;
-   //   int iBLine;
-   //   double dDiv = cx * cy;
+   //   ::f64 dR = 0.0;
+   //   ::f64 dG = 0.0;
+   //   ::f64 dB = 0.0;
+   //   ::i32 iRLine;
+   //   ::i32 iGLine;
+   //   ::i32 iBLine;
+   //   ::f64 dDiv = cx * cy;
    //   if(dDiv > 0)
    //   {
-   //      unsigned char * lpb = (unsigned char *) m_pcolorref;
-   //      for (int y = 0; y < cy; y++)
+   //      ::u8 * lpb = (::u8 *) m_pcolorref;
+   //      for (::i32 y = 0; y < cy; y++)
    //      {
    //         iRLine = 0;
    //         iGLine = 0;
    //         iBLine = 0;
-   //         for (int x = 0; x < cx; x++)
+   //         for (::i32 x = 0; x < cx; x++)
    //         {
    //            iRLine += lpb[2];
    //            iGLine += lpb[1];
@@ -773,9 +773,9 @@ namespace draw2d_directx11
    //         dG += iGLine / dDiv;
    //         dB += iBLine / dDiv;
    //      }
-   //      int iR = (int) dR;
-   //      int iG = (int) dG;
-   //      int iB = (int) dB;
+   //      ::i32 iR = (::i32) dR;
+   //      ::i32 iG = (::i32) dG;
+   //      ::i32 iB = (::i32) dB;
    //      return rgb(iR, iG, iB);
    //   }
    //   else
@@ -793,10 +793,10 @@ namespace draw2d_directx11
    //   {
    //      return;
    //   }
-   //   int iCount = cx * cy;
+   //   ::i32 iCount = cx * cy;
    //   LPDWORD lpd1 = (LPDWORD) m_pcolorref;
    //   LPDWORD lpd2 = (LPDWORD) pimage->get_data();
-   //   for(int i = 0; i < iCount; i++)
+   //   for(::i32 i = 0; i < iCount; i++)
    //   {
    //      *lpd1 = *lpd1 ^ *lpd2;
    //      lpd1++;
@@ -804,30 +804,30 @@ namespace draw2d_directx11
    //   }
    //}
 
-   //void image::create_frame(::i32_size size, int iFrameCount)
+   //void image::create_frame(::i32_size size, ::i32 iFrameCount)
    //{
-   //   int iSliceCount = (int) sqrt((double) iFrameCount);
-   //   int iFrameWidth = size.cx / iSliceCount;
-   //   int iFrameHeight = size.cy / iSliceCount;
+   //   ::i32 iSliceCount = (::i32) sqrt((::f64) iFrameCount);
+   //   ::i32 iFrameWidth = size.cx / iSliceCount;
+   //   ::i32 iFrameHeight = size.cy / iSliceCount;
    //   create(iFrameWidth, iFrameHeight);
    //}
 
-   //void image::set_frame1(void * lpdata, int iFrame, int iFrameCount)
+   //void image::set_frame1(void * lpdata, ::i32 iFrame, ::i32 iFrameCount)
    //{
-   //   int iSliceCount = (int) sqrt((double) iFrameCount);
+   //   ::i32 iSliceCount = (::i32) sqrt((::f64) iFrameCount);
    //   if(iSliceCount == 0)
    //      iSliceCount = 1;
-   //   int iFrameWidth = cx / iSliceCount;
-   //   int iFrameHeight = cy / iSliceCount;
-   //   int iX = iFrame % iSliceCount;
-   //   int iY = iFrame / iSliceCount;
+   //   ::i32 iFrameWidth = cx / iSliceCount;
+   //   ::i32 iFrameHeight = cy / iSliceCount;
+   //   ::i32 iX = iFrame % iSliceCount;
+   //   ::i32 iY = iFrame / iSliceCount;
    //   ::color::color * lpDest = &m_pcolorref[iFrameWidth * iX + iY * iFrameHeight * cx];
    //   ::color::color * lpSrc = (::color::color *) lpdata;
    //   ::color::color * lpDestLine;
-   //   for(int y = 0; y < iFrameHeight; y++)
+   //   for(::i32 y = 0; y < iFrameHeight; y++)
    //   {
    //      lpDestLine = &lpDest[y * cx];
-   //      for(int x = 0; x < iFrameWidth; x++)
+   //      for(::i32 x = 0; x < iFrameWidth; x++)
    //      {
    //         *lpDestLine = *lpSrc;
    //         lpDestLine++;
@@ -836,24 +836,24 @@ namespace draw2d_directx11
    //   }
    //}
 
-   //void image::set_frame2(void * lpdata, int iFrame, int iFrameCount)
+   //void image::set_frame2(void * lpdata, ::i32 iFrame, ::i32 iFrameCount)
    //{
    //   if(lpdata == nullptr)
    //      return;
-   //   int iSliceCount = (int) sqrt((double) iFrameCount);
+   //   ::i32 iSliceCount = (::i32) sqrt((::f64) iFrameCount);
    //   if(iSliceCount == 0)
    //      iSliceCount = 1;
-   //   int iFrameWidth = cx / iSliceCount;
-   //   int iFrameHeight = cy / iSliceCount;
-   //   int iX = iFrame % iSliceCount;
-   //   int iY = iFrame / iSliceCount;
+   //   ::i32 iFrameWidth = cx / iSliceCount;
+   //   ::i32 iFrameHeight = cy / iSliceCount;
+   //   ::i32 iX = iFrame % iSliceCount;
+   //   ::i32 iY = iFrame / iSliceCount;
    //   ::color::color * lpDest = &m_pcolorref[iFrameWidth * iX + iY * iFrameHeight * cx];
    //   ::color::color * lpSrc = (::color::color *) lpdata;
    //   ::color::color * lpDestLine;
-   //   for(int y = iFrameHeight - 1; y >= 0; y--)
+   //   for(::i32 y = iFrameHeight - 1; y >= 0; y--)
    //   {
    //      lpDestLine = &lpDest[y * cx];
-   //      for(int x = 0; x < iFrameWidth; x++)
+   //      for(::i32 x = 0; x < iFrameWidth; x++)
    //      {
    //         *lpDestLine = *lpSrc;
    //         lpDestLine++;
@@ -862,24 +862,24 @@ namespace draw2d_directx11
    //   }
    //}
 
-   //void image::xor_image_frame2(void * lpdata, int iFrame, int iFrameCount)
+   //void image::xor_image_frame2(void * lpdata, ::i32 iFrame, ::i32 iFrameCount)
    //{
    //   if(lpdata == nullptr)
    //      return;
-   //   int iSliceCount = (int) sqrt((double) iFrameCount);
+   //   ::i32 iSliceCount = (::i32) sqrt((::f64) iFrameCount);
    //   if(iSliceCount == 0)
    //      iSliceCount = 1;
-   //   int iFrameWidth = cx / iSliceCount;
-   //   int iFrameHeight = cy / iSliceCount;
-   //   int iX = iFrame % iSliceCount;
-   //   int iY = iFrame / iSliceCount;
+   //   ::i32 iFrameWidth = cx / iSliceCount;
+   //   ::i32 iFrameHeight = cy / iSliceCount;
+   //   ::i32 iX = iFrame % iSliceCount;
+   //   ::i32 iY = iFrame / iSliceCount;
    //   ::color::color * lpDest = &m_pcolorref[iFrameWidth * iX + iY * iFrameHeight * cx];
    //   ::color::color * lpSrc = (::color::color *) lpdata;
    //   ::color::color * lpDestLine;
-   //   for(int y = iFrameHeight - 1; y >= 0; y--)
+   //   for(::i32 y = iFrameHeight - 1; y >= 0; y--)
    //   {
    //      lpDestLine = &lpDest[y * cx];
-   //      for(int x = 0; x < iFrameWidth; x++)
+   //      for(::i32 x = 0; x < iFrameWidth; x++)
    //      {
    //         *lpDestLine ^= *lpSrc;
    //         lpDestLine++;
@@ -888,20 +888,20 @@ namespace draw2d_directx11
    //   }
    //}
 
-   //void image::get_frame(void * lpdata, int iFrame, int iFrameCount)
+   //void image::get_frame(void * lpdata, ::i32 iFrame, ::i32 iFrameCount)
    //{
-   //   int iSliceCount = (int) sqrt((double) iFrameCount);
-   //   int iFrameWidth = cx / iSliceCount;
-   //   int iFrameHeight = cy / iSliceCount;
-   //   int iX = iFrame % iSliceCount;
-   //   int iY = iFrame / iSliceCount;
+   //   ::i32 iSliceCount = (::i32) sqrt((::f64) iFrameCount);
+   //   ::i32 iFrameWidth = cx / iSliceCount;
+   //   ::i32 iFrameHeight = cy / iSliceCount;
+   //   ::i32 iX = iFrame % iSliceCount;
+   //   ::i32 iY = iFrame / iSliceCount;
    //   ::color::color * lpSrc = &m_pcolorref[iFrameWidth * iX + iY * iFrameHeight *  cx];
    //   ::color::color * lpDest = (::color::color *) lpdata;
    //   ::color::color * lpSrcLine;
-   //   for(int y = 0; y < iFrameHeight; y++)
+   //   for(::i32 y = 0; y < iFrameHeight; y++)
    //   {
    //      lpSrcLine = &lpSrc[y * cx];
-   //      for(int x = 0; x < iFrameWidth; x++)
+   //      for(::i32 x = 0; x < iFrameWidth; x++)
    //      {
    //         *lpDest = *lpSrcLine;
    //         lpDest++;
@@ -912,9 +912,9 @@ namespace draw2d_directx11
 
    //bool image::is_rgb_black()
    //{
-   //   int iSize = cx * cy;
+   //   ::i32 iSize = cx * cy;
    //   ::color::color * lp = m_pcolorref;
-   //   for(int i = 0; i < iSize; i++)
+   //   for(::i32 i = 0; i < iSize; i++)
    //   {
    //      if((*lp & 0x00FFFFFF) != 0)
    //         return false;
@@ -923,90 +923,90 @@ namespace draw2d_directx11
    //   return true;
    //}
 
-   //void image::DivideRGB(int iDivide)
+   //void image::DivideRGB(::i32 iDivide)
    //{
    //   if(iDivide == 0)
    //   {
    //      return;
    //   }
-   //   int iCount = cx * cy;
-   //   unsigned char * lp = ((unsigned char *) m_pcolorref);
-   //   int i = 0;
-   //   int iCount1 = iCount - iCount % 8;
+   //   ::i32 iCount = cx * cy;
+   //   ::u8 * lp = ((::u8 *) m_pcolorref);
+   //   ::i32 i = 0;
+   //   ::i32 iCount1 = iCount - iCount % 8;
    //   for(; i < iCount1; i++)
    //   {
-   //      lp[0] /= (unsigned char) iDivide;
-   //      lp[1] /= (unsigned char) iDivide;
-   //      lp[2] /= (unsigned char) iDivide;
+   //      lp[0] /= (::u8) iDivide;
+   //      lp[1] /= (::u8) iDivide;
+   //      lp[2] /= (::u8) iDivide;
 
-   //      lp[4] /= (unsigned char) iDivide;
-   //      lp[5] /= (unsigned char) iDivide;
-   //      lp[6] /= (unsigned char) iDivide;
+   //      lp[4] /= (::u8) iDivide;
+   //      lp[5] /= (::u8) iDivide;
+   //      lp[6] /= (::u8) iDivide;
 
-   //      lp[8] /= (unsigned char) iDivide;
-   //      lp[9] /= (unsigned char) iDivide;
-   //      lp[10] /= (unsigned char) iDivide;
+   //      lp[8] /= (::u8) iDivide;
+   //      lp[9] /= (::u8) iDivide;
+   //      lp[10] /= (::u8) iDivide;
 
-   //      lp[12] /= (unsigned char) iDivide;
-   //      lp[13] /= (unsigned char) iDivide;
-   //      lp[14] /= (unsigned char) iDivide;
+   //      lp[12] /= (::u8) iDivide;
+   //      lp[13] /= (::u8) iDivide;
+   //      lp[14] /= (::u8) iDivide;
 
-   //      lp[16] /= (unsigned char) iDivide;
-   //      lp[17] /= (unsigned char) iDivide;
-   //      lp[28] /= (unsigned char) iDivide;
+   //      lp[16] /= (::u8) iDivide;
+   //      lp[17] /= (::u8) iDivide;
+   //      lp[28] /= (::u8) iDivide;
 
-   //      lp[20] /= (unsigned char) iDivide;
-   //      lp[21] /= (unsigned char) iDivide;
-   //      lp[22] /= (unsigned char) iDivide;
+   //      lp[20] /= (::u8) iDivide;
+   //      lp[21] /= (::u8) iDivide;
+   //      lp[22] /= (::u8) iDivide;
 
-   //      lp[24] /= (unsigned char) iDivide;
-   //      lp[25] /= (unsigned char) iDivide;
-   //      lp[26] /= (unsigned char) iDivide;
+   //      lp[24] /= (::u8) iDivide;
+   //      lp[25] /= (::u8) iDivide;
+   //      lp[26] /= (::u8) iDivide;
 
-   //      lp[28] /= (unsigned char) iDivide;
-   //      lp[29] /= (unsigned char) iDivide;
-   //      lp[30] /= (unsigned char) iDivide;
+   //      lp[28] /= (::u8) iDivide;
+   //      lp[29] /= (::u8) iDivide;
+   //      lp[30] /= (::u8) iDivide;
 
    //      lp += 4 * 8;
    //   }
    //   for(; i < iCount; i++)
    //   {
-   //      lp[0] /= (unsigned char) iDivide;
-   //      lp[1] /= (unsigned char) iDivide;
-   //      lp[2] /= (unsigned char) iDivide;
+   //      lp[0] /= (::u8) iDivide;
+   //      lp[1] /= (::u8) iDivide;
+   //      lp[2] /= (::u8) iDivide;
    //      lp +=4;
    //   }
    //}
 
-   //void image::DivideARGB(int iDivide)
+   //void image::DivideARGB(::i32 iDivide)
    //{
    //   if(iDivide == 0)
    //   {
    //      return;
    //   }
-   //   int iCount = cx * cy;
-   //   unsigned char * lp = ((unsigned char *) m_pcolorref);
-   //   for(int i = 0; i < iCount; i++)
+   //   ::i32 iCount = cx * cy;
+   //   ::u8 * lp = ((::u8 *) m_pcolorref);
+   //   for(::i32 i = 0; i < iCount; i++)
    //   {
-   //      lp[0] /= (unsigned char) iDivide;
-   //      lp[1] /= (unsigned char) iDivide;
-   //      lp[2] /= (unsigned char) iDivide;
-   //      lp[3] /= (unsigned char) iDivide;
+   //      lp[0] /= (::u8) iDivide;
+   //      lp[1] /= (::u8) iDivide;
+   //      lp[2] /= (::u8) iDivide;
+   //      lp[3] /= (::u8) iDivide;
    //      lp +=4;
    //   }
    //}
 
-   //void image::DivideA(int iDivide)
+   //void image::DivideA(::i32 iDivide)
    //{
    //   if(iDivide == 0)
    //   {
    //      return;
    //   }
-   //   int iCount = cx * cy;
-   //   unsigned char * lp = ((unsigned char *) m_pcolorref);
-   //   for(int i = 0; i < iCount; i++)
+   //   ::i32 iCount = cx * cy;
+   //   ::u8 * lp = ((::u8 *) m_pcolorref);
+   //   for(::i32 i = 0; i < iCount; i++)
    //   {
-   //      lp[3] /= (unsigned char) iDivide;
+   //      lp[3] /= (::u8) iDivide;
    //      lp +=4;
    //   }
    //}
@@ -1244,12 +1244,12 @@ namespace draw2d_directx11
    }
 
 
-   /*   int image::cx
+   /*   ::i32 image::cx
    {
    return cx;
    }
 
-   int image::cy
+   ::i32 image::cy
    {
    return cy;
    }*/
@@ -1433,7 +1433,7 @@ namespace draw2d_directx11
 
    }
 
-   /*   int image::scan()
+   /*   ::i32 image::scan()
    {
 
    return scan;
@@ -1463,7 +1463,7 @@ namespace draw2d_directx11
    //}
 
 
-   void image::blend(const ::i32_point & pointDst, ::image::image * pimageSrc, const ::i32_point & pointSrc, const ::i32_size & sizeParam, unsigned char bA)
+   void image::blend(const ::i32_point & pointDst, ::image::image * pimageSrc, const ::i32_point & pointSrc, const ::i32_size & sizeParam, ::u8 bA)
    {
 
       //return 
@@ -1554,9 +1554,9 @@ namespace draw2d_directx11
 
       //   }
 
-      //   D2D1_RECT_F rectangleTarget = D2D1::RectF((float)pointDst.x, (float)pointDst.y, (float)(pointDst.x + size.cx), (float)(pointDst.y + size.cy));
+      //   D2D1_RECT_F rectangleTarget = D2D1::RectF((::f32)pointDst.x, (::f32)pointDst.y, (::f32)(pointDst.x + size.cx), (::f32)(pointDst.y + size.cy));
 
-      //   D2D1_RECT_F rectangleSource = D2D1::RectF((float)pointSrc.x, (float)pointSrc.y, (float)(pointSrc.x + size.cx), (float)(pointSrc.y + size.cy));
+      //   D2D1_RECT_F rectangleSource = D2D1::RectF((::f32)pointSrc.x, (::f32)pointSrc.y, (::f32)(pointSrc.x + size.cx), (::f32)(pointSrc.y + size.cy));
 
       //   HRESULT hr = ((ID2D1DeviceContext *)pgraphicsMap->get_os_data())->EndDraw();
 
@@ -1666,7 +1666,7 @@ namespace draw2d_directx11
       //pgraphicsDib1->m_pdevicecontext->DrawImage(
       //pimage->get_bitmap()->get_os_data< ID2D1Bitmap>(),
       //D2D1::Point2F(0.f, 0.f),
-      //d2d1::float_rectangle(rectangleDib1),
+      //d2d1::f32_rectangle(rectangleDib1),
       //D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR,
       //D2D1_COMPOSITE_MODE_SOU_IN);
 

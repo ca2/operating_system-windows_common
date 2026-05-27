@@ -91,12 +91,12 @@
 /////  \lparam		duration sleeping time of matter
 ///*CLASS_DECL_ACME void sleep(const duration & duration)
 //{
-//   sleep((unsigned int)duration.total_milliseconds());
+//   sleep((::u32)duration.total_milliseconds());
 //}*/
 //
 //CLASS_DECL_ACME void sleep(const duration & duration)
 //{
-//   ::sleep(static_cast<unsigned int>(duration.total_milliseconds()));
+//   ::sleep(static_cast<::u32>(duration.total_milliseconds()));
 //}
 //
 //void * matter::get_os_data() const
@@ -183,7 +183,7 @@
 //
 //}
 //
-//bool matter::unlock(int lCount, LPLONG pPrevCount)
+//bool matter::unlock(::i32 lCount, LPLONG pPrevCount)
 
 //{
 //   __UNREFERENCED_PARAMETER(lCount);

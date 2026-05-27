@@ -11,15 +11,15 @@ WCHAR szTitle[MAX_LOADSTRING];                  // The title bar text
 
 // Forward declarations of functions included in this code module:
 CLASS_DECL_ACME ATOM                MyRegisterClass(HINSTANCE hInstance);
-BOOL                InitInstance(HINSTANCE, int);
-LRESULT CALLBACK    WndProc(HWND, unsigned int, WPARAM, LPARAM);
-INT_PTR CALLBACK    About(HWND, unsigned int, WPARAM, LPARAM);
+BOOL                InitInstance(HINSTANCE, ::i32);
+LRESULT CALLBACK    WndProc(HWND, ::u32, WPARAM, LPARAM);
+INT_PTR CALLBACK    About(HWND, ::u32, WPARAM, LPARAM);
 
-////int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
+////::i32 APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 ////   _In_opt_ HINSTANCE hPrevInstance,
 ////   _In_ LPWSTR    lpCmdLine,
-////   _In_ int       nCmdShow)
-//   int windows_desktop1_main(HINSTANCE hInstance,int       nCmdShow)
+////   _In_ ::i32       nCmdShow)
+//   ::i32 windows_desktop1_main(HINSTANCE hInstance,::i32       nCmdShow)
 //{
 //   //__UNREFERENCED_PARAMETER(hPrevInstance);
 //   //__UNREFERENCED_PARAMETER(lpCmdLine);
@@ -51,7 +51,7 @@ INT_PTR CALLBACK    About(HWND, unsigned int, WPARAM, LPARAM);
 //      }
 //   }
 //
-//   return (int)msg.wParam;
+//   return (::i32)msg.wParam;
 //}
 //
 
@@ -85,7 +85,7 @@ CLASS_DECL_ACME ATOM MyRegisterClass(HINSTANCE hInstance)
 }
 
 //
-//   FUNCTION: InitInstance(HINSTANCE, int)
+//   FUNCTION: InitInstance(HINSTANCE, ::i32)
 //
 //   PURPOSE: Saves instance handle and creates main window
 //
@@ -94,7 +94,7 @@ CLASS_DECL_ACME ATOM MyRegisterClass(HINSTANCE hInstance)
 //        In this function, we save the instance handle in a global variable and
 //        create and display the main program window.
 //
-//BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
+//BOOL InitInstance(HINSTANCE hInstance, ::i32 nCmdShow)
 //{
 //   hInst = hInstance; // Store instance handle in our global variable
 //
@@ -113,7 +113,7 @@ CLASS_DECL_ACME ATOM MyRegisterClass(HINSTANCE hInstance)
 //}
 
 //
-//  FUNCTION: WndProc(HWND, unsigned int, WPARAM, LPARAM)
+//  FUNCTION: WndProc(HWND, ::u32, WPARAM, LPARAM)
 //
 //  PURPOSE: Processes messages for the main window.
 //
@@ -122,7 +122,7 @@ CLASS_DECL_ACME ATOM MyRegisterClass(HINSTANCE hInstance)
 //  e_message_destroy  - post a quit message and return
 //
 //
-LRESULT CALLBACK WndProc(HWND hWnd, unsigned int message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK WndProc(HWND hWnd, ::u32 message, WPARAM wParam, LPARAM lParam)
 {
    switch (message)
    {
@@ -145,7 +145,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, unsigned int message, WPARAM wParam, LPARAM 
 }
 
 // Message handler for about box.
-INT_PTR CALLBACK About(HWND hDlg, unsigned int message, WPARAM wParam, LPARAM lParam)
+INT_PTR CALLBACK About(HWND hDlg, ::u32 message, WPARAM wParam, LPARAM lParam)
 {
    
    __UNREFERENCED_PARAMETER(lParam);

@@ -18,7 +18,7 @@ dxgi_surface_bindable::~dxgi_surface_bindable()
 }
 
 
-void dxgi_surface_bindable::_bind(int iIndex, int iLayerIndex, IDXGISurface* psurface)
+void dxgi_surface_bindable::_bind(::i32 iIndex, ::i32 iLayerIndex, IDXGISurface* psurface)
 {
 
    throw ::interface_only();

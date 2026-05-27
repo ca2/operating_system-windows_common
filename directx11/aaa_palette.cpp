@@ -42,7 +42,7 @@ namespace draw2d_directx11
       return false;
 
    }
-   unsigned int palette::GetPaletteEntries(unsigned int nStartIndex, unsigned int nNumEntries,
+   ::u32 palette::GetPaletteEntries(::u32 nStartIndex, ::u32 nNumEntries,
                                    LPPALETTEENTRY lpPaletteColors) const
    {
 
@@ -56,7 +56,7 @@ namespace draw2d_directx11
       return 0;
 
    }
-   unsigned int palette::SetPaletteEntries(unsigned int nStartIndex, unsigned int nNumEntries,
+   ::u32 palette::SetPaletteEntries(::u32 nStartIndex, ::u32 nNumEntries,
                                    LPPALETTEENTRY lpPaletteColors)
    {
 //#ifdef WINDOWS_DESKTOP
@@ -69,7 +69,7 @@ namespace draw2d_directx11
       return 0;
 
    }
-   void palette::AnimatePalette(unsigned int nStartIndex, unsigned int nNumEntries,
+   void palette::AnimatePalette(::u32 nStartIndex, ::u32 nNumEntries,
                                 LPPALETTEENTRY lpPaletteColors)
    {
       throw ::exception(todo);
@@ -79,7 +79,7 @@ namespace draw2d_directx11
 
    }
 
-   unsigned int palette::GetNearestPaletteIndex(color32_t crColor) const
+   ::u32 palette::GetNearestPaletteIndex(color32_t crColor) const
    {
 
       throw ::exception(todo);
@@ -88,7 +88,7 @@ namespace draw2d_directx11
       */
    }
 
-   bool palette::ResizePalette(unsigned int nNumEntries)
+   bool palette::ResizePalette(::u32 nNumEntries)
    {
       throw ::exception(todo);
 
@@ -96,12 +96,12 @@ namespace draw2d_directx11
       //return ::ResizePalette((HPALETTE)get_os_data(), nNumEntries) != false;
    }
 
-   int palette::GetEntryCount()
+   ::i32 palette::GetEntryCount()
    {
       throw ::exception(todo);
 
-      //   ASSERT(get_os_data() != nullptr); unsigned short nEntries;
-      //::GetObject((HANDLE) get_os_data(), sizeof(unsigned short), &nEntries); return (int)nEntries;
+      //   ASSERT(get_os_data() != nullptr); ::u16 nEntries;
+      //::GetObject((HANDLE) get_os_data(), sizeof(::u16), &nEntries); return (::i32)nEntries;
 
    }
 

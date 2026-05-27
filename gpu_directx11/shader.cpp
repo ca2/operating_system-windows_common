@@ -51,7 +51,7 @@ namespace gpu_directx11
       comptr<ID3DBlob> pblobShader;
       comptr<ID3DBlob> pblobError;
 
-      auto data = (const_char_pointer)block.data();
+      auto data = (const_char_pointer )block.data();
 
       auto size = block.size();
 
@@ -74,7 +74,7 @@ namespace gpu_directx11
          if (pblobError)
          {
 
-            ::string strError((const_char_pointer)pblobError->GetBufferPointer(), pblobError->GetBufferSize());
+            ::string strError((const_char_pointer )pblobError->GetBufferPointer(), pblobError->GetBufferSize());
 
             warning() << strError;
 
@@ -92,7 +92,7 @@ namespace gpu_directx11
       comptr<ID3DBlob> pblobShader;
       comptr<ID3DBlob> pblobError;
 
-      auto data = (const_char_pointer)block.data();
+      auto data = (const_char_pointer )block.data();
 
       auto size = block.size();
 
@@ -115,7 +115,7 @@ namespace gpu_directx11
          if (pblobError)
          {
 
-            ::string strError((const_char_pointer)pblobError->GetBufferPointer(), pblobError->GetBufferSize());
+            ::string strError((const_char_pointer )pblobError->GetBufferPointer(), pblobError->GetBufferSize());
 
             warning() << strError;
 
@@ -150,12 +150,12 @@ namespace gpu_directx11
       // if (countInputLayout > 0)
       //{
 
-      //   int iSemanticIndex = 0;
-      //   int iInputSlot = 0;
+      //   ::i32 iSemanticIndex = 0;
+      //   ::i32 iInputSlot = 0;
       //   D3D11_INPUT_CLASSIFICATION classification = D3D11_INPUT_PER_VERTEX_DATA;
       //   UINT DataStepRate = 0;
-      //   int iOffset = 0;
-      //   int iNextOffset = 0;
+      //   ::i32 iOffset = 0;
+      //   ::i32 iNextOffset = 0;
 
       //   for (::collection::index iInputLayout = 0; iInputLayout < countInputLayout; iInputLayout++)
       //   {
@@ -397,7 +397,7 @@ namespace gpu_directx11
    //}
 
 
-   void shader::bind_source(::gpu::command_buffer *pgpucommandbuffer, ::gpu::texture *pgputextureSource, int iSlot)
+   void shader::bind_source(::gpu::command_buffer *pgpucommandbuffer, ::gpu::texture *pgputextureSource, ::i32 iSlot)
    {
 
       ::cast<context> pgpucontext = m_pgpurenderer->m_pgpucontext;
@@ -831,7 +831,7 @@ namespace gpu_directx11
             throw ::hresult_exception(hr);
          }
 
-         m_iSizeSharedPushConstants = (int)m_propertiesPushShared.size(false);
+         m_iSizeSharedPushConstants = (::i32)m_propertiesPushShared.size(false);
       }
 
       // PushConstants pc = { XMFLOAT4(1, 0, 0, 1), currentTime };
@@ -888,11 +888,11 @@ namespace gpu_directx11
    }
 
 
-   void shader::bind_slot_set(::gpu::command_buffer *pgpucommandbuffer, int iSet,
+   void shader::bind_slot_set(::gpu::command_buffer *pgpucommandbuffer, ::i32 iSet,
                               ::gpu::binding_slot_set *pgpubindingslotset)
    {
 
-      int iSlotIndex = -1;
+      ::i32 iSlotIndex = -1;
 
       for (auto &bindingslot: *pgpubindingslotset)
       {
@@ -906,7 +906,7 @@ namespace gpu_directx11
 
             auto pbuffer = pblock->m_pbuffer;
 
-            int iBinding = bindingslot.m_pbinding->m_iBindingPoint2;
+            ::i32 iBinding = bindingslot.m_pbinding->m_iBindingPoint2;
 
             ::cast<::gpu_directx11::context> pcontext =
                pgpucommandbuffer->m_pgpurendertarget->m_pgpurenderer->m_pgpucontext;
@@ -921,7 +921,7 @@ namespace gpu_directx11
 
             ::cast<::gpu_directx11::texture> ptexture = bindingslot.m_ptexture;
 
-            int iBinding = bindingslot.m_pbinding->m_iBindingPoint2;
+            ::i32 iBinding = bindingslot.m_pbinding->m_iBindingPoint2;
 
             ::cast<context> pgpucontext = m_pgpurenderer->m_pgpucontext;
 

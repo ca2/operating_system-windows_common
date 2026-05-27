@@ -27,11 +27,11 @@ namespace gpu_directx11
 
       //private:
       //   ::pointer < context > m_pgpucontext;
-      //   ::map_base < unsigned int, VkDescriptorSetLayoutBinding> bindings{};
+      //   ::map_base < ::u32, VkDescriptorSetLayoutBinding> bindings{};
       //};
 
       //descriptor_set_layout(
-        //  context * pvkcdevice, ::map_base<unsigned int, VkDescriptorSetLayoutBinding> bindings);
+        //  context * pvkcdevice, ::map_base<::u32, VkDescriptorSetLayoutBinding> bindings);
       descriptor_set_layout();
       ~descriptor_set_layout();
 
@@ -39,7 +39,7 @@ namespace gpu_directx11
 
       ::pointer < context > m_pgpucontext;
       //aaaVkDescriptorSetLayout descriptorSetLayout;
-      //::map_base<unsigned int, VkDescriptorSetLayoutBinding> bindings;
+      //::map_base<::u32, VkDescriptorSetLayoutBinding> bindings;
 
    };
 

@@ -98,7 +98,7 @@ namespace acme_windows_common
       wstring pszFileName(path);
 
 
-      unsigned int wAttr;
+      ::u32 wAttr;
       FILETIME creationTime;
       FILETIME lastAccessTime;
       FILETIME lastWriteTime;
@@ -108,7 +108,7 @@ namespace acme_windows_common
 
       LPFILETIME pLastWriteTime = nullptr;
 
-      if ((wAttr = ::windows::get_file_attributes(path)) == (unsigned int)INVALID_FILE_ATTRIBUTES)
+      if ((wAttr = ::windows::get_file_attributes(path)) == (::u32)INVALID_FILE_ATTRIBUTES)
       {
 
          auto lasterror = ::windows::get_last_error();
@@ -121,7 +121,7 @@ namespace acme_windows_common
 
       }
 
-      if ((unsigned int)status.m_attribute != wAttr && (wAttr & FILE_ATTRIBUTE_READONLY))
+      if ((::u32)status.m_attribute != wAttr && (wAttr & FILE_ATTRIBUTE_READONLY))
       {
          
          // set file attribute, only if currently readonly.
@@ -224,7 +224,7 @@ namespace acme_windows_common
 
       }
 
-      if ((unsigned int)status.m_attribute != wAttr && !(wAttr & FILE_ATTRIBUTE_READONLY))
+      if ((::u32)status.m_attribute != wAttr && !(wAttr & FILE_ATTRIBUTE_READONLY))
       {
 
          ::windows::set_file_attributes(path, status.m_attribute);
@@ -259,9 +259,9 @@ namespace acme_windows_common
       //FindClose(hFind);
 
       // strip attribute of NORMAL bit, our API doesn't have a "normal" bit.
-      rStatus.m_attribute = (unsigned char)(findfile.m_finddata.dwFileAttributes & ~FILE_ATTRIBUTE_NORMAL);
+      rStatus.m_attribute = (::u8)(findfile.m_finddata.dwFileAttributes & ~FILE_ATTRIBUTE_NORMAL);
 
-      // get just the low unsigned int of the file i32_size
+      // get just the low ::u32 of the file i32_size
       //ASSERT(findFileData.nFileSizeHigh == 0);
       rStatus.m_filesize = (::filesize)make64_from32(findfile.m_finddata.nFileSizeLow, findfile.m_finddata.nFileSizeHigh);
 

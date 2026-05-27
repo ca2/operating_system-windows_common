@@ -109,19 +109,19 @@ namespace gpu_directx11
       }
 
 
-      // unsigned int brdf_convolution_framebuffer::getWidth()
+      // ::u32 brdf_convolution_framebuffer::getWidth()
       // {
       //    return width;
       // }
       //
       //
-      // unsigned int brdf_convolution_framebuffer::getHeight()
+      // ::u32 brdf_convolution_framebuffer::getHeight()
       // {
       //    return height;
       // }
       //
 
-      //unsigned int brdf_convolution_framebuffer::getColorTextureId()
+      //::u32 brdf_convolution_framebuffer::getColorTextureId()
       //{::cast < gpu_directx11::texture>ptexture = m_ptexture;
       //   return ptexture->m_gluTextureID;
       //}

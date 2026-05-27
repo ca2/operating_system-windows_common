@@ -216,7 +216,7 @@ namespace gpu_directx11
       
       {
 
-         float blendFactor[4] = { 0, 0, 0, 0 }; // Not used
+         ::f32 blendFactor[4] = { 0, 0, 0, 0 }; // Not used
          UINT sampleMask = 0xFFFFFFFF;
          pgpucontext->m_pcontext->OMSetBlendState(m_pblendstateDisabled, blendFactor, sampleMask);
 
@@ -302,8 +302,8 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       D3D11_VIEWPORT vp = {};
       vp.TopLeftX = 0;
       vp.TopLeftY = 0;
-      vp.Width = static_cast<float>(m_size.cx);
-      vp.Height = static_cast<float>(m_size.cy);
+      vp.Width = static_cast<::f32>(m_size.cx);
+      vp.Height = static_cast<::f32>(m_size.cy);
       vp.MinDepth = 0.0f;
       vp.MaxDepth = 1.0f;
       pgpucontext->m_pcontext->RSSetViewports(1, &vp);
@@ -335,7 +335,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       //rect.right = 200;
       //rect.bottom = 200;
 
-      //float clearColor[4] = { 0.5f * 0.5f,0.75f * 0.5f, 0.95f * 0.5f, 0.5f }; 
+      //::f32 clearColor[4] = { 0.5f * 0.5f,0.75f * 0.5f, 0.95f * 0.5f, 0.5f }; 
 
       //pgpucontext->m_pcontext1->ClearView(m_ptextureSwapChain->m_prendertargetview, clearColor, &rect, 1);
 

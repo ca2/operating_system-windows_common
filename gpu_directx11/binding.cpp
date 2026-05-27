@@ -96,7 +96,7 @@ namespace gpu_vulkan
 
       auto pdescriptorpoolbuilder = allocateø::gpu_vulkan::descriptor_pool::Builder();
 
-      int iFrameCount = pgpucommandbuffer->m_pgpurendertarget->get_frame_count();
+      ::i32 iFrameCount = pgpucommandbuffer->m_pgpurendertarget->get_frame_count();
 
       pdescriptorpoolbuilder->initialize_builder(pcontext);
       pdescriptorpoolbuilder->setMaxSets(iFrameCount * 10);
@@ -120,7 +120,7 @@ namespace gpu_vulkan
                                                         ::array_base<VkDescriptorBufferInfo> &bufferinfoa)
    {
 
-      for (int i = 0; i < bufferinfoa.size(); i++)
+      for (::i32 i = 0; i < bufferinfoa.size(); i++)
       {
 
          descriptor_writer(*m_pdescriptorsetlayout1, *m_pdescriptorpool)
@@ -149,7 +149,7 @@ namespace gpu_vulkan
 //      //                  VK_SHADER_STAGE_FRAGMENT_BIT)
 //      //      .build();
 
-//      int iFrameCount = m_pgpurenderer->m_pgpurendertarget->get_frame_count();
+//      ::i32 iFrameCount = m_pgpurenderer->m_pgpurendertarget->get_frame_count();
 
 //      auto pdescriptorpoolbuilder = allocateø::gpu_vulkan::descriptor_pool::Builder();
 
@@ -169,7 +169,7 @@ namespace gpu_vulkan
 //                        VK_SHADER_STAGE_FRAGMENT_BIT)
 //            .build();
 
-//      int iFrameCount = m_pgpurenderer->m_pgpurendertarget->get_frame_count();
+//      ::i32 iFrameCount = m_pgpurenderer->m_pgpurendertarget->get_frame_count();
 
 //      auto pdescriptorpoolbuilder = allocateø::gpu_vulkan::descriptor_pool::Builder();
 
@@ -191,7 +191,7 @@ namespace gpu_vulkan
 //                        VK_SHADER_STAGE_FRAGMENT_BIT)
 //            .build();
 
-//      int iFrameCount = m_pgpurenderer->m_pgpurendertarget->get_frame_count();
+//      ::i32 iFrameCount = m_pgpurenderer->m_pgpurendertarget->get_frame_count();
 
 //      auto pdescriptorpoolbuilder = allocateø::gpu_vulkan::descriptor_pool::Builder();
 
@@ -213,7 +213,7 @@ namespace gpu_vulkan
 //                        VK_SHADER_STAGE_FRAGMENT_BIT)
 //            .build();
 
-//      int iFrameCount = m_pgpurenderer->m_pgpurendertarget->get_frame_count();
+//      ::i32 iFrameCount = m_pgpurenderer->m_pgpurendertarget->get_frame_count();
 
 //      auto pdescriptorpoolbuilder = allocateø::gpu_vulkan::descriptor_pool::Builder();
 
@@ -225,14 +225,14 @@ namespace gpu_vulkan
 //   }
 //}
 
-//_create_pipeline_layout((int)m_propertiesPush.m_memory.size());
+//_create_pipeline_layout((::i32)m_propertiesPush.m_memory.size());
 
 // ::cast < context > pgpucontext = m_pgpurenderer->m_pgpucontext;
 //
 // ::cast < device > pgpudevice = pgpucontext->m_pgpudevice;
 
 
-// for (int i = 0; i < this->size(); i++)
+// for (::i32 i = 0; i < this->size(); i++)
 //{
 
 

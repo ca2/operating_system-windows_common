@@ -136,7 +136,7 @@ namespace gpu_directx11
                throw ::exception(error_wrong_state);
             }
 
-            for (int i = 0; i < 6; ++i)
+            for (::i32 i = 0; i < 6; ++i)
             {
 
                auto pimage = imagea[i];
@@ -411,11 +411,11 @@ namespace gpu_directx11
             if (m_rendertargetview2a.is_empty())
             {
                m_rendertargetview2a.set_size(m_textureattributes.m_iMipCount);
-               for (int iMip = 0; iMip < m_textureattributes.m_iMipCount; iMip++)
+               for (::i32 iMip = 0; iMip < m_textureattributes.m_iMipCount; iMip++)
                {
                   m_rendertargetview2a[iMip].set_size(6);
 
-                  for (int i = 0; i < 6; i++)
+                  for (::i32 i = 0; i < 6; i++)
                   {
                      D3D11_RENDER_TARGET_VIEW_DESC rtvDesc = {};
                      rtvDesc.Format = m_texture2ddesc.Format;
@@ -516,7 +516,7 @@ namespace gpu_directx11
          depthDesc.Height = size.cy;
          depthDesc.MipLevels = 1;
          depthDesc.ArraySize = 1;
-         int MorePrecisionNoStencil = 1;
+         ::i32 MorePrecisionNoStencil = 1;
          if (MorePrecisionNoStencil)
          {
 
@@ -591,7 +591,7 @@ namespace gpu_directx11
       // depthImageMemorys.resize(imageCount());
       // depthImageViews.resize(imageCount());
 
-      // for (int i = 0; i < depthImages.size(); i++)
+      // for (::i32 i = 0; i < depthImages.size(); i++)
       //{
 
       //   VkImageCreateInfo imageInfo{};
@@ -747,12 +747,12 @@ namespace gpu_directx11
 
 
    void texture::initialize_with_image_data(::gpu::context *pgpucontext, const ::i32_rectangle &rectangleTarget,
-                                            int channels, bool bSrgb, const void *pdata, ::gpu::enum_texture etexture)
+                                            ::i32 channels, bool bSrgb, const void *pdata, ::gpu::enum_texture etexture)
    {
       m_pgpucontext = pgpucontext;
       auto width = rectangleTarget.width();
       auto height = rectangleTarget.height();
-      auto imagedata = (unsigned char *)pdata;
+      auto imagedata = (::u8 *)pdata;
 
       // m_etexture = etype;
       m_textureattributes.m_rectangleTarget = rectangleTarget;
@@ -786,21 +786,21 @@ namespace gpu_directx11
 
       rgbaData->swap_red_blue(width, height);
 
-      //int h = height;
-      //int w = width;
+      //::i32 h = height;
+      //::i32 w = width;
       //auto p = rgbaData;
 
-      // int halfw = w / 2;
+      // ::i32 halfw = w / 2;
       // for (size_t y = 0; y < h; y++)
       // {
       //    auto pline = p + y * width * 4;
       //    for (size_t x = 0; x < halfw; x++)
       //    {
-      //       swap(((unsigned int *)pline)[x], ((unsigned int *)pline)[w - x - 1]);
+      //       swap(((::u32 *)pline)[x], ((::u32 *)pline)[w - x - 1]);
       //    }
       // }
 
-      // int halfh = h / 2;
+      // ::i32 halfh = h / 2;
       //::memory memoryLine;
       // memoryLine.set_size(width * 4);
       // p = buffer;
@@ -883,7 +883,7 @@ namespace gpu_directx11
 
       auto size = block.size();
 
-      int width, height, channels;
+      ::i32 width, height, channels;
 
       //stbi_set_flip_vertically_on_load(1);
       stbi_set_flip_vertically_on_load(0);
@@ -924,13 +924,13 @@ namespace gpu_directx11
       texDesc.CPUAccessFlags = 0;
       texDesc.MiscFlags = 0;
       memory memory;
-      float *rgbaData = nullptr;
+      ::f32 *rgbaData = nullptr;
       if (channels != 4)
       {
 
          size_t pixelCount = (size_t)width * height;
-         memory.set_size(pixelCount * 4 * sizeof(float));
-         rgbaData = (float *)memory.data();
+         memory.set_size(pixelCount * 4 * sizeof(::f32));
+         rgbaData = (::f32 *)memory.data();
 
          if (channels == 3)
          {
@@ -965,7 +965,7 @@ namespace gpu_directx11
       // Fill subresource data
       D3D11_SUBRESOURCE_DATA initData = {};
       initData.pSysMem = (const void *)(rgbaData ? rgbaData : imagedata);
-      initData.SysMemPitch = width * 4 * sizeof(float); // 4 floats per pixel
+      initData.SysMemPitch = width * 4 * sizeof(::f32); // 4 floats per pixel
       initData.SysMemSlicePitch = 0;
 
       HRESULT hr = pgpudevice->m_pd3d11device->CreateTexture2D(&texDesc, &initData, &m_ptextureOffscreen);
@@ -979,12 +979,12 @@ namespace gpu_directx11
       // glBindTexture(m_gluType, m_gluTextureID);
       // GLCheckError("");
 
-      // float *rgbaData = nullptr;
+      // ::f32 *rgbaData = nullptr;
       // if (channels == 3)
       //{
 
       //   size_t pixelCount = (size_t)width * height;
-      //   rgbaData = (float *)malloc(pixelCount * 4 * sizeof(float));
+      //   rgbaData = (::f32 *)malloc(pixelCount * 4 * sizeof(::f32));
 
       //   for (size_t i = 0; i < pixelCount; ++i)
       //   {
@@ -1022,7 +1022,7 @@ namespace gpu_directx11
 
 
 
-   ID3D11RenderTargetView *texture::render_target_view(int iFace, int iMip)
+   ID3D11RenderTargetView *texture::render_target_view(::i32 iFace, ::i32 iMip)
    {
 
       //auto iIndex = render_target_view_index(iFace, iMip);

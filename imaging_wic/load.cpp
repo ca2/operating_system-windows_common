@@ -156,7 +156,7 @@ namespace imaging_wic
 
       }
 
-      int iOrientation = -1;
+      ::i32 iOrientation = -1;
 
       {
 
@@ -275,9 +275,9 @@ namespace imaging_wic
 
       }
 
-      unsigned int uWidth;
+      ::u32 uWidth;
 
-      unsigned int uHeight;
+      ::u32 uHeight;
 
       hr = piBmp->GetSize(&uWidth, &uHeight);
 
@@ -306,7 +306,7 @@ namespace imaging_wic
 
       }
 
-      unsigned int cbStride;
+      ::u32 cbStride;
 
       piLock->GetStride(&cbStride);
 
@@ -317,9 +317,9 @@ namespace imaging_wic
 
       }
 
-      unsigned int uArea;
+      ::u32 uArea;
 
-      unsigned char * pData;
+      ::u8 * pData;
 
       hr = piLock->GetDataPointer(&uArea, &pData);
 
@@ -330,7 +330,7 @@ namespace imaging_wic
 
       }
 
-      pimageFrame->create({ (int)uWidth, (int)uHeight });
+      pimageFrame->create({ (::i32)uWidth, (::i32)uHeight });
 
       if (pimageFrame->area() <= 0)
       {
@@ -504,9 +504,9 @@ namespace imaging_wic
 
    //   comptr < IWICStream > piStream = nullptr;
 
-   //   unsigned int uWidth = pimage->width();
+   //   ::u32 uWidth = pimage->width();
 
-   //   unsigned int uHeight = pimage->height();
+   //   ::u32 uHeight = pimage->height();
 
    //   HRESULT hr = CoCreateInstance(
    //      CLSID_WICImagingFactory,
@@ -690,7 +690,7 @@ namespace imaging_wic
    //         if (SUCCEEDED(hr))
    //         {
 
-   //            hr = piBitmapFrame->WritePixels(uHeight, pimage->scan_size(), uHeight * pimage->scan_size(), (unsigned char *)pcr);
+   //            hr = piBitmapFrame->WritePixels(uHeight, pimage->scan_size(), uHeight * pimage->scan_size(), (::u8 *)pcr);
 
    //         }
 
@@ -709,7 +709,7 @@ namespace imaging_wic
    //               GUID_WICPixelFormat32bppBGRA,
    //               pimage->scan_size(),
    //               pimage->scan_size() * pimage->height(),
-   //               (unsigned char *)pcr,
+   //               (::u8 *)pcr,
    //               &pbitmap
    //            );
 

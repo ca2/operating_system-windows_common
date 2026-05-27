@@ -138,7 +138,7 @@ namespace gpu_directx11
       //      m_pframebufferPrefilteredEnvMap->set_current_mip(iMip);
 
       //      // each mip level has increasing roughness
-      //      float roughness = (float)iMip / (float)(m_iPrefilteredEnvMapMipCount - 1);
+      //      ::f32 roughness = (::f32)iMip / (::f32)(m_iPrefilteredEnvMapMipCount - 1);
 
       //      m_pshaderPrefilteredEnvMap->set_float("roughness", roughness);
 
@@ -269,9 +269,9 @@ namespace gpu_directx11
       //   //   auto *pixel = reinterpret_cast<const uint16_t *>(rowPtr); // 16-bit floats
       //   //   for (UINT x = 0; x < minimum(desc.Width, 4u); x++)
       //   //   {
-      //   //      // Convert half to float (quick approximate if no helper)
-      //   //      float r = DirectX::PackedVector::XMConvertHalfToFloat(pixel[0]);
-      //   //      float g = DirectX::PackedVector::XMConvertHalfToFloat(pixel[1]);
+      //   //      // Convert half to ::f32 (quick approximate if no helper)
+      //   //      ::f32 r = DirectX::PackedVector::XMConvertHalfToFloat(pixel[0]);
+      //   //      ::f32 g = DirectX::PackedVector::XMConvertHalfToFloat(pixel[1]);
       //   //      printf("(%f, %f) ", r, g);
       //   //      pixel += 2; // R16G16
       //   //   }
@@ -280,15 +280,15 @@ namespace gpu_directx11
       //   //}
       //   // 5. Print the first few values
       //   //    for DXGI_FORMAT_R32G32_FLOAT
-      //   float *rowPtr = (float*)(mapped.pData);
+      //   ::f32 *rowPtr = (::f32*)(mapped.pData);
       //   for (UINT y = 0; y < minimum(desc.Height, 4u); y++) // print first 4 rows
       //   {
       //      auto *pixel = rowPtr; // 32-bit floats
       //      for (UINT x = 0; x < minimum(desc.Width, 4u); x++)
       //      {
-      //         // Convert half to float (quick approximate if no helper)
-      //         float r = pixel[0];
-      //         float g = pixel[1];
+      //         // Convert half to ::f32 (quick approximate if no helper)
+      //         ::f32 r = pixel[0];
+      //         ::f32 g = pixel[1];
       //         informationf("(%f, %f) ", r, g);
       //         pixel += 2; // R32G32
       //      }

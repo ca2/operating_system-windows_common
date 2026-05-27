@@ -10,15 +10,15 @@ namespace directx11
    {
 
 
-      CLASS_DECL_DIRECTX11 comptr<ID2D1RectangleGeometry> create_rectangle(const ::float_rectangle & rectangle);
-      CLASS_DECL_DIRECTX11 comptr<ID2D1EllipseGeometry> create_ellipse(const ::float_ellipse & ellipse);
-      CLASS_DECL_DIRECTX11 comptr<ID2D1PathGeometry> create_polygon(const ::double_polygon & polygon, bool bFilled = true);
-      CLASS_DECL_DIRECTX11 comptr<ID2D1PathGeometry> create_poly_polygon(const ::double_poly_polygon & polygon, bool bFilled = true);
+      CLASS_DECL_DIRECTX11 comptr<ID2D1RectangleGeometry> create_rectangle(const ::f32_rectangle & rectangle);
+      CLASS_DECL_DIRECTX11 comptr<ID2D1EllipseGeometry> create_ellipse(const ::f32_ellipse & ellipse);
+      CLASS_DECL_DIRECTX11 comptr<ID2D1PathGeometry> create_polygon(const ::f64_polygon & polygon, bool bFilled = true);
+      CLASS_DECL_DIRECTX11 comptr<ID2D1PathGeometry> create_poly_polygon(const ::f64_poly_polygon & polygon, bool bFilled = true);
 
-      CLASS_DECL_DIRECTX11 void add_rectangle(ID2D1GeometrySink * pgeometrysink, const ::double_rectangle & rectangle);
-      CLASS_DECL_DIRECTX11 void add_ellipse(ID2D1GeometrySink * pgeometrysink, const ::double_ellipse & ellipse, bool bFilled = true);
-      CLASS_DECL_DIRECTX11 void add_polygon(ID2D1GeometrySink * pgeometrysink, const ::double_polygon & polygon, bool bFilled = true);
-      CLASS_DECL_DIRECTX11 void add_poly_polygon(ID2D1GeometrySink * pgeometrysink, const ::double_poly_polygon & polygon, bool bFilled = true);
+      CLASS_DECL_DIRECTX11 void add_rectangle(ID2D1GeometrySink * pgeometrysink, const ::f64_rectangle & rectangle);
+      CLASS_DECL_DIRECTX11 void add_ellipse(ID2D1GeometrySink * pgeometrysink, const ::f64_ellipse & ellipse, bool bFilled = true);
+      CLASS_DECL_DIRECTX11 void add_polygon(ID2D1GeometrySink * pgeometrysink, const ::f64_polygon & polygon, bool bFilled = true);
+      CLASS_DECL_DIRECTX11 void add_poly_polygon(ID2D1GeometrySink * pgeometrysink, const ::f64_poly_polygon & polygon, bool bFilled = true);
 
 
    } // namespace geometry

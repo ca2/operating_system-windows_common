@@ -59,7 +59,7 @@ namespace directx11
       //ID2D1DeviceContext* default_d2d1_device_context();
 
 
-      //comptr < ID2D1PathGeometry1 > create_rectangle_path_geometry(const ::double_rectangle & rectangle);
+      //comptr < ID2D1PathGeometry1 > create_rectangle_path_geometry(const ::f64_rectangle & rectangle);
 
       virtual IDXGIDevice * _get_dxgi_device();
 

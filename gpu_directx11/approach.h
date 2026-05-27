@@ -87,7 +87,7 @@ namespace gpu_directx11
       //CommandLineParser commandLineParser;
 
       /** @brief Last frame time measured using a high performance timer (if available) */
-      //float                            m_fFrameTimer = 1.0f;
+      //::f32                            m_fFrameTimer = 1.0f;
 
       ::pointer < benchmark >          m_pbenchmark;
 
@@ -135,9 +135,9 @@ namespace gpu_directx11
 
       //// Defines a frame rate independent timer value clamped from -1.0...1.0
       //// For use in animations, rotations, etc.
-      //float m_fTimer = 0.0f;
+      //::f32 m_fTimer = 0.0f;
       //// Multiplier for speeding up (or slowing down) the global timer
-      //float m_fTimerSpeed = 0.25f;
+      //::f32 m_fTimerSpeed = 0.25f;
       //bool m_bPaused = false;
 
       //::pointer < camera > m_pcamera;
@@ -165,7 +165,7 @@ namespace gpu_directx11
 //         int32_t y;
 //      } touchPos{};
 //      bool touchDown = false;
-//      double touchTimer = 0.0;
+//      ::f64 touchTimer = 0.0;
 //      int64_t lastTapTime = 0;
 //#elif (defined(VK_USE_PLATFORM_IOS_MVK) || defined(VK_USE_PLATFORM_MACOS_MVK) || defined(VK_USE_PLATFORM_METAL_EXT))
 //      void * view;
@@ -231,12 +231,12 @@ namespace gpu_directx11
       //::i32_size                        m_sizeNew;
       //::i32_size                        m_size;
       //HDC                           m_hdcGraphics;
-      //float                         m_z;
+      //::f32                         m_z;
       //i32_point                         m_pointTranslate;
       //::pointer<::directx11::buffer>  m_pbuffer;
       //::pointer<::directx11::program> m_pprogram;
-      //unsigned int                  VAO;
-      //unsigned int                  VBO;
+      //::u32                  VAO;
+      //::u32                  VBO;
 
 
       approach();
@@ -258,7 +258,7 @@ namespace gpu_directx11
       //::pointer < ::gpu::context > start_gpu_context(const ::gpu::start_context_t & startcontext) override;
 
 
-      int fread(void * data, int c, int s ,::file::file* pfile);
+      ::i32 fread(void * data, ::i32 c, ::i32 s ,::file::file* pfile);
 
       virtual void defer_init_gpu_library() override;
 

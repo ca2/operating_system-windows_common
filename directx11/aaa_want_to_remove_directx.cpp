@@ -30,7 +30,7 @@ namespace draw2d_directx11
    }
 
    // Initialize the DirectX resources required to run.
-   void directx::Initialize(float dpi)
+   void directx::Initialize(::f32 dpi)
    {
       CreateDeviceIndependentResources();
       CreateDeviceResources();
@@ -42,7 +42,7 @@ namespace draw2d_directx11
    void directx::HandleDeviceLost()
    {
       // Reset these member variables to ensure that SetDpi recreates all resources.
-      float dpi = m_dpi;
+      ::f32 dpi = m_dpi;
       m_dpi = -1.0f;
       m_windowBounds.Width = 0;
       m_windowBounds.Height = 0;
@@ -110,7 +110,7 @@ namespace draw2d_directx11
    {
       // This flag adds support for surfaces with a different color channel ordering
       // than the API default. It is required for compatibility with Direct2D.
-      unsigned int creationFlags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
+      ::u32 creationFlags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
       ComPtr<IDXGIDevice> dxgiDevice;
 
 #if defined(_DEBUG)
@@ -199,7 +199,7 @@ namespace draw2d_directx11
 
    // Helps track the DPI in the helper class.
    // This is called in the dpiChanged happening handler in the impact class.
-   void directx::SetDpi(float dpi)
+   void directx::SetDpi(::f32 dpi)
    {
       if (dpi != m_dpi)
       {
@@ -238,8 +238,8 @@ namespace draw2d_directx11
 
       psystem->m_puserinteraction->m_rectangleParentClient.left     = 0;
       psystem->m_puserinteraction->m_rectangleParentClient.top      = 0;
-      psystem->m_puserinteraction->m_rectangleParentClient.right    = (long long) m_window.Bounds.Width;
-      psystem->m_puserinteraction->m_rectangleParentClient.bottom   = (long long) m_window.Bounds.Height;
+      psystem->m_puserinteraction->m_rectangleParentClient.right    = (::i64) m_window.Bounds.Width;
+      psystem->m_puserinteraction->m_rectangleParentClient.bottom   = (::i64) m_window.Bounds.Height;
       */
    }
 
@@ -279,7 +279,7 @@ namespace draw2d_directx11
          swapChainDesc.SampleDesc.Count = 1;                          // Don't use multi-sampling.
          swapChainDesc.SampleDesc.Quality = 0;
          swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-         swapChainDesc.BufferCount = 2;                               // Use double-buffering to minimize latency.
+         swapChainDesc.BufferCount = 2;                               // Use ::f64-buffering to minimize latency.
          swapChainDesc.Scaling = DXGI_SCALING_NONE;
          swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL; // All Metro style apps must use this SwapEffect.
          swapChainDesc.Flags = 0;
@@ -334,12 +334,12 @@ namespace draw2d_directx11
       // Cache the rendertarget dimensions in our helper class for convenient use.
       D3D11_TEXTURE2D_DESC backBufferDesc = {0};
       backBuffer->GetDesc(&backBufferDesc);
-      m_renderTargetSize.Width  = static_cast<float>(backBufferDesc.Width);
-      m_renderTargetSize.Height = static_cast<float>(backBufferDesc.Height);
+      m_renderTargetSize.Width  = static_cast<::f32>(backBufferDesc.Width);
+      m_renderTargetSize.Height = static_cast<::f32>(backBufferDesc.Height);
 
       // Create a depth stencil impact for use with 3D rendering if needed.
       CD3D11_TEXTURE2D_DESC depthStencilDesc(
-         DXGI_FORMAT_D24_UNORM_S8_unsigned int,
+         DXGI_FORMAT_D24_UNORM_S8_unsigned ::i32,
          backBufferDesc.Width,
          backBufferDesc.Height,
          1,
@@ -369,8 +369,8 @@ namespace draw2d_directx11
       CD3D11_VIEWPORT viewport(
          0.0f,
          0.0f,
-         static_cast<float>(backBufferDesc.Width),
-         static_cast<float>(backBufferDesc.Height)
+         static_cast<::f32>(backBufferDesc.Width),
+         static_cast<::f32>(backBufferDesc.Height)
          );
 
       m_d3dContext->RSSetViewports(1, &viewport);
@@ -583,7 +583,7 @@ namespace draw2d_directx11
          if (m_windowSizeChangeInProgress)
          {
             // A window size change has been initiated and the app has just completed presenting
-            // the first frame with the ___new size. Notify the resize manager so we can short
+            // the first frame with the ___new size. Notify the resize manager so we can ::i16
             // circuit any resize animation and prevent unnecessary delays.
             CoreWindowResizeManager::GetForCurrentView()->NotifyLayoutCompleted();
             m_windowSizeChangeInProgress = false;

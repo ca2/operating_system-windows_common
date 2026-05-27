@@ -24,7 +24,7 @@
 //
 //      ::gpu::element             m_ibo_elements;
 //
-//      ::array<unsigned short>    m_indices;
+//      ::array<::u16>    m_indices;
 //      ::array<::floating_sequence3>       m_vertices;
 //      ::array<::floating_sequence2>       m_uvs;
 //      ::array<::floating_sequence3>       m_normals;

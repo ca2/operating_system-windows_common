@@ -8,8 +8,8 @@
 //
 //struct CLASS_DECL_ACME __MAP_MESSAGE
 //{
-//   unsigned int    nMsg;
-//   const char *  pszMsg;
+//   ::u32    nMsg;
+//   const ::i8 *  pszMsg;
 
 //};
 //
@@ -220,7 +220,7 @@ void TraceDDE(const ::scoped_string & scopedstrPrefix, const MSG* pMsg)
       }
       ASSERT(hCommands != nullptr);
 
-      const char * pszCommands = (const ::string &)::GlobalLock(hCommands);
+      const ::i8 * pszCommands = (const ::string &)::GlobalLock(hCommands);
 
       ENSURE_THROW(pszCommands != nullptr, throw ::exception(error_no_memory));
 
@@ -256,9 +256,9 @@ void TraceDDE(const ::scoped_string & scopedstrPrefix, const MSG* pMsg)
 
       wchar_t szFormat[80];
       szFormat[0] = '\0';
-      if (((unsigned int)0xC000 <= (unsigned int)pAdvise->cfFormat) &&
+      if (((::u32)0xC000 <= (::u32)pAdvise->cfFormat) &&
 
-            ((unsigned int)pAdvise->cfFormat <= (unsigned int)0xFFFF))
+            ((::u32)pAdvise->cfFormat <= (::u32)0xFFFF))
 
       {
          ::GetClipboardFormatNameW(pAdvise->cfFormat,

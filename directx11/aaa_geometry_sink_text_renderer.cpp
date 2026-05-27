@@ -20,7 +20,7 @@
 #pragma warning( disable: 4073 )  // initializers put in library initialization area
 #pragma init_seg( lib )
 
-extern int __abi___threading_model;
+extern ::i32 __abi___threading_model;
 //__abi_Module* __abi_module = nullptr;
 
 #undef Platform
@@ -58,14 +58,14 @@ namespace Platform {
 
 
       // Forward declarations from vccorlib DLL
-      HRESULT InitializeData(int __threading_model);
-      void UninitializeData(int __threading_model);
+      HRESULT InitializeData(::i32 __threading_model);
+      void UninitializeData(::i32 __threading_model);
 
       //Initializaton forwarders
       void __cdecl Cleanup();
 
       // Initialize MoCOM data and clean up handlers
-//		int __cdecl Initialize()
+//		::i32 __cdecl Initialize()
 //		{
 //			//Global initialization
 ///*			HRESULT hr = InitializeData(__abi___threading_model);

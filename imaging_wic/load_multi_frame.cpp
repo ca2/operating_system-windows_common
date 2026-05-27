@@ -13,7 +13,7 @@
 
    // 0xAARRGGBB WICColor
 
-   return argb(((unsigned char *)&color)[3], ((unsigned char *)&color)[2], ((unsigned char *)&color)[1], ((unsigned char *)&color)[0]);
+   return argb(((::u8 *)&color)[3], ((::u8 *)&color)[2], ((::u8 *)&color)[1], ((::u8 *)&color)[0]);
 
 }
 
@@ -26,7 +26,7 @@
 
 //namespac
 //
-//CLASS_DECL_ACME void cra_from_quada(color_array& colora, WINRGBQUAD* prgbquad, int iCount);
+//CLASS_DECL_ACME void cra_from_quada(color_array& colora, WINRGBQUAD* prgbquad, ::i32 iCount);
 
 
 namespace imaging_wic
@@ -34,7 +34,7 @@ namespace imaging_wic
 
    comptr < IWICImagingFactory > get_imaging_factory();
 
-   //bool draw2d_gif_load_frame(::image::image * pimageCanvas, image_frame_array * pframea, ::image::image_frame * pframe, int uFrameIndex, unsigned char * ba, int iScan, color_array & colora, int transparentIndex);
+   //bool draw2d_gif_load_frame(::image::image * pimageCanvas, image_frame_array * pframea, ::image::image_frame * pframe, ::i32 uFrameIndex, ::u8 * ba, ::i32 iScan, color_array & colora, ::i32 transparentIndex);
    bool windows_image_from_bitmap_source(::image::image * pimage, IWICBitmapSource * pbitmapsource, IWICImagingFactory * pimagingfactory);
    ::color::color windows_image_metadata_get_background_color(IWICMetadataQueryReader * pqueryreader, IWICBitmapDecoder * pbitmapdecoder, IWICImagingFactory * pimagingfactory);
 
@@ -85,7 +85,7 @@ namespace imaging_wic
 
          {
 
-            unsigned int uCount = 0;
+            ::u32 uCount = 0;
 
             hr = pbitmapdecoder->GetFrameCount(&uCount);
 
@@ -219,7 +219,7 @@ namespace imaging_wic
 
                comptr<IWICMetadataQueryReader > pqueryreader;
 
-               HRESULT hr = pbitmapdecoder->GetFrame((unsigned int)iFrame, &pframedecode);
+               HRESULT hr = pbitmapdecoder->GetFrame((::u32)iFrame, &pframedecode);
 
                if (SUCCEEDED(hr))
                {
@@ -269,7 +269,7 @@ namespace imaging_wic
                      if (SUCCEEDED(hr))
                      {
 
-                        pframe->m_rectangle.left = static_cast<int>(propValue.uiVal);
+                        pframe->m_rectangle.left = static_cast<::i32>(propValue.uiVal);
 
                      }
 
@@ -294,7 +294,7 @@ namespace imaging_wic
                      if (SUCCEEDED(hr))
                      {
 
-                        pframe->m_rectangle.top = static_cast<int>(propValue.uiVal);
+                        pframe->m_rectangle.top = static_cast<::i32>(propValue.uiVal);
 
                      }
 
@@ -319,7 +319,7 @@ namespace imaging_wic
                      if (SUCCEEDED(hr))
                      {
 
-                        pframe->m_rectangle.right = static_cast<int>(propValue.uiVal) + pframe->m_rectangle.left;
+                        pframe->m_rectangle.right = static_cast<::i32>(propValue.uiVal) + pframe->m_rectangle.left;
 
                      }
 
@@ -344,7 +344,7 @@ namespace imaging_wic
                      if (SUCCEEDED(hr))
                      {
 
-                        pframe->m_rectangle.bottom = static_cast<int>(propValue.uiVal) + pframe->m_rectangle.top;
+                        pframe->m_rectangle.bottom = static_cast<::i32>(propValue.uiVal) + pframe->m_rectangle.top;
 
                      }
 
@@ -369,7 +369,7 @@ namespace imaging_wic
                      {
 
                         // Convert the delay retrieved in 10 ms units to a delay in 1 ms units
-                        unsigned int uDelayMilliseconds;
+                        ::u32 uDelayMilliseconds;
 
                         hr = UIntMult(propValue.uiVal, 10, &uDelayMilliseconds);
 
@@ -415,7 +415,7 @@ namespace imaging_wic
 
                   PropVariantInit(&propValue);
 
-                  int iDisposal = -1;
+                  ::i32 iDisposal = -1;
 
                   if (SUCCEEDED(pqueryreader->GetMetadataByName(
                      L"/grctlext/Disposal",
@@ -485,7 +485,7 @@ namespace imaging_wic
       comptr< IWICBitmapFrameDecode> & pframe,
       IWICImagingFactory * pimagingfactory,
       IWICBitmapDecoder * pbitmapdecoder,
-      int iFrame)
+      ::i32 iFrame)
    {
 
       try
@@ -514,17 +514,17 @@ namespace imaging_wic
          if (px == GUID_WICPixelFormat32bppRGBA)
          {
 
-            unsigned int width = 0;
+            ::u32 width = 0;
 
-            unsigned int height = 0;
+            ::u32 height = 0;
 
             pframe->GetSize(&width, &height);
 
-            pimage->create({(int) width, (int)height });
+            pimage->create({(::i32) width, (::i32)height });
 
             pimage->map();
 
-            hr = pframe->CopyPixels(nullptr, pimage->scan_size(), pimage->scan_size() * height, (unsigned char *)pimage->data());
+            hr = pframe->CopyPixels(nullptr, pimage->scan_size(), pimage->scan_size() * height, (::u8 *)pimage->data());
 
    #ifdef UNIVERSAL_WINDOWS
             //pimage->mult_alpha();
@@ -534,9 +534,9 @@ namespace imaging_wic
          else if (px == GUID_WICPixelFormat32bppBGRA)
          {
 
-            unsigned int width = 0;
+            ::u32 width = 0;
 
-            unsigned int height = 0;
+            ::u32 height = 0;
 
             pframe->GetSize(&width, &height);
 
@@ -544,7 +544,7 @@ namespace imaging_wic
 
             pimage->map();
 
-            hr = pframe->CopyPixels(nullptr, pimage->scan_size(), pimage->scan_size() * height, (unsigned char *)pimage->data());
+            hr = pframe->CopyPixels(nullptr, pimage->scan_size(), pimage->scan_size() * height, (::u8 *)pimage->data());
    #ifdef UNIVERSAL_WINDOWS
             //pimage->mult_alpha();
    #endif
@@ -571,18 +571,18 @@ namespace imaging_wic
             }
 
             //Step 4: Create render target and D2D bitmap from IWICBitmapSource
-            unsigned int width = 0;
-            unsigned int height = 0;
+            ::u32 width = 0;
+            ::u32 height = 0;
             if (SUCCEEDED(hr))
             {
                hr = pbitmap->GetSize(&width, &height);
             }
 
-            pimage->create({ (int)width, (int)height });
+            pimage->create({ (::i32)width, (::i32)height });
 
             pimage->map();
 
-            hr = pbitmap->CopyPixels(nullptr, pimage->scan_size(), pimage->scan_size() * height, (unsigned char *)pimage->data());
+            hr = pbitmap->CopyPixels(nullptr, pimage->scan_size(), pimage->scan_size() * height, (::u8 *)pimage->data());
 
 
          }
@@ -603,11 +603,11 @@ namespace imaging_wic
 
    HRESULT windows_image_get_frame(::image::image * pimageCompose,
       WICColor * rgColors,
-      int iUsed,
+      ::i32 iUsed,
       ::image::image_frame_array * pframea,
       IWICImagingFactory * pimagingfactory,
       IWICBitmapDecoder * pbitmapdecoder,
-      unsigned int uFrameIndex)
+      ::u32 uFrameIndex)
    {
 
       ::pointer<::image::image_frame>pframe = pframea->element_at(uFrameIndex);
@@ -641,9 +641,9 @@ namespace imaging_wic
 
       }
 
-      unsigned int width = 0;
+      ::u32 width = 0;
 
-      unsigned int height = 0;
+      ::u32 height = 0;
 
       if (SUCCEEDED(hr))
       {
@@ -652,7 +652,7 @@ namespace imaging_wic
 
       }
 
-      pframe->m_pimage->create({ (int)width, (int)height });
+      pframe->m_pimage->create({ (::i32)width, (::i32)height });
 
       pframe->m_pimage->map();
 
@@ -660,7 +660,7 @@ namespace imaging_wic
 
       ba.set_size((memsize)pframe->m_pimage->area());
 
-      hr = pbitmap->CopyPixels(nullptr, pframe->m_pimage->width(), (unsigned int)ba.size(), (unsigned char *)ba.data());
+      hr = pbitmap->CopyPixels(nullptr, pframe->m_pimage->width(), (::u32)ba.size(), (::u8 *)ba.data());
 
       if (FAILED(hr))
       {
@@ -789,7 +789,7 @@ namespace imaging_wic
             if (SUCCEEDED(hr))
             {
 
-               unsigned int uMilliseconds;
+               ::u32 uMilliseconds;
 
                // Convert the delay retrieved in 10 ms units to a delay in 1 ms units
                hr = UIntMult(propValue.uiVal, 10, &uMilliseconds);
@@ -868,7 +868,7 @@ namespace imaging_wic
 
       }
 
-      int transparentIndex = -1;
+      ::i32 transparentIndex = -1;
 
       hr = S_OK;
 
@@ -974,7 +974,7 @@ namespace imaging_wic
 
       }
 
-      //if (!draw2d_gif_load_frame(pimageCompose, pframea, pframe, uFrameIndex, (unsigned char *)ba.data(), width, colora, transparentIndex))
+      //if (!draw2d_gif_load_frame(pimageCompose, pframea, pframe, uFrameIndex, (::u8 *)ba.data(), width, colora, transparentIndex))
       //{
 
       //   return false;
@@ -994,10 +994,10 @@ namespace imaging_wic
    ::color::color windows_image_metadata_get_background_color(IWICMetadataQueryReader * pqueryreader, IWICBitmapDecoder * pbitmapdecoder, IWICImagingFactory * pimagingfactory)
    {
 
-      unsigned int dwBGColor;
-      unsigned char backgroundIndex = 0;
+      ::u32 dwBGColor;
+      ::u8 backgroundIndex = 0;
       WICColor rgColors[256];
-      unsigned int cColorsCopied = 0;
+      ::u32 cColorsCopied = 0;
       PROPVARIANT propVariant;
       comptr < IWICPalette > pWicPalette;
 
@@ -1065,7 +1065,7 @@ namespace imaging_wic
          dwBGColor = rgColors[backgroundIndex];
 
          // The background color is in argb format, and we want to
-         // extract the alpha value and convert it to float
+         // extract the alpha value and convert it to ::f32
          crBk = WICColor_color(dwBGColor);
       }
 

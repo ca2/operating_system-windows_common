@@ -27,10 +27,10 @@ namespace gpu_directx11
       {
       public:
 
-         // const unsigned int diffuse_irradiance_mapWidth = 32;
-         // const unsigned int diffuse_irradiance_mapHeight = 32;
+         // const ::u32 diffuse_irradiance_mapWidth = 32;
+         // const ::u32 diffuse_irradiance_mapHeight = 32;
          //
-         // const unsigned int environmentCubemapId;
+         // const ::u32 environmentCubemapId;
          //
          // ::pointer<Shader> diffuseIrradianceShader;
          // ::pointer<cubemap_framebuffer> diffuseIrradianceFramebuffer;
@@ -53,7 +53,7 @@ namespace gpu_directx11
 
          // void initialize_diffuse_irradiance_map(
          //    ::gpu::renderer * pgpurenderer,
-         //    unsigned int uEnvironmentCubemapId) override;
+         //    ::u32 uEnvironmentCubemapId) override;
 
          /**
           * Render the diffuse irradiance map.
@@ -66,7 +66,7 @@ namespace gpu_directx11
           * @return
           */
 
-         //unsigned int getCubemapId();
+         //::u32 getCubemapId();
 
 
       };

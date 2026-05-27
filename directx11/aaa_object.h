@@ -15,9 +15,9 @@ namespace draw2d_directx11
       virtual ~object();
 
 
-      int get_object(int nCount, LPVOID lpObject) const;
-      unsigned int GetObjectType() const;
-      bool CreateStockObject(int nIndex);
+      ::i32 get_object(::i32 nCount, LPVOID lpObject) const;
+      ::u32 GetObjectType() const;
+      bool CreateStockObject(::i32 nIndex);
       bool UnrealizeObject();
       bool operator==(const object& obj) const;
       bool operator!=(const object& obj) const;

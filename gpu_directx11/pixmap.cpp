@@ -82,7 +82,7 @@
 //   }
 //
 //
-//   void pixmap::set_pixels(const void* data, int w, int h)
+//   void pixmap::set_pixels(const void* data, ::i32 w, ::i32 h)
 //   {
 //
 //      ::cast < ::gpu_directx11::context > pcontext = m_pgpurenderer->m_pgpucontext;
@@ -94,10 +94,10 @@
 //
 //      pimage32->copy(::i32_size(w, h), mapped.RowPitch,(const ::image32_t*) data, w * 4);
 //      //// Fill the buffer
-//      //for (int y = 0; y < height; ++y)
+//      //for (::i32 y = 0; y < height; ++y)
 //      //{
 //      //   UINT32* row = (UINT32*)((uint8_t*)mapped.pData + y * mapped.RowPitch);
-//      //   for (int x = 0; x < width; ++x)
+//      //   for (::i32 x = 0; x < width; ++x)
 //      //   {
 //      //      row[x] = 0xFF00FF00; // Green with full alpha
 //      //   }

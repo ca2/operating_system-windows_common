@@ -226,9 +226,9 @@ void MessageIO::ResetMessageBuilding(bool resetMessageType)
    _sendMessageTextBox->Text = L"";
 }
 
-MidiMessageType MessageIO::GetMessageTypeFromIndex(int index)
+MidiMessageType MessageIO::GetMessageTypeFromIndex(::i32 index)
 {
-   int count = 0;
+   ::i32 count = 0;
    MidiMessageType retValue = MidiMessageType::None;
 
    std::for_each(begin(_messageTypeMap), end(_messageTypeMap),
@@ -335,7 +335,7 @@ void MessageIO::OutPortsListSelectionChanged(Platform::Object^ sender, ::winrt::
 
 void MessageIO::MessageTypeSelectionChanged(Platform::Object^ sender, ::winrt::Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e)
 {
-   int typeIndex = _messageTypeComboBox->SelectedIndex;
+   ::i32 typeIndex = _messageTypeComboBox->SelectedIndex;
 
    if (-1 == typeIndex)
    {
@@ -512,8 +512,8 @@ void MessageIO::SendButtonClick(Platform::Object^ sender, ::winrt::Windows::UI::
    {
       DataWriter^ dataWriter = ref ___new DataWriter();
 
-      // expecting a string of format "NN NN NN NN...." where NN is a unsigned char in hex
-      int len = _sendMessageTextBox->Text->Length();
+      // expecting a string of format "NN NN NN NN...." where NN is a ::u8 in hex
+      ::i32 len = _sendMessageTextBox->Text->Length();
       if (0 == len)
       {
          return;
@@ -524,7 +524,7 @@ void MessageIO::SendButtonClick(Platform::Object^ sender, ::winrt::Windows::UI::
 
       do
       {
-         unsigned char midiByte = (unsigned char)wcstoul(startPointer, &endPointer, 16);
+         ::u8 midiByte = (::u8)wcstoul(startPointer, &endPointer, 16);
          if (endPointer == startPointer)
          {
             // conversion failed, bail out
@@ -635,7 +635,7 @@ void MessageIO::UpdateField1UI()
 
       _field1ComboBox->Items->Clear();
 
-      for (int i = 0; i < 16; i++)
+      for (::i32 i = 0; i < 16; i++)
       {
          _field1ComboBox->Items->Append(i);
       }
@@ -650,7 +650,7 @@ void MessageIO::UpdateField1UI()
 
       _field1ComboBox->Items->Clear();
 
-      for (int i = 0; i < 8; i++)
+      for (::i32 i = 0; i < 8; i++)
       {
          _field1ComboBox->Items->Append(i);
       }
@@ -665,7 +665,7 @@ void MessageIO::UpdateField1UI()
 
       _field1ComboBox->Items->Clear();
 
-      for (int i = 0; i < 16384; i++)
+      for (::i32 i = 0; i < 16384; i++)
       {
          _field1ComboBox->Items->Append(i);
       }
@@ -680,7 +680,7 @@ void MessageIO::UpdateField1UI()
 
       _field1ComboBox->Items->Clear();
 
-      for (int i = 0; i < 128; i++)
+      for (::i32 i = 0; i < 128; i++)
       {
          _field1ComboBox->Items->Append(i);
       }
@@ -734,7 +734,7 @@ void MessageIO::UpdateField2UI()
 
       _field2ComboBox->Items->Clear();
 
-      for (int i = 0; i < 128; i++)
+      for (::i32 i = 0; i < 128; i++)
       {
          _field2ComboBox->Items->Append(i);
       }
@@ -749,7 +749,7 @@ void MessageIO::UpdateField2UI()
 
       _field2ComboBox->Items->Clear();
 
-      for (int i = 0; i < 128; i++)
+      for (::i32 i = 0; i < 128; i++)
       {
          _field2ComboBox->Items->Append(i);
       }
@@ -764,7 +764,7 @@ void MessageIO::UpdateField2UI()
 
       _field2ComboBox->Items->Clear();
 
-      for (int i = 0; i < 128; i++)
+      for (::i32 i = 0; i < 128; i++)
       {
          _field2ComboBox->Items->Append(i);
       }
@@ -779,7 +779,7 @@ void MessageIO::UpdateField2UI()
 
       _field2ComboBox->Items->Clear();
 
-      for (int i = 0; i < 128; i++)
+      for (::i32 i = 0; i < 128; i++)
       {
          _field2ComboBox->Items->Append(i);
       }
@@ -794,7 +794,7 @@ void MessageIO::UpdateField2UI()
 
       _field2ComboBox->Items->Clear();
 
-      for (int i = 0; i < 16384; i++)
+      for (::i32 i = 0; i < 16384; i++)
       {
          _field2ComboBox->Items->Append(i);
       }
@@ -809,7 +809,7 @@ void MessageIO::UpdateField2UI()
 
       _field2ComboBox->Items->Clear();
 
-      for (int i = 0; i < 16; i++)
+      for (::i32 i = 0; i < 16; i++)
       {
          _field2ComboBox->Items->Append(i);
       }
@@ -852,7 +852,7 @@ void MessageIO::UpdateField3UI()
 
       _field3ComboBox->Items->Clear();
 
-      for (int i = 0; i < 128; i++)
+      for (::i32 i = 0; i < 128; i++)
       {
          _field3ComboBox->Items->Append(i);
       }
@@ -868,7 +868,7 @@ void MessageIO::UpdateField3UI()
 
       _field3ComboBox->Items->Clear();
 
-      for (int i = 0; i < 128; i++)
+      for (::i32 i = 0; i < 128; i++)
       {
          _field3ComboBox->Items->Append(i);
       }
@@ -884,7 +884,7 @@ void MessageIO::UpdateField3UI()
 
       _field3ComboBox->Items->Clear();
 
-      for (int i = 0; i < 128; i++)
+      for (::i32 i = 0; i < 128; i++)
       {
          _field3ComboBox->Items->Append(i);
       }
@@ -986,7 +986,7 @@ void MessageIO::OnMessageReceived(MidiInPort ^sender, MidiMessageReceivedEventAr
             // prepare SysEx message for printing to the screen.
             // convert bytes to hex strings.
             Array<wchar_t>^ byteInHex = ref ___new Array<wchar_t>(3);
-            unsigned char byteRead = sysExReader->ReadByte();
+            ::u8 byteRead = sysExReader->ReadByte();
 
             swprintf_s(byteInHex->Data, sizeof(byteInHex->Length), L"%02X", byteRead);
             String^ hexString = ref ___new String(byteInHex->Data);
@@ -1114,7 +1114,7 @@ DeviceInformation^ MessageIO::GetDeviceInformationForOutPort(String^ friendlyNam
 
 void MessageIO::CloseInPort(String^ portId)
 {
-   for (unsigned int index = 0; index < _midiInPortArray.Size; index++)
+   for (::u32 index = 0; index < _midiInPortArray.Size; index++)
    {
       if (0 == String::CompareOrdinal(_midiInPortArray.GetAt(index)->DeviceId, portId))
       {
@@ -1127,7 +1127,7 @@ void MessageIO::CloseInPort(String^ portId)
 
 void MessageIO::CloseOutPort(String^ portId)
 {
-   for (unsigned int index = 0; index < _midiOutPortArray.Size; index++)
+   for (::u32 index = 0; index < _midiOutPortArray.Size; index++)
    {
       if (0 == String::CompareOrdinal(_midiOutPortArray.GetAt(index)->DeviceId, portId))
       {
@@ -1194,7 +1194,7 @@ void MessageIO::MidiDeviceWatcher::UpdatePorts()
          _devInfoCollection = deviceInfoCollection;
 
          // Enumerate through the ports and the custom properties
-         for (unsigned int i = 0; i < deviceInfoCollection->Size; i++)
+         for (::u32 i = 0; i < deviceInfoCollection->Size; i++)
          {
             _portListBox->Items->Append(deviceInfoCollection->GetAt(i)->Name);
          }

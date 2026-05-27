@@ -54,7 +54,7 @@ namespace gpu_directx11
    //   //// Get queue family indices for the requested queue family types
    //   //// Note that the indices may overlap depending on the implementation
 
-   //   //const float defaultQueuePriority(0.0f);
+   //   //const ::f32 defaultQueuePriority(0.0f);
 
    //   //// Graphics queue
    //   //if (requestedQueueTypes & VK_QUEUE_GRAPHICS_BIT)

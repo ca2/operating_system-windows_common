@@ -28,7 +28,7 @@ namespace gpu_directx11
       cbd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
       cbd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
       ::cast<device> pgpudevice = m_pgpucontext->m_pgpudevice;
-      int iSize = this->size(false);
+      ::i32 iSize = this->size(false);
       // GlobalUbo
       cbd.ByteWidth = (iSize + 15) & ~15;
       pgpudevice->m_pd3d11device->CreateBuffer(&cbd, nullptr, &m_pbuffer);
@@ -65,7 +65,7 @@ namespace gpu_directx11
 //       //bufferinfo.imageView = get_image_view();
 //       //bufferinfo.sampler = pcontext->_001VkSampler();
 //
-//       unsigned int uSamplerBinding = 0;
+//       ::u32 uSamplerBinding = 0;
 //
 //       //auto pgpubindingset = pshader->get_first_image_sampler_binding_set();
 //

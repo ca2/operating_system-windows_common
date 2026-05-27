@@ -38,20 +38,20 @@ namespace draw2d_direct2d
 
 
       using ::image::image::create;
-      void create(const ::i32_size & size, ::enum_flag eflagCreate = DEFAULT_CREATE_IMAGE_FLAG, int iStride = -1, bool bPreserve = false) override;
+      void create(const ::i32_size & size, ::enum_flag eflagCreate = DEFAULT_CREATE_IMAGE_FLAG, ::i32 iStride = -1, bool bPreserve = false) override;
       using ::image::image::initialize;
-      void initialize(const ::i32_size & size, ::image32_t * pimage32, int iScan, ::enum_flag eflagCreate = DEFAULT_CREATE_IMAGE_FLAG) override;
+      void initialize(const ::i32_size & size, ::image32_t * pimage32, ::i32 iScan, ::enum_flag eflagCreate = DEFAULT_CREATE_IMAGE_FLAG) override;
       bool _create(::draw2d::graphics * pgraphics);
       void destroy() override;
       void destroy_os_data() override;
 
 
-      virtual void create_ex(const ::i32_size & size, ::image32_t * pimage32, int iScan, ::enum_flag eflagCreate = DEFAULT_CREATE_IMAGE_FLAG, int iStride = -1, bool bPreserve = false);
+      virtual void create_ex(const ::i32_size & size, ::image32_t * pimage32, ::i32 iScan, ::enum_flag eflagCreate = DEFAULT_CREATE_IMAGE_FLAG, ::i32 iStride = -1, bool bPreserve = false);
 
       //virtual bool _draw_raw(const ::i32_rectangle & rectangleTarget, ::image::image * pimage, const ::i32_point & pointSrc) override;
 
 
-      virtual void SetIconMask(::image::icon * picon, int cx, int cy) override;
+      virtual void SetIconMask(::image::icon * picon, ::i32 cx, ::i32 cy) override;
 
 
       virtual void defer_realize(::draw2d::graphics * pgraphics) const;
@@ -60,7 +60,7 @@ namespace draw2d_direct2d
       virtual bool is_realized() const;
 
       using ::image::image::blend;
-      virtual void blend(const ::i32_point & pointDst, ::image::image * pimageSrc, const ::i32_point & pointSrc, const ::i32_size & size, unsigned char bA) override;
+      virtual void blend(const ::i32_point & pointDst, ::image::image * pimageSrc, const ::i32_point & pointSrc, const ::i32_size & size, ::u8 bA) override;
 
       using ::image::image::tint;
       virtual void tint(::image::image * pimage, ::color::color color32) override;

@@ -22,7 +22,7 @@ namespace write_text_direct2d
 
 
 
-   ::write_text::font_pointer write_text::font(const ::write_text::font_family_pointer& pfontfamily, const ::write_text::font_size& fontsize, int iFontWeight)
+   ::write_text::font_pointer write_text::font(const ::write_text::font_family_pointer& pfontfamily, const ::write_text::font_size& fontsize, ::i32 iFontWeight)
    {
 
       auto pfont = ::write_text::write_text::font(pfontfamily, fontsize, iFontWeight);

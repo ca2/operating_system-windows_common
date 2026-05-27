@@ -83,9 +83,9 @@ namespace gpu_directx11
 
       //   LPCTSTR lpClassName = L"draw2d_directx11_offscreen_buffer_window";
       //   LPCTSTR lpWindowName = L"draw2d_directx11_offscreen_buffer_window";
-      //   //unsigned int dwStyle = WS_CAPTION | WS_POPUPWINDOW; // | WS_VISIBLE
-      //   unsigned int dwExStyle = 0;
-      //   unsigned int dwStyle = WS_OVERLAPPEDWINDOW;
+      //   //::u32 dwStyle = WS_CAPTION | WS_POPUPWINDOW; // | WS_VISIBLE
+      //   ::u32 dwExStyle = 0;
+      //   ::u32 dwStyle = WS_OVERLAPPEDWINDOW;
       //   dwStyle |= WS_POPUP;
       //   //dwStyle |= WS_VISIBLE;
       //   //dwStyle |= WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX;
@@ -93,10 +93,10 @@ namespace gpu_directx11
       //   //dwStyle = 0;
       //   dwStyle &= ~WS_THICKFRAME;
       //   dwStyle &= ~WS_BORDER;
-      //   int x = 0;
-      //   int y = 0;
-      //   int nWidth = size.cx;
-      //   int nHeight = size.cy;
+      //   ::i32 x = 0;
+      //   ::i32 y = 0;
+      //   ::i32 nWidth = size.cx;
+      //   ::i32 nHeight = size.cy;
       //   HWND hWndParent = nullptr;
       //   HMENU hMenu = nullptr;
       //   HINSTANCE hInstance = ::GetModuleHandleW(L"gpu_directx11.dll");
@@ -207,7 +207,7 @@ namespace gpu_directx11
 
    HRESULT context_win32::createLogicalDevice(
    VkPhysicalDeviceFeatures enabledFeatures,
-   ::array<const char *> enabledExtensions,
+   ::array<const ::i8 *> enabledExtensions,
    void * pNextChain,
    bool useSwapChain,
    VkQueueFlags requestedQueueTypes)
@@ -226,7 +226,7 @@ namespace gpu_directx11
       // Get queue family indices for the requested queue family types
       // Note that the indices may overlap depending on the implementation
 
-      const float defaultQueuePriority(0.0f);
+      const ::f32 defaultQueuePriority(0.0f);
 
       // Graphics queue
       if (requestedQueueTypes & VK_QUEUE_GRAPHICS_BIT)
@@ -288,7 +288,7 @@ namespace gpu_directx11
       }
 
       // Create the logical device representation
-      ::array<const char *> deviceExtensions(enabledExtensions);
+      ::array<const ::i8 *> deviceExtensions(enabledExtensions);
       if (useSwapChain)
       {
          
@@ -323,7 +323,7 @@ namespace gpu_directx11
 
       if (deviceExtensions.size() > 0)
       {
-         for (const char * enabledExtension : deviceExtensions)
+         for (const ::i8 * enabledExtension : deviceExtensions)
          {
             if (!isExtensionSupported(enabledExtension)) {
                information() << "Enabled device extension \"" << enabledExtension << "\" is not present at device level\n";
@@ -416,7 +416,7 @@ namespace gpu_directx11
 
    //      //xxxopengl>>>>directx11 PIXELFORMATDESCRIPTOR pixformat;
 
-   //      int chosenformat;
+   //      ::i32 chosenformat;
 
    //      HDC hdc = GetDC(m_hwnd);
 
@@ -508,7 +508,7 @@ namespace gpu_directx11
 
    //      pdirectx11->defer_init_gpu_library();
 
-   //      //auto pszVersion = (const char *)glGetString(GL_VERSION);
+   //      //auto pszVersion = (const ::i8 *)glGetString(GL_VERSION);
    //      ////::e_status estatus = 
 
    //      //::string strVersion(pszVersion);
@@ -589,7 +589,7 @@ namespace gpu_directx11
 
    //         //PIXELFORMATDESCRIPTOR pixformat;
 
-   //         //int chosenformat;
+   //         //::i32 chosenformat;
 
    //         HDC hdc = GetDC(m_hwnd);
 
@@ -652,7 +652,7 @@ namespace gpu_directx11
 
    ////         pwindow->m_hglrcProto = hglrc;
 
-   //////         int context_attribs[] = {
+   //////         ::i32 context_attribs[] = {
    //////WGL_CONTEXT_MAJOR_VERSION_ARB, 2,
    //////WGL_CONTEXT_MINOR_VERSION_ARB, 1,
    //////0, 0
@@ -697,7 +697,7 @@ namespace gpu_directx11
 
    ////         pdirectx11->defer_init_gpu_library();
 
-   //         //auto pszVersion = (const char *)glGetString(GL_VERSION);
+   //         //auto pszVersion = (const ::i8 *)glGetString(GL_VERSION);
    //         ////::e_status estatus = 
 
    //         //::string strVersion(pszVersion);
@@ -739,7 +739,7 @@ namespace gpu_directx11
 
 
    //      //HDC pdcDIB;                      // контекст устройства в памяти
-   //      //HBITMAP hbmpDIB;                 // и его текущий битмапvoid *pBitsDIB(NULL);            // содержимое битмапаint cxDIB(200); int cyDIB(300);  // его размеры (например для окна 200х300)
+   //      //HBITMAP hbmpDIB;                 // и его текущий битмапvoid *pBitsDIB(NULL);            // содержимое битмапаint cxDIB(200); ::i32 cyDIB(300);  // его размеры (например для окна 200х300)
    //      //auto &BIH=pwindow->m_bitmapinfoheaderProto;            // и заголовок// …// создаем DIB section// создаем структуру BITMAPINFOHEADER, описывающую наш DIBint iSize = sizeof(BITMAPINFOHEADER);  // размер
    //      //memset(&BIH, 0, sizeof(pwindow->m_bitmapinfoheaderProto));
 
@@ -951,13 +951,13 @@ namespace gpu_directx11
       if (iFindPrecision >= 0)
       {
 
-         stra[iFindPrecision] = "precision highp float;";
+         stra[iFindPrecision] = "precision highp ::f32;";
 
       }
       else
       {
 
-         stra.insert_at(1, "precision highp float;");
+         stra.insert_at(1, "precision highp ::f32;");
 
          iFindPrecision = 1;
 

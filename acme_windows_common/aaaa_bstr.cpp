@@ -8,7 +8,7 @@
 //
 //   character_count nLen = utf_to_utf_length(bstr, pchData, nDataLength);
 //
-//   bstr = ::SysAllocStringLen(nullptr, (unsigned int)nLen);
+//   bstr = ::SysAllocStringLen(nullptr, (::u32)nLen);
 //
 //   if (bstr != nullptr)
 //   {
@@ -28,7 +28,7 @@
 //
 //   character_count nLen = utf_to_utf_length(pbstr, pchData, nDataLength);
 //
-//   bool bSuccess = ::SysReAllocStringLen(pbstr, nullptr, (unsigned int)nLen) != 0;
+//   bool bSuccess = ::SysReAllocStringLen(pbstr, nullptr, (::u32)nLen) != 0;
 //
 //   if (bSuccess)
 //   {
@@ -45,7 +45,7 @@
 //wstring bstr_to_wstr(BSTR bstr)
 //{
 //
-//   int len = ::SysStringLen(bstr);
+//   ::i32 len = ::SysStringLen(bstr);
 //
 //   wstring wstr((wchar_t *)bstr, len);
 //

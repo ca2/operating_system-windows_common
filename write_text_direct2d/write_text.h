@@ -21,7 +21,7 @@ namespace write_text_direct2d
       ~write_text() override;
 
 
-      virtual ::write_text::font_pointer font(const ::write_text::font_family_pointer& pfontfamily, const ::write_text::font_size& fontsize, int iFontWeight = e_font_weight_normal) override;
+      virtual ::write_text::font_pointer font(const ::write_text::font_family_pointer& pfontfamily, const ::write_text::font_size& fontsize, ::i32 iFontWeight = e_font_weight_normal) override;
 
 
    };

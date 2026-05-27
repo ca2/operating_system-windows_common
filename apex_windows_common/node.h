@@ -37,15 +37,15 @@ namespace apex_windows_common
 
       virtual bool _os_calc_system_dark_mode();
 
-      virtual ::color::color get_default_color(unsigned long long u);
+      virtual ::color::color get_default_color(::u64 u);
 
-      virtual void set_console_colors(unsigned int dwScreenColors, unsigned int dwPopupColors, unsigned int dwWindowAlpha);
+      virtual void set_console_colors(::u32 dwScreenColors, ::u32 dwPopupColors, ::u32 dwWindowAlpha);
 
       virtual void set_system_dark_mode1(bool bSet = true);
 
       virtual void set_app_dark_mode1(bool bSet = true);
 
-      virtual double get_time_zone();
+      virtual ::f64 get_time_zone();
 
       virtual void open_folder(::file::path& pathFolder);
 

@@ -24,12 +24,12 @@ inline int_bool is_ok(hfile hfile)
 using HANDLE = void *;
 
 //CLASS_DECL_ACME hfile hfile_create(
-//const char *            pFileName,
-//unsigned int                   dwDesiredAccess,
-//unsigned int                   dwShareMode,
+//const ::i8 *            pFileName,
+//::u32                   dwDesiredAccess,
+//::u32                   dwShareMode,
 //void *                  pSecurityAttributes,
-//unsigned int                   dwCreationDisposition,
-//unsigned int                   dwFlagsAndAttributes,
+//::u32                   dwCreationDisposition,
+//::u32                   dwFlagsAndAttributes,
 //HANDLE                  hTemplateFile
 //);
 //

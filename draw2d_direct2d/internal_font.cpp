@@ -15,7 +15,7 @@ struct custom_data_size_key
 {
 
    void *            data;
-   unsigned long long    size;
+   ::u64    size;
 
 };
 
@@ -266,7 +266,7 @@ public:
 
 };
 
-//int main() {
+//::i32 main() {
 //   // Initialize COM
 //   HRESULT hr = CoInitialize(nullptr);
 //   if (FAILED(hr)) {
@@ -279,7 +279,7 @@ public:
 //      return -1;
 //   }
 
-   //std::vector<char> fontData((std::istreambuf_iterator<char>(fontFile)), std::istreambuf_iterator<char>());
+   //std::vector<::i8> fontData((std::istreambuf_iterator<::i8>(fontFile)), std::istreambuf_iterator<::i8>());
    //fontFile.close();
 
    //// Create DirectWrite factory
@@ -479,7 +479,7 @@ namespace draw2d_direct2d
 
    //   m_familya.set_size(iFamilyCount);
 
-   //   for (int iFamily = 0; iFamily < iFamilyCount; iFamily++)
+   //   for (::i32 iFamily = 0; iFamily < iFamilyCount; iFamily++)
    //   {
 
    //      if (m_familya[iFamily].GetLastStatus() != Gdiplus::Ok)
@@ -622,7 +622,7 @@ namespace draw2d_direct2d
 
       //::cast < ::draw2d_direct2d::font> pdraw2ddirect2dfont = pfont;
 
-      //int iFoundFamily = -1;
+      //::i32 iFoundFamily = -1;
 
       ////WCHAR wszGetFamilyName[LF_FACESIZE];
 
@@ -656,7 +656,7 @@ namespace draw2d_direct2d
       //      if (SUCCEEDED(hrItem))
       //      {
       //         // Get the default locale for this user.
-      //         int defaultLocaleSuccess = GetUserDefaultLocaleName(localeName, LOCALE_NAME_MAX_LENGTH);
+      //         ::i32 defaultLocaleSuccess = GetUserDefaultLocaleName(localeName, LOCALE_NAME_MAX_LENGTH);
 
       //         // If the default locale is returned, find that locale name, otherwise use "en-us".
       //         if (defaultLocaleSuccess)

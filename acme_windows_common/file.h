@@ -56,9 +56,9 @@ namespace acme_windows_common
       };*/
 
       ::windows::file            m_file;
-      //unsigned int                      m_dwAccessMode;
+      //::u32                      m_dwAccessMode;
       ::windows_path             m_windowspath;
-      //int               m_iCharacterPutBack;
+      //::i32               m_iCharacterPutBack;
 
 
       file();
@@ -96,9 +96,9 @@ namespace acme_windows_common
       void write(const void * p, ::memsize s) override;
 
 
-      //virtual int peek_character();
-      //virtual int get_character();
-      //virtual int put_character_back(int iCharacter);
+      //virtual ::i32 peek_character();
+      //virtual ::i32 get_character();
+      //virtual ::i32 put_character_back(::i32 iCharacter);
 
 
       void lock(filesize dwPos, filesize dwCount) override;

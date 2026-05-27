@@ -4,7 +4,7 @@
 #pragma once
 
 
-#include "acme/nano/graphics/device.h"
+#include "acme/nano/graphics/context.h"
 #include "direct2d/graphics.h"
 #undef USUAL_OPERATING_SYSTEM_SUPPRESSIONS
 #include "acme/_operating_system.h"
@@ -23,7 +23,7 @@ namespace universal_windows
 
 
          class CLASS_DECL_NANO_GRAPHICS_DIRECT2D device :
-            virtual public ::nano::graphics::device,
+            virtual public ::nano::graphics::context,
             virtual public ::direct2d::graphics
          {
          public:
@@ -35,13 +35,13 @@ namespace universal_windows
 
 
                D2D1::Matrix3x2F                    m_m;
-               int                                 m_iLayerIndex;
+               ::i32                                 m_iLayerIndex;
                D2D1_LAYER_PARAMETERS               m_layerparameters;
 
             };
 
 
-            int                                                m_iLayerCount;
+            ::i32                                                m_iLayerCount;
 
             comptr<ID2D1DeviceContext>                         m_pdevicecontext; // 0
             comptr<ID2D1RenderTarget>                          m_prendertarget; // 1
@@ -59,7 +59,7 @@ namespace universal_windows
 
             bool                                               m_bSaveClip;
 
-            int                                                m_iType;
+            ::i32                                                m_iType;
 
             D2D1_BITMAP_INTERPOLATION_MODE                     m_bitmapinterpolationmode;
             D2D1_INTERPOLATION_MODE                            m_interpolationmode;
@@ -84,10 +84,10 @@ namespace universal_windows
             void rectangle(const ::i32_rectangle& rectangle, ::nano::graphics::brush* pnanobrush, ::nano::graphics::pen* pnanopen) override;
 
 
-            void draw(::nano::graphics::icon * picon, int x, int y, int cx, int cy) override;
+            void draw(::nano::graphics::icon * picon, ::i32 x, ::i32 y, ::i32 cx, ::i32 cy) override;
 
 
-            void translate(int x, int y) override;
+            void translate(::i32 x, ::i32 y) override;
 
 
          };

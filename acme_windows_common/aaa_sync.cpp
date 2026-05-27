@@ -12,7 +12,7 @@
 //
 //#endif
 //
-//   if (lpszName == nullptr)
+//   if (pszName == nullptr)
 //   {
 //
 //      m_pszName = nullptr;
@@ -21,7 +21,7 @@
 //   else
 //   {
 //
-//      m_pszName = strdup(lpszName);
+//      m_pszName = strdup(pszName);
 //
 //   }
 //
@@ -37,7 +37,7 @@
 //
 //   m_bOwner = false;
 //
-//   if (lpszName == nullptr)
+//   if (pszName == nullptr)
 //   {
 //
 //      m_pszName = nullptr;
@@ -46,7 +46,7 @@
 //   else
 //   {
 //
-//      m_pszName = strdup(lpszName);
+//      m_pszName = strdup(pszName);
 //
 //   }
 //
@@ -130,7 +130,7 @@ bool synchronization_object::unlock()
 }
 
 
-bool synchronization_object::unlock(int /* lCount */, int * /* pPrevCount=nullptr */)
+bool synchronization_object::unlock(::i32 /* lCount */, ::i32 * /* pPrevCount=nullptr */)
 {
 
    return false;
@@ -146,7 +146,7 @@ synchronization_result synchronization_object::wait(const duration & durationTim
 
 #ifdef WINDOWS
 
-      return synchronization_result((unsigned int) ::WaitForSingleObjectEx(m_hsync, durationTimeout.u32_millis(), false));
+      return synchronization_result((::u32) ::WaitForSingleObjectEx(m_hsync, durationTimeout.u32_millis(), false));
 
 #endif
 
@@ -212,7 +212,7 @@ void synchronization_object::release_ownership()
 //}
 
 
-//bool synchronization_object::unlock(int /* lCount */, LPLONG /* pPrevCount=nullptr */)
+//bool synchronization_object::unlock(::i32 /* lCount */, LPLONG /* pPrevCount=nullptr */)
 //
 //{
 //

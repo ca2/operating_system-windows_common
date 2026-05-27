@@ -25,7 +25,7 @@ public:
    DECLARE_REUSABLE(manual_reset_happening);
 
 
-   manual_reset_happening(char * sz = nullptr, bool bInitiallyOwn = false);
+   manual_reset_happening(::i8 * sz = nullptr, bool bInitiallyOwn = false);
 
 
    void reuse() { reset_happening(); }
@@ -61,7 +61,7 @@ public:
 
    }
 
-   long operator ++(int)
+   long operator ++(::i32)
    {
 
       long l = m_long;

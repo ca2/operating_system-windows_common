@@ -32,13 +32,13 @@ namespace draw2d_direct2d
 
    }
 
-   int object::get_object(int nCount, LPVOID lpObject) const
+   ::i32 object::get_object(::i32 nCount, LPVOID lpObject) const
    {
       //return ::GetObject(get_handle(), nCount, lpObject);
       return 0;
    }
 
-   bool object::CreateStockObject(int nIndex)
+   bool object::CreateStockObject(::i32 nIndex)
    {
       //return (set_handle(::GetStockObject(nIndex))) != nullptr;
       return 0;
@@ -48,9 +48,9 @@ namespace draw2d_direct2d
       //ASSERT(get_handle() != nullptr); return ::UnrealizeObject(get_handle());
       return 0;
    }
-   unsigned int object::GetObjectType() const
+   ::u32 object::GetObjectType() const
    {
-      //return (unsigned int)::GetObjectType(get_handle());
+      //return (::u32)::GetObjectType(get_handle());
       return 0;
    }
 
@@ -111,7 +111,7 @@ namespace draw2d_direct2d
    //}
 
 
-   //void * object::get_os_data_ex(int i) const
+   //void * object::get_os_data_ex(::i32 i) const
    //{
    //   if(i == data_graphics)
    //   {
@@ -121,7 +121,7 @@ namespace draw2d_direct2d
    //}
 
 
-   void object::defer_update(::draw2d::graphics* pgraphics, char i) const
+   void object::defer_update(::draw2d::graphics* pgraphics, ::i8 i) const
    {
 
       if (!m_pdirect2d)

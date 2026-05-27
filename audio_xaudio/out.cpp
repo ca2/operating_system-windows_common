@@ -60,7 +60,7 @@ namespace multimedia
       }
 
 
-      void out::out_open_ex(thread * pthreadCallback, unsigned int uiSamplesPerSec, unsigned int uiChannelCount, unsigned int uiBitsPerSample, ::wave::enum_purpose epurpose)
+      void out::out_open_ex(thread * pthreadCallback, ::u32 uiSamplesPerSec, ::u32 uiChannelCount, ::u32 uiBitsPerSample, ::wave::enum_purpose epurpose)
       {
 
          single_lock sLock(synchronization(), true);
@@ -109,7 +109,7 @@ namespace multimedia
          {
             throw ::exception(error_failed);
          }
-         int iSampleRate = XAUDIO2_MIN_SAMPLE_RATE;
+         ::i32 iSampleRate = XAUDIO2_MIN_SAMPLE_RATE;
          estatus = ::success;
          m_pwaveformat->m_waveformat.wFormatTag = WAVE_FORMAT_PCM;
          m_pwaveformat->m_waveformat.nChannels = uiChannelCount;
@@ -166,7 +166,7 @@ namespace multimedia
 
          }
 
-         int iAlign = 2048;
+         ::i32 iAlign = 2048;
 
          auto uiBufferSize = iBufferSampleCount * m_pwaveformat->m_waveformat.nChannels * 2;
 
@@ -213,8 +213,8 @@ namespace multimedia
 
          ::e_status estatus;
 
-//         int i, iSize;
-         //int iSize;
+//         ::i32 i, iSize;
+         //::i32 iSize;
 
          auto iSize =  out_get_buffer()->GetBufferCount();
 
@@ -326,15 +326,15 @@ namespace multimedia
          zero(b);
 
          b.pContext = pbuffer;
-         b.AudioBytes = (unsigned int) (pwbuffer->m_uiBufferSize);
-         b.pAudioData = (const unsigned char *)pbuffer->m_pData;
+         b.AudioBytes = (::u32) (pwbuffer->m_uiBufferSize);
+         b.pAudioData = (const ::u8 *)pbuffer->m_pData;
          b.Flags = m_bEOS ? XAUDIO2_END_OF_STREAM : 0;
 
          //single_lock sLock(mutex(),true);
 
 #if 0
 
-         char sz[256];
+         ::i8 sz[256];
 
          zero(sz);
 
@@ -543,10 +543,10 @@ namespace multimedia
 
             m_psourcevoice->GetState(&s);
 
-            //long long i = s.SamplesPlayed;
+            //::i64 i = s.SamplesPlayed;
             //i *= 1000;
             //i /= m_pwaveformat->m_waveformat.nSamplesPerSec;
-            return second_time((double)s.SamplesPlayed/(double)m_pwaveformat->m_waveformat.nSamplesPerSec);
+            return second_time((::f64)s.SamplesPlayed/(::f64)m_pwaveformat->m_waveformat.nSamplesPerSec);
 
          }
          else
@@ -645,7 +645,7 @@ namespace multimedia
       //void out::out_run_step()
       //{
 
-      //   int iPlay =  -1;
+      //   ::i32 iPlay =  -1;
 
 
       //}
@@ -669,7 +669,7 @@ namespace multimedia
       //
       // Callback handlers, only implement the buffer happenings for maintaining play state
       //
-      void out::OnVoiceProcessingPassStart(unsigned int /*bytesRequired*/)
+      void out::OnVoiceProcessingPassStart(::u32 /*bytesRequired*/)
       {
       }
       void out::OnVoiceProcessingPassEnd()
@@ -695,10 +695,10 @@ namespace multimedia
 
          //}
 
-         unsigned long long freq;
+         ::u64 freq;
          QueryPerformanceFrequency((LARGE_INTEGER*)&freq);
-         double timerFrequency = (1.0 / freq);
-         unsigned long long startTime;
+         ::f64 timerFrequency = (1.0 / freq);
+         ::u64 startTime;
          QueryPerformanceCounter((LARGE_INTEGER *)&startTime);
 
 
@@ -706,13 +706,13 @@ namespace multimedia
 
          //pbuffer->m_bIsPlaying = false;
 
-         int iBuffer = (int)pbuffer->m_iIndex;
+         ::i32 iBuffer = (::i32)pbuffer->m_iIndex;
 
          m_psynthtask->on_free(iBuffer);
 
-         unsigned long long endTime;
+         ::u64 endTime;
          QueryPerformanceCounter((LARGE_INTEGER *)&endTime);
-         double timeDifferenceInseconds = ((endTime - startTime) * timerFrequency);
+         ::f64 timeDifferenceInseconds = ((endTime - startTime) * timerFrequency);
          if(timeDifferenceInseconds > 0.040)
          {
             ::output_debug_string("too much delay to create audio\n");
@@ -735,7 +735,7 @@ namespace multimedia
       //}
 
 
-      //int out::run_step_thread::run()
+      //::i32 out::run_step_thread::run()
       //{
 
       //   while(m_bRun && m_pout->m_eoutstate == out::wave::e_out_state_playing)

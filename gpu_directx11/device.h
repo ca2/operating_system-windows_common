@@ -39,13 +39,13 @@ namespace gpu_directx11
       //itask									m_itaskGpu;
       //VkSampler                           m_vksampler001;
 
-      //unsigned int                     m_VAO;
-      //unsigned int                     m_VBO;
+      //::u32                     m_VAO;
+      //::u32                     m_VBO;
 
-      //int                            m_iMatrixUniform;
+      //::i32                            m_iMatrixUniform;
 
-      //int                           m_gluTextureBitmap1;
-      //int                              m_iLastBitmap1Scan;
+      //::i32                           m_gluTextureBitmap1;
+      //::i32                              m_iLastBitmap1Scan;
       //::i32_size                       m_sizeBitmap1;
 
       //memory                           m_memorySwap;
@@ -150,9 +150,9 @@ namespace gpu_directx11
       //descriptor_set_layout* get_set_descriptor_layout();
       //virtual VkDescriptorSet getCurrentDescriptorSet(::gpu_directx11::renderer* prenderer);
 
-      //::gpu_directx11::descriptor_pool* get_global_pool(int iFrameCount);
+      //::gpu_directx11::descriptor_pool* get_global_pool(::i32 iFrameCount);
 
-      //virtual void create_global_ubo(int iSize, int iFrameCount);
+      //virtual void create_global_ubo(::i32 iSize, ::i32 iFrameCount);
       //virtual void update_global_ubo(const ::block& block);
 
       //void clear(const ::color::color& color);
@@ -276,7 +276,7 @@ namespace gpu_directx11
       //      //descriptor_set_layout* get_set_descriptor_layout(::gpu::context * pgpucontext);
       //virtual VkDescriptorSet getGlobalDescriptorSet(::gpu::context* pgpucontext, ::gpu_directx11::renderer* prenderer);
 
-      //::gpu_directx11::descriptor_pool* get_global_pool(::gpu::context* pgpucontext, int iFrameCount);
+      //::gpu_directx11::descriptor_pool* get_global_pool(::gpu::context* pgpucontext, ::i32 iFrameCount);
 
       
       void on_top_end_frame() override;
@@ -286,7 +286,7 @@ namespace gpu_directx11
       ID3D11Device1* draw_get_d3d11_device1();
       virtual IDXGIDevice* _get_dxgi_device();
 
-      int get_type_size(::gpu::enum_type etype) override;
+      ::i32 get_type_size(::gpu::enum_type etype) override;
       void set_matrix4(void* p, const floating_matrix4& mat4) override;
 
 

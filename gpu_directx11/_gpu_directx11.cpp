@@ -383,7 +383,7 @@ namespace directx11
 //   //         size_t size = AAsset_getLength(asset);
 //   //         assert(size > 0);
 //   //
-//   //         char * shaderCode = new char[size];
+//   //         ::i8 * shaderCode = new ::i8[size];
 //   //         AAsset_read(asset, shaderCode, size);
 //   //         AAsset_close(asset);
 //   //
@@ -410,7 +410,7 @@ namespace directx11
 //   //         {
 //   //            size_t size = is.tellg();
 //   //            is.seekg(0, std::ios::beg);
-//   //            char * shaderCode = new char[size];
+//   //            ::i8 * shaderCode = new ::i8[size];
 //   //            is.read(shaderCode, size);
 //   //            is.close();
 //   //
@@ -492,7 +492,7 @@ namespace directx11
 //      case ::gpu::e_type_seq3: return VK_FORMAT_R32G32B32_SFLOAT;
 //      case ::gpu::e_type_seq2: return VK_FORMAT_R32G32_SFLOAT;
 //      default:
-//         throw ::exception(error_bad_argument, "get_type_vk_format: unknown ::gpu::enum_type " + ::as_string((int)etype));
+//         throw ::exception(error_bad_argument, "get_type_vk_format: unknown ::gpu::enum_type " + ::as_string((::i32)etype));
 //
 //      }
 //

@@ -80,7 +80,7 @@ namespace gpu_directx11
 
 
 
-   inline int input_layout_aligned_property_size(int i)
+   inline ::i32 input_layout_aligned_property_size(::i32 i)
    {
 
       return (i + 3) & ~3;
@@ -114,13 +114,13 @@ namespace gpu_directx11
       if (countInputLayout > 0)
       {
 
-         int iSemanticIndex = 0;
-         int iTexCoord = 0;
-         int iInputSlot = 0;
+         ::i32 iSemanticIndex = 0;
+         ::i32 iTexCoord = 0;
+         ::i32 iInputSlot = 0;
          D3D11_INPUT_CLASSIFICATION classification = D3D11_INPUT_PER_VERTEX_DATA;
          UINT DataStepRate = 0;
-         int iOffset = 0;
-         int iNextOffset = 0;
+         ::i32 iOffset = 0;
+         ::i32 iNextOffset = 0;
 
          for (::collection::index iInputLayout = 0; iInputLayout < countInputLayout; iInputLayout++)
          {

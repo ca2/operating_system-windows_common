@@ -9,18 +9,18 @@ namespace music
    {
 
 
-      unsigned int const DefaultTempo = 500000L;
+      ::u32 const DefaultTempo = 500000L;
 
-      const unsigned int grbChanMsgLen[] =
+      const ::u32 grbChanMsgLen[] =
       {
-         0,                      /* 0x   not a status unsigned char   */
-         0,                      /* 1x   not a status unsigned char   */
-         0,                      /* 2x   not a status unsigned char   */
-         0,                      /* 3x   not a status unsigned char   */
-         0,                      /* 4x   not a status unsigned char   */
-         0,                      /* 5x   not a status unsigned char   */
-         0,                      /* 6x   not a status unsigned char   */
-         0,                      /* 7x   not a status unsigned char   */
+         0,                      /* 0x   not a status ::u8   */
+         0,                      /* 1x   not a status ::u8   */
+         0,                      /* 2x   not a status ::u8   */
+         0,                      /* 3x   not a status ::u8   */
+         0,                      /* 4x   not a status ::u8   */
+         0,                      /* 5x   not a status ::u8   */
+         0,                      /* 6x   not a status ::u8   */
+         0,                      /* 7x   not a status ::u8   */
          3,                      /* 8x   Note off            */
          3,                      /* 9x   Note on             */
          3,                      /* Ax   Poly pressure       */
@@ -33,7 +33,7 @@ namespace music
 
 
 
-      const char pitchText[][5]
+      const ::i8 pitchText[][5]
       =
       {
          "C-2",
@@ -177,7 +177,7 @@ namespace music
       };
 
 
-      /*const unsigned int voiceText[]
+      /*const ::u32 voiceText[]
       =
       {
       IDS_VOICE_1   ,
@@ -311,10 +311,10 @@ namespace music
       };
       */
 
-      double GetNoteFrequency(double dA3Frequency, unsigned char bNote)
+      ::f64 GetNoteFrequency(::f64 dA3Frequency, ::u8 bNote)
       {
 
-         return dA3Frequency * pow(2.0, (double) (bNote - 69) / 12);
+         return dA3Frequency * pow(2.0, (::f64) (bNote - 69) / 12);
 
       }
 
@@ -325,7 +325,7 @@ namespace music
 
       //   string str;
       //   str.load_string(IDS_MIDI_NOTEOFF);
-      //   int iItem = lpcombo->AddString(str);
+      //   ::i32 iItem = lpcombo->AddString(str);
       //   lpcombo->SetItemData(iItem, NoteOff);
 
       //   str.load_string(IDS_MIDI_NOTEON);
@@ -352,9 +352,9 @@ namespace music
       //   __UNREFERENCED_PARAMETER(lpcombo);
       //   /*    lpcombo->reset_content();
 
-      //   for(int i = 0; i < 128; i++)
+      //   for(::i32 i = 0; i < 128; i++)
       //   {
-      //   int iItem = lpcombo->AddString(pitchText[i]);
+      //   ::i32 iItem = lpcombo->AddString(pitchText[i]);
       //   lpcombo->SetItemData(iItem, i);
       //   }
       //   */
@@ -362,19 +362,19 @@ namespace music
       //}
 
 
-      int GetMessageLen(unsigned char bEvent)
+      ::i32 GetMessageLen(::u8 bEvent)
       {
          return grbChanMsgLen[(bEvent >> 4) & 0x0F];
       }
 
       // returns the midi stream ::payload dword
-      unsigned int GetVDWord(unsigned char * &hpbMidiStream, unsigned int dwLeft, unsigned int &dwValueParam)
+      ::u32 GetVDWord(::u8 * &hpbMidiStream, ::u32 dwLeft, ::u32 &dwValueParam)
       {
 
-         unsigned char                    b;
-         unsigned int                   dwUsed  = 0;
-         unsigned char * &            hpbImage = hpbMidiStream;
-         unsigned int               dwValue;
+         ::u8                    b;
+         ::u32                   dwUsed  = 0;
+         ::u8 * &            hpbImage = hpbMidiStream;
+         ::u32               dwValue;
 
          ASSERT(hpbImage != nullptr);
 
@@ -416,13 +416,13 @@ namespace music
       * Returns the state i32_size in bytes.
       *
       *****************************************************************************/
-      unsigned int GetStateMaxSize(
+      ::u32 GetStateMaxSize(
       VOID)
       {
-         return  3*sizeof(unsigned int) +           /* Tempo                */
-                 3*16*sizeof(unsigned int) +        /* Patch changes        */
-                 3*16*120*sizeof(unsigned int) +    /* Controller changes   */
-                 3*sizeof(unsigned int);            /* time alignment NOP   */
+         return  3*sizeof(::u32) +           /* Tempo                */
+                 3*16*sizeof(::u32) +        /* Patch changes        */
+                 3*16*120*sizeof(::u32) +    /* Controller changes   */
+                 3*sizeof(::u32);            /* time alignment NOP   */
       }
 
 

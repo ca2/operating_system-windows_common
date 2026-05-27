@@ -132,7 +132,7 @@ namespace acme_windows_common
    }
 
 
-   void wait_until_mutex_does_not_exist(::particle * pparticle, const_char_pointer lpszName)
+   void wait_until_mutex_does_not_exist(::particle * pparticle, const_char_pointer pszName)
    {
 
       ::pointer<mutex>pmutex = allocateø mutex(pparticle, false, "Global\\::ca::account::ca2_spa::7807e510-5579-11dd-ae16-0800200c7784");

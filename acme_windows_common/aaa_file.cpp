@@ -13,7 +13,7 @@
 
 
 
-//int_bool windows_create_directory(const char* path, LPSECURITY_ATTRIBUTES lpSecurityAttributes)
+//int_bool windows_create_directory(const ::i8* path, LPSECURITY_ATTRIBUTES lpSecurityAttributes)
 //{
 //
 //   wstring wstr(path);
@@ -58,7 +58,7 @@
 
 
 
-//bool context::_os_resolve_alias(::file::path & path, const char * psz, ::user::prototype * pinteraction, bool bNoUI, bool bNoMount)
+//bool context::_os_resolve_alias(::file::path & path, const ::i8 * psz, ::user::prototype * pinteraction, bool bNoUI, bool bNoMount)
 //{
 //
 //   if (os_is_alias(psz))
@@ -73,7 +73,7 @@
 //}
 
 
-CLASS_DECL_ACME_WINDOWS_COMMON bool _os_may_have_alias(const char * psz)
+CLASS_DECL_ACME_WINDOWS_COMMON bool _os_may_have_alias(const ::i8 * psz)
 {
 
    string str(psz);
@@ -83,7 +83,7 @@ CLASS_DECL_ACME_WINDOWS_COMMON bool _os_may_have_alias(const char * psz)
 }
 
 //
-//bool context::os_is_alias(const char * psz)
+//bool context::os_is_alias(const ::i8 * psz)
 //{
 //
 //   return psz.case_insensitive_ends(".lnk");
@@ -119,7 +119,7 @@ CLASS_DECL_ACME_WINDOWS_COMMON memsize hfile_read(hfile hfile, void* p, memsize 
 //   while (s > 0)
 //   {
 //
-//      int iWrite = (int) minimum(INT_MAX, s);
+//      ::i32 iWrite = (::i32) minimum(INT_MAX, s);
 //
 //      DWORD dwWritten = 0;
 //
@@ -274,7 +274,7 @@ directory_system()create(path.folder());
 
       // map read/write mode
       ASSERT((::file::e_open_read | ::file::e_open_write | ::file::e_open_read_write) == 3);
-      unsigned int dwAccess = 0;
+      ::u32 dwAccess = 0;
       switch (eopen & 3)
       {
       case ::file::e_open_read:
@@ -294,7 +294,7 @@ directory_system()create(path.folder());
       auto eopenShare = eopen & ::file::e_open_share_mask;
 
       // map share mode
-      unsigned int dwShareMode = 0;
+      ::u32 dwShareMode = 0;
       switch (eopenShare)    // map compatibility mode to exclusive
       {
       default:
@@ -354,7 +354,7 @@ directory_system()create(path.folder());
       }
 
       // map creation flags
-      unsigned int dwCreateFlag;
+      ::u32 dwCreateFlag;
       if (eopen & ::file::e_open_create)
       {
          if (eopen & ::file::e_open_no_truncate)
@@ -369,11 +369,11 @@ directory_system()create(path.folder());
 
       HANDLE handleFile = INVALID_HANDLE_VALUE;
 
-      unsigned int dwWaitSharingViolation = 84;
+      ::u32 dwWaitSharingViolation = 84;
 
       auto durationStart = ::duration::now();
 
-      //unsigned int dwFileSharingViolationRetryTimeout = ::get_task() != nullptr ? ::get_task()->get_file_sharing_violation_timeout_total_milliseconds() : 0;
+      //::u32 dwFileSharingViolationRetryTimeout = ::get_task() != nullptr ? ::get_task()->get_file_sharing_violation_timeout_total_milliseconds() : 0;
 
    retry:
 
@@ -492,11 +492,11 @@ directory_system()create(path.folder());
       //if (m_iCharacterPutBack != I32_MINIMUM)
       //{
 
-      //   ((unsigned char *)pdata)[0] = (unsigned char)m_iCharacterPutBack;
+      //   ((::u8 *)pdata)[0] = (::u8)m_iCharacterPutBack;
 
       //   m_iCharacterPutBack = I32_MINIMUM;
 
-      //   pdata = ((char *)pdata) + 1;
+      //   pdata = ((::i8 *)pdata) + 1;
 
       //   nCount--;
 
@@ -516,7 +516,7 @@ directory_system()create(path.folder());
 
       DWORD dwRead;
 
-      if (!::ReadFile((HANDLE)m_handleFile, pdata, (unsigned int)nCount, &dwRead, nullptr))
+      if (!::ReadFile((HANDLE)m_handleFile, pdata, (::u32)nCount, &dwRead, nullptr))
       {
 
          auto lasterror = ::GetLastError();
@@ -525,7 +525,7 @@ directory_system()create(path.folder());
 
       }
 
-      return (unsigned int)dwRead;
+      return (::u32)dwRead;
 
    }
 
@@ -549,7 +549,7 @@ directory_system()create(path.folder());
 
       DWORD nWritten;
 
-      if (!::WriteFile((HANDLE)m_handleFile, pdata, (unsigned int)nCount, &nWritten, nullptr))
+      if (!::WriteFile((HANDLE)m_handleFile, pdata, (::u32)nCount, &nWritten, nullptr))
       {
 
          auto lasterror = ::windows::get_last_error();
@@ -594,7 +594,7 @@ directory_system()create(path.folder());
       LONG lLoOffset = offset & 0xffffffff;
       LONG lHiOffset = (offset >> 32) & 0xffffffff;
 
-      filesize posNew = ::SetFilePointer((HANDLE)m_handleFile, lLoOffset, &lHiOffset, (unsigned int)nFrom);
+      filesize posNew = ::SetFilePointer((HANDLE)m_handleFile, lLoOffset, &lHiOffset, (::u32)nFrom);
       posNew |= ((filesize)lHiOffset) << 32;
       if (posNew == (filesize)-1)
       {
@@ -609,7 +609,7 @@ directory_system()create(path.folder());
    }
 
 
-   //int file::peek_character()
+   //::i32 file::peek_character()
    //{
 
    //   if (m_iCharacterPutBack != I32_MINIMUM)
@@ -624,7 +624,7 @@ directory_system()create(path.folder());
    //}
 
 
-   //int file::get_character()
+   //::i32 file::get_character()
    //{
 
    //   auto iCharacterPutBack = m_iCharacterPutBack;
@@ -643,7 +643,7 @@ directory_system()create(path.folder());
    //}
 
 
-   //int file::put_character_back(int iCharacter)
+   //::i32 file::put_character_back(::i32 iCharacter)
    //{
 
    //   m_iCharacterPutBack = iCharacter;
@@ -732,7 +732,7 @@ directory_system()create(path.folder());
       ASSERT(m_handleFile != INVALID_HANDLE_VALUE);
 
       bool bError = false;
-      unsigned int dwLastError = 0;
+      ::u32 dwLastError = 0;
       if (m_handleFile != INVALID_HANDLE_VALUE)
       {
 
@@ -963,7 +963,7 @@ directory_system()create(path.folder());
          }
          else
          {
-            rStatus.m_attribute = (unsigned char)information.dwFileAttributes & 0xff;
+            rStatus.m_attribute = (::u8)information.dwFileAttributes & 0xff;
 
          }
 
@@ -1019,20 +1019,20 @@ directory_system()create(path.folder());
 
    }
 
-   //unsigned long long file::ReadHuge(void * pBuffer, unsigned long long dwCount)
+   //::u64 file::ReadHuge(void * pBuffer, ::u64 dwCount)
 
    //{
 
-   //   return (unsigned long long) read(pBuffer, (unsigned int)dwCount);
+   //   return (::u64) read(pBuffer, (::u32)dwCount);
 
 
    //}
 
-   //void file::WriteHuge(const void * pBuffer, unsigned long long dwCount)
+   //void file::WriteHuge(const void * pBuffer, ::u64 dwCount)
 
    //{
 
-   //   write(pBuffer, (unsigned int)dwCount);
+   //   write(pBuffer, (::u32)dwCount);
 
 
    //}
@@ -1067,7 +1067,7 @@ bool CLASS_DECL_ACME_WINDOWS_COMMON window_get_full_path(wstring & wstrFullPath,
    // first, fully qualify the path name
    unichar * pszFilePart;
 
-   character_count dwLen = GetFullPathNameW(wstrPath, (unsigned int)dwAllocLen, pwszFullPath, &pszFilePart);
+   character_count dwLen = GetFullPathNameW(wstrPath, (::u32)dwAllocLen, pwszFullPath, &pszFilePart);
 
    wstrFullPath.release_buffer();
 
@@ -1087,7 +1087,7 @@ bool CLASS_DECL_ACME_WINDOWS_COMMON window_get_full_path(wstring & wstrFullPath,
 
       dwAllocLen = dwLen + _MAX_PATH;
 
-      dwLen = GetFullPathNameW(wstrPath, (unsigned int)dwAllocLen, pwszFullPath, &pszFilePart);
+      dwLen = GetFullPathNameW(wstrPath, (::u32)dwAllocLen, pwszFullPath, &pszFilePart);
 
       wstrFullPath.release_buffer();
 
@@ -1152,7 +1152,7 @@ bool CLASS_DECL_ACME_WINDOWS_COMMON window_get_full_path(wstring & wstrFullPath,
 
             auto pwsz = wstrFullPath.get_buffer(iFilePart + iLenFileName + 32); // arrange more space with more 32 extra wchars
 
-            wcsncpy(pwsz, wstrBackup, (int)iFilePart);
+            wcsncpy(pwsz, wstrBackup, (::i32)iFilePart);
 
             wstrFullPath.release_buffer();
 
@@ -1255,7 +1255,7 @@ string CLASS_DECL_ACME_WINDOWS_COMMON windows_string_from_clsid(REFCLSID rclsid)
 //}
 //
 
-//unsigned int CLASS_DECL_ACME_WINDOWS_COMMON vfxGetFileName(const unichar * pszPathName, unichar * pszTitle, unsigned int nMax)
+//::u32 CLASS_DECL_ACME_WINDOWS_COMMON vfxGetFileName(const unichar * pszPathName, unichar * pszTitle, ::u32 nMax)
 //
 //{
 //   ASSERT(pszTitle == nullptr ||
@@ -1304,7 +1304,7 @@ string CLASS_DECL_ACME_WINDOWS_COMMON windows_string_from_clsid(REFCLSID rclsid)
 //namespace windows
 //{
 //
-//   //void ::file::errno_status(int nErrno)
+//   //void ::file::errno_status(::i32 nErrno)
 //   //{
 //   //   switch(nErrno)
 //   //   {
@@ -1346,13 +1346,13 @@ string CLASS_DECL_ACME_WINDOWS_COMMON windows_string_from_clsid(REFCLSID rclsid)
 
 
 //CLASS_DECL_ACME_WINDOWS_COMMON HANDLE hfile_create(
-//   const char * pFileName,
+//   const ::i8 * pFileName,
 //
-//   unsigned int                   dwDesiredAccess,
-//   unsigned int                   dwShareMode,
+//   ::u32                   dwDesiredAccess,
+//   ::u32                   dwShareMode,
 //   void * pSecurityAttributes,
-//   unsigned int                   dwCreationDisposition,
-//   unsigned int                   dwFlagsAndAttributes,
+//   ::u32                   dwCreationDisposition,
+//   ::u32                   dwFlagsAndAttributes,
 //   HANDLE                  hTemplateFile
 //)
 //{

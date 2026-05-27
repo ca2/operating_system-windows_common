@@ -55,7 +55,7 @@ namespace acme_windows_common
 #ifdef WINDOWS
       EXCEPTION_POINTERS * m_ppointers;
 #else
-      int            m_iSignal;
+      ::i32            m_iSignal;
       void * m_psiginfo;
 #ifndef ANDROID
       ucontext_t     m_ucontext;
@@ -65,10 +65,10 @@ namespace acme_windows_common
 
 
 
-      unsigned int         code() const { return m_ppointers->ExceptionRecord->ExceptionCode; }
+      ::u32         code() const { return m_ppointers->ExceptionRecord->ExceptionCode; }
       void * address() const { return m_ppointers->ExceptionRecord->ExceptionAddress; }
       EXCEPTION_POINTERS * info() const { return m_ppointers; }
-      const_char_pointer name() const { return exception_translator::_get_standard_exception_name(code()); }
+      const_char_pointer pszName() const { return exception_translator::_get_standard_exception_name(code()); }
       const_char_pointer description() const { return exception_translator::_get_standard_exception_description(code()); }
       bool is_read_op() const { return !info()->ExceptionRecord->ExceptionInformation[0]; }
       uptr inaccessible_address() const { return info()->ExceptionRecord->ExceptionInformation[1]; }

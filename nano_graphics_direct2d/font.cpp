@@ -34,7 +34,7 @@ namespace universal_windows
          }
 
 
-         void font::update(::nano::graphics::device* pnanodevice)
+         void font::update(::nano::graphics::context* pgraphicscontext)
          {
 
             if (m_bModified)
@@ -44,7 +44,7 @@ namespace universal_windows
 
                LOGFONTW logfontw = {};
 
-               ::cast < ::universal_windows::nano::graphics::device > pdevice = pnanodevice;
+               ::cast < ::universal_windows::nano::graphics::context > pdevice = pnanodevice;
 
                IDWriteFactory * pfactory = m_pdirect2d->dwrite_factory();
 
@@ -67,7 +67,7 @@ namespace universal_windows
 
                stretch = DWRITE_FONT_STRETCH_NORMAL;
 
-               float fFontSize;
+               ::f32 fFontSize;
 
                //::acme::windowing::window * pacmewindowingwindow = nullptr;
                //
@@ -81,24 +81,24 @@ namespace universal_windows
                //if (m_fontsize.eunit() == ::e_unit_point)
                {
 
-                 // fFontSize = (float)pgraphics->m_pdraw2dhost->point_dpi(m_fontsize.as_double());
+                 // fFontSize = (::f32)pgraphics->m_pdraw2dhost->point_dpi(m_fontsize.as_f64());
 
                }
                //else
                {
 
-                  //fFontSize = (float)pgraphics->m_pdraw2dhost->dpiy(m_fontsize.as_double());
+                  //fFontSize = (::f32)pgraphics->m_pdraw2dhost->dpiy(m_fontsize.as_f64());
 
-                  //fFontSize = (float)pgraphics->m_pdraw2dhost->dpiy(m_iFontSize);
+                  //fFontSize = (::f32)pgraphics->m_pdraw2dhost->dpiy(m_iFontSize);
 
-                  fFontSize = (float)m_iFontSize;
+                  fFontSize = (::f32)m_iFontSize;
 
                }
 
                //if (::is_set(pgraphics))
                //{
 
-               //   fFontSize *= (float)pgraphics->m_dFontFactor;
+               //   fFontSize *= (::f32)pgraphics->m_dFontFactor;
 
                //}
 
@@ -144,7 +144,7 @@ namespace universal_windows
          }
 
 
-         //HFONT font::_create_point_font(int nPointSize, const ::scoped_string& scopedstrFaceName, bool bBold, HDC hdc, LOGFONTW* plf)
+         //HFONT font::_create_point_font(::i32 nPointSize, const ::scoped_string& scopedstrFaceName, bool bBold, HDC hdc, LOGFONTW* plf)
          //{
 
          //   LOGFONTW lF;

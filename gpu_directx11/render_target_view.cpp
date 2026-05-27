@@ -55,7 +55,7 @@ namespace gpu_directx11
    }
 
 
-   //int render_target_view::get_image_index() const
+   //::i32 render_target_view::get_image_index() const
    //{
    //   
    //   return m_pgpurenderer->get_frame_index(); 

@@ -5,7 +5,7 @@
 //
 //extern "C"
 //{
-//GLAPI int gladLoadEGL(void);
+//GLAPI ::i32 gladLoadEGL(void);
 //
 //} // extern "C"
 //
@@ -119,12 +119,12 @@ namespace directx11
 ////      //printf("Loaded EGL %d.%d after reload.\n",
 ////        //     GLAD_VERSION_MAJOR(egl_version), GLAD_VERSION_MINOR(egl_version));
 //
-//      int iConfigCount = 0;
+//      ::i32 iConfigCount = 0;
 //
 //      if (!eglChooseConfig(m_display, attribList, &m_config, 1, &iConfigCount))
 //      {
 //
-//         int iError = eglGetError();
+//         ::i32 iError = eglGetError();
 //
 //         const ::scoped_string & scopedstrError = eglQueryString(m_display, iError);
 //
@@ -264,12 +264,12 @@ namespace directx11
 //
 //      eglBindAPI(EGL_DIRECTX11_ES_API);
 //
-//      int iConfigCount = 0;
+//      ::i32 iConfigCount = 0;
 //
 //      if (!eglChooseConfig(m_display, attribList, &m_config, 1, &iConfigCount))
 //      {
 //
-//         int iError = eglGetError();
+//         ::i32 iError = eglGetError();
 //
 //         const ::scoped_string & scopedstrError = eglQueryString(m_display, iError);
 //
@@ -408,12 +408,12 @@ namespace directx11
 
       eglBindAPI(EGL_DIRECTX11_ES_API);
 
-      int iConfigCount = 0;
+      ::i32 iConfigCount = 0;
 
       if (!eglChooseConfig(m_display, attribList, &m_config, 1, &iConfigCount))
       {
 
-         int iError = eglGetError();
+         ::i32 iError = eglGetError();
 
          const ::scoped_string & scopedstrError = eglQueryString(m_display, iError);
 
@@ -593,13 +593,13 @@ namespace directx11
       if(iFindPrecision >= 0)
       {
 
-         stra[iFindPrecision] = "precision highp float;";
+         stra[iFindPrecision] = "precision highp ::f32;";
 
       }
       else
       {
 
-         stra.insert_at(1, "precision highp float;");
+         stra.insert_at(1, "precision highp ::f32;");
 
          iFindPrecision = 1;
 

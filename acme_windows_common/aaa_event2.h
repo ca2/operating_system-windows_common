@@ -17,7 +17,7 @@ public:
    /// Private Mutexes
    bool              m_bManualEvent;
    bool              m_bSignaled;  // meaningful only when m_bManualEvent
-   int               m_iSignalId;  // meaningful only when m_bManualEvent
+   ::i32               m_iSignalId;  // meaningful only when m_bManualEvent
    void *            m_pcond; // pthread_cond_t
    void *            m_mutex; // pthread_mutex_t;
 
@@ -28,12 +28,12 @@ public:
 #if defined(LINUX) || defined(APPLEOS)
 
    /// Named Mutexes
-   int               m_sem;
+   ::i32               m_sem;
 
 #endif
 
 
-   happening(char * sz = nullptr,bool bInitiallyOwn = false, bool bManualReset = false, const ::scoped_string & scopedstrNAme = nullptr, sync_options * psyncoptions = nullptr);
+   happening(::i8 * sz = nullptr,bool bInitiallyOwn = false, bool bManualReset = false, const ::scoped_string & scopedstrNAme = nullptr, sync_options * psyncoptions = nullptr);
 
    virtual ~happening();
 

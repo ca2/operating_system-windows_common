@@ -32,19 +32,19 @@ namespace gpu_directx11
 
 
          // // prefiltered environment map
-         // const unsigned int prefilteredEnvMapMipLevels = 5;
-         // const unsigned int prefilteredEnvMapWidth = 128;
-         // const unsigned int prefilteredEnvMapHeight = 128;
+         // const ::u32 prefilteredEnvMapMipLevels = 5;
+         // const ::u32 prefilteredEnvMapWidth = 128;
+         // const ::u32 prefilteredEnvMapHeight = 128;
          //
-         // const unsigned int environmentCubemapId;
+         // const ::u32 environmentCubemapId;
 
          // ::pointer<::gpu::shader> m_pshaderPprefilteredEnvMap;
          // ::pointer<mipmap_cubemap_framebuffer> m_pprefilteredEnvMapFramebuffer;
          //
          // // brdf convolution
-         // unsigned int m_uBrdfConvolutionMapId;
-         // const unsigned int m_uBrdfConvolutionMapWidth = 512;
-         // const unsigned int m_uBrdfConvolutionMapHeight = 512;
+         // ::u32 m_uBrdfConvolutionMapId;
+         // const ::u32 m_uBrdfConvolutionMapWidth = 512;
+         // const ::u32 m_uBrdfConvolutionMapHeight = 512;
          //
          // ::pointer<::gpu::shader> m_pshaderBrdfConvolutionShader;
          // ::pointer<brdf_convolution_framebuffer> m_pshaderBrdfConvolutionFramebuffer;
@@ -66,7 +66,7 @@ namespace gpu_directx11
          ::memory brdf_convolution_frag_memory() override;
 
 
-         //virtual void initialize_specular_map(const ::string &engineRoot, const unsigned int environmentCubemapId);
+         //virtual void initialize_specular_map(const ::string &engineRoot, const ::u32 environmentCubemapId);
 
 
          /**
@@ -79,7 +79,7 @@ namespace gpu_directx11
           * Get the GL texture ID of the computed pre-filtered environment cubemap.
           * @return
           */
-//virtual         unsigned int getPrefilteredEnvMapId();
+//virtual         ::u32 getPrefilteredEnvMapId();
 
 
          /**
@@ -92,7 +92,7 @@ namespace gpu_directx11
           * Get the GL texture ID of the computed BRDF convolution map.
           * @return
           */
-         //unsigned int getBrdfConvolutionMapId();
+         //::u32 getBrdfConvolutionMapId();
 
 
       };

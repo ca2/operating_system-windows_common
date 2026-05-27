@@ -26,14 +26,14 @@ namespace multimedia
       }
 
 
-      //void translate(WAVEHDR & wavehdr, ::wave::buffer * pwavebuffer, int iBuffer)
+      //void translate(WAVEHDR & wavehdr, ::wave::buffer * pwavebuffer, ::i32 iBuffer)
       //{
 
       //   ::wave::buffer::item * pbuffer = pwavebuffer->get_buffer(iBuffer);
       //
       //   pbuffer->m_posdata            = &wavehdr;
 
-      //   wavehdr.lpData                = (char *) pbuffer->m_pData;
+      //   wavehdr.lpData                = (::i8 *) pbuffer->m_pData;
       //   wavehdr.dwBufferLength        = pwavebuffer->m_uiBufferSize;
       //   wavehdr.dwBytesRecorded       = 0;
       //   wavehdr.dwUser                = pbuffer->m_iIndex;
@@ -42,7 +42,7 @@ namespace multimedia
       //}
 
 
-      //LPWAVEHDR create_new_WAVEHDR(::wave::buffer * pwavebuffer, int iBuffer)
+      //LPWAVEHDR create_new_WAVEHDR(::wave::buffer * pwavebuffer, ::i32 iBuffer)
       //{
 
       //   LPWAVEHDR lpwavehdr = ___new WAVEHDR;
@@ -53,7 +53,7 @@ namespace multimedia
 
       //}
 
-      //LPWAVEHDR get_os_data(::wave::buffer * pwavebuffer, int iBuffer)
+      //LPWAVEHDR get_os_data(::wave::buffer * pwavebuffer, ::i32 iBuffer)
       //{
       //
       //   ::wave::buffer::item * pbuffer = pwavebuffer->get_buffer(iBuffer);

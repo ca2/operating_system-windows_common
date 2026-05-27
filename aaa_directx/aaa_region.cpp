@@ -21,15 +21,15 @@ namespace draw2d_directx
    }
 
 
-   int region::GetRegionData(LPRGNDATA lpRgnData, int nDataSize) const
+   ::i32 region::GetRegionData(LPRGNDATA lpRgnData, ::i32 nDataSize) const
    {
 
       throw ::exception(todo);
 
-      //   ASSERT(get_os_data() != nullptr); return (int)::GetRegionData((HRGN)get_os_data(), nDataSize, lpRgnData);
+      //   ASSERT(get_os_data() != nullptr); return (::i32)::GetRegionData((HRGN)get_os_data(), nDataSize, lpRgnData);
 
    }
-   void region::SetRectRgn(int x1, int y1, int x2, int y2)
+   void region::SetRectRgn(::i32 x1, ::i32 y1, ::i32 x2, ::i32 y2)
    {
 
       throw ::exception(todo);
@@ -45,7 +45,7 @@ namespace draw2d_directx
       //   ::SetRectRgn((HRGN)get_os_data(), rectangle.left, rectangle.top, rectangle.right, rectangle.bottom);
    }
 
-   int region::CombineRgn(const ::draw2d::region* pRgn1, const ::draw2d::region* pRgn2, int nCombineMode)
+   ::i32 region::CombineRgn(const ::draw2d::region* pRgn1, const ::draw2d::region* pRgn2, ::i32 nCombineMode)
    {
 
       throw ::exception(todo);
@@ -53,7 +53,7 @@ namespace draw2d_directx
       //ASSERT(get_os_data() != nullptr); return ::CombineRgn((HRGN)get_os_data(), (HRGN)pRgn1->get_os_data(),
       //(HRGN)pRgn2->get_os_data(), nCombineMode);
    }
-   int region::CopyRgn(const ::draw2d::region* pRgnSrc)
+   ::i32 region::CopyRgn(const ::draw2d::region* pRgnSrc)
    {
 
       throw ::exception(todo);
@@ -73,7 +73,7 @@ namespace draw2d_directx
 
    }
 
-   int region::OffsetRgn(int x, int y)
+   ::i32 region::OffsetRgn(::i32 x, ::i32 y)
    {
 
       throw ::exception(todo);
@@ -81,7 +81,7 @@ namespace draw2d_directx
 
       //ASSERT(get_os_data() != nullptr); return ::OffsetRgn((HRGN)get_os_data(), x, y);
    }
-   int region::OffsetRgn(const ::i32_point & point)
+   ::i32 region::OffsetRgn(const ::i32_point & point)
    {
 
       throw ::exception(todo);
@@ -89,7 +89,7 @@ namespace draw2d_directx
 
       //ASSERT(get_os_data() != nullptr); return ::OffsetRgn((HRGN)get_os_data(), point.x, point.y);
    }
-   int region::GetRgnBox(::i32_rectangle * prectangle) const
+   ::i32 region::GetRgnBox(::i32_rectangle * prectangle) const
    {
 
       throw ::exception(todo);
@@ -99,7 +99,7 @@ namespace draw2d_directx
    }
 
 
-   bool region::contains(::draw2d::graphics* pgraphics, int x, int y) const
+   bool region::contains(::draw2d::graphics* pgraphics, ::i32 x, ::i32 y) const
    {
 
       ((region *) this)->defer_update(pgraphics, 0);
@@ -113,11 +113,11 @@ namespace draw2d_directx
 
       return b != false;
 
-      //Gdiplus::PointF float_point((Gdiplus::REAL) x, (Gdiplus::REAL) y);
+      //Gdiplus::PointF ::f32_point((Gdiplus::REAL) x, (Gdiplus::REAL) y);
       //
       //ASSERT(get_os_data() != nullptr); //return ::PtInRegion((HRGN)get_os_data(), x, y);
 
-      //return m_pgeometry->IsVisible(float_point)  != false;
+      //return m_pgeometry->IsVisible(::f32_point)  != false;
 
    }
 
@@ -131,11 +131,11 @@ namespace draw2d_directx
 
 
       //return ::PtInRegion((HRGN)get_os_data(), point.x, point.y);
-      //Gdiplus::PointF float_point((Gdiplus::REAL) point.x, (Gdiplus::REAL) point.y);
+      //Gdiplus::PointF ::f32_point((Gdiplus::REAL) point.x, (Gdiplus::REAL) point.y);
       //
       //ASSERT(get_os_data() != nullptr); //return ::PtInRegion((HRGN)get_os_data(), x, y);
 
-      //return m_pgeometry->IsVisible(float_point)  != false;
+      //return m_pgeometry->IsVisible(::f32_point)  != false;
 
    }
 
@@ -148,16 +148,16 @@ namespace draw2d_directx
 
       //ASSERT(get_os_data() != nullptr); return ::rectInRegion((HRGN)get_os_data(), rectangle);
 
-      //Gdiplus::RectF float_rectangle((Gdiplus::REAL) rectangle.left, (Gdiplus::REAL) rectangle.top, (Gdiplus::REAL) (rectangle.right - rectangle.left), (Gdiplus::REAL) (rectangle.bottom - rectangle.top));
+      //Gdiplus::RectF ::f32_rectangle((Gdiplus::REAL) rectangle.left, (Gdiplus::REAL) rectangle.top, (Gdiplus::REAL) (rectangle.right - rectangle.left), (Gdiplus::REAL) (rectangle.bottom - rectangle.top));
       //
       //ASSERT(get_os_data() != nullptr); //return ::PtInRegion((HRGN)get_os_data(), x, y);
 
-      //return m_pgeometry->IsVisible(float_rectangle)  != false;
+      //return m_pgeometry->IsVisible(::f32_rectangle)  != false;
 
    }
 
 
-   bool region::create(::draw2d::graphics * pgraphics, char iCreate)
+   bool region::create(::draw2d::graphics * pgraphics, ::i8 iCreate)
    {
 
       m_osdata[0] = get(pgraphics);
@@ -232,10 +232,10 @@ namespace draw2d_directx
 
       D2D1_ELLIPSE ellipse;
 
-      ellipse.point.x = (float)(m_x2 + m_x1) / 2.f;
-      ellipse.point.y = (float)(m_y2 + m_y1) / 2.f;
-      ellipse.radiusX = (float)(m_x2 - m_x1) / 2.f;
-      ellipse.radiusY = (float)(m_y2 - m_y1) / 2.f;
+      ellipse.point.x = (::f32)(m_x2 + m_x1) / 2.f;
+      ellipse.point.y = (::f32)(m_y2 + m_y1) / 2.f;
+      ellipse.radiusX = (::f32)(m_x2 - m_x1) / 2.f;
+      ellipse.radiusY = (::f32)(m_y2 - m_y1) / 2.f;
 
       ID2D1EllipseGeometry * pgeometry = nullptr;
 
@@ -251,9 +251,9 @@ namespace draw2d_directx
 
       auto ppath = createø < ::draw2d::path > ();
 
-      /*int_point_array pa;
+      /*i32_point_array pa;
 
-      for(int i = 0; i < m_nCount; i++)
+      for(::i32 i = 0; i < m_nCount; i++)
       {
          pa.add(Gdiplus::PointF((Gdiplus::REAL) m_lppoints[i].x, (Gdiplus::REAL) m_lppoints[i].y));
       }*/
@@ -283,7 +283,7 @@ namespace draw2d_directx
 
       auto ppath = createø < ::draw2d::path > ();
 
-      double_point_array pa;
+      f64_point_array pa;
 
       /*if(m_efillmode == ::draw2d::e_fill_mode_alternate)
       {
@@ -294,20 +294,20 @@ namespace draw2d_directx
          path.SetFillMode(Gdiplus::FillModeWinding);
       }*/
 
-      int n = 0;
+      ::i32 n = 0;
 
-      for(int i = 0; i < m_nCount; i++)
+      for(::i32 i = 0; i < m_nCount; i++)
       {
-         int jCount = m_lppolycounts[i];
+         ::i32 jCount = m_lppolycounts[i];
          pa.erase_all();
-         for(int j = 0; j < jCount; j++)
+         for(::i32 j = 0; j < jCount; j++)
          {
-            pa.add(double_point(m_lppoints[n].x, m_lppoints[n].y));
+            pa.add(::f64_point(m_lppoints[n].x, m_lppoints[n].y));
             n++;
          }
          //ppath->begin_figure(true, m_efillmode);
          ppath->begin_figure();
-         ppath->add_lines(pa.get_data(), (int) pa.get_count());
+         ppath->add_lines(pa.get_data(), (::i32) pa.get_count());
          //ppath->end_figure(true);
          ppath->close_figure();
       }

@@ -9,7 +9,7 @@
 #include "bred/gpu/renderer.h"
 
 
-//constexpr unsigned int FRAME_OVERLAP = 2;
+//constexpr ::u32 FRAME_OVERLAP = 2;
 
 
 namespace gpu_directx11
@@ -95,7 +95,7 @@ namespace gpu_directx11
 
       //::array<VkCommandBuffer>	commandBuffers;
       //VkExtent2D m_extentRenderer;
-      //int currentFrameIndex = 0;
+      //::i32 currentFrameIndex = 0;
       //bool isFrameStarted = false;
       //bool m_bNeedToRecreateSwapChain = false;
       //bool m_bOffScreen = true;
@@ -125,8 +125,8 @@ namespace gpu_directx11
       //void on_new_frame() override;
       void initialize_gpu_renderer(::gpu::context* pgpucontext) override;
 
-      //int width()  override;
-      //int height() override;
+      //::i32 width()  override;
+      //::i32 height() override;
 
 
 
@@ -146,7 +146,7 @@ namespace gpu_directx11
       //void _resolve_color_and_alpha_accumulation_buffers();
       void swap_chain();
 
-      float getAspectRatio() const;
+      ::f32 getAspectRatio() const;
     
 
       //bool isFrameInProgress() const { return isFrameStarted; }
@@ -157,8 +157,8 @@ namespace gpu_directx11
       //   return commandBuffers[get_frame_index()];
       //}
 
-      //int get_frame_index() const override;
-      //int get_frame_count() const override;
+      //::i32 get_frame_index() const override;
+      //::i32 get_frame_count() const override;
 
       //void defer_update_renderer() override;
       //void on_defer_update_renderer_allocate_render_target(::gpu::enum_output eoutput, const ::i32_size& size, ::gpu::render_target* previous) override;
