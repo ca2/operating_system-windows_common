@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.17)
-project(nano_graphics_gdi CXX)
+project(nano_graphics_direct2d CXX)
 
 
 
