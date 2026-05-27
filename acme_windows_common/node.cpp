@@ -6,7 +6,7 @@
 #include "acme/filesystem/filesystem/directory_system.h"
 #include "acme/platform/scoped_restore.h"
 #include "acme/platform/system.h"
-#include "acme/user/user/key_state.h"
+#include "acme/user/user/keyboard_state.h"
 
 extern "C" void nano_idn_windows_common_factory(::factory::factory * pfactory);
 
