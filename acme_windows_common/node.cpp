@@ -8,7 +8,7 @@
 #include "acme/platform/system.h"
 #include "acme/user/user/keyboard_state.h"
 
-extern "C" void nano_idn_windows_common_factory(::factory::factory * pfactory);
+//extern "C" void nano_idn_windows_common_factory(::factory::factory * pfactory);
 
 
 #include "acme/_operating_system.h"
@@ -775,28 +775,28 @@ namespace acme_windows_common
    }
 
 
-   ::enum_id node::key_command(::user::enum_key ekey, ::user::key_state* pkeystate)
+   ::enum_id node::key_command(::user::enum_key ekey, ::user::keyboard_state * pkeyboardstate)
    {
 
-      if (ekey == ::user::e_key_a && pkeystate->is_key_pressed(::user::e_key_control))
+      if (ekey == ::user::e_key_a && pkeyboardstate->is_key_pressed(::user::e_key_control))
       {
 
          return ::id_edit_select_all;
 
       }
-      else if (ekey == ::user::e_key_c && pkeystate->is_key_pressed(::user::e_key_control))
+      else if (ekey == ::user::e_key_c && pkeyboardstate->is_key_pressed(::user::e_key_control))
       {
 
          return ::id_edit_copy;
 
       }
-      else if (ekey == ::user::e_key_v && pkeystate->is_key_pressed(::user::e_key_control))
+      else if (ekey == ::user::e_key_v && pkeyboardstate->is_key_pressed(::user::e_key_control))
       {
 
          return ::id_edit_paste;
 
       }
-      else if (ekey == ::user::e_key_x && pkeystate->is_key_pressed(::user::e_key_control))
+      else if (ekey == ::user::e_key_x && pkeyboardstate->is_key_pressed(::user::e_key_control))
       {
 
          return ::id_edit_cut;
@@ -1064,16 +1064,16 @@ namespace acme_windows_common
    {
 
 
-            if (scopedstrComponent == "nano_idn")
-            {
+      //      if (scopedstrComponent == "nano_idn")
+      //      {
 
-               auto pfactory = this->factory();
+      //         auto pfactory = this->factory();
 
-               nano_idn_windows_common_factory(pfactory);
+      //         nano_idn_windows_common_factory(pfactory);
 
-               return true;
+      //         return true;
 
-      }
+      //}
 
       return false;
    }
