@@ -5,6 +5,7 @@
 #include "acme/constant/user_key.h"
 #include "acme/filesystem/filesystem/directory_system.h"
 #include "acme/platform/scoped_restore.h"
+#include "acme/platform/session.h"
 #include "acme/platform/system.h"
 #include "acme/user/user/keyboard_state.h"
 
@@ -775,28 +776,28 @@ namespace acme_windows_common
    }
 
 
-   ::enum_id node::key_command(::user::enum_key ekey, ::user::keyboard_state * pkeyboardstate)
+   ::enum_id node::key_command(const ::user::e_key & ekey)
    {
 
-      if (ekey == ::user::e_key_a && pkeyboardstate->is_key_pressed(::user::e_key_control))
+      if (ekey == ::user::e_key_a && session()->is_key_pressed(::user::e_key_control))
       {
 
          return ::id_edit_select_all;
 
       }
-      else if (ekey == ::user::e_key_c && pkeyboardstate->is_key_pressed(::user::e_key_control))
+      else if (ekey == ::user::e_key_c && session()->is_key_pressed(::user::e_key_control))
       {
 
          return ::id_edit_copy;
 
       }
-      else if (ekey == ::user::e_key_v && pkeyboardstate->is_key_pressed(::user::e_key_control))
+      else if (ekey == ::user::e_key_v && session()->is_key_pressed(::user::e_key_control))
       {
 
-         return ::id_edit_paste;
+         return ::id_edit_paste; 
 
       }
-      else if (ekey == ::user::e_key_x && pkeyboardstate->is_key_pressed(::user::e_key_control))
+      else if (ekey == ::user::e_key_x && session()->is_key_pressed(::user::e_key_control))
       {
 
          return ::id_edit_cut;

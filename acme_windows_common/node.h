@@ -51,7 +51,8 @@ namespace acme_windows_common
 
       void install_crash_dump_reporting(const ::scoped_string & scopedstrModuleNameWithTheExeExtension) override;
 
-      ::enum_id key_command(::user::enum_key ekey, ::user::keyboard_state * pkeyboardstate) override;
+      
+      ::enum_id key_command(const ::user::e_key & ekey) override;
 
 
 
