@@ -62,18 +62,18 @@ namespace windows_common
 
                     defer_throw_hresult(hr);
 
-                    bstring bstrZip(payloadZip.as_file_path());
+                    bstring bstrZip(payloadZip.as_file_path().windows_path().c_str());
 
                     InZipFile.vt = VT_BSTR;
                     InZipFile.bstrVal = bstrZip;
-                    pISD->NameSpace(InZipFile, &pZippedFile);
+                    auto hrOpenZip = pISD->NameSpace(InZipFile, &pZippedFile);
                     if (!pZippedFile)
                     {
                         //pISD->Release();
                         throw ::exception(error_failed, "pISD->NameSpace(InZipFile, &pZippedFile)");
                     }
 
-                    bstring bstrFolder(pathFolder);
+                    bstring bstrFolder(pathFolder.windows_path().c_str());
 
                     OutFolder.vt = VT_BSTR;
                     OutFolder.bstrVal = bstrFolder;
