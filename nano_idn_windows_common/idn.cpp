@@ -37,13 +37,21 @@ namespace windows_common
 
             wstring wstr(scopedstr);
 
-            ::i32 iSize = IdnToAscii(IDN_RAW_PUNYCODE, wstr, (::i32)wstr.length(), nullptr, 0);
+            //::i32 iSize = IdnToAscii(IDN_RAW_PUNYCODE, wstr, (::i32)wstr.length(), nullptr, 0);
+            ::i32 iSize = IdnToAscii(0, wstr, (::i32)wstr.length(), nullptr, 0);
+
+            if (iSize < 0)
+            {
+
+               return scopedstr;
+
+            }
 
             wstring wstrTarget;
 
             WCHAR* pwszTarget = wstrTarget.get_buffer(iSize);
 
-            IdnToAscii(IDN_RAW_PUNYCODE, wstr, (::i32)wstr.length(), pwszTarget, iSize);
+            IdnToAscii(0, wstr, (::i32)wstr.length(), pwszTarget, iSize);
 
             wstrTarget.release_buffer();
 
