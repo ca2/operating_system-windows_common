@@ -287,7 +287,7 @@ namespace multimedia
 
          }
 
-         m_pxaudio.Release();
+         m_pxaudio.release();
 
          //estatus = xaudio::translate(waveOutClose(m_hwaveout));
 
