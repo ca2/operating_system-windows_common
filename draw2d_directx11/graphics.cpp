@@ -185,7 +185,7 @@ namespace draw2d_directx11
 
       auto pgpuapproach = m_papplication->get_gpu_approach();
 
-      auto pgpudevice = pgpuapproach->get_gpu_device(m_puserinteraction->m_pacmewindowingwindow);
+      auto pgpudevice = pgpuapproach->get_gpu_device(m_puserinteractionDraw2dGraphics->m_pacmewindowingwindow);
 
       //m_pdirectx11 = ::directx11::from_gpu_device(pgpudevice);
 
@@ -229,7 +229,7 @@ namespace draw2d_directx11
 
       //}
 
-      //::user::interaction* puserinteraction = m_puserinteraction;
+      //::user::interaction* puserinteraction = m_puserinteractionDraw2dGraphics;
 
       //if (::is_null(puserinteraction))
       //{
@@ -289,7 +289,7 @@ namespace draw2d_directx11
 
       }
 
-      ::user::interaction* puserinteraction = m_puserinteraction;
+      ::user::interaction* puserinteraction = m_puserinteractionDraw2dGraphics;
 
       if (::is_null(puserinteraction))
       {
@@ -356,7 +356,7 @@ namespace draw2d_directx11
 
             //HRESULT hr;
 
-            //::user::interaction* puserinteraction = m_puserinteraction;
+            //::user::interaction* puserinteraction = m_puserinteractionDraw2dGraphics;
 
             //if (!puserinteraction)
             //{
@@ -550,7 +550,7 @@ namespace draw2d_directx11
 
             set_ok_flag();
 
-         });
+         };
 
       //return true;
 
@@ -5440,14 +5440,14 @@ namespace draw2d_directx11
    //oswindow graphics::get_window_handle()
    //{
 
-   //   if (::is_null(m_puserinteraction))
+   //   if (::is_null(m_puserinteractionDraw2dGraphics))
    //   {
 
    //      return nullptr;
 
    //   }
 
-   //   return m_puserinteraction->get_oswindow();
+   //   return m_puserinteractionDraw2dGraphics->get_oswindow();
 
    //}
 
@@ -6544,7 +6544,7 @@ namespace draw2d_directx11
       //if (m_egraphics == ::e_graphics_draw)
       //{
 
-      //   //auto rectangleHost = m_puserinteraction->raw_rectangle();
+      //   //auto rectangleHost = m_puserinteractionDraw2dGraphics->raw_rectangle();
 
       //   //m_pgpucontextDraw2d->m_pgpudevice->start_stacking_layers();
 
@@ -6621,7 +6621,7 @@ namespace draw2d_directx11
 
       ::gpu::graphics::start_gpu_layer(pgpuframe);
       //m_pgpucontextDraw2d->m_pgpudevice->start_stacking_layers();
-      //m_pgpucontextDraw2d->m_pgpurenderer->start_layer(m_puserinteraction->raw_rectangle());
+      //m_pgpucontextDraw2d->m_pgpurenderer->start_layer(m_puserinteractionDraw2dGraphics->raw_rectangle());
 
       
 

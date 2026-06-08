@@ -46,6 +46,8 @@ namespace gpu_directx11
 
       m_estatus = error_not_initialized;
 
+      m_iCurrentImage = 0;
+
    }
 
 
@@ -2044,7 +2046,7 @@ bool device::_is_ok() const
 
       switch (etype)
       {
-      case ::gpu::e_type_int: return sizeof(::i32);
+      case ::gpu::e_type_i32: return sizeof(::i32);
       case ::gpu::e_type_f32: return sizeof(::f32);
       case ::gpu::e_type_seq4: return sizeof(::floating_sequence4);
       case ::gpu::e_type_mat4: return sizeof(floating_matrix4);

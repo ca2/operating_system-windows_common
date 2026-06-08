@@ -172,7 +172,7 @@ namespace draw2d_direct2d
 
       auto pgpuapproach = m_papplication->get_gpu_approach();
 
-      auto pgpudevice = pgpuapproach->get_gpu_device(m_puserinteraction->m_pacmewindowingwindow);
+      auto pgpudevice = pgpuapproach->get_gpu_device(m_puserinteractionDraw2dGraphics->m_pacmewindowingwindow);
 
       m_pdirect2d = ::direct2d::from_gpu_device(pgpudevice);
 
@@ -217,7 +217,7 @@ namespace draw2d_direct2d
 
       //}
 
-      //::user::interaction* puserinteraction = m_puserinteraction;
+      //::user::interaction* puserinteraction = m_puserinteractionDraw2dGraphics;
 
       //if (::is_null(puserinteraction))
       //{
@@ -302,7 +302,7 @@ namespace draw2d_direct2d
 
       }
 
-      ::user::interaction* puserinteraction = m_puserinteraction;
+      ::user::interaction* puserinteraction = m_puserinteractionDraw2dGraphics;
 
       if (::is_null(puserinteraction))
       {
@@ -317,7 +317,7 @@ namespace draw2d_direct2d
 
       auto pgpuapproach = m_papplication->get_gpu_approach();
 
-      auto pgpudevice = pgpuapproach->get_gpu_device(m_puserinteraction->m_pacmewindowingwindow);
+      auto pgpudevice = pgpuapproach->get_gpu_device(m_puserinteractionDraw2dGraphics->m_pacmewindowingwindow);
 
       auto pgpucontextNew = pgpudevice->create_draw2d_context(
          ::gpu::e_output_gpu_buffer,
@@ -369,7 +369,7 @@ namespace draw2d_direct2d
 
             HRESULT hr;
 
-            ::user::interaction* puserinteraction = m_puserinteraction;
+            ::user::interaction* puserinteraction = m_puserinteractionDraw2dGraphics;
 
             if (!puserinteraction)
             {
@@ -565,7 +565,7 @@ namespace draw2d_direct2d
 
             set_ok_flag();
 
-         });
+         };
 
       //return true;
 
@@ -5389,14 +5389,14 @@ namespace draw2d_direct2d
    //oswindow graphics::get_window_handle()
    //{
 
-   //   if (::is_null(m_puserinteraction))
+   //   if (::is_null(m_puserinteractionDraw2dGraphics))
    //   {
 
    //      return nullptr;
 
    //   }
 
-   //   return m_puserinteraction->get_oswindow();
+   //   return m_puserinteractionDraw2dGraphics->get_oswindow();
 
    //}
 
@@ -5812,10 +5812,10 @@ namespace draw2d_direct2d
       if (m_pfont->m_dFontWidth == 1.0)
       {
 
-         D2D1_RECT_F ::f32_rectangle = D2D1::RectF((FLOAT)rectangle.left, (FLOAT)rectangle.top, (FLOAT)rectangle.right, (FLOAT)rectangle.bottom);
+         D2D1_RECT_F rectf = D2D1::RectF((FLOAT)rectangle.left, (FLOAT)rectangle.top, (FLOAT)rectangle.right, (FLOAT)rectangle.bottom);
 
          m_pd2d1rendertarget->DrawText(ptextitem->get_text(), (::u32)ptextitem->get_text().length(), pfont,
-                                       &::f32_rectangle, pbrush);
+                                       &rectf, pbrush);
 
       }
       else
@@ -5826,7 +5826,7 @@ namespace draw2d_direct2d
 
          D2D1::Matrix3x2F mOriginal(m);
 
-         D2D1_RECT_F ::f32_rectangle = D2D1::RectF((FLOAT)0, (FLOAT)0, (FLOAT)width(rectangle), (FLOAT)height(rectangle));
+         D2D1_RECT_F rectf = D2D1::RectF((FLOAT)0, (FLOAT)0, (FLOAT)width(rectangle), (FLOAT)height(rectangle));
 
          m = m * D2D1::Matrix3x2F::Translation((FLOAT)rectangle.left, (FLOAT)rectangle.top);
 
@@ -5836,7 +5836,7 @@ namespace draw2d_direct2d
 
          m_pd2d1rendertarget->DrawText(ptextitem->get_text(), (::u32)ptextitem->get_text().length(),
                                        pfont,
-                                       &::f32_rectangle,
+                                       &rectf,
                                        pbrush);
 
          m_pd2d1rendertarget->SetTransform(&mOriginal);
@@ -6197,7 +6197,7 @@ namespace draw2d_direct2d
 
       }
 
-      D2D1_RECT_F ::f32_rectangle = D2D1::RectF((FLOAT)0, (FLOAT)0, (FLOAT)(0 + sizeText.cx * 2), (FLOAT)(0 + sizeText.cy * 2));
+      D2D1_RECT_F rectf = D2D1::RectF((FLOAT)0, (FLOAT)0, (FLOAT)(0 + sizeText.cx * 2), (FLOAT)(0 + sizeText.cy * 2));
 
       HRESULT  hr = pfont->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
 
@@ -6249,10 +6249,10 @@ namespace draw2d_direct2d
       else
       {
 
-         ::f32_rectangle.left += (FLOAT)x;
-         ::f32_rectangle.top += (FLOAT)y;
-         ::f32_rectangle.right += (FLOAT)x;
-         ::f32_rectangle.bottom += (FLOAT)y;
+         rectf.left += (FLOAT)x;
+         rectf.top += (FLOAT)y;
+         rectf.right += (FLOAT)x;
+         rectf.bottom += (FLOAT)y;
 
       }
 
@@ -6274,7 +6274,7 @@ namespace draw2d_direct2d
       if (lpcwsz != nullptr && uiLen > 0)
       {
 
-         m_pd2d1rendertarget->DrawText(lpcwsz, (::i32)uiLen, pfont, &::f32_rectangle, pbrush);
+         m_pd2d1rendertarget->DrawText(lpcwsz, (::i32)uiLen, pfont, &rectf, pbrush);
 
       }
 
@@ -6386,7 +6386,7 @@ namespace draw2d_direct2d
       //if (m_egraphics == ::e_graphics_draw)
       //{
 
-      //   //auto rectangleHost = m_puserinteraction->raw_rectangle();
+      //   //auto rectangleHost = m_puserinteractionDraw2dGraphics->raw_rectangle();
 
       //   //m_pgpucontextDraw2d->m_pgpudevice->start_stacking_layers();
 
@@ -6455,7 +6455,7 @@ namespace draw2d_direct2d
 
       ::gpu::graphics::start_gpu_layer(pgpuframe);
       //m_pgpucontextDraw2d->m_pgpudevice->start_stacking_layers();
-      //m_pgpucontextDraw2d->m_pgpurenderer->start_layer(m_puserinteraction->raw_rectangle());
+      //m_pgpucontextDraw2d->m_pgpurenderer->start_layer(m_puserinteractionDraw2dGraphics->raw_rectangle());
 
       
 
@@ -6558,9 +6558,9 @@ namespace draw2d_direct2d
       if (pdxgisurfaceBound != pdxgisurface)
       {
 
-         pd2d1rendertarget.Release();
+         pd2d1rendertarget.release();
 
-         pd2d1bitmap.Release();
+         pd2d1bitmap.release();
 
       }
 

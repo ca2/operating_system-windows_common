@@ -73,6 +73,8 @@ list(APPEND library_source
         render_target_view.h
         renderer.cpp
         renderer.h
+        semaphore.cpp
+        semaphore.h
         shader.cpp
         shader.h
         swap_chain.cpp

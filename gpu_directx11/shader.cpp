@@ -813,7 +813,7 @@ namespace gpu_directx11
       if (iSetSizeShared != m_iSizeSharedPushConstants || !m_pbufferSharedPushConstants)
       {
 
-         m_pbufferSharedPushConstants.Release();
+         m_pbufferSharedPushConstants.release();
 
          D3D11_BUFFER_DESC cbDesc = {};
          cbDesc.ByteWidth = (m_propertiesPushShared.size(false) + 15) & ~15;

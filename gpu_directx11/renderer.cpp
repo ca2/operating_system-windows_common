@@ -608,7 +608,7 @@ namespace gpu_directx11
          || texture2ddescSource.Height != m_sizeStaging.height())
       {
 
-         m_ptextureStaging.Release();
+         m_ptextureStaging.release();
 
          if (texture2ddescSource.Format != DXGI_FORMAT_B8G8R8A8_UNORM)
          {
@@ -1218,6 +1218,14 @@ HRESULT hrCreateDepthStencilState = pgpudevice->m_pd3d11device->CreateDepthStenc
       m_prenderstate->on_happening(::gpu::e_happening_end_frame);
 
       defer_end_frame_layer_copy();
+
+      ::gpu::renderer::endFrame();
+
+      // isFrameStarted = false;
+ 
+      // auto eoutput = m_pgpucontext->m_eoutput;
+
+      defer_end_frame_layer_after_submit();
 
       auto eoutput = m_pgpucontext->m_eoutput;
 

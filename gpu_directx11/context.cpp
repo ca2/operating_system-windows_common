@@ -59,14 +59,16 @@ namespace gpu_directx11
    void context::_context_lock()
    {
 
-      if (!m_pmultithread)
+      //if (!m_pmultithread)
       {
 
-         m_pcontext->QueryInterface(__interface_of(m_pmultithread));
+//         m_pcontext->QueryInterface(__interface_of(m_pmultithread));
 
       }
 
-      m_pmultithread->Enter();
+  ///    m_pmultithread->Enter();
+
+      this->synchronization()->lock();
 
    }
 
@@ -74,7 +76,8 @@ namespace gpu_directx11
    void context::_context_unlock()
    {
 
-      m_pmultithread->Leave();
+      //m_pmultithread->Leave();
+      this->synchronization()->unlock();
 
    }
 

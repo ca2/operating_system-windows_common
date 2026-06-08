@@ -39,6 +39,8 @@ namespace gpu_directx11
 
    class renderer;
 
+   class semaphore;
+
    class descriptor_pool;
 
    class buffer;

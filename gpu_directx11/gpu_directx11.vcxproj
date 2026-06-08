@@ -771,6 +771,7 @@
     <ClInclude Include="program.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="render_target_view.h" />
+    <ClInclude Include="semaphore.h" />
     <ClInclude Include="shader.h" />
     <ClInclude Include="swap_chain.h" />
     <ClInclude Include="swap_chain_render_target_view.h" />
@@ -886,6 +887,7 @@
     <ClCompile Include="pixmap.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="render_target_view.cpp" />
+    <ClCompile Include="semaphore.cpp" />
     <ClCompile Include="swap_chain.cpp" />
     <ClCompile Include="swap_chain_render_target_view.cpp" />
     <ClCompile Include="texture.cpp" />

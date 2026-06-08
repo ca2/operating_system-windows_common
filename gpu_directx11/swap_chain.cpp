@@ -79,7 +79,7 @@ namespace gpu_directx11
          //DXGI_SWAP_CHAIN_DESC sd = {};
          //sd.BufferCount = 1;
          RECT rect = {};
-         GetWindowRect(pwin32window->_HWND(), &rect);
+         GetWindowRect((HWND) pwin32window->_HWND(), &rect);
          //sd.BufferDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
          //sd.BufferDesc.RefreshRate.Numerator = 60;
          //sd.BufferDesc.RefreshRate.Denominator = 1;
@@ -103,7 +103,7 @@ namespace gpu_directx11
          // Create the swap chain for an HWND
          //ComPtr<IDXGISwapChain1> swapChain1;
          HRESULT hrCreateSwapChainForHwnd = pdx11gpudevice->m_pdxgifactory2->CreateSwapChainForHwnd(
-            m_pdxgidevice_2, pwin32window->_HWND(),
+            m_pdxgidevice_2, (HWND) pwin32window->_HWND(),
             &desc,
             nullptr,       // No fullscreen desc
             nullptr,       // No output restriction
@@ -124,7 +124,7 @@ namespace gpu_directx11
          dxgiswapchaindesc1.AlphaMode = DXGI_ALPHA_MODE_PREMULTIPLIED;
 
          RECT rect = {};
-         GetWindowRect(pwin32window->_HWND(), &rect);
+         GetWindowRect((HWND) pwin32window->_HWND(), &rect);
          dxgiswapchaindesc1.Width = rect.right - rect.left;
          dxgiswapchaindesc1.Height = rect.bottom - rect.top;
 
@@ -140,6 +140,8 @@ namespace gpu_directx11
          ::defer_throw_hresult(hrCreateSwapChainForComposition);
 
       }
+
+      m_pdxgiswapchain1.as(m_pdxgiswapchain3);
 
       ///m_pswapchain->initialize_gpu_swap_chain(this, pwindow);
 
@@ -182,28 +184,42 @@ namespace gpu_directx11
 
       m_size = pgpucontext->m_rectangle.size();
 
-      if (!m_ptextureSwapChain)
+      ::cast < ::gpu_directx11::device > pgpudevice = pgpucontext->m_pgpudevice;
+
+      UINT uBackBufferIndex = 0;
+
+      if (m_pdxgiswapchain3)
       {
 
-         construct_newø(m_ptextureSwapChain);
+         uBackBufferIndex = m_pdxgiswapchain3->GetCurrentBackBufferIndex();
+
+      }
+
+      pgpudevice->m_iCurrentImage = uBackBufferIndex;
+
+      auto & ptextureSwapChain = m_textureaSwapChain.atø(pgpudevice->m_iCurrentImage);
+
+      if (!ptextureSwapChain)
+      {
+
+         construct_newø(ptextureSwapChain);
 
 
-         m_ptextureSwapChain->m_textureflags.m_bRenderTarget= true;
+         ptextureSwapChain->m_textureflags.m_bRenderTarget= true;
 
-         m_ptextureSwapChain->m_textureflags.m_bShaderResource = false;
+         ptextureSwapChain->m_textureflags.m_bShaderResource = false;
 
-         m_ptextureSwapChain->_initialize_gpu_texture(
+         ptextureSwapChain->_initialize_gpu_texture(
             pgpucontext,
-            m_pdxgiswapchain1);
+            m_pdxgiswapchain1,
+            (::u32) pgpudevice->m_iCurrentImage);
 
-         //m_pdxgiswapchain1->GetBuffer(0, __interface_of(m_ptextureSwapChain));
+         //m_pdxgiswapchain1->GetBuffer(0, __interface_of(ptextureSwapChain));
 
       }
 
       if (!m_pblendstateDisabled)
       {
-
-         ::cast < ::gpu_directx11::device > pgpudevice = pgpucontext->m_pgpudevice;
 
          D3D11_BLEND_DESC blendDesc = { 0 };
          blendDesc.RenderTarget[0].BlendEnable = FALSE;  // Disable blending
@@ -228,13 +244,13 @@ namespace gpu_directx11
       //   ::cast < ::gpu_directx11::device > pgpudevice = pgpucontext->m_pgpudevice;
 
       //   pgpudevice->m_pd3d11device->CreateRenderTargetView(
-      //      m_ptextureSwapChain, nullptr, &m_prendertargetviewSwapChain);
+      //      ptextureSwapChain, nullptr, &m_prendertargetviewSwapChain);
 
       //}
 
       //ID3D11RenderTargetView* rendertargetviewa[] = 
       //{
-      //   m_ptextureSwapChain->m_prendertargetview
+      //   ptextureSwapChain->m_prendertargetview
       //};
       //
       //pgpucontext->m_pcontext->OMSetRenderTargets(1, rendertargetviewa, nullptr);
@@ -289,15 +305,15 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
       //pgpucontext->m_pcontext->OMSetDepthStencilState(pgpucontext->depth_stencil_state_disabled(), 0);
 
-      m_pshaderPresent->bind(nullptr, m_ptextureSwapChain);
+      m_pshaderPresent->bind(nullptr, ptextureSwapChain);
       m_pshaderPresent->bind_source(nullptr, pgputexture, 0);
       //pgpucontext->m_pcontext->VSSetShader(m_pvertexshaderFullscreen, nullptr, 0);
       //pgpucontext->m_pcontext->PSSetShader(m_ppixelshaderFullscreen, nullptr, 0);
 
       //pgpucontext->m_pcontext->PSSetShaderResources(
-      //   0, 1, m_ptextureSwapChain->m_pshaderresourceview.pp());
+      //   0, 1, ptextureSwapChain->m_pshaderresourceview.pp());
       //pgpucontext->m_pcontext->PSSetSamplers(
-      //   0, 1, m_ptextureSwapChain->m_psamplerstate.pp());
+      //   0, 1, ptextureSwapChain->m_psamplerstate.pp());
 
       D3D11_VIEWPORT vp = {};
       vp.TopLeftX = 0;
@@ -327,7 +343,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
       //FLOAT colorRGBA2[] = { 0.5f * 0.5f,0.75f * 0.5f, 0.95f * 0.5f, 0.5f };
 
-      //pgpucontext->m_pcontext->ClearRenderTargetView(m_ptextureSwapChain->m_prendertargetview, colorRGBA2);
+      //pgpucontext->m_pcontext->ClearRenderTargetView(ptextureSwapChain->m_prendertargetview, colorRGBA2);
 
       //D3D11_RECT rect = {};
       //rect.left = 100;
@@ -337,7 +353,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
       //::f32 clearColor[4] = { 0.5f * 0.5f,0.75f * 0.5f, 0.95f * 0.5f, 0.5f }; 
 
-      //pgpucontext->m_pcontext1->ClearView(m_ptextureSwapChain->m_prendertargetview, clearColor, &rect, 1);
+      //pgpucontext->m_pcontext1->ClearView(ptextureSwapChain->m_prendertargetview, clearColor, &rect, 1);
 
 
       {
@@ -358,7 +374,9 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    void swap_chain::swap_buffers()
    {
 
-      m_pdxgiswapchain1->Present(1, 0);
+      HRESULT hresult = m_pdxgiswapchain1->Present(1, 0);
+
+      ::defer_throw_hresult(hresult);
 
    }
 
@@ -366,25 +384,25 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    //::gpu::texture* swap_chain::current_texture()
    //{
 
-   //   if (!m_ptextureSwapChain)
+   //   if (!m_textureaSwapChain)
    //   {
 
-   //      construct_newø(m_ptextureSwapChain);
+   //      construct_newø(m_textureaSwapChain);
 
-   //      m_ptextureSwapChain->m_bRenderTarget = true;
+   //      m_textureaSwapChain->m_bRenderTarget = true;
 
-   //      m_ptextureSwapChain->m_bShaderResourceView = false;
+   //      m_textureaSwapChain->m_bShaderResourceView = false;
 
-   //      m_ptextureSwapChain->_initialize_gpu_texture(
+   //      m_textureaSwapChain->_initialize_gpu_texture(
    //         m_pgpurenderer,
    //         m_pdxgiswapchain1);
 
-   //      //m_pdxgiswapchain1->GetBuffer(0, __interface_of(m_ptextureSwapChain));
+   //      //m_pdxgiswapchain1->GetBuffer(0, __interface_of(m_textureaSwapChain));
 
 
    //   }
 
-   //   return m_ptextureSwapChain;
+   //   return m_textureaSwapChain;
 
    //}
 

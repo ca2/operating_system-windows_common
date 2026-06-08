@@ -18,10 +18,11 @@ namespace gpu_directx11
 
       //D3D11_TEXTURE2D_DESC texDesc = {};
       ::pointer < ::gpu_directx11::shader > m_pshaderPresent;
-      //::comptr<ID3D11Texture2D> m_ptextureSwapChain;
+      //::comptr<ID3D11Texture2D> m_textureaSwapChain;
       //::comptr<ID3D11RenderTargetView> m_prendertargetviewSwapChain;
-      ::pointer<::gpu_directx11::texture> m_ptextureSwapChain;
+      ::pointer_array<::gpu_directx11::texture> m_textureaSwapChain;
       ::comptr <ID3D11BlendState > m_pblendstateDisabled;
+      ::comptr <IDXGISwapChain3> m_pdxgiswapchain3;
 
 
       swap_chain();

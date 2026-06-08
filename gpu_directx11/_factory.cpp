@@ -17,6 +17,7 @@
 #include "pixmap.h"
 #include "program.h"
 #include "renderer.h"
+#include "semaphore.h"
 #include "shader.h"
 #include "swap_chain.h"
 #include "texture.h"
@@ -54,6 +55,7 @@ __FACTORY_EXPORT void gpu_directx11_factory(::factory::factory * pfactory)
    pfactory->add_factory_item < ::gpu_directx11::context, ::gpu::context >();
    pfactory->add_factory_item < ::gpu_directx11::frame, ::gpu::frame >();
    pfactory->add_factory_item < ::gpu_directx11::fence, ::gpu::fence >();
+   pfactory->add_factory_item < ::gpu_directx11::semaphore, ::gpu::semaphore >();
    pfactory->add_factory_item < ::gpu_directx11::shader, ::gpu::shader >();
    pfactory->add_factory_item < ::gpu_directx11::cpu_buffer, ::gpu::cpu_buffer >();
    pfactory->add_factory_item < ::gpu_directx11::renderer, ::gpu::renderer >();

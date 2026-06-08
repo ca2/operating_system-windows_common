@@ -90,7 +90,10 @@ namespace gpu_directx11
       // void initialize_texture(::gpu::renderer* prenderer,
       //    const ::i32_rectangle& rectangleTarget, bool bWithDepth,
       //    const ::pointer_array < ::image::image > * imagea = nullptr, enum_type type = e_type_image) override;
-      virtual void _initialize_gpu_texture(::gpu::context *pgpucontext, IDXGISwapChain1 *pdxgiswapchain);
+      virtual void _initialize_gpu_texture(
+         ::gpu::context *pgpucontext,
+         IDXGISwapChain1 *pdxgiswapchain,
+         UINT uBuffer = 0);
 
 
       void create_render_target() override;

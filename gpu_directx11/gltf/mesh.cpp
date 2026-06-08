@@ -108,7 +108,7 @@ namespace gpu_directx11
 
 
             bool bAlbedo = !prendersystem->m_bDisableAlbedo && m_pmaterial->useTextureAlbedo;
-            pshader->set_int("useTextureAlbedo", bAlbedo);
+            pshader->set_i32("useTextureAlbedo", bAlbedo);
             floating_sequence3 seq3Albedo= {};
             if (prendersystem->m_bForceDefaultAlbedo)
             {
@@ -136,7 +136,7 @@ namespace gpu_directx11
             bool bMetallicRoughness =
                !prendersystem->m_bDisableMetallicRoughness && m_pmaterial->useTextureMetallicRoughness;
 
-            pshader->set_int("useTextureMetallicRoughness", bMetallicRoughness);
+            pshader->set_i32("useTextureMetallicRoughness", bMetallicRoughness);
             ::f32 fMetallic = 0.0f;
             if (prendersystem->m_bForceDefaultMetallicFactor)
             {
@@ -161,8 +161,8 @@ namespace gpu_directx11
 
                fRoughness = m_pmaterial->m_fRoughness;
             }
-            pshader->set_float("metallic", fMetallic);
-            pshader->set_float("roughness", fRoughness);
+            pshader->set_f32("metallic", fMetallic);
+            pshader->set_f32("roughness", fRoughness);
             if (bMetallicRoughness)
             {
                ::i32 iTextureIndex = ::gpu::e_gltf_texture_metallic_roughness;
@@ -174,7 +174,7 @@ namespace gpu_directx11
             }
 
             bool bNormal = !prendersystem->m_bDisableNormal && m_pmaterial->useTextureNormal;
-            pshader->set_int("useTextureNormal", bNormal);
+            pshader->set_i32("useTextureNormal", bNormal);
             if (bNormal)
             {
                //glActiveTexture(GL_TEXTURE0 + ::gpu::e_gltf_texture_normal);
@@ -185,7 +185,7 @@ namespace gpu_directx11
 
             bool bAmbientOcclusion =
                !prendersystem->m_bDisableAmbientOcclusion && m_pmaterial->useTextureAmbientOcclusion;
-            pshader->set_int("useTextureAmbientOcclusion", bAmbientOcclusion);
+            pshader->set_i32("useTextureAmbientOcclusion", bAmbientOcclusion);
             ::f32 fAmbientOcclusion = 0.0f;
             if (prendersystem->m_bForceDefaultAmbientOcclusionFactor)
             {
@@ -197,7 +197,7 @@ namespace gpu_directx11
 
                fAmbientOcclusion = m_pmaterial->m_fAmbientOcclusion;
             }
-            pshader->set_float("ambientOcclusion", fAmbientOcclusion);
+            pshader->set_f32("ambientOcclusion", fAmbientOcclusion);
             if (bAmbientOcclusion)
             {
                //glActiveTexture(GL_TEXTURE0 + ::gpu::e_gltf_texture_ambient_occlusion);
@@ -207,7 +207,7 @@ namespace gpu_directx11
             }
 
             bool bEmissive = !prendersystem->m_bDisableEmissive && m_pmaterial->useTextureEmissive;
-            pshader->set_int("useTextureEmissive", bEmissive);
+            pshader->set_i32("useTextureEmissive", bEmissive);
             floating_sequence3 seq3Emission = {};
             if (prendersystem->m_bForceDefaultEmission)
             {
@@ -363,7 +363,7 @@ namespace gpu_directx11
             //   glBindTexture(GL_TEXTURE_2D, ptextureMetallicRoughness->m_gluTextureID);
             //}
 
-            pshader->set_int("material.useTextureNormal", m_pmaterial->useTextureNormal);
+            pshader->set_i32("material.useTextureNormal", m_pmaterial->useTextureNormal);
             if (m_pmaterial->useTextureNormal)
             {
                //glActiveTexture(GL_TEXTURE0 + ::gpu::e_gltf_texture_normal);

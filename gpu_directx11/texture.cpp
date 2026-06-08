@@ -302,7 +302,10 @@ namespace gpu_directx11
    // }
 
 
-   void texture::_initialize_gpu_texture(::gpu::context *pgpucontext, IDXGISwapChain1 *pdxgiswapchain1)
+   void texture::_initialize_gpu_texture(
+      ::gpu::context *pgpucontext,
+      IDXGISwapChain1 *pdxgiswapchain1,
+      UINT uBuffer)
    {
 
       //m_pgpurenderer = prenderer;
@@ -313,7 +316,7 @@ namespace gpu_directx11
 
       auto pdevice = pgpudevice->m_pd3d11device;
 
-      HRESULT hrCreateTexture = pdxgiswapchain1->GetBuffer(0, __interface_of(m_ptextureOffscreen));
+      HRESULT hrCreateTexture = pdxgiswapchain1->GetBuffer(uBuffer, __interface_of(m_ptextureOffscreen));
 
       if (FAILED(hrCreateTexture))
       {
