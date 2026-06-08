@@ -47,6 +47,8 @@ namespace gpu_directx11
 
    class frame;
 
+   class fence;
+
    class render_target_view;
 
    class offscreen_render_target_view;
@@ -65,4 +67,3 @@ namespace gpu_directx11
 
 
 
- 

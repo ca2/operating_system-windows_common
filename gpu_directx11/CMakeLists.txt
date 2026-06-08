@@ -46,6 +46,8 @@ list(APPEND library_source
         descriptors.h
         device.cpp
         device.h
+        fence.cpp
+        fence.h
         frame_storage.cpp
         frame_storage.h
         framework.cpp

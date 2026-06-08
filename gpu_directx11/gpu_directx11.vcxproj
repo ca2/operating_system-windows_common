@@ -757,6 +757,7 @@
     <ClInclude Include="debug.h" />
     <ClInclude Include="descriptors.h" />
     <ClInclude Include="device.h" />
+    <ClInclude Include="fence.h" />
     <ClInclude Include="frame.h" />
     <ClInclude Include="initializers.h" />
     <ClInclude Include="aaa_lock.h" />
@@ -865,6 +866,7 @@
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="descriptors.cpp" />
     <ClCompile Include="device.cpp" />
+    <ClCompile Include="fence.cpp" />
     <ClCompile Include="aaa_lock.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">true</ExcludedFromBuild>
