@@ -16,7 +16,7 @@
 #include "aura/user/user/interaction.h"
 #include "bred/gpu/command_buffer.h"
 #include "bred/gpu/context_lock.h"
-#include "bred/gpu/frame.h"
+#include "bred/gpu/layer.h"
 #include "bred/gpu/graphics.h"
 #include "bred/gpu/layer.h"
 #include "bred/gpu/types.h"
@@ -882,7 +882,7 @@ namespace gpu_directx11
    }
 
 
-   void context::__bind_draw2d_compositor(::gpu::compositor* pgpucompositor, ::gpu::layer* player)
+   void context::__bind_draw2d_compositor(::gpu::compositor* pgpucompositor, ::gpu::layer * pgpulayer)
    {
 
       ::cast < ::dxgi_surface_bindable > pdxgisurfacebindable = pgpucompositor;
@@ -890,13 +890,13 @@ namespace gpu_directx11
       auto pgpurendertarget = get_gpu_renderer()->render_target();
 
       ::cast<::gpu_directx11::texture> ptexture =
-         pgpurendertarget->current_texture(::gpu::current_frame());
+         pgpurendertarget->current_texture(::gpu::current_layer());
 
       auto iFrameIndex = pgpurendertarget->get_frame_index();
 
       auto pdxgisurface = ptexture->__get_dxgi_surface();
 
-      pdxgisurfacebindable->_bind(iFrameIndex, player->m_iLayerIndex, pdxgisurface);
+      pdxgisurfacebindable->_bind(iFrameIndex, pgpulayer->m_iLayerIndex, pdxgisurface);
 
    }
 
@@ -1300,7 +1300,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       //for (auto player : *playera)
       //{
       //   //            player->
-      //   ::cast <texture > ptexture = player->texture();
+      //   ::cast <texture > ptexture = pgpulayer->texture();
       //   ID3D11SamplerState* samplerstatea[] =
       //   { ptexture->m_psamplerstate };
       //   ID3D11ShaderResourceView* sharedresourceviewa[] =
@@ -1363,7 +1363,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
 
    void context::merge_layers(::gpu::command_buffer *pgpucommandbuffer, ::gpu::texture *ptextureTarget,
-                              ::pointer_array<::gpu::layer> *playera)
+                              ::pointer_array<::gpu::layer> *pgpulayera)
    {
 
       ::gpu::context_lock context_lock(this);
@@ -1521,10 +1521,10 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       //g_context->PSSetShader(g_ps, nullptr, 0);
       //g_context->PSSetSamplers(0, 1, &g_sampler);
 
-      for (auto player : *playera)
+      for (auto pgpulayer : *pgpulayera)
       {
          
-         ::cast <::gpu_directx11::texture > ptexture = player->texture();
+         ::cast <::gpu_directx11::texture > ptexture = pgpulayer->texture();
 
          m_pshaderBlend3->bind_source(nullptr, ptexture, 0);
 
@@ -1629,7 +1629,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    }
 
 
-   void context::on_start_layer(::gpu::layer* player)
+   void context::on_start_layer(::gpu::layer * pgpulayer)
    {
 
       if (m_pgpucompositor && m_etype == e_type_draw2d)
@@ -1641,7 +1641,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
          //_get_dxgi_device();
 
-         ////ptexture->_new_state(prenderer->getCurrentCommandBuffer2(::gpu::current_frame())->m_pcommandlist, D3D12_RESOURCE_STATE_RENDER_TARGET);
+         ////ptexture->_new_state(prenderer->getCurrentCommandBuffer2(::gpu::current_layer())->m_pcommandlist, D3D12_RESOURCE_STATE_RENDER_TARGET);
 
          //// 4. Release wrapped resource to allow access from D3D12
 
@@ -1664,19 +1664,19 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
          ////pdxgisurfacebindable->_bind(iFrameIndex, pdxgisurface);
 
-         __bind_draw2d_compositor(m_pgpucompositor, player);
+         __bind_draw2d_compositor(m_pgpucompositor, pgpulayer);
 
-         m_pgpucompositor->on_start_layer(player);
+         m_pgpucompositor->on_start_layer(pgpulayer);
 
       }
 
    }
 
 
-   void context::on_end_layer(::gpu::layer* player)
+   void context::on_end_layer(::gpu::layer * pgpulayer)
    {
 
-      ::gpu::context::on_end_layer(player);
+      ::gpu::context::on_end_layer(pgpulayer);
 
       //if (m_pgpucompositor)
       //{

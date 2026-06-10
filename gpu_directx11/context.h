@@ -150,8 +150,8 @@ namespace gpu_directx11
                                                  ::pointer_array<::gpu::layer> *playera);
 
 
-      void on_start_layer(::gpu::layer* player) override;
-      void on_end_layer(::gpu::layer* player) override;
+      void on_start_layer(::gpu::layer * pgpulayer) override;
+      void on_end_layer(::gpu::layer * pgpulayer) override;
 
 
       void start_debug_happening(::gpu::command_buffer * pgpucommandbuffer, const ::scoped_string& scopedstrDebugHappening) override;
@@ -206,7 +206,7 @@ namespace gpu_directx11
       void on_create_context(::gpu::device* pgpudevice, const ::gpu::enum_output& eoutput, ::acme::windowing::window* pwindow, const ::i32_size& size) override;
 
 
-      void __bind_draw2d_compositor(::gpu::compositor* pgpucompositor, ::gpu::layer* player) override;
+      void __bind_draw2d_compositor(::gpu::compositor* pgpucompositor, ::gpu::layer * pgpulayer) override;
 
       //VkDevice logicalDevice();
 

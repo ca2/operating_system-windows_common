@@ -55,7 +55,7 @@ namespace gpu_directx11
       //render_target_view(renderer* prenderer, const ::i32_size& size, ::pointer <render_target_view>previous);
       ~render_target_view();
 
-      virtual void on_before_begin_render(frame* pframe);
+      virtual void on_before_begin_render(::gpu::layer * pgpulayer);
 
       //VkFramebuffer getFramebuffer(::i32 index) { return m_framebuffers[index]; }
       //VkFramebuffer getCurrentFramebuffer() { return m_framebuffers[get_image_index()]; }

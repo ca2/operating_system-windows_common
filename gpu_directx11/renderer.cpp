@@ -12,6 +12,7 @@
 #include "bred/gpu/command_buffer.h"
 #include "bred/gpu/context_lock.h"
 #include "bred/gpu/cpu_buffer.h"
+#include "bred/gpu/layer.h"
 #include "bred/gpu/render_state.h"
 #include "bred/gpu/swap_chain.h"
 #include "gpu_directx11/shader.h"
@@ -377,7 +378,8 @@ namespace gpu_directx11
 
       }
 
-      assert(!m_bFrameStarted && "Can't call beginFrame while already in progress");
+      assert(m_prenderstate->m_egpuframestate == ::gpu::e_gpu_frame_state_began_frame
+         && "Can't call beginRender while not in began_frame gpu_frame_state");
 
       //if (m_bOffScreen)
       {
@@ -400,7 +402,7 @@ namespace gpu_directx11
          //   throw ::exception(error_failed, "Failed to aquire swap chain image");
          //}
 
-         m_bFrameStarted = true;
+         //m_bFrameStarted = true;
 
          //auto commandBuffer = getCurrentCommandBuffer();
 
@@ -720,7 +722,7 @@ namespace gpu_directx11
 
       ID3D11DeviceContext* context = pgpucontext->m_pcontext;
 
-      ::cast < ::gpu_directx11::texture > ptexture = poffscreenrendertargetview->current_texture(::gpu::current_frame());
+      ::cast < ::gpu_directx11::texture > ptexture = poffscreenrendertargetview->current_texture(::gpu::current_layer());
 
       ID3D11Texture2D* offscreenTexture = ptexture->m_ptextureOffscreen;
 
@@ -823,7 +825,7 @@ namespace gpu_directx11
 
 
       }
-      m_bFrameStarted = false;
+      //m_bFrameStarted = false;
       //currentFrameIndex = (currentFrameIndex + 1) % render_target_view::MAX_FRAMES_IN_FLIGHT;
 
       //}
@@ -940,10 +942,10 @@ namespace gpu_directx11
    }
 
 
-   void renderer::_on_begin_render(::gpu::frame * pgpuframe)
+   void renderer::_on_begin_render(::gpu::layer * pgpulayer)
    {
 
-      ::cast < frame > pframe = pgpuframe;
+      ///::cast < frame > pframe = pgpulayer;
 
       ::cast < ::gpu_directx11::context > pgpucontext = m_pgpucontext;
 
@@ -960,7 +962,7 @@ namespace gpu_directx11
       if (pgpurendertargetview)
       {
 
-         ::cast < texture > ptexture = pgpurendertargetview->current_texture(pframe);
+         ::cast < texture > ptexture = pgpurendertargetview->current_texture(pgpulayer);
 
          ::comptr < ID3D11RenderTargetView > prendertargetview;
 
@@ -1131,7 +1133,7 @@ HRESULT hrCreateDepthStencilState = pgpudevice->m_pd3d11device->CreateDepthStenc
 
       //::cast < render_target_view > pgpurendertargetview = m_pgpurendertarget;
 
-      ::cast < texture > ptexture = pgpurendertargetview->current_texture(::gpu::current_frame());
+      ::cast < texture > ptexture = pgpurendertargetview->current_texture(::gpu::current_layer());
 
       if (!ptexture->m_prendertargetview)
       {
@@ -1146,7 +1148,7 @@ HRESULT hrCreateDepthStencilState = pgpudevice->m_pd3d11device->CreateDepthStenc
    }
 
 
-   //void renderer::on_begin_render(::gpu::frame* pframeParam)
+   //void renderer::on_begin_render(::gpu::layer * pgpulayer)
    //{
 
    //   ::cast < ::gpu_directx11::context > pcontext = m_pgpucontext;
@@ -1171,7 +1173,7 @@ HRESULT hrCreateDepthStencilState = pgpudevice->m_pd3d11device->CreateDepthStenc
    //}
 
 
-   //void renderer::on_end_render(::gpu::frame* pframeParam)
+   //void renderer::on_end_render(::gpu::layer * pgpulayer)
    //{
 
    //   on_happening(e_happening_end_render);
@@ -1179,53 +1181,53 @@ HRESULT hrCreateDepthStencilState = pgpudevice->m_pd3d11device->CreateDepthStenc
    //}
 
 
-   void renderer::_on_end_render(::gpu::frame * pframe)
+   void renderer::_on_end_render(::gpu::layer * pgpulayer)
    {
 
       
    }
 
 
-   void renderer::on_end_layer(::gpu::layer* player)
+   void renderer::on_end_layer(::gpu::layer * pgpulayer)
    {
 
-      ::gpu::renderer::on_end_layer(player);
+      ::gpu::renderer::on_end_layer(pgpulayer);
 
    }
 
 
-   ::pointer < ::gpu::frame > renderer::beginFrame()
+   //::pointer < ::gpu::frame >
+   void renderer::start_frame()
    {
 
-      return ::gpu::renderer::beginFrame();
-
+      return ::gpu::renderer::start_frame();
       //assert(!isFrameStarted && "Can't call beginFrame while already in progress");
 
-      //defer_constructø(m_pgpurendertarget->m_pgpuframe);
+      //defer_constructø(m_pgpurendertarget->m_pgpulayer);
       //
       //m_prenderstate->on_happening(::gpu::e_happening_begin_frame);
 
       //isFrameStarted = true;
 
-      //return m_pgpurendertarget->m_pgpuframe;
+      //return m_pgpurendertarget->m_pgpulayer;
 
    }
 
 
-   void renderer::endFrame()
+   void renderer::end_frame()
    {
 
       m_prenderstate->on_happening(::gpu::e_happening_end_frame);
 
-      defer_end_frame_layer_copy();
+      //defer_end_frame_layer_copy();
 
-      ::gpu::renderer::endFrame();
+      ::gpu::renderer::end_frame();
 
       // isFrameStarted = false;
  
       // auto eoutput = m_pgpucontext->m_eoutput;
 
-      defer_end_frame_layer_after_submit();
+      //defer_end_frame_layer_after_submit();
 
       auto eoutput = m_pgpucontext->m_eoutput;
 
@@ -1242,7 +1244,7 @@ HRESULT hrCreateDepthStencilState = pgpudevice->m_pd3d11device->CreateDepthStenc
 
       }
 
-      m_bFrameStarted = false;
+      //m_bFrameStarted = false;
 
    }
 

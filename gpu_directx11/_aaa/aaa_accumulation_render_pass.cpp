@@ -95,7 +95,7 @@ namespace gpu_directx11
    }
 
 
-   void accumulation_render_pass::on_before_begin_render(frame* pframe)
+   void accumulation_render_pass::on_before_begin_render(::gpu::layer * pgpulayer)
    {
 
       //if (m_pgpurenderer->is_starting_frame())

@@ -8,7 +8,7 @@
 #include "aura/user/user/interaction.h"
 #include "bred/gpu/command_buffer.h"
 #include "bred/gpu/context_lock.h"
-#include "bred/gpu/frame.h"
+#include "bred/gpu/layer.h"
 #include "bred/gpu/graphics.h"
 #include "bred/gpu/layer.h"
 #include "bred/gpu/types.h"

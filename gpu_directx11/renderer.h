@@ -171,8 +171,8 @@ namespace gpu_directx11
       void on_context_resize() override;
 
       void on_begin_draw() override;
-      void _on_begin_render(::gpu::frame * pframe) override;
-      void _on_end_render(::gpu::frame * pframe) override;
+      void _on_begin_render(::gpu::layer * pgpulayer) override;
+      void _on_end_render(::gpu::layer * pgpulayer) override;
       void on_end_draw() override;
 
    //public:
@@ -187,10 +187,12 @@ namespace gpu_directx11
 
       void on_end_layer(::gpu::layer * player) override;
 
-      ::pointer < ::gpu::frame > beginFrame() override;
-      //void _on_begin_render(::gpu::frame* pframeParam) override;
-      //void _on_end_render(::gpu::frame* pframeParam) override;
-      void endFrame() override;
+      void start_frame() override;
+      //::pointer < ::gpu::frame > beginFrame() override;
+      //void _on_begin_render(::gpu::layer * pgpulayer) override;
+      //void _on_end_render(::gpu::layer * pgpulayer) override;
+      //void endFrame() override;
+      void end_frame() override;
       void endDraw(::gpu::graphics * pgraphics, ::user::interaction * puserinteraction) override;
 
 

@@ -40,7 +40,7 @@ namespace gpu_directx11
    }
 
 
-   void render_target_view::on_before_begin_render(frame* pframe)
+   void render_target_view::on_before_begin_render(::gpu::layer * pgpulayer)
    {
 
 

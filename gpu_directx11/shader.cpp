@@ -7,7 +7,7 @@
 #include "bred/gpu/binding.h"
 #include "bred/gpu/command_buffer.h"
 #include "bred/gpu/context_lock.h"
-#include "bred/gpu/frame.h"
+#include "bred/gpu/layer.h"
 #include "bred/gpu/types.h"
 #include "context.h"
 #include "descriptors.h"
@@ -524,7 +524,7 @@ namespace gpu_directx11
             if (pgpurendertargetview)
             {
 
-               ::cast<texture> ptexture = pgpurendertargetview->current_texture(::gpu::current_frame());
+               ::cast<texture> ptexture = pgpurendertargetview->current_texture(::gpu::current_layer());
 
                pgputextureTarget = ptexture.m_p;
             }
@@ -612,7 +612,7 @@ namespace gpu_directx11
    // void shader::bind(::gpu::command_buffer *pgpucommandbuffer)
    //{
 
-   //   ::cast <texture> ptexture = m_pgpurenderer->current_render_target_texture(::gpu::current_frame());
+   //   ::cast <texture> ptexture = m_pgpurenderer->current_render_target_texture(::gpu::current_layer());
 
    //   bind(pgpucommandbuffer, ptexture);
 
@@ -760,7 +760,7 @@ namespace gpu_directx11
          if (pgpurendertargetview)
          {
 
-            ::cast<texture> ptexture = pgpurendertargetview->current_texture(::gpu::current_frame());
+            ::cast<texture> ptexture = pgpurendertargetview->current_texture(::gpu::current_layer());
 
             //::cast < offscreen_render_target_view > poffscreenrendertargetview = pgpurendertargetview;
 

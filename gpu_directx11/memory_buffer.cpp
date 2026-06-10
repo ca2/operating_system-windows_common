@@ -166,7 +166,7 @@ namespace gpu_directx11
       if (!m_bStatic)
       {
 
-         //::cast < frame > pframe = ::gpu::current_frame();
+         //::cast < frame > pframe = ::gpu::current_layer();
 
          ::cast < device > pdevice = pcontext->m_pgpudevice;
 
