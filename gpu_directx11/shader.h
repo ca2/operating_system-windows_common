@@ -31,6 +31,7 @@ namespace gpu_directx11
 
       ::comptr < ID3D11DepthStencilState > m_pdepthstencilstate2;
       ::comptr < ID3D11RasterizerState> m_prasterizerstate2;
+      ::comptr<ID3D11BlendState> m_pblendstate2;
       //::pointer < pipeline > m_ppipeline;
 
       //struct d3d11_constant_buffer

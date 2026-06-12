@@ -278,6 +278,26 @@ namespace gpu_directx11
       // (optional) Stencil test settings
       dsDesc.StencilEnable = FALSE;
 
+      if (m_bEnableBlend)
+      {
+
+         D3D11_BLEND_DESC blendDesc = {0};
+         blendDesc.RenderTarget[0].BlendEnable = TRUE;
+         blendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_ONE; // Premultiplied alpha
+         blendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA; // Use inverse of alpha
+         blendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+
+         blendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE; // Alpha blending (optional)
+         blendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_INV_SRC_ALPHA;
+         blendDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+
+         blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+         HRESULT hrCreateBlendState = pgpudevice->m_pd3d11device->CreateBlendState(&blendDesc, &m_pblendstate2);
+         ::defer_throw_hresult(hrCreateBlendState);
+
+      }
+
       //::cast < device > pgpudevice = pgpucontext->m_pgpudevice;
 
       HRESULT hrCreateDepthStencilState =
@@ -487,6 +507,17 @@ namespace gpu_directx11
       {
 
          pgpucontext->m_pcontext->RSSetState(m_prasterizerstate2);
+
+      }
+
+      if (m_pblendstate2)
+      {
+                  
+         ::f32 blendFactor[4] = {0, 0, 0, 0}; // Ignored with this blend mode
+         UINT sampleMask = 0xFFFFFFFF;
+
+         pgpucontext->m_pcontext->OMSetBlendState(m_pblendstate2, blendFactor, sampleMask);
+
       }
 
       auto etopology = ::directx11::as_d3d11_topology(m_etopology);

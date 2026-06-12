@@ -154,6 +154,9 @@ namespace gpu_directx11
       void on_end_layer(::gpu::layer * pgpulayer) override;
 
 
+      void draw2d_on_end_draw(::gpu::graphics *pgpugraphics) override;
+
+
       void start_debug_happening(::gpu::command_buffer * pgpucommandbuffer, const ::scoped_string& scopedstrDebugHappening) override;
       void end_debug_happening(::gpu::command_buffer * pgpucommandbuffer) override;
 

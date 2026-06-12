@@ -1217,7 +1217,7 @@ HRESULT hrCreateDepthStencilState = pgpudevice->m_pd3d11device->CreateDepthStenc
    void renderer::end_frame()
    {
 
-      m_prenderstate->on_happening(::gpu::e_happening_end_frame);
+      //m_prenderstate->on_happening(::gpu::e_happening_end_frame);
 
       //defer_end_frame_layer_copy();
 

@@ -1711,6 +1711,23 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    }
 
 
+      void context::draw2d_on_end_draw(::gpu::graphics *pgpugraphics)
+   {
+
+      if (m_papplication->m_gpu.m_bUseSwapChainWindow)
+      {
+
+         auto pswapchain = m_pgpudevice->m_pgpucontextMain->get_swap_chain();
+
+         if (pswapchain)
+         {
+
+            pswapchain->swap_buffers();
+         }
+      }
+   }
+
+
    //ID3D11DepthStencilState* context::depth_stencil_state_disabled()
    //{
 

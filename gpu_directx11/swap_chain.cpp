@@ -169,7 +169,7 @@ namespace gpu_directx11
    //}
 
 
-   void swap_chain::present(::gpu::texture * pgputexture)
+   void swap_chain::present(::gpu::texture *pgputexture, ::gpu::command_buffer *pgpucommandbuffer)
    {
 
       ::cast < renderer > pgpurenderer = ::gpu::swap_chain::m_pgpurenderer;

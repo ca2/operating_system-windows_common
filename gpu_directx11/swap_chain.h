@@ -33,7 +33,7 @@ namespace gpu_directx11
       void initialize_gpu_swap_chain(::gpu::renderer* pgpurenderer) override;
       //void _update_swap_chain() override;
 
-      void present(::gpu::texture * pgputexture) override;
+      void present(::gpu::texture * pgputexture, ::gpu::command_buffer * pgpucommandbuffer) override;
 
       void swap_buffers() override;
       //::gpu::texture* current_texture() override;
