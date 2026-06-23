@@ -204,9 +204,10 @@ namespace acme_windows_common
             if (eopen & ::file::e_open_write)
             {
 
-               auto pmessageboxpayload = __initialize_new ::message_box_payload("Couldn't write to file \"" + m_path + "\".\nAccess Denied!!\n(Is any anti-virus program blocking this program: \"" + file_system()->module() + "\"?", file_system()->module().title() + " - Access Denied!", ::user::e_message_box_ok);
+               auto pmessagebox = createø < ::user_interface::message_box >();
+               pmessagebox->initialize_message_box("Couldn't write to file \"" + m_path + "\".\nAccess Denied!!\n(Is any anti-virus program blocking this program: \"" + file_system()->module() + "\"?", file_system()->module().title() + " - Access Denied!", ::user::e_message_box_ok);
 
-               post(pmessageboxpayload);
+               post(pmessagebox);
 
             }
 
