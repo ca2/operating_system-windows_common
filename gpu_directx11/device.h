@@ -278,8 +278,9 @@ namespace gpu_directx11
 
       //::gpu_directx11::descriptor_pool* get_global_pool(::gpu::context* pgpucontext, ::i32 iFrameCount);
 
-      
-      void on_top_end_frame() override;
+      void on_start_frame() override;
+
+      void on_end_frame() override;
 
 
       ID3D11Device* draw_get_d3d11_device();
@@ -296,7 +297,6 @@ namespace gpu_directx11
       ::gpu::payload load_dds(const ::scoped_string& scopedstrImagePath) override;
 
 
-      void on_new_frame() override;
       
 
    };
