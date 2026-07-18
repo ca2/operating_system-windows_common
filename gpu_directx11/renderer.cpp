@@ -5,6 +5,7 @@
 #include "input_layout.h"
 #include "renderer.h"
 #include "texture.h"
+#include "bred/gpu/frame.h"
 #include "offscreen_render_target_view.h"
 #include "physical_device.h"
 #include "swap_chain_render_target_view.h"
@@ -13,7 +14,7 @@
 #include "bred/gpu/context_lock.h"
 #include "bred/gpu/cpu_buffer.h"
 #include "bred/gpu/layer.h"
-#include "bred/gpu/render_state.h"
+//#include "bred/gpu/render_state.h"
 #include "bred/gpu/swap_chain.h"
 #include "gpu_directx11/shader.h"
 #include "acme/parallelization/synchronous_lock.h"
@@ -378,7 +379,8 @@ namespace gpu_directx11
 
       }
 
-      assert(m_prenderstate->m_egpuframestate == ::gpu::e_gpu_frame_state_began_frame
+      assert(m_pgpucontext->m_pgpudevice->current_frame()->m_egpuframestate ==
+                ::gpu::e_gpu_frame_state_began_frame
          && "Can't call beginRender while not in began_frame gpu_frame_state");
 
       //if (m_bOffScreen)
@@ -1196,57 +1198,57 @@ HRESULT hrCreateDepthStencilState = pgpudevice->m_pd3d11device->CreateDepthStenc
    }
 
 
-   //::pointer < ::gpu::frame >
-   void renderer::start_frame()
-   {
+   ////::pointer < ::gpu::frame >
+   //void renderer::start_frame()
+   //{
 
-      return ::gpu::renderer::start_frame();
-      //assert(!isFrameStarted && "Can't call beginFrame while already in progress");
+   //   return ::gpu::renderer::start_frame();
+   //   //assert(!isFrameStarted && "Can't call beginFrame while already in progress");
 
-      //defer_constructø(m_pgpurendertarget->m_pgpulayer);
-      //
-      //m_prenderstate->on_happening(::gpu::e_happening_begin_frame);
+   //   //defer_constructø(m_pgpurendertarget->m_pgpulayer);
+   //   //
+   //   //m_prenderstate->on_happening(::gpu::e_happening_begin_frame);
 
-      //isFrameStarted = true;
+   //   //isFrameStarted = true;
 
-      //return m_pgpurendertarget->m_pgpulayer;
+   //   //return m_pgpurendertarget->m_pgpulayer;
 
-   }
+   //}
 
 
-   void renderer::end_frame()
-   {
+   //void renderer::end_frame()
+   //{
 
-      //m_prenderstate->on_happening(::gpu::e_happening_end_frame);
+   //   //m_prenderstate->on_happening(::gpu::e_happening_end_frame);
 
-      //defer_end_frame_layer_copy();
+   //   //defer_end_frame_layer_copy();
 
-      ::gpu::renderer::end_frame();
+   //   ::gpu::renderer::end_frame();
 
-      // isFrameStarted = false;
+   //   // isFrameStarted = false;
  
-      // auto eoutput = m_pgpucontext->m_eoutput;
+   //   // auto eoutput = m_pgpucontext->m_eoutput;
 
-      //defer_end_frame_layer_after_submit();
+   //   //defer_end_frame_layer_after_submit();
 
-      auto eoutput = m_pgpucontext->m_eoutput;
+   //   auto eoutput = m_pgpucontext->m_eoutput;
 
-      if (eoutput == ::gpu::e_output_swap_chain)
-      {
+   //   if (eoutput == ::gpu::e_output_swap_chain)
+   //   {
 
-         m_pgpucontext->get_swap_chain()->swap_buffers();
+   //      m_pgpucontext->get_swap_chain()->swap_buffers();
 
-      } 
-      else if (eoutput == ::gpu::e_output_cpu_buffer)
-      {
+   //   } 
+   //   else if (eoutput == ::gpu::e_output_cpu_buffer)
+   //   {
 
-         this->do_sampling_to_cpu();
+   //      this->do_sampling_to_cpu();
 
-      }
+   //   }
 
-      //m_bFrameStarted = false;
+   //   //m_bFrameStarted = false;
 
-   }
+   //}
 
 
    //void renderer::copy(::gpu::texture* pgputextureTarget, ::gpu::texture* pgputextureSource)

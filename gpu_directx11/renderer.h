@@ -187,12 +187,12 @@ namespace gpu_directx11
 
       void on_end_layer(::gpu::layer * player) override;
 
-      void start_frame() override;
+      //void start_frame() override;
       //::pointer < ::gpu::frame > beginFrame() override;
       //void _on_begin_render(::gpu::layer * pgpulayer) override;
       //void _on_end_render(::gpu::layer * pgpulayer) override;
       //void endFrame() override;
-      void end_frame() override;
+      //void end_frame() override;
       void endDraw(::gpu::graphics * pgraphics, ::user::interaction * puserinteraction) override;
 
 

@@ -892,7 +892,7 @@ namespace gpu_directx11
       ::cast<::gpu_directx11::texture> ptexture =
          pgpurendertarget->current_texture(::gpu::current_layer());
 
-      auto iFrameIndex = pgpurendertarget->get_frame_index();
+      auto iFrameIndex = pgpurendertarget->m_pgpurenderer->m_pgpucontext->m_pgpudevice->get_frame_index3();
 
       auto pdxgisurface = ptexture->__get_dxgi_surface();
 
@@ -2671,7 +2671,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
       auto pgpurendertarget = m_pgpurenderer->render_target();
 
-      auto iFrameIndex = pgpurendertarget->get_frame_index();
+      auto iFrameIndex = pgpurendertarget->m_pgpurenderer->m_pgpucontext->m_pgpudevice->get_frame_index3();
 
       //m_uboBuffers[iFrameIndex]->writeToBuffer(block.data());
 
