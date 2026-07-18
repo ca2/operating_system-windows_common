@@ -141,6 +141,7 @@ namespace gpu_directx11
       //}
 
       void do_sampling_to_cpu();
+      void sample_to_cpu_buffer() override;
       void gpu_blend(::draw2d::graphics * pgraphics);
       //void resolve_color_and_alpha_accumulation_buffers();
       //void _resolve_color_and_alpha_accumulation_buffers();
