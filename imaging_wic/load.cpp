@@ -24,23 +24,32 @@
 #include "_winrt_applicationmodel_datatransfer.h"
 #endif
 
+#include <gdiplus.h>
+//#include <wincodec.h>
+//#include <windows.h>
+//#include <wrl/client.h>
+
+//#include <cstdint>
+//#include <limits>
+//#include <memory>
+//#include <vector>
 
 namespace imaging_wic
 {
 
    comptr < IWICImagingFactory > get_imaging_factory();
 
-   bool windows_image_from_bitmap_source(::image::image * pimageFrame, IWICBitmapSource * pbitmapsource, IWICImagingFactory * pimagingfactory);
+   bool windows_image_from_bitmap_source(::image::load_image * pimageFrame, IWICBitmapSource * pbitmapsource, IWICImagingFactory * pimagingfactory);
 
 
-   void image_context::_load_image(::image::image * pimageParam, const ::payload & payloadFile, const ::image::load_options & loadoptions)
+   void image_context::_load_image(::image::load_image * ploadimage, const ::payload & payloadFile, const ::image::load_options & loadoptions)
    {
 
-      auto ploadimage = allocateø::image::load_image(this);
+      //auto ploadimage = allocateø::image::load_image(this);
 
       //auto estatus = 
 
-      ploadimage->initialize(this);
+      //ploadimage->initialize(this);
 
       /*if (!estatus)
       {
@@ -49,17 +58,17 @@ namespace imaging_wic
 
       }*/
 
-      ploadimage->m_pimage = pimageParam;
+      //ploadimage->m_pimage = pimageParam;
 
-      ploadimage->m_pimage->m_estatus = error_failed;
+      ploadimage->m_ppixmap->m_estatus = error_failed;
 
-      ploadimage->m_pimage->set_nok();
+      ploadimage->m_ppixmap->set_nok();
 
       ploadimage->m_payload = payloadFile;
 
       ploadimage->m_functionLoaded = loadoptions.functionLoaded;
 
-      pimageParam->m_bCreateHelperMaps = loadoptions.helper_maps;
+      ploadimage->m_bCreateHelperMaps = loadoptions.helper_maps;
 
       auto filepath = payloadFile.as_file_path();
 
@@ -88,12 +97,64 @@ namespace imaging_wic
    }
 
 
-   void image_context::_os_load_image(::image::image * pimage, memory & memory)
+   //   void image_context::_load_pixmap(::pixmap *ppixmapParam, const ::payload &payloadFile,
+   //                                const ::image::load_options &loadoptions)
+   //{
+
+   //   auto ploadimage = allocateø::image::load_image(this);
+
+   //   // auto estatus =
+
+   //   ploadimage->initialize(this);
+
+   //   /*if (!estatus)
+   //   {
+
+   //      return estatus;
+
+   //   }*/
+
+   //   ploadimage->m_ppixmap = ppixmapParam;
+
+   //   ploadimage->m_ppixmap->m_estatus = error_failed;
+
+   //   ploadimage->m_ppixmap->set_nok();
+
+   //   ploadimage->m_payload = payloadFile;
+
+   //   ploadimage->m_functionLoaded = loadoptions.functionLoaded;
+
+   //   //ppixmapParam->m_bCreateHelperMaps = loadoptions.helper_maps;
+
+   //   auto filepath = payloadFile.as_file_path();
+
+   //   // if (!filepath.case_insensitive_ends(".webp"))
+   //   //{
+
+   //   //   return;
+
+   //   //}
+
+   //   if (filepath.case_insensitive_begins("http:/") || filepath.case_insensitive_begins("https:/"))
+   //   {
+
+   //      m_pmanagerImageLoadSlowQueue->handle(loadoptions.sync, {e_timeout, 1_minute, ploadimage});
+   //   }
+   //   else
+   //   {
+
+   //      m_pmanagerImageLoadFastQueue->handle(loadoptions.sync, {e_timeout, 15_s, ploadimage});
+   //   }
+
+   //   // return ploadimage->m_estatus;
+   //}
+
+   void image_context::_os_load_image(::image::load_image * ploadimage, memory & memory)
    {
 
-      pimage->m_estatus = ::error_failed;
+      ploadimage->m_ppixmap->m_estatus = ::error_failed;
 
-      pimage->set_nok();
+      ploadimage->m_ppixmap->set_nok();
 
       comptr < IWICImagingFactory > pimagingfactory;
 
@@ -233,20 +294,20 @@ namespace imaging_wic
 
       }
 
-      if (!windows_image_from_bitmap_source(pimage, pbitmapsource, pimagingfactory))
+      if (!windows_image_from_bitmap_source(ploadimage, pbitmapsource, pimagingfactory))
       {
 
          return;
 
       }
 
-      pimage->m_iExifOrientation = iOrientation;
+      ploadimage->m_ppixmap->set_exif_orientation(iOrientation);
 
-      pimage->on_load_image();
+      ploadimage->m_ppixmap->on_load_image();
 
-      pimage->set_ok_flag();
+      ploadimage->m_ppixmap->set_ok_flag();
 
-      pimage->m_estatus = ::success;
+      ploadimage->m_ppixmap->m_estatus = ::success;
 
    }
 
@@ -261,7 +322,329 @@ namespace imaging_wic
    //
    //#endif
    //
-   bool windows_image_from_bitmap_source(::image::image * pimageFrame, IWICBitmapSource * pbitmapsource, IWICImagingFactory * pimagingfactory)
+
+
+
+   std::unique_ptr<Gdiplus::Bitmap> create_stretched_gdiplus_bitmap(IWICBitmap *pWicBitmap, UINT targetWidth,
+                                                                    UINT targetHeight)
+   {
+
+      if (!pWicBitmap || targetWidth == 0 || targetHeight == 0)
+      {
+
+         return nullptr;
+      }
+
+      if (targetWidth > static_cast<UINT>((std::numeric_limits<INT>::max)()) ||
+          targetHeight > static_cast<UINT>((std::numeric_limits<INT>::max)()))
+      {
+
+         return nullptr;
+      }
+
+      auto pimagingfactory = get_imaging_factory();
+
+      /*
+       * Convert the WIC bitmap to premultiplied BGRA.
+       *
+       * GUID_WICPixelFormat32bppPBGRA corresponds to the memory layout expected
+       * by GDI+ PixelFormat32bppPARGB on little-endian Windows:
+       *
+       * memory bytes: B, G, R, A
+       */
+      ::comptr<IWICFormatConverter> pConverter;
+
+      HRESULT hr = pimagingfactory->CreateFormatConverter(&pConverter);
+
+      if (FAILED(hr))
+      {
+
+         return nullptr;
+
+      }
+
+      hr = pConverter->Initialize(pWicBitmap, GUID_WICPixelFormat32bppPBGRA, WICBitmapDitherTypeNone, nullptr, 0.0,
+                                  WICBitmapPaletteTypeCustom);
+
+      if (FAILED(hr))
+      {
+
+         return nullptr;
+      }
+
+      UINT sourceWidth = 0;
+      UINT sourceHeight = 0;
+
+      hr = pConverter->GetSize(&sourceWidth, &sourceHeight);
+
+      if (FAILED(hr) || sourceWidth == 0 || sourceHeight == 0)
+      {
+
+         return nullptr;
+      }
+
+      if (sourceWidth > static_cast<UINT>((std::numeric_limits<INT>::max)()) ||
+          sourceHeight > static_cast<UINT>((std::numeric_limits<INT>::max)()))
+      {
+
+         return nullptr;
+      }
+
+      constexpr UINT bytesPerPixel = 4;
+
+      if (sourceWidth > (std::numeric_limits<UINT>::max)() / bytesPerPixel)
+      {
+
+         return nullptr;
+      }
+
+      const UINT sourceStride = sourceWidth * bytesPerPixel;
+
+      if (sourceStride > static_cast<UINT>((std::numeric_limits<INT>::max)()) ||
+          sourceHeight > (std::numeric_limits<UINT>::max)() / sourceStride)
+      {
+
+         return nullptr;
+      }
+
+      const UINT sourceBufferSize = sourceStride * sourceHeight;
+
+      memory sourcePixels;
+
+      try
+      {
+
+         sourcePixels.set_size(sourceBufferSize);
+      }
+      catch (...)
+      {
+
+         return nullptr;
+      }
+
+      hr = pConverter->CopyPixels(nullptr, sourceStride, sourceBufferSize, sourcePixels.data());
+
+      if (FAILED(hr))
+      {
+
+         return nullptr;
+      }
+
+      /*
+       * This bitmap references sourcePixels; it does not need to outlive this
+       * function because it is only used while rendering the destination.
+       */
+      Gdiplus::Bitmap sourceBitmap(static_cast<INT>(sourceWidth), static_cast<INT>(sourceHeight),
+                                   static_cast<INT>(sourceStride), PixelFormat32bppPARGB, sourcePixels.data());
+
+      if (sourceBitmap.GetLastStatus() != Gdiplus::Ok)
+      {
+
+         return nullptr;
+      }
+
+      auto pDestination = std::make_unique<Gdiplus::Bitmap>(static_cast<INT>(targetWidth),
+                                                            static_cast<INT>(targetHeight), PixelFormat32bppPARGB);
+
+      if (pDestination->GetLastStatus() != Gdiplus::Ok)
+      {
+
+         return nullptr;
+      }
+
+      Gdiplus::Graphics graphics(pDestination.get());
+
+      if (graphics.GetLastStatus() != Gdiplus::Ok)
+      {
+
+         return nullptr;
+      }
+
+      /*
+       * SourceCopy is important when the source contains transparency. It avoids
+       * blending the resized pixels with the initially transparent destination.
+       */
+      if (graphics.SetCompositingMode(Gdiplus::CompositingModeSourceCopy) != Gdiplus::Ok)
+      {
+
+         return nullptr;
+      }
+
+      if (graphics.SetCompositingQuality(Gdiplus::CompositingQualityHighQuality) != Gdiplus::Ok)
+      {
+
+         return nullptr;
+      }
+
+      if (graphics.SetInterpolationMode(Gdiplus::InterpolationModeHighQualityBicubic) != Gdiplus::Ok)
+      {
+
+         return nullptr;
+      }
+
+      graphics.SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
+      graphics.SetSmoothingMode(Gdiplus::SmoothingModeHighQuality);
+
+      /*
+       * TileFlipXY prevents the high-quality interpolation kernel from sampling
+       * transparent black beyond the source edges, which can otherwise produce
+       * dark or faded borders.
+       */
+      Gdiplus::ImageAttributes imageAttributes;
+
+      if (imageAttributes.SetWrapMode(Gdiplus::WrapModeTileFlipXY) != Gdiplus::Ok)
+      {
+
+         return nullptr;
+      }
+
+      const Gdiplus::Rect destinationRectangle(0, 0, static_cast<INT>(targetWidth), static_cast<INT>(targetHeight));
+
+      const Gdiplus::Status status =
+         graphics.DrawImage(&sourceBitmap, destinationRectangle, 0, 0, static_cast<INT>(sourceWidth),
+                            static_cast<INT>(sourceHeight), Gdiplus::UnitPixel, &imageAttributes);
+
+      if (status != Gdiplus::Ok)
+      {
+
+         return nullptr;
+      }
+
+      return pDestination;
+   }
+
+
+   #include <gdiplus.h>
+
+#include <cstddef>
+#include <cstdlib>
+
+
+   class gdiplus_bitmap_lock
+   {
+   public:
+
+      gdiplus_bitmap_lock(Gdiplus::Bitmap *pBitmap, UINT lockMode = Gdiplus::ImageLockModeRead,
+                          Gdiplus::PixelFormat pixelFormat = PixelFormat32bppPARGB) : m_pBitmap(pBitmap)
+      {
+
+         if (!m_pBitmap)
+         {
+
+            return;
+         }
+
+         const UINT width = m_pBitmap->GetWidth();
+         const UINT height = m_pBitmap->GetHeight();
+
+         if (width == 0 || height == 0)
+         {
+
+            return;
+         }
+
+         Gdiplus::Rect rectangle(0, 0, static_cast<INT>(width), static_cast<INT>(height));
+
+         m_status = m_pBitmap->LockBits(&rectangle, lockMode, pixelFormat, &m_bitmapData);
+
+         m_bLocked = m_status == Gdiplus::Ok;
+      }
+
+
+      ~gdiplus_bitmap_lock() { unlock(); }
+
+
+      gdiplus_bitmap_lock(const gdiplus_bitmap_lock &) = delete;
+      gdiplus_bitmap_lock &operator=(const gdiplus_bitmap_lock &) = delete;
+
+
+      bool is_locked() const { return m_bLocked; }
+
+
+      Gdiplus::Status status() const { return m_status; }
+
+
+      void *data() { return m_bLocked ? m_bitmapData.Scan0 : nullptr; }
+
+
+      const void *data() const { return m_bLocked ? m_bitmapData.Scan0 : nullptr; }
+
+
+      UINT width() const { return m_bLocked ? m_bitmapData.Width : 0; }
+
+
+      UINT height() const { return m_bLocked ? m_bitmapData.Height : 0; }
+
+
+      INT stride() const { return m_bLocked ? m_bitmapData.Stride : 0; }
+
+
+      size_t absolute_stride() const
+      {
+
+         if (!m_bLocked)
+         {
+
+            return 0;
+         }
+
+         return static_cast<size_t>(std::abs(static_cast<long long>(m_bitmapData.Stride)));
+      }
+
+
+      size_t storage_size() const { return absolute_stride() * height(); }
+
+
+      BYTE *scanline(UINT y)
+      {
+
+         if (!m_bLocked || y >= m_bitmapData.Height)
+         {
+
+            return nullptr;
+         }
+
+         return static_cast<BYTE *>(m_bitmapData.Scan0) + static_cast<ptrdiff_t>(y) * m_bitmapData.Stride;
+      }
+
+
+      const BYTE *scanline(UINT y) const
+      {
+
+         if (!m_bLocked || y >= m_bitmapData.Height)
+         {
+
+            return nullptr;
+         }
+
+         return static_cast<const BYTE *>(m_bitmapData.Scan0) + static_cast<ptrdiff_t>(y) * m_bitmapData.Stride;
+      }
+
+
+      void unlock()
+      {
+
+         if (m_bLocked && m_pBitmap)
+         {
+
+            m_pBitmap->UnlockBits(&m_bitmapData);
+            m_bLocked = false;
+         }
+      }
+
+
+   private:
+
+      Gdiplus::Bitmap *m_pBitmap = nullptr;
+
+      Gdiplus::BitmapData m_bitmapData{};
+
+      Gdiplus::Status m_status = Gdiplus::GenericError;
+
+      bool m_bLocked = false;
+   };
+
+   bool windows_image_from_bitmap_source(::image::load_image * ploadimageFrame, IWICBitmapSource * pbitmapsource, IWICImagingFactory * pimagingfactory)
    {
 
       comptr < IWICBitmap > piBmp;
@@ -287,6 +670,44 @@ namespace imaging_wic
          return false;
 
       }
+
+      if (ploadimageFrame->m_sizePreferred.area() > 0)
+      {
+
+         if (ploadimageFrame->m_sizePreferred.cx != uWidth || ploadimageFrame->m_sizePreferred.cy != uHeight)
+         {
+
+            std::unique_ptr<Gdiplus::Bitmap> pResized = create_stretched_gdiplus_bitmap(piBmp, 
+               ploadimageFrame->m_sizePreferred.cx, ploadimageFrame->m_sizePreferred.cy);
+
+            if (pResized)
+            {
+               gdiplus_bitmap_lock lock(pResized.get());
+
+               if (lock.is_locked())
+               {
+
+                  void *pStorage = lock.data();
+                  UINT width = lock.width();
+                  UINT height = lock.height();
+                  INT scanSize = lock.stride();
+                  size_t storageSize = lock.storage_size();
+
+                  ploadimageFrame->on_load_image((::image32_t *)pStorage, {(::i32)width, (::i32)height}, scanSize);
+
+                  if (ploadimageFrame->m_ppixmap->is_ok())
+                  {
+
+                     return true;
+                  }
+               }
+
+            }
+
+         }
+
+      }
+         
 
       WICRect rc;
 
@@ -330,22 +751,14 @@ namespace imaging_wic
 
       }
 
-      pimageFrame->create({ (::i32)uWidth, (::i32)uHeight });
+      ploadimageFrame->on_load_image((::image32_t *)pData, {(::i32)uWidth, (::i32)uHeight}, cbStride);
 
-      if (pimageFrame->area() <= 0)
+      if (!ploadimageFrame->m_ppixmap->is_ok())
       {
 
          return false;
 
       }
-
-      pimageFrame->map();
-
-      auto pdataTarget = pimageFrame->data();
-
-      auto scanSizeTarget = pimageFrame->scan_size();
-
-      pdataTarget->copy(uWidth, uHeight, scanSizeTarget, (::image32_t *)pData, cbStride);
 
       return true;
 

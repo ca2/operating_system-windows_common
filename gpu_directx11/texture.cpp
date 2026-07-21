@@ -122,10 +122,10 @@ namespace gpu_directx11
 
       D3D11_SUBRESOURCE_DATA subresourcedata[6]{};
 
-      if (texturedata.is_image_array())
+      if (texturedata.is_pixmap_array())
       {
 
-         const auto &imagea = texturedata.imagea();
+         const auto &imagea = texturedata.pixmapa();
 
          if (m_textureattributes.m_etexture == ::gpu::e_texture_cube_map)
          {

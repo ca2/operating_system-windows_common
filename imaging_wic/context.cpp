@@ -8,7 +8,7 @@
 #include "apex_windows_common/single_threaded_handler_manager.h"
 #include "aura/graphics/image/encoding_options.h"
 #include "acme/operating_system/windows_common/com/comptr.h"
-
+#include "operating_system-windows/gdiplus_library/_.h"
 
 #include "acme/_operating_system.h"
 #include <wincodec.h>
@@ -52,18 +52,14 @@ namespace imaging_wic
 {
 
 
-   bool windows_image_from_bitmap_source(::image::image * pimageFrame, IWICBitmapSource * pbitmapsource, IWICImagingFactory * pimagingfactory);
+   bool windows_image_from_bitmap_source(::image::load_image * pimageFrame, IWICBitmapSource * pbitmapsource, IWICImagingFactory * pimagingfactory);
 
 
-   image_context::image_context()
-   {
-
+   image_context::image_context() { initialize_gdiplus();
    }
 
 
-   image_context::~image_context()
-   {
-
+   image_context::~image_context() { terminate_gdiplus();
    }
 
 

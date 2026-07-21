@@ -2,6 +2,7 @@
 #include "context.h"
 #include "acme/exception/exception.h"
 #include "aura/graphics/image/frame_array.h"
+#include "aura/graphics/image/load_image.h"
 #include "acme/operating_system/windows_common/com/comptr.h"
 
 
@@ -35,7 +36,7 @@ namespace imaging_wic
    comptr < IWICImagingFactory > get_imaging_factory();
 
    //bool draw2d_gif_load_frame(::image::image * pimageCanvas, image_frame_array * pframea, ::image::image_frame * pframe, ::i32 uFrameIndex, ::u8 * ba, ::i32 iScan, color_array & colora, ::i32 transparentIndex);
-   bool windows_image_from_bitmap_source(::image::image * pimage, IWICBitmapSource * pbitmapsource, IWICImagingFactory * pimagingfactory);
+   bool windows_image_from_bitmap_source(::image::load_image * pimage, IWICBitmapSource * pbitmapsource, IWICImagingFactory * pimagingfactory);
    ::color::color windows_image_metadata_get_background_color(IWICMetadataQueryReader * pqueryreader, IWICBitmapDecoder * pbitmapdecoder, IWICImagingFactory * pimagingfactory);
 
 
@@ -243,7 +244,11 @@ namespace imaging_wic
                if (SUCCEEDED(hr))
                {
 
-                  hr = windows_image_from_bitmap_source(pimageFrame, pformatconverter, pimagingfactory) ? S_OK : E_FAIL;
+                  auto ploadimageFrame = create_newø<::image::load_image>();
+
+                  ploadimageFrame->initialize_load_image(this, pimageFrame);
+
+                  hr = windows_image_from_bitmap_source(ploadimageFrame, pformatconverter, pimagingfactory) ? S_OK : E_FAIL;
 
                }
 
