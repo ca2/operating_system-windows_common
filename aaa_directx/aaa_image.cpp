@@ -314,9 +314,9 @@ namespace draw2d_directx
       pimage2->fill(0, 0, 0, 0);
 
 //#ifdef WINDOWS_DESKTOP
-      pimage2->get_graphics()->stretch(::f64_size(cx, cy),picon);
+      pgraphicsImage2->stretch(::f64_size(cx, cy),picon);
 //#else
-//      pimage2->get_graphics()->DrawIcon(
+//      pgraphicsImage2->DrawIcon(
 //      0, 0,
 //      picon,
 //      cx, cy,

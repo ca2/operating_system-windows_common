@@ -711,9 +711,9 @@ namespace draw2d_direct2d
 
       //      ::i32_rectangle rectangleDib1(::f64_point(), pimage1->m_size);
 
-      //      pimage1->get_graphics()->set_alpha_mode(::draw2d::e_alpha_mode_set);
+      //      pgraphicsImage1->set_alpha_mode(::draw2d::e_alpha_mode_set);
 
-      //      pimage1->get_graphics()->fill_rectangle(rectangleDib1, argb(0, 0, 0, 0));
+      //      pgraphicsImage1->fill_rectangle(rectangleDib1, argb(0, 0, 0, 0));
 
       //      if (!pimage1->from(::f64_point(), pgraphicsSrc, ::f64_point(xSrc, ySrc), ::f64_size))
       //      {
@@ -726,9 +726,9 @@ namespace draw2d_direct2d
 
       //      pimage2 = create_image(::f64_size);
 
-      //      pimage2->get_graphics()->set_alpha_mode(::draw2d::e_alpha_mode_set);
+      //      pgraphicsImage2->set_alpha_mode(::draw2d::e_alpha_mode_set);
 
-      //      pimage2->get_graphics()->fill_rectangle(rectangleDib1, argb(255, 0, 0, 0));
+      //      pgraphicsImage2->fill_rectangle(rectangleDib1, argb(255, 0, 0, 0));
 
       //      if (!pimage2->from(::f64_point(), m_pimageAlphaBlend, i32_point - m_pointAlphaBlend, rectangleIntersect.size()))
       //      {
@@ -737,9 +737,9 @@ namespace draw2d_direct2d
 
       //      }
 
-      //      ::pointer<::draw2d_direct2d::graphics>pgraphicsDib1 = pimage1->get_graphics();
+      //      ::pointer<::draw2d_direct2d::graphics>pgraphicsDib1 = pgraphicsImage1;
 
-      //      ::pointer<::draw2d_direct2d::graphics>pgraphicsDib2 = pimage2->get_graphics();
+      //      ::pointer<::draw2d_direct2d::graphics>pgraphicsDib2 = pgraphicsImage2;
 
       //      HRESULT hr = ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->EndDraw();
 
@@ -759,7 +759,7 @@ namespace draw2d_direct2d
 
       //      set_alpha_mode(::draw2d::e_alpha_mode_blend);
 
-      //      BitBltRaw(x, y, nWidth, nHeight, pimage2->get_graphics(), 0, 0);
+      //      BitBltRaw(x, y, nWidth, nHeight, pgraphicsImage2, 0, 0);
 
       //      return true;
 
@@ -845,7 +845,9 @@ namespace draw2d_direct2d
 
             auto pimage1 = image()->create_image(rectangleBlt.size());
 
-            pimage1->get_graphics()->set_alpha_mode(::draw2d::e_alpha_mode_set);
+            auto pgraphicsImage1 = pimage1->acquire_graphics();
+
+            pgraphicsImage1->set_alpha_mode(::draw2d::e_alpha_mode_set);
 
             auto pimage = imagedrawing.image();
 
@@ -912,27 +914,31 @@ namespace draw2d_direct2d
 
          ::f64_rectangle rectangleDib1(::f64_point(), size);
 
-         pimage1->get_graphics()->set(get_current_font());
+         auto pgraphicsImage1 = pimage1->acquire_graphics();
 
-         pimage1->get_graphics()->set(get_current_brush());
+         pgraphicsImage1->set(get_current_font());
 
-         pimage1->get_graphics()->set_alpha_mode(::draw2d::e_alpha_mode_set);
+         pgraphicsImage1->set(get_current_brush());
 
-         pimage1->get_graphics()->fill_rectangle(rectangleDib1, argb(0, 0, 0, 0));
+         pgraphicsImage1->set_alpha_mode(::draw2d::e_alpha_mode_set);
 
-         pimage1->get_graphics()->text_out(0, 0, scopedstr);
+         pgraphicsImage1->fill_rectangle(rectangleDib1, argb(0, 0, 0, 0));
+
+         pgraphicsImage1->text_out(0, 0, scopedstr);
 
          auto pimage2 = image()->create_image(size);
 
-         pimage2->get_graphics()->set_alpha_mode(::draw2d::e_alpha_mode_set);
+         auto pgraphicsImage2 = pimage2->acquire_graphics();
 
-         pimage2->get_graphics()->fill_rectangle(rectangleDib1, argb(255, 0, 0, 0));
+         pgraphicsImage2->set_alpha_mode(::draw2d::e_alpha_mode_set);
+
+         pgraphicsImage2->fill_rectangle(rectangleDib1, argb(255, 0, 0, 0));
 
          pimage2->_draw_raw(rectangleIntersect.size(), m_pimageAlphaBlend, ::f64_point(point - m_pointAlphaBlend));
 
-         ::pointer<::draw2d_direct2d::graphics>pgraphicsDib1 = pimage1->get_graphics();
+         ::pointer<::draw2d_direct2d::graphics>pgraphicsDib1 = pgraphicsImage1.get();
 
-         ::pointer<::draw2d_direct2d::graphics>pgraphicsDib2 = pimage2->get_graphics();
+         ::pointer<::draw2d_direct2d::graphics>pgraphicsDib2 = pgraphicsImage2.get();
 
          pimage2->unmap();
 
@@ -2572,7 +2578,9 @@ namespace draw2d_direct2d
 
       }
 
-      if (pimage->get_graphics() == nullptr)
+      auto pgraphicsImage = pimage->acquire_graphics();
+
+      if (pgraphicsImage == nullptr)
       {
 
          //return false;

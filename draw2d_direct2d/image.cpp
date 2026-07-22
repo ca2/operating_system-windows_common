@@ -363,12 +363,14 @@ namespace draw2d_direct2d
 
          ::image::image_drawing imagedrawing(imagedrawingoptions, imagesource);
 
-         pimage2->get_graphics()->draw(imagedrawing);
+         auto pgraphicsImage2 = pimage2->acquire_graphics();
+
+         pgraphicsImage2->draw(imagedrawing);
 
       }
 
 //#else
-//      pimage2->get_graphics()->DrawIcon(
+//      pgraphicsImage2->DrawIcon(
 //      0, 0,
 //      picon,
 //      cx, cy,
@@ -1428,7 +1430,7 @@ namespace draw2d_direct2d
    bool image::is_realized() const
    {
 
-      if (((image *) this)->get_graphics() == nullptr || ((image *) this)->get_graphics()->get_os_data() == nullptr)
+      if (((image *) this)->get_graphics2() == nullptr || ((image *) this)->get_graphics2()->get_os_data() == nullptr)
          return false;
 
       return true;
@@ -1479,7 +1481,7 @@ namespace draw2d_direct2d
       //try
       //{
 
-      //   ::draw2d::graphics * pgraphicsMap = pimageSrc->get_graphics();
+      //   ::draw2d::graphics * pgraphicsMap = pgraphicsImageSrc;
 
       //   if (pgraphicsMap == nullptr)
       //   {
