@@ -22,14 +22,12 @@ namespace draw2d_direct2d
       ~image() override;
 
 
-      virtual void _map(bool bApplyAlphaTransform = true) override;
-      virtual void _unmap() override;
 
 
       void copy_from(::image::image * pimage, enum_flag eflagCreate = e_flag_success) override;
 
 
-      virtual ::draw2d::graphics * _get_graphics() const override;
+      //virtual ::draw2d::graphics * _get_graphics() const override;
       virtual ::draw2d::bitmap_pointer get_bitmap() const;
       virtual ::draw2d::bitmap_pointer detach_bitmap();
 
@@ -66,7 +64,9 @@ namespace draw2d_direct2d
       virtual void tint(::image::image * pimage, ::color::color color32) override;
 
       
-
+protected:
+      void _map(bool bApplyAlphaTransform = true) override;
+      void _unmap(bool bDoUnmap = false) override;
 
    };
 

@@ -106,7 +106,7 @@ namespace draw2d_directx11
 
       pgraphics->create_memory_graphics(size);
 
-      pbitmap->create_bitmap(pgraphics, size, (void**)&pimage32, &iScan);
+      pbitmap->create_bitmap(pgraphics, size, &pimage32,nullptr,  &iScan);
 
       //if (!pbitmap->create_bitmap(pgraphics, size, (void **)&pimage32, &iScan))
       //{
@@ -133,7 +133,7 @@ namespace draw2d_directx11
 
       //}
 
-      m_pgraphics = pgraphics;
+      //m_pgraphics = pgraphics;
 
       m_pbitmap = pbitmap;
 
@@ -147,7 +147,7 @@ namespace draw2d_directx11
 
       m_hrEndDraw = S_OK;
 
-      m_pgraphics->m_pimage = this;
+      //m_pgraphics->m_pimage = this;
 
       set_flag(eflagCreate);
 
@@ -295,7 +295,7 @@ namespace draw2d_directx11
 
       m_pbitmap.release();
 
-      m_pgraphics.release();
+      //m_pgraphics.release();
 
    }
 
@@ -338,7 +338,10 @@ namespace draw2d_directx11
 
       pimage1->clear(rgba(0, 255, 255, 255));
 
+
       {
+
+         auto pgraphicsImage1 = pimage1->acquire_graphics();
 
          ::image::image_source imagesource(picon);
 
@@ -383,6 +386,8 @@ namespace draw2d_directx11
       auto pimageM = ::particle::image()->create_image({cx,  cy});
 
       {
+
+         auto pgraphicsImageM = pimageM->acquire_graphics();
 
          ::image::image_source imagesource(picon);
 
@@ -1063,13 +1068,13 @@ namespace draw2d_directx11
 
    //}
 
+   //::draw2d::graphics * image::_get_graphics() const
+   //{
 
-   ::draw2d::graphics * image::_get_graphics() const
-   {
+   //   return m_pgraphics;
 
-      return m_pgraphics;
+   //}
 
-   }
 
 
    void image::_map(bool bApplyAlphaTransform)
@@ -1093,7 +1098,7 @@ namespace draw2d_directx11
 
       }
 
-      auto pgraphics2d = m_pgraphics.cast < ::draw2d_directx11::graphics>();
+      //auto pgraphics2d = m_pgraphics.cast < ::draw2d_directx11::graphics>();
 
       //D2D1_SIZE_U size;
 
@@ -1173,7 +1178,7 @@ namespace draw2d_directx11
    }
 
 
-   void image::_unmap()
+   void image::_unmap(bool bDoUnmap)
    {
 
       //::draw2d::lock draw2dlock;
@@ -1428,8 +1433,8 @@ namespace draw2d_directx11
    bool image::is_realized() const
    {
 
-      if (((image *) this)->get_graphics2() == nullptr || ((image *) this)->get_graphics2()->get_os_data() == nullptr)
-         return false;
+      //if (((image *) this)->get_graphics2() == nullptr || ((image *) this)->get_graphics2()->get_os_data() == nullptr)
+       //  return false;
 
       return true;
 

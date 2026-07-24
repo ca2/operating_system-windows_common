@@ -92,7 +92,7 @@ namespace draw2d_direct2d
    }
 
 
-   void bitmap::create_bitmap(::draw2d::graphics* pgraphics, const ::i32_size & size, void **ppdata, ::i32 * pstride)
+   void bitmap::create_bitmap(::draw2d::graphics* pgraphics, const ::i32_size & size, ::image32_t  **ppimage32, const ::image32_t * pimage32,  ::i32 * piScan)
    {
 
       //::draw2d::lock draw2dlock;
@@ -158,13 +158,20 @@ namespace draw2d_direct2d
 
       }
 
-      auto pimage32 = (color32_t *)*ppdata;
+      auto pimage32Target = (color32_t *)*ppimage32;
 
-      auto iScan = *pstride;
+      int iScan = size.cx * 4;
+
+      if (piScan && *piScan > iScan)
+      {
+
+         iScan = *piScan;
+
+      }
 
       HRESULT hrResultCopyBitmap = S_OK;
 
-      if (pimage32 && iScan > 0)
+      if (pimage32)
       {
 
          D2D1_RECT_U rectangleDst = {};

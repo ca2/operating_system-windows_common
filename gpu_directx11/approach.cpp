@@ -423,7 +423,7 @@ namespace gpu_directx11
 
 
 
-   //   ::pointer < ::gpu::context > approach::_create_context(const ::gpu::start_context_t & startcontext)
+   //   ::gpu::context_pointer approach::_create_context(const ::gpu::start_context_t & startcontext)
    //   {
    //
    //      ::pointer < ::gpu_directx11::context > pgpucontext;
