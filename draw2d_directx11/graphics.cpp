@@ -2462,9 +2462,9 @@ namespace draw2d_directx11
 
          //pimage->unmap();
 
-         //HRESULT hrFlush = ((ID2D1DeviceContext *)pimage->g()->get_os_data())->Flush();
+         //HRESULT hrFlush = ((ID2D1DeviceContext *)pgraphicsImage->get_os_data())->Flush();
 
-         //HRESULT hrEndDraw = ((ID2D1DeviceContext *)pimage->g()->get_os_data())->EndDraw();
+         //HRESULT hrEndDraw = ((ID2D1DeviceContext *)pgraphicsImage->get_os_data())->EndDraw();
 
          //defer_primitive_blend();
 
@@ -2519,7 +2519,7 @@ namespace draw2d_directx11
          //if (SUCCEEDED(hrEndDraw))
          //{
 
-         //   ((ID2D1DeviceContext *)pimage->g()->get_os_data())->BeginDraw();
+         //   ((ID2D1DeviceContext *)pgraphicsImage->get_os_data())->BeginDraw();
 
          //}
 
@@ -2602,7 +2602,7 @@ namespace draw2d_directx11
 
                   pimageTarget->create(m_pimage->size());
 
-                  pimageTarget->g()->_stretch_raw(rectangleTarget, pimageSource, imagedrawingoptions, rectangleSource);
+                  pgraphicsImageTarget->_stretch_raw(rectangleTarget, pimageSource, imagedrawingoptions, rectangleSource);
 
                }
 
@@ -2644,7 +2644,7 @@ namespace draw2d_directx11
 
          //pimage->unmap();
 
-         //::cast < graphics > pgraphicsImage = pimage->g();
+         //::cast < graphics > pgraphicsImage = pgraphicsImage;
 
          //auto pd2d1contextImage = pgraphicsImage->m_pdevicecontext;
 
@@ -2674,7 +2674,7 @@ namespace draw2d_directx11
          //if (SUCCEEDED(hrEndDraw))
          //{
 
-         //   ((ID2D1DeviceContext *)pimage->g()->get_os_data())->BeginDraw();
+         //   ((ID2D1DeviceContext *)pgraphicsImage->get_os_data())->BeginDraw();
 
          //}
 

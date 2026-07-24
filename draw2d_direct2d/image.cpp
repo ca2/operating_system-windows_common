@@ -346,7 +346,7 @@ namespace draw2d_direct2d
 
          ::image::image_drawing imagedrawing(imagedrawingoptions, imagesource);
 
-         pimage1->g()->draw(imagedrawing);
+         pgraphicsImage1->draw(imagedrawing);
 
       }
 
@@ -390,7 +390,7 @@ namespace draw2d_direct2d
 
          ::image::image_drawing imagedrawing(imagedrawingoptions, imagesource);
 
-         pimageM->g()->draw(imagedrawing);
+         pgraphicsImageM->draw(imagedrawing);
 
       }
 
@@ -1663,7 +1663,7 @@ namespace draw2d_direct2d
 
       //auto pgraphicsDib1 = __graphics(get_graphics());
 
-      //auto pgraphicsDib2 = __graphics(pimage->g());
+      //auto pgraphicsDib2 = __graphics(pgraphicsImage);
 
       //pgraphicsDib2->m_pdevicecontext->EndDraw();
 
