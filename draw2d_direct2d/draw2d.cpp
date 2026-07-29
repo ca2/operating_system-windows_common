@@ -1,6 +1,7 @@
 #include "framework.h"
 #include "draw2d.h"
 #include "direct2d/direct2d.h"
+#include "image.h"
 #include "aura/windowing/window.h"
 
 
@@ -126,6 +127,24 @@ namespace draw2d_direct2d
          nExStyle |= WS_EX_NOREDIRECTIONBITMAP;
 
       }
+
+   }
+
+
+   ::draw2d::graphics_pointer draw2d::do_allocation_strategy(::draw2d::host *pdraw2dhost, ::image::image *pimage,
+                                                             const ::i32_size &size)
+   {
+
+      auto pgraphics = create_memory_graphics(pdraw2dhost, size);
+
+      if (::is_set(pimage))
+      {
+
+         pimage->create_from_graphics(pgraphics);
+
+      }
+
+      return pgraphics;
 
    }
 

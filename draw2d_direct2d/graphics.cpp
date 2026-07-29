@@ -54,13 +54,13 @@ namespace draw2d_direct2d
 {
 
 
-   //graphics::state::state()
+   // graphics::state::state()
    //{
 
    //}
 
 
-   //graphics::state::~state()
+   // graphics::state::~state()
    //{
 
    //}
@@ -90,19 +90,13 @@ namespace draw2d_direct2d
       m_interpolationmode = D2D1_INTERPOLATION_MODE_HIGH_QUALITY_CUBIC;
 
       m_bitmapinterpolationmode = D2D1_BITMAP_INTERPOLATION_MODE_LINEAR;
-
    }
 
 
-   graphics::~graphics()
-   {
-
-      destroy();
-
-   }
+   graphics::~graphics() { destroy(); }
 
 
-   //void graphics::assert_ok() const
+   // void graphics::assert_ok() const
    //{
 
    //   object::assert_ok();
@@ -110,7 +104,7 @@ namespace draw2d_direct2d
    //}
 
 
-   //void graphics::dump(dump_context & dumpcontext) const
+   // void graphics::dump(dump_context & dumpcontext) const
    //{
 
    //   object::dump(dumpcontext);
@@ -124,7 +118,7 @@ namespace draw2d_direct2d
    //}
 
 
-   //void graphics::IsPrinting()
+   // void graphics::IsPrinting()
    //{
 
    //   return m_bPrinting;
@@ -132,29 +126,26 @@ namespace draw2d_direct2d
    //}
 
 
-   //void graphics::CreateDC(const ::scoped_string & scopedstrDriverName, const ::scoped_string & scopedstrDeviceName, const ::scoped_string & scopedstrOutput, const void * lpInitData)
+   // void graphics::CreateDC(const ::scoped_string & scopedstrDriverName, const ::scoped_string & scopedstrDeviceName,
+   // const ::scoped_string & scopedstrOutput, const void * lpInitData)
    //{
+   //    throw ::exception(todo);
+   //    //return Attach(::CreateDC(lpszDriverName, lpszDeviceName, lpszOutput, (const DEVMODE*)lpInitData));
+   // }
+
+
+   // void graphics::CreateIC(const ::scoped_string & scopedstrDriverName, const ::scoped_string & scopedstrDeviceName,
+   // const ::scoped_string & scopedstrOutput, const void * lpInitData)
+   //{
+
    //   throw ::exception(todo);
-   //   //return Attach(::CreateDC(lpszDriverName, lpszDeviceName, lpszOutput, (const DEVMODE*)lpInitData));
+
    //}
 
 
-   //void graphics::CreateIC(const ::scoped_string & scopedstrDriverName, const ::scoped_string & scopedstrDeviceName, const ::scoped_string & scopedstrOutput, const void * lpInitData)
-   //{
+   void graphics::create_compatible_graphics(::draw2d::graphics *pgraphics) { _create_memory_graphics({256, 256}); }
 
-   //   throw ::exception(todo);
-
-   //}
-
-   
-   void graphics::create_compatible_graphics(::draw2d::graphics* pgraphics)
-   {
-
-      _create_memory_graphics({ 256, 256 });
-
-   }
-
-   void graphics::defer_set_size(const ::i32_size& size)
+   void graphics::defer_set_size(const ::i32_size &size)
    {
       _create_memory_graphics(size);
       /*m_pgpucontextCompositor->sendø() << [this, size]()
@@ -165,7 +156,7 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::create_for_window_draw2d(::user::interaction * puserinteraction, const ::i32_size& size)
+   void graphics::create_for_window_draw2d(::user::interaction *puserinteraction, const ::i32_size &size)
    {
 
       ::gpu::graphics::create_for_window_draw2d(puserinteraction, size);
@@ -182,7 +173,7 @@ namespace draw2d_direct2d
 
       set_gpu_context(pgpucontextNew);
 
-      ::cast < ::dxgi_device_source > pdxgidevicesource = gpu_context();
+      ::cast<::dxgi_device_source> pdxgidevicesource = gpu_context();
 
       m_pdevicecontext = m_pdirect2d->default_d2d1_device_context(pdxgidevicesource);
 
@@ -194,23 +185,23 @@ namespace draw2d_direct2d
 
       //// for now create a "fake" memory graphics
 
-      //create_memory_graphics({ 1920,1080 });
-      
-      //m_pgpucontextCompositor->m_iOverrideFrame = 0;
-      //
-      //bind_draw2d_compositor();
+      // create_memory_graphics({ 1920,1080 });
 
-      //m_pgpucontextCompositor->m_iOverrideFrame = -1;
+      // m_pgpucontextCompositor->m_iOverrideFrame = 0;
+      //
+      // bind_draw2d_compositor();
+
+      // m_pgpucontextCompositor->m_iOverrideFrame = -1;
 
       set_ok_flag();
 
-      //m_osdata[0] = (void*)1;
+      // m_osdata[0] = (void*)1;
 
       ////::draw2d::lock draw2dlock;
 
       //// ::draw2d::device_lock devicelock(this);
 
-      //if (m_iType != 0)
+      // if (m_iType != 0)
       //{
 
       //   destroy();
@@ -219,22 +210,22 @@ namespace draw2d_direct2d
 
       //::user::interaction* puserinteraction = m_puserinteractionDraw2dGraphics;
 
-      //if (::is_null(puserinteraction))
+      // if (::is_null(puserinteraction))
       //{
 
       //   puserinteraction = dynamic_cast <::user::interaction*>(m_papplication->m_pacmeuserinteractionMain.m_p);
 
       //}
 
-      //auto pwindow = puserinteraction->window();
+      // auto pwindow = puserinteraction->window();
 
-      //auto rectanglePlacement = pwindow->get_window_rectangle();
+      // auto rectanglePlacement = pwindow->get_window_rectangle();
 
-      //auto pgpuapproach = m_papplication->get_gpu_approach();
+      // auto pgpuapproach = m_papplication->get_gpu_approach();
 
-      //auto pgpudevice = pgpuapproach->get_gpu_device();
+      // auto pgpudevice = pgpuapproach->get_gpu_device();
 
-      //m_pgpucontextCompositor = pgpudevice->create_draw2d_context(::gpu::e_output_gpu_buffer, size);
+      // m_pgpucontextCompositor = pgpudevice->create_draw2d_context(::gpu::e_output_gpu_buffer, size);
 
       /*_create_memory_graphics(size);
 
@@ -244,24 +235,20 @@ namespace draw2d_direct2d
             m_pgpucontextCompositor->create_offscreen_graphics_for_swap_chain_blitting(this, size);
 
          });*/
-
    }
 
-   
-   void graphics::_create_from_dxgi_surface(::i32 iIndex, ::i32 iLayerIndex, IDXGISurface* pdxgisurface)
+
+   void graphics::_create_from_dxgi_surface(::i32 iIndex, ::i32 iLayerIndex, IDXGISurface *pdxgisurface)
    {
 
-      auto& pd2d1rendertarget = m_d2d1rendertargeta.element_at_grow(iIndex).element_at_grow(iLayerIndex);
+      auto &pd2d1rendertarget = m_d2d1rendertargeta.element_at_grow(iIndex).element_at_grow(iLayerIndex);
 
       D2D1_RENDER_TARGET_PROPERTIES props = D2D1::RenderTargetProperties(
-         D2D1_RENDER_TARGET_TYPE_DEFAULT,
-         D2D1::PixelFormat(DXGI_FORMAT_B8G8R8A8_UNORM, D2D1_ALPHA_MODE_PREMULTIPLIED),
-         96.0f, 96.0f
-      );
+         D2D1_RENDER_TARGET_TYPE_DEFAULT, D2D1::PixelFormat(DXGI_FORMAT_B8G8R8A8_UNORM, D2D1_ALPHA_MODE_PREMULTIPLIED),
+         96.0f, 96.0f);
 
-      HRESULT hrCreateDxgiSurfaceRenderTarget=
-         m_pdirect2d->d2d1_factory1()->CreateDxgiSurfaceRenderTarget(
-         pdxgisurface, &props, &pd2d1rendertarget);
+      HRESULT hrCreateDxgiSurfaceRenderTarget =
+         m_pdirect2d->d2d1_factory1()->CreateDxgiSurfaceRenderTarget(pdxgisurface, &props, &pd2d1rendertarget);
 
       ::defer_throw_hresult(hrCreateDxgiSurfaceRenderTarget);
 
@@ -270,8 +257,336 @@ namespace draw2d_direct2d
       ::defer_throw_hresult(m_pd2d1rendertarget.as(m_pdevicecontext));
 
       ::defer_throw_hresult(m_pdevicecontext.as(m_pdevicecontext1));
+   }
+
+
+   ::draw2d::bitmap * graphics::get_target_bitmap()
+   {
+
+      if (!m_pbitmaprendertarget)
+      {
+
+         throw ::exception(error_wrong_state);
+
+      }
+
+      constructø(m_pbitmapTarget);
+
+      ::cast<::draw2d_direct2d::bitmap> pbitmap = m_pbitmapTarget;
+
+      auto hrGetBitmap = m_pbitmaprendertarget->GetBitmap(&pbitmap->m_pbitmap);
+
+      if (FAILED(hrGetBitmap))
+      {
+
+         throw ::hresult_exception(hrGetBitmap);
+
+      }
+
+      pbitmap->m_pbitmap.as(pbitmap->m_pbitmap1);
+
+      auto size = pbitmap->m_pbitmap->GetSize();
+
+      pbitmap->m_size.cx = size.width;
+
+      pbitmap->m_size.cy = size.height;
+
+      return pbitmap;
 
    }
+
+
+   void graphics::create_bitmap_graphics(::draw2d::bitmap *pbitmap)
+   {
+
+      throw ::interface_only();
+   //{
+   //
+   //   auto pcontext = gpu_context();
+
+   //   ::i32_size ;
+   //   size.cx = pbitmap->m_size.cx;
+   //   size.cy = pbitmap->m_size.cy;
+
+   //   if (pcontext)
+   //   {
+
+   //      if (pcontext->m_rectangle.size() == size)
+   //      {
+
+   //         return;
+   //      }
+   //   }
+
+   //   //::draw2d::lock draw2dlock;
+
+   //   // ::draw2d::device_lock devicelock(this);
+
+   //   if (m_iType != 0)
+   //   {
+
+   //      destroy();
+   //   }
+
+   //   ::user::interaction *puserinteraction = m_puserinteractionDraw2dGraphics;
+
+   //   if (::is_null(puserinteraction))
+   //   {
+
+   //      puserinteraction = dynamic_cast<::user::interaction *>(m_papplication->m_pacmeuserinteractionMain.m_p);
+   //   }
+
+   //   auto pwindow = puserinteraction->window();
+
+   //   auto rectanglePlacement = pwindow->get_window_rectangle();
+
+   //   auto pgpuapproach = m_papplication->get_gpu_approach();
+
+   //   ::acme::windowing::window *pacmewindowingwindow = nullptr;
+
+   //   if (::is_set(m_puserinteractionDraw2dGraphics))
+   //   {
+
+   //      pacmewindowingwindow = m_puserinteractionDraw2dGraphics->m_pacmewindowingwindow;
+   //   }
+
+   //   if (::is_null(pacmewindowingwindow))
+   //   {
+
+   //      pacmewindowingwindow = m_papplication->m_pacmeuserinteractionMain->m_pacmewindowingwindow;
+   //   }
+
+   //   auto pgpudevice = pgpuapproach->get_gpu_device(pacmewindowingwindow);
+
+   //   auto pgpucontextNew = pgpudevice->create_draw2d_context(::gpu::e_output_gpu_buffer, size);
+
+   //   set_gpu_context(pgpucontextNew);
+
+   //   pcontext = gpu_context();
+
+   //   {
+
+   //      ::gpu::context_lock context_lock(pcontext);
+
+   //      pcontext->m_pgpucompositor = this;
+
+   //      auto pdirect2d = ::direct2d::from_gpu_device(pcontext->m_pgpudevice);
+
+   //      initialize_direct2d_object(pdirect2d);
+   //   }
+
+   //   // auto pgpucontext = pgpudevice->get_main_context();
+
+   //   // m_pgpucontextDraw2d->m_pgpurenderer = pgpucontext->get_output_renderer();
+   //   //{
+
+   //   //   m_pgpucontextCompositor->start_gpu_context(
+   //   //      ::gpu::start_gpu_output_context_t
+   //   //      {
+   //   //         this,
+   //   //         pdevice,
+   //   //         ::gpu::e_output_gpu_buffer,
+   //   //         rectanglePlacement
+   //   //      });
+
+   //   //}
+
+   //   // auto pcontext = gpu_context();
+
+   //   pcontext->sendø() << [this, size]()
+   //   {
+   //      auto pcontext = gpu_context();
+
+   //      ::gpu::context_lock context_lock(pcontext);
+   //      /*::direct2d::direct2d() = allocateø ::draw2d_direct2d::plugin();
+
+   //      ::direct2d::get()->initialize();*/
+
+   //      HRESULT hr;
+
+   //      ::user::interaction *puserinteraction = m_puserinteractionDraw2dGraphics;
+
+   //      if (!puserinteraction)
+   //      {
+
+   //         puserinteraction = dynamic_cast<::user::interaction *>(m_papplication->m_pacmeuserinteractionMain.m_p);
+   //      }
+
+   //      auto pwindow = puserinteraction->window();
+
+   //      auto rectanglePlacement = pwindow->get_window_rectangle();
+
+   //      auto pdirect2d = m_pdirect2d;
+
+   //      ::direct2d_lock lock(pdirect2d);
+
+   //      // auto pcontext = gpu_context();
+
+   //      ::cast<::dxgi_device_source> pdxgidevicesource = pcontext;
+
+   //      auto pdevicecontextDefault = pdirect2d->default_d2d1_device_context(pdxgidevicesource);
+
+   //      // comptr < ID2D1DeviceContext > pdevicecontextTemplate;
+
+   //      // hr = m_pdevice->CreateDeviceContext(
+   //      //    //D2D1_DEVICE_CONTEXT_OPTIONS_NONE,
+   //      //    D2D1_DEVICE_CONTEXT_OPTIONS_ENABLE_MULTITHREADED_OPTIMIZATIONS,
+   //      //    &pdevicecontextTemplate);
+
+   //      // if (FAILED(hr))
+   //      //{
+
+   //      //   warning() << "graphics::CreateCompatibleDC, CreateDeviceContext (1) " << hresult_text(hr);
+
+   //      //   //return false;
+
+   //      //   throw ::exception(error_failed);
+
+   //      //}
+
+   //      auto psession = session();
+
+   //      auto paurasession = psession;
+
+   //      auto puser = paurasession->user();
+
+   //      auto pwindowing = system()->windowing();
+
+   //      auto pdisplay = pwindowing->display();
+
+   //      auto dpi = pdisplay->get_dpi();
+
+   //      if (dpi <= 0.0)
+   //      {
+
+   //         ASSERT(false);
+
+   //         throw ::exception(error_failed);
+   //      }
+
+   //      pdevicecontextDefault->SetDpi(dpi, dpi);
+
+   //      // comptr < ID2D1RenderTarget > prendertargetTemplate;
+
+   //      // hr = pdevicecontextDefault->QueryInterface(IID_ID2D1RenderTarget, (void**)&prendertargetTemplate);
+
+   //      // if (FAILED(hr))
+   //      //{
+
+   //      //   warning() << "graphics::CreateCompatibleDC, QueryInterface (2) " << hresult_text(hr);
+
+   //      //   throw ::exception(error_failed);
+
+   //      //}
+
+   //      D2D1_SIZE_U sizeu = D2D1::SizeU(size.cx, size.cy);
+
+   //      if (sizeu.width <= 0)
+   //      {
+
+   //         sizeu.width = 800;
+   //      }
+
+   //      if (sizeu.width <= 0)
+   //      {
+
+   //         sizeu.width = 600;
+   //      }
+
+   //      D2D1_PIXEL_FORMAT pixelformat;
+
+   //      pixelformat.alphaMode = D2D1_ALPHA_MODE_PREMULTIPLIED;
+
+   //      pixelformat.format = DXGI_FORMAT_B8G8R8A8_UNORM;
+   //      if (m_pbitmaprendertarget)
+   //      {
+
+   //         ID2D1Bitmap *pbitmap;
+
+
+   //         hr = m_pbitmaprendertarget->GetBitmap(&pbitmap);
+   //         if (SUCCEEDED(hr) &&
+
+   //             pbitmap)
+   //         {
+
+
+   //            auto s = pbitmap->GetSize();
+
+   //            if (s.width == size.width() && s.height == size.height())
+   //            {
+
+   //               return;
+   //            }
+   //         }
+   //      }
+
+   //      hr = pdevicecontextDefault->CreateCompatibleRenderTarget(
+   //         nullptr, &sizeu, &pixelformat, D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS_NONE, &m_pbitmaprendertarget);
+
+   //      if (FAILED(hr))
+   //      {
+
+   //         warning() << "graphics::CreateCompatibleDC, CreateCompatibleRenderTarget (3) " << hresult_text(hr);
+
+   //         throw ::exception(error_failed);
+   //      }
+
+   //      hr = m_pbitmaprendertarget.as(m_pd2d1rendertarget);
+
+   //      if (FAILED(hr))
+   //      {
+
+   //         m_pbitmaprendertarget = nullptr;
+
+   //         throw ::exception(error_failed);
+   //      }
+
+   //      hr = m_pbitmaprendertarget.as(m_pdevicecontext);
+
+   //      m_pdevicecontext.as(m_pdevicecontext1);
+
+   //      if (FAILED(hr))
+   //      {
+
+   //         m_pd2d1rendertarget = nullptr;
+
+   //         m_pbitmaprendertarget = nullptr;
+
+   //         throw ::exception(error_failed);
+   //      }
+
+   //      defer_constructø(m_pbitmap);
+
+   //      ID2D1Bitmap *pbitmap;
+
+   //      hr = m_pbitmaprendertarget->GetBitmap(&pbitmap);
+
+   //      if (FAILED(hr))
+   //      {
+
+   //         m_pbitmaprendertarget = nullptr;
+
+   //         throw ::exception(error_failed);
+   //      }
+
+   //      m_pbitmap->attach(pbitmap);
+
+   //      m_iType = 3;
+
+
+   //      void *pDataDeviceContext = m_pdevicecontext.m_p;
+   //      m_osdata[data_device_context] = pDataDeviceContext;
+
+   //      void *pDataRenderTarget = m_pd2d1rendertarget.m_p;
+   //      m_osdata[data_render_target] = pDataRenderTarget;
+
+   //      set_ok_flag();
+   //   };
+
+   //   // return true;
+   //}
+}
 
 
    void graphics::_create_memory_graphics(const ::i32_size & size)
@@ -317,7 +632,23 @@ namespace draw2d_direct2d
 
       auto pgpuapproach = m_papplication->get_gpu_approach();
 
-      auto pgpudevice = pgpuapproach->get_gpu_device(m_puserinteractionDraw2dGraphics->m_pacmewindowingwindow);
+      ::acme::windowing::window *pacmewindowingwindow = nullptr;
+
+      if (::is_set(m_puserinteractionDraw2dGraphics))
+      {
+
+         pacmewindowingwindow = m_puserinteractionDraw2dGraphics->m_pacmewindowingwindow;
+
+      }
+
+      if (::is_null(pacmewindowingwindow))
+      {
+
+         pacmewindowingwindow = m_papplication->m_pacmeuserinteractionMain->m_pacmewindowingwindow;
+
+      }
+
+      auto pgpudevice = pgpuapproach->get_gpu_device(pacmewindowingwindow);
 
       auto pgpucontextNew = pgpudevice->create_draw2d_context(
          ::gpu::e_output_gpu_buffer,
@@ -2553,7 +2884,7 @@ namespace draw2d_direct2d
 
                   defer_constructø(pimageTarget);
 
-                  pimageTarget->create(m_pimage->size());
+                  pimageTarget->create_as_descriptor(m_pimage->size());
 
                   auto pgraphicsImageTarget = pimageTarget->acquire_graphics();
 
@@ -7562,7 +7893,7 @@ namespace draw2d_direct2d
 
          //return false;
 
-         throw ::exception(error_null_pointer);
+         //throw ::exception(error_null_pointer);
 
       }
 

@@ -12,14 +12,14 @@
 #include "initializers.h"
 #include "bred/gpu/command_buffer.h"
 #include "bred/gpu/context_lock.h"
-#include "bred/gpu/cpu_buffer.h"
+#include "bred/gpu/aaa_cpu_buffer.h"
 #include "bred/gpu/layer.h"
 //#include "bred/gpu/render_state.h"
 #include "bred/gpu/swap_chain.h"
 #include "gpu_directx11/shader.h"
 #include "acme/parallelization/synchronous_lock.h"
 #include "acme/platform/application.h"
-#include "aura/graphics/image/target.h"
+#include "aura/graphics/image/aaa_target.h"
 #include "aura/user/user/interaction.h"
 #include "aura/windowing/window.h"
 //#include "tools.h"
@@ -102,20 +102,22 @@ namespace gpu_directx11
 
       m_pgpucontext = pgpucontext;
 
-      if (m_pgpucontext->m_eoutput == ::gpu::e_output_cpu_buffer)
-      {
+      //if (m_pgpucontext->m_eoutput == ::gpu::e_output_aaa_cpu_buffer)
+      //{
 
-         //m_pimpact = pgpucontext->m_pimpact;
+      //   //m_pimpact = pgpucontext->m_pimpact;
 
-         pgpucontext->create_cpu_buffer(pgpucontext->rectangle().size());
+      //   throw todo;
 
-         construct_newø(m_pcpubuffersampler);
+      //   pgpucontext->create_cpu_buffer21(pgpucontext->rectangle().size());
 
-         m_pcpubuffersampler->initialize_cpu_buffer_sampler(pgpucontext);
+      //   construct_newø(m_pcpubuffersampler);
 
-         m_pcpubuffersampler->m_prenderer = this;
+      //   m_pcpubuffersampler->initialize_cpu_buffer_sampler(pgpucontext);
 
-      }
+      //   m_pcpubuffersampler->m_prenderer = this;
+
+      //}
 
       //m_poffscreensampler->set_storing_flag
 
@@ -685,7 +687,9 @@ namespace gpu_directx11
 
       auto pgpucontext = m_pgpucontext;
 
-      auto pcpubuffer = pgpucontext->m_pcpubuffer;
+      throw todo;
+
+      auto pcpubuffer = pgpucontext->m_pcpubuffer2;
 
       /*memory m;
 
@@ -705,15 +709,15 @@ namespace gpu_directx11
    }
 
 
-   void renderer::sample_to_cpu_buffer()
+   void renderer::sample_to_cpu_buffer21()
    {
 
-      do_sampling_to_cpu();
+      do_sampling_to_cpu21();
 
    }
 
 
-   void renderer::do_sampling_to_cpu()
+   void renderer::do_sampling_to_cpu21()
    {
 
       ::cast< context > pgpucontext = m_pgpucontext;
@@ -822,10 +826,10 @@ namespace gpu_directx11
       //   //	throw ::exception(error_failed, "failed to present swap chain image!");
       //   //}
 
-      if (m_pgpucontext->m_eoutput == ::gpu::e_output_cpu_buffer)
+      if (m_pgpucontext->m_eoutput == ::gpu::e_output_aaa_cpu_buffer)
       {
          
-         do_sampling_to_cpu();
+         do_sampling_to_cpu21();
 
       }
       else if (m_pgpucontext->m_eoutput == ::gpu::e_output_swap_chain)

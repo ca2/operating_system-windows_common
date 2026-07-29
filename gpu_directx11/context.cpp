@@ -1782,8 +1782,10 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
 
 
-   void context::_create_cpu_buffer(const ::i32_size& size)
+   void context::_create_cpu_buffer21(const ::i32_size& size)
    {
+
+      throw todo;
 
       _create_offscreen_window(size);
 
@@ -1817,8 +1819,10 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    }
 
 
-   void context::resize_cpu_buffer(const ::i32_size& sizeParam)
+   void context::resize_cpu_buffer21(const ::i32_size& sizeParam)
    {
+
+      throw todo;
 
       if (m_papplication->m_gpu.m_bUseSwapChainWindow)
       {
@@ -1833,7 +1837,9 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
          {
             //if (!m_pcpubuffer)
 
-            create_cpu_buffer(size);
+            throw todo;
+
+            create_cpu_buffer21(size);
 
 
             ///m_pcpubuffer->m_pixmap.create(m_pcpubuffer->m_memory, size);
@@ -1879,8 +1885,10 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    //}
 
 
-   void context::destroy_cpu_buffer()
+   void context::destroy_cpu_buffer21()
    {
+
+      throw todo;
 
       //ASSERT(is_current_task());
 

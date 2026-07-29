@@ -138,6 +138,8 @@ namespace draw2d_direct2d
 
       }
 
+      ::draw2d::bitmap *get_target_bitmap() override;
+
       void defer_text_primitive_blend();
 
       // for bidi and mirrored localization
@@ -160,6 +162,7 @@ namespace draw2d_direct2d
       void create_compatible_graphics(::draw2d::graphics * pgraphics) override;
       virtual void _create_from_dxgi_surface(::i32 iIndex, ::i32 iLayerIndex, IDXGISurface* pdxgisurface);
       void _create_memory_graphics(const ::i32_size& size = {}) override;
+      void create_bitmap_graphics(::draw2d::bitmap *pbitmap) override;
       void defer_set_size(const ::i32_size& size = {}) override;
 
       //void create_offscreen_graphics_for_swap_chain_blitting(const ::i32_size& size) override;

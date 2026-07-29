@@ -1,7 +1,7 @@
 #include "framework.h"
 #include "bred/gltf/vertex.h"
 #include "approach.h"
-#include "cpu_buffer.h"
+#include "aaa_cpu_buffer.h"
 //#include "cube.h"
 #include "frame.h"
 #include "frame_storage.h"
@@ -26,6 +26,7 @@
 #include "bred/gpu/pixmap.h"
 #include "bred/gpu/frame_ephemeral.h"
 #include "bred/gpu/frame_storage.h"
+#include "bred/gpu/texture_synchronization.h"
 #include "gltf/model.h"
 #include "gpu/full_screen_quad.h"
 //#include "ibl/brdf_convolution_framebuffer.h"
@@ -57,7 +58,7 @@ __FACTORY_EXPORT void gpu_directx11_factory(::factory::factory * pfactory)
    pfactory->add_factory_item < ::gpu_directx11::fence, ::gpu::fence >();
    pfactory->add_factory_item < ::gpu_directx11::semaphore, ::gpu::semaphore >();
    pfactory->add_factory_item < ::gpu_directx11::shader, ::gpu::shader >();
-   pfactory->add_factory_item < ::gpu_directx11::cpu_buffer, ::gpu::cpu_buffer >();
+   pfactory->add_factory_item < ::gpu_directx11::aaa_cpu_buffer, ::gpu::aaa_cpu_buffer >();
    pfactory->add_factory_item < ::gpu_directx11::renderer, ::gpu::renderer >();
 
    //pfactory->add_factory_item < ::gpu_directx11::object, ::gpu::object >();
@@ -65,6 +66,8 @@ __FACTORY_EXPORT void gpu_directx11_factory(::factory::factory * pfactory)
    pfactory->add_factory_item < ::gpu_directx11::texture, ::gpu::texture >();
 
    pfactory->add_factory_item < ::gpu_directx11::device, ::gpu::device >();
+
+   pfactory->add_factory_item<::gpu::texture_synchronization>();
 
    pfactory->add_factory_item < ::gpu_directx11::offscreen_render_target_view, ::gpu::render_target >();
    pfactory->add_factory_item < ::gpu_directx11::swap_chain, ::gpu::swap_chain >();

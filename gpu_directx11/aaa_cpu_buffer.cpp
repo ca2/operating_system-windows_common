@@ -1,12 +1,12 @@
 #include "framework.h"
 #include "context.h"
-#include "cpu_buffer.h"
+#include "aaa_cpu_buffer.h"
 #include "device.h"
 #include "renderer.h"
 #include "offscreen_render_target_view.h"
 #include "acme/parallelization/synchronous_lock.h"
 #include "aura/graphics/image/image.h"
-#include "aura/graphics/image/target.h"
+#include "aura/graphics/image/aaa_target.h"
 #include "bred/gpu/context.h"
 
 
@@ -14,19 +14,19 @@ namespace gpu_directx11
 {
 
 
-   cpu_buffer::cpu_buffer()
+   aaa_cpu_buffer::aaa_cpu_buffer()
    {
 
    }
 
 
-   cpu_buffer::~cpu_buffer()
+   aaa_cpu_buffer::~aaa_cpu_buffer()
    {
 
    }
 
 
-//   void cpu_buffer::gpu_read()
+//   void aaa_cpu_buffer::gpu_read()
 //   {
 //
 //      _synchronous_lock synchronouslock(this->synchronization());
@@ -155,7 +155,7 @@ namespace gpu_directx11
 //   }
 //
 
-   void cpu_buffer::gpu_write()
+   void aaa_cpu_buffer::gpu_write()
    {
 
       _synchronous_lock synchronouslock(this->synchronization());
@@ -184,7 +184,7 @@ namespace gpu_directx11
 
 
    // Utility function to read RGBA pixel data from a GPU texture
-   void cpu_buffer::gpu_read()
+   void aaa_cpu_buffer::gpu_read()
    {
 
 

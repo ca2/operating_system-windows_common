@@ -29,7 +29,9 @@ namespace draw2d_direct2d
       //void on_create_window(::windowing::window* pwindow) override;
       
       void adjust_composited_window_styles(::u32& nExStyle, ::u32& nStyle) override;
-      
+      virtual ::draw2d::graphics_pointer do_allocation_strategy(::draw2d::host *pdraw2dhost, ::image::image *pimage,
+                                                                const ::i32_size &size);
+
 
    };
 

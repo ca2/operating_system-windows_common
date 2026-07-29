@@ -2600,7 +2600,7 @@ namespace draw2d_directx11
 
                   defer_constructø(pimageTarget);
 
-                  pimageTarget->create(m_pimage->size());
+                  pimageTarget->create_as_descriptor(m_pimage->size());
 
                   auto pgraphicsImageTarget = pimageTarget->acquire_graphics();
 

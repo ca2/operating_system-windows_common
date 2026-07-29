@@ -199,7 +199,7 @@ namespace imaging_wic
 
             //estatus = 
             
-            pimageFrame->create(pframea->m_size, e_flag_none);
+            pimageFrame->create_as_descriptor(pframea->m_size, e_flag_none);
 
             //if (!estatus)
             //{
@@ -525,11 +525,11 @@ namespace imaging_wic
 
             pframe->GetSize(&width, &height);
 
-            pimage->create({(::i32) width, (::i32)height });
+            pimage->create_as_descriptor({(::i32)width, (::i32)height});
 
-            pimage->map();
+            auto mapImage = pimage->map();
 
-            hr = pframe->CopyPixels(nullptr, pimage->scan_size(), pimage->scan_size() * height, (::u8 *)pimage->data());
+            hr = pframe->CopyPixels(nullptr, mapImage.scan_size(), mapImage.scan_area_in_bytes(), (::u8 *)mapImage.data());
 
    #ifdef UNIVERSAL_WINDOWS
             //pimage->mult_alpha();
@@ -545,11 +545,11 @@ namespace imaging_wic
 
             pframe->GetSize(&width, &height);
 
-            pimage->create(::i32_size(width, height));
+            pimage->create_as_descriptor(::i32_size(width, height));
 
-            pimage->map();
+            auto mapImage = pimage->map();
 
-            hr = pframe->CopyPixels(nullptr, pimage->scan_size(), pimage->scan_size() * height, (::u8 *)pimage->data());
+            hr = pframe->CopyPixels(nullptr, mapImage.scan_size(), mapImage.scan_area_in_bytes(), (::u8 *)mapImage.data());
    #ifdef UNIVERSAL_WINDOWS
             //pimage->mult_alpha();
    #endif
@@ -583,11 +583,12 @@ namespace imaging_wic
                hr = pbitmap->GetSize(&width, &height);
             }
 
-            pimage->create({ (::i32)width, (::i32)height });
+            pimage->create_as_descriptor({(::i32)width, (::i32)height});
 
-            pimage->map();
+            auto mapImage = pimage->map();
 
-            hr = pbitmap->CopyPixels(nullptr, pimage->scan_size(), pimage->scan_size() * height, (::u8 *)pimage->data());
+            hr = pbitmap->CopyPixels(nullptr, mapImage.scan_size(), mapImage.scan_area_in_bytes(),
+                                     (::u8 *)mapImage.data());
 
 
          }
@@ -657,7 +658,7 @@ namespace imaging_wic
 
       }
 
-      pframe->m_pimage->create({ (::i32)width, (::i32)height });
+      pframe->m_pimage->create_as_descriptor({ (::i32)width, (::i32)height });
 
       pframe->m_pimage->map();
 

@@ -156,23 +156,23 @@ namespace draw2d_directx11
    }
 
 
-   void image::create(const ::i32_size & size, ::enum_flag eflagCreate, ::i32 iGoodStride, bool bPreserve)
-   {
+   //void image::create(const ::i32_size & size, ::enum_flag eflagCreate, ::i32 iGoodStride, bool bPreserve)
+   //{
 
-      //auto estatus = 
-      
-      create_ex(size, nullptr, 0, eflagCreate, iGoodStride, bPreserve);
+   //   //auto estatus = 
+   //   
+   //   create_ex(size, nullptr, 0, eflagCreate, iGoodStride, bPreserve);
 
-      //if (!estatus)
-      //{
+   //   //if (!estatus)
+   //   //{
 
-      //   return estatus;
+   //   //   return estatus;
 
-      //}
+   //   //}
 
-      //return estatus;
+   //   //return estatus;
 
-   }
+   //}
 
 
    void image::initialize(const ::i32_size & size, ::image32_t * pimage32, ::i32 iScan, ::enum_flag eflagCreate)
@@ -216,7 +216,7 @@ namespace draw2d_directx11
 
       ::i32_size size = pbitmap->get_size();
 
-      create(size);
+      create_as_descriptor(size);
 
       //if (!create(size))
       //{
@@ -323,7 +323,7 @@ namespace draw2d_directx11
 
       //auto estatus = 
       
-      create({ cx, cy });
+      create_as_descriptor({ cx, cy });
 
       //if (!estatus)
       //{

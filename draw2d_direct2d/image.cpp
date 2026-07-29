@@ -31,6 +31,33 @@ namespace draw2d_direct2d
    }
 
 
+   void image::create_from_graphics(::draw2d::graphics * pgraphics)
+   {
+
+      auto pbitmap = pgraphics->get_target_bitmap();
+
+      if (::is_null(pbitmap))
+      {
+
+         throw ::exception(error_wrong_state);
+
+      }
+
+      m_pbitmap = pbitmap;
+
+      m_size = m_pbitmap->size();
+
+      m_sizeRaw = m_size;
+
+      m_pimage32 = nullptr;
+
+      m_pimage32Raw = nullptr;
+
+      m_iScan = 0;
+
+   }
+
+
    ::draw2d::bitmap_pointer image::get_bitmap() const
    {
 
@@ -106,7 +133,9 @@ namespace draw2d_direct2d
 
       pgraphics->create_memory_graphics(size);
 
-      pbitmap->create_bitmap(pgraphics, size, &pimage32,nullptr, &iScan);
+      create_from_graphics(pgraphics);
+
+      //pbitmap->create_bitmap(pgraphics, size, &pimage32,nullptr, &iScan);
 
       //if (!pbitmap->create_bitmap(pgraphics, size, (void **)&pimage32, &iScan))
       //{
@@ -115,16 +144,16 @@ namespace draw2d_direct2d
 
       //}
 
-      if (pbitmap->m_osdata[0] == nullptr)
-      {
+      //if (pbitmap->m_osdata[0] == nullptr)
+      //{
 
-         return;
+      //   return;
 
-      }
+      //}
 
-      //auto estatus = 
-      
-      pgraphics->set(pbitmap);
+      ////auto estatus = 
+      //
+      //pgraphics->set(pbitmap);
 
       //if (!estatus)
       //{
@@ -156,7 +185,7 @@ namespace draw2d_direct2d
    }
 
 
-   void image::create(const ::i32_size & size, ::enum_flag eflagCreate, ::i32 iGoodStride, bool bPreserve)
+   void image::create_as_render_target(const ::i32_size & size, ::enum_flag eflagCreate, ::i32 iGoodStride, bool bPreserve)
    {
 
       //auto estatus = 
@@ -216,7 +245,7 @@ namespace draw2d_direct2d
 
       ::i32_size size = pbitmap->get_size();
 
-      create(size);
+      create_as_descriptor(size);
 
       //if (!create(size))
       //{
@@ -323,7 +352,7 @@ namespace draw2d_direct2d
 
       //auto estatus = 
       
-      create({ cx, cy });
+      create_as_descriptor({ cx, cy });
 
       //if (!estatus)
       //{
