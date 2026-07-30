@@ -33,7 +33,11 @@ namespace write_text_direct2d
 
       auto papproach = m_papplication->get_gpu_approach();
 
-      auto pdevice = papproach->get_gpu_device(::system()->m_papplicationMain->m_pacmeuserinteractionMain->m_pacmewindowingwindow);
+      auto papplicationMain = ::system()->m_papplicationMain;
+
+      auto pacmeuserinteractionMain = papplicationMain->main_acme_user_interaction();
+
+      auto pdevice = papproach->get_gpu_device(pacmeuserinteractionMain->m_pacmewindowingwindow);
 
       auto pdirect2d = ::direct2d::from_gpu_device(pdevice);
 

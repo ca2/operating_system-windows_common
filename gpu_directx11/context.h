@@ -206,7 +206,7 @@ namespace gpu_directx11
 
       virtual void _create_context_directx11(::gpu::device* pgpudevice, const ::gpu::enum_output& eoutput, ::acme::windowing::window* pwindow, const ::i32_size& size);
 
-      void on_create_context(::gpu::device* pgpudevice, const ::gpu::enum_output& eoutput, ::acme::windowing::window* pwindow, const ::i32_size& size) override;
+      void _create_gpu_context(::gpu::device* pgpudevice, const ::gpu::enum_output& eoutput, const ::gpu::enum_scene& escene, ::acme::windowing::window* pacmewindowingwindow, const ::i32_size& size) override;
 
 
       void __bind_draw2d_compositor(::gpu::compositor* pgpucompositor, ::gpu::layer * pgpulayer) override;
@@ -225,9 +225,9 @@ namespace gpu_directx11
 
       virtual void _create_offscreen_window(const ::i32_size & size);
 
-      void defer_create_window_context(::acme::windowing::window * pwindow) override;
-      void _defer_create_window_context(::acme::windowing::window * pwindow) override;
-      virtual void _create_window_context(::acme::windowing::window * pwindow);
+      //void defer_create_window_context(::acme::windowing::window * pwindow) override;
+      //void _defer_create_window_context(::acme::windowing::window * pwindow) override;
+      //virtual void _create_window_context(::acme::windowing::window * pwindow);
 
       //virtual void _create_window_buffer();
       void _create_cpu_buffer21(const ::i32_size & size) override;

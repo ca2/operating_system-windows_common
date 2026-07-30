@@ -4,7 +4,7 @@
 #include "bred/gpu/graphics.h"
 #include "acme_windows_common/dxgi_surface_bindable.h"
 #include "direct2d/object.h"
-//#include <dxgi1_2.h>
+#include <dxgi1_2.h>
 
 
 namespace draw2d_direct2d
@@ -12,8 +12,9 @@ namespace draw2d_direct2d
 
 
    class CLASS_DECL_DRAW2D_DIRECT2D graphics :
-      virtual public ::draw2d::graphics,
-      virtual public ::direct2d::object
+      virtual public ::gpu::graphics,
+      virtual public ::direct2d::object,
+      virtual public ::dxgi_surface_bindable
    {
    public:
       i32_array_base m_iaPushLayer;
@@ -30,7 +31,7 @@ namespace draw2d_direct2d
       };
 
       ::pointer < ::particle > m_pSwapChainForBlitting;
-      //::array < ::array < ::comptr < IDXGISurface > > > m_dxgisurfaceaBound;
+      ::array < ::array < ::comptr < IDXGISurface > > > m_dxgisurfaceaBound;
 
       ::i32                                                m_iLayerCount;
 
@@ -42,13 +43,13 @@ namespace draw2d_direct2d
       comptr<ID2D1DCRenderTarget>                        m_pdcrendertarget; // 3
       comptr<ID2D1DeviceContext1>                        m_pdevicecontext1; // 4
 
-      //comptr<IDXGISurface>                               m_pdxgisurface;
+      comptr<IDXGISurface>                               m_pdxgisurface;
       comptr < ID2D1Bitmap1>                              m_pd2d1bitmap;
 
       ::array<::array <comptr < ID2D1Bitmap1>   > >          m_d2d1bitmapa;
 
-      //comptr<IDXGIAdapter>                               m_padapter;
-      //comptr<IDXGIFactory2>                              m_pfactory2;
+      comptr<IDXGIAdapter>                               m_padapter;
+      comptr<IDXGIFactory2>                              m_pfactory2;
       comptr<ID2D1Layer>                                 m_player;
       comptr<ID2D1PathGeometry>                          m_ppathgeometryClip;
 

@@ -234,7 +234,7 @@ namespace draw2d_directx11
       //if (::is_null(puserinteraction))
       //{
 
-      //   puserinteraction = dynamic_cast <::user::interaction*>(m_papplication->m_pacmeuserinteractionMain.m_p);
+      //   puserinteraction = dynamic_cast <::user::interaction*>(m_pacmeuserinteractionMain.m_p);
 
       //}
 
@@ -294,7 +294,7 @@ namespace draw2d_directx11
       if (::is_null(puserinteraction))
       {
 
-         puserinteraction = dynamic_cast <::user::interaction*>(m_papplication->m_pacmeuserinteractionMain.m_p);
+         puserinteraction = dynamic_cast <::user::interaction*>(m_pacmeuserinteractionMain.m_p);
 
       }
 
@@ -361,7 +361,7 @@ namespace draw2d_directx11
             //if (!puserinteraction)
             //{
 
-            //   puserinteraction = dynamic_cast <::user::interaction*>(m_papplication->m_pacmeuserinteractionMain.m_p);
+            //   puserinteraction = dynamic_cast <::user::interaction*>(m_pacmeuserinteractionMain.m_p);
 
             //}
 

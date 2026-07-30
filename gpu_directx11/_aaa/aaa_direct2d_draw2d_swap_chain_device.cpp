@@ -222,7 +222,7 @@
 //      //if (!puserinteraction)
 //      //{
 //
-//      //   puserinteraction = dynamic_cast <::user::interaction*>(m_papplication->m_pacmeuserinteractionMain.m_p);
+//      //   puserinteraction = dynamic_cast <::user::interaction*>(m_pacmeuserinteractionMain.m_p);
 //
 //      //}
 //

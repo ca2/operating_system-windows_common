@@ -34,6 +34,13 @@
 //#include <memory>
 //#include <vector>
 
+#include <gdiplus.h>
+
+#include <cstddef>
+#include <cstdlib>
+
+
+
 namespace imaging_wic
 {
 
@@ -513,11 +520,6 @@ namespace imaging_wic
       return pDestination;
    }
 
-
-   #include <gdiplus.h>
-
-#include <cstddef>
-#include <cstdlib>
 
 
    class gdiplus_bitmap_lock
