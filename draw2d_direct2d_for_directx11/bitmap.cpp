@@ -24,10 +24,14 @@ namespace draw2d_direct2d
    }
 
 
-   void bitmap::create_bitmap_for_image(::image::image* pimage)
+   void bitmap::create_bitmap_for_image(
+      ::image::image * pimage,
+      ::acme::user::interaction * pacmeuserinteractionAffinity)
    {
 
-      ::draw2d::bitmap::create_bitmap_for_image(pimage);
+      ::draw2d::bitmap::create_bitmap_for_image(
+         pimage,
+         pacmeuserinteractionAffinity);
 
    }
 

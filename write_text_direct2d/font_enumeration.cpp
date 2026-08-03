@@ -3,7 +3,7 @@
 #include "font_enumeration.h"
 #include "direct2d/direct2d.h"
 #include "aura/graphics/write_text/font_enumeration_item.h"
-#include "bred/gpu/bred_approach.h"
+//#include "bred/gpu/bred_approach.h"
 #include <dwrite.h>
 
 
@@ -31,17 +31,17 @@ namespace write_text_direct2d
 
       ::direct2d::object::on_initialize_particle();
 
-      auto papproach = m_papplication->get_gpu_approach();
+      //auto papproach = m_papplication->get_gpu_approach();
 
       auto papplicationMain = ::system()->m_papplicationMain;
 
       auto pacmeuserinteractionMain = papplicationMain->main_acme_user_interaction();
 
-      auto pdevice = papproach->get_gpu_device(pacmeuserinteractionMain->m_pacmewindowingwindow);
+      //auto pdevice = papproach->get_gpu_device(pacmeuserinteractionMain->m_pacmewindowingwindow);
 
-      auto pdirect2d = ::direct2d::from_gpu_device(pdevice);
+      //auto pdirect2d = ::direct2d::from_gpu_device(pdevice);
 
-      initialize_direct2d_object(pdirect2d);
+      //initialize_direct2d_object(direct2d());
 
    }
 
@@ -55,7 +55,7 @@ namespace write_text_direct2d
 
       ::comptr<IDWriteFontCollection> pFontCollection;
 
-      HRESULT hr = m_pdirect2d->dwrite_factory()->GetSystemFontCollection(&pFontCollection);
+      HRESULT hr = direct2d()->dwrite_factory()->GetSystemFontCollection(&pFontCollection);
 
       ::u32 familyCount = 0;
 
@@ -158,7 +158,7 @@ namespace write_text_direct2d
 
             string strName = string((const ::wide_character*)(name));
 
-            m_pfontenumerationitema->add(allocateø ::write_text::font_enumeration_item(strName, strName));
+            m_pfontenumerationitema->add(allocateø::write_text::font_enumeration_item({}, strName));
 
          }
 

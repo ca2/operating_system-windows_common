@@ -41,6 +41,7 @@ namespace draw2d_direct2d
       comptr<ID2D1BitmapRenderTarget>                    m_pbitmaprendertarget; // 2
       comptr<ID2D1DCRenderTarget>                        m_pdcrendertarget; // 3
       comptr<ID2D1DeviceContext1>                        m_pdevicecontext1; // 4
+      comptr<ID2D1BitmapRenderTarget>                    m_pbitmaprendertargetCompatibleMemoryGraphics; // 2
 
       //comptr<IDXGISurface>                               m_pdxgisurface;
       comptr < ID2D1Bitmap1>                              m_pd2d1bitmap;
@@ -51,7 +52,6 @@ namespace draw2d_direct2d
       //comptr<IDXGIFactory2>                              m_pfactory2;
       comptr<ID2D1Layer>                                 m_player;
       comptr<ID2D1PathGeometry>                          m_ppathgeometryClip;
-
       ::array < state >                                  m_statea;
       state                                              m_state;
       bool                                               m_bSaveClip;
@@ -76,31 +76,35 @@ namespace draw2d_direct2d
 
 
 
-      void gpu_layer_on_after_begin_render() override;
-      void gpu_layer_on_before_end_render() override;
+      //void gpu_layer_on_after_begin_render() override;
+      //void gpu_layer_on_before_end_render() override;
 
-
+      void on_acquire_memory_graphics(
+         ::image::image * pimage,
+         const ::i32_size & size,
+         ::acme::user::interaction * pacmeuserinteractionAffinity) override;
+      void on_release_memory_graphics() override;
 
       bool TextOutAlphaBlend(::f64 x, ::f64 y, const ::scoped_string & scopedstr) override;
       bool _draw_blend(const ::image::image_drawing & imagedrawing) override;
 
 
-      //bool IsPrinting() override;            // true if being used for printing
+      ////bool IsPrinting() override;            // true if being used for printing
 
-      //void start_layer(::e_graphics egraphics) override;
-      //void end_layer(::e_graphics egraphics) override;
-      void start_layer(bool bFirstLayer = false) override;
-      void end_layer(bool bClosingLayer = false) override;
-      
-      //void on_begin_draw1() override;
-      //void on_end_draw1() override;
-
-
-      void just_after_new_frame() override;
+      ////void start_layer(::e_graphics egraphics) override;
+      ////void end_layer(::e_graphics egraphics) override;
+      //void start_layer(bool bFirstLayer = false) override;
+      //void end_layer(bool bClosingLayer = false) override;
+      //
+      ////void on_begin_draw1() override;
+      ////void on_end_draw1() override;
 
 
-      //void start_gpu_layer(::gpu::layer * pgpulayer) override;
-      //::gpu::frame* end_gpu_layer(::gpu::layer* pgpulayer) override;
+      ////void just_after_new_frame() override;
+
+
+      ////void start_gpu_layer(::gpu::layer * pgpulayer) override;
+      ////::gpu::frame* end_gpu_layer(::gpu::layer* pgpulayer) override;
 
 
       using ::draw2d::graphics::set;
@@ -145,8 +149,8 @@ namespace draw2d_direct2d
       ::u32 GetLayout() override;
       ::u32 SetLayout(::u32 dwLayout) override;
 
-      void on_start_layer(::gpu::layer* pgpulayer) override;
-      void on_end_layer(::gpu::layer* pgpulayer) override;
+      //void on_start_layer(::gpu::layer* pgpulayer) override;
+      //void on_end_layer(::gpu::layer* pgpulayer) override;
 
       //virtual bool save_clip() override;
       //virtual bool restore_clip() override;
@@ -158,14 +162,16 @@ namespace draw2d_direct2d
       //              const_char_pointer pszOutput, const void * lpInitData) override;
       //bool CreateIC(const ::scoped_string & scopedstrDriverName, const ::scoped_string & scopedstrDeviceName,
       //              const_char_pointer pszOutput, const void * lpInitData) override;
+      void create_for_image(::image::image *pimage) override;
+      void _create_memory_graphics(const ::i32_size &size, ::acme::user::interaction * pacmeuserinteractionAffinity) override;
       void create_compatible_graphics(::draw2d::graphics * pgraphics) override;
-      virtual void _create_from_dxgi_surface(::i32 iIndex, ::i32 iLayerIndex, IDXGISurface* pdxgisurface);
-      void _create_memory_graphics(const ::i32_size& size = {}) override;
+      //virtual void _create_from_dxgi_surface(::i32 iIndex, ::i32 iLayerIndex, IDXGISurface* pdxgisurface);
+      //void _create_memory_graphics(const ::i32_size& size = {}) override;
       void create_bitmap_graphics(::draw2d::bitmap *pbitmap) override;
       void defer_set_size(const ::i32_size& size = {}) override;
 
       //void create_offscreen_graphics_for_swap_chain_blitting(const ::i32_size& size) override;
-      void create_for_window_draw2d(::user::interaction* puserinteraction, const ::i32_size & size) override;
+      //void create_for_window_draw2d(::user::interaction* puserinteraction, const ::i32_size & size) override;
       //void create_connector() override;
 
       void DeleteDC() override;
@@ -492,9 +498,9 @@ namespace draw2d_direct2d
 //      virtual ::i32 draw_text_ex(::i8 * lpszString, ::i32 nCount, ::f64_rectangle * prectangle, const ::e_align & ealign = e_align_top_left, const ::e_draw_text & edrawtext = e_draw_text_none, LPDRAWTEXTPARAMS lpDTParams) override;
       //    virtual ::i32 draw_text_ex(const ::scoped_string & scopedstr, ::f64_rectangle * prectangle, const ::e_align & ealign = e_align_top_left, const ::e_draw_text & edrawtext = e_draw_text_none, LPDRAWTEXTPARAMS lpDTParams) override;
 
-      ::f64_size get_text_extent(const ::scoped_string & scopedstr, character_count iIndex) override;
+      ::f64_size _get_text_extent(const ::scoped_string & scopedstr, character_count iIndex) override;
       //virtual ::f64_size get_text_extent(const ::scoped_string & scopedstrString, character_count nCount) override;
-      ::f64_size get_text_extent(const ::scoped_string & scopedstr) override;
+      ::f64_size _get_text_extent(const ::scoped_string & scopedstr) override;
       //void get_text_extent(::f64_size & size, const_char_pointer pszString, character_count nCount, character_count iIndex) override;
       //void get_text_extent(::f64_size & size, const_char_pointer pszString, character_count nCount) override;
       //void get_text_extent(::f64_size & size, const ::scoped_string & scopedstr) override;
@@ -628,7 +634,7 @@ namespace draw2d_direct2d
 
       //virtual void __attach(ID2D1DeviceContext* pdevicecontext);
 
-      void _bind(::i32 iIndex, ::i32 iLayerIndex, IDXGISurface* pdxgisurface) override;
+      //void _bind(::i32 iIndex, ::i32 iLayerIndex, IDXGISurface* pdxgisurface) override;
 
       virtual void __attach(::i32 iIndex, ::i32 iLayerIndex, ID2D1Bitmap1* pd2d1bitmap);
 

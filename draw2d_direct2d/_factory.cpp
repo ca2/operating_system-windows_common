@@ -10,6 +10,7 @@
 #include "internal_font.h"
 #include "graphics.h"
 #include "draw2d.h"
+#include "window_attachment.h"
 #include "direct2d/direct2d.h"
 //#include "directx11_swap_chain.h"
 
@@ -20,7 +21,7 @@ CLASS_DECL_AURA void init_draw2d_mutex();
 __FACTORY_EXPORT void draw2d_direct2d_factory(::factory::factory* pfactory)
 {
 
-   pfactory->m_papplication->m_bGpu = true;
+   //pfactory->m_papplication->m_bGpu = true;
 
    pfactory->add_factory_item < ::draw2d_direct2d::image, ::image::image >();
    pfactory->add_factory_item < ::draw2d_direct2d::bitmap, ::draw2d::bitmap >();
@@ -31,6 +32,7 @@ __FACTORY_EXPORT void draw2d_direct2d_factory(::factory::factory* pfactory)
    pfactory->add_factory_item < ::draw2d_direct2d::region, ::draw2d::region >();
    pfactory->add_factory_item < ::draw2d_direct2d::font, ::write_text::font >();
    pfactory->add_factory_item < ::draw2d_direct2d::internal_font, ::write_text::internal_font >();
+   pfactory->add_factory_item < ::draw2d_direct2d::window_attachment, ::draw2d::window_attachment >();
 
    pfactory->add_factory_item < ::draw2d_direct2d::graphics, ::draw2d::graphics >();
 

@@ -50,7 +50,9 @@ namespace draw2d_direct2d
       bool LoadOEMBitmap(::u32 nIDBitmap); // for OBM_/OCR_/OIC_
 
 
-      void create_bitmap_for_image(::image::image* pimage) override;
+      void create_bitmap_for_image(
+         ::image::image * pimage,
+         ::acme::user::interaction * pacmeuserinteractionAffinity = nullptr) override;
       virtual void CreateBitmap(::draw2d::graphics * pgraphics, const ::i32_size& size, ::u32 nPlanes, ::u32 nBitcount, const void * lpBits, ::i32 stride) override;
       virtual bool CreateBitmapIndirect(::draw2d::graphics * pgraphics, LPBITMAP lpBitmap);
       virtual void CreateCompatibleBitmap(::draw2d::graphics * pgraphics, ::i32 nWidth, ::i32 nHeight);

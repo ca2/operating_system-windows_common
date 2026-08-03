@@ -1,10 +1,12 @@
 #include "framework.h"
-#include "graphics.h"
 #include "bitmap.h"
+#include "brush.h"
+#include "graphics.h"
+#include "image.h"
 #include "path.h"
 #include "pen.h"
-#include "brush.h"
 #include "region.h"
+#include "window_attachment.h"
 #include "direct2d/direct2d.h"
 #include "direct2d/geometry.h"
 #include "CustomRenderer.h"
@@ -32,8 +34,10 @@
 #include "bred/gpu/renderer.h"
 #include "bred/gpu/swap_chain.h"
 #include "bred/gpu/types.h"
+#include "operating_system-windows_common/direct2d/direct2d.h"
 #include <math.h>
 #include "acme_windows_common/dxgi_device_source.h"
+#include <atomic>
 
 
 void dpi_initialize(ID2D1Factory * pFactory);
@@ -69,7 +73,7 @@ namespace draw2d_direct2d
    graphics::graphics()
    {
 
-      m_bDraw2dNeedsD3D11onD12 = true;
+      //m_bDraw2dNeedsD3D11onD12 = true;
 
       m_iLayerCount = 0;
 
@@ -142,12 +146,330 @@ namespace draw2d_direct2d
 
    //}
 
+   
+   void graphics::create_for_image(::image::image * pimage)
+   {
 
-   void graphics::create_compatible_graphics(::draw2d::graphics *pgraphics) { _create_memory_graphics({256, 256}); }
+      m_pacmeuserinteractionAffinity = pimage->m_pacmeuserinteractionAffinity;
+
+      ::cast<::draw2d_direct2d::image> pdirect2dimage = pimage;
+
+      auto hdcMemory = pdirect2dimage->m_hdcMemory;
+
+      if (hdcMemory)
+      {
+
+         RECT bounds{ 0, 0, pdirect2dimage->width(), pdirect2dimage->height() };
+
+         auto properties = D2D1::RenderTargetProperties(
+            D2D1_RENDER_TARGET_TYPE_DEFAULT,
+            D2D1::PixelFormat(DXGI_FORMAT_B8G8R8A8_UNORM, D2D1_ALPHA_MODE_PREMULTIPLIED),
+            96.0f, 96.0f);
+
+         auto hrCreateDCRenderTarget = direct2d()->d2d1_factory1()->CreateDCRenderTarget(&properties, &m_pdcrendertarget);
+
+         if (FAILED(hrCreateDCRenderTarget))
+         {
+
+            throw hresult_exception(hrCreateDCRenderTarget);
+
+         }
+
+         if (::is_null(pimage->m_pacmeuserinteractionAffinity))
+         {
+
+            throw ::exception(error_wrong_state, "graphics::create_for_image : pimage->m_puserinteraction is null");
+
+         }
+
+         auto hrBindDC = m_pdcrendertarget->BindDC(hdcMemory, &bounds);
+
+         if (FAILED(hrBindDC))
+         {
+
+            throw hresult_exception(hrBindDC);
+
+         }
+
+         m_pdcrendertarget.as(m_pd2d1rendertarget);
+
+         m_pdcrendertarget.as(m_pdevicecontext);
+
+         m_pdcrendertarget.as(m_pdevicecontext1);
+
+      }
+      else
+      {
+         
+         pimage->create_bitmap(pimage->m_pacmeuserinteractionAffinity);
+
+         ::cast < ::draw2d_direct2d::bitmap > pbitmap = pimage->m_pbitmap;
+
+         pbitmap->m_pdevicecontext.as(m_pdevicecontext);
+
+         m_pdevicecontext.as(m_pd2d1rendertarget);
+
+         m_pdevicecontext.as(m_pdevicecontext1);
+
+      }
+
+      m_osdata[data_device_context] = m_pdevicecontext;
+
+      m_osdata[data_render_target] = m_pd2d1rendertarget;
+
+      set_ok_flag();
+
+   }
+
+
+   void graphics::_create_memory_graphics(const ::i32_size & sizeParam, ::acme::user::interaction * pacmeuserinteractionAffinity)
+   {
+
+      //constructø(m_pbitmap);
+
+      //if (!pacmeuserinteractionAffinity)
+      //{
+
+      //   pacmeuserinteractionAffinity = m_pacmeuserinteractionAffinity;
+
+      //}
+
+      //m_pbitmap->create_bitmap_for_image(
+      //   this,
+      //   pacmeuserinteractionAffinity);
+      ////::draw2d::lock draw2dlock;
+
+      //__UNREFERENCED_PARAMETER(pgraphics);
+      ////__UNREFERENCED_PARAMETER(pbits);
+      ////__UNREFERENCED_PARAMETER(stride);
+
+      ::draw2d::device_lock devicelock(this);
+
+      if (m_pdevicecontext)
+      {
+
+         destroy();
+
+      }
+
+
+
+      D2D1_SIZE_F size;
+
+      size.width = sizeParam.cx;
+      size.height = sizeParam.cy;
+
+      D2D1_SIZE_U sizeu;
+
+      sizeu.width = sizeParam.cx;
+      sizeu.height = sizeParam.cy;
+
+      D2D1_PIXEL_FORMAT pixelformat{};
+
+      pixelformat.alphaMode = D2D1_ALPHA_MODE_PREMULTIPLIED;
+      pixelformat.format = DXGI_FORMAT_B8G8R8A8_UNORM;
+      //properties.dpiX = 96.0;
+      //properties.dpiY = 96.0;
+
+      D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS options;
+
+      options = D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS_NONE;
+
+      ::cast < ::windowing::window > pwindow;
+
+      if (m_pacmeuserinteractionAffinity)
+      {
+
+         pwindow = m_pacmeuserinteractionAffinity->acme_windowing_window();
+
+      }
+
+      if (!pwindow)
+      {
+
+         throw ::exception(
+            error_wrong_state,
+            "Direct2D bitmap interaction affinity has no window");
+
+      }
+
+      ::cast < ::draw2d_direct2d::window_attachment > pwindowattachment = pwindow->m_pdraw2dwindowattachment;
+
+      if (!pwindowattachment)
+      {
+
+         throw ::exception(
+            error_wrong_state,
+            "Direct2D bitmap window has no Direct2D attachment");
+
+      }
+
+      _synchronous_lock synchronouslock(pwindowattachment->_d2d1_device_context_mutex());
+
+      //draw2d_direct2d::graphics * pgraphics2d = dynamic_cast < ::draw2d_direct2d::graphics * > (pgraphics);
+
+      //pgraphics2d->m_pd2d1rendertarget->GetDpi(&props.dpiX, &props.dpiY); // Thank you https://repo.anl-external.org/repos/BlueTBB/tbb41_20130314oss/examples/common/gui/d2dvideo.cpp
+
+      auto pd2d1devicecontext = pwindowattachment->_d2d1_device_context();
+
+      auto hrCreateCompatibleRenderTarget = pd2d1devicecontext->CreateCompatibleRenderTarget(
+         size,
+         sizeu,
+         pixelformat,
+         options,
+         &m_pbitmaprendertargetCompatibleMemoryGraphics);
+
+      if (FAILED(hrCreateCompatibleRenderTarget))
+      {
+
+         throw hresult_exception(hrCreateCompatibleRenderTarget, "Failed to create compatible bitmap render target");
+
+      }
+
+      D2D1_BITMAP_PROPERTIES1 bitmapproperties1 = {};
+
+      bitmapproperties1.bitmapOptions = D2D1_BITMAP_OPTIONS_TARGET;
+      bitmapproperties1.pixelFormat = pixelformat;
+      //props.bitmapOptions = D2D1_BITMAP_OPTIONS_TARGET | D2D1_BITMAP_OPTIONS_CANNOT_DRAW;
+      bitmapproperties1.dpiX = 96.0f;
+      bitmapproperties1.dpiY = 96.0f;
+      bitmapproperties1.colorContext = nullptr;
+
+      auto hrQueryDeviceContext = m_pbitmaprendertargetCompatibleMemoryGraphics.as(m_pdevicecontext);
+      //if(ppdata != nullptr)
+      {
+         // g.m_pdc->CreateBitmap(size, *ppdata, cx * sizeof(::color32_t), props, &m_pbitmap);
+      }
+      //else
+      //{
+      //HRESULT hr = ((ID2D1DeviceContext *)pgraphics->get_os_data())->CreateBitmap(size, lpBits, stride, props, &m_pbitmap1);
+      //HRESULT hrCreateBitmap = m_pbitmaprendertarget->GetBitmap(&m_pbitmap);
+
+      ////}
+
+      //if (FAILED(hrCreateBitmap))
+      //{
+
+      //   throw ::exception(error_failed);
+
+      //}
+
+
+      //if (pbits && stride >= size.width * 4)
+      //{
+
+      //   D2D1_RECT_U r;
+
+      //   r.left = 0;
+      //   r.top = 0;
+      //   r.right = size.width;
+      //   r.bottom = size.height;
+
+      //   m_pbitmap->CopyFromMemory(&r, pbits, stride);
+
+      //}
+
+
+      //auto hrQueryBitmap1 = m_pbitmap.as(m_pbitmap1);
+
+      //static ::std::atomic<unsigned int> s_uBitmapCreationDiagnosticCount{ 0 };
+      //auto uBitmapCreationDiagnosticCount = s_uBitmapCreationDiagnosticCount.fetch_add(1, ::std::memory_order_relaxed);
+
+      //if (uBitmapCreationDiagnosticCount < 32
+      //   || FAILED(hrQueryDeviceContext)
+      //   || FAILED(hrQueryBitmap1))
+      //{
+
+      //   informationf(
+      //      "Direct2DBitmapCreationDiagnostic compatible=0x%08lx queryContext=0x%08lx getBitmap=0x%08lx "
+      //      "queryBitmap1=0x%08lx thread=%lu requested=(%d,%d) sourceContext=%p bitmapTarget=%p "
+      //      "bitmap=%p bitmap1=%p bitmapContext=%p",
+      //      (unsigned long)hrCreateCompatibleRenderTarget,
+      //      (unsigned long)hrQueryDeviceContext,
+      //      (unsigned long)hrCreateBitmap,
+      //      (unsigned long)hrQueryBitmap1,
+      //      (unsigned long)::GetCurrentThreadId(),
+      //      sizeParam.cx,
+      //      sizeParam.cy,
+      //      pd2d1devicecontext,
+      //      (ID2D1BitmapRenderTarget *)m_pbitmaprendertarget,
+      //      (ID2D1Bitmap *)m_pbitmap,
+      //      (ID2D1Bitmap1 *)m_pbitmap1,
+      //      (ID2D1DeviceContext *)m_pdevicecontext);
+
+      //}
+
+      if (FAILED(hrQueryDeviceContext))
+      {
+
+         throw hresult_exception(hrQueryDeviceContext, "Failed to query bitmap device context");
+
+      }
+
+      //if (FAILED(hrQueryBitmap1))
+      //{
+
+      //   throw hresult_exception(hrQueryBitmap1, "Failed to query ID2D1Bitmap1");
+
+      //}
+
+
+      //m_pdevicecontext->SetTarget(m_pbitmap1);
+
+      //zero(m_map);
+      //    m_pbitmap->Map(D2D1_MAP_OPTIONS_READ | D2D1_MAP_OPTIONS_WRITE, &m_map);
+      //
+      //if(ppdata != nullptr)
+      // *ppdata = (::color::color *) m_map.bits;
+      //m_osdata[0] = m_pbitmap;
+
+      //return true;
+
+      ///set_ok_flag();
+
+      m_estatus = success;
+
+
+      //::cast < ::draw2d_direct2d::bitmap > pbitmap = pimage->m_pbitmap;
+
+      //pbitmap->m_pdevicecontext.as(m_pdevicecontext);
+
+      m_pdevicecontext.as(m_pd2d1rendertarget);
+
+      m_pdevicecontext.as(m_pdevicecontext1);
+
+   m_osdata[data_device_context] = m_pdevicecontext;
+
+   m_osdata[data_render_target] = m_pd2d1rendertarget;
+
+   set_ok_flag();
+
+   }
+
+
+   void graphics::create_compatible_graphics(::draw2d::graphics *pgraphics)
+   {
+   
+      _create_memory_graphics({256, 256}, pgraphics->m_pacmeuserinteractionAffinity); 
+   
+   }
+
 
    void graphics::defer_set_size(const ::i32_size &size)
    {
-      _create_memory_graphics(size);
+      if (m_pimage)
+      {
+
+         if (m_pimage->m_size == size)
+         {
+
+            return;
+
+         }
+
+      }
+
+      //_create_memory_graphics(size);
       /*m_pgpucontextCompositor->sendø() << [this, size]()
          {
             m_pgpucontextCompositor->sendø() << [this, size]()
@@ -156,108 +478,108 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::create_for_window_draw2d(::user::interaction *puserinteraction, const ::i32_size &size)
-   {
+   //void graphics::create_for_window_draw2d(::user::interaction *puserinteraction, const ::i32_size &size)
+   //{
 
-      ::gpu::graphics::create_for_window_draw2d(puserinteraction, size);
+   //   ::gpu::graphics::create_for_window_draw2d(puserinteraction, size);
 
-      auto pgpuapproach = m_papplication->get_gpu_approach();
+   //   auto pgpuapproach = m_papplication->get_gpu_approach();
 
-      auto pgpudevice = pgpuapproach->get_gpu_device(m_puserinteractionDraw2dGraphics->m_pacmewindowingwindow);
+   //   auto pgpudevice = pgpuapproach->get_gpu_device(m_puserinteractionDraw2dGraphics->m_pacmewindowingwindow);
 
-      m_pdirect2d = ::direct2d::from_gpu_device(pgpudevice);
+   //   direct2d() = ::direct2d::from_gpu_device(pgpudevice);
 
-      auto pgpucontextNew = pgpudevice->main_draw2d_context();
+   //   auto pgpucontextNew = pgpudevice->main_draw2d_context();
 
-      pgpucontextNew->m_pgpucompositor = this;
+   //   pgpucontextNew->m_pgpucompositor = this;
 
-      set_gpu_context(pgpucontextNew);
+   //   set_gpu_context(pgpucontextNew);
 
-      ::cast<::dxgi_device_source> pdxgidevicesource = gpu_context();
+   //   ::cast<::dxgi_device_source> pdxgidevicesource = gpu_context();
 
-      m_pdevicecontext = m_pdirect2d->default_d2d1_device_context(pdxgidevicesource);
+   //   m_pdevicecontext = direct2d()->default_d2d1_device_context(pdxgidevicesource);
 
-      m_pdevicecontext.as(m_pdevicecontext1);
+   //   m_pdevicecontext.as(m_pdevicecontext1);
 
-      m_pdevicecontext.as(m_pd2d1rendertarget);
+   //   m_pdevicecontext.as(m_pd2d1rendertarget);
 
-      defer_create_swap_chain(puserinteraction);
+   //   defer_create_swap_chain(puserinteraction);
 
-      //// for now create a "fake" memory graphics
+   //   //// for now create a "fake" memory graphics
 
-      // create_memory_graphics({ 1920,1080 });
+   //   // create_memory_graphics({ 1920,1080 });
 
-      // m_pgpucontextCompositor->m_iOverrideFrame = 0;
-      //
-      // bind_draw2d_compositor();
+   //   // m_pgpucontextCompositor->m_iOverrideFrame = 0;
+   //   //
+   //   // bind_draw2d_compositor();
 
-      // m_pgpucontextCompositor->m_iOverrideFrame = -1;
+   //   // m_pgpucontextCompositor->m_iOverrideFrame = -1;
 
-      set_ok_flag();
+   //   set_ok_flag();
 
-      // m_osdata[0] = (void*)1;
+   //   // m_osdata[0] = (void*)1;
 
-      ////::draw2d::lock draw2dlock;
+   //   ////::draw2d::lock draw2dlock;
 
-      //// ::draw2d::device_lock devicelock(this);
+   //   //// ::draw2d::device_lock devicelock(this);
 
-      // if (m_iType != 0)
-      //{
+   //   // if (m_iType != 0)
+   //   //{
 
-      //   destroy();
+   //   //   destroy();
 
-      //}
+   //   //}
 
-      //::user::interaction* puserinteraction = m_puserinteractionDraw2dGraphics;
+   //   //::user::interaction* puserinteraction = m_puserinteractionDraw2dGraphics;
 
-      // if (::is_null(puserinteraction))
-      //{
+   //   // if (::is_null(puserinteraction))
+   //   //{
 
-      //   puserinteraction = dynamic_cast <::user::interaction*>(m_pacmeuserinteractionMain.m_p);
+   //   //   puserinteraction = dynamic_cast <::user::interaction*>(m_pacmeuserinteractionMain.m_p);
 
-      //}
+   //   //}
 
-      // auto pwindow = puserinteraction->window();
+   //   // auto pwindow = puserinteraction->window();
 
-      // auto rectanglePlacement = pwindow->get_window_rectangle();
+   //   // auto rectanglePlacement = pwindow->get_window_rectangle();
 
-      // auto pgpuapproach = m_papplication->get_gpu_approach();
+   //   // auto pgpuapproach = m_papplication->get_gpu_approach();
 
-      // auto pgpudevice = pgpuapproach->get_gpu_device();
+   //   // auto pgpudevice = pgpuapproach->get_gpu_device();
 
-      // m_pgpucontextCompositor = pgpudevice->create_draw2d_context(::gpu::e_output_gpu_buffer, size);
+   //   // m_pgpucontextCompositor = pgpudevice->create_draw2d_context(::gpu::e_output_gpu_buffer, size);
 
-      /*_create_memory_graphics(size);
+   //   /*_create_memory_graphics(size);
 
-      m_pgpucontextCompositor->sendø() << [this, size]()
-         {
+   //   m_pgpucontextCompositor->sendø() << [this, size]()
+   //      {
 
-            m_pgpucontextCompositor->create_offscreen_graphics_for_swap_chain_blitting(this, size);
+   //         m_pgpucontextCompositor->create_offscreen_graphics_for_swap_chain_blitting(this, size);
 
-         });*/
-   }
+   //      });*/
+   //}
 
 
-   void graphics::_create_from_dxgi_surface(::i32 iIndex, ::i32 iLayerIndex, IDXGISurface *pdxgisurface)
-   {
+   //void graphics::_create_from_dxgi_surface(::i32 iIndex, ::i32 iLayerIndex, IDXGISurface *pdxgisurface)
+   //{
 
-      auto &pd2d1rendertarget = m_d2d1rendertargeta.element_at_grow(iIndex).element_at_grow(iLayerIndex);
+   //   auto &pd2d1rendertarget = m_d2d1rendertargeta.element_at_grow(iIndex).element_at_grow(iLayerIndex);
 
-      D2D1_RENDER_TARGET_PROPERTIES props = D2D1::RenderTargetProperties(
-         D2D1_RENDER_TARGET_TYPE_DEFAULT, D2D1::PixelFormat(DXGI_FORMAT_B8G8R8A8_UNORM, D2D1_ALPHA_MODE_PREMULTIPLIED),
-         96.0f, 96.0f);
+   //   D2D1_RENDER_TARGET_PROPERTIES props = D2D1::RenderTargetProperties(
+   //      D2D1_RENDER_TARGET_TYPE_DEFAULT, D2D1::PixelFormat(DXGI_FORMAT_B8G8R8A8_UNORM, D2D1_ALPHA_MODE_PREMULTIPLIED),
+   //      96.0f, 96.0f);
 
-      HRESULT hrCreateDxgiSurfaceRenderTarget =
-         m_pdirect2d->d2d1_factory1()->CreateDxgiSurfaceRenderTarget(pdxgisurface, &props, &pd2d1rendertarget);
+   //   HRESULT hrCreateDxgiSurfaceRenderTarget =
+   //      direct2d()->d2d1_factory1()->CreateDxgiSurfaceRenderTarget(pdxgisurface, &props, &pd2d1rendertarget);
 
-      ::defer_throw_hresult(hrCreateDxgiSurfaceRenderTarget);
+   //   ::defer_throw_hresult(hrCreateDxgiSurfaceRenderTarget);
 
-      m_pd2d1rendertarget = pd2d1rendertarget;
+   //   m_pd2d1rendertarget = pd2d1rendertarget;
 
-      ::defer_throw_hresult(m_pd2d1rendertarget.as(m_pdevicecontext));
+   //   ::defer_throw_hresult(m_pd2d1rendertarget.as(m_pdevicecontext));
 
-      ::defer_throw_hresult(m_pdevicecontext.as(m_pdevicecontext1));
-   }
+   //   ::defer_throw_hresult(m_pdevicecontext.as(m_pdevicecontext1));
+   //}
 
 
    ::draw2d::bitmap * graphics::get_target_bitmap()
@@ -416,7 +738,7 @@ namespace draw2d_direct2d
 
    //      auto rectanglePlacement = pwindow->get_window_rectangle();
 
-   //      auto pdirect2d = m_pdirect2d;
+   //      auto pdirect2d = direct2d();
 
    //      ::direct2d_lock lock(pdirect2d);
 
@@ -589,324 +911,324 @@ namespace draw2d_direct2d
 }
 
 
-   void graphics::_create_memory_graphics(const ::i32_size & size)
-   {
+   //void graphics::_create_memory_graphics(const ::i32_size & size)
+   //{
 
-      auto pcontext = gpu_context();
+   //   auto pcontext = gpu_context();
 
-      if (pcontext)
-      {
+   //   if (pcontext)
+   //   {
 
-         if (pcontext->m_rectangle.size() == size)
-         {
+   //      if (pcontext->m_rectangle.size() == size)
+   //      {
 
-            return;
+   //         return;
 
-         }
+   //      }
 
-      }
+   //   }
 
-      //::draw2d::lock draw2dlock;
+   //   //::draw2d::lock draw2dlock;
 
-      // ::draw2d::device_lock devicelock(this);
+   //   // ::draw2d::device_lock devicelock(this);
 
-      if (m_iType != 0)
-      {
+   //   if (m_iType != 0)
+   //   {
 
-         destroy();
+   //      destroy();
 
-      }
+   //   }
 
-      ::user::interaction* puserinteraction = m_puserinteractionDraw2dGraphics;
+   //   ::user::interaction* puserinteraction = m_puserinteractionDraw2dGraphics;
 
-      if (::is_null(puserinteraction))
-      {
+   //   if (::is_null(puserinteraction))
+   //   {
 
-         auto pacmeuserinteractionMain = m_papplication->main_acme_user_interaction();
+   //      auto pacmeuserinteractionMain = m_papplication->main_acme_user_interaction();
 
-         puserinteraction = dynamic_cast <::user::interaction*>(pacmeuserinteractionMain);
+   //      puserinteraction = dynamic_cast <::user::interaction*>(pacmeuserinteractionMain);
 
-      }
+   //   }
 
-      auto pwindow = puserinteraction->window();
+   //   auto pwindow = puserinteraction->window();
 
-      auto rectanglePlacement = pwindow->get_window_rectangle();
+   //   auto rectanglePlacement = pwindow->get_window_rectangle();
 
-      auto pgpuapproach = m_papplication->get_gpu_approach();
+   //   auto pgpuapproach = m_papplication->get_gpu_approach();
 
-      ::acme::windowing::window *pacmewindowingwindow = nullptr;
+   //   ::acme::windowing::window *pacmewindowingwindow = nullptr;
 
-      if (::is_set(m_puserinteractionDraw2dGraphics))
-      {
+   //   if (::is_set(m_puserinteractionDraw2dGraphics))
+   //   {
 
-         pacmewindowingwindow = m_puserinteractionDraw2dGraphics->m_pacmewindowingwindow;
+   //      pacmewindowingwindow = m_puserinteractionDraw2dGraphics->m_pacmewindowingwindow;
 
-      }
+   //   }
 
-      if (::is_null(pacmewindowingwindow))
-      {
+   //   if (::is_null(pacmewindowingwindow))
+   //   {
 
-         auto pacmeuserinteractionMain = m_papplication->main_acme_user_interaction();
+   //      auto pacmeuserinteractionMain = m_papplication->main_acme_user_interaction();
 
-         pacmewindowingwindow = pacmeuserinteractionMain->m_pacmewindowingwindow;
+   //      pacmewindowingwindow = pacmeuserinteractionMain->m_pacmewindowingwindow;
 
-      }
+   //   }
 
-      auto pgpudevice = pgpuapproach->get_gpu_device(pacmewindowingwindow);
+   //   auto pgpudevice = pgpuapproach->get_gpu_device(pacmewindowingwindow);
 
-      auto pgpucontextNew = pgpudevice->allocate_gpu_context();
+   //   auto pgpucontextNew = pgpudevice->allocate_gpu_context();
 
-      pgpucontextNew->create_draw2d_gpu_context(pgpudevice, pacmewindowingwindow, size);
+   //   pgpucontextNew->create_draw2d_gpu_context(pgpudevice, pacmewindowingwindow, size);
 
-      set_gpu_context(pgpucontextNew);
+   //   set_gpu_context(pgpucontextNew);
 
-      pcontext = gpu_context();
+   //   pcontext = gpu_context();
 
-      {
+   //   {
 
-         ::gpu::context_lock context_lock(pcontext);
+   //      ::gpu::context_lock context_lock(pcontext);
 
-         pcontext->m_pgpucompositor = this;
+   //      pcontext->m_pgpucompositor = this;
 
-         auto pdirect2d = ::direct2d::from_gpu_device(pcontext->m_pgpudevice);
+   //      auto pdirect2d = ::direct2d::from_gpu_device(pcontext->m_pgpudevice);
 
-         initialize_direct2d_object(pdirect2d);
+   //      initialize_direct2d_object(pdirect2d);
 
-      }
+   //   }
 
-      //auto pgpucontext = pgpudevice->get_main_context();
+   //   //auto pgpucontext = pgpudevice->get_main_context();
 
-      //m_pgpucontextDraw2d->m_pgpurenderer = pgpucontext->get_output_renderer();
-      //{
+   //   //m_pgpucontextDraw2d->m_pgpurenderer = pgpucontext->get_output_renderer();
+   //   //{
 
-      //   m_pgpucontextCompositor->start_gpu_context(
-      //      ::gpu::start_gpu_output_context_t
-      //      {
-      //         this,
-      //         pdevice,
-      //         ::gpu::e_output_gpu_buffer,
-      //         rectanglePlacement
-      //      });
+   //   //   m_pgpucontextCompositor->start_gpu_context(
+   //   //      ::gpu::start_gpu_output_context_t
+   //   //      {
+   //   //         this,
+   //   //         pdevice,
+   //   //         ::gpu::e_output_gpu_buffer,
+   //   //         rectanglePlacement
+   //   //      });
 
-      //}
+   //   //}
 
-      //auto pcontext = gpu_context();
+   //   //auto pcontext = gpu_context();
 
-      pcontext->sendø() << [this, size]()
-         {
+   //   pcontext->sendø() << [this, size]()
+   //      {
 
-            auto pcontext = gpu_context();
+   //         auto pcontext = gpu_context();
 
-            ::gpu::context_lock context_lock(pcontext);
-            /*::direct2d::direct2d() = allocateø ::draw2d_direct2d::plugin();
+   //         ::gpu::context_lock context_lock(pcontext);
+   //         /*::direct2d::direct2d() = allocateø ::draw2d_direct2d::plugin();
 
-            ::direct2d::get()->initialize();*/
+   //         ::direct2d::get()->initialize();*/
 
-            HRESULT hr;
+   //         HRESULT hr;
 
-            ::user::interaction* puserinteraction = m_puserinteractionDraw2dGraphics;
+   //         ::user::interaction* puserinteraction = m_puserinteractionDraw2dGraphics;
 
-            if (!puserinteraction)
-            {
+   //         if (!puserinteraction)
+   //         {
 
-               auto pacmeuserinteractionMain = m_papplication->main_acme_user_interaction();
+   //            auto pacmeuserinteractionMain = m_papplication->main_acme_user_interaction();
 
-               puserinteraction = dynamic_cast <::user::interaction*>(pacmeuserinteractionMain);
+   //            puserinteraction = dynamic_cast <::user::interaction*>(pacmeuserinteractionMain);
 
-            }
+   //         }
 
-            auto pwindow = puserinteraction->window();
+   //         auto pwindow = puserinteraction->window();
 
-            auto rectanglePlacement = pwindow->get_window_rectangle();
+   //         auto rectanglePlacement = pwindow->get_window_rectangle();
 
-            auto pdirect2d = m_pdirect2d;
+   //         auto pdirect2d = direct2d();
 
-            ::direct2d_lock lock(pdirect2d);
+   //         ::direct2d_lock lock(pdirect2d);
 
-            //auto pcontext = gpu_context();
+   //         //auto pcontext = gpu_context();
 
-            ::cast < ::dxgi_device_source > pdxgidevicesource = pcontext;
+   //         ::cast < ::dxgi_device_source > pdxgidevicesource = pcontext;
 
-            auto pdevicecontextDefault = pdirect2d->default_d2d1_device_context(pdxgidevicesource);
+   //         auto pdevicecontextDefault = pdirect2d->default_d2d1_device_context(pdxgidevicesource);
 
-            //comptr < ID2D1DeviceContext > pdevicecontextTemplate;
+   //         //comptr < ID2D1DeviceContext > pdevicecontextTemplate;
 
-            //hr = m_pdevice->CreateDeviceContext(
-            //   //D2D1_DEVICE_CONTEXT_OPTIONS_NONE,
-            //   D2D1_DEVICE_CONTEXT_OPTIONS_ENABLE_MULTITHREADED_OPTIMIZATIONS,
-            //   &pdevicecontextTemplate);
+   //         //hr = m_pdevice->CreateDeviceContext(
+   //         //   //D2D1_DEVICE_CONTEXT_OPTIONS_NONE,
+   //         //   D2D1_DEVICE_CONTEXT_OPTIONS_ENABLE_MULTITHREADED_OPTIMIZATIONS,
+   //         //   &pdevicecontextTemplate);
 
-            //if (FAILED(hr))
-            //{
+   //         //if (FAILED(hr))
+   //         //{
 
-            //   warning() << "graphics::CreateCompatibleDC, CreateDeviceContext (1) " << hresult_text(hr);
+   //         //   warning() << "graphics::CreateCompatibleDC, CreateDeviceContext (1) " << hresult_text(hr);
 
-            //   //return false;
+   //         //   //return false;
 
-            //   throw ::exception(error_failed);
+   //         //   throw ::exception(error_failed);
 
-            //}
+   //         //}
 
-            auto psession = session();
+   //         auto psession = session();
 
-            auto paurasession = psession;
+   //         auto paurasession = psession;
 
-            auto puser = paurasession->user();
+   //         auto puser = paurasession->user();
 
-            auto pwindowing = system()->windowing();
+   //         auto pwindowing = system()->windowing();
 
-            auto pdisplay = pwindowing->display();
+   //         auto pdisplay = pwindowing->display();
 
-            auto dpi = pdisplay->get_dpi();
+   //         auto dpi = pdisplay->get_dpi();
 
-            if (dpi <= 0.0)
-            {
+   //         if (dpi <= 0.0)
+   //         {
 
-               ASSERT(false);
+   //            ASSERT(false);
 
-               throw ::exception(error_failed);
+   //            throw ::exception(error_failed);
 
-            }
+   //         }
 
-            pdevicecontextDefault->SetDpi(dpi, dpi);
+   //         pdevicecontextDefault->SetDpi(dpi, dpi);
 
-            //comptr < ID2D1RenderTarget > prendertargetTemplate;
+   //         //comptr < ID2D1RenderTarget > prendertargetTemplate;
 
-            //hr = pdevicecontextDefault->QueryInterface(IID_ID2D1RenderTarget, (void**)&prendertargetTemplate);
+   //         //hr = pdevicecontextDefault->QueryInterface(IID_ID2D1RenderTarget, (void**)&prendertargetTemplate);
 
-            //if (FAILED(hr))
-            //{
+   //         //if (FAILED(hr))
+   //         //{
 
-            //   warning() << "graphics::CreateCompatibleDC, QueryInterface (2) " << hresult_text(hr);
+   //         //   warning() << "graphics::CreateCompatibleDC, QueryInterface (2) " << hresult_text(hr);
 
-            //   throw ::exception(error_failed);
+   //         //   throw ::exception(error_failed);
 
-            //}
+   //         //}
 
-            D2D1_SIZE_U sizeu = D2D1::SizeU(size.cx, size.cy);
+   //         D2D1_SIZE_U sizeu = D2D1::SizeU(size.cx, size.cy);
 
-            if (sizeu.width <= 0)
-            {
+   //         if (sizeu.width <= 0)
+   //         {
 
-               sizeu.width = 800;
+   //            sizeu.width = 800;
 
-            }
+   //         }
 
-            if (sizeu.width <= 0)
-            {
+   //         if (sizeu.width <= 0)
+   //         {
 
-               sizeu.width = 600;
+   //            sizeu.width = 600;
 
-            }
+   //         }
 
-            D2D1_PIXEL_FORMAT pixelformat;
+   //         D2D1_PIXEL_FORMAT pixelformat;
 
-            pixelformat.alphaMode = D2D1_ALPHA_MODE_PREMULTIPLIED;
+   //         pixelformat.alphaMode = D2D1_ALPHA_MODE_PREMULTIPLIED;
 
-            pixelformat.format = DXGI_FORMAT_B8G8R8A8_UNORM;
-            if (m_pbitmaprendertarget)
-            {
+   //         pixelformat.format = DXGI_FORMAT_B8G8R8A8_UNORM;
+   //         if (m_pbitmaprendertarget)
+   //         {
 
-               ID2D1Bitmap* pbitmap;
+   //            ID2D1Bitmap* pbitmap;
 
 
 
-               hr = m_pbitmaprendertarget->GetBitmap(&pbitmap);
-               if (SUCCEEDED(hr) &&
+   //            hr = m_pbitmaprendertarget->GetBitmap(&pbitmap);
+   //            if (SUCCEEDED(hr) &&
 
-                  pbitmap)
-               {
+   //               pbitmap)
+   //            {
 
 
-                  auto s = pbitmap->GetSize();
+   //               auto s = pbitmap->GetSize();
 
-                  if (s.width == size.width()
-                     && s.height == size.height())
-                  {
+   //               if (s.width == size.width()
+   //                  && s.height == size.height())
+   //               {
 
-                     return;
+   //                  return;
 
-                  }
+   //               }
 
-               }
+   //            }
 
-            }
+   //         }
 
-            hr = pdevicecontextDefault->CreateCompatibleRenderTarget(
-               nullptr,
-               &sizeu,
-               &pixelformat,
-               D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS_NONE,
-               &m_pbitmaprendertarget);
+   //         hr = pdevicecontextDefault->CreateCompatibleRenderTarget(
+   //            nullptr,
+   //            &sizeu,
+   //            &pixelformat,
+   //            D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS_NONE,
+   //            &m_pbitmaprendertarget);
 
-            if (FAILED(hr))
-            {
+   //         if (FAILED(hr))
+   //         {
 
-               warning() << "graphics::CreateCompatibleDC, CreateCompatibleRenderTarget (3) " << hresult_text(hr);
+   //            warning() << "graphics::CreateCompatibleDC, CreateCompatibleRenderTarget (3) " << hresult_text(hr);
 
-               throw ::exception(error_failed);
+   //            throw ::exception(error_failed);
 
-            }
+   //         }
 
-            hr = m_pbitmaprendertarget.as(m_pd2d1rendertarget);
+   //         hr = m_pbitmaprendertarget.as(m_pd2d1rendertarget);
 
-            if (FAILED(hr))
-            {
+   //         if (FAILED(hr))
+   //         {
 
-               m_pbitmaprendertarget = nullptr;
+   //            m_pbitmaprendertarget = nullptr;
 
-               throw ::exception(error_failed);
+   //            throw ::exception(error_failed);
 
-            }
+   //         }
 
-            hr = m_pbitmaprendertarget.as(m_pdevicecontext);
+   //         hr = m_pbitmaprendertarget.as(m_pdevicecontext);
 
-            m_pdevicecontext.as(m_pdevicecontext1);
+   //         m_pdevicecontext.as(m_pdevicecontext1);
 
-            if (FAILED(hr))
-            {
+   //         if (FAILED(hr))
+   //         {
 
-               m_pd2d1rendertarget = nullptr;
+   //            m_pd2d1rendertarget = nullptr;
 
-               m_pbitmaprendertarget = nullptr;
+   //            m_pbitmaprendertarget = nullptr;
 
-               throw ::exception(error_failed);
+   //            throw ::exception(error_failed);
 
-            }
+   //         }
 
-            defer_constructø(m_pbitmap);
+   //         defer_constructø(m_pbitmap);
 
-            ID2D1Bitmap* pbitmap;
+   //         ID2D1Bitmap* pbitmap;
 
-            hr = m_pbitmaprendertarget->GetBitmap(&pbitmap);
+   //         hr = m_pbitmaprendertarget->GetBitmap(&pbitmap);
 
-            if (FAILED(hr))
-            {
+   //         if (FAILED(hr))
+   //         {
 
-               m_pbitmaprendertarget = nullptr;
+   //            m_pbitmaprendertarget = nullptr;
 
-               throw ::exception(error_failed);
+   //            throw ::exception(error_failed);
 
-            }
+   //         }
 
-            m_pbitmap->attach(pbitmap);
+   //         m_pbitmap->attach(pbitmap);
 
-            m_iType = 3;
+   //         m_iType = 3;
 
 
-            void* pDataDeviceContext = m_pdevicecontext.m_p;
-            m_osdata[data_device_context] = pDataDeviceContext;
+   //         void* pDataDeviceContext = m_pdevicecontext.m_p;
+   //         m_osdata[data_device_context] = pDataDeviceContext;
 
-            void* pDataRenderTarget = m_pd2d1rendertarget.m_p;
-            m_osdata[data_render_target] = pDataRenderTarget;
+   //         void* pDataRenderTarget = m_pd2d1rendertarget.m_p;
+   //         m_osdata[data_render_target] = pDataRenderTarget;
 
-            set_ok_flag();
+   //         set_ok_flag();
 
-         };
+   //      };
 
-      //return true;
+   //   //return true;
 
-   }
+   //}
 
 
    //::i32 graphics::GetDeviceCaps(::f64 dIndex)
@@ -917,36 +1239,36 @@ namespace draw2d_direct2d
    //}
 
 
-   void graphics::gpu_layer_on_after_begin_render()
-   {
-      
-      ////m_bInLayer = true;
-      //
-      //m_pdirect2d->m_pd2d1multithread->Enter();
+   //void graphics::gpu_layer_on_after_begin_render()
+   //{
+   //   
+   //   ////m_bInLayer = true;
+   //   //
+   //   //direct2d()->m_pd2d1multithread->Enter();
 
-      //bind_draw2d_compositor();
+   //   //bind_draw2d_compositor();
 
-      //m_pdevicecontext->BeginDraw();
+   //   //m_pdevicecontext->BeginDraw();
 
-      //m_pdevicecontext->Clear();
+   //   //m_pdevicecontext->Clear();
 
-   }
+   //}
 
 
-   void graphics::gpu_layer_on_before_end_render()
-   {
+   //void graphics::gpu_layer_on_before_end_render()
+   //{
 
-      //m_pdevicecontext->EndDraw();
+   //   //m_pdevicecontext->EndDraw();
 
-      ////m_pdevicecontext->Clear();
+   //   ////m_pdevicecontext->Clear();
 
-      //soft_unbind_draw2d_compositor();
+   //   //soft_unbind_draw2d_compositor();
 
-      //m_pdirect2d->m_pd2d1multithread->Leave();
+   //   //direct2d()->m_pd2d1multithread->Leave();
 
-      ////m_bInLayer = false;
+   //   ////m_bInLayer = false;
 
-   }
+   //}
 
 
    ::f64_point graphics::GetBrushOrg()
@@ -1279,9 +1601,16 @@ namespace draw2d_direct2d
 
          //pimage2->unmap();
 
-         HRESULT hrFlush = ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->Flush();
+         //HRESULT hrFlush = ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->Flush();
 
-         HRESULT hrEndDraw = ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->EndDraw();
+         //HRESULT hrEndDraw = ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->EndDraw();
+
+         //if (FAILED(hrEndDraw))
+         //{
+
+         //   warning("graphics::on_release_memory_graphics : EndDraw failed: {}", hresult_text(hrEndDraw));
+
+         //}
 
          D2D1_RECT_F rectfDib1;
 
@@ -1294,12 +1623,12 @@ namespace draw2d_direct2d
          D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR,
          D2D1_COMPOSITE_MODE_DESTINATION_IN);
 
-         if (SUCCEEDED(hrEndDraw))
-         {
+         //if (SUCCEEDED(hrEndDraw))
+         //{
 
-            ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->BeginDraw();
+         //   ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->BeginDraw();
 
-         }
+         //}
 
          set_alpha_mode(::draw2d::e_alpha_mode_blend);
 
@@ -2197,7 +2526,7 @@ namespace draw2d_direct2d
 
          //comptr < ID2D1PathGeometry1 > pgeometry;
 
-         //HRESULT hr = m_pdirect2d->d2d1_factory1()->CreatePathGeometry(&pgeometry);
+         //HRESULT hr = direct2d()->d2d1_factory1()->CreatePathGeometry(&pgeometry);
 
          //if (FAILED(hr))
          //{
@@ -2332,7 +2661,7 @@ namespace draw2d_direct2d
 
       comptr<ID2D1PathGeometry> pgeometry;
 
-      HRESULT hr = m_pdirect2d->d2d1_factory1()->CreatePathGeometry(&pgeometry);
+      HRESULT hr = direct2d()->d2d1_factory1()->CreatePathGeometry(&pgeometry);
 
       {
 
@@ -2384,7 +2713,7 @@ namespace draw2d_direct2d
 
       comptr<ID2D1PathGeometry> pgeometry;
 
-      HRESULT hr = m_pdirect2d->d2d1_factory1()->CreatePathGeometry(&pgeometry);
+      HRESULT hr = direct2d()->d2d1_factory1()->CreatePathGeometry(&pgeometry);
 
       {
 
@@ -2432,7 +2761,7 @@ namespace draw2d_direct2d
 
       comptr<ID2D1PathGeometry> pgeometry;
 
-      HRESULT hr = m_pdirect2d->d2d1_factory1()->CreatePathGeometry(&pgeometry);
+      HRESULT hr = direct2d()->d2d1_factory1()->CreatePathGeometry(&pgeometry);
 
       {
 
@@ -2638,10 +2967,19 @@ namespace draw2d_direct2d
       //try
       //{
 
-      if (pimage == nullptr || pimage->get_bitmap() == nullptr)
+      if (pimage == nullptr)
       {
 
          //return false;
+
+         throw ::exception(error_null_pointer);
+
+      }
+
+      pimage->create_bitmap(m_pacmeuserinteractionAffinity);
+
+      if (pimage->get_bitmap() == nullptr)
+      {
 
          throw ::exception(error_null_pointer);
 
@@ -2908,6 +3246,8 @@ namespace draw2d_direct2d
 
       }
 
+      pimage->create_bitmap(m_pacmeuserinteractionAffinity);
+
       if (pimage->get_bitmap() == nullptr)
       {
 
@@ -2917,16 +3257,16 @@ namespace draw2d_direct2d
 
       }
 
-      auto pgraphicsImage = pimage->acquire_graphics();
+      //auto pgraphicsImage = pimage->acquire_graphics();
 
-      if (pgraphicsImage == nullptr)
-      {
+      //if (pgraphicsImage == nullptr)
+      //{
 
-         //return false;
+      //   //return false;
 
-         throw ::exception(error_failed);
+      //   throw ::exception(error_failed);
 
-      }
+      //}
 
       {
 
@@ -2936,17 +3276,24 @@ namespace draw2d_direct2d
 
          //pimage->unmap();
 
-         ::cast < graphics > pgraphicsImage = pgraphicsImage;
+         //::cast < graphics > pgraphicsImage = pgraphicsImage;
 
-         auto pd2d1contextImage = pgraphicsImage->m_pdevicecontext;
+         //auto pd2d1contextImage = pgraphicsImage->m_pdevicecontext;
 
-         auto pcontext = gpu_context();
+         //auto pcontext = gpu_context();
 
-         ::direct2d_lock direct2dlock(::direct2d::from_gpu_device(pcontext->m_pgpudevice));
+         //::direct2d_lock direct2dlock(::direct2d::from_gpu_device(pcontext->m_pgpudevice));
 
-         HRESULT hrFlush = pd2d1contextImage->Flush();
+         //HRESULT hrFlush = pd2d1contextImage->Flush();
 
-         HRESULT hrEndDraw = pd2d1contextImage->EndDraw();
+         //HRESULT hrEndDraw = pd2d1contextImage->EndDraw();
+
+         //if (FAILED(hrEndDraw))
+         //{
+
+         //   warning("graphics::on_release_memory_graphics : EndDraw failed: {}", hresult_text(hrEndDraw));
+
+         //}
 
          defer_primitive_blend();
 
@@ -2965,12 +3312,12 @@ namespace draw2d_direct2d
 
          }
 
-         if (SUCCEEDED(hrEndDraw))
-         {
+         //if (SUCCEEDED(hrEndDraw))
+         //{
 
-            ((ID2D1DeviceContext *)pgraphicsImage->get_os_data())->BeginDraw();
+         //   ((ID2D1DeviceContext *)pgraphicsImage->get_os_data())->BeginDraw();
 
-         }
+         //}
 
       }
 
@@ -5228,7 +5575,7 @@ namespace draw2d_direct2d
 
    //   copy(r, rectangle);
 
-   //   m_pdirect2d->d2d1_factory1()->CreateRectangleGeometry(r, &pgeometry);
+   //   direct2d()->d2d1_factory1()->CreateRectangleGeometry(r, &pgeometry);
 
    //   //return pgeometry;
 
@@ -5326,7 +5673,7 @@ namespace draw2d_direct2d
 
       comptr<ID2D1PathGeometry> ppathgeometry;
 
-      HRESULT hr = m_pdirect2d->d2d1_factory1()->CreatePathGeometry(&ppathgeometry);
+      HRESULT hr = direct2d()->d2d1_factory1()->CreatePathGeometry(&ppathgeometry);
 
       ::i32_rectangle_array_base rectanglea;
 
@@ -5768,43 +6115,43 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::on_start_layer(::gpu::layer* pgpulayer)
-   {
+   //void graphics::on_start_layer(::gpu::layer* pgpulayer)
+   //{
 
-      //if (m_pdevicecontext && m_bInLayer)
-      //if (m_pdevicecontext)
-      {
+   //   //if (m_pdevicecontext && m_bInLayer)
+   //   //if (m_pdevicecontext)
+   //   {
 
-         m_pdirect2d->m_pd2d1multithread->Enter();
+   //      direct2d()->m_pd2d1multithread->Enter();
 
-         m_pdevicecontext->BeginDraw();
+   //      m_pdevicecontext->BeginDraw();
 
-         m_pdevicecontext->Clear();
+   //      m_pdevicecontext->Clear();
 
-      }
+   //   }
 
-   }
-
-
-   void graphics::on_end_layer(::gpu::layer* pgpulayer)
-   {
-
-      //if (m_pdevicecontext)
-      {
-
-         m_pdevicecontext->Flush();
-
-         m_pdevicecontext->EndDraw();
-
-         m_pdirect2d->m_pd2d1multithread->Leave();
+   //}
 
 
+   //void graphics::on_end_layer(::gpu::layer* pgpulayer)
+   //{
 
-      }
+   //   //if (m_pdevicecontext)
+   //   {
 
-      defer_soft_unbind_draw2d_compositor(pgpulayer);
+   //      m_pdevicecontext->Flush();
 
-   }
+   //      m_pdevicecontext->EndDraw();
+
+   //      direct2d()->m_pd2d1multithread->Leave();
+
+
+
+   //   }
+
+   //   defer_soft_unbind_draw2d_compositor(pgpulayer);
+
+   //}
 
    //void graphics::arc_to(::f64 x1, ::f64 y1, ::f64 x2, ::f64 y2, ::f64 x3, ::f64 y3, ::f64 x4, ::f64 y4)
    //{
@@ -6260,7 +6607,7 @@ namespace draw2d_direct2d
 
 
    //void graphics::get_text_extent(::f64_size & size, const_char_pointer pszString, character_count nCount, character_count iIndex)
-   ::f64_size graphics::get_text_extent(const ::scoped_string & scopedstr, character_count iIndex)
+   ::f64_size graphics::_get_text_extent(const ::scoped_string & scopedstr, character_count iIndex)
    {
 
       //if (iIndex <= 0)
@@ -6359,7 +6706,7 @@ namespace draw2d_direct2d
 
       ::u32 uLength = (::u32)ptextitem->get_text().length();
 
-      hr = m_pdirect2d->dwrite_factory()->CreateTextLayout(
+      hr = direct2d()->dwrite_factory()->CreateTextLayout(
          ptextitem->get_text(), // The string to be laid out and formatted.
            uLength,   // The length of the string.
            pfont,    // The text format to apply to the string (contains font information, etc).
@@ -6397,7 +6744,7 @@ namespace draw2d_direct2d
 
 
    //void graphics::get_text_extent(::f64_size & size, const_char_pointer pszString, character_count nCount)
-   ::f64_size graphics::get_text_extent(const ::scoped_string & scopedstr)
+   ::f64_size graphics::_get_text_extent(const ::scoped_string & scopedstr)
    {
 
       //if (nCount < 0)
@@ -6409,7 +6756,7 @@ namespace draw2d_direct2d
 
       //return get_text_extent(size, lpszString, nCount, nCount);
 
-      return get_text_extent(scopedstr, scopedstr.size());
+      return _get_text_extent(scopedstr, scopedstr.size());
 
    }
 
@@ -6451,6 +6798,76 @@ namespace draw2d_direct2d
       m_pdevicecontext->FillRectangle(&rectangle, psolidbrush);
 
    }
+
+
+   void graphics::on_acquire_memory_graphics(
+      ::image::image * pimage,
+      const ::i32_size & size,
+      ::acme::user::interaction * pacmeuserinteractionAffinity)
+   {
+
+      if (::is_set(pimage))
+      {
+
+         pimage->create_bitmap(pacmeuserinteractionAffinity);
+
+      }
+
+      ::draw2d::graphics::on_acquire_memory_graphics(
+         pimage,
+         size,
+         pacmeuserinteractionAffinity);
+
+      if (::is_set(pimage))
+      {
+
+         ::cast <::draw2d_direct2d::bitmap> pbitmap = pimage->m_pbitmap;
+
+         m_pdevicecontext->SetTarget(pbitmap->m_pbitmap);
+
+      }
+
+      m_pdevicecontext->BeginDraw();
+
+   }
+
+
+   void graphics::on_release_memory_graphics()
+   {
+
+
+      auto pimageBeforeRelease = m_pimage;
+
+      ::draw2d::graphics::on_release_memory_graphics();
+
+      auto hrEndDraw = m_pdevicecontext->EndDraw();
+
+      static ::std::atomic<unsigned int> s_uEndDrawDiagnosticCount{ 0 };
+      auto uEndDrawDiagnosticCount = s_uEndDrawDiagnosticCount.fetch_add(1, ::std::memory_order_relaxed);
+
+      if (uEndDrawDiagnosticCount < 32 || FAILED(hrEndDraw))
+      {
+
+         informationf(
+            "Direct2DEndDrawDiagnostic result=0x%08lx graphics=%p image=%p target=%p",
+            (unsigned long)hrEndDraw,
+            this,
+            pimageBeforeRelease,
+            (ID2D1DeviceContext *)m_pdevicecontext);
+
+      }
+
+      if (FAILED(hrEndDraw))
+      {
+
+         warning("graphics::on_release_memory_graphics : EndDraw failed: {}", hresult_text(hrEndDraw));
+
+      }
+
+      m_pdevicecontext->SetTarget(nullptr);
+
+   }
+
 
 
    //void graphics::text_out(::f64 x, ::f64 y, const block & block)
@@ -6717,33 +7134,33 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::start_layer(bool bFirstLayer)
-   {
+   //void graphics::start_layer(bool bFirstLayer)
+   //{
 
-      reset_clip();
+   //   reset_clip();
 
-      m_ealphamodeDevice = ::draw2d::e_alpha_mode_none;
+   //   m_ealphamodeDevice = ::draw2d::e_alpha_mode_none;
 
-      set_alpha_mode(::draw2d::e_alpha_mode_blend);
+   //   set_alpha_mode(::draw2d::e_alpha_mode_blend);
 
-      set_smooth_mode(::draw2d::e_smooth_mode_high);
+   //   set_smooth_mode(::draw2d::e_smooth_mode_high);
 
-      ::gpu::graphics::start_layer(bFirstLayer);
+   //   ::gpu::graphics::start_layer(bFirstLayer);
 
-      //if (m_egraphics == ::e_graphics_draw)
-      //{
+   //   //if (m_egraphics == ::e_graphics_draw)
+   //   //{
 
-      //   //auto rectangleHost = m_puserinteractionDraw2dGraphics->raw_rectangle();
+   //   //   //auto rectangleHost = m_puserinteractionDraw2dGraphics->raw_rectangle();
 
-      //   //m_pgpucontextDraw2d->m_pgpudevice->start_stacking_layers();
+   //   //   //m_pgpucontextDraw2d->m_pgpudevice->start_stacking_layers();
 
-      //   //m_pgpucontextDraw2d->m_pgpurenderer->start_layer(rectangleHost);
+   //   //   //m_pgpucontextDraw2d->m_pgpurenderer->start_layer(rectangleHost);
 
-      //   m_pd2d1rendertarget->BeginDraw();
+   //   //   m_pd2d1rendertarget->BeginDraw();
 
-      //}
+   //   //}
 
-   }
+   //}
 
 
    //void graphics::create_end_draw()
@@ -6765,36 +7182,36 @@ namespace draw2d_direct2d
    //}
 
 
-   void graphics::end_layer(bool bClosingLayer)
-   {
+   //void graphics::end_layer(bool bClosingLayer)
+   //{
 
-      if (m_iLayerCount > 0)
-      {
+   //   if (m_iLayerCount > 0)
+   //   {
 
-         warning() << "Layers left to pop on end draw!";
+   //      warning() << "Layers left to pop on end draw!";
 
-         _pop_all_layers();
+   //      _pop_all_layers();
 
-      }
+   //   }
 
-      //if (m_egraphics == ::e_graphics_draw)
-      //{
+   //   //if (m_egraphics == ::e_graphics_draw)
+   //   //{
 
-      //   m_pd2d1rendertarget->EndDraw();
+   //   //   m_pd2d1rendertarget->EndDraw();
 
-      //}
+   //   //}
 
-      ::gpu::graphics::end_layer(bClosingLayer);
+   //   ::gpu::graphics::end_layer(bClosingLayer);
 
-   }
+   //}
 
 
-   void graphics::just_after_new_frame()
-   {
+   //void graphics::just_after_new_frame()
+   //{
 
-      ::gpu::graphics::just_after_new_frame();
+   //   ::gpu::graphics::just_after_new_frame();
 
-   }
+   //}
 
 
    //void graphics::start_gpu_layer(::gpu::layer * pgpulayer)
@@ -6873,118 +7290,118 @@ namespace draw2d_direct2d
    //}
    
 
-   //void graphics::__attach(ID2D1DeviceContext* pdevicecontext)
-   void graphics::_bind(::i32 iIndex, ::i32 iLayerIndex, IDXGISurface * pdxgisurface)
-   {
-
-      if (::is_null(pdxgisurface))
-      {
-
-         throw ::exception(error_null_pointer);
-
-      }
-      if (iIndex < 0 || iIndex >= 16)
-      {
-
-         throw ::exception(error_bad_argument, "what?!");
-
-      }
-      if (iLayerIndex < 0 || iLayerIndex >= 8)
-      {
-
-         throw ::exception(error_bad_argument, "what?!");
-
-      }
-
-      auto& pdxgisurfaceBound = m_dxgisurfaceaBound.element_at_grow(iIndex).element_at_grow(iLayerIndex);
-
-      auto& pd2d1bitmap = m_d2d1bitmapa.element_at_grow(iIndex).element_at_grow(iLayerIndex);
-
-      auto & pd2d1rendertarget = m_d2d1rendertargeta.element_at_grow(iIndex).element_at_grow(iLayerIndex);
-
-      if (pdxgisurfaceBound != pdxgisurface)
-      {
-
-         pd2d1rendertarget.release();
-
-         pd2d1bitmap.release();
-
-      }
-
-      if (pd2d1bitmap)
-      {
-
-         auto size = pd2d1bitmap->GetSize();
-
-         DXGI_SURFACE_DESC desc{};
-
-         HRESULT hrDxgiSurfaceGetDesc = pdxgisurface->GetDesc(&desc);
-
-         ::defer_throw_hresult(hrDxgiSurfaceGetDesc);
-
-         if (size.width == desc.Width
-            && size.height == desc.Height
-            && pd2d1rendertarget)
-         {
-
-            pdxgisurfaceBound = pdxgisurface;
-
-            __attach(iIndex, iLayerIndex, pd2d1bitmap);
-
-            return;
-
-         }
-
-      }
-
-      //IDXGISurface* dxgiSurface = nullptr;
-      //auto hr = texture->QueryInterface(__uuidof(IDXGISurface), (void**)&dxgiSurface);
-
-      //ID2D1Factory1* d2dFactory = nullptr;
-      //D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &d2dFactory);
-
-      //IDXGIDevice* dxgiDevice = nullptr;
-//      d3d11Device->QueryInterface(__uuidof(IDXGIDevice), (void**)&dxgiDevice);
-
-      auto pcontext = gpu_context();
-
-      ::cast < ::dxgi_device_source > pdxgidevicesource = pcontext;
-
-      auto pd2d1device = m_pdirect2d->d2d1_device(pdxgidevicesource);
-
-      /*ID2D1Device* d2dDevice = nullptr;
-      m_pdirect2d->d2d1_factory1()->CreateDevice(pdxgidevice, &d2dDevice);*/
-
-      //ID2D1DeviceContext* d2dContext = nullptr;
-
-      //pd2d1device->CreateDeviceContext(D2D1_DEVICE_CONTEXT_OPTIONS_NONE, 
-        // &m_pdevicecontext);
-
-      //m_pdevicecontext = pdevicecontext;
-
-      D2D1_BITMAP_PROPERTIES1 bitmapProps = {
-    { DXGI_FORMAT_B8G8R8A8_UNORM, D2D1_ALPHA_MODE_PREMULTIPLIED },
-    96.0f, 96.0f,
-    D2D1_BITMAP_OPTIONS_TARGET | D2D1_BITMAP_OPTIONS_CANNOT_DRAW,
-    nullptr
-      };
-      
-      _create_from_dxgi_surface(iIndex, iLayerIndex, pdxgisurface);
-      
-      HRESULT hrCreateBitmapFromDxgiSurface = 
-         m_pdevicecontext1->CreateBitmapFromDxgiSurface(
-         pdxgisurface, 
-         &bitmapProps, 
-         &pd2d1bitmap);
-
-      ::defer_throw_hresult(hrCreateBitmapFromDxgiSurface);
-
-      pdxgisurfaceBound = pdxgisurface;
-
-      __attach(iIndex, iLayerIndex, pd2d1bitmap);
-
-   }
-
+//   //void graphics::__attach(ID2D1DeviceContext* pdevicecontext)
+//   void graphics::_bind(::i32 iIndex, ::i32 iLayerIndex, IDXGISurface * pdxgisurface)
+//   {
+//
+//      if (::is_null(pdxgisurface))
+//      {
+//
+//         throw ::exception(error_null_pointer);
+//
+//      }
+//      if (iIndex < 0 || iIndex >= 16)
+//      {
+//
+//         throw ::exception(error_bad_argument, "what?!");
+//
+//      }
+//      if (iLayerIndex < 0 || iLayerIndex >= 8)
+//      {
+//
+//         throw ::exception(error_bad_argument, "what?!");
+//
+//      }
+//
+//      auto& pdxgisurfaceBound = m_dxgisurfaceaBound.element_at_grow(iIndex).element_at_grow(iLayerIndex);
+//
+//      auto& pd2d1bitmap = m_d2d1bitmapa.element_at_grow(iIndex).element_at_grow(iLayerIndex);
+//
+//      auto & pd2d1rendertarget = m_d2d1rendertargeta.element_at_grow(iIndex).element_at_grow(iLayerIndex);
+//
+//      if (pdxgisurfaceBound != pdxgisurface)
+//      {
+//
+//         pd2d1rendertarget.release();
+//
+//         pd2d1bitmap.release();
+//
+//      }
+//
+//      if (pd2d1bitmap)
+//      {
+//
+//         auto size = pd2d1bitmap->GetSize();
+//
+//         DXGI_SURFACE_DESC desc{};
+//
+//         HRESULT hrDxgiSurfaceGetDesc = pdxgisurface->GetDesc(&desc);
+//
+//         ::defer_throw_hresult(hrDxgiSurfaceGetDesc);
+//
+//         if (size.width == desc.Width
+//            && size.height == desc.Height
+//            && pd2d1rendertarget)
+//         {
+//
+//            pdxgisurfaceBound = pdxgisurface;
+//
+//            __attach(iIndex, iLayerIndex, pd2d1bitmap);
+//
+//            return;
+//
+//         }
+//
+//      }
+//
+//      //IDXGISurface* dxgiSurface = nullptr;
+//      //auto hr = texture->QueryInterface(__uuidof(IDXGISurface), (void**)&dxgiSurface);
+//
+//      //ID2D1Factory1* d2dFactory = nullptr;
+//      //D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &d2dFactory);
+//
+//      //IDXGIDevice* dxgiDevice = nullptr;
+////      d3d11Device->QueryInterface(__uuidof(IDXGIDevice), (void**)&dxgiDevice);
+//
+//      auto pcontext = gpu_context();
+//
+//      ::cast < ::dxgi_device_source > pdxgidevicesource = pcontext;
+//
+//      auto pd2d1device = direct2d()->d2d1_device(pdxgidevicesource);
+//
+//      /*ID2D1Device* d2dDevice = nullptr;
+//      direct2d()->d2d1_factory1()->CreateDevice(pdxgidevice, &d2dDevice);*/
+//
+//      //ID2D1DeviceContext* d2dContext = nullptr;
+//
+//      //pd2d1device->CreateDeviceContext(D2D1_DEVICE_CONTEXT_OPTIONS_NONE, 
+//        // &m_pdevicecontext);
+//
+//      //m_pdevicecontext = pdevicecontext;
+//
+//      D2D1_BITMAP_PROPERTIES1 bitmapProps = {
+//    { DXGI_FORMAT_B8G8R8A8_UNORM, D2D1_ALPHA_MODE_PREMULTIPLIED },
+//    96.0f, 96.0f,
+//    D2D1_BITMAP_OPTIONS_TARGET | D2D1_BITMAP_OPTIONS_CANNOT_DRAW,
+//    nullptr
+//      };
+//      
+//      _create_from_dxgi_surface(iIndex, iLayerIndex, pdxgisurface);
+//      
+//      HRESULT hrCreateBitmapFromDxgiSurface = 
+//         m_pdevicecontext1->CreateBitmapFromDxgiSurface(
+//         pdxgisurface, 
+//         &bitmapProps, 
+//         &pd2d1bitmap);
+//
+//      ::defer_throw_hresult(hrCreateBitmapFromDxgiSurface);
+//
+//      pdxgisurfaceBound = pdxgisurface;
+//
+//      __attach(iIndex, iLayerIndex, pd2d1bitmap);
+//
+//   }
+//
 
    void graphics::__attach(::i32 iIndex, ::i32 iLayerIndex, ID2D1Bitmap1* pd2d1bitmap)
    {
@@ -7119,7 +7536,7 @@ namespace draw2d_direct2d
    //                                            D2D1_FEATURE_LEVEL_DEFAULT
    //                                            );
    //
-   //      HRESULT hr = m_pdirect2d->d2d1_factory1()->CreateDCRenderTarget(&props,&m_pdcrendertarget);
+   //      HRESULT hr = direct2d()->d2d1_factory1()->CreateDCRenderTarget(&props,&m_pdcrendertarget);
    //
    //      if (FAILED(hr))
    //      {
@@ -7724,7 +8141,7 @@ namespace draw2d_direct2d
 
       //IDWriteTextFormat * pformat = textout.m_pfont->get_os_data < IDWriteTextFormat * > (this);
 
-      //IDWriteFactory * pfactory = m_pdirect2d->dwrite_factory();
+      //IDWriteFactory * pfactory = direct2d()->dwrite_factory();
 
       //comptr<IDWriteTextLayout> playout;
 
@@ -7744,7 +8161,7 @@ namespace draw2d_direct2d
 
       //}
 
-      //CustomTextRenderer renderer(m_pdirect2d->d2d1_factory1(),m_pd2d1rendertarget,ppen->get_os_data < ID2D1Brush * >(this));
+      //CustomTextRenderer renderer(direct2d()->d2d1_factory1(),m_pd2d1rendertarget,ppen->get_os_data < ID2D1Brush * >(this));
 
       //defer_text_primitive_blend();
 
@@ -7764,7 +8181,7 @@ namespace draw2d_direct2d
 
       //IDWriteTextFormat * pformat = textout.m_pfont->get_os_data < IDWriteTextFormat * >(this);
 
-      //IDWriteFactory * pfactory = m_pdirect2d->dwrite_factory();
+      //IDWriteFactory * pfactory = direct2d()->dwrite_factory();
 
       //comptr<IDWriteTextLayout> playout;
 
@@ -7789,7 +8206,7 @@ namespace draw2d_direct2d
       //if (posbrush)
       //{
 
-      //   CustomTextRenderer renderer(m_pdirect2d->d2d1_factory1(), m_pd2d1rendertarget, nullptr, posbrush);
+      //   CustomTextRenderer renderer(direct2d()->d2d1_factory1(), m_pd2d1rendertarget, nullptr, posbrush);
 
       //   defer_text_primitive_blend();
 
@@ -7811,7 +8228,7 @@ namespace draw2d_direct2d
 
       //IDWriteTextFormat* pformat = drawtext.m_pfont->get_os_data < IDWriteTextFormat* >(this);
 
-      //IDWriteFactory* pfactory = m_pdirect2d->dwrite_factory();
+      //IDWriteFactory* pfactory = direct2d()->dwrite_factory();
 
       //IDWriteTextLayout* playout = nullptr;
 
@@ -7831,7 +8248,7 @@ namespace draw2d_direct2d
 
       //}
 
-      //CustomTextRenderer renderer(m_pdirect2d->d2d1_factory1(), m_pd2d1rendertarget, ppen->get_os_data < ID2D1Brush* >(this));
+      //CustomTextRenderer renderer(direct2d()->d2d1_factory1(), m_pd2d1rendertarget, ppen->get_os_data < ID2D1Brush* >(this));
 
       //defer_text_primitive_blend();
 
@@ -7851,7 +8268,7 @@ namespace draw2d_direct2d
 
       //IDWriteTextFormat* pformat = drawtext.m_pfont->get_os_data < IDWriteTextFormat* >(this);
 
-      //IDWriteFactory* pfactory = m_pdirect2d->dwrite_factory();
+      //IDWriteFactory* pfactory = direct2d()->dwrite_factory();
 
       //IDWriteTextLayout* playout = nullptr;
 
@@ -7876,7 +8293,7 @@ namespace draw2d_direct2d
       //if (posbrush)
       //{
 
-      //   CustomTextRenderer renderer(m_pdirect2d->d2d1_factory1(), m_pd2d1rendertarget, nullptr, posbrush);
+      //   CustomTextRenderer renderer(direct2d()->d2d1_factory1(), m_pd2d1rendertarget, nullptr, posbrush);
 
       //   defer_text_primitive_blend();
 

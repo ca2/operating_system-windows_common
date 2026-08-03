@@ -70,7 +70,7 @@ namespace draw2d_direct2d
 
    //   comptr < ID2D1StrokeStyle1 > pstrokestyle;
 
-   //   HRESULT hr = m_pdirect2d->d2d1_factory1()->CreateStrokeStyle(&properties1, nullptr, 0, &pstrokestyle);
+   //   HRESULT hr = direct2d()->d2d1_factory1()->CreateStrokeStyle(&properties1, nullptr, 0, &pstrokestyle);
 
    //   return pstrokestyle;
 
@@ -79,7 +79,7 @@ namespace draw2d_direct2d
    void pen::create(::draw2d::graphics* pgraphicsParam, ::i8 iCreate)
    {
 
-      auto pgraphics = __graphics(pgraphicsParam);
+      ::cast < ::draw2d_direct2d::graphics > pgraphics = pgraphicsParam;
 
       if((!m_bMetroColor || m_colorMetro != m_color) || m_pbrush == nullptr)
       {
@@ -168,7 +168,16 @@ namespace draw2d_direct2d
    HRESULT pen::s_CreatePatternBrush(ID2D1DeviceContext *pDeviceContext, D2D1_COLOR_F * pcr, ID2D1ImageBrush **ppImageBrush)
    {
 
-      HRESULT hrEndDraw = pDeviceContext->EndDraw();
+      //HRESULT hrEndDraw = pDeviceContext->EndDraw();
+
+      //if (FAILED(hrEndDraw))
+      //{
+
+      //   throw ::exception(error_failed, "graphics::on_release_memory_graphics : EndDraw failed: {}", hresult_text(hrEndDraw));
+
+      //   //warning("graphics::on_release_memory_graphics : EndDraw failed: {}", hresult_text(hrEndDraw));
+
+      //}
 
       HRESULT hr = S_OK;
       ID2D1Image *pOldTarget = nullptr;
@@ -222,10 +231,10 @@ namespace draw2d_direct2d
       pCommandList->Release();
       pOldTarget->Release();
 
-      if(hrEndDraw == S_OK)
-      {
-         pDeviceContext->BeginDraw();
-      }
+      //if(hrEndDraw == S_OK)
+      //{
+      //   pDeviceContext->BeginDraw();
+      //}
 
       if(SUCCEEDED(hr))
       {

@@ -14,7 +14,19 @@ namespace draw2d_direct2d
       //m_pgraphics    = nullptr;
       //m_powner = nullptr;
 
+
    }
+
+
+   object::object(object && object) :
+      DRAW2D_OBJECT_TRANSFER(object),
+      direct2d::object(::transfer(object)),
+      m_pgraphics(::transfer(object.m_pgraphics))
+   {
+
+
+   }
+
 
 
    object::~object()
@@ -28,7 +40,7 @@ namespace draw2d_direct2d
 
       initialize(pgraphics);
 
-      initialize_direct2d_object(pgraphics->m_pdirect2d);
+      //initialize_direct2d_object(pgraphics->direct2d());
 
    }
 
@@ -124,14 +136,14 @@ namespace draw2d_direct2d
    void object::defer_update(::draw2d::graphics* pgraphics, ::i8 i) const
    {
 
-      if (!m_pdirect2d)
-      {
+      //if (!direct2d())
+      //{
 
-         ::cast < graphics> pdirect2dgraphics = pgraphics;
+      //   ::cast < graphics> pdirect2dgraphics = pgraphics;
 
-         ((object*)this)->initialize_draw2d_direct2d_object(pdirect2dgraphics);
+      //   ((object*)this)->initialize_draw2d_direct2d_object(pdirect2dgraphics);
 
-      }
+      //}
 
       ::draw2d::object::defer_update(pgraphics, i);
 

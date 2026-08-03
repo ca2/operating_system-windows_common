@@ -27,14 +27,14 @@ namespace write_text_direct2d
 
       auto pfont = ::write_text::write_text::font(pfontfamily, fontsize, iFontWeight);
 
-      ::cast < ::direct2d::object > pdirect2dobject = pfont;
+      //::cast < ::direct2d::object > pdirect2dobject = pfont;
 
-      if (pdirect2dobject)
-      {
+      //if (pdirect2dobject)
+      //{
 
-         pdirect2dobject->initialize_direct2d_object(m_pdirect2d);
+      //   pdirect2dobject->initialize_direct2d_object(direct2d());
 
-      }
+      //}
 
       return pfont;
 

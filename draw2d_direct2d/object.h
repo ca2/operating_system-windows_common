@@ -19,6 +19,7 @@ namespace draw2d_direct2d
       ::pointer < ::draw2d_direct2d::graphics > m_pgraphics;
 
       object();
+      object(object && object);
       ~object() override;
 
 

@@ -717,6 +717,7 @@
     <ClInclude Include="printer.h" />
     <ClInclude Include="region.h" />
     <ClInclude Include="aaa_swap_chain.h" />
+    <ClInclude Include="window_attachment.h" />
     <ClInclude Include="_.h" />
     <ClInclude Include="_constant.h" />
     <ClInclude Include="_library.h" />
@@ -728,6 +729,7 @@
     <ClCompile Include="draw2d.cpp" />
     <ClCompile Include="internal_font.cpp" />
     <ClCompile Include="aaa_swap_chain.cpp" />
+    <ClCompile Include="window_attachment.cpp" />
     <ClCompile Include="_factory.cpp" />
     <ClCompile Include="font.cpp" />
     <ClCompile Include="framework.cpp">

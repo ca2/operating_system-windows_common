@@ -64,6 +64,7 @@ namespace direct2d
       comptr < ID2D1PathGeometry1 > create_rectangle_path_geometry(const ::f64_rectangle & rectangle);
 
       
+      
 
 
 
@@ -73,6 +74,8 @@ namespace direct2d
    CLASS_DECL_DIRECT2D direct2d* from_gpu_device(::gpu::device* pgpudevice);
 
 
+   CLASS_DECL_DIRECT2D ::direct2d::direct2d *get();
+   CLASS_DECL_DIRECT2D void release();
    ////inline ID2D1Factory1* factory()
    //{
 
@@ -105,7 +108,7 @@ public:
 
 
    bool m_bLocked = false;
-   ::direct2d::direct2d* m_pdirect2d;
+   ::direct2d::direct2d* m_pdirect2d_;
 
 
    direct2d_lock(::direct2d::direct2d * pdirect2d);

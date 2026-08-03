@@ -234,7 +234,7 @@ namespace draw2d_direct2d
 
       IDWriteTextFormat * pformat = pfont->get_os_data < IDWriteTextFormat * >(pgraphics);
 
-      IDWriteFactory * pfactory = m_pdirect2d->dwrite_factory();
+      IDWriteFactory * pfactory = direct2d()->dwrite_factory();
 
       comptr<IDWriteTextLayout> playout;
 
@@ -256,9 +256,9 @@ namespace draw2d_direct2d
 
       }
 
-      ::direct2d_lock lock(m_pdirect2d);
+      ::direct2d_lock lock(direct2d());
 
-      auto & renderer = m_pdirect2d->m_geometrysinktextrenderer;
+      auto & renderer = direct2d()->m_geometrysinktextrenderer;
 
       renderer.m_pgeometrysink = m_psink;
 
@@ -439,7 +439,9 @@ namespace draw2d_direct2d
    void path::create(::draw2d::graphics* pgraphicsParam, ::i8 iCreate)
    {
 
-      auto pgraphics = __graphics(pgraphicsParam);
+      //auto pgraphics = __graphics(pgraphicsParam);
+
+      ::cast < graphics > pgraphics = pgraphicsParam;
 
       HRESULT hr = S_OK;
 
@@ -460,7 +462,7 @@ namespace draw2d_direct2d
 
          }
 
-         hr = m_pdirect2d->d2d1_factory1()->CreatePathGeometry(&m_ppathHollow);
+         hr = direct2d()->d2d1_factory1()->CreatePathGeometry(&m_ppathHollow);
 
          m_ppath = m_ppathHollow;
 
@@ -477,7 +479,7 @@ namespace draw2d_direct2d
 
          }
 
-         hr = m_pdirect2d->d2d1_factory1()->CreatePathGeometry(&m_ppathFilled);
+         hr = direct2d()->d2d1_factory1()->CreatePathGeometry(&m_ppathFilled);
          
          m_ppath = m_ppathFilled;
 
@@ -553,7 +555,9 @@ namespace draw2d_direct2d
       if (!prealization)
       {
 
-         auto pgraphics = __graphics(pgraphicsParam);
+         //auto pgraphics = __graphics(pgraphicsParam);
+
+         ::cast < ::draw2d_direct2d::graphics > pgraphics = pgraphicsParam;
 
          HRESULT hr = pgraphics->m_pdevicecontext1->CreateStrokedGeometryRealization(
             m_ppathHollow,
@@ -579,7 +583,9 @@ namespace draw2d_direct2d
       if (!prealization)
       {
 
-         auto pgraphics = __graphics(pgraphicsParam);
+         //auto pgraphics = __graphics(pgraphicsParam);
+
+         ::cast<graphics> pgraphics = pgraphicsParam;
 
          HRESULT hr = pgraphics->m_pdevicecontext1->CreateFilledGeometryRealization(
             m_ppathFilled,
@@ -875,7 +881,7 @@ namespace draw2d_direct2d
 
       //IDWriteTextFormat * pformat = textout.m_pfont->get_os_data < IDWriteTextFormat * >(pgraphicsParam);
 
-      //IDWriteFactory * pfactory = m_pdirect2d->dwrite_factory();
+      //IDWriteFactory * pfactory = direct2d()->dwrite_factory();
 
       //comptr<IDWriteTextLayout> playout;
 
@@ -906,7 +912,7 @@ namespace draw2d_direct2d
 
       ////}
 
-      ////CustomTextRenderer renderer(m_pdirect2d->d2d1_factory1(), m_psink);
+      ////CustomTextRenderer renderer(direct2d()->d2d1_factory1(), m_psink);
 
       ////defer_text_primitive_blend();
 

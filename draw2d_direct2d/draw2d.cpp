@@ -2,6 +2,7 @@
 #include "draw2d.h"
 #include "direct2d/direct2d.h"
 #include "image.h"
+#include "acme/platform/node.h"
 #include "aura/windowing/window.h"
 
 
@@ -50,10 +51,93 @@ namespace draw2d_direct2d
 
       //}
 
-      //return estatus;
+      ////return estatus;
+      //m_pmutexDeviceContext = node()->create_mutex();
+
+
+      //m_pimage32Raw = nullptr;
+      //m_hdcMemory = nullptr;
+      //m_hbitmap = nullptr;
+      //m_hbitmapOld = nullptr;
+
+
    
    }
 
+
+   //::mutex * draw2d::_generic_d2d1_device_context_mutex()
+   //{
+
+   //   return m_pmutexDeviceContext;
+
+   //}
+
+
+   //ID2D1DeviceContext * draw2d::_generic_d2d1_device_context()
+   //{
+
+   //   _synchronous_lock synchronouslock(this->m_pmutexDeviceContext);
+
+   //   if (!m_pd2d1devicecontext)
+   //   {
+
+   //      auto properties = D2D1::RenderTargetProperties(
+   //         D2D1_RENDER_TARGET_TYPE_DEFAULT,
+   //         D2D1::PixelFormat(DXGI_FORMAT_B8G8R8A8_UNORM, D2D1_ALPHA_MODE_PREMULTIPLIED), 
+   //         96.0f, 96.0f);
+
+   //      auto hrCreateDCRenderTarget = direct2d()->d2d1_factory1()->CreateDCRenderTarget(&properties, &m_pd2d1dcrendertarget);
+
+   //      if (FAILED(hrCreateDCRenderTarget))
+   //      {
+
+   //         throw hresult_exception(hrCreateDCRenderTarget);
+
+   //      }
+
+   //      ::i32_size sizeRaw{1920, 1080};
+
+   //      BITMAPINFO info{};
+   //      info.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+   //      info.bmiHeader.biWidth = sizeRaw.cx;
+   //      info.bmiHeader.biHeight = -sizeRaw.cy; // Top-down.
+   //      info.bmiHeader.biPlanes = 1;
+   //      info.bmiHeader.biBitCount = 32; // Memory order is BGRA.
+   //      info.bmiHeader.biCompression = BI_RGB;
+
+   //      m_pimage32Raw = nullptr;
+
+   //      m_hdcMemory = CreateCompatibleDC(nullptr);
+
+   //      m_hbitmap = CreateDIBSection(m_hdcMemory, &info, DIB_RGB_COLORS, (void **)&m_pimage32Raw, nullptr, 0);
+
+   //      if (!m_hdcMemory || !m_hbitmap || !m_pimage32Raw)
+   //      {
+   //         // return false;
+   //         throw ::interface_only();
+
+   //      }
+
+   //      RECT bounds{0, 0, sizeRaw.cx, sizeRaw.cy};
+
+   //      m_hbitmapOld = (HBITMAP)SelectObject(m_hdcMemory, m_hbitmap);
+
+   //      auto hrBindDC = m_pd2d1dcrendertarget->BindDC(m_hdcMemory, &bounds);
+
+   //      if (FAILED(hrBindDC))
+   //      {
+
+   //         throw hresult_exception(hrBindDC);
+
+   //      }
+
+   //      m_pd2d1dcrendertarget.as(m_pd2d1devicecontext);
+
+   //   }
+
+   //   return m_pd2d1devicecontext;
+
+   //}
 
 
    string draw2d::write_text_get_default_implementation_name()
@@ -67,7 +151,7 @@ namespace draw2d_direct2d
    bool draw2d::lock_device()
    {
 
-      auto pdirect2d = m_pdirect2d;
+      auto pdirect2d = direct2d();
 
       if (!pdirect2d)
       {
@@ -95,7 +179,7 @@ namespace draw2d_direct2d
    void draw2d::unlock_device()
    {
       
-      auto pdirect2d = m_pdirect2d;
+      auto pdirect2d = direct2d();
 
       auto pmultithread = pdirect2d->m_pd2d1multithread.m_p;
 
@@ -131,23 +215,92 @@ namespace draw2d_direct2d
    }
 
 
-   ::draw2d::graphics_pointer draw2d::do_allocation_strategy(::draw2d::host *pdraw2dhost, ::image::image *pimage,
+   ::draw2d::graphics_pointer draw2d::do_allocation_strategy(::acme::user::interaction * pacmeuserinteractionAffinity, ::image::image *pimage,
                                                              const ::i32_size &size)
    {
 
-      auto pgraphics = create_memory_graphics(pdraw2dhost, size);
+            
 
       if (::is_set(pimage))
       {
 
-         pimage->create_from_graphics(pgraphics);
+         auto pgraphicsOwned = pimage->m_pgraphicsOwned;
 
+         if (pgraphicsOwned)
+         {
+
+            return pgraphicsOwned;
+
+         }
+
+         auto pgraphics = create_graphics(pacmeuserinteractionAffinity);
+
+         pgraphics->create_for_image(pimage);
+
+         return pgraphics;
+
+         //auto pbitmap = pimage->get_bitmap();
+
+         //if (::is_set(pbitmap))
+         //{
+
+         //   pgraphics->create_bitmap_graphics(pbitmap);
+         //}
+         //else
+         //{
+
+         //   throw ::exception(error_wrong_state);
+         //}
+      }
+      else
+      {
+         auto pgraphics = create_graphics(pacmeuserinteractionAffinity);
+         pgraphics->create_memory_graphics(size, pacmeuserinteractionAffinity);
+         return pgraphics;
       }
 
-      return pgraphics;
+      
+
+      //return ::draw2d::draw2d::do_allocation_strategy(pdraw2dhost, pimage, size);
+
+      //auto pgraphics = create_memory_graphics(pdraw2dhost, size);
+
+      //if (::is_set(pimage))
+      //{
+
+      //   pimage->create_from_graphics(pgraphics);
+
+      //}
+
+      //return pgraphics;
 
    }
 
+   
+   void draw2d::do_release_to_pool_strategy(::draw2d::graphics_pointer &pgraphics, ::image::image *pimage)
+   {
+
+      ::draw2d::draw2d::do_release_to_pool_strategy(pgraphics, pimage);
+
+      //if (::is_set(pimage))
+      //{
+
+      //   auto pgraphicsOwned = pimage->m_pgraphicsOwned;
+
+      //   if (pgraphicsOwned && pgraphicsOwned == pgraphics)
+      //   {
+
+      //      return;
+
+      //   }
+
+      //}
+
+      //m_graphicsaMemoryPoolIdle.add(pgraphics);
+
+      //pgraphics.release();
+
+   }
 
 } // namespace draw2d_direct2d
 

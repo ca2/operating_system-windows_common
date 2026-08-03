@@ -13,20 +13,23 @@ namespace direct2d
    public:
 
 
-      ::pointer < ::direct2d::direct2d > m_pdirect2d;
+      ::pointer < ::direct2d::direct2d > m_pdirect2d_;
 
       object();
+      object(object && object);
       ~object() override;
 
 
-      void initialize_direct2d_object(::direct2d::direct2d * pdirect2d);
+      //void initialize_direct2d_object(::direct2d::direct2d * pdirect2d);
 
 
       virtual comptr < ID2D1StrokeStyle1 > _create_stroke_style(
-         ::gpu::graphics * pgraphics,
+         ::draw2d::graphics * pgraphics,
          ::draw2d::enum_line_cap elinecapBeg,
          ::draw2d::enum_line_cap elinecapEnd
          );
+
+      virtual ::direct2d::direct2d *direct2d();
 
 
    };

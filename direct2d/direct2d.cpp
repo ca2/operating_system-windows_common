@@ -272,6 +272,20 @@ namespace direct2d
    }
 
 
+   //::direct2d::direct2d * direct2d::direct2d()
+   //{
+
+   //   if (!s_pdirect2d)
+   //   {
+
+   //      s_pdirect2d = ::system()->create_newø<::direct2d::direct2d>();
+
+   //   }
+
+   //   return s_pdirect2d;
+
+   //}
+
 
    //CLASS_DECL_DIRECT2D void defer_initialize(::windowing::window* pwindow, const ::i32_rectangle& rectanglePlacement)
    //{
@@ -342,6 +356,30 @@ namespace direct2d
    }
 
 
+   static ::pointer<::direct2d::direct2d> g_pdirect2d;
+
+   CLASS_DECL_DIRECT2D::direct2d::direct2d * get()
+   {
+
+      if (!g_pdirect2d)
+      {
+
+         g_pdirect2d = ::system()->create_newø<::direct2d::direct2d>();
+
+      }
+
+      return g_pdirect2d;
+
+   }
+
+
+   CLASS_DECL_DIRECT2D void release()
+   {
+
+      g_pdirect2d.release();
+
+   }
+
 
 } // namespace draw2d_direct2d
 
@@ -360,9 +398,9 @@ CLASS_DECL_DIRECT2D DWRITE_FONT_WEIGHT dwrite_font_weight(const write_text::font
 direct2d_lock::direct2d_lock(::direct2d::direct2d* pdirect2d)
 {
 
-   m_pdirect2d = pdirect2d;
+   m_pdirect2d_ = pdirect2d;
 
-   if (::is_null(m_pdirect2d))
+   if (::is_null(m_pdirect2d_))
    {
 
       m_bLocked = false;
@@ -395,7 +433,7 @@ direct2d_lock::~direct2d_lock()
    if (m_bLocked)
    {
 
-      m_pdirect2d->m_pd2d1multithread->Leave();
+      m_pdirect2d_->m_pd2d1multithread->Leave();
 
    }
 

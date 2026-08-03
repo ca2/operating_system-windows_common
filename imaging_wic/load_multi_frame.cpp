@@ -210,7 +210,7 @@ namespace imaging_wic
 
             // pframe->m_pimage->fill(0);
 
-            pimageFrame->clear(color::transparent);
+            //pimageFrame->clear(color::transparent);
 
             {
 

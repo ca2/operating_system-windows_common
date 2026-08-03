@@ -31,10 +31,13 @@ namespace draw2d_direct2d
       comptr<ID2D1Bitmap1>                   m_pbitmap1;
       memory                                 m_memory;
 
-
+      comptr<ID2D1Bitmap1>                   m_pbitmap1Map;
+      comptr<ID2D1BitmapRenderTarget>        m_pbitmaprendertarget;
+      comptr<ID2D1DeviceContext>             m_pdevicecontext;
 
 
       bitmap();
+      bitmap(bitmap && bitmap);
       ~bitmap() override;
 
 
@@ -50,7 +53,17 @@ namespace draw2d_direct2d
       bool LoadOEMBitmap(::u32 nIDBitmap); // for OBM_/OCR_/OIC_
 
 
-      void create_bitmap_for_image(::image::image* pimage) override;
+      void create_bitmap_for_image(
+         ::image::image * pimage,
+         ::acme::user::interaction * pacmeuserinteractionAffinity = nullptr) override;
+      void _create_bitmap(
+         ::draw2d::graphics * pgraphics,
+         const ::i32_size & size,
+         const void * pbits,
+         ::i32 stride,
+         ::acme::user::interaction * pacmeuserinteractionAffinity);
+
+      void preserve_image(const ::i32_size & size, ::image::image * pimage) override;
       virtual void CreateBitmap(::draw2d::graphics * pgraphics, const ::i32_size& size, ::u32 nPlanes, ::u32 nBitcount, const void * lpBits, ::i32 stride) override;
       virtual bool CreateBitmapIndirect(::draw2d::graphics * pgraphics, LPBITMAP lpBitmap);
       virtual void CreateCompatibleBitmap(::draw2d::graphics * pgraphics, ::i32 nWidth, ::i32 nHeight);
@@ -69,6 +82,7 @@ namespace draw2d_direct2d
       //::i32_size SetBitmapDimension(::i32 nWidth, ::i32 nHeight);
       ::i32_size GetBitmapDimension() const;
 
+      virtual ID2D1Bitmap1 * _map_bitmap1();
       
 
       void destroy() override;

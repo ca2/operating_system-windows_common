@@ -33,7 +33,8 @@ namespace draw2d_direct2d
    void brush::create(::draw2d::graphics* pgraphicsParam, ::i8 iCreate)
    {
 
-      auto pgraphics = __graphics(pgraphicsParam);
+      //auto pgraphics = __graphics(pgraphicsParam);
+      ::cast<graphics> pgraphics = pgraphicsParam;
 
       if (pgraphics->m_pd2d1rendertarget == nullptr)
       {
