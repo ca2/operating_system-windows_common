@@ -20,7 +20,7 @@ namespace draw2d_directx11
    path::path()
    {
 
-      m_pthis = this;
+      //m_pthis = this;
       m_bUseGeometryRealization = true;
 
    }

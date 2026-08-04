@@ -447,12 +447,12 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::create_compatible_graphics(::draw2d::graphics *pgraphics)
-   {
-   
-      _create_memory_graphics({256, 256}, pgraphics->m_pacmeuserinteractionAffinity); 
-   
-   }
+   //void graphics::create_compatible_graphics(::draw2d::graphics *pgraphics)
+   //{
+   //
+   //   _create_memory_graphics({256, 256}, pgraphics->m_pacmeuserinteractionAffinity); 
+   //
+   //}
 
 
    void graphics::defer_set_size(const ::i32_size &size)

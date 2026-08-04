@@ -164,7 +164,7 @@ namespace draw2d_direct2d
       //              const_char_pointer pszOutput, const void * lpInitData) override;
       void create_for_image(::image::image *pimage) override;
       void _create_memory_graphics(const ::i32_size &size, ::acme::user::interaction * pacmeuserinteractionAffinity) override;
-      void create_compatible_graphics(::draw2d::graphics * pgraphics) override;
+      //void create_compatible_graphics(::draw2d::graphics * pgraphics) override;
       //virtual void _create_from_dxgi_surface(::i32 iIndex, ::i32 iLayerIndex, IDXGISurface* pdxgisurface);
       //void _create_memory_graphics(const ::i32_size& size = {}) override;
       void create_bitmap_graphics(::draw2d::bitmap *pbitmap) override;

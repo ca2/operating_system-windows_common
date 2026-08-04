@@ -359,25 +359,25 @@ namespace draw2d_direct2d
    }
 
 
-   void image::initialize(const ::i32_size & size, ::image32_t * pimage32, ::i32 iScan, ::enum_flag eflagCreate)
-   {
+   //void image::initialize(const ::i32_size & size, ::image32_t * pimage32, ::i32 iScan, ::enum_flag eflagCreate)
+   //{
 
-      ::image::image::initialize(size, pimage32, iScan, eflagCreate);
+   //   ::image::image::initialize(size, pimage32, iScan, eflagCreate);
 
-      //auto estatus =
-      
-      //create_ex(size, pimage32, iScan, eflagCreate);
+   //   //auto estatus =
+   //   
+   //   //create_ex(size, pimage32, iScan, eflagCreate);
 
-      //if (!estatus)
-      //{
+   //   //if (!estatus)
+   //   //{
 
-      //   return estatus;
+   //   //   return estatus;
 
-      //}
+   //   //}
 
-      //return estatus;
+   //   //return estatus;
 
-   }
+   //}
 
 
    void image::dc_select(bool bSelect)

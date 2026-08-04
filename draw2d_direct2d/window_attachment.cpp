@@ -8,6 +8,7 @@
 #include "operating_system-windows/aura_windows/layered_window_buffer.h"
 #endif
 
+
 namespace draw2d_direct2d
 {
 

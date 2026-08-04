@@ -701,6 +701,7 @@
     <ClInclude Include="assimp.h" />
     <ClInclude Include="binding.h" />
     <ClInclude Include="block.h" />
+    <ClInclude Include="draw2d_window_attachment.h" />
     <ClInclude Include="frame_storage.h" />
     <ClInclude Include="gltf\aaa_vertex.h" />
     <ClInclude Include="gltf\material.h" />
@@ -804,6 +805,7 @@
     <ClCompile Include="assimp.cpp" />
     <ClCompile Include="block.cpp" />
     <ClCompile Include="context_ktx.cpp" />
+    <ClCompile Include="draw2d_window_attachment.cpp" />
     <ClCompile Include="frame_storage.cpp" />
     <ClCompile Include="gltf\mesh.cpp" />
     <ClCompile Include="gltf\model.cpp" />

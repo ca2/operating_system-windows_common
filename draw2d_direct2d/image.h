@@ -51,7 +51,7 @@ namespace draw2d_direct2d
       void create_as_render_target(const ::i32_size & size, ::user::interaction * puserinteraction, ::enum_flag eflagCreate = DEFAULT_CREATE_IMAGE_FLAG, ::i32 iStride = -1, bool bPreserve = false) override;
       //void create_for_image(::image::image *pimage) override;
       using ::image::image::initialize;
-      void initialize(const ::i32_size & size, ::image32_t * pimage32, ::i32 iScan, ::enum_flag eflagCreate = DEFAULT_CREATE_IMAGE_FLAG) override;
+      //void initialize(const ::i32_size & size, ::image32_t * pimage32, ::i32 iScan, ::enum_flag eflagCreate = DEFAULT_CREATE_IMAGE_FLAG) override;
       bool _create(::draw2d::graphics * pgraphics);
       void destroy() override;
       void destroy_os_data() override;

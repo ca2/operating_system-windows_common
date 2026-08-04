@@ -1,12 +1,11 @@
 // Created by camilo on 2025-06-10 18:26 <3ThomasBorregaardSørensen!!
 #include "framework.h"
-//#include "lock.h"
+#include "draw2d_window_attachment.h"
 #include "renderer.h"
 #include "shader.h"
 #include "swap_chain.h"
 #include "texture.h"
 #include "windowing_win32/window.h"
-#include "bred/gpu/context_lock.h"
 #include "bred/gpu/context_lock.h"
 
 
@@ -195,9 +194,11 @@ namespace gpu_directx11
 
       }
 
-      pgpudevice->m_iCurrentImage = uBackBufferIndex;
+      auto pgpudraw2dwindowattachment = ::gpu::draw2d_window_attachment::get(m_pgpucontext);
 
-      auto & ptextureSwapChain = m_textureaSwapChain.atø(pgpudevice->m_iCurrentImage);
+      pgpudraw2dwindowattachment->m_iCurrentImage = uBackBufferIndex;
+
+      auto & ptextureSwapChain = m_textureaSwapChain.atø(pgpudraw2dwindowattachment->m_iCurrentImage);
 
       if (!ptextureSwapChain)
       {
@@ -212,7 +213,7 @@ namespace gpu_directx11
          ptextureSwapChain->_initialize_gpu_texture(
             pgpucontext,
             m_pdxgiswapchain1,
-            (::u32) pgpudevice->m_iCurrentImage);
+            (::u32) pgpudraw2dwindowattachment->m_iCurrentImage);
 
          //m_pdxgiswapchain1->GetBuffer(0, __interface_of(ptextureSwapChain));
 

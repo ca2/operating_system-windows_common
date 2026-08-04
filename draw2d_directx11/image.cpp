@@ -47,113 +47,113 @@ namespace draw2d_directx11
    }
 
 
-   void image::create_ex(const ::i32_size & size, ::image32_t * pimage32, ::i32 iScan, ::enum_flag eflagCreate, ::i32 iGoodStride, bool bPreserve)
-   {
+   //void image::create_ex(const ::i32_size & size, ::image32_t * pimage32, ::i32 iScan, ::enum_flag eflagCreate, ::i32 iGoodStride, bool bPreserve)
+   //{
 
-      //::draw2d::lock draw2dlock;
+   //   //::draw2d::lock draw2dlock;
 
-      //::draw2d::device_lock devicelock(this);
+   //   //::draw2d::device_lock devicelock(this);
 
-      auto sizeCurrent = this->size();
+   //   auto sizeCurrent = this->size();
 
-      if (m_pbitmap.is_set() && size == sizeCurrent)
-      {
+   //   if (m_pbitmap.is_set() && size == sizeCurrent)
+   //   {
 
-         //return true;
+   //      //return true;
 
-         return;
+   //      return;
 
-      }
+   //   }
 
-      destroy();
+   //   destroy();
 
-      if (size.is_empty())
-      {
+   //   if (size.is_empty())
+   //   {
 
-         throw ::exception(error_failed);
+   //      throw ::exception(error_failed);
 
-      }
+   //   }
 
-      ::i32 iStride = size.cx * 4;
+   //   ::i32 iStride = size.cx * 4;
 
-      if (iGoodStride > iStride)
-      {
+   //   if (iGoodStride > iStride)
+   //   {
 
-         iStride = iGoodStride;
+   //      iStride = iGoodStride;
 
-      }
+   //   }
 
-      //m_info.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
-      //m_info.bmiHeader.biWidth = size.cx;
-      //m_info.bmiHeader.biHeight = -size.cy;
-      //m_info.bmiHeader.biPlanes = 1;
-      //m_info.bmiHeader.biBitCount = 32;
-      //m_info.bmiHeader.biCompression = BI_RGB;
-      //m_info.bmiHeader.biSizeImage = iStride * size.cy;
+   //   //m_info.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+   //   //m_info.bmiHeader.biWidth = size.cx;
+   //   //m_info.bmiHeader.biHeight = -size.cy;
+   //   //m_info.bmiHeader.biPlanes = 1;
+   //   //m_info.bmiHeader.biBitCount = 32;
+   //   //m_info.bmiHeader.biCompression = BI_RGB;
+   //   //m_info.bmiHeader.biSizeImage = iStride * size.cy;
 
-      ::draw2d::bitmap_pointer         pbitmap;
-      ::draw2d::graphics_pointer       pgraphics;
+   //   ::draw2d::bitmap_pointer         pbitmap;
+   //   ::draw2d::graphics_pointer       pgraphics;
 
-      constructø(pbitmap);
-      constructø(pgraphics);
+   //   constructø(pbitmap);
+   //   constructø(pgraphics);
 
-      if (::is_null(pbitmap) || ::is_null(pgraphics))
-      {
+   //   if (::is_null(pbitmap) || ::is_null(pgraphics))
+   //   {
 
-         throw ::exception(error_failed);
+   //      throw ::exception(error_failed);
 
-      }
+   //   }
 
-      pgraphics->create_memory_graphics(size);
+   //   pgraphics->create_memory_graphics(size);
 
-      pbitmap->create_bitmap(pgraphics, size, &pimage32,nullptr,  &iScan);
+   //   pbitmap->create_bitmap(pgraphics, size, &pimage32,nullptr,  &iScan);
 
-      //if (!pbitmap->create_bitmap(pgraphics, size, (void **)&pimage32, &iScan))
-      //{
+   //   //if (!pbitmap->create_bitmap(pgraphics, size, (void **)&pimage32, &iScan))
+   //   //{
 
-      //   return false;
+   //   //   return false;
 
-      //}
+   //   //}
 
-      //if (pbitmap->m_osdata[0] == nullptr)
-      //{
+   //   //if (pbitmap->m_osdata[0] == nullptr)
+   //   //{
 
-      //   return;
+   //   //   return;
 
-      //}
+   //   //}
 
-      //auto estatus = 
-      
-      pgraphics->set(pbitmap);
+   //   //auto estatus = 
+   //   
+   //   pgraphics->set(pbitmap);
 
-      //if (!estatus)
-      //{
+   //   //if (!estatus)
+   //   //{
 
-      //   return false;
+   //   //   return false;
 
-      //}
+   //   //}
 
-      //m_pgraphics = pgraphics;
+   //   //m_pgraphics = pgraphics;
 
-      m_pbitmap = pbitmap;
+   //   m_pbitmap = pbitmap;
 
-      m_sizeRaw = size;
+   //   m_sizeRaw = size;
 
-      m_size = m_sizeRaw;
+   //   m_size = m_sizeRaw;
 
-      m_bMapped = false;
+   //   m_bMapped = false;
 
-      //((ID2D1DeviceContext *)m_pgraphics->get_os_data())->BeginDraw();
+   //   //((ID2D1DeviceContext *)m_pgraphics->get_os_data())->BeginDraw();
 
-      m_hrEndDraw = S_OK;
+   //   m_hrEndDraw = S_OK;
 
-      //m_pgraphics->m_pimage = this;
+   //   //m_pgraphics->m_pimage = this;
 
-      set_flag(eflagCreate);
+   //   set_flag(eflagCreate);
 
-      //return true;
+   //   //return true;
 
-   }
+   //}
 
 
    //void image::create(const ::i32_size & size, ::enum_flag eflagCreate, ::i32 iGoodStride, bool bPreserve)
@@ -175,23 +175,23 @@ namespace draw2d_directx11
    //}
 
 
-   void image::initialize(const ::i32_size & size, ::image32_t * pimage32, ::i32 iScan, ::enum_flag eflagCreate)
-   {
+   //void image::initialize(const ::i32_size & size, ::image32_t * pimage32, ::i32 iScan, ::enum_flag eflagCreate)
+   //{
 
-      //auto estatus =
-      
-      create_ex(size, pimage32, iScan, eflagCreate);
+   //   //auto estatus =
+   //   
+   //   //create_ex(size, pimage32, iScan, eflagCreate);
 
-      //if (!estatus)
-      //{
+   //   //if (!estatus)
+   //   //{
 
-      //   return estatus;
+   //   //   return estatus;
 
-      //}
+   //   //}
 
-      //return estatus;
+   //   //return estatus;
 
-   }
+   //}
 
 
    void image::dc_select(bool bSelect)
@@ -245,7 +245,7 @@ namespace draw2d_directx11
          if (::is_set(pimage->m_pimage32Raw) && pimage->m_iScan > 0)
          {
 
-            initialize(s, pimage->m_pimage32Raw, pimage->m_iScan, eflagCreate);
+            create_from_data(s, pimage->m_pimage32Raw, pimage->m_iScan, eflagCreate);
 
             //if (initialize(s, pimage->m_pimage32Raw, pimage->m_iScan, eflagCreate))
             //{
@@ -286,12 +286,12 @@ namespace draw2d_directx11
 
       //::draw2d::device_lock devicelock(this);
 
-      if (m_bMapped)
-      {
+      //if (m_bMapped)
+      //{
 
-         unmap();
+      //   unmap();
 
-      }
+      //}
 
       m_pbitmap.release();
 

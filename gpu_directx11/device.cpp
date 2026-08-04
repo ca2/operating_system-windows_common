@@ -46,8 +46,6 @@ namespace gpu_directx11
 
       m_estatus = error_not_initialized;
 
-      m_iCurrentImage = 0;
-
    }
 
 
@@ -2185,38 +2183,6 @@ bool device::_is_ok() const
    }
 
 
-   //void device::on_new_frame()
-   void device::on_start_frame()
-   {
-
-      //gpu::device::on_new_frame();
-
-      gpu::device::on_start_frame();
-
-      //auto& pframestorage = m_framestoragea.ø(m_iCurrentFrame2);
-
-      //if (!pframestorage)
-      //{
-
-      //   defer_construct_newø(pframestorage);
-
-      //}
-
-      //pframestorage->m_iBuffer = 0;
-
-      //pframestorage->m_iBufferOffset = 0;
-
-   }
-
-
-      // void device::on_top_end_frame()
-   void device::on_end_frame()
-   {
-
-      // gpu::device::on_top_end_frame();
-
-      gpu::device::on_end_frame();
-   }
 
 
 } // namespace gpu_directx11

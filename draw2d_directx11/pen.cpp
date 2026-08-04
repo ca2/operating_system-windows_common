@@ -11,7 +11,7 @@ namespace draw2d_directx11
    pen::pen()
    {
 
-      m_pthis = this;
+      //m_pthis = this;
       m_bMetroColor     = false;
       //m_colorMetro = {};
 

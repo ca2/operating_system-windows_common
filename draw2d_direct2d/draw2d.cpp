@@ -219,8 +219,6 @@ namespace draw2d_direct2d
                                                              const ::i32_size &size)
    {
 
-            
-
       if (::is_set(pimage))
       {
 
@@ -233,7 +231,7 @@ namespace draw2d_direct2d
 
          }
 
-         auto pgraphics = create_graphics(pacmeuserinteractionAffinity);
+         auto pgraphics = allocate_graphics(pacmeuserinteractionAffinity);
 
          pgraphics->create_for_image(pimage);
 
@@ -254,7 +252,7 @@ namespace draw2d_direct2d
       }
       else
       {
-         auto pgraphics = create_graphics(pacmeuserinteractionAffinity);
+         auto pgraphics = allocate_graphics(pacmeuserinteractionAffinity);
          pgraphics->create_memory_graphics(size, pacmeuserinteractionAffinity);
          return pgraphics;
       }

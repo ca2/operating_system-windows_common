@@ -1,6 +1,7 @@
 #include "framework.h"
 #include "approach.h"
 #include "descriptors.h"
+#include "draw2d_window_attachment.h"
 #include "frame.h"
 #include "input_layout.h"
 #include "renderer.h"
@@ -381,7 +382,10 @@ namespace gpu_directx11
 
       }
 
-      assert(m_pgpucontext->m_pgpudevice->current_frame()->m_egpuframestate ==
+
+      auto pgpudraw2dwindowattachment = ::gpu::draw2d_window_attachment::get(m_pgpucontext);
+
+      assert(pgpudraw2dwindowattachment->current_frame()->m_egpuframestate ==
                 ::gpu::e_gpu_frame_state_began_frame
          && "Can't call beginRender while not in began_frame gpu_frame_state");
 

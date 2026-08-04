@@ -3,6 +3,7 @@
 #include "memory_buffer.h"
 #include "context.h"
 #include "device.h"
+#include "draw2d_window_attachment.h"
 #include "physical_device.h"
 #include "program.h"
 #include "renderer.h"
@@ -891,7 +892,9 @@ namespace gpu_directx11
       ::cast<::gpu_directx11::texture> ptexture =
          pgpurendertarget->current_texture(::gpu::current_layer());
 
-      auto iFrameIndex = pgpurendertarget->m_pgpurenderer->m_pgpucontext->m_pgpudevice->get_frame_index3();
+      auto pgpudraw2dwindowattachment = ::gpu::draw2d_window_attachment::get(pgpurendertarget);
+
+      auto iFrameIndex = pgpudraw2dwindowattachment->get_frame_index3();
 
       auto pdxgisurface = ptexture->__get_dxgi_surface();
 
@@ -1716,7 +1719,9 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       if (m_papplication->m_gpu.m_bUseSwapChainWindow)
       {
 
-         auto pswapchain = m_pgpudevice->m_pgpucontextMain->get_swap_chain();
+         auto pgpudraw2dwindowattachment = ::gpu::draw2d_window_attachment::get(this);
+
+         auto pswapchain = pgpudraw2dwindowattachment->window_context()->get_swap_chain();
 
          if (pswapchain)
          {
@@ -2678,7 +2683,9 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
       auto pgpurendertarget = m_pgpurenderer->render_target();
 
-      auto iFrameIndex = pgpurendertarget->m_pgpurenderer->m_pgpucontext->m_pgpudevice->get_frame_index3();
+      auto pgpudraw2dwindowattachment = ::gpu::draw2d_window_attachment::get(pgpurendertarget);
+
+      auto iFrameIndex = pgpudraw2dwindowattachment->get_frame_index3();
 
       //m_uboBuffers[iFrameIndex]->writeToBuffer(block.data());
 
