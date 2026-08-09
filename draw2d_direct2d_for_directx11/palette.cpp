@@ -2,7 +2,7 @@
 #include "palette.h"
 
 
-namespace draw2d_direct2d
+namespace draw2d_direct2d_for_directx11
 {
 
 
@@ -38,8 +38,8 @@ namespace draw2d_direct2d
 //
 //   bool palette::CreateHalftonePalette(::image::image * pimage)
 //   {
-//      //ASSERT(pgraphics != nullptr && (dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->get_handle1() != nullptr);
-//      //return Attach(::CreateHalftonePalette((dynamic_cast<::draw2d_direct2d::graphics * >(pgraphics))->get_handle1()));
+//      //ASSERT(pgraphics != nullptr && (dynamic_cast<::draw2d_direct2d_for_directx11::graphics * >(pgraphics))->get_handle1() != nullptr);
+//      //return Attach(::CreateHalftonePalette((dynamic_cast<::draw2d_direct2d_for_directx11::graphics * >(pgraphics))->get_handle1()));
 //      return false;
 //
 //   }
@@ -106,4 +106,4 @@ namespace draw2d_direct2d
 //
 //   }
 
-} // namespace draw2d_direct2d
+} // namespace draw2d_direct2d_for_directx11

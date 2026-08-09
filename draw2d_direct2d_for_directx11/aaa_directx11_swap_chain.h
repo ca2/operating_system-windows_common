@@ -4,21 +4,21 @@
 
 //#include "direct2d/_.h"
 //#include "direct2d/swap_chain.h"
-//#include "draw2d_direct2d/_.h"
+//#include "draw2d_direct2d_for_directx11/_.h"
 #include "windowing_win32/_.h"
-//#include "draw2d_direct2d/swap_chain.h"
+//#include "draw2d_direct2d_for_directx11/swap_chain.h"
 #include "gpu_directx11/_.h"
 //#include "gpu_directx11/device.h"
 #include "gpu_directx11/swap_chain.h"
 //#include "swap_chain.h"
 
 
-namespace draw2d_direct2d
+namespace draw2d_direct2d_for_directx11
 {
 
 
-   class CLASS_DECL_DRAW2D_DIRECT2D directx11_swap_chain :
-      virtual public ::draw2d_direct2d::swap_chain,
+   class CLASS_DECL_DRAW2D_DIRECT2D_FOR_DIRECTX11 directx11_swap_chain :
+      virtual public ::draw2d_direct2d_for_directx11::swap_chain,
       virtual public ::gpu_directx11::swap_chain
    {
    public:
@@ -41,7 +41,7 @@ namespace draw2d_direct2d
       //::comptr <ID3D11Resource > m_presourceWrappedRTV;
       //::comptr<IDXGISurface> m_pdxgisurface;
       //::comptr<ID3D12CommandQueue>                                m_pcommandqueue;
-      //::pointer < ::draw2d_direct2d::graphics > m_pgraphics;
+      //::pointer < ::draw2d_direct2d_for_directx11::graphics > m_pgraphics;
       ::pointer < ::gpu_directx11::context > m_pgpucontext;
       //::comptr<ID2D1DeviceContext> m_pd2d1devicecontext;
       //::comptr <IDXGIDevice> m_pdxgidevice;
@@ -74,7 +74,7 @@ namespace draw2d_direct2d
    };
 
 
-} // namespace draw2d_direct2d
+} // namespace draw2d_direct2d_for_directx11
 
 
 

@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "bred/_.h"
+#include "draw2d_direct2d/_.h"
 #include "acme/_win32_gdi.h"
 #include "direct2d/_.h"
 #include "gpu_directx11/_.h"
@@ -9,10 +9,10 @@
 #include "acme/operating_system/windows_common/com/hresult_exception.h"
 
 
-#if defined(_draw2d_direct2d_project)
-#define CLASS_DECL_DRAW2D_DIRECT2D  CLASS_DECL_EXPORT
+#if defined(_draw2d_direct2d_for_directx11_project)
+#define CLASS_DECL_DRAW2D_DIRECT2D_FOR_DIRECTX11  CLASS_DECL_EXPORT
 #else
-#define CLASS_DECL_DRAW2D_DIRECT2D  CLASS_DECL_IMPORT
+#define CLASS_DECL_DRAW2D_DIRECT2D_FOR_DIRECTX11  CLASS_DECL_IMPORT
 #endif
 
 
@@ -50,7 +50,7 @@
 //} // namespace d2d1
 //
 
-namespace draw2d_direct2d
+namespace draw2d_direct2d_for_directx11
 {
 
    CLASS_DECL_AURA void initialize();
@@ -64,14 +64,14 @@ namespace draw2d_direct2d
 
 
 
-} // namespace draw2d_direct2d
+} // namespace draw2d_direct2d_for_directx11
 
 
-#define __graphics(pgraphics) ((::draw2d_direct2d::graphics *) pgraphics->m_pthis)
-#define __pen(ppen) ((::draw2d_direct2d::pen *) ppen->m_pthis)
-#define __brush(pbrush) ((::draw2d_direct2d::brush *) pbrush->m_pthis)
-#define __font(pfont) ((::draw2d_direct2d::font *) pfont->m_pthis)
-#define __graphics_path(ppath) ((::draw2d_direct2d::path *) ppath->m_pthis)
+#define __graphics(pgraphics) ((::draw2d_direct2d_for_directx11::graphics *) pgraphics->m_pthis)
+#define __pen(ppen) ((::draw2d_direct2d_for_directx11::pen *) ppen->m_pthis)
+#define __brush(pbrush) ((::draw2d_direct2d_for_directx11::brush *) pbrush->m_pthis)
+#define __font(pfont) ((::draw2d_direct2d_for_directx11::font *) pfont->m_pthis)
+#define __graphics_path(ppath) ((::draw2d_direct2d_for_directx11::path *) ppath->m_pthis)
 
 
 

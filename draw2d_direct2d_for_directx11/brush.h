@@ -5,12 +5,12 @@
 #include "object.h"
 
 
-namespace draw2d_direct2d
+namespace draw2d_direct2d_for_directx11
 {
 
 
-   class CLASS_DECL_DRAW2D_DIRECT2D brush :
-      virtual public ::draw2d_direct2d::object,
+   class CLASS_DECL_DRAW2D_DIRECT2D_FOR_DIRECTX11 brush :
+      virtual public ::draw2d_direct2d_for_directx11::object,
       virtual public ::draw2d::brush
    {
    public:
@@ -34,7 +34,7 @@ namespace draw2d_direct2d
       void destroy_os_data() override;
       void create(::draw2d::graphics * pgraphics, ::i8 iCreate) override;
 
-      //virtual ID2D1Brush * get_os_brush(::draw2d_direct2d::graphics * pgraphics) const;
+      //virtual ID2D1Brush * get_os_brush(::draw2d_direct2d_for_directx11::graphics * pgraphics) const;
 
       //bool CreateSolidBrush(::color::color crColor);
       //bool CreateHatchBrush(::i32 nIndex, ::color::color crColor);
@@ -49,7 +49,7 @@ namespace draw2d_direct2d
    };
 
 
-} // namespace draw2d_direct2d
+} // namespace draw2d_direct2d_for_directx11
 
 
 

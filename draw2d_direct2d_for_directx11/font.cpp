@@ -1,7 +1,7 @@
 #include "framework.h"
 #include "font.h"
 #include "direct2d/direct2d.h"
-#include "aura/graphics/draw2d/host.h"
+//#include "aura/graphics/draw2d/host.h"
 
 
 #include "acme_windows_common/_.h"
@@ -9,7 +9,7 @@
 #include "acme/operating_system/windows_common/com/hresult_exception.h"
 
 
-namespace draw2d_direct2d
+namespace draw2d_direct2d_for_directx11
 {
 
 
@@ -87,13 +87,13 @@ namespace draw2d_direct2d
       if (m_fontsize.eunit() == ::e_unit_point)
       {
 
-         fFontSize = (::f32)pgraphics->m_pdraw2dhost->point_dpi(m_fontsize.as_f64());
+         fFontSize = (::f32)pgraphics->m_pacmeuserinteractionAffinity->point_dpi(m_fontsize.as_f64());
 
       }
       else
       {
 
-         fFontSize = (::f32)pgraphics->m_pdraw2dhost->dpiy(m_fontsize.as_f64());
+         fFontSize = (::f32)pgraphics->m_pacmeuserinteractionAffinity->dpiy(m_fontsize.as_f64());
 
       }
 
@@ -131,7 +131,7 @@ namespace draw2d_direct2d
 
          }
 
-         IDWriteFactory * pfactory = m_pdirect2d->dwrite_factory();
+         IDWriteFactory * pfactory = direct2d()->dwrite_factory();
 
          if (!defer_load_internal_font(pgraphics))
          {
@@ -394,6 +394,6 @@ namespace draw2d_direct2d
    }
 
 
-} // namespace draw2d_direct2d
+} // namespace draw2d_direct2d_for_directx11
 
 

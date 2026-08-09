@@ -1,6 +1,6 @@
 #include "framework.h"
 #include "context.h"
-#include "aaa_cpu_buffer.h"
+#include "buffer.h"
 #include "device.h"
 #include "renderer.h"
 #include "offscreen_render_target_view.h"
@@ -14,19 +14,19 @@ namespace gpu_directx11
 {
 
 
-   aaa_cpu_buffer::aaa_cpu_buffer()
+   buffer::buffer()
    {
 
    }
 
 
-   aaa_cpu_buffer::~aaa_cpu_buffer()
+   buffer::~buffer()
    {
 
    }
 
 
-//   void aaa_cpu_buffer::gpu_read()
+//   void buffer::gpu_read()
 //   {
 //
 //      _synchronous_lock synchronouslock(this->synchronization());
@@ -155,12 +155,12 @@ namespace gpu_directx11
 //   }
 //
 
-   void aaa_cpu_buffer::gpu_write()
+   void buffer::gpu_write()
    {
 
       _synchronous_lock synchronouslock(this->synchronization());
 
-      if (m_pimagetarget->m_pimage.nok())
+      if (m_ppixmap.nok())
       {
 
          return;
@@ -184,7 +184,7 @@ namespace gpu_directx11
 
 
    // Utility function to read RGBA pixel data from a GPU texture
-   void aaa_cpu_buffer::gpu_read()
+   void buffer::gpu_read()
    {
 
 

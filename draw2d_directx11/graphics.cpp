@@ -29,7 +29,7 @@
 #include "bred/gpu/context.h"
 #include "bred/gpu/context_lock.h"
 #include "bred/gpu/device.h"
-#include "bred/gpu/draw2d_window_attachment.h"
+#include "bred/gpu/window_attachment.h"
 #include "bred/gpu/layer.h"
 #include "bred/gpu/renderer.h"
 #include "bred/gpu/swap_chain.h"
@@ -190,9 +190,9 @@ namespace draw2d_directx11
 
       //m_pdirectx11 = ::directx11::from_gpu_device(pgpudevice);
 
-      auto pgpudraw2dwindowattachment = ::gpu::draw2d_window_attachment::get(m_pacmeuserinteractionAffinity);
+      auto pgpuwindowattachment = ::gpu::window_attachment::get(m_pacmeuserinteractionAffinity);
 
-      auto pgpucontextNew = pgpudraw2dwindowattachment->draw2d_context();
+      auto pgpucontextNew = pgpuwindowattachment->draw2d_context();
 
       pgpucontextNew->m_pgpucompositor = this;
 
@@ -275,7 +275,7 @@ namespace draw2d_directx11
       if (pcontext)
       {
 
-         if (pcontext->m_rectangle.size() == size)
+         if (pcontext->size() == size)
          {
 
             return;
@@ -5490,6 +5490,8 @@ namespace draw2d_directx11
    void graphics::on_start_layer(::gpu::layer * pgpulayer)
    {
 
+      m_bBeginDraw = true;
+
       //if (m_pdevicecontext && m_bInLayer)
       //if (m_pdevicecontext)
       {
@@ -6228,8 +6230,8 @@ namespace draw2d_directx11
 //          r.top,
 //          r.right,
 //          r.bottom,  // rectangle in pixels (left, top, right, bottom)
-//          pcontext->m_rectangle.width(),
-//          pcontext->m_rectangle.height(),            // viewport size in pixels (width, height)
+//          pcontext->width(),
+//          pcontext->height(),            // viewport size in pixels (width, height)
 //          color.f32_red() * color.f32_opacity(),
 //          color.f32_green() * color.f32_opacity(),
 //          color.f32_blue() * color.f32_opacity(),
@@ -7522,7 +7524,7 @@ namespace draw2d_directx11
 
       auto pcontext = gpu_context();
 
-      auto size = pcontext->m_rectangle.size();
+      auto size = pcontext->size();
 
       ::geometry2d::matrix contextmatrix;
 
@@ -7823,14 +7825,14 @@ namespace draw2d_directx11
    void graphics::flush()
    {
 
-      if (!m_bBeginDraw)
-      {
+      //if (!m_bBeginDraw)
+      //{
 
-         //return false;
+      //   //return false;
 
-         throw ::exception(error_null_pointer);
+      //   throw ::exception(error_null_pointer);
 
-      }
+      //}
 
       //HRESULT hr = m_pd2d1rendertarget->Flush();
 

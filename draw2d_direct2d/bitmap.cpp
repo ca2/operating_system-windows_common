@@ -47,11 +47,12 @@ namespace draw2d_direct2d
 
    void bitmap::create_bitmap_for_image(
       ::image::image * pimage,
-      ::acme::user::interaction * pacmeuserinteractionAffinity)
+      ::acme::user::interaction * pacmeuserinteractionAffinity, 
+      ::draw2d::graphics * pgraphics)
    {
 
       _create_bitmap(
-         nullptr,
+         pgraphics,
          pimage->m_sizeRaw,
          pimage->image32(),
          pimage->m_iScan,

@@ -13,7 +13,7 @@
 #include <math.h>
 
 
-namespace draw2d_direct2d
+namespace draw2d_direct2d_for_directx11
 {
 
 
@@ -34,923 +34,648 @@ namespace draw2d_direct2d
    }
 
 
-   bool path::internal_end_figure(bool bClose)
-   {
-
-      if (m_psink == nullptr)
-      {
-
-         return false;
-
-      }
-
-      if(bClose)
-      {
-
-         m_psink->EndFigure(D2D1_FIGURE_END_CLOSED);
-
-      }
-      else
-      {
-
-         m_psink->EndFigure(D2D1_FIGURE_END_OPEN);
-
-      }
-
-      m_bHasPoint = false;
-
-      return true;
-
-   }
-
-
-   bool path::internal_add_arc(::draw2d::graphics* pgraphics, const ::f64_arc & arc)
-   {
-
-      ::f64_point point;
-
-      D2D1_ARC_SEGMENT arcseg;
-
-      internal_get_arc(point, arcseg, arc);
-
-      if (!m_bHasPoint)
-      {
-
-         if (!internal_start_figure(pgraphics, point.x, point.y))
-         {
-
-            return false;
-
-         }
-
-      }
-      else
-      {
-
-         auto dDistance = point.distance(m_pointEnd);
-
-         if (dDistance > 0.001)
-         {
-
-            m_psink->AddLine({(FLOAT) point.x, (FLOAT) point.y});
-
-         }
-
-
-      }
-
-      m_psink->AddArc(arcseg);
-
-      m_pointEnd.x = arcseg.point.x;
-
-      m_pointEnd.y = arcseg.point.y;
-
-      m_estatus = ::success;
-
-      return true;
-
-   }
-
-
-   bool path::internal_add_rectangle(::draw2d::graphics* pgraphics, ::f64 x, ::f64 y, ::f64 cx, ::f64 cy)
-   {
-
-      internal_start_figure(pgraphics, x, y);
-
-      internal_add_line(pgraphics, x + cx,y);
-      internal_add_line(pgraphics, x + cx,y + cy);
-      internal_add_line(pgraphics, x,y + cy);
-      
-      internal_end_figure(true);
-
-      return true;
-
-   }
-
-
-   bool path::internal_add_ellipse(::draw2d::graphics * pgraphics, ::f64 x, ::f64 y, ::f64 cx, ::f64 cy)
-   {
-
-      internal_start_figure(pgraphics, x + cx, y + cy / 2.0);
-
-      ::f64_arc arc{};
-
-      arc.left = x;
-      arc.top = y;
-      arc.right =x + cx;
-      arc.bottom = y + cy;
-      arc.m_pointBegin.x = x + cx;
-      arc.m_pointBegin.y = y + cy / 2.0;
-      arc.m_pointEnd.x = x + cx;
-      arc.m_pointEnd.y = y + cy / 2.0;
-      arc.m_angleBeg = 0_degree;
-      arc.m_angleEnd2 = 360_degree;
-      arc.m_angleExt = 360_degree;
-
-      internal_add_arc(pgraphics, arc);
-
-      //arc.m_pointCenter.x = x + cx / 2.0;
-      //arc.m_pointCenter.y = y + cy / 2.0;
-      //arc.m_sizeRadius.cx = cx / 2.0;
-      //arc.m_sizeRadius.cy = cy / 2.0;
-      //arc.m_pointBegin.x = x;
-      //arc.m_pointBegin.y = y + cy / 2.0;
-      //arc.m_pointEnd.x = x + cx;
-      //arc.m_pointEnd.y = y + cy / 2.0;
-      //arc.m_angleBeg = MATH_PI;
-      //arc.m_angleEnd2 = MATH_PI * 2.0;
-      //arc.m_angleExt = MATH_PI;
-
-      //internal_add_arc(pgraphics, arc);
-
-      internal_end_figure(true);
-
-      return true;
-
-   }
-
-
-   bool path::internal_add_lines(::draw2d::graphics* pgraphics, const ::i32_point_array& pointa, bool bClose)
-   {
-
-      if (pointa.get_count() < 1)
-      {
-
-         return false;
-
-      }
-
-      internal_start_figure(pgraphics, pointa[0].x, pointa[0].y);
-
-      for (::collection::index i = 1; i < pointa.get_count(); i++)
-      {
-
-         internal_add_line(pgraphics, pointa[i].x, pointa[i].y);
-
-      }
-
-      internal_end_figure(bClose);
-
-      return true;
-
-   }
-
-
-   bool path::internal_add_lines(::draw2d::graphics* pgraphics, const ::f64_point_array& pointa, bool bClose)
-   {
-
-      if (pointa.get_count() < 1)
-      {
-
-         return false;
-
-      }
-
-      internal_start_figure(pgraphics, pointa[0].x, pointa[0].y);
-
-      for (::collection::index i = 1; i < pointa.get_count(); i++)
-      {
-
-         internal_add_line(pgraphics, pointa[i].x, pointa[i].y);
-
-      }
-
-      internal_end_figure(bClose);
-
-      return true;
-
-   }
-
-
-   bool path::internal_add_string(::draw2d_direct2d::graphics * pgraphics, ::f64 x, ::f64 y, const ::scoped_string & scopedstrText, ::write_text::font * pfont)
-   {
-
-      if(!internal_start_figure(pgraphics))
-      {
-
-         return false;
-
-      }
-
-      IDWriteTextFormat * pformat = pfont->get_os_data < IDWriteTextFormat * >(pgraphics);
-
-      IDWriteFactory * pfactory = m_pdirect2d->dwrite_factory();
-
-      comptr<IDWriteTextLayout> playout;
-
-      wstring wstr(scopedstrText);
-
-      HRESULT hr = pfactory->CreateTextLayout(
-         wstr,      // The string to be laid out and formatted.
-         (::u32)wstr.length(),  // The length of the string.
-         pformat,  // The text format to apply to the string (contains font information, etc).
-         4096,         // The width of the on_layout box.
-         4096,        // The height of the on_layout box.
-         &playout  // The IDWriteTextLayout interface pointer.
-      );
-
-      if (playout == nullptr)
-      {
-
-         return false;
-
-      }
-
-      ::direct2d_lock lock(m_pdirect2d);
-
-      auto & renderer = m_pdirect2d->m_geometrysinktextrenderer;
-
-      renderer.m_pgeometrysink = m_psink;
-
-      FLOAT dpix = 0.f;
-      FLOAT dpiy = 0.f;
-
-      pgraphics->m_pd2d1rendertarget->GetDpi(&dpix, &dpiy);
-
-      if (dpix <= 0)
-      {
-
-         renderer.m_dDpi = 96.0;
-
-      }
-      else
-      {
-
-         renderer.m_dDpi = dpix;
-
-      }
-
-      renderer.m_figurebeginOverride = pgraphics->m_bOutline ? D2D1_FIGURE_BEGIN_HOLLOW : D2D1_FIGURE_BEGIN_FILLED;
-
-      playout->Draw(nullptr, &renderer, (FLOAT)x, (FLOAT)y);
-
-      m_estatus = ::success;
-
-      return true;
-
-   }
-
-
-   bool path::internal_add_line(::draw2d::graphics* pgraphics, ::f64 x, ::f64 y)
-   {
-
-      if (::is_null(m_psink))
-      {
-
-         return false;
-
-      }
-
-      m_psink->AddLine({ (FLOAT) x, (FLOAT)y });
-
-      m_pointEnd.x = x;
-
-      m_pointEnd.y = y;
-
-      m_estatus = ::success;
-
-      return true;
-
-   }
-
-
-   bool path::internal_start_figure(::draw2d::graphics* pgraphics)
-   {
-
-      if (m_bHasPoint)
-      {
-
-         internal_end_figure(false);
-
-      }
-
-      if (m_psink == nullptr)
-      {
-
-         m_ppath->Open(&m_psink);
-
-         if (m_efillmode == ::draw2d::e_fill_mode_winding)
-         {
-
-            m_psink->SetFillMode(D2D1_FILL_MODE_WINDING);
-
-         }
-         else if (m_efillmode == ::draw2d::e_fill_mode_alternate)
-         {
-
-            m_psink->SetFillMode(D2D1_FILL_MODE_ALTERNATE);
-
-         }
-
-      }
-
-      return true;
-
-   }
-
-
-   bool path::internal_start_figure(::draw2d::graphics * pgraphics, ::f64 x, ::f64 y)
-   {
-
-      if (!internal_start_figure(pgraphics))
-      {
-
-         return false;
-
-      }
-
-      m_psink->BeginFigure({ (FLOAT)x, (FLOAT)y }, pgraphics->m_bOutline ? D2D1_FIGURE_BEGIN_HOLLOW : D2D1_FIGURE_BEGIN_FILLED);
-
-      m_pointBegin.x = x;
-      m_pointBegin.y = y;
-      m_pointEnd.x = x;
-      m_pointEnd.y = y;
-
-      m_bHasPoint = true;
-
-      return true;
-
-   }
-
-
-   void * path::detach()
-   {
-
-      return m_ppath.detach();
-
-   }
-
-
-
-   bool path::internal_get_arc(::f64_point & pointStart,D2D1_ARC_SEGMENT & arcseg, const ::f64_arc & arc)
-   {
-
-      D2D1_POINT_2F pointCenter;
-
-      pointCenter.x = (FLOAT)arc.center().x;
-      pointCenter.y = (FLOAT)arc.center().y;
-
-      ::f64 rx = arc.radius().cx;
-      ::f64 ry = arc.radius().cy;
-
-      pointStart.x = arc.m_pointBegin.x;
-      pointStart.y = arc.m_pointBegin.y;
-
-      arcseg.point.x = (FLOAT)arc.m_pointEnd.x;
-      arcseg.point.y = (FLOAT)arc.m_pointEnd.y;
-
-      if(arc.m_angleEnd2 > arc.m_angleBeg)
-      {
-
-         arcseg.sweepDirection = D2D1_SWEEP_DIRECTION_CLOCKWISE;
-
-      }
-      else
-      {
-
-         arcseg.sweepDirection = D2D1_SWEEP_DIRECTION_COUNTER_CLOCKWISE;
-
-      }
-
-      if(fabs(arc.m_angleEnd2 - arc.m_angleBeg) < MATH_PI)
-      {
-
-         arcseg.arcSize = D2D1_ARC_SIZE_SMALL;
-
-      }
-      else
-      {
-
-         arcseg.arcSize = D2D1_ARC_SIZE_LARGE;
-
-      }
-
-      arcseg.rotationAngle = (FLOAT) arc.m_angleRotation;
-
-      arcseg.size.width    = (FLOAT) rx;
-
-      arcseg.size.height   = (FLOAT) ry;
-
-      return true;
-
-   }
-
-
-   void path::create(::draw2d::graphics* pgraphicsParam, ::i8 iCreate)
-   {
-
-      auto pgraphics = __graphics(pgraphicsParam);
-
-      HRESULT hr = S_OK;
-
-      if (pgraphics->m_bOutline)
-      {
-
-         if (iCreate == path_hollow)
-         {
-
-            if (m_ppathHollow)
-            {
-
-               m_osdata[path_hollow] = m_ppathHollow;
-
-               return;
-
-            }
-
-         }
-
-         hr = m_pdirect2d->d2d1_factory1()->CreatePathGeometry(&m_ppathHollow);
-
-         m_ppath = m_ppathHollow;
-
-      }
-      else
-      {
-
-         if (m_ppathFilled)
-         {
-
-            m_osdata[path_filled] = m_ppathFilled;
-
-            return;
-
-         }
-
-         hr = m_pdirect2d->d2d1_factory1()->CreatePathGeometry(&m_ppathFilled);
-         
-         m_ppath = m_ppathFilled;
-
-      }
-
-      ::defer_throw_hresult(hr);
-
-      m_psink  = nullptr;
-
-      m_estatus = error_failed;
-
-      m_bHasPoint = false;
-
-      _set_create(pgraphics);
-
-      /*for(::i32 i = 0; i < m_elementa.get_count(); i++)
-      {
-
-         if (m_elementa.ptr_at(i))
-         {
-
-            set(pgraphics, m_elementa(i));
-
-         }
-
-      }*/
-
-      if (!m_estatus)
-      {
-
-         m_ppath = nullptr;
-
-      }
-      else
-      {
-
-         if (m_bHasPoint)
-         {
-
-            internal_end_figure(false);
-
-         }
-
-         if (m_psink != nullptr)
-         {
-
-            HRESULT hr = m_psink->Close();
-
-            m_osdata[iCreate] = m_ppath;
-
-         }
-         else
-         {
-
-            m_ppath = nullptr;
-
-         }
-
-      }
-
-      m_psink = nullptr;
-
-      //return m_ppath != nullptr;
-
-   }
-
-
-   ID2D1GeometryRealization * path::_get_stroked_geometry_realization(::draw2d::graphics * pgraphicsParam, ::i32 iWidth)
-   {
-
-      auto & prealization = m_mapGeometryHollowRealization[iWidth];
-
-      if (!prealization)
-      {
-
-         auto pgraphics = __graphics(pgraphicsParam);
-
-         HRESULT hr = pgraphics->m_pdevicecontext1->CreateStrokedGeometryRealization(
-            m_ppathHollow,
-            1.0f,
-            (FLOAT)iWidth,
-            nullptr,
-            &prealization);
-
-         defer_throw_hresult(hr);
-
-      }
-
-      return prealization;
-
-   }
-
-
-   ID2D1GeometryRealization * path::_get_filled_geometry_realization(::draw2d::graphics * pgraphicsParam)
-   {
-
-      auto & prealization = m_geometryFilledRealization;
-
-      if (!prealization)
-      {
-
-         auto pgraphics = __graphics(pgraphicsParam);
-
-         HRESULT hr = pgraphics->m_pdevicecontext1->CreateFilledGeometryRealization(
-            m_ppathFilled,
-            1.0f,
-            &prealization);
-
-         defer_throw_hresult(hr);
-
-      }
-
-      return prealization;
-
-   }
-
-
-
-   void * path::detach(::draw2d::graphics* pgraphicsParam)
-   {
-
-      defer_update(pgraphicsParam, 0);
-
-      return m_ppath.detach();
-
-   }
-
-
-   void path::destroy()
-   {
-
-      destroy_os_data();
-
-      ::draw2d::path::destroy();
-
-   }
-
-
-   void path::destroy_os_data()
-   {
-
-      m_psink = nullptr;
-
-      m_ppath = nullptr;
-
-      m_ppathHollow = nullptr;
-
-      m_ppathFilled = nullptr;
-
-      object::destroy_os_data();
-
-   }
-
-
-
-   bool path::create()
-   {
-
-      return true;
-
-   }
-
-
-   //bool path::set(::draw2d_direct2d::graphics * pgraphics, const ::draw2d::path::matter & e)
+   //bool path::internal_end_figure(bool bClose)
    //{
 
-   //   switch(e.m_etype)
+   //   if (m_psink == nullptr)
    //   {
-   //   case ::draw2d::path::matter::type_move:
-   //      set(e.u.m_move);
-   //      break;
-   //   case ::draw2d::path::matter::type_arc:
-   //      set(e.u.m_arc);
-   //      break;
-   //   case ::draw2d::path::matter::type_line:
-   //      set(e.u.m_line);
-   //      break;
-   //   case ::draw2d::path::matter::type_rect:
-   //      set(e.u.m_rectangle);
-   //      break;
-   //   case ::draw2d::path::matter::e_type_string:
-   //      set(pgraphics,e.m_stringpath);
-   //      break;
-   //   case ::draw2d::path::matter::type_end:
-   //      internal_end_figure(e.u.m_end.m_bClose);
-   //      break;
-   //   default:
-   //      throw ::exception(::exception("unexpected simple os graphics matter type"));
+
+   //      return false;
+
    //   }
 
-   //   return false;
-
-   //}
-
-
-   bool path::_set(::draw2d::graphics * pgraphics, const ::f64_arc & arc)
-   {
-
-      //::f64_rectangle rectangle;
-
-      //rectangle.left      = (::i32) (arc.m_pointCenter.x - arc.m_sizeRadius.cx);
-      //rectangle.right     = (::i32) (arc.m_pointCenter.x + arc.m_sizeRadius.cx);
-      //rectangle.top       = (::i32) (arc.m_pointCenter.y - arc.m_sizeRadius.cy);
-      //rectangle.bottom    = (::i32) (arc.m_pointCenter.y + arc.m_sizeRadius.cy);
-
-      //bool bOk = internal_add_arc(pgraphics, parc);
-
-      //return bOk;
-
-      return internal_add_arc(pgraphics, arc);
-
-   }
-
-
-   bool path::_set(::draw2d::graphics* pgraphics, const ::draw2d::enum_item & eitem)
-   {
-
-      if (eitem == ::draw2d::e_item_begin_figure)
-      {
-
-         if (m_bHasPoint)
-         {
-
-            internal_end_figure(false);
-
-         }
-
-         return true;
-
-      }
-      else if (eitem == ::draw2d::e_item_close_figure)
-      {
-
-         if (m_bHasPoint)
-         {
-
-            internal_end_figure(true);
-
-         }
-
-         return true;
-
-      }
-      else if (eitem == ::draw2d::e_item_end_figure)
-      {
-
-         if (m_bHasPoint)
-         {
-
-            internal_end_figure(false);
-
-         }
-
-         return true;
-
-      }
-      else
-      {
-
-         return ::draw2d::path::_set(pgraphics, eitem);
-
-      }
-
-      return true;
-
-   }
-
-
-   //bool path::_set(const ::draw2d::path::move & move)
-   //{
-
-   //   return internal_add_move((::i32) move.m_x, (::i32) move.m_y);
-
-   //}
-
-
-   bool path::_set(::draw2d::graphics* pgraphics, const ::f64_line & line)
-   {
-
-      if (line.m_p1 != m_pointEnd || ::is_null(m_psink))
-      {
-
-         if (!internal_start_figure(pgraphics, line.m_p1.x, line.m_p1.y))
-         {
-
-            return false;
-
-         }
-
-      }
-
-      return internal_add_line(pgraphics, line.m_p2.x, line.m_p2.y);
-
-   }
-
-
-   //bool path::_set(::draw2d::graphics* pgraphics, const ::line & line)
-   //{
-
-   //   if (line.m_p1 != m_pointEnd || !m_bFigureOpened)
+   //   if(bClose)
    //   {
 
-   //      if (!internal_start_figure(pgraphics, line.m_p1.x, line.m_p1.y))
+   //      m_psink->EndFigure(D2D1_FIGURE_END_CLOSED);
+
+   //   }
+   //   else
+   //   {
+
+   //      m_psink->EndFigure(D2D1_FIGURE_END_OPEN);
+
+   //   }
+
+   //   m_bHasPoint = false;
+
+   //   return true;
+
+   //}
+
+
+   //bool path::internal_add_arc(::draw2d::graphics* pgraphics, const ::f64_arc & arc)
+   //{
+
+   //   ::f64_point point;
+
+   //   D2D1_ARC_SEGMENT arcseg;
+
+   //   internal_get_arc(point, arcseg, arc);
+
+   //   if (!m_bHasPoint)
+   //   {
+
+   //      if (!internal_start_figure(pgraphics, point.x, point.y))
    //      {
 
    //         return false;
 
    //      }
 
-   //      m_pointEnd = line.m_p1;
+   //   }
+   //   else
+   //   {
+
+   //      auto dDistance = point.distance(m_pointEnd);
+
+   //      if (dDistance > 0.001)
+   //      {
+
+   //         m_psink->AddLine({(FLOAT) point.x, (FLOAT) point.y});
+
+   //      }
+
 
    //   }
 
-   //   return internal_add_line(pgraphics, line.m_p2.x, line.m_p2.y);
+   //   m_psink->AddArc(arcseg);
+
+   //   m_pointEnd.x = arcseg.point.x;
+
+   //   m_pointEnd.y = arcseg.point.y;
+
+   //   m_estatus = ::success;
+
+   //   return true;
 
    //}
 
 
-   bool path::_set(::draw2d::graphics* pgraphics, const ::f64_rectangle & rectangle)
-   {
-
-      return internal_add_rectangle(pgraphics, rectangle.left, rectangle.top, rectangle.width(), rectangle.height());
-
-   }
-
-
-   //bool path::_set(::draw2d::graphics* pgraphics, const ::f64_rectangle& rectangle)
+   //bool path::internal_add_rectangle(::draw2d::graphics* pgraphics, ::f64 x, ::f64 y, ::f64 cx, ::f64 cy)
    //{
 
-   //   return internal_add_rect(pgraphics, rectangle.left, rectangle.top, rectangle.width(), rectangle.height());
+   //   internal_start_figure(pgraphics, x, y);
+
+   //   internal_add_line(pgraphics, x + cx,y);
+   //   internal_add_line(pgraphics, x + cx,y + cy);
+   //   internal_add_line(pgraphics, x,y + cy);
+   //   
+   //   internal_end_figure(true);
+
+   //   return true;
 
    //}
 
 
-   bool path::_set(::draw2d::graphics * pgraphics, const ::f64_ellipse & ellipse)
-   {
-
-      return internal_add_ellipse(pgraphics, ellipse.left, ellipse.top, ellipse.width(), ellipse.height());
-
-   }
-
-
-
-   bool path::_set(::draw2d::graphics* pgraphics, const ::f64_lines & lines)
-   {
-
-      return internal_add_lines(pgraphics, (const ::i32_point_array &) lines, false);
-
-   }
-
-
-   //bool path::_set(::draw2d::graphics* pgraphics, const ::linesd& lines)
+   //bool path::internal_add_ellipse(::draw2d::graphics * pgraphics, ::f64 x, ::f64 y, ::f64 cx, ::f64 cy)
    //{
 
-   //   return internal_add_lines(pgraphics, (const ::f64_point_array&) lines, false);
+   //   internal_start_figure(pgraphics, x + cx, y + cy / 2.0);
+
+   //   ::f64_arc arc{};
+
+   //   arc.left = x;
+   //   arc.top = y;
+   //   arc.right =x + cx;
+   //   arc.bottom = y + cy;
+   //   arc.m_pointBegin.x = x + cx;
+   //   arc.m_pointBegin.y = y + cy / 2.0;
+   //   arc.m_pointEnd.x = x + cx;
+   //   arc.m_pointEnd.y = y + cy / 2.0;
+   //   arc.m_angleBeg = 0_degree;
+   //   arc.m_angleEnd2 = 360_degree;
+   //   arc.m_angleExt = 360_degree;
+
+   //   internal_add_arc(pgraphics, arc);
+
+   //   //arc.m_pointCenter.x = x + cx / 2.0;
+   //   //arc.m_pointCenter.y = y + cy / 2.0;
+   //   //arc.m_sizeRadius.cx = cx / 2.0;
+   //   //arc.m_sizeRadius.cy = cy / 2.0;
+   //   //arc.m_pointBegin.x = x;
+   //   //arc.m_pointBegin.y = y + cy / 2.0;
+   //   //arc.m_pointEnd.x = x + cx;
+   //   //arc.m_pointEnd.y = y + cy / 2.0;
+   //   //arc.m_angleBeg = MATH_PI;
+   //   //arc.m_angleEnd2 = MATH_PI * 2.0;
+   //   //arc.m_angleExt = MATH_PI;
+
+   //   //internal_add_arc(pgraphics, arc);
+
+   //   internal_end_figure(true);
+
+   //   return true;
 
    //}
 
 
-   bool path::_set(::draw2d::graphics* pgraphics, const ::f64_polygon & polygon)
-   {
-
-      return internal_add_lines(pgraphics, (const ::f64_point_array&)polygon, true);
-
-   }
-
-   //bool path::_set(::draw2d::graphics* pgraphics, const ::f64_polygon& i32_polygon)
+   //bool path::internal_add_lines(::draw2d::graphics* pgraphics, const ::i32_point_array& pointa, bool bClose)
    //{
 
-   //   return internal_add_lines(pgraphics, (const ::f64_point_array&)i32_polygon, true);
+   //   if (pointa.get_count() < 1)
+   //   {
+
+   //      return false;
+
+   //   }
+
+   //   internal_start_figure(pgraphics, pointa[0].x, pointa[0].y);
+
+   //   for (::collection::index i = 1; i < pointa.get_count(); i++)
+   //   {
+
+   //      internal_add_line(pgraphics, pointa[i].x, pointa[i].y);
+
+   //   }
+
+   //   internal_end_figure(bClose);
+
+   //   return true;
 
    //}
 
 
-   bool path::_set(::draw2d::graphics * pgraphics, const ::write_text::text_out & textout)
-   {
+   //bool path::internal_add_lines(::draw2d::graphics* pgraphics, const ::f64_point_array& pointa, bool bClose)
+   //{
 
-      ::pointer < ::draw2d_direct2d::graphics > pgraphicsDraw2dDirect2d = pgraphics;
+   //   if (pointa.get_count() < 1)
+   //   {
 
-      auto bOk = internal_add_string(
-         pgraphicsDraw2dDirect2d,
-         textout.m_point.x,
-         textout.m_point.y,
-         textout.m_strText,
-         textout.m_pfont);
+   //      return false;
 
-      if (!bOk)
-      {
+   //   }
 
-         return false;
+   //   internal_start_figure(pgraphics, pointa[0].x, pointa[0].y);
 
-      }
+   //   for (::collection::index i = 1; i < pointa.get_count(); i++)
+   //   {
 
-      return true;
+   //      internal_add_line(pgraphics, pointa[i].x, pointa[i].y);
 
-      //IDWriteTextFormat * pformat = textout.m_pfont->get_os_data < IDWriteTextFormat * >(pgraphicsParam);
+   //   }
 
-      //IDWriteFactory * pfactory = m_pdirect2d->dwrite_factory();
+   //   internal_end_figure(bClose);
 
-      //comptr<IDWriteTextLayout> playout;
+   //   return true;
 
-      //wstring wstr(textout.m_strText);
-
-      //HRESULT hr = pfactory->CreateTextLayout(
-      //   wstr,      // The string to be laid out and formatted.
-      //   (::u32)wstr.length(),  // The length of the string.
-      //   pformat,  // The text format to apply to the string (contains font information, etc).
-      //   4096,         // The width of the on_layout box.
-      //   4096,        // The height of the on_layout box.
-      //   &playout  // The IDWriteTextLayout interface pointer.
-      //);
-
-      //if (playout == nullptr)
-      //{
-
-      //   return false;
-
-      //}
-
-      //auto pgraphics = pgraphicsParam->cast < ::draw2d_direct2d::graphics>();
-
-      ////if (m_psink == nullptr)
-      ////{
-
-      ////   hr = m_ppath->Open(&m_psink);
-
-      ////}
-
-      ////CustomTextRenderer renderer(m_pdirect2d->d2d1_factory1(), m_psink);
-
-      ////defer_text_primitive_blend();
-
-      ////defer_text_rendering_hint();
-
-      //synchronous_lock lock(::direct2d::get()->synchronization());
-
-      //auto & renderer = ::direct2d::get()->m_geometrysinktextrenderer;
-
-      //renderer.m_pgeometrysink = m_psink;
-
-      //FLOAT dpix, dpiy;
-
-      //if (SUCCEEDED(pgraphics->m_prendertarget->GetDpi(dpix, dpiy))
-      //{
-
-      //   renderer.m_dDpi = dpix;
-
-      //}
-      //else
-      //{
-
-      //   renderer.m_dDpi = 96.0;
-
-      //}
-
-      //renderer.m_figurebeginOverride = pgraphics->m_bOutline ? D2D1_FIGURE_BEGIN_HOLLOW : D2D1_FIGURE_BEGIN_FILLED;
-
-      //playout->Draw(nullptr, &renderer, (FLOAT)textout.m_point.x, (FLOAT)textout.m_point.y);
-
-      //return true;
-
-   }
+   //}
 
 
-   bool path::_set(::draw2d::graphics* pgraphics, const ::write_text::draw_text & drawtext)
-   {
+   //bool path::internal_add_string(::draw2d_direct2d_for_directx11::graphics * pgraphics, ::f64 x, ::f64 y, const ::scoped_string & scopedstrText, ::write_text::font * pfont)
+   //{
 
-      return true;
+   //   if(!internal_start_figure(pgraphics))
+   //   {
 
-   }
+   //      return false;
+
+   //   }
+
+   //   IDWriteTextFormat * pformat = pfont->get_os_data < IDWriteTextFormat * >(pgraphics);
+
+   //   IDWriteFactory * pfactory = direct2d()->dwrite_factory();
+
+   //   comptr<IDWriteTextLayout> playout;
+
+   //   wstring wstr(scopedstrText);
+
+   //   HRESULT hr = pfactory->CreateTextLayout(
+   //      wstr,      // The string to be laid out and formatted.
+   //      (::u32)wstr.length(),  // The length of the string.
+   //      pformat,  // The text format to apply to the string (contains font information, etc).
+   //      4096,         // The width of the on_layout box.
+   //      4096,        // The height of the on_layout box.
+   //      &playout  // The IDWriteTextLayout interface pointer.
+   //   );
+
+   //   if (playout == nullptr)
+   //   {
+
+   //      return false;
+
+   //   }
+
+   //   ::direct2d_lock lock(direct2d());
+
+   //   auto & renderer = direct2d()->m_geometrysinktextrenderer;
+
+   //   renderer.m_pgeometrysink = m_psink;
+
+   //   FLOAT dpix = 0.f;
+   //   FLOAT dpiy = 0.f;
+
+   //   pgraphics->m_pd2d1rendertarget->GetDpi(&dpix, &dpiy);
+
+   //   if (dpix <= 0)
+   //   {
+
+   //      renderer.m_dDpi = 96.0;
+
+   //   }
+   //   else
+   //   {
+
+   //      renderer.m_dDpi = dpix;
+
+   //   }
+
+   //   renderer.m_figurebeginOverride = pgraphics->m_bOutline ? D2D1_FIGURE_BEGIN_HOLLOW : D2D1_FIGURE_BEGIN_FILLED;
+
+   //   playout->Draw(nullptr, &renderer, (FLOAT)x, (FLOAT)y);
+
+   //   m_estatus = ::success;
+
+   //   return true;
+
+   //}
 
 
-   //bool path::_set(::draw2d::graphics* pgraphics, ::draw2d::path::close* pclose)
+   //bool path::internal_add_line(::draw2d::graphics* pgraphics, ::f64 x, ::f64 y)
+   //{
+
+   //   if (::is_null(m_psink))
+   //   {
+
+   //      return false;
+
+   //   }
+
+   //   m_psink->AddLine({ (FLOAT) x, (FLOAT)y });
+
+   //   m_pointEnd.x = x;
+
+   //   m_pointEnd.y = y;
+
+   //   m_estatus = ::success;
+
+   //   return true;
+
+   //}
+
+
+   //bool path::internal_start_figure(::draw2d::graphics* pgraphics)
+   //{
+
+   //   if (m_bHasPoint)
+   //   {
+
+   //      internal_end_figure(false);
+
+   //   }
+
+   //   if (m_psink == nullptr)
+   //   {
+
+   //      m_ppath->Open(&m_psink);
+
+   //      if (m_efillmode == ::draw2d::e_fill_mode_winding)
+   //      {
+
+   //         m_psink->SetFillMode(D2D1_FILL_MODE_WINDING);
+
+   //      }
+   //      else if (m_efillmode == ::draw2d::e_fill_mode_alternate)
+   //      {
+
+   //         m_psink->SetFillMode(D2D1_FILL_MODE_ALTERNATE);
+
+   //      }
+
+   //   }
+
+   //   return true;
+
+   //}
+
+
+   //bool path::internal_start_figure(::draw2d::graphics * pgraphics, ::f64 x, ::f64 y)
+   //{
+
+   //   if (!internal_start_figure(pgraphics))
+   //   {
+
+   //      return false;
+
+   //   }
+
+   //   m_psink->BeginFigure({ (FLOAT)x, (FLOAT)y }, pgraphics->m_bOutline ? D2D1_FIGURE_BEGIN_HOLLOW : D2D1_FIGURE_BEGIN_FILLED);
+
+   //   m_pointBegin.x = x;
+   //   m_pointBegin.y = y;
+   //   m_pointEnd.x = x;
+   //   m_pointEnd.y = y;
+
+   //   m_bHasPoint = true;
+
+   //   return true;
+
+   //}
+
+
+   //void * path::detach()
+   //{
+
+   //   return m_ppath.detach();
+
+   //}
+
+
+
+   //bool path::internal_get_arc(::f64_point & pointStart,D2D1_ARC_SEGMENT & arcseg, const ::f64_arc & arc)
+   //{
+
+   //   D2D1_POINT_2F pointCenter;
+
+   //   pointCenter.x = (FLOAT)arc.center().x;
+   //   pointCenter.y = (FLOAT)arc.center().y;
+
+   //   ::f64 rx = arc.radius().cx;
+   //   ::f64 ry = arc.radius().cy;
+
+   //   pointStart.x = arc.m_pointBegin.x;
+   //   pointStart.y = arc.m_pointBegin.y;
+
+   //   arcseg.point.x = (FLOAT)arc.m_pointEnd.x;
+   //   arcseg.point.y = (FLOAT)arc.m_pointEnd.y;
+
+   //   if(arc.m_angleEnd2 > arc.m_angleBeg)
+   //   {
+
+   //      arcseg.sweepDirection = D2D1_SWEEP_DIRECTION_CLOCKWISE;
+
+   //   }
+   //   else
+   //   {
+
+   //      arcseg.sweepDirection = D2D1_SWEEP_DIRECTION_COUNTER_CLOCKWISE;
+
+   //   }
+
+   //   if(fabs(arc.m_angleEnd2 - arc.m_angleBeg) < MATH_PI)
+   //   {
+
+   //      arcseg.arcSize = D2D1_ARC_SIZE_SMALL;
+
+   //   }
+   //   else
+   //   {
+
+   //      arcseg.arcSize = D2D1_ARC_SIZE_LARGE;
+
+   //   }
+
+   //   arcseg.rotationAngle = (FLOAT) arc.m_angleRotation;
+
+   //   arcseg.size.width    = (FLOAT) rx;
+
+   //   arcseg.size.height   = (FLOAT) ry;
+
+   //   return true;
+
+   //}
+
+
+   //void path::create(::draw2d::graphics* pgraphicsParam, ::i8 iCreate)
+   //{
+
+   //   auto pgraphics = __graphics(pgraphicsParam);
+
+   //   HRESULT hr = S_OK;
+
+   //   if (pgraphics->m_bOutline)
+   //   {
+
+   //      if (iCreate == path_hollow)
+   //      {
+
+   //         if (m_ppathHollow)
+   //         {
+
+   //            m_osdata[path_hollow] = m_ppathHollow;
+
+   //            return;
+
+   //         }
+
+   //      }
+
+   //      hr = direct2d()->d2d1_factory1()->CreatePathGeometry(&m_ppathHollow);
+
+   //      m_ppath = m_ppathHollow;
+
+   //   }
+   //   else
+   //   {
+
+   //      if (m_ppathFilled)
+   //      {
+
+   //         m_osdata[path_filled] = m_ppathFilled;
+
+   //         return;
+
+   //      }
+
+   //      hr = direct2d()->d2d1_factory1()->CreatePathGeometry(&m_ppathFilled);
+   //      
+   //      m_ppath = m_ppathFilled;
+
+   //   }
+
+   //   ::defer_throw_hresult(hr);
+
+   //   m_psink  = nullptr;
+
+   //   m_estatus = error_failed;
+
+   //   m_bHasPoint = false;
+
+   //   _set_create(pgraphics);
+
+   //   /*for(::i32 i = 0; i < m_elementa.get_count(); i++)
+   //   {
+
+   //      if (m_elementa.ptr_at(i))
+   //      {
+
+   //         set(pgraphics, m_elementa(i));
+
+   //      }
+
+   //   }*/
+
+   //   if (!m_estatus)
+   //   {
+
+   //      m_ppath = nullptr;
+
+   //   }
+   //   else
+   //   {
+
+   //      if (m_bHasPoint)
+   //      {
+
+   //         internal_end_figure(false);
+
+   //      }
+
+   //      if (m_psink != nullptr)
+   //      {
+
+   //         HRESULT hr = m_psink->Close();
+
+   //         m_osdata[iCreate] = m_ppath;
+
+   //      }
+   //      else
+   //      {
+
+   //         m_ppath = nullptr;
+
+   //      }
+
+   //   }
+
+   //   m_psink = nullptr;
+
+   //   //return m_ppath != nullptr;
+
+   //}
+
+
+   //ID2D1GeometryRealization * path::_get_stroked_geometry_realization(::draw2d::graphics * pgraphicsParam, ::i32 iWidth)
+   //{
+
+   //   auto & prealization = m_mapGeometryHollowRealization[iWidth];
+
+   //   if (!prealization)
+   //   {
+
+   //      ::cast < graphics> pgraphics = pgraphicsParam;
+
+   //      auto pdevicecontext1 = pgraphics->m_pdevicecontext1;
+
+   //      HRESULT hr = pdevicecontext1->CreateStrokedGeometryRealization(
+   //         m_ppathHollow,
+   //         1.0f,
+   //         (FLOAT)iWidth,
+   //         nullptr,
+   //         &prealization);
+
+   //      defer_throw_hresult(hr);
+
+   //   }
+
+   //   return prealization;
+
+   //}
+
+
+   //ID2D1GeometryRealization * path::_get_filled_geometry_realization(::draw2d::graphics * pgraphicsParam)
+   //{
+
+   //   auto & prealization = m_geometryFilledRealization;
+
+   //   if (!prealization)
+   //   {
+
+   //      auto pgraphics = __graphics(pgraphicsParam);
+
+   //      HRESULT hr = pgraphics->m_pdevicecontext1->CreateFilledGeometryRealization(
+   //         m_ppathFilled,
+   //         1.0f,
+   //         &prealization);
+
+   //      defer_throw_hresult(hr);
+
+   //   }
+
+   //   return prealization;
+
+   //}
+
+
+
+   //void * path::detach(::draw2d::graphics* pgraphicsParam)
+   //{
+
+   //   defer_update(pgraphicsParam, 0);
+
+   //   return m_ppath.detach();
+
+   //}
+
+
+   //void path::destroy()
+   //{
+
+   //   destroy_os_data();
+
+   //   ::draw2d::path::destroy();
+
+   //}
+
+
+   //void path::destroy_os_data()
+   //{
+
+   //   m_psink = nullptr;
+
+   //   m_ppath = nullptr;
+
+   //   m_ppathHollow = nullptr;
+
+   //   m_ppathFilled = nullptr;
+
+   //   object::destroy_os_data();
+
+   //}
+
+
+
+   //bool path::create()
+   //{
+
+   //   return true;
+
+   //}
+
+
+   ////bool path::set(::draw2d_direct2d_for_directx11::graphics * pgraphics, const ::draw2d::path::matter & e)
+   ////{
+
+   ////   switch(e.m_etype)
+   ////   {
+   ////   case ::draw2d::path::matter::type_move:
+   ////      set(e.u.m_move);
+   ////      break;
+   ////   case ::draw2d::path::matter::type_arc:
+   ////      set(e.u.m_arc);
+   ////      break;
+   ////   case ::draw2d::path::matter::type_line:
+   ////      set(e.u.m_line);
+   ////      break;
+   ////   case ::draw2d::path::matter::type_rect:
+   ////      set(e.u.m_rectangle);
+   ////      break;
+   ////   case ::draw2d::path::matter::e_type_string:
+   ////      set(pgraphics,e.m_stringpath);
+   ////      break;
+   ////   case ::draw2d::path::matter::type_end:
+   ////      internal_end_figure(e.u.m_end.m_bClose);
+   ////      break;
+   ////   default:
+   ////      throw ::exception(::exception("unexpected simple os graphics matter type"));
+   ////   }
+
+   ////   return false;
+
+   ////}
+
+
+   //bool path::_set(::draw2d::graphics * pgraphics, const ::f64_arc & arc)
    //{
 
    //   //::f64_rectangle rectangle;
@@ -964,10 +689,57 @@ namespace draw2d_direct2d
 
    //   //return bOk;
 
-   //   if (m_bFigureOpened)
+   //   return internal_add_arc(pgraphics, arc);
+
+   //}
+
+
+   //bool path::_set(::draw2d::graphics* pgraphics, const ::draw2d::enum_item & eitem)
+   //{
+
+   //   if (eitem == ::draw2d::e_item_begin_figure)
    //   {
 
-   //      internal_end_figure(true);
+   //      if (m_bHasPoint)
+   //      {
+
+   //         internal_end_figure(false);
+
+   //      }
+
+   //      return true;
+
+   //   }
+   //   else if (eitem == ::draw2d::e_item_close_figure)
+   //   {
+
+   //      if (m_bHasPoint)
+   //      {
+
+   //         internal_end_figure(true);
+
+   //      }
+
+   //      return true;
+
+   //   }
+   //   else if (eitem == ::draw2d::e_item_end_figure)
+   //   {
+
+   //      if (m_bHasPoint)
+   //      {
+
+   //         internal_end_figure(false);
+
+   //      }
+
+   //      return true;
+
+   //   }
+   //   else
+   //   {
+
+   //      return ::draw2d::path::_set(pgraphics, eitem);
 
    //   }
 
@@ -976,7 +748,237 @@ namespace draw2d_direct2d
    //}
 
 
-} // namespace draw2d_direct2d
+   ////bool path::_set(const ::draw2d::path::move & move)
+   ////{
+
+   ////   return internal_add_move((::i32) move.m_x, (::i32) move.m_y);
+
+   ////}
+
+
+   //bool path::_set(::draw2d::graphics* pgraphics, const ::f64_line & line)
+   //{
+
+   //   if (line.m_p1 != m_pointEnd || ::is_null(m_psink))
+   //   {
+
+   //      if (!internal_start_figure(pgraphics, line.m_p1.x, line.m_p1.y))
+   //      {
+
+   //         return false;
+
+   //      }
+
+   //   }
+
+   //   return internal_add_line(pgraphics, line.m_p2.x, line.m_p2.y);
+
+   //}
+
+
+   ////bool path::_set(::draw2d::graphics* pgraphics, const ::line & line)
+   ////{
+
+   ////   if (line.m_p1 != m_pointEnd || !m_bFigureOpened)
+   ////   {
+
+   ////      if (!internal_start_figure(pgraphics, line.m_p1.x, line.m_p1.y))
+   ////      {
+
+   ////         return false;
+
+   ////      }
+
+   ////      m_pointEnd = line.m_p1;
+
+   ////   }
+
+   ////   return internal_add_line(pgraphics, line.m_p2.x, line.m_p2.y);
+
+   ////}
+
+
+   //bool path::_set(::draw2d::graphics* pgraphics, const ::f64_rectangle & rectangle)
+   //{
+
+   //   return internal_add_rectangle(pgraphics, rectangle.left, rectangle.top, rectangle.width(), rectangle.height());
+
+   //}
+
+
+   ////bool path::_set(::draw2d::graphics* pgraphics, const ::f64_rectangle& rectangle)
+   ////{
+
+   ////   return internal_add_rect(pgraphics, rectangle.left, rectangle.top, rectangle.width(), rectangle.height());
+
+   ////}
+
+
+   //bool path::_set(::draw2d::graphics * pgraphics, const ::f64_ellipse & ellipse)
+   //{
+
+   //   return internal_add_ellipse(pgraphics, ellipse.left, ellipse.top, ellipse.width(), ellipse.height());
+
+   //}
+
+
+
+   //bool path::_set(::draw2d::graphics* pgraphics, const ::f64_lines & lines)
+   //{
+
+   //   return internal_add_lines(pgraphics, (const ::i32_point_array &) lines, false);
+
+   //}
+
+
+   ////bool path::_set(::draw2d::graphics* pgraphics, const ::linesd& lines)
+   ////{
+
+   ////   return internal_add_lines(pgraphics, (const ::f64_point_array&) lines, false);
+
+   ////}
+
+
+   //bool path::_set(::draw2d::graphics* pgraphics, const ::f64_polygon & polygon)
+   //{
+
+   //   return internal_add_lines(pgraphics, (const ::f64_point_array&)polygon, true);
+
+   //}
+
+   ////bool path::_set(::draw2d::graphics* pgraphics, const ::f64_polygon& i32_polygon)
+   ////{
+
+   ////   return internal_add_lines(pgraphics, (const ::f64_point_array&)i32_polygon, true);
+
+   ////}
+
+
+   //bool path::_set(::draw2d::graphics * pgraphics, const ::write_text::text_out & textout)
+   //{
+
+   //   ::pointer < ::draw2d_direct2d_for_directx11::graphics > pgraphicsDraw2dDirect2d = pgraphics;
+
+   //   auto bOk = internal_add_string(
+   //      pgraphicsDraw2dDirect2d,
+   //      textout.m_point.x,
+   //      textout.m_point.y,
+   //      textout.m_strText,
+   //      textout.m_pfont);
+
+   //   if (!bOk)
+   //   {
+
+   //      return false;
+
+   //   }
+
+   //   return true;
+
+   //   //IDWriteTextFormat * pformat = textout.m_pfont->get_os_data < IDWriteTextFormat * >(pgraphicsParam);
+
+   //   //IDWriteFactory * pfactory = m_pdirect2d->dwrite_factory();
+
+   //   //comptr<IDWriteTextLayout> playout;
+
+   //   //wstring wstr(textout.m_strText);
+
+   //   //HRESULT hr = pfactory->CreateTextLayout(
+   //   //   wstr,      // The string to be laid out and formatted.
+   //   //   (::u32)wstr.length(),  // The length of the string.
+   //   //   pformat,  // The text format to apply to the string (contains font information, etc).
+   //   //   4096,         // The width of the on_layout box.
+   //   //   4096,        // The height of the on_layout box.
+   //   //   &playout  // The IDWriteTextLayout interface pointer.
+   //   //);
+
+   //   //if (playout == nullptr)
+   //   //{
+
+   //   //   return false;
+
+   //   //}
+
+   //   //auto pgraphics = pgraphicsParam->cast < ::draw2d_direct2d_for_directx11::graphics>();
+
+   //   ////if (m_psink == nullptr)
+   //   ////{
+
+   //   ////   hr = m_ppath->Open(&m_psink);
+
+   //   ////}
+
+   //   ////CustomTextRenderer renderer(m_pdirect2d->d2d1_factory1(), m_psink);
+
+   //   ////defer_text_primitive_blend();
+
+   //   ////defer_text_rendering_hint();
+
+   //   //synchronous_lock lock(::direct2d::get()->synchronization());
+
+   //   //auto & renderer = ::direct2d::get()->m_geometrysinktextrenderer;
+
+   //   //renderer.m_pgeometrysink = m_psink;
+
+   //   //FLOAT dpix, dpiy;
+
+   //   //if (SUCCEEDED(pgraphics->m_prendertarget->GetDpi(dpix, dpiy))
+   //   //{
+
+   //   //   renderer.m_dDpi = dpix;
+
+   //   //}
+   //   //else
+   //   //{
+
+   //   //   renderer.m_dDpi = 96.0;
+
+   //   //}
+
+   //   //renderer.m_figurebeginOverride = pgraphics->m_bOutline ? D2D1_FIGURE_BEGIN_HOLLOW : D2D1_FIGURE_BEGIN_FILLED;
+
+   //   //playout->Draw(nullptr, &renderer, (FLOAT)textout.m_point.x, (FLOAT)textout.m_point.y);
+
+   //   //return true;
+
+   //}
+
+
+   //bool path::_set(::draw2d::graphics* pgraphics, const ::write_text::draw_text & drawtext)
+   //{
+
+   //   return true;
+
+   //}
+
+
+   ////bool path::_set(::draw2d::graphics* pgraphics, ::draw2d::path::close* pclose)
+   ////{
+
+   ////   //::f64_rectangle rectangle;
+
+   ////   //rectangle.left      = (::i32) (arc.m_pointCenter.x - arc.m_sizeRadius.cx);
+   ////   //rectangle.right     = (::i32) (arc.m_pointCenter.x + arc.m_sizeRadius.cx);
+   ////   //rectangle.top       = (::i32) (arc.m_pointCenter.y - arc.m_sizeRadius.cy);
+   ////   //rectangle.bottom    = (::i32) (arc.m_pointCenter.y + arc.m_sizeRadius.cy);
+
+   ////   //bool bOk = internal_add_arc(pgraphics, parc);
+
+   ////   //return bOk;
+
+   ////   if (m_bFigureOpened)
+   ////   {
+
+   ////      internal_end_figure(true);
+
+   ////   }
+
+   ////   return true;
+
+   ////}
+
+
+} // namespace draw2d_direct2d_for_directx11
 
 
 
@@ -1110,7 +1112,7 @@ namespace draw2d_direct2d
 //      return S_OK;
 //   }
 //
-//   ::draw2d_direct2d::path * dc = static_cast<::draw2d_direct2d::path*>(clientDrawingContext);
+//   ::draw2d_direct2d_for_directx11::path * dc = static_cast<::draw2d_direct2d_for_directx11::path*>(clientDrawingContext);
 //   HRESULT hr = glyphRun->pfontFace->GetGlyphRunOutline(
 //                glyphRun->pfontEmSize,
 //                glyphRun->glyphIndices,
@@ -1226,7 +1228,7 @@ namespace draw2d_direct2d
 //}
 //
 //
-//namespace draw2d_direct2d
+//namespace draw2d_direct2d_for_directx11
 //{
 //   void path::CreatePathTextRenderer(FLOAT pixelsPerDip, IDWriteTextRenderer **textRenderer)
 //   {
@@ -1238,4 +1240,4 @@ namespace draw2d_direct2d
 //      newRenderer = nullptr;
 //   }
 //
-//} // namespace draw2d_direct2d
+//} // namespace draw2d_direct2d_for_directx11

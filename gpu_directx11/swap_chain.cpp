@@ -1,6 +1,6 @@
 // Created by camilo on 2025-06-10 18:26 <3ThomasBorregaardSørensen!!
 #include "framework.h"
-#include "draw2d_window_attachment.h"
+#include "window_attachment.h"
 #include "renderer.h"
 #include "shader.h"
 #include "swap_chain.h"
@@ -181,7 +181,7 @@ namespace gpu_directx11
 
       pgpucontext->m_pcontext->OMSetRenderTargets(1, nullRTV, nullptr);
 
-      m_size = pgpucontext->m_rectangle.size();
+      m_size = pgpucontext->size();
 
       ::cast < ::gpu_directx11::device > pgpudevice = pgpucontext->m_pgpudevice;
 
@@ -194,11 +194,11 @@ namespace gpu_directx11
 
       }
 
-      auto pgpudraw2dwindowattachment = ::gpu::draw2d_window_attachment::get(m_pgpucontext);
+      auto pgpuwindowattachment = ::gpu::window_attachment::get(m_pgpucontext);
 
-      pgpudraw2dwindowattachment->m_iCurrentImage = uBackBufferIndex;
+      pgpuwindowattachment->m_iCurrentImage = uBackBufferIndex;
 
-      auto & ptextureSwapChain = m_textureaSwapChain.atø(pgpudraw2dwindowattachment->m_iCurrentImage);
+      auto & ptextureSwapChain = m_textureaSwapChain.atø(pgpuwindowattachment->m_iCurrentImage);
 
       if (!ptextureSwapChain)
       {
@@ -213,7 +213,7 @@ namespace gpu_directx11
          ptextureSwapChain->_initialize_gpu_texture(
             pgpucontext,
             m_pdxgiswapchain1,
-            (::u32) pgpudraw2dwindowattachment->m_iCurrentImage);
+            (::u32) pgpuwindowattachment->m_iCurrentImage);
 
          //m_pdxgiswapchain1->GetBuffer(0, __interface_of(ptextureSwapChain));
 

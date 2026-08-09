@@ -3,9 +3,13 @@
 #include "graphics.h"
 #include "aura/graphics/draw2d/lock.h"
 #include "aura/graphics/draw2d/device_lock.h"
+#include "bred/gpu/layer.h"
+#include "gpu_directx11/context.h"
+#include "gpu_directx11/renderer.h"
+#include "gpu_directx11/texture.h"
 
 
-namespace draw2d_direct2d
+namespace draw2d_direct2d_for_directx11
 {
 
 
@@ -26,17 +30,83 @@ namespace draw2d_direct2d
 
    void bitmap::create_bitmap_for_image(
       ::image::image * pimage,
-      ::acme::user::interaction * pacmeuserinteractionAffinity)
+      ::acme::user::interaction * pacmeuserinteractionAffinity,
+      ::draw2d::graphics * pgraphics)
    {
 
       ::draw2d::bitmap::create_bitmap_for_image(
          pimage,
-         pacmeuserinteractionAffinity);
+         pacmeuserinteractionAffinity,
+         pgraphics);
 
    }
 
 
-   void bitmap::CreateBitmap(::draw2d::graphics* pgraphics, const ::i32_size& sizeParam, ::u32 nPlanes, ::u32 nBitcount, const void * lpBits, ::i32 stride)
+   void bitmap::_create_from_dxgi_surface(::i32 iIndex, ::i32 iLayerIndex, IDXGISurface * pdxgisurface, ::draw2d_direct2d_for_directx11::graphics * pdraw2dgraphics)
+   {
+
+      ::cast < ::draw2d_direct2d_for_directx11::graphics > pgraphics = pdraw2dgraphics;
+
+      ::cast< ::gpu_directx11::context > pgpucontext = pgraphics->m_pgpucontextOwned;
+      ::cast< ::gpu_directx11::device > pgpudevice = pgpucontext->m_pgpudevice;
+      ::cast< ::gpu_directx11::renderer > prenderer = pgraphics->m_pgpucontextOwned->get_gpu_renderer();
+      auto prendertarget = prenderer->render_target();
+      //::cast < ::gpu_directx11::render_target_view > prendertargetview = prenderer->render_target();
+      //::cast < ::gpu_directx11::offscreen_render_target_view > poffscreenrendertargetview = prendertargetview;
+      //::cast< ::gpu_directx11::device > pgpudevice = pgraphics->m_pgpucontextLease.m_p->m_pgpudevice;
+      ID3D11Device * device = pgpudevice->m_pd3d11device;
+      ID3D11DeviceContext * context = pgpucontext->m_pcontext;
+      //::cast < ::gpu_directx11::texture > ptexture = prendertarget->current_texture(::gpu::current_layer());
+      //ID3D11Texture2D * offscreenTexture = ptexture->m_ptextureOffscreen;
+      if (!device || !context || !pdxgisurface)
+      {
+         throw ::exception(error_wrong_state);
+      }
+
+
+
+      //D3D11_TEXTURE2D_DESC texDesc = {};
+      //texDesc.Width = width;
+      //texDesc.Height = height;
+      //texDesc.MipLevels = 1;
+      //texDesc.ArraySize = 1;
+      //texDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
+      //texDesc.SampleDesc.Count = 1;
+      //texDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
+      //texDesc.MiscFlags = D3D11_RESOURCE_MISC_SHARED;
+
+      // ... Create texture using device->CreateTexture2D
+
+      // 2. Wrap the texture in a DXGI surface
+      //comptr<IDXGISurface> dxgiSurface;
+      //offscreenTexture->QueryInterface(IID_PPV_ARGS(&dxgiSurface));
+
+      // 3. Create the Direct2D bitmap
+      D2D1_BITMAP_PROPERTIES1 bitmapProps =
+         D2D1::BitmapProperties1(
+            D2D1_BITMAP_OPTIONS_TARGET,
+            D2D1::PixelFormat(DXGI_FORMAT_B8G8R8A8_UNORM, D2D1_ALPHA_MODE_PREMULTIPLIED)
+         );
+
+      auto hrCreateBitmapFromDxgiSurface = pgraphics->m_pdevicecontext->CreateBitmapFromDxgiSurface(
+         pdxgisurface,
+         &bitmapProps,
+         &m_pbitmap1
+      );
+
+      if (FAILED(hrCreateBitmapFromDxgiSurface))
+      {
+
+         throw ::hresult_exception(hrCreateBitmapFromDxgiSurface);
+
+      }
+
+      m_pbitmap1.as(m_pbitmap);
+
+   }
+
+
+   void bitmap::CreateBitmap(::draw2d::graphics* pdraw2dgraphics, const ::i32_size& sizeParam, ::u32 nPlanes, ::u32 nBitcount, const void * lpBits, ::i32 stride)
    {
 
       //::draw2d::lock draw2dlock;
@@ -50,48 +120,87 @@ namespace draw2d_direct2d
 
       }
 
-      D2D1_SIZE_U size;
-
-      size.width = sizeParam.cx;
-      size.height = sizeParam.cy;
-
-      D2D1_BITMAP_PROPERTIES props;
-
-      props.pixelFormat.alphaMode = D2D1_ALPHA_MODE_PREMULTIPLIED;
-      props.pixelFormat.format = DXGI_FORMAT_B8G8R8A8_UNORM;
-
-      draw2d_direct2d::graphics * pgraphics2d = dynamic_cast < ::draw2d_direct2d::graphics * > (pgraphics);
-
-      pgraphics2d->m_pd2d1rendertarget->GetDpi(&props.dpiX, &props.dpiY); // Thank you https://repo.anl-external.org/repos/BlueTBB/tbb41_20130314oss/examples/common/gui/d2dvideo.cpp
-
-      //props.bitmapOptions = D2D1_BITMAP_OPTIONS_TARGET | D2D1_BITMAP_OPTIONS_CANNOT_DRAW;
-      //props.colorContext = nullptr;
-
-      //if(ppdata != nullptr)
+      if (::is_set(lpBits))
       {
-         // g.m_pdc->CreateBitmap(size, *ppdata, cx * sizeof(::color32_t), props, &m_pbitmap);
+
+         pixmap_t pixmap;
+
+         pixmap.m_size = sizeParam;
+         pixmap.m_sizeRaw = sizeParam;
+         pixmap.m_iScan = stride;
+         pixmap.m_pimage32 = (::image32_t *)lpBits;
+         pixmap.m_pimage32Raw = (::image32_t *)lpBits;
+
+         _create_gpu_bitmap(sizeParam, &pixmap);
+
       }
-      //else
+      else
+      {
+
+         _create_gpu_bitmap(sizeParam);
+
+      }
+
+      ::cast < ::gpu_directx11::texture > ptexture = m_pgputexture;
+
+      auto & pdxgisurface = ptexture->m_pdxgisurface;
+
+      if (!pdxgisurface)
+      {
+
+         ptexture->m_ptextureOffscreen.as(pdxgisurface);
+
+      }
+
+      ::cast < ::draw2d_direct2d_for_directx11::graphics > pgraphics = pdraw2dgraphics;
+
+      _create_from_dxgi_surface(0, 0, pdxgisurface, pgraphics);
+
+      //D2D1_SIZE_U size;
+
+      //size.width = sizeParam.cx;
+      //size.height = sizeParam.cy;
+
+      //D2D1_BITMAP_PROPERTIES1 props;
+
+      //props.pixelFormat.alphaMode = D2D1_ALPHA_MODE_PREMULTIPLIED;
+      //props.pixelFormat.format = DXGI_FORMAT_B8G8R8A8_UNORM;
+
+      //draw2d_direct2d_for_directx11::graphics * pgraphics2d = dynamic_cast < ::draw2d_direct2d_for_directx11::graphics * > (pgraphics);
+
+      //pgraphics2d->m_pd2d1rendertarget->GetDpi(&props.dpiX, &props.dpiY); // Thank you https://repo.anl-external.org/repos/BlueTBB/tbb41_20130314oss/examples/common/gui/d2dvideo.cpp
+
+      ////props.bitmapOptions = D2D1_BITMAP_OPTIONS_TARGET | D2D1_BITMAP_OPTIONS_CANNOT_DRAW;
+      //props.bitmapOptions = D2D1_BITMAP_OPTIONS_TARGET;
+      ////props.colorContext = nullptr;
+
+      ////if(ppdata != nullptr)
       //{
-      HRESULT hr = ((ID2D1DeviceContext *)pgraphics->get_os_data())->CreateBitmap(size, lpBits, stride, props, &m_pbitmap);
+      //   // g.m_pdc->CreateBitmap(size, *ppdata, cx * sizeof(::color32_t), props, &m_pbitmap);
+      //}
+      ////else
+      ////{
+      //HRESULT hr = ((ID2D1DeviceContext *)pgraphics->get_os_data())->CreateBitmap(size, lpBits, stride, props, &m_pbitmap1);
+
+      ////}
+
+      //if (FAILED(hr))
+      //{
+
+      //   throw ::exception(error_failed);
 
       //}
 
-      if (FAILED(hr))
-      {
+      //m_pbitmap1.as(m_pbitmap);
 
-         throw ::exception(error_failed);
+      ////zero(m_map);
+      ////    m_pbitmap->Map(D2D1_MAP_OPTIONS_READ | D2D1_MAP_OPTIONS_WRITE, &m_map);
+      ////
+      ////if(ppdata != nullptr)
+      //// *ppdata = (::color::color *) m_map.bits;
+      //m_osdata[0] = m_pbitmap;
 
-      }
-
-      //zero(m_map);
-      //    m_pbitmap->Map(D2D1_MAP_OPTIONS_READ | D2D1_MAP_OPTIONS_WRITE, &m_map);
-      //
-      //if(ppdata != nullptr)
-      // *ppdata = (::color::color *) m_map.bits;
-      m_osdata[0] = m_pbitmap;
-
-      //return true;
+      ////return true;
 
    }
 
@@ -130,7 +239,7 @@ namespace draw2d_direct2d
 
       props.pixelFormat.format = DXGI_FORMAT_B8G8R8A8_UNORM;
 
-      draw2d_direct2d::graphics * pgraphics2d = dynamic_cast < ::draw2d_direct2d::graphics * > (pgraphics);
+      draw2d_direct2d_for_directx11::graphics * pgraphics2d = dynamic_cast < ::draw2d_direct2d_for_directx11::graphics * > (pgraphics);
 
       if (!::is_set(pgraphics2d))
       {
@@ -304,7 +413,7 @@ namespace draw2d_direct2d
       props.pixelFormat.alphaMode = D2D1_ALPHA_MODE_PREMULTIPLIED;
       props.pixelFormat.format = DXGI_FORMAT_B8G8R8A8_UNORM_SRGB;
 
-      draw2d_direct2d::graphics * pgraphics2d = dynamic_cast < ::draw2d_direct2d::graphics * > (pgraphics);
+      draw2d_direct2d_for_directx11::graphics * pgraphics2d = dynamic_cast < ::draw2d_direct2d_for_directx11::graphics * > (pgraphics);
 
       pgraphics2d->m_pd2d1rendertarget->GetDpi(&props.dpiX, &props.dpiY); // Thanks again and a third time https://repo.anl-external.org/repos/BlueTBB/tbb41_20130314oss/examples/common/gui/d2dvideo.cpp      props.bitmapOptions = D2D1_BITMAP_OPTIONS_CPU_READ | D2D1_BITMAP_OPTIONS_CANNOT_DRAW;
 
@@ -354,7 +463,7 @@ namespace draw2d_direct2d
       props.pixelFormat.alphaMode = D2D1_ALPHA_MODE_PREMULTIPLIED;
       props.pixelFormat.format = DXGI_FORMAT_B8G8R8A8_UNORM_SRGB;
 
-      draw2d_direct2d::graphics * pgraphics2d = dynamic_cast < ::draw2d_direct2d::graphics * > (pgraphics);
+      draw2d_direct2d_for_directx11::graphics * pgraphics2d = dynamic_cast < ::draw2d_direct2d_for_directx11::graphics * > (pgraphics);
 
       pgraphics2d->m_pd2d1rendertarget->GetDpi(&props.dpiX, &props.dpiY); // One more time, Thank you very much https://repo.anl-external.org/repos/BlueTBB/tbb41_20130314oss/examples/common/gui/d2dvideo.cpp      props.bitmapOptions = D2D1_BITMAP_OPTIONS_CPU_READ | D2D1_BITMAP_OPTIONS_CANNOT_DRAW;
 
@@ -460,4 +569,4 @@ namespace draw2d_direct2d
    }
 
 
-} // namespace draw2d_direct2d
+} // namespace draw2d_direct2d_for_directx11

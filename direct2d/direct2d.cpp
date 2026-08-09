@@ -329,31 +329,31 @@ namespace direct2d
 
 
 
-   CLASS_DECL_DIRECT2D direct2d* from_gpu_device(::gpu::device* pgpudevice)
-   {
+   //CLASS_DECL_DIRECT2D direct2d* from_gpu_device(::gpu::device* pgpudevice)
+   //{
 
-      ::cast < direct2d > pdirect2d = pgpudevice->payload("direct2d").get_subparticle();
+   //   ::cast < direct2d > pdirect2d = pgpudevice->payload("direct2d").get_subparticle();
 
-      if (!pdirect2d)
-      {
+   //   if (!pdirect2d)
+   //   {
 
-         ::pointer < direct2d > pdirect2dNew;
+   //      ::pointer < direct2d > pdirect2dNew;
 
-         pgpudevice->construct_newø(pdirect2dNew);
+   //      pgpudevice->construct_newø(pdirect2dNew);
 
-         ::cast < ::dxgi_device_source > pdxgidevicesource = pgpudevice;
+   //      ::cast < ::dxgi_device_source > pdxgidevicesource = pgpudevice;
 
-         pdirect2dNew->initialize_direct2d(pdxgidevicesource);
+   //      pdirect2dNew->initialize_direct2d(pdxgidevicesource);
 
-         pgpudevice->payload("direct2d") = pdirect2dNew;
-         
-         pdirect2d = pgpudevice->payload("direct2d").get_subparticle();
+   //      pgpudevice->payload("direct2d") = pdirect2dNew;
+   //      
+   //      pdirect2d = pgpudevice->payload("direct2d").get_subparticle();
 
-      }
+   //   }
 
-      return pdirect2d;
+   //   return pdirect2d;
 
-   }
+   //}
 
 
    static ::pointer<::direct2d::direct2d> g_pdirect2d;

@@ -55,7 +55,8 @@ namespace draw2d_direct2d
 
       void create_bitmap_for_image(
          ::image::image * pimage,
-         ::acme::user::interaction * pacmeuserinteractionAffinity = nullptr) override;
+         ::acme::user::interaction * pacmeuserinteractionAffinity = nullptr,
+         ::draw2d::graphics * pgraphics = nullptr) override;
       void _create_bitmap(
          ::draw2d::graphics * pgraphics,
          const ::i32_size & size,

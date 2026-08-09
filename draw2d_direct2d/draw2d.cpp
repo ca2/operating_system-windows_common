@@ -2,6 +2,7 @@
 #include "draw2d.h"
 #include "direct2d/direct2d.h"
 #include "image.h"
+#include "window_attachment.h"
 #include "acme/platform/node.h"
 #include "aura/windowing/window.h"
 
@@ -63,6 +64,15 @@ namespace draw2d_direct2d
 
    
    }
+
+
+   ::pointer < ::draw2d::window_attachment > draw2d::allocate_draw2d_window_attachment(::acme::windowing::window * pacmewindowingwindow)
+   {
+
+      return create_newø<::draw2d_direct2d::window_attachment >();
+
+   }
+
 
 
    //::mutex * draw2d::_generic_d2d1_device_context_mutex()

@@ -5,12 +5,12 @@
 #include "object.h"
 
 
-namespace draw2d_direct2d
+namespace draw2d_direct2d_for_directx11
 {
 
 
-   class CLASS_DECL_DRAW2D_DIRECT2D font :
-      virtual public ::draw2d_direct2d::object,
+   class CLASS_DECL_DRAW2D_DIRECT2D_FOR_DIRECTX11 font :
+      virtual public ::draw2d_direct2d_for_directx11::object,
       virtual public ::write_text::font
    {
    public:
@@ -64,7 +64,7 @@ namespace draw2d_direct2d
    };
 
 
-} // namespace draw2d_direct2d
+} // namespace draw2d_direct2d_for_directx11
 
 
 

@@ -29,7 +29,7 @@ namespace draw2d_direct2d
 
       };
 
-      ::pointer < ::particle > m_pSwapChainForBlitting;
+      //::pointer < ::particle > m_pSwapChainForBlitting;
       //::array < ::array < ::comptr < IDXGISurface > > > m_dxgisurfaceaBound;
 
       ::i32                                                m_iLayerCount;
@@ -89,12 +89,14 @@ namespace draw2d_direct2d
       bool _draw_blend(const ::image::image_drawing & imagedrawing) override;
 
 
+      void set_target_image(::image::image * pimage) override;
+
       ////bool IsPrinting() override;            // true if being used for printing
 
       ////void start_layer(::e_graphics egraphics) override;
       ////void end_layer(::e_graphics egraphics) override;
-      //void start_layer(bool bFirstLayer = false) override;
-      //void end_layer(bool bClosingLayer = false) override;
+      void start_layer(bool bFirstLayer = false) override;
+      void end_layer(bool bClosingLayer = false) override;
       //
       ////void on_begin_draw1() override;
       ////void on_end_draw1() override;
@@ -162,6 +164,7 @@ namespace draw2d_direct2d
       //              const_char_pointer pszOutput, const void * lpInitData) override;
       //bool CreateIC(const ::scoped_string & scopedstrDriverName, const ::scoped_string & scopedstrDeviceName,
       //              const_char_pointer pszOutput, const void * lpInitData) override;
+      void create_for_window_draw2d(::user::interaction * puserinteraction, const ::i32_size & size) override;
       void create_for_image(::image::image *pimage) override;
       void _create_memory_graphics(const ::i32_size &size, ::acme::user::interaction * pacmeuserinteractionAffinity) override;
       //void create_compatible_graphics(::draw2d::graphics * pgraphics) override;

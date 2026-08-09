@@ -1,35 +1,34 @@
 #pragma once
 
 
-#include "acme/prototype/prototype/memory.h"
-#include "aura/graphics/draw2d/bitmap.h"
-#include "object.h"
+#include "bred/gpu/bitmap.h"
+#include "draw2d_direct2d/bitmap.h"
 
 
-namespace draw2d_direct2d
+namespace draw2d_direct2d_for_directx11
 {
 
 
-   class CLASS_DECL_DRAW2D_DIRECT2D bitmap :
-      virtual public ::draw2d_direct2d::object,
-      virtual public ::draw2d::bitmap
+   class CLASS_DECL_DRAW2D_DIRECT2D_FOR_DIRECTX11 bitmap :
+      virtual public ::draw2d_direct2d::bitmap,
+      virtual public ::gpu::bitmap
 
    {
    public:
 
 
-      enum e_data
-      {
+      //enum e_data
+      //{
 
-         data_bitmap,
-         data_bitmap1,
+      //   data_bitmap,
+      //   data_bitmap1,
 
-      };
+      //};
 
 
-      comptr<ID2D1Bitmap>                    m_pbitmap;
-      comptr<ID2D1Bitmap1>                   m_pbitmap1;
-      memory                                 m_memory;
+      //comptr<ID2D1Bitmap>                    m_pbitmap;
+      //comptr<ID2D1Bitmap1>                   m_pbitmap1;
+      //memory                                 m_memory;
 
 
 
@@ -50,9 +49,11 @@ namespace draw2d_direct2d
       bool LoadOEMBitmap(::u32 nIDBitmap); // for OBM_/OCR_/OIC_
 
 
+      void _create_from_dxgi_surface(::i32 iIndex, ::i32 iLayerIndex, IDXGISurface * pdxgisurface, ::draw2d_direct2d_for_directx11::graphics * pgraphics);
       void create_bitmap_for_image(
          ::image::image * pimage,
-         ::acme::user::interaction * pacmeuserinteractionAffinity = nullptr) override;
+         ::acme::user::interaction * pacmeuserinteractionAffinity = nullptr,
+         ::draw2d::graphics * pgraphics = nullptr) override;
       virtual void CreateBitmap(::draw2d::graphics * pgraphics, const ::i32_size& size, ::u32 nPlanes, ::u32 nBitcount, const void * lpBits, ::i32 stride) override;
       virtual bool CreateBitmapIndirect(::draw2d::graphics * pgraphics, LPBITMAP lpBitmap);
       virtual void CreateCompatibleBitmap(::draw2d::graphics * pgraphics, ::i32 nWidth, ::i32 nHeight);
@@ -80,7 +81,7 @@ namespace draw2d_direct2d
    };
 
 
-} // namespace draw2d_direct2d
+} // namespace draw2d_direct2d_for_directx11
 
 
 

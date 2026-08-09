@@ -1,15 +1,21 @@
+// Created by camilo on 2026-08-07 18:11 <3ThomasBorregaardSørensen!! Mummi!! bilbo!!
 #include "framework.h"
+#include "bitmap.h"
 #include "image.h"
 #include "graphics.h"
+#include "acme/platform/application.h"
+#include "apex/gpu/approach.h"
 #include "aura/graphics/draw2d/lock.h"
 #include "aura/graphics/draw2d/device_lock.h"
 #include "aura/graphics/image/context.h"
 #include "aura/graphics/image/icon.h"
 #include "aura/graphics/image/drawing.h"
+#include "aura/user/user/interaction.h"
 #include "bred/gpu/context_lock.h"
+#include "gpu_directx11/texture.h"
 
 
-namespace draw2d_direct2d
+namespace draw2d_direct2d_for_directx11
 {
 
 
@@ -27,6 +33,30 @@ namespace draw2d_direct2d
    {
 
       destroy();
+
+   }
+
+
+   void image::create_gpu_texture_image(::gpu::texture * pgputexture, ::gpu::graphics * pgpugraphics)
+   {
+
+      ::cast < ::gpu_directx11::texture > ptexture = pgputexture;
+
+      auto pdraw2dbitmap = createø<::draw2d::bitmap>();
+
+      ::cast < ::draw2d_direct2d_for_directx11::bitmap > pbitmap = pdraw2dbitmap;
+
+      ::cast < ::draw2d_direct2d_for_directx11::graphics > pgraphics = pgpugraphics;
+
+      ::comptr < IDXGISurface > pdxgisurface;
+
+      pbitmap->m_pgputexture = ptexture;
+
+      ptexture->m_ptextureOffscreen.as(pdxgisurface);
+
+      pbitmap->_create_from_dxgi_surface(0, 0, pdxgisurface, pgraphics);
+
+      m_pbitmap = pbitmap;
 
    }
 
@@ -75,123 +105,235 @@ namespace draw2d_direct2d
    }
 
 
-   void image::create_ex(const ::i32_size & size, ::image32_t * pimage32, ::i32 iScan, ::enum_flag eflagCreate, ::i32 iGoodStride, bool bPreserve)
+//   void image::create_ex(const ::i32_size & size, ::image32_t * pimage32, ::i32 iScan, ::enum_flag eflagCreate, ::i32 iGoodStride, bool bPreserve)
+//   {
+//
+//      //::draw2d::lock draw2dlock;
+//
+//      //::draw2d::device_lock devicelock(this);
+//
+//      auto sizeCurrent = this->size();
+//
+//      if (m_pbitmap.is_set() && size == sizeCurrent)
+//      {
+//
+//         //return true;
+//
+//         return;
+//
+//      }
+//
+//      destroy();
+//
+//      if (size.is_empty())
+//      {
+//
+//         throw ::exception(error_failed);
+//
+//      }
+//
+//      ::i32 iStride = size.cx * 4;
+//
+//      if (iGoodStride > iStride)
+//      {
+//
+//         iStride = iGoodStride;
+//
+//      }
+//
+//      //m_info.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+//      //m_info.bmiHeader.biWidth = size.cx;
+//      //m_info.bmiHeader.biHeight = -size.cy;
+//      //m_info.bmiHeader.biPlanes = 1;
+//      //m_info.bmiHeader.biBitCount = 32;
+//      //m_info.bmiHeader.biCompression = BI_RGB;
+//      //m_info.bmiHeader.biSizeImage = iStride * size.cy;
+//
+//      ::draw2d::bitmap_pointer         pbitmap;
+//      ::draw2d::graphics_pointer       pgraphics;
+//
+//      constructø(pbitmap);
+//      constructø(pgraphics);
+//
+//      if (::is_null(pbitmap) || ::is_null(pgraphics))
+//      {
+//
+//         throw ::exception(error_failed);
+//
+//      }
+//
+//      pgraphics->create_memory_graphics(size);
+//
+//      create_from_graphics(pgraphics);
+//
+//      //pbitmap->create_bitmap(pgraphics, size, &pimage32,nullptr, &iScan);
+//
+//      //if (!pbitmap->create_bitmap(pgraphics, size, (void **)&pimage32, &iScan))
+//      //{
+//
+//      //   return false;
+//
+//      //}
+//
+//      //if (pbitmap->m_osdata[0] == nullptr)
+//      //{
+//
+//      //   return;
+//
+//      //}
+//
+//      ////auto estatus = 
+//      //
+//      //pgraphics->set(pbitmap);
+//
+//      //if (!estatus)
+//      //{
+//
+//      //   return false;
+//
+//      //}
+//
+//      //m_pgraphics = pgraphics;
+//
+//      m_pbitmap = pbitmap;
+//
+//      m_sizeRaw = size;
+//
+//      m_size = m_sizeRaw;
+//
+//      m_bMapped = false;
+//
+//      //((ID2D1DeviceContext *)m_pgraphics->get_os_data())->BeginDraw();
+//
+//      m_hrEndDraw = S_OK;
+////
+//  //    m_pgraphics->m_pimage = this;
+//
+//      set_flag(eflagCreate);
+//
+//      //return true;
+//
+//   }
+
+
+   void image::create_as_render_target(const ::i32_size & sizeRaw, ::user::interaction * puserinteraction, ::draw2d::graphics * pdraw2dgraphics, ::enum_flag eflagCreate, ::i32 iStride, bool bPreserve, bool bTopDraw2d)
    {
 
-      //::draw2d::lock draw2dlock;
-
-      //::draw2d::device_lock devicelock(this);
-
-      auto sizeCurrent = this->size();
-
-      if (m_pbitmap.is_set() && size == sizeCurrent)
+      if (!puserinteraction)
       {
 
-         //return true;
+         throw ::exception(error_null_pointer, "user::interaction is null");
+
+      }
+
+      m_pacmeuserinteractionAffinity = puserinteraction;
+
+      // if (m_pgputexture && m_pgraphics && m_pgputexture->size() == size)
+
+      destroy();
+
+      if (sizeRaw.is_empty())
+      {
 
          return;
 
       }
 
-      destroy();
+      create_as_descriptor(sizeRaw, eflagCreate, iStride);
 
-      if (size.is_empty())
-      {
+      //auto pbitmap = createø<::draw2d::bitmap>();
 
-         throw ::exception(error_failed);
+      //::cast<::gpu::bitmap> pgpubitmap = pbitmap;
 
-      }
+      //auto pacmewindowingwindow = m_pacmeuserinteractionMain->m_pacmewindowingwindow;
 
-      ::i32 iStride = size.cx * 4;
+      //auto pgpudevice = m_papplication->get_gpu_approach()->get_gpu_device(pacmewindowingwindow);
 
-      if (iGoodStride > iStride)
-      {
+      //_synchronous_lock synchronouslock(pgpudevice->synchronization());
 
-         iStride = iGoodStride;
+      //auto pixmap = this->pixmap::map();
 
-      }
+      auto pacmewindowingwindow = m_pacmeuserinteractionAffinity->m_pacmewindowingwindow;
 
-      //m_info.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
-      //m_info.bmiHeader.biWidth = size.cx;
-      //m_info.bmiHeader.biHeight = -size.cy;
-      //m_info.bmiHeader.biPlanes = 1;
-      //m_info.bmiHeader.biBitCount = 32;
-      //m_info.bmiHeader.biCompression = BI_RGB;
-      //m_info.bmiHeader.biSizeImage = iStride * size.cy;
+      auto pgpudevice = m_papplication->get_gpu_approach()->get_gpu_device(pacmewindowingwindow);
 
-      ::draw2d::bitmap_pointer         pbitmap;
-      ::draw2d::graphics_pointer       pgraphics;
+      _synchronous_lock synchronouslock(pgpudevice->synchronization());
 
-      constructø(pbitmap);
-      constructø(pgraphics);
-
-      if (::is_null(pbitmap) || ::is_null(pgraphics))
-      {
-
-         throw ::exception(error_failed);
-
-      }
-
-      pgraphics->create_memory_graphics(size);
-
-      create_from_graphics(pgraphics);
-
-      //pbitmap->create_bitmap(pgraphics, size, &pimage32,nullptr, &iScan);
-
-      //if (!pbitmap->create_bitmap(pgraphics, size, (void **)&pimage32, &iScan))
+      //if (!bTopDraw2d)
       //{
 
-      //   return false;
+      //   auto pgpucontextlease = pgpudevice->acquire_gpu_context(
+      //      bTopDraw2d ? ::gpu::e_output_draw2d_bitmap : ::gpu::e_output_none, m_size);
+
+      //   pgpucontextlease->m_pacmeuserinteractionAffinity = m_pacmeuserinteractionAffinity;
+
+      //   //::pixmap_t pixmap;
+
+      //   //pixmap.m_pimage32Raw = (::image32_t *)pimage32;
+
+      //   //pixmap.m_pimage32 = (::image32_t *)pimage32;
+
+      //   //pixmap.m_size = size;
+
+      //   //pixmap.m_sizeRaw = size;
+
+      //   //pixmap.m_iScan = iScan;
+
+      //   //pgpubitmap->initialize_gpu_bitmap(pgpucontextlease, sizeRaw, pixmap);
+
+      //   pgpubitmap->initialize_gpu_bitmap(pgpucontextlease, sizeRaw, {});
+
+      //   m_pbitmap = pgpubitmap;
 
       //}
 
-      //if (pbitmap->m_osdata[0] == nullptr)
+      //auto pgraphics = system()->draw2d()->allocate_graphics(m_pacmeuserinteractionAffinity);
+
+      //if (bTopDraw2d)
       //{
 
-      //   return;
+      //   pgraphics->create_for_window_draw2d(puserinteraction, sizeRaw);
+
+      //}
+      //else
+      //{
+
+      //   pgraphics->create_for_image(this);
 
       //}
 
-      ////auto estatus = 
-      //
-      //pgraphics->set(pbitmap);
+      ////m_pgraphicsOwned = pgraphics;
 
-      //if (!estatus)
-      //{
+      //pgraphics->m_pimage = this;
 
-      //   return false;
+      //auto pgpucontext = pgpudevice->acquire_gpu_context(::gpu::e_output_none, size);
 
-      //}
+      //::gpu::context_lock contextlock(pgpucontext);
 
-      //m_pgraphics = pgraphics;
+      //pixmap_t pixmap;
+
+      //pixmap.initialize_pixmap(size, (::image32_t*) pimage32, iScan);
+
+      //pgputexture->initialize_gpu_pimage(pgpucontext, size, pixmap);
+
+
+      auto pdraw2dbitmap = createø<::draw2d::bitmap>();
+
+      ::cast < ::draw2d_direct2d_for_directx11::bitmap > pbitmap = pdraw2dbitmap;
+
+      pbitmap->CreateBitmap(pdraw2dgraphics, sizeRaw, 0, 32, nullptr, 0);
 
       m_pbitmap = pbitmap;
 
-      m_sizeRaw = size;
+      //::cast <::draw2d_direct2d_for_directx11::graphics > pgraphics = m_pgraphicsOwned;
 
-      m_size = m_sizeRaw;
+      //auto & pd2d1bitmap = pbitmap->m_pbitmap;
 
-      m_bMapped = false;
-
-      //((ID2D1DeviceContext *)m_pgraphics->get_os_data())->BeginDraw();
-
-      m_hrEndDraw = S_OK;
-//
-  //    m_pgraphics->m_pimage = this;
-
-      set_flag(eflagCreate);
-
-      //return true;
-
-   }
-
-
-   void image::create_as_render_target(const ::i32_size & size, ::enum_flag eflagCreate, ::i32 iGoodStride, bool bPreserve)
-   {
+      //pgraphics->m_pdevicecontext->SetTarget(pd2d1bitmap);
 
       //auto estatus = 
       
-      create_ex(size, nullptr, 0, eflagCreate, iGoodStride, bPreserve);
+      //create_ex(size, nullptr, 0, eflagCreate, iStride, bPreserve);
 
       //if (!estatus)
       //{
@@ -202,26 +344,35 @@ namespace draw2d_direct2d
 
       //return estatus;
 
+      m_eflagElement = eflagCreate;
+
+      m_estatus = ::success;
+
+      set_ok_flag();
+
+      //      m_pgputexture->write_pixels(size, pimage32, iScan);
+
+
    }
 
 
-   void image::initialize(const ::i32_size & size, ::image32_t * pimage32, ::i32 iScan, ::enum_flag eflagCreate)
-   {
+   //void image::initialize(const ::i32_size & size, ::image32_t * pimage32, ::i32 iScan, ::enum_flag eflagCreate)
+   //{
 
-      //auto estatus =
-      
-      create_ex(size, pimage32, iScan, eflagCreate);
+   //   //auto estatus =
+   //   
+   //   create_ex(size, pimage32, iScan, eflagCreate);
 
-      //if (!estatus)
-      //{
+   //   //if (!estatus)
+   //   //{
 
-      //   return estatus;
+   //   //   return estatus;
 
-      //}
+   //   //}
 
-      //return estatus;
+   //   //return estatus;
 
-   }
+   //}
 
 
    void image::dc_select(bool bSelect)
@@ -235,7 +386,7 @@ namespace draw2d_direct2d
    bool image::_create(::draw2d::graphics* pgraphicsParam)
    {
 
-      ::draw2d::bitmap * pbitmap = dynamic_cast<::draw2d_direct2d::graphics *>(pgraphicsParam)->get_current_bitmap();
+      ::draw2d::bitmap * pbitmap = dynamic_cast<::draw2d_direct2d_for_directx11::graphics *>(pgraphicsParam)->get_current_bitmap();
 
       if (pbitmap == nullptr)
       {
@@ -275,7 +426,7 @@ namespace draw2d_direct2d
          if (::is_set(pimage->m_pimage32Raw) && pimage->m_iScan > 0)
          {
 
-            initialize(s, pimage->m_pimage32Raw, pimage->m_iScan, eflagCreate);
+            create_from_data(s, pimage->m_pimage32Raw, pimage->m_iScan, eflagCreate);
 
             //if (initialize(s, pimage->m_pimage32Raw, pimage->m_iScan, eflagCreate))
             //{
@@ -1129,7 +1280,7 @@ namespace draw2d_direct2d
 
       }
 
-      //auto pgraphics2d = m_pgraphics.cast < ::draw2d_direct2d::graphics>();
+      //auto pgraphics2d = m_pgraphics.cast < ::draw2d_direct2d_for_directx11::graphics>();
 
       //::gpu::context_lock contextlock(pgraphics2d->gpu_context());
 
@@ -1342,11 +1493,11 @@ namespace draw2d_direct2d
 
    ////   }
 
-   ////   //::pointer<::draw2d_direct2d::graphics>pgraphicsMap = m_pgraphicsMap;
+   ////   //::pointer<::draw2d_direct2d_for_directx11::graphics>pgraphicsMap = m_pgraphicsMap;
 
-   ////   ::pointer<::draw2d_direct2d::graphics>pgraphics = m_pgraphics;
+   ////   ::pointer<::draw2d_direct2d_for_directx11::graphics>pgraphics = m_pgraphics;
 
-   ////   ::pointer<::draw2d_direct2d::bitmap>pbitmap = m_pbitmap;
+   ////   ::pointer<::draw2d_direct2d_for_directx11::bitmap>pbitmap = m_pbitmap;
 
    ////   pgraphics->m_pbitmaprendertarget = nullptr;
 
@@ -1601,7 +1752,7 @@ namespace draw2d_direct2d
 
       //   HRESULT hr = ((ID2D1DeviceContext *)pgraphicsMap->get_os_data())->EndDraw();
 
-      //   ::draw2d_direct2d::graphics * pgraphics = dynamic_cast <::draw2d_direct2d::graphics *> (get_graphics());
+      //   ::draw2d_direct2d_for_directx11::graphics * pgraphics = dynamic_cast <::draw2d_direct2d_for_directx11::graphics *> (get_graphics());
 
       //   pgraphics->set_alpha_mode(::draw2d::e_alpha_mode_set);
 
@@ -1658,7 +1809,7 @@ namespace draw2d_direct2d
 
       //      ((ID2D1DeviceContext *)pgraphicsMap->get_os_data())->BeginDraw();
 
-      //      //dynamic_cast <::draw2d_direct2d::graphics *> (pgraphicsMap)->RestoreClip();
+      //      //dynamic_cast <::draw2d_direct2d_for_directx11::graphics *> (pgraphicsMap)->RestoreClip();
 
       //   }
 
@@ -1720,7 +1871,7 @@ namespace draw2d_direct2d
    }
 
 
-} // namespace draw2d_direct2d
+} // namespace draw2d_direct2d_for_directx11
 
 
 

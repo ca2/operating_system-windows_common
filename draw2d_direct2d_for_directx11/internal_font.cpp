@@ -1,5 +1,3 @@
-// Create by camilo on 2024-12-30 21:16 <3ThomasBorregaardSorensen!!
-// chatgpt-2024-12-30-21-06://How to load a font file into memory and load a font from this font using DirectWrite Windows Component in C++?
 #include "framework.h"
 #include "font.h"
 #include "internal_font.h"
@@ -11,369 +9,370 @@
 
 //using Microsoft::WRL::ComPtr;
 
-struct custom_data_size_key
+
+namespace draw2d_direct2d_for_directx11
 {
 
-   void *            data;
-   ::u64    size;
 
-};
 
-template < typename TYPE >
-class com_object :
-   virtual public TYPE
-{
-public:
-   
-   
-   ULONG             m_uReferenceCount;
-
-   com_object() :
-      m_uReferenceCount(1)
+   struct custom_data_size_key
    {
 
-   }
+      void * data;
+      ::u64    size;
 
-   
-   HRESULT STDMETHODCALLTYPE QueryInterface(REFIID riid, void ** ppvObject) override
+   };
+
+   template < typename TYPE >
+   class com_object :
+      virtual public TYPE
    {
+   public:
 
-      if (riid == __uuidof(IUnknown)) 
+
+      ULONG             m_uReferenceCount;
+
+      com_object() :
+         m_uReferenceCount(1)
       {
-      
-         *ppvObject = (IUnknown *)this;
-         
-         AddRef();
+
+      }
+
+
+      HRESULT STDMETHODCALLTYPE QueryInterface(REFIID riid, void ** ppvObject) override
+      {
+
+         if (riid == __uuidof(IUnknown))
+         {
+
+            *ppvObject = (IUnknown *)this;
+
+            AddRef();
+
+            return S_OK;
+
+         }
+
+         *ppvObject = nullptr;
+
+         return E_NOINTERFACE;
+
+      }
+
+
+      ULONG STDMETHODCALLTYPE AddRef() override
+      {
+
+         return InterlockedIncrement(&m_uReferenceCount);
+
+      }
+
+      ULONG STDMETHODCALLTYPE Release() override
+      {
+
+         ULONG newCount = InterlockedDecrement(&m_uReferenceCount);
+
+         if (newCount == 0)
+         {
+
+            delete this;
+
+         }
+
+         return newCount;
+
+      }
+
+   };
+
+
+   // Custom Font File Stream
+   class CustomFontFileStream :
+      public com_object < IDWriteFontFileStream >
+   {
+   public:
+
+
+      custom_data_size_key  m_datasizekey;
+
+      CustomFontFileStream(custom_data_size_key datasizekey) :
+         m_datasizekey(datasizekey)
+      {
+      }
+
+      HRESULT STDMETHODCALLTYPE QueryInterface(REFIID riid, void ** ppvObject) override
+      {
+
+         if (riid == __uuidof(IDWriteFontFileStream))
+         {
+
+            *ppvObject = static_cast<IDWriteFontFileStream *>(this);
+
+            AddRef();
+
+            return S_OK;
+
+         }
+
+         return com_object::QueryInterface(riid, ppvObject);
+
+      }
+
+
+      HRESULT STDMETHODCALLTYPE ReadFileFragment(
+          const void ** fragmentStart,
+          UINT64 fileOffset,
+          UINT64 fragmentSize,
+          void ** fragmentContext) override
+      {
+
+         if (fileOffset + fragmentSize > m_datasizekey.size)
+         {
+
+            return E_FAIL;
+
+         }
+
+         *fragmentStart = static_cast<const BYTE *>(m_datasizekey.data) + fileOffset;
+
+         *fragmentContext = nullptr;
 
          return S_OK;
 
       }
 
-      *ppvObject = nullptr;
 
-      return E_NOINTERFACE;
-
-   }
-        
-
-   ULONG STDMETHODCALLTYPE AddRef() override
-   {
-
-      return InterlockedIncrement(&m_uReferenceCount);
-
-   }
-
-   ULONG STDMETHODCALLTYPE Release() override 
-   {
-
-      ULONG newCount = InterlockedDecrement(&m_uReferenceCount);
-
-      if (newCount == 0) 
+      void STDMETHODCALLTYPE ReleaseFileFragment(void * /*fragmentContext*/) override
       {
-
-         delete this;
 
       }
 
-      return newCount;
-
-   }
-
-};
-
-
-// Custom Font File Stream
-class CustomFontFileStream : 
-   public com_object < IDWriteFontFileStream >
-{
-public:
-
-
-   custom_data_size_key  m_datasizekey;
-
-   CustomFontFileStream(custom_data_size_key datasizekey):
-      m_datasizekey(datasizekey)
-   {
-   }
-
-   HRESULT STDMETHODCALLTYPE QueryInterface(REFIID riid, void ** ppvObject) override
-   {
-
-      if (riid == __uuidof(IDWriteFontFileStream)) 
+      HRESULT STDMETHODCALLTYPE GetFileSize(UINT64 * fileSize) override
       {
-         
-         *ppvObject = static_cast<IDWriteFontFileStream *>(this);
-         
-         AddRef();
+
+         *fileSize = m_datasizekey.size;
 
          return S_OK;
 
       }
 
-      return com_object::QueryInterface(riid, ppvObject);
-
-   }
-
-
-   HRESULT STDMETHODCALLTYPE ReadFileFragment(
-       const void ** fragmentStart,
-       UINT64 fileOffset,
-       UINT64 fragmentSize,
-       void ** fragmentContext) override 
-   {
-
-      if (fileOffset + fragmentSize > m_datasizekey.size) 
+      HRESULT STDMETHODCALLTYPE GetLastWriteTime(UINT64 * lastWriteTime) override
       {
-         
-         return E_FAIL;
 
-      }
+         *lastWriteTime = 0;
 
-      *fragmentStart = static_cast<const BYTE *>(m_datasizekey.data) + fileOffset;
-
-      *fragmentContext = nullptr;
-
-      return S_OK;
-
-   }
-
-
-   void STDMETHODCALLTYPE ReleaseFileFragment(void * /*fragmentContext*/) override
-   {
-   
-   }
-
-   HRESULT STDMETHODCALLTYPE GetFileSize(UINT64 * fileSize) override 
-   {
-
-      *fileSize = m_datasizekey.size;
-
-      return S_OK;
-
-   }
-
-   HRESULT STDMETHODCALLTYPE GetLastWriteTime(UINT64 * lastWriteTime) override 
-   {
-
-      *lastWriteTime = 0;
-
-      return S_OK;
-
-   }
-
-};
-
-
-// Custom Font File Loader
-class CustomFontFileLoader :
-   public com_object < IDWriteFontFileLoader >
-{
-public:
-
-
-   CustomFontFileLoader() {}
-
-   HRESULT STDMETHODCALLTYPE QueryInterface(REFIID riid, void ** ppvObject) override 
-   {
-      
-      if (riid == __uuidof(IDWriteFontFileLoader)) 
-      {
-         
-         *ppvObject = static_cast<IDWriteFontFileLoader *>(this);
-         
-         AddRef();
-         
          return S_OK;
 
       }
 
-      return com_object::QueryInterface(riid, ppvObject);
-
-   }
+   };
 
 
-   HRESULT STDMETHODCALLTYPE CreateStreamFromKey(
-       const void * fontFileReferenceKey,
-       UINT32 fontFileReferenceKeySize,
-       IDWriteFontFileStream ** fontFileStream) override
+   // Custom Font File Loader
+   class CustomFontFileLoader :
+      public com_object < IDWriteFontFileLoader >
    {
-
-      const auto * pkey = (custom_data_size_key *)(fontFileReferenceKey);
-
-      *fontFileStream = new CustomFontFileStream(*pkey);
-
-      return S_OK;
-
-   }
-
-};
+   public:
 
 
-// Custom Font File Enumerator
-class CustomFontFileEnumerator : 
-   public com_object < IDWriteFontFileEnumerator  >
-{
-public:
+      CustomFontFileLoader() {}
 
-   ::comptr<IDWriteFactory>         factory_;
-   custom_data_size_key             m_datasizekey;
-   bool                             hasNext_;
-   ::comptr<IDWriteFontFileLoader>   fontFileLoader_;
-   
-   CustomFontFileEnumerator(
-      IDWriteFactory * factory, 
-      custom_data_size_key datasizekey, 
-      IDWriteFontFileLoader * ploader) :
-      factory_(factory),
-      m_datasizekey(datasizekey), 
-      hasNext_(true),
-      fontFileLoader_(ploader)
+      HRESULT STDMETHODCALLTYPE QueryInterface(REFIID riid, void ** ppvObject) override
+      {
+
+         if (riid == __uuidof(IDWriteFontFileLoader))
+         {
+
+            *ppvObject = static_cast<IDWriteFontFileLoader *>(this);
+
+            AddRef();
+
+            return S_OK;
+
+         }
+
+         return com_object::QueryInterface(riid, ppvObject);
+
+      }
+
+
+      HRESULT STDMETHODCALLTYPE CreateStreamFromKey(
+          const void * fontFileReferenceKey,
+          UINT32 fontFileReferenceKeySize,
+          IDWriteFontFileStream ** fontFileStream) override
+      {
+
+         const auto * pkey = (custom_data_size_key *)(fontFileReferenceKey);
+
+         *fontFileStream = new CustomFontFileStream(*pkey);
+
+         return S_OK;
+
+      }
+
+   };
+
+
+   // Custom Font File Enumerator
+   class CustomFontFileEnumerator :
+      public com_object < IDWriteFontFileEnumerator  >
    {
-      
-   }
+   public:
 
-   ~CustomFontFileEnumerator() {
-   }
+      ::comptr<IDWriteFactory>         factory_;
+      custom_data_size_key             m_datasizekey;
+      bool                             hasNext_;
+      ::comptr<IDWriteFontFileLoader>   fontFileLoader_;
 
-   HRESULT STDMETHODCALLTYPE QueryInterface(REFIID riid, void ** ppvObject) override
-   {
-      if (riid == __uuidof(IDWriteFontFileEnumerator)) {
-         *ppvObject = static_cast<IDWriteFontFileEnumerator *>(this);
-         AddRef();
+      CustomFontFileEnumerator(
+         IDWriteFactory * factory,
+         custom_data_size_key datasizekey,
+         IDWriteFontFileLoader * ploader) :
+         factory_(factory),
+         m_datasizekey(datasizekey),
+         hasNext_(true),
+         fontFileLoader_(ploader)
+      {
+
+      }
+
+      ~CustomFontFileEnumerator() {
+      }
+
+      HRESULT STDMETHODCALLTYPE QueryInterface(REFIID riid, void ** ppvObject) override
+      {
+         if (riid == __uuidof(IDWriteFontFileEnumerator)) {
+            *ppvObject = static_cast<IDWriteFontFileEnumerator *>(this);
+            AddRef();
+            return S_OK;
+         }
+         return com_object::QueryInterface(riid, ppvObject);
+      }
+
+
+      HRESULT STDMETHODCALLTYPE MoveNext(BOOL * hasCurrentFile) override {
+         *hasCurrentFile = hasNext_;
+         hasNext_ = FALSE; // Only one font file in this case
          return S_OK;
       }
-      return com_object::QueryInterface(riid, ppvObject);
-   }
 
 
-   HRESULT STDMETHODCALLTYPE MoveNext(BOOL * hasCurrentFile) override {
-      *hasCurrentFile = hasNext_;
-      hasNext_ = FALSE; // Only one font file in this case
-      return S_OK;
-   }
+      HRESULT STDMETHODCALLTYPE GetCurrentFontFile(IDWriteFontFile ** fontFile) override
+      {
 
-   
-   HRESULT STDMETHODCALLTYPE GetCurrentFontFile(IDWriteFontFile ** fontFile) override 
-   {
+         return factory_->CreateCustomFontFileReference(
+            &m_datasizekey,
+            sizeof(m_datasizekey),
+            fontFileLoader_,
+            fontFile);
 
-      return factory_->CreateCustomFontFileReference(
-         &m_datasizekey,
-         sizeof(m_datasizekey), 
-         fontFileLoader_,
-         fontFile);
+      }
 
-   }
+   };
 
-};
+   //::i32 main() {
+   //   // Initialize COM
+   //   HRESULT hr = CoInitialize(nullptr);
+   //   if (FAILED(hr)) {
+   //      return -1;
+   //   }
+   //
+   //   // Load font data into memory
+   //   std::ifstream fontFile("path/to/font.ttf", std::ios::binary);
+   //   if (!fontFile) {
+   //      return -1;
+   //   }
 
-//::i32 main() {
-//   // Initialize COM
-//   HRESULT hr = CoInitialize(nullptr);
-//   if (FAILED(hr)) {
-//      return -1;
-//   }
-//
-//   // Load font data into memory
-//   std::ifstream fontFile("path/to/font.ttf", std::ios::binary);
-//   if (!fontFile) {
-//      return -1;
-//   }
+      //std::vector<::i8> fontData((std::istreambuf_iterator<::i8>(fontFile)), std::istreambuf_iterator<::i8>());
+      //fontFile.close();
 
-   //std::vector<::i8> fontData((std::istreambuf_iterator<::i8>(fontFile)), std::istreambuf_iterator<::i8>());
-   //fontFile.close();
+      //// Create DirectWrite factory
+      //ComPtr<IDWriteFactory> factory;
+      //hr = DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(IDWriteFactory), &factory);
+      //if (FAILED(hr)) {
+      //   return -1;
+      //}
 
-   //// Create DirectWrite factory
-   //ComPtr<IDWriteFactory> factory;
-   //hr = DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(IDWriteFactory), &factory);
-   //if (FAILED(hr)) {
-   //   return -1;
+   //   // Register custom loader
+   //   auto * loader = new CustomFontFileLoader();
+   //   hr = factory->RegisterFontFileLoader(loader);
+   //   if (FAILED(hr)) {
+   //      return -1;
+   //   }
+   //
+   //   // Create font file reference
+   //   ComPtr<IDWriteFontFile> fontFileReference;
+   //   std::pair<const void *, UINT32> key(fontData.data(), static_cast<UINT32>(fontData.size()));
+   //   hr = factory->CreateCustomFontFileReference(&key, sizeof(key), loader, &fontFileReference);
+   //   if (FAILED(hr)) {
+   //      return -1;
+   //   }
+   //
+   //   // Create font face
+   //   ComPtr<IDWriteFontFace> fontFace;
+   //   hr = factory->CreateFontFaceFromFile(fontFileReference.Get(), 0, DWRITE_FONT_SIMULATIONS_NONE, &fontFace);
+   //   if (FAILED(hr)) {
+   //      return -1;
+   //   }
+   //
+   //   // Cleanup
+   //   factory->UnregisterFontFileLoader(loader);
+   //   loader->Release();
+   //   CoUninitialize();
+   //
+   //   return 0;
    //}
-
-//   // Register custom loader
-//   auto * loader = new CustomFontFileLoader();
-//   hr = factory->RegisterFontFileLoader(loader);
-//   if (FAILED(hr)) {
-//      return -1;
-//   }
-//
-//   // Create font file reference
-//   ComPtr<IDWriteFontFile> fontFileReference;
-//   std::pair<const void *, UINT32> key(fontData.data(), static_cast<UINT32>(fontData.size()));
-//   hr = factory->CreateCustomFontFileReference(&key, sizeof(key), loader, &fontFileReference);
-//   if (FAILED(hr)) {
-//      return -1;
-//   }
-//
-//   // Create font face
-//   ComPtr<IDWriteFontFace> fontFace;
-//   hr = factory->CreateFontFaceFromFile(fontFileReference.Get(), 0, DWRITE_FONT_SIMULATIONS_NONE, &fontFace);
-//   if (FAILED(hr)) {
-//      return -1;
-//   }
-//
-//   // Cleanup
-//   factory->UnregisterFontFileLoader(loader);
-//   loader->Release();
-//   CoUninitialize();
-//
-//   return 0;
-//}
-//
+   //
 
 
 
-// Custom Font Collection Loader
-class CustomFontCollectionLoader : 
-   public com_object < IDWriteFontCollectionLoader  >
-{
-public:
-
-   ::comptr< IDWriteFontFileLoader >m_pfontfileloader;
-
-
-   CustomFontCollectionLoader(IDWriteFontFileLoader * pfontfileloader) :
-      m_pfontfileloader(pfontfileloader) 
+   // Custom Font Collection Loader
+   class CustomFontCollectionLoader :
+      public com_object < IDWriteFontCollectionLoader  >
    {
-   
-   }
+   public:
 
-   HRESULT STDMETHODCALLTYPE QueryInterface(REFIID riid, void ** ppvObject) override {
-      if (riid == __uuidof(IDWriteFontCollectionLoader)) {
-         *ppvObject = static_cast<IDWriteFontCollectionLoader *>(this);
-         AddRef();
+      ::comptr< IDWriteFontFileLoader >m_pfontfileloader;
+
+
+      CustomFontCollectionLoader(IDWriteFontFileLoader * pfontfileloader) :
+         m_pfontfileloader(pfontfileloader)
+      {
+
+      }
+
+      HRESULT STDMETHODCALLTYPE QueryInterface(REFIID riid, void ** ppvObject) override {
+         if (riid == __uuidof(IDWriteFontCollectionLoader)) {
+            *ppvObject = static_cast<IDWriteFontCollectionLoader *>(this);
+            AddRef();
+            return S_OK;
+
+         }
+         return com_object::QueryInterface(riid, ppvObject);
+
+      }
+
+
+
+      HRESULT STDMETHODCALLTYPE CreateEnumeratorFromKey(
+          IDWriteFactory * factory,
+          const void * collectionKey,
+          UINT32 collectionKeySize,
+          IDWriteFontFileEnumerator ** fontFileEnumerator) override
+      {
+
+         auto * pdatasizekey = (custom_data_size_key *)(collectionKey);
+
+         *fontFileEnumerator = new CustomFontFileEnumerator(factory,
+            *pdatasizekey,
+            m_pfontfileloader);
+
          return S_OK;
 
       }
-      return com_object::QueryInterface(riid, ppvObject);
-
-   }
 
 
-
-   HRESULT STDMETHODCALLTYPE CreateEnumeratorFromKey(
-       IDWriteFactory * factory,
-       const void * collectionKey,
-       UINT32 collectionKeySize,
-       IDWriteFontFileEnumerator ** fontFileEnumerator) override 
-   {
-   
-      auto * pdatasizekey = (custom_data_size_key *) (collectionKey);
-
-      *fontFileEnumerator = new CustomFontFileEnumerator(factory,
-         *pdatasizekey,
-         m_pfontfileloader);
-
-      return S_OK;
-
-   }
-
-
-};
-
-
-
-namespace draw2d_direct2d
-{
+   };
 
 
    internal_font::internal_font()
@@ -386,7 +385,7 @@ namespace draw2d_direct2d
    internal_font::~internal_font()
    {
       
-      IDWriteFactory * pfactory = m_pdirect2d->dwrite_factory();
+      IDWriteFactory * pfactory = direct2d()->dwrite_factory();
 
       pfactory->UnregisterFontFileLoader(m_pfontfileloader);
       pfactory->UnregisterFontCollectionLoader(m_pfontcollectionloader);
@@ -404,7 +403,7 @@ namespace draw2d_direct2d
 
       }
 
-      IDWriteFactory * pfactory = m_pdirect2d->dwrite_factory();
+      IDWriteFactory * pfactory = direct2d()->dwrite_factory();
 
       //// Register custom loader
       m_pfontfileloader.m_p = new CustomFontFileLoader();
@@ -497,9 +496,9 @@ namespace draw2d_direct2d
    void internal_font::on_create_font(::draw2d::graphics * pgraphics, ::write_text::font * pfont)
    {
 
-      ::cast < ::draw2d_direct2d::font> pdraw2ddirect2dfont = pfont;
+      ::cast < ::draw2d_direct2d_for_directx11::font> pdraw2ddirect2dfont = pfont;
 
-      IDWriteFactory * pfactory = m_pdirect2d->dwrite_factory();
+      IDWriteFactory * pfactory = direct2d()->dwrite_factory();
 
       ::wstring wstrFamilyName;
 
@@ -620,7 +619,7 @@ namespace draw2d_direct2d
 
       //}
 
-      //::cast < ::draw2d_direct2d::font> pdraw2ddirect2dfont = pfont;
+      //::cast < ::draw2d_direct2d_for_directx11::font> pdraw2ddirect2dfont = pfont;
 
       //::i32 iFoundFamily = -1;
 
@@ -793,7 +792,7 @@ namespace draw2d_direct2d
 
 
 
-} // namespace draw2d_direct2d
+} // namespace draw2d_direct2d_for_directx11
 
 
 

@@ -2,74 +2,75 @@
 
 
 #include "bred/gpu/graphics.h"
+#include "draw2d_direct2d/graphics.h"
 #include "acme_windows_common/dxgi_surface_bindable.h"
 #include "direct2d/object.h"
 #include <dxgi1_2.h>
 
 
-namespace draw2d_direct2d
+namespace draw2d_direct2d_for_directx11
 {
 
 
-   class CLASS_DECL_DRAW2D_DIRECT2D graphics :
+   class CLASS_DECL_DRAW2D_DIRECT2D_FOR_DIRECTX11 graphics :
       virtual public ::gpu::graphics,
-      virtual public ::direct2d::object,
+      virtual public ::draw2d_direct2d::graphics,
       virtual public ::dxgi_surface_bindable
    {
    public:
-      i32_array_base m_iaPushLayer;
-      i32_array_base m_iaPushLayerCount;
-      class state
-      {
-      public:
+      //i32_array_base m_iaPushLayer;
+      //i32_array_base m_iaPushLayerCount;
+      //class state
+      //{
+      //public:
 
 
-         D2D1::Matrix3x2F                    m_m;
-         ::i32                                 m_iLayerIndex;
-         D2D1_LAYER_PARAMETERS               m_layerparameters;
+      //   D2D1::Matrix3x2F                    m_m;
+      //   ::i32                                 m_iLayerIndex;
+      //   D2D1_LAYER_PARAMETERS               m_layerparameters;
 
-      };
+      //};
 
       ::pointer < ::particle > m_pSwapChainForBlitting;
       ::array < ::array < ::comptr < IDXGISurface > > > m_dxgisurfaceaBound;
 
-      ::i32                                                m_iLayerCount;
+      //::i32                                                m_iLayerCount;
 
       //comptr<ID2D1Device>                                m_pdevice;
-      comptr<ID2D1DeviceContext>                         m_pdevicecontext; // 0
-      comptr<ID2D1RenderTarget>                          m_pd2d1rendertarget; // 1
-      array < array < comptr<ID2D1RenderTarget> > >      m_d2d1rendertargeta; // 1
-      comptr<ID2D1BitmapRenderTarget>                    m_pbitmaprendertarget; // 2
-      comptr<ID2D1DCRenderTarget>                        m_pdcrendertarget; // 3
-      comptr<ID2D1DeviceContext1>                        m_pdevicecontext1; // 4
+      //comptr<ID2D1DeviceContext>                         m_pdevicecontext; // 0
+      //comptr<ID2D1RenderTarget>                          m_pd2d1rendertarget; // 1
+      //array < array < comptr<ID2D1RenderTarget> > >      m_d2d1rendertargeta; // 1
+      //comptr<ID2D1BitmapRenderTarget>                    m_pbitmaprendertarget; // 2
+      //comptr<ID2D1DCRenderTarget>                        m_pdcrendertarget; // 3
+      //comptr<ID2D1DeviceContext1>                        m_pdevicecontext1; // 4
 
       comptr<IDXGISurface>                               m_pdxgisurface;
-      comptr < ID2D1Bitmap1>                              m_pd2d1bitmap;
+      //comptr < ID2D1Bitmap1>                              m_pd2d1bitmap;
 
-      ::array<::array <comptr < ID2D1Bitmap1>   > >          m_d2d1bitmapa;
+      //::array<::array <comptr < ID2D1Bitmap1>   > >          m_d2d1bitmapa;
 
       comptr<IDXGIAdapter>                               m_padapter;
       comptr<IDXGIFactory2>                              m_pfactory2;
-      comptr<ID2D1Layer>                                 m_player;
-      comptr<ID2D1PathGeometry>                          m_ppathgeometryClip;
+      //comptr<ID2D1Layer>                                 m_player;
+      //comptr<ID2D1PathGeometry>                          m_ppathgeometryClip;
 
-      ::array < state >                                  m_statea;
-      state                                              m_state;
-      bool                                               m_bSaveClip;
+      //::array < state >                                  m_statea;
+      //state                                              m_state;
+      //bool                                               m_bSaveClip;
 
-      ::i32                                                m_iType;
+      //::i32                                                m_iType;
 
-      D2D1_BITMAP_INTERPOLATION_MODE                     m_bitmapinterpolationmode;
-      D2D1_INTERPOLATION_MODE                            m_interpolationmode;
+      //D2D1_BITMAP_INTERPOLATION_MODE                     m_bitmapinterpolationmode;
+      //D2D1_INTERPOLATION_MODE                            m_interpolationmode;
 
-      ::write_text::enum_rendering                    m_etextrenderinghintDevice;
+      //::write_text::enum_rendering                    m_etextrenderinghintDevice;
 
 
-      // advanced use and implementation
-      bool                                               m_bPrinting;
+      //// advanced use and implementation
+      //bool                                               m_bPrinting;
 
-      HDC                                                m_hdcAttach;
-      ::draw2d::enum_alpha_mode                          m_ealphamodeDevice;
+      //HDC                                                m_hdcAttach;
+      //::draw2d::enum_alpha_mode                          m_ealphamodeDevice;
 
 
       graphics();
@@ -80,6 +81,9 @@ namespace draw2d_direct2d
       void gpu_layer_on_after_begin_render() override;
       void gpu_layer_on_before_end_render() override;
 
+
+      void on_acquire_memory_graphics(::image::image * pimage, const ::i32_size & size,
+::acme::user::interaction * pacmeuserinteractionAffinity) override;
 
 
       bool TextOutAlphaBlend(::f64 x, ::f64 y, const ::scoped_string & scopedstr) override;
@@ -100,6 +104,7 @@ namespace draw2d_direct2d
       void just_after_new_frame() override;
 
 
+      void set_target_image(::image::image * pimage) override;
       //void start_gpu_layer(::gpu::layer * pgpulayer) override;
       //::gpu::frame* end_gpu_layer(::gpu::layer* pgpulayer) override;
 
@@ -159,9 +164,9 @@ namespace draw2d_direct2d
       //              const_char_pointer pszOutput, const void * lpInitData) override;
       //bool CreateIC(const ::scoped_string & scopedstrDriverName, const ::scoped_string & scopedstrDeviceName,
       //              const_char_pointer pszOutput, const void * lpInitData) override;
-      void create_compatible_graphics(::draw2d::graphics * pgraphics) override;
+      //void create_compatible_graphics(::draw2d::graphics * pgraphics) override;
       virtual void _create_from_dxgi_surface(::i32 iIndex, ::i32 iLayerIndex, IDXGISurface* pdxgisurface);
-      void _create_memory_graphics(const ::i32_size& size = {}) override;
+      void _create_memory_graphics(const ::i32_size & size = {}, ::acme::user::interaction * pacmeuserinteractionAffinity = nullptr) override;
       void create_bitmap_graphics(::draw2d::bitmap *pbitmap) override;
       void defer_set_size(const ::i32_size& size = {}) override;
 
@@ -493,9 +498,9 @@ namespace draw2d_direct2d
 //      virtual ::i32 draw_text_ex(::i8 * lpszString, ::i32 nCount, ::f64_rectangle * prectangle, const ::e_align & ealign = e_align_top_left, const ::e_draw_text & edrawtext = e_draw_text_none, LPDRAWTEXTPARAMS lpDTParams) override;
       //    virtual ::i32 draw_text_ex(const ::scoped_string & scopedstr, ::f64_rectangle * prectangle, const ::e_align & ealign = e_align_top_left, const ::e_draw_text & edrawtext = e_draw_text_none, LPDRAWTEXTPARAMS lpDTParams) override;
 
-      ::f64_size get_text_extent(const ::scoped_string & scopedstr, character_count iIndex) override;
+      ::f64_size _get_text_extent(const ::scoped_string & scopedstr, character_count iIndex) override;
       //virtual ::f64_size get_text_extent(const ::scoped_string & scopedstrString, character_count nCount) override;
-      ::f64_size get_text_extent(const ::scoped_string & scopedstr) override;
+      ::f64_size _get_text_extent(const ::scoped_string & scopedstr) override;
       //void get_text_extent(::f64_size & size, const_char_pointer pszString, character_count nCount, character_count iIndex) override;
       //void get_text_extent(::f64_size & size, const_char_pointer pszString, character_count nCount) override;
       //void get_text_extent(::f64_size & size, const ::scoped_string & scopedstr) override;
@@ -672,7 +677,7 @@ namespace draw2d_direct2d
       //virtual void enum_fonts(::write_text::font_enumeration_item_array & itema) override;
 
 //#ifdef UNIVERSAL_WINDOWS
-//      virtual void set_direct2d_plugin(::draw2d_direct2d::plugin * pplugin);
+//      virtual void set_direct2d_plugin(::draw2d_direct2d_for_directx11::plugin * pplugin);
 //#endif
 
       //virtual bool update_window(::image::image *  pimage) override;
@@ -689,7 +694,7 @@ namespace draw2d_direct2d
    };
 
 
-   class CLASS_DECL_DRAW2D_DIRECT2D layer
+   class CLASS_DECL_DRAW2D_DIRECT2D_FOR_DIRECTX11 layer
    {
    public:
 
@@ -727,7 +732,7 @@ namespace draw2d_direct2d
    };
 
 
-} // namespace draw2d_direct2d
+} // namespace draw2d_direct2d_for_directx11
 
 
 

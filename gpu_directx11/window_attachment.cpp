@@ -1,6 +1,6 @@
 // Created by camilo on 2026-08-04 01:32 <3ThomasBorregaardSørensen!! Mummi!! Bilbo!!
 #include "framework.h"
-#include "draw2d_window_attachment.h"
+#include "window_attachment.h"
 
 
 
@@ -8,25 +8,25 @@ namespace gpu_directx11
 {
 
 
-   draw2d_window_attachment::draw2d_window_attachment()
+   window_attachment::window_attachment()
    {
 
    }
 
 
-   draw2d_window_attachment::~draw2d_window_attachment()
+   window_attachment::~window_attachment()
    {
 
 
    }
 
    //void device::on_new_frame()
-   void draw2d_window_attachment::on_start_frame()
+   void window_attachment::on_start_frame()
    {
 
       //gpu::device::on_new_frame();
 
-      gpu::draw2d_window_attachment::on_start_frame();
+      gpu::window_attachment::on_start_frame();
 
       //auto& pframestorage = m_framestoragea.ø(m_iCurrentFrame2);
 
@@ -45,12 +45,12 @@ namespace gpu_directx11
 
 
    // void device::on_top_end_frame()
-   void draw2d_window_attachment::on_end_frame()
+   void window_attachment::on_end_frame()
    {
 
       // gpu::device::on_top_end_frame();
 
-      gpu::draw2d_window_attachment::on_end_frame();
+      gpu::window_attachment::on_end_frame();
    }
 
 

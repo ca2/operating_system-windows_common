@@ -701,7 +701,7 @@
     <ClInclude Include="assimp.h" />
     <ClInclude Include="binding.h" />
     <ClInclude Include="block.h" />
-    <ClInclude Include="draw2d_window_attachment.h" />
+    <ClInclude Include="window_attachment.h" />
     <ClInclude Include="frame_storage.h" />
     <ClInclude Include="gltf\aaa_vertex.h" />
     <ClInclude Include="gltf\material.h" />
@@ -753,7 +753,7 @@
     <ClInclude Include="ibl\specular_map.h" />
     <ClInclude Include="memory_buffer.h" />
     <ClInclude Include="context_object.h" />
-    <ClInclude Include="aaa_cpu_buffer.h" />
+    <ClInclude Include="buffer.h" />
     <ClInclude Include="context.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="descriptors.h" />
@@ -805,7 +805,7 @@
     <ClCompile Include="assimp.cpp" />
     <ClCompile Include="block.cpp" />
     <ClCompile Include="context_ktx.cpp" />
-    <ClCompile Include="draw2d_window_attachment.cpp" />
+    <ClCompile Include="window_attachment.cpp" />
     <ClCompile Include="frame_storage.cpp" />
     <ClCompile Include="gltf\mesh.cpp" />
     <ClCompile Include="gltf\model.cpp" />
@@ -854,7 +854,7 @@
     <ClCompile Include="ibl\specular_map.cpp" />
     <ClCompile Include="memory_buffer.cpp" />
     <ClCompile Include="context_object.cpp" />
-    <ClCompile Include="aaa_cpu_buffer.cpp" />
+    <ClCompile Include="buffer.cpp" />
     <ClCompile Include="context.cpp" />
     <ClCompile Include="aaa_context_win32.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>

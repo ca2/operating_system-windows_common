@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "aura/graphics/image/image.h"
+#include "bred/gpu/image.h"
 
 
 namespace draw2d_directx11
@@ -9,7 +9,7 @@ namespace draw2d_directx11
 
 
    class CLASS_DECL_DRAW2D_DIRECTX11 image :
-      virtual public ::image::image
+      virtual public ::gpu::image
    {
    public:
 

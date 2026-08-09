@@ -1,21 +1,23 @@
 #pragma once
 
 
-#include "aura/graphics/image/image.h"
+#include "bred/gpu/image.h"
+#include "draw2d_direct2d/image.h"
 
 
-namespace draw2d_direct2d
+namespace draw2d_direct2d_for_directx11
 {
 
 
-   class CLASS_DECL_DRAW2D_DIRECT2D image :
-      virtual public ::image::image
+   class CLASS_DECL_DRAW2D_DIRECT2D_FOR_DIRECTX11 image :
+      virtual public ::draw2d_direct2d::image,
+      virtual public ::gpu::image
    {
    public:
 
 
-      HRESULT                             m_hrEndDraw;
-      comptr<ID2D1Bitmap1>                m_pbitmap1Map;
+      //HRESULT                             m_hrEndDraw;
+      //comptr<ID2D1Bitmap1>                m_pbitmap1Map;
 
 
       image();
@@ -23,6 +25,9 @@ namespace draw2d_direct2d
 
 
       void create_from_graphics(::draw2d::graphics *pgraphics) override;
+
+
+      void create_gpu_texture_image(::gpu::texture * pgputexture, ::gpu::graphics * pgpugraphics) override;
 
       void copy_from(::image::image * pimage, enum_flag eflagCreate = e_flag_success) override;
 
@@ -36,15 +41,15 @@ namespace draw2d_direct2d
 
 
       //using ::image::image::create;
-      void create_as_render_target(const ::i32_size & size, ::enum_flag eflagCreate = DEFAULT_CREATE_IMAGE_FLAG, ::i32 iStride = -1, bool bPreserve = false) override;
-      using ::image::image::initialize;
-      void initialize(const ::i32_size & size, ::image32_t * pimage32, ::i32 iScan, ::enum_flag eflagCreate = DEFAULT_CREATE_IMAGE_FLAG) override;
+      void create_as_render_target(const ::i32_size & size, ::user::interaction * puserinteraction, ::draw2d::graphics * pdraw2dgraphics, ::enum_flag eflagCreate = DEFAULT_CREATE_IMAGE_FLAG, ::i32 iStride = -1, bool bPreserve = false, bool bTopDraw2d = false) override;
+      //using ::image::image::initialize;
+      //void initialize(const ::i32_size & size, ::image32_t * pimage32, ::i32 iScan, ::enum_flag eflagCreate = DEFAULT_CREATE_IMAGE_FLAG) override;
       bool _create(::draw2d::graphics * pgraphics);
       void destroy() override;
       void destroy_os_data() override;
 
 
-      virtual void create_ex(const ::i32_size & size, ::image32_t * pimage32, ::i32 iScan, ::enum_flag eflagCreate = DEFAULT_CREATE_IMAGE_FLAG, ::i32 iStride = -1, bool bPreserve = false);
+      //virtual void create_ex(const ::i32_size & size, ::image32_t * pimage32, ::i32 iScan, ::enum_flag eflagCreate = DEFAULT_CREATE_IMAGE_FLAG, ::i32 iStride = -1, bool bPreserve = false);
 
       //virtual bool _draw_raw(const ::i32_rectangle & rectangleTarget, ::image::image * pimage, const ::i32_point & pointSrc) override;
 
@@ -71,7 +76,7 @@ protected:
    };
 
 
-} // namespace draw2d_direct2d
+} // namespace draw2d_direct2d_for_directx11
 
 
 

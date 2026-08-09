@@ -9,7 +9,7 @@
 ////#include "gpu_directx11/swap_chain_render_target_view.h"
 //#include "bred/gpu/graphics.h"
 //#include "windowing_win32/window.h"
-//namespace draw2d_direct2d
+//namespace draw2d_direct2d_for_directx11
 //{
 //
 //
@@ -30,7 +30,7 @@
 //   //IDXGISurface* directx11_swap_chain::_get_dxgi_surface()
 //   //{
 //
-//   //   return draw2d_direct2d::swap_chain::_get_dxgi_surface();
+//   //   return draw2d_direct2d_for_directx11::swap_chain::_get_dxgi_surface();
 //
 //   //}
 //
@@ -64,7 +64,7 @@
 //
 //      //::defer_throw_hresult(hrCreateRenderTargetView);
 //
-//      ::draw2d_direct2d::swap_chain::initialize_gpu_swap_chain(pgpudevice, pwindow);
+//      ::draw2d_direct2d_for_directx11::swap_chain::initialize_gpu_swap_chain(pgpudevice, pwindow);
 //
 //      ::gpu_directx11::swap_chain::initialize_gpu_swap_chain(pgpudevice, pwindow);
 //
@@ -74,7 +74,7 @@
 //   //void directx11_swap_chain::initialize_direct2d_draw2d_gpu_swap_chain(::gpu::device* pgpudevice, ::windowing::window* pwindow)
 //   //{
 //
-//   //   ::draw2d_direct2d::swap_chain::initialize_direct2d_draw2d_gpu_swap_chain(pgpudevice, pwindow);
+//   //   ::draw2d_direct2d_for_directx11::swap_chain::initialize_direct2d_draw2d_gpu_swap_chain(pgpudevice, pwindow);
 //
 //   //}
 //
@@ -82,7 +82,7 @@
 //   void directx11_swap_chain::endDraw(::draw2d_gpu::graphics* pgraphics, ::user::interaction* puserinteraction, ::gpu::renderer* prendererSrc)
 //   {
 //
-//      ::draw2d_direct2d::swap_chain::endDraw(pgraphics, puserinteraction, prendererSrc);
+//      ::draw2d_direct2d_for_directx11::swap_chain::endDraw(pgraphics, puserinteraction, prendererSrc);
 //
 //   }
 //
@@ -98,12 +98,12 @@
 //   void directx11_swap_chain::present()
 //   {
 //      
-//      ::draw2d_direct2d::swap_chain::present();
+//      ::draw2d_direct2d_for_directx11::swap_chain::present();
 //
 //   }
 //
 //
-//} // namespace draw2d_direct2d
+//} // namespace draw2d_direct2d_for_directx11
 //
 //
 //

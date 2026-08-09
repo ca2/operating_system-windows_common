@@ -44,6 +44,7 @@ namespace gpu_directx11
 
       comptr<ID3D11RenderTargetView>      m_prendertargetview;
       comptr<ID3D11Texture2D> m_ptextureOffscreen;
+      comptr<ID3D11Texture2D> m_ptextureStaging;
       comptr< ID3D11SamplerState> m_psamplerstate;
       comptr<ID3D11ShaderResourceView>m_pshaderresourceview;
 
@@ -107,7 +108,7 @@ namespace gpu_directx11
       //class d3d11* d3d11();
 
       //void blend(::gpu::texture* ptexture) override;
-
+      void read_pixels(::gpu::command_buffer * pgpucommandbuffer, ::pixmap_t * ppixmap) override;
 
       virtual IDXGISurface* __get_dxgi_surface();
 

@@ -22,6 +22,7 @@
 #include "aura/graphics/draw2d/lock.h"
 #include "aura/graphics/draw2d/region.h"
 #include "aura/graphics/draw2d/device_lock.h"
+#include "aura/graphics/graphics/buffer_item.h"
 #include "aura/graphics/image/context.h"
 #include "aura/graphics/image/drawing.h"
 #include "aura/graphics/image/frame_array.h"
@@ -145,6 +146,30 @@ namespace draw2d_direct2d
    //   throw ::exception(todo);
 
    //}
+
+
+   void graphics::create_for_window_draw2d(::user::interaction * puserinteraction, const ::i32_size & size)
+   {
+
+      m_bForWindowDraw2d = true;
+
+      m_pacmeuserinteractionAffinity = puserinteraction;
+
+      m_sizeTotal2 = size;
+
+      if (m_pgraphicsbufferitem)
+      {
+
+         constructø(m_pgraphicsbufferitem->m_pimageBufferItem);
+
+         m_pgraphicsbufferitem->m_pimageBufferItem->create_as_render_target(size, puserinteraction, this);
+
+         //create_for_image(m_pgraphicsbufferitem->m_pimageBufferItem);
+
+      }
+
+   }
+
 
    
    void graphics::create_for_image(::image::image * pimage)
@@ -633,7 +658,7 @@ namespace draw2d_direct2d
    //   if (pcontext)
    //   {
 
-   //      if (pcontext->m_rectangle.size() == size)
+   //      if (pcontext->size() == size)
    //      {
 
    //         return;
@@ -919,7 +944,7 @@ namespace draw2d_direct2d
    //   if (pcontext)
    //   {
 
-   //      if (pcontext->m_rectangle.size() == size)
+   //      if (pcontext->size() == size)
    //      {
 
    //         return;
@@ -6806,28 +6831,44 @@ namespace draw2d_direct2d
       ::acme::user::interaction * pacmeuserinteractionAffinity)
    {
 
-      if (::is_set(pimage))
-      {
+      //if (::is_set(pimage))
+      //{
 
-         pimage->create_bitmap(pacmeuserinteractionAffinity);
+      //   pimage->create_bitmap(pacmeuserinteractionAffinity);
 
-      }
+      //}
 
       ::draw2d::graphics::on_acquire_memory_graphics(
          pimage,
          size,
          pacmeuserinteractionAffinity);
 
-      if (::is_set(pimage))
+
+
+      if (!m_bBeginDraw)
       {
 
-         ::cast <::draw2d_direct2d::bitmap> pbitmap = pimage->m_pbitmap;
+         m_bBeginDraw = true;
 
-         m_pdevicecontext->SetTarget(pbitmap->m_pbitmap);
+         if (::is_set(pimage))
+         {
+
+            if (!pimage->m_pbitmap)
+            {
+
+               pimage->create_bitmap(pacmeuserinteractionAffinity, this);
+
+            }
+
+            ::cast <::draw2d_direct2d::bitmap> pbitmap = pimage->m_pbitmap;
+
+            m_pdevicecontext->SetTarget(pbitmap->m_pbitmap);
+
+         }
+
+         m_pdevicecontext->BeginDraw();
 
       }
-
-      m_pdevicecontext->BeginDraw();
 
    }
 
@@ -6840,7 +6881,17 @@ namespace draw2d_direct2d
 
       ::draw2d::graphics::on_release_memory_graphics();
 
-      auto hrEndDraw = m_pdevicecontext->EndDraw();
+      HRESULT hrEndDraw = S_OK;
+
+      if (m_bBeginDraw)
+      {
+
+         m_bBeginDraw = false;
+
+         hrEndDraw = m_pdevicecontext->EndDraw();
+
+
+      }
 
       static ::std::atomic<unsigned int> s_uEndDrawDiagnosticCount{ 0 };
       auto uEndDrawDiagnosticCount = s_uEndDrawDiagnosticCount.fetch_add(1, ::std::memory_order_relaxed);
@@ -6864,7 +6915,7 @@ namespace draw2d_direct2d
 
       }
 
-      m_pdevicecontext->SetTarget(nullptr);
+      //m_pdevicecontext->SetTarget(nullptr);
 
    }
 
@@ -7134,33 +7185,101 @@ namespace draw2d_direct2d
    }
 
 
-   //void graphics::start_layer(bool bFirstLayer)
-   //{
+   void graphics::start_layer(bool bFirstLayer)
+   {
 
-   //   reset_clip();
+      reset_clip();
 
-   //   m_ealphamodeDevice = ::draw2d::e_alpha_mode_none;
+      m_ealphamodeDevice = ::draw2d::e_alpha_mode_none;
 
-   //   set_alpha_mode(::draw2d::e_alpha_mode_blend);
+      set_alpha_mode(::draw2d::e_alpha_mode_blend);
 
-   //   set_smooth_mode(::draw2d::e_smooth_mode_high);
+      set_smooth_mode(::draw2d::e_smooth_mode_high);
 
-   //   ::gpu::graphics::start_layer(bFirstLayer);
+      //::gpu::graphics::start_layer(bFirstLayer);
 
-   //   //if (m_egraphics == ::e_graphics_draw)
-   //   //{
+      if (m_egraphics == ::e_graphics_draw)
+      {
 
-   //   //   //auto rectangleHost = m_puserinteractionDraw2dGraphics->raw_rectangle();
+      //   //auto rectangleHost = m_puserinteractionDraw2dGraphics->raw_rectangle();
 
-   //   //   //m_pgpucontextDraw2d->m_pgpudevice->start_stacking_layers();
+      //   //m_pgpucontextDraw2d->m_pgpudevice->start_stacking_layers();
 
-   //   //   //m_pgpucontextDraw2d->m_pgpurenderer->start_layer(rectangleHost);
+      //   //m_pgpucontextDraw2d->m_pgpurenderer->start_layer(rectangleHost);
 
-   //   //   m_pd2d1rendertarget->BeginDraw();
 
-   //   //}
 
-   //}
+         if (m_pgraphicsbufferitem)
+         {
+
+            //m_pgraphicsbufferitem->m_pimageBufferItem = m_pimage;
+
+            auto pimage = m_pgraphicsbufferitem->m_pimageBufferItem;
+
+            if (pimage)
+            {
+
+               auto point = m_pacmeuserinteractionAffinity->m_pacmewindowingwindow->m_pointWindow;
+               auto size = m_pacmeuserinteractionAffinity->m_pacmewindowingwindow->m_sizeWindow;
+
+            //   ::f64_point pointf64Image = pimage->m_point;
+            //   ::f64_size sizef64Image = pimage->m_size;
+            //   ::f64_size sizef64ImageRaw = pimage->m_sizeRaw;
+
+               if (pimage->m_point != point || pimage->m_size != size)
+               {
+
+                  pimage->m_point = point;
+
+                  pimage->m_size = size;
+
+                  pimage->set_ok_flag();
+
+                  pimage->m_estatus = success;
+
+               }
+
+            }
+
+            set_target_image(m_pgraphicsbufferitem->m_pimageBufferItem);
+
+         }
+
+
+         if (!m_bBeginDraw)
+         {
+
+            m_bBeginDraw = true;
+
+            m_pd2d1rendertarget->BeginDraw();
+
+         }
+
+      }
+
+   }
+
+
+   void graphics::set_target_image(::image::image * pimage)
+   {
+
+      ::cast < ::draw2d_direct2d::bitmap > pbitmap = pimage->m_pbitmap;
+
+      pbitmap->m_pdevicecontext.as(m_pdevicecontext);
+      
+      pbitmap->m_pbitmaprendertarget.as(m_pbitmaprendertarget);
+
+      m_pdevicecontext.as(m_pdevicecontext1);
+
+      m_pbitmaprendertarget.as(m_pd2d1rendertarget);
+
+      m_pdevicecontext.as(m_pdcrendertarget);
+
+      m_osdata[data_device_context] = m_pdevicecontext;
+
+      m_osdata[data_render_target] = m_pd2d1rendertarget;
+
+   }
 
 
    //void graphics::create_end_draw()
@@ -7182,28 +7301,35 @@ namespace draw2d_direct2d
    //}
 
 
-   //void graphics::end_layer(bool bClosingLayer)
-   //{
+   void graphics::end_layer(bool bClosingLayer)
+   {
 
-   //   if (m_iLayerCount > 0)
-   //   {
+      if (m_iLayerCount > 0)
+      {
 
-   //      warning() << "Layers left to pop on end draw!";
+         warning() << "Layers left to pop on end draw!";
 
-   //      _pop_all_layers();
+         _pop_all_layers();
 
-   //   }
+      }
 
-   //   //if (m_egraphics == ::e_graphics_draw)
-   //   //{
+      if (m_egraphics == ::e_graphics_draw)
+      {
 
-   //   //   m_pd2d1rendertarget->EndDraw();
+         if (m_bBeginDraw)
+         {
 
-   //   //}
+            m_bBeginDraw = false;
 
-   //   ::gpu::graphics::end_layer(bClosingLayer);
+            m_pd2d1rendertarget->EndDraw();
 
-   //}
+         }
+
+      }
+
+      //::gpu::graphics::end_layer(bClosingLayer);
+
+   }
 
 
    //void graphics::just_after_new_frame()
@@ -8320,7 +8446,12 @@ namespace draw2d_direct2d
 
       }
 
-      HRESULT hr = m_pd2d1rendertarget->Flush();
+      if (m_egraphics == e_graphics_draw)
+      {
+
+         HRESULT hr = m_pd2d1rendertarget->Flush();
+
+      }
 
       //return SUCCEEDED(hr);
 

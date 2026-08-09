@@ -4,12 +4,12 @@
 #include "object.h"
 
 
-namespace draw2d_direct2d
+namespace draw2d_direct2d_for_directx11
 {
 
 
    class region :
-      virtual public ::draw2d_direct2d::object,
+      virtual public ::draw2d_direct2d_for_directx11::object,
       virtual public ::draw2d::region
    {
    public:
@@ -52,7 +52,7 @@ namespace draw2d_direct2d
    };
 
 
-} // namespace draw2d_direct2d
+} // namespace draw2d_direct2d_for_directx11
 
 
 

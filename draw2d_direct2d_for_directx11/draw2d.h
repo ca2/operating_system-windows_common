@@ -1,17 +1,15 @@
 #pragma once
 
 
-#include "bred/gpu/draw2d.h"
-#include "direct2d/object.h"
+#include "draw2d_direct2d/draw2d.h"
 
 
-namespace draw2d_direct2d
+namespace draw2d_direct2d_for_directx11
 {
 
 
-   class CLASS_DECL_DRAW2D_DIRECT2D draw2d :
-      virtual public ::gpu::draw2d,
-      virtual public ::direct2d::object
+   class CLASS_DECL_DRAW2D_DIRECT2D_FOR_DIRECTX11 draw2d :
+      virtual public ::draw2d_direct2d::draw2d
    {
    public:
 
@@ -29,14 +27,14 @@ namespace draw2d_direct2d
       //void on_create_window(::windowing::window* pwindow) override;
       
       void adjust_composited_window_styles(::u32& nExStyle, ::u32& nStyle) override;
-      virtual ::draw2d::graphics_pointer do_allocation_strategy(::draw2d::host *pdraw2dhost, ::image::image *pimage,
-                                                                const ::i32_size &size);
+      virtual ::draw2d::graphics_pointer do_allocation_strategy(::acme::user::interaction * pacmeuserinteractionAffinity, ::image::image * pimage,
+                                                                const ::i32_size & size);
 
 
    };
 
 
-} // namespace draw2d_direct2d
+} // namespace draw2d_direct2d_for_directx11
 
 
 

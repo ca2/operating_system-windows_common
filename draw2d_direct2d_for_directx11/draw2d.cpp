@@ -5,7 +5,7 @@
 #include "aura/windowing/window.h"
 
 
-namespace draw2d_direct2d
+namespace draw2d_direct2d_for_directx11
 {
 
 
@@ -67,7 +67,7 @@ namespace draw2d_direct2d
    bool draw2d::lock_device()
    {
 
-      auto pdirect2d = m_pdirect2d;
+      auto pdirect2d = direct2d();
 
       if (!pdirect2d)
       {
@@ -95,7 +95,7 @@ namespace draw2d_direct2d
    void draw2d::unlock_device()
    {
       
-      auto pdirect2d = m_pdirect2d;
+      auto pdirect2d = direct2d();
 
       auto pmultithread = pdirect2d->m_pd2d1multithread.m_p;
 
@@ -131,11 +131,11 @@ namespace draw2d_direct2d
    }
 
 
-   ::draw2d::graphics_pointer draw2d::do_allocation_strategy(::draw2d::host *pdraw2dhost, ::image::image *pimage,
-                                                             const ::i32_size &size)
+   ::draw2d::graphics_pointer draw2d::do_allocation_strategy(::acme::user::interaction * pacmeuserinteractionAffinity, ::image::image * pimage,
+                                                                const ::i32_size & size)
    {
 
-      auto pgraphics = create_memory_graphics(pdraw2dhost, size);
+      auto pgraphics = create_memory_graphics(size, pacmeuserinteractionAffinity);
 
       if (::is_set(pimage))
       {
@@ -149,7 +149,7 @@ namespace draw2d_direct2d
    }
 
 
-} // namespace draw2d_direct2d
+} // namespace draw2d_direct2d_for_directx11
 
 
 

@@ -4,7 +4,7 @@
 #include "direct2d/direct2d.h"
 
 
-namespace draw2d_direct2d
+namespace draw2d_direct2d_for_directx11
 {
 
 
@@ -168,7 +168,7 @@ namespace draw2d_direct2d
    HRESULT pen::s_CreatePatternBrush(ID2D1DeviceContext *pDeviceContext, D2D1_COLOR_F * pcr, ID2D1ImageBrush **ppImageBrush)
    {
 
-      HRESULT hrEndDraw = pDeviceContext->EndDraw();
+      //HRESULT hrEndDraw = pDeviceContext->EndDraw();
 
       HRESULT hr = S_OK;
       ID2D1Image *pOldTarget = nullptr;
@@ -222,10 +222,10 @@ namespace draw2d_direct2d
       pCommandList->Release();
       pOldTarget->Release();
 
-      if(hrEndDraw == S_OK)
-      {
-         pDeviceContext->BeginDraw();
-      }
+      //if(hrEndDraw == S_OK)
+      //{
+      //   pDeviceContext->BeginDraw();
+      //}
 
       if(SUCCEEDED(hr))
       {
@@ -242,7 +242,7 @@ namespace draw2d_direct2d
       return hr;
    }
 
-} // namespace draw2d_direct2d
+} // namespace draw2d_direct2d_for_directx11
 
 
 

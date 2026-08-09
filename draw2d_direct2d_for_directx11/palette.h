@@ -5,12 +5,12 @@
 #include "object.h"
 
 
-namespace draw2d_direct2d
+namespace draw2d_direct2d_for_directx11
 {
 
 
-   class CLASS_DECL_DRAW2D_DIRECT2D palette :
-      virtual public ::draw2d_direct2d::object,
+   class CLASS_DECL_DRAW2D_DIRECT2D_FOR_DIRECTX11 palette :
+      virtual public ::draw2d_direct2d_for_directx11::object,
       virtual public ::draw2d::palette
    {
    public:
@@ -23,7 +23,7 @@ namespace draw2d_direct2d
    };
 
 
-} // namespace draw2d_direct2d
+} // namespace draw2d_direct2d_for_directx11
 
 
 

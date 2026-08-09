@@ -71,7 +71,7 @@ namespace direct2d
    };
 
 
-   CLASS_DECL_DIRECT2D direct2d* from_gpu_device(::gpu::device* pgpudevice);
+   ///CLASS_DECL_DIRECT2D direct2d* from_gpu_device(::gpu::device* pgpudevice);
 
 
    CLASS_DECL_DIRECT2D ::direct2d::direct2d *get();

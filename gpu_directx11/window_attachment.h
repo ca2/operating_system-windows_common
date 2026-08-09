@@ -2,21 +2,21 @@
 #pragma once
 
 
-#include "bred/gpu/draw2d_window_attachment.h"
+#include "bred/gpu/window_attachment.h"
 
 
 namespace gpu_directx11
 {
 
 
-   class CLASS_DECL_GPU_DIRECTX11 draw2d_window_attachment :
-      virtual public ::gpu::draw2d_window_attachment
+   class CLASS_DECL_GPU_DIRECTX11 window_attachment :
+      virtual public ::gpu::window_attachment
    {
    public:
 
 
-      draw2d_window_attachment();
-      ~draw2d_window_attachment() override;
+      window_attachment();
+      ~window_attachment() override;
 
 
       void on_start_frame() override;

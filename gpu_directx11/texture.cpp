@@ -677,7 +677,112 @@ namespace gpu_directx11
    //}
 
 
-   //void texture::blend(::gpu::texture *ptexture) {}
+   ////void texture::blend(::gpu::texture *ptexture) {}
+
+   //bool read_texture_pixels(
+   //ID3D11Device * device,
+   //ID3D11DeviceContext * context,
+   //ID3D11Texture2D * texture,
+   //std::vector<uint8_t> & pixels,
+   //UINT & width,
+   //UINT & height,
+   //UINT & rowSize)
+   //{
+   //   if (!device || !context || !texture)
+   //   {
+   //      return false;
+   //   }
+
+
+   //   return true;
+   //}
+
+   void texture::read_pixels(::gpu::command_buffer * pgpucommandbuffer, ::pixmap_t * ppixmap)
+   {
+
+      D3D11_TEXTURE2D_DESC desc{};
+      m_ptextureOffscreen->GetDesc(&desc);
+      D3D11_TEXTURE2D_DESC stagingDesc{};
+
+      if (m_ptextureStaging)
+      {
+
+         m_ptextureStaging->GetDesc(&stagingDesc);
+
+         if (stagingDesc.Width != desc.Width
+            || stagingDesc.Height != desc.Height)
+         {
+
+            m_ptextureStaging.release();
+
+         }
+
+      }
+
+      ::cast<::gpu_directx11::context> pgpucontext = m_pgpucontext;
+
+
+      if (!m_ptextureStaging)
+      {
+
+         stagingDesc = desc;
+
+         // This example assumes 4 bytes/pixel, such as:
+         // DXGI_FORMAT_R8G8B8A8_UNORM
+         // DXGI_FORMAT_B8G8R8A8_UNORM
+         auto rowSize = desc.Width * 4;
+
+         stagingDesc.Usage = D3D11_USAGE_STAGING;
+         stagingDesc.BindFlags = 0;
+         stagingDesc.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
+         stagingDesc.MiscFlags = 0;
+
+         ::cast<::gpu_directx11::device> pgpudevice = pgpucontext->m_pgpudevice;
+
+         auto pdevice = pgpudevice->m_pd3d11device;
+
+
+         HRESULT hrCreateTexture2D = pdevice->CreateTexture2D(
+            &stagingDesc,
+            nullptr,
+            &m_ptextureStaging);
+
+         if (FAILED(hrCreateTexture2D))
+         {
+
+            throw ::hresult_exception(hrCreateTexture2D);
+
+         }
+
+      }
+
+      pgpucontext->m_pcontext->CopyResource(
+         m_ptextureStaging,
+         m_ptextureOffscreen);
+
+      D3D11_MAPPED_SUBRESOURCE mapped{};
+
+      auto hrMap = pgpucontext->m_pcontext->Map(
+         m_ptextureStaging,
+         0,
+         D3D11_MAP_READ,
+         0,
+         &mapped);
+
+      if (FAILED(hrMap))
+      {
+         throw ::hresult_exception(hrMap);
+      }
+
+
+      ppixmap->copy({ desc.Width, desc.Height }, (const ::image32_t *)mapped.pData, mapped.RowPitch);
+
+      pgpucontext->m_pcontext->Unmap(m_ptextureStaging, 0);
+
+      //stagingTexture->Release();
+
+
+   }
 
 
    IDXGISurface *texture::__get_dxgi_surface()

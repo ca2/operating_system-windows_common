@@ -5,11 +5,11 @@
 //#include "direct2d/swap_chain.h"
 //
 //
-//namespace draw2d_direct2d
+//namespace draw2d_direct2d_for_directx11
 //{
 //
 //
-//   class CLASS_DECL_DRAW2D_DIRECT2D swap_chain :
+//   class CLASS_DECL_DRAW2D_DIRECT2D_FOR_DIRECTX11 swap_chain :
 //      virtual public ::directx11::swap_chain
 //   {
 //   public:
@@ -32,7 +32,7 @@
 //   };
 //
 //
-//} // namespace draw2d_direct2d
+//} // namespace draw2d_direct2d_for_directx11
 //
 //
 //

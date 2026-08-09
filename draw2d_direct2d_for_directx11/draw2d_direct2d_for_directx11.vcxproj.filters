@@ -56,13 +56,13 @@
     <ClCompile Include="draw2d.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="internal_font.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="aaa_swap_chain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="aaa_directx11_swap_chain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="internal_font.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -129,7 +129,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="draw2d_direct2d.def">
+    <None Include="draw2d_direct2d_for_directx11.def">
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>

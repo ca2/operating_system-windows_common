@@ -273,7 +273,7 @@ namespace draw2d_direct2d
    }
 
 
-   void image::create_as_render_target(const ::i32_size & sizeRaw, ::user::interaction * puserinteraction, ::enum_flag eflagCreate, ::i32 iGoodStride, bool bPreserve)
+   void image::create_as_render_target(const ::i32_size & sizeRaw, ::user::interaction * puserinteraction, ::draw2d::graphics * pdraw2dgraphics, ::enum_flag eflagCreate, ::i32 iGoodStride, bool bPreserve, bool bTopDraw2d)
    {
 
       if (::is_null(puserinteraction))
@@ -285,8 +285,9 @@ namespace draw2d_direct2d
 
       m_pacmeuserinteractionAffinity = puserinteraction;
 
-      if (m_sizeRaw == sizeRaw
-         && m_pgraphicsOwned.ok())
+      //if (m_sizeRaw == sizeRaw
+        // && m_pgraphicsOwned.ok())
+      if(m_sizeRaw == sizeRaw)
       {
 
          return;
@@ -326,11 +327,13 @@ namespace draw2d_direct2d
 
       //m_hbitmapOld = (HBITMAP) SelectObject(m_hdcMemory, m_hbitmap);
 
-      constructø(m_pgraphicsOwned);
+      //constructø(m_pgraphicsOwned);
 
       m_sizeRaw = sizeRaw;
 
-      m_pgraphicsOwned->create_for_image(this);
+      //m_pgraphicsOwned->create_for_image(this);
+
+      pdraw2dgraphics->create_for_image(this);
 
 
       if (m_pbitmap.ok())

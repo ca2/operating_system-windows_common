@@ -2,7 +2,7 @@
 #include "frame.h"
 #include "model_buffer.h"
 #include "gpu_directx11/context.h"
-#include "bred/gpu/draw2d_window_attachment.h"
+#include "bred/gpu/window_attachment.h"
 /*
  * Encapsulates a directx11 memory_buffer
  *
@@ -173,9 +173,9 @@ namespace gpu_directx11
 
          //::cast < frame_storage > pframestorage = pdevice->current_frame_storage();
 
-         auto pgpudraw2dwindowattachment = ::gpu::draw2d_window_attachment::get(pcontext);
+         auto pgpuwindowattachment = ::gpu::window_attachment::get(pcontext);
 
-         auto pframestorage = pgpudraw2dwindowattachment->current_frame_storage();
+         auto pframestorage = pgpuwindowattachment->current_frame_storage();
 
          pframestorage->map_allocate(this, (::i32) count);
 

@@ -1,7 +1,7 @@
 #include "framework.h"
 #include "approach.h"
 #include "descriptors.h"
-#include "draw2d_window_attachment.h"
+#include "window_attachment.h"
 #include "frame.h"
 #include "input_layout.h"
 #include "renderer.h"
@@ -13,7 +13,7 @@
 #include "initializers.h"
 #include "bred/gpu/command_buffer.h"
 #include "bred/gpu/context_lock.h"
-#include "bred/gpu/aaa_cpu_buffer.h"
+#include "bred/gpu/buffer.h"
 #include "bred/gpu/layer.h"
 //#include "bred/gpu/render_state.h"
 #include "bred/gpu/swap_chain.h"
@@ -110,7 +110,7 @@ namespace gpu_directx11
 
       //   throw todo;
 
-      //   pgpucontext->create_cpu_buffer21(pgpucontext->rectangle().size());
+      //   pgpucontext->create_cpu_buffer21(pgpucontext->size());
 
       //   construct_newø(m_pcpubuffersampler);
 
@@ -373,7 +373,7 @@ namespace gpu_directx11
    void renderer::on_begin_draw()
    {
 
-      if (m_pgpucontext->m_rectangle.is_empty())
+      if (m_pgpucontext->size().is_empty())
       {
 
          throw ::exception(error_wrong_state, "please call set size before at least once with no empty preferrably good initial size");
@@ -383,9 +383,9 @@ namespace gpu_directx11
       }
 
 
-      auto pgpudraw2dwindowattachment = ::gpu::draw2d_window_attachment::get(m_pgpucontext);
+      auto pgpuwindowattachment = ::gpu::window_attachment::get(m_pgpucontext);
 
-      assert(pgpudraw2dwindowattachment->current_frame()->m_egpuframestate ==
+      assert(pgpuwindowattachment->current_frame()->m_egpuframestate ==
                 ::gpu::e_gpu_frame_state_began_frame
          && "Can't call beginRender while not in began_frame gpu_frame_state");
 
@@ -693,7 +693,7 @@ namespace gpu_directx11
 
       throw todo;
 
-      auto pcpubuffer = pgpucontext->m_pcpubuffer2;
+      auto pbuffer = pgpucontext->m_pbuffer;
 
       /*memory m;
 
@@ -701,7 +701,7 @@ namespace gpu_directx11
 
       m.set(255);*/
 
-      pcpubuffer->set_pixels(
+      pbuffer->set_pixels(
          data,
          width,
          height,
@@ -975,7 +975,7 @@ namespace gpu_directx11
 
       ::cast < render_target_view > pgpurendertargetview = render_target();
 
-      auto size = pgpucontext->m_rectangle.size();
+      auto size = pgpucontext->size();
 
       if (pgpurendertargetview)
       {
@@ -1284,7 +1284,7 @@ HRESULT hrCreateDepthStencilState = pgpudevice->m_pd3d11device->CreateDepthStenc
 
       prenderer = prendererSrc;
 
-      m_pgpucontext->set_placement(prenderer->m_pgpucontext->rectangle());
+      m_pgpucontext->set_placement(prenderer->m_pgpucontext->get_placement());
 
       defer_update_renderer();
 

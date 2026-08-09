@@ -9,10 +9,10 @@
 //#include "bred/gpu/renderer.h"
 ////#include "bred/gpu/swap_chain_render_target_view.h"
 /////#include "bred/gpu/graphics.h"
-////#include "draw2d_direct2d/graphics.h"
+////#include "draw2d_direct2d_for_directx11/graphics.h"
 //
 //
-//namespace draw2d_direct2d
+//namespace draw2d_direct2d_for_directx11
 //{
 //
 //   swap_chain::swap_chain()
@@ -67,7 +67,7 @@
 //   void swap_chain::endDraw(::draw2d_gpu::graphics* pgraphics, ::user::interaction* puserinteraction, ::gpu::renderer* prendererSrc)
 //   {
 //
-//      ::cast < ::draw2d_direct2d::graphics > pgraphicsDirect2d = pgraphics;
+//      ::cast < ::draw2d_direct2d_for_directx11::graphics > pgraphicsDirect2d = pgraphics;
 //
 //      comptr < ID2D1Bitmap > pd2d1bitmap;
 //
@@ -134,7 +134,7 @@
 //   }
 //
 //
-//} // namespace draw2d_direct2d
+//} // namespace draw2d_direct2d_for_directx11
 //
 //
 //

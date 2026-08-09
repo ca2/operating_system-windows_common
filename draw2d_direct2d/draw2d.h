@@ -30,6 +30,9 @@ namespace draw2d_direct2d
 
       virtual void initialize(::particle * pparticle) override;
 
+      ::pointer < ::draw2d::window_attachment > allocate_draw2d_window_attachment(::acme::windowing::window * pacmewindowingwindow) override;
+
+
       virtual string write_text_get_default_implementation_name() override;
 
       bool lock_device() override;

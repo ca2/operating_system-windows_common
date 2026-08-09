@@ -141,7 +141,7 @@ namespace gpu_directx11
 
       
       void copy(::gpu::texture *pgputextureTarget, ::gpu::texture *pgputextureSource,
-                ::pointer<::gpu::fence> *pgpufence) override;
+                ::pointer<::gpu::fence> *pgpufence, ::pointer < ::gpu::semaphore > * pgpusemaphoreReady) override;
 
       virtual void copy_using_shader(::gpu::texture* pgputextureTarget, ::gpu::texture* pgputextureSource);
 
@@ -230,9 +230,9 @@ namespace gpu_directx11
       //virtual void _create_window_context(::acme::windowing::window * pwindow);
 
       //virtual void _create_window_buffer();
-      void _create_cpu_buffer21(const ::i32_size & size) override;
-      void resize_cpu_buffer21(const ::i32_size & size) override;
-      void destroy_cpu_buffer21() override;
+      void _create_cpu_buffer(const ::i32_size & size) override;
+      void resize_cpu_buffer(const ::i32_size & size) override;
+      void destroy_cpu_buffer() override;
 
       //void make_current() override;
 

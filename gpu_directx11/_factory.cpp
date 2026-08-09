@@ -1,7 +1,7 @@
 #include "framework.h"
 #include "bred/gltf/vertex.h"
 #include "approach.h"
-#include "aaa_cpu_buffer.h"
+#include "buffer.h"
 //#include "cube.h"
 #include "frame.h"
 #include "frame_storage.h"
@@ -58,7 +58,7 @@ __FACTORY_EXPORT void gpu_directx11_factory(::factory::factory * pfactory)
    pfactory->add_factory_item < ::gpu_directx11::fence, ::gpu::fence >();
    pfactory->add_factory_item < ::gpu_directx11::semaphore, ::gpu::semaphore >();
    pfactory->add_factory_item < ::gpu_directx11::shader, ::gpu::shader >();
-   pfactory->add_factory_item < ::gpu_directx11::aaa_cpu_buffer, ::gpu::aaa_cpu_buffer >();
+   pfactory->add_factory_item < ::gpu_directx11::buffer, ::gpu::buffer >();
    pfactory->add_factory_item < ::gpu_directx11::renderer, ::gpu::renderer >();
 
    //pfactory->add_factory_item < ::gpu_directx11::object, ::gpu::object >();

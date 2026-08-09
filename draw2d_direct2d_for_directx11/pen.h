@@ -5,12 +5,12 @@
 #include "object.h"
 
 
-namespace draw2d_direct2d
+namespace draw2d_direct2d_for_directx11
 {
 
 
-   class CLASS_DECL_DRAW2D_DIRECT2D pen :
-      virtual public ::draw2d_direct2d::object,
+   class CLASS_DECL_DRAW2D_DIRECT2D_FOR_DIRECTX11 pen :
+      virtual public ::draw2d_direct2d_for_directx11::object,
       virtual public ::draw2d::pen
    {
    public:
@@ -40,7 +40,7 @@ namespace draw2d_direct2d
 
       //virtual bool create_solid(::draw2d::graphics * pgraphics, ::f64 dWidth, ::color::color crColor);
 
-      //virtual ID2D1Brush * get_os_pen_brush(::draw2d_direct2d::graphics * pgraphics) const;
+      //virtual ID2D1Brush * get_os_pen_brush(::draw2d_direct2d_for_directx11::graphics * pgraphics) const;
 
 
       //bool destroy();
@@ -53,4 +53,4 @@ namespace draw2d_direct2d
 
    };
 
-} // namespace draw2d_direct2d
+} // namespace draw2d_direct2d_for_directx11

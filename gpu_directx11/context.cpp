@@ -3,7 +3,7 @@
 #include "memory_buffer.h"
 #include "context.h"
 #include "device.h"
-#include "draw2d_window_attachment.h"
+#include "window_attachment.h"
 #include "physical_device.h"
 #include "program.h"
 #include "renderer.h"
@@ -863,6 +863,8 @@ namespace gpu_directx11
 
       }
 
+      m_pgpudevice = pgpudeviceParam;
+
       auto& pdevicecontext = pgpudevice->m_pd3d11devicecontext;
 
       ::defer_throw_hresult(pdevicecontext.as(m_pcontext));
@@ -892,9 +894,9 @@ namespace gpu_directx11
       ::cast<::gpu_directx11::texture> ptexture =
          pgpurendertarget->current_texture(::gpu::current_layer());
 
-      auto pgpudraw2dwindowattachment = ::gpu::draw2d_window_attachment::get(pgpurendertarget);
+      auto pgpuwindowattachment = ::gpu::window_attachment::get(pgpurendertarget);
 
-      auto iFrameIndex = pgpudraw2dwindowattachment->get_frame_index3();
+      auto iFrameIndex = pgpuwindowattachment->get_frame_index3();
 
       auto pdxgisurface = ptexture->__get_dxgi_surface();
 
@@ -1126,10 +1128,49 @@ namespace gpu_directx11
    //   //   set_ok_flag();
 
    //}
+void SetTextureRectangle(
+    ID3D11DeviceContext * context,
+    ID3D11Texture2D * texture,
+    UINT left,
+    UINT top,
+    UINT right,
+    UINT bottom,
+    uint8_t red,
+    uint8_t green,
+    uint8_t blue,
+    uint8_t alpha)
+{
+   const UINT width = right - left;
+   const UINT height = bottom - top;
 
+   const uint32_t color =
+      uint32_t(red)
+      | uint32_t(green) << 8
+      | uint32_t(blue) << 16
+      | uint32_t(alpha) << 24;
+
+   std::vector<uint32_t> pixels(width * height, color);
+
+   const D3D11_BOX box{
+       .left = left,
+       .top = top,
+       .front = 0,
+       .right = right,
+       .bottom = bottom,
+       .back = 1,
+   };
+
+   context->UpdateSubresource(
+       texture,
+       0,                         // subresource
+       &box,
+       pixels.data(),
+       width * sizeof(uint32_t),  // source row pitch
+       0);                        // unused for 2D textures
+}
 
    void context::copy(::gpu::texture *pgputextureTarget, ::gpu::texture *pgputextureSource,
-                      ::pointer<::gpu::fence> *pgpufence)
+                      ::pointer<::gpu::fence> *pgpufence, ::pointer < ::gpu::semaphore > * pgpusemaphoreReady)
    {
 
       ::gpu::context_lock context_lock(this);
@@ -1147,9 +1188,53 @@ namespace gpu_directx11
 
          ::cast < ::gpu_directx11::texture > ptextureSrc = pgputextureSource;
 
+         int iLayerIndex = ::gpu::current_layer()->m_iLayerIndex;
+
+         informationf("layer_end_copy (%d)", iLayerIndex);
+
+         //if (iLayerIndex == 0)
+         //{
+
+
+         //   SetTextureRectangle(m_pcontext, ptextureSrc->m_ptextureOffscreen,
+         //   400, 0,600, 200, 200 / 2, 160 / 2, 100 / 2, 128);
+
+
+         //}
+         //else if (iLayerIndex == 2)
+         //{
+
+
+         //   SetTextureRectangle(m_pcontext, ptextureSrc->m_ptextureOffscreen,
+         //   600, 0, 800, 200, 180 / 2, 200 / 2, 100 / 2, 128);
+
+
+         //}
+
+
          m_pcontext->CopyResource(
             ptextureDst->m_ptextureOffscreen,
             ptextureSrc->m_ptextureOffscreen);
+
+
+         //if (iLayerIndex == 0)
+         //{
+         //   
+
+         //   SetTextureRectangle(m_pcontext, ptextureDst->m_ptextureOffscreen,
+         //   0, 0, 200, 200, 200/2, 160/2, 100/2, 128);
+         //   
+
+         //}
+         //else if (iLayerIndex == 2)
+         //{
+
+
+         //   SetTextureRectangle(m_pcontext, ptextureDst->m_ptextureOffscreen,
+         //   200, 0, 400, 200, 180/2, 200/2, 100/2, 128);
+
+
+         //}
 
       }
 
@@ -1456,8 +1541,8 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
          D3D11_VIEWPORT vp = {};
          vp.TopLeftX = 0;
          vp.TopLeftY = 0;
-         vp.Width = static_cast<::f32>(m_rectangle.width());
-         vp.Height = static_cast<::f32>(m_rectangle.height());
+         vp.Width = static_cast<::f32>(this->width());
+         vp.Height = static_cast<::f32>(this->height());
          vp.MinDepth = 0.0f;
          vp.MaxDepth = 1.0f;
          m_pcontext->RSSetViewports(1, &vp);
@@ -1465,9 +1550,9 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
          D3D11_RECT rectScissor;
          rectScissor.left = 0;
          rectScissor.top = 0;
-         rectScissor.right = m_rectangle.width();
-         rectScissor.bottom = m_rectangle.height();
-
+         rectScissor.right = this->width();
+         rectScissor.bottom = this->height();
+         
          m_pcontext->RSSetScissorRects(1, &rectScissor);
 
       }
@@ -1526,7 +1611,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       for (auto pgpulayer : *pgpulayera)
       {
          
-         ::cast <::gpu_directx11::texture > ptexture = pgpulayer->texture();
+         ::cast <::gpu_directx11::texture > ptexture = pgpulayer->texture(false);
 
          m_pshaderBlend3->bind_source(nullptr, ptexture, 0);
 
@@ -1719,9 +1804,9 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       if (m_papplication->m_gpu.m_bUseSwapChainWindow)
       {
 
-         auto pgpudraw2dwindowattachment = ::gpu::draw2d_window_attachment::get(this);
+         auto pgpuwindowattachment = ::gpu::window_attachment::get(this);
 
-         auto pswapchain = pgpudraw2dwindowattachment->window_context()->get_swap_chain();
+         auto pswapchain = pgpuwindowattachment->window_context()->get_swap_chain();
 
          if (pswapchain)
          {
@@ -1786,7 +1871,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
 
 
-   void context::_create_cpu_buffer21(const ::i32_size& size)
+   void context::_create_cpu_buffer(const ::i32_size& size)
    {
 
       throw todo;
@@ -1823,10 +1908,10 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    //}
 
 
-   void context::resize_cpu_buffer21(const ::i32_size& sizeParam)
+   void context::resize_cpu_buffer(const ::i32_size& sizeParam)
    {
 
-      throw todo;
+      //throw todo;
 
       if (m_papplication->m_gpu.m_bUseSwapChainWindow)
       {
@@ -1843,7 +1928,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
             throw todo;
 
-            create_cpu_buffer21(size);
+            create_cpu_buffer(size);
 
 
             ///m_pcpubuffer->m_pixmap.create(m_pcpubuffer->m_memory, size);
@@ -1889,10 +1974,10 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    //}
 
 
-   void context::destroy_cpu_buffer21()
+   void context::destroy_cpu_buffer()
    {
 
-      throw todo;
+      //throw todo;
 
       //ASSERT(is_current_task());
 
@@ -2683,9 +2768,9 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
       auto pgpurendertarget = m_pgpurenderer->render_target();
 
-      auto pgpudraw2dwindowattachment = ::gpu::draw2d_window_attachment::get(pgpurendertarget);
+      auto pgpuwindowattachment = ::gpu::window_attachment::get(m_pacmeuserinteractionAffinity);
 
-      auto iFrameIndex = pgpudraw2dwindowattachment->get_frame_index3();
+      auto iFrameIndex = pgpuwindowattachment->get_frame_index3();
 
       //m_uboBuffers[iFrameIndex]->writeToBuffer(block.data());
 

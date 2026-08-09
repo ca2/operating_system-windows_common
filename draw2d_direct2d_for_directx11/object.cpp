@@ -1,9 +1,10 @@
 #include "framework.h"
 #include "graphics.h"
 #include "object.h"
+#include "draw2d.h"
 
 
-namespace draw2d_direct2d
+namespace draw2d_direct2d_for_directx11
 {
 
 
@@ -23,14 +24,19 @@ namespace draw2d_direct2d
    }
 
 
-   void object::initialize_draw2d_direct2d_object(::draw2d_direct2d::graphics* pgraphics)
+   void object::initialize_draw2d_direct2d_object(::draw2d_direct2d_for_directx11::graphics* pgraphics)
    {
 
       initialize(pgraphics);
 
-      initialize_direct2d_object(pgraphics->m_pdirect2d);
+      ::cast < ::draw2d_direct2d::graphics > pdraw2direct2dgraphics = pgraphics;
+
+      //::cast < ::draw2d_direct2d::draw2d > pdraw2direct2ddraw2d = pdraw2direct2dgraphics->direct2d();
+
+      ::draw2d_direct2d::object::initialize_draw2d_direct2d_object(pdraw2direct2dgraphics);
 
    }
+
 
    ::i32 object::get_object(::i32 nCount, LPVOID lpObject) const
    {
@@ -124,7 +130,7 @@ namespace draw2d_direct2d
    void object::defer_update(::draw2d::graphics* pgraphics, ::i8 i) const
    {
 
-      if (!m_pdirect2d)
+      if (!m_pdirect2d_)
       {
 
          ::cast < graphics> pdirect2dgraphics = pgraphics;
@@ -138,7 +144,7 @@ namespace draw2d_direct2d
    }
 
 
-} // namespace draw2d_direct2d
+} // namespace draw2d_direct2d_for_directx11
 
 
 
