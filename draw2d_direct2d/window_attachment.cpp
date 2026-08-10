@@ -36,8 +36,11 @@ namespace draw2d_direct2d
       return dpi;
    }
 
+
    void window_attachment::initialize_window_attachment(::windowing::window *pwindow) 
    {
+
+      ::draw2d::window_attachment::initialize_window_attachment(pwindow);
    
       if (m_papplication->m_gpu.m_bUseSwapChainWindow)
       {

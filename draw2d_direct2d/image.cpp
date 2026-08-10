@@ -1483,8 +1483,8 @@ namespace draw2d_direct2d
       auto pbitmap1 = pbitmap->_map_bitmap1();
 
       // Copy render target content to CPU-readable staging bitmap
-      D2D1_POINT_2U destPoint = { 0, 0 };
-      D2D1_RECT_U srcRect = { 0, 0, m_size.cx, m_size.cy };
+      D2D1_POINT_2U destPoint = { m_point.x, m_point.y };
+      D2D1_RECT_U srcRect = { m_point.x, m_point.y, m_point.x + m_size.cx, m_point.y + m_size.cy };
 
       auto hrCopyFromBitmap = pbitmap1->CopyFromBitmap(&destPoint,pbitmap->m_pbitmap, &srcRect);
 
@@ -1666,18 +1666,20 @@ namespace draw2d_direct2d
 
       auto iScan = mappedrect.pitch;
 
-      if (iScan < m_size.cx * 4)
+      if (iScan < m_sizeRaw.cx * 4)
       {
 
-         iScan = m_size.cx * 4;
+         iScan = m_sizeRaw.cx * 4;
 
       }
 
-      auto area = (iScan / sizeof(*pimage32)) * m_size.cy;
+      auto area = (iScan / sizeof(*pimage32)) * m_sizeRaw.cy;
 
-      m_memoryPixmap.set_size(iScan * m_size.cy);
+      m_memoryPixmap.set_size(iScan * m_sizeRaw.cy);
 
-      initialize_pixmap(m_size, (::image32_t *) m_memoryPixmap.data(), iScan);
+      initialize_pixmap(m_sizeRaw, (::image32_t *) m_memoryPixmap.data(), iScan);
+
+      pixmap_map();
 
       if (::is_null(pimage32))
       {
@@ -1688,7 +1690,7 @@ namespace draw2d_direct2d
       else
       {
        
-         this->pixmap_t::copy(m_size, pimage32, iScan);
+         this->pixmap_t::copy(m_size, pimage32->offset(m_point.x, m_point.y, mappedrect.pitch), mappedrect.pitch);
 
       }
 

@@ -5343,10 +5343,26 @@ namespace draw2d_direct2d
 
       m_iaPushLayerCount.add((::i32) rectanglea.size());
 
+      //::f64_point pointImage;
+
+      //if (m_pgraphicsbufferitem)
+      //{
+
+      //   if (m_pgraphicsbufferitem->m_pimageBufferItem)
+      //   {
+
+      //      pointImage = m_pgraphicsbufferitem->m_pimageBufferItem->m_point;
+
+      //   }
+
+      //}
+
       for (::i32 i = 0; i < rectanglea.size(); i++)
       {
 
          auto r = rectanglea[i];
+
+         //r.offset(pointImage.x, pointImage.y);
 
          D2D1_RECT_F clipRect{(FLOAT) r.left, (FLOAT)r.top, (FLOAT)r.right, (FLOAT)r.bottom};
 
@@ -5369,6 +5385,7 @@ namespace draw2d_direct2d
       bool isAxisAligned = IsAxisAligned(transform);
 
       D2D1_RECT_F clipRect;
+
 
       if (isAxisAligned && IsAxisAlignedRectGeometry(pgeometry, &clipRect))
       {
@@ -5393,8 +5410,8 @@ namespace draw2d_direct2d
 
          m_iaPushLayerCount.add(1);
 
-
       }
+
       m_iLayerCount++;
 
    }
@@ -5846,6 +5863,22 @@ namespace draw2d_direct2d
       //auto r = rectangle + m_pointAddShapeTranslate;
 
       auto r = rectangle;
+
+      //::f64_point pointImage;
+
+      //if (m_pgraphicsbufferitem)
+      //{
+
+      //   if (m_pgraphicsbufferitem->m_pimageBufferItem)
+      //   {
+
+      //      pointImage = m_pgraphicsbufferitem->m_pimageBufferItem->m_point;
+
+      //   }
+
+      //}
+
+      //r += pointImage;
 
       D2D1_RECT_F rf;
 
@@ -7197,6 +7230,10 @@ namespace draw2d_direct2d
       set_smooth_mode(::draw2d::e_smooth_mode_high);
 
       //::gpu::graphics::start_layer(bFirstLayer);
+      m_pointOrigin = m_pacmeuserinteractionAffinity->m_pacmewindowingwindow->m_pointWindow;
+      m_sizeImpact2 = m_pacmeuserinteractionAffinity->m_pacmewindowingwindow->m_sizeWindow;
+
+
 
       if (m_egraphics == ::e_graphics_draw)
       {
