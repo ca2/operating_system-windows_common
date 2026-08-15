@@ -1,4 +1,4 @@
-#include "framework.h"
+#include "platform.h"
 #include "out.h"
 #include "acme/exception/extended_status.h"
 #include "acme/parallelization/synchronous_lock.h"

@@ -5,7 +5,7 @@
 //  Created by Camilo Sasuke Thomas Borregaard Soerensen on 25/07/20.
 //  Copyright (c) 2020 Camilo Sasuke Thomas Borregaard Soerensen. All rights reserved.
 //
-#include "framework.h"
+#include "platform.h"
 #include <DirectX11/DirectX11.h>
 #include "context_fbo.h"
 #include "directx11.h"

@@ -1,4 +1,4 @@
-#include "framework.h"
+#include "platform.h"
 
 
 //synchronization_object::synchronization_object(const ::scoped_string & scopedstrName)

@@ -58,6 +58,8 @@ namespace gpu_directx11
       comptr < IDXGISurface > m_pdxgisurface;
 
 
+
+
       //class d3d11 :
       //   virtual public ::particle
       //{
@@ -108,16 +110,16 @@ namespace gpu_directx11
       //class d3d11* d3d11();
 
       //void blend(::gpu::texture* ptexture) override;
-      void read_pixels(::gpu::command_buffer * pgpucommandbuffer, ::pixmap_t * ppixmap) override;
+      void read_pixels(::gpu::command_buffer * pgpucommandbuffer, ::pixmap_t * ppixmap, const ::i32_point & pointOutput) override;
 
       virtual IDXGISurface* __get_dxgi_surface();
 
       void set_pixels(const ::i32_rectangle& rectangle, const void* data) override;
-      void initialize_with_image_data(::gpu::context *pgpucontext, const ::i32_rectangle &rectangleTarget,
+      void create_with_image_data(::gpu::context *pgpucontext, const ::i32_size & size,
                                       ::i32 numChannels, bool bSrgb, const void *pdata, ::gpu::enum_texture etexture) override;
 
 
-      void initialize_hdr_texture_on_memory(::gpu::context *pgpucontext, const ::block &block) override;
+      void create_hdr_texture_on_memory(::gpu::context *pgpucontext, const ::block &block) override;
       virtual ID3D11RenderTargetView * render_target_view(::i32 iFace, ::i32 iMip);
 
       void generate_mipmap(::gpu::command_buffer *pgpucommandbuffer) override;

@@ -1,5 +1,5 @@
 // Created by camilo on 2025-06-04 23:11 <3ThomasBorregaardSørensen!!
-#include "framework.h"
+#include "platform.h"
 #include "graphics.h"
 #include "direct2d/direct2d.h"
 #include "end_draw.h"

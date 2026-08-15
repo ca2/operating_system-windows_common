@@ -1,7 +1,7 @@
 // From directx11/object by camilo on 2025-06-25 21:18 <3ThomasBorregaardSørensen!!
 // From draw2d_directx11/pen.cpp by camilo
 // on 2014-12-30 01:51 <3ThomasBorregaardSorensen!!
-#include "framework.h"
+#include "platform.h"
 #include "object.h"
 #include "directx11.h"
 

@@ -6,8 +6,8 @@ list(APPEND library_source
    _.cpp
    _.h
    _factory.cpp
-   framework.cpp
-   framework.h
+   platform.cpp
+   platform.h
 node.h
    node.cpp
 )
@@ -15,7 +15,7 @@ node.h
 
 add_library(aura_windows_common SHARED ${library_source})
 
-target_precompile_headers(aura_windows_common PRIVATE framework.h)
+target_precompile_headers(aura_windows_common PRIVATE platform.h)
 
 set_target_properties(aura_windows_common PROPERTIES LINKER_LANGUAGE CXX)
 

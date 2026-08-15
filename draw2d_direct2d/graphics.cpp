@@ -1,4 +1,4 @@
-#include "framework.h"
+#include "platform.h"
 #include "bitmap.h"
 #include "brush.h"
 #include "graphics.h"
@@ -281,8 +281,8 @@ namespace draw2d_direct2d
 
       D2D1_SIZE_F size;
 
-      size.width = sizeParam.cx;
-      size.height = sizeParam.cy;
+      size.width = (FLOAT) sizeParam.cx;
+      size.height = (FLOAT) sizeParam.cy;
 
       D2D1_SIZE_U sizeu;
 
@@ -634,9 +634,9 @@ namespace draw2d_direct2d
 
       auto size = pbitmap->m_pbitmap->GetSize();
 
-      pbitmap->m_size.cx = size.width;
+      pbitmap->m_size.cx = (::i32) size.width;
 
-      pbitmap->m_size.cy = size.height;
+      pbitmap->m_size.cy = (::i32) size.height;
 
       return pbitmap;
 
@@ -3001,14 +3001,14 @@ namespace draw2d_direct2d
 
       }
 
-      pimage->create_bitmap(m_pacmeuserinteractionAffinity);
+      //pimage->create_bitmap(m_pacmeuserinteractionAffinity);
 
-      if (pimage->get_bitmap() == nullptr)
-      {
+      //if (pimage->get_bitmap() == nullptr)
+      //{
 
-         throw ::exception(error_null_pointer);
+      //   throw ::exception(error_null_pointer);
 
-      }
+      //}
 
       //if (pgraphicsSrc->get_current_bitmap() == nullptr)
       //{
@@ -3083,7 +3083,7 @@ namespace draw2d_direct2d
 
       {
 
-         D2D1_SIZE_U sz = ((ID2D1Bitmap *)pimage->get_bitmap()->get_os_data())->GetPixelSize();
+         D2D1_SIZE_U sz = ((ID2D1Bitmap *)pimage->get_bitmap(this)->get_os_data())->GetPixelSize();
 
          if (nWidth + xSrc > sz.width)
          {

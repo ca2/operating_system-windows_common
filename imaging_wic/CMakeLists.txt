@@ -13,8 +13,8 @@ list(APPEND ${PROJECT_NAME}_source
    context.h
    _factory.cpp
    #factory_exchange.h
-   framework.cpp
-   framework.h
+   platform.cpp
+   platform.h
    load.cpp
    load_multi_frame.cpp
    saving.cpp)
@@ -23,7 +23,7 @@ list(APPEND ${PROJECT_NAME}_source
 add_library(${PROJECT_NAME} SHARED ${${PROJECT_NAME}_source})
 
 
-target_precompile_headers(${PROJECT_NAME} PRIVATE framework.h)
+target_precompile_headers(${PROJECT_NAME} PRIVATE platform.h)
 
 
 set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)

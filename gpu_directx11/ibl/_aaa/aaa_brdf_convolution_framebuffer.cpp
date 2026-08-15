@@ -1,7 +1,7 @@
 // From github:/tristancalderbank/OpenGL-PBR-Renderer/brdf_convolution_framebuffer.cpp by
 // camilo on 2025-09-26 19:50 <3ThomasBorregaardSorensen!!
 // From gpu_directx11 by camilo on 2025-10-16 17:37 <3ThomasBorregaardSorensen!!
-#include "framework.h"
+#include "platform.h"
 #include "brdf_convolution_framebuffer.h"
 #include "bred/gpu/context_lock.h"
 //#include <glad/glad.h>

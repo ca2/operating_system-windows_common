@@ -1,4 +1,4 @@
-#include "framework.h"
+#include "platform.h"
 #include "acme/operating_system.h"
 
 
@@ -11,7 +11,7 @@
 #endif
 
 
-#include "framework.h"
+#include "platform.h"
 
 
 WCHAR* wrap_dup_w(const WCHAR* pwsz, const WCHAR* pwszPrefix = nullptr, const WCHAR* pwszSuffix = nullptr)

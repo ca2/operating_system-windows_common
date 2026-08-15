@@ -1,6 +1,6 @@
 // Create by camilo on 2024-12-30 21:16 <3ThomasBorregaardSorensen!!
 // chatgpt-2024-12-30-21-06://How to load a font file into memory and load a font from this font using DirectWrite Windows Component in C++?
-#include "framework.h"
+#include "platform.h"
 #include "font.h"
 #include "internal_font.h"
 #include "direct2d/direct2d.h"

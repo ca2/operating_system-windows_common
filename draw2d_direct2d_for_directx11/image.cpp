@@ -1,5 +1,5 @@
 // Created by camilo on 2026-08-07 18:11 <3ThomasBorregaardSørensen!! Mummi!! bilbo!!
-#include "framework.h"
+#include "platform.h"
 #include "bitmap.h"
 #include "image.h"
 #include "graphics.h"
@@ -253,7 +253,7 @@ namespace draw2d_direct2d_for_directx11
 
       //auto pixmap = this->pixmap::map();
 
-      auto pacmewindowingwindow = m_pacmeuserinteractionAffinity->m_pacmewindowingwindow;
+      auto pacmewindowingwindow = m_pacmeuserinteractionAffinity->acme_windowing_window();
 
       auto pgpudevice = m_papplication->get_gpu_approach()->get_gpu_device(pacmewindowingwindow);
 
@@ -1259,7 +1259,7 @@ namespace draw2d_direct2d_for_directx11
    //}
 
 
-   void image::_map(bool bApplyAlphaTransform)
+   void image::_map(const ::i32_rectangle & rectangle, bool bApplyAlphaTransform)
    {
 
       //::draw2d::lock draw2dlock;

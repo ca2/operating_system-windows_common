@@ -19,6 +19,16 @@ namespace directx11
    public:
 
 
+      class CLASS_DECL_DIRECTX11 container :
+         virtual public ::particle
+      {
+      public:
+
+         ::pointer < directx11> m_pdirectx11;
+
+      };
+
+
       //comptr<IDWriteFactory>        m_pwritefactory;
       //comptr<ID2D1Factory1>         m_pd2d1factory;
       //geometry_sink_text_renderer   m_geometrysinktextrenderer;
@@ -41,6 +51,8 @@ namespace directx11
 
 
       void initialize(::particle * pparticle) override;
+
+      virtual bool use_composition();
 
    //protected:
    //   virtual comptr<ID2D1Device> create_device(::windowing::window* pwindow, const ::i32_rectangle& rectanglePlacement);

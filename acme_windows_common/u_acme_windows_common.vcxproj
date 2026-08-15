@@ -78,7 +78,7 @@
     <ClInclude Include="exception\translator.h" />
     <ClInclude Include="factory_exchange.h" />
     <ClInclude Include="file.h" />
-    <ClInclude Include="framework.h" />
+    <ClInclude Include="platform.h" />
     <ClInclude Include="hresult_exception.h" />
     <ClInclude Include="node.h" />
     <ClInclude Include="parallelization.h" />
@@ -114,7 +114,7 @@
     <ClCompile Include="synchronization_object.cpp" />
     <ClCompile Include="_factory.cpp" />
     <ClCompile Include="file.cpp" />
-    <ClCompile Include="framework.cpp">
+    <ClCompile Include="platform.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

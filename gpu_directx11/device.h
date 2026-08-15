@@ -6,7 +6,7 @@
 #include "bred/gpu/device.h"
 #include "acme/prototype/prototype/memory.h"
 #include "acme_windows_common/dxgi_device_source.h"
-//#include "directx11/directx11.h"
+#include "operating_system-windows_common/directx11/directx11.h"
 #include "frame_storage.h"
 
 
@@ -15,7 +15,8 @@ namespace gpu_directx11
 
 
    class CLASS_DECL_GPU_DIRECTX11 device :
-      virtual public ::gpu::device
+      virtual public ::gpu::device,
+      virtual public ::directx11::directx11::container
    {
    public:
 
@@ -25,7 +26,7 @@ namespace gpu_directx11
       comptr<IDXGIDevice>                             m_pdxgidevice;
       comptr<IDXGIFactory2>                           m_pdxgifactory2;
       //comptr<IDXGISwapChain1>                         m_pdxgiswapchain1;
-      comptr<ID3D11DeviceContext>                     m_pd3d11devicecontext;
+      comptr<ID3D11DeviceContext>                     m_pd3d11devicecontextMain;
       ::pointer<::windowing::window>                  m_pimpl;
 
 

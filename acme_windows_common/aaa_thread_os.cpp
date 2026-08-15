@@ -1,4 +1,4 @@
-#include "framework.h"
+#include "platform.h"
 
 
 //class thread_proc_runner :

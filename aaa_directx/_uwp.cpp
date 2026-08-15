@@ -1,4 +1,4 @@
-#include "framework.h"
+#include "platform.h"
 #include "CustomRenderer.h"
 
 #undef ___new

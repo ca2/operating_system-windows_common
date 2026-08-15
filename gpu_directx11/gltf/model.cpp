@@ -1,7 +1,7 @@
 // From github:/tristancalderbank/OpenGL-PBR-Renderer/model.cpp by
 // camilo on 2025-09-26 18:14 <3ThomasBorregaardSorensen!!
 // From gpu_directx11 by camilo on 2025-10-16 16:45 <3ThomasBorregaardSorensen!!
-#include "framework.h"
+#include "platform.h"
 #include "model.h"
 //#include "glad/glad.h"
 

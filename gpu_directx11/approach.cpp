@@ -1,4 +1,4 @@
-#include "framework.h"
+#include "platform.h"
 #include "approach.h"
 #include "memory_buffer.h"
 #include "context.h"

@@ -1,4 +1,4 @@
-#include "framework.h"
+#include "platform.h"
 #include "bitmap.h"
 #include "image.h"
 #include "graphics.h"
@@ -1077,7 +1077,7 @@ namespace draw2d_directx11
 
 
 
-   void image::_map(bool bApplyAlphaTransform)
+   void image::_map(const ::i32_rectangle & rectangle, bool bApplyAlphaTransform)
    {
 
       //::draw2d::lock draw2dlock;

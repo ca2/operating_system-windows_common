@@ -1,6 +1,6 @@
 // From gpu_directx11::device by
 // camilo on 2025-05-27 04:54 <3ThomasBorregaardSorensen!!
-#include "framework.h"
+#include "platform.h"
 #include "approach.h"
 #include "memory_buffer.h"
 #include "device.h"
@@ -141,7 +141,7 @@ namespace gpu_directx11
          D3D11_SDK_VERSION,
          &m_pd3d11device,
          &featureLevelActual,    // Actual feature level
-         &m_pd3d11devicecontext));  // Device context
+         &m_pd3d11devicecontextMain));  // Device context
 
       //preempt(5_s);
 
@@ -1961,7 +1961,7 @@ bool device::_is_ok() const
 
       ::defer_throw_hresult(pdevice.as(m_pd3d11device1));
 
-      ::defer_throw_hresult(pdevicecontext.as(m_pd3d11devicecontext));
+      ::defer_throw_hresult(pdevicecontext.as(m_pd3d11devicecontextMain));
 
 
       // Get the underlying DXGI device of the Direct3D device.

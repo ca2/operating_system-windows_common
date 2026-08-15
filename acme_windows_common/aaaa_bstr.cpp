@@ -1,4 +1,4 @@
-#include "framework.h"
+#include "platform.h"
 
 //
 //BSTR AllocSysString(const ::ansi_character * pchData, character_count nDataLength) noexcept

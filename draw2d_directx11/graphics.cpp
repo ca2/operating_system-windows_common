@@ -1,4 +1,4 @@
-#include "framework.h"
+#include "platform.h"
 #include "graphics.h"
 #include "bitmap.h"
 #include "path.h"
@@ -33,6 +33,7 @@
 #include "bred/gpu/layer.h"
 #include "bred/gpu/renderer.h"
 #include "bred/gpu/swap_chain.h"
+#include "bred/gpu/texture_site.h"
 #include "bred/gpu/types.h"
 #include "bred/graphics3d/types.h"
 #include "gpu_directx11/context.h"
@@ -300,22 +301,33 @@ namespace draw2d_directx11
       if (::is_null(puserinteraction))
       {
 
-         puserinteraction = dynamic_cast <::user::interaction*>(m_papplication->main_acme_user_interaction());
+         puserinteraction = dynamic_cast <::user::interaction *>(m_papplication->main_acme_user_interaction());
 
       }
 
       auto pwindow = puserinteraction->window();
 
-      auto rectanglePlacement = pwindow->get_window_rectangle();
+      //auto rectanglePlacement = pwindow->get_window_rectangle();
 
       auto pgpuapproach = m_papplication->get_gpu_approach();
 
       auto pgpudevice = pgpuapproach->get_gpu_device(pwindow);
 
-      auto pgpucontextNew = pgpudevice->create_draw2d_gpu_context(
+      auto pgpucontextNew = pgpudevice->allocate_gpu_context();
+
+      //::i32_rectangle rectanglePlacement(size);
+
+      auto sizeRaw = pwindow->get_raw_buffer_size().maximum(size);
+
+      pgpucontextNew->create_draw2d_gpu_context(
          //;; ::gpu::e_output_gpu_buffer,
+         pgpudevice,
          m_pacmeuserinteractionAffinity->m_pacmewindowingwindow,
-         size);
+         //rectanglePlacement,
+         {},
+      {},
+         size,
+         sizeRaw);
 
       set_gpu_context(pgpucontextNew);
 
@@ -5511,7 +5523,9 @@ namespace draw2d_directx11
 
          auto prendertarget = prenderer->render_target();
 
-         ::cast < ::gpu_directx11::texture > ptexture = prendertarget->current_texture(::gpu::current_layer());
+         auto ptexturesite = prendertarget->current_texture(::gpu::current_layer(), true);
+
+         ::cast < ::gpu_directx11::texture > ptexture = ptexturesite->gpu_texture();
 
          if (!ptexture->m_prendertargetview)
          {

@@ -1,7 +1,7 @@
 // From github:/tristancalderbank/OpenGL-PBR-Renderer/hdri_cube.cpp by
 // camilo on 2025-09-26 19:54 <3ThomasBorregaardSorensen!!
 // From gpu_directx11 by camilo on 2025-10-16 17:38 <3ThomasBorregaardSorensen!!
-#include "framework.h"
+#include "platform.h"
 #include "hdri_cube.h"
 #include "bred/gpu/command_buffer.h"
 #include "bred/gpu/context.h"

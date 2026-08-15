@@ -1,4 +1,4 @@
-#include "framework.h"
+#include "platform.h"
 #include "approach.h"
 #include "memory_buffer.h"
 #include "context.h"
@@ -15,11 +15,13 @@
 #include "acme/platform/application.h"
 #include "aura/graphics/image/image.h"
 #include "aura/user/user/interaction.h"
+#include "bred/gpu/binding.h"
 #include "bred/gpu/command_buffer.h"
 #include "bred/gpu/context_lock.h"
-#include "bred/gpu/layer.h"
 #include "bred/gpu/graphics.h"
 #include "bred/gpu/layer.h"
+#include "bred/gpu/model_buffer.h"
+#include "bred/gpu/texture_site.h"
 #include "bred/gpu/types.h"
 #include "bred/graphics3d/types.h"
 #include "gpu_directx11/descriptors.h"
@@ -63,11 +65,11 @@ namespace gpu_directx11
       //if (!m_pmultithread)
       {
 
-//         m_pcontext->QueryInterface(__interface_of(m_pmultithread));
+         //         m_pcontext->QueryInterface(__interface_of(m_pmultithread));
 
       }
 
-  ///    m_pmultithread->Enter();
+      ///    m_pmultithread->Enter();
 
       this->synchronization()->lock();
 
@@ -83,7 +85,7 @@ namespace gpu_directx11
    }
 
 
-   IDXGIDevice* context::_get_dxgi_device()
+   IDXGIDevice * context::_get_dxgi_device()
    {
 
       ::cast < device > pdevice = m_pgpudevice;
@@ -160,53 +162,53 @@ namespace gpu_directx11
    }
 
 
-//   void context::start_drawing()
-//   {
-//
-//
-//      //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo_elements);
-////::i32 iError16 = glGetError();
-//
-////::i32 size = 0; 
-////glGetBufferParameteriv(GL_ELEMENT_ARRAY_BUFFER, GL_BUFFER_SIZE, &size);
-////::i32 iError17 = glGetError();
-//
-////glDrawElements(GL_TRIANGLES, size / sizeof(GLushort), GL_UNSIGNED_SHORT, 0);
-////::i32 iError18 = glGetError();
-//
-//
-//
-//
-//      //ASSERT(is_current_task());
-//
-//      ////      glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
-//
-//      //      // Clear the screen
-//      //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//
-//      ////glClear(GL_COLOR_BUFFER_BIT);
-//
-//      //if (m_pprogram && m_pprogram->m_pshader)
-//      //{
-//
-//      //   m_pprogram->m_pshader->use();
-//
-//      //}
-//      //// Use our shader
-//      ////glUseProgram(programID);
-//
-//      //// be sure to activate the shader
-//      ////glUseProgram(shaderProgram);
-//
-//      //// update the uniform color
-//      ////::f32 timeValue = glfwGetTime();
-//      ////::f32 greenValue = sin(timeValue) / 2.0f + 0.5f;
-//      ////::i32 vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
-//      ////glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
-//
-//      ////return ::success;
-//
-//   }
+   //   void context::start_drawing()
+   //   {
+   //
+   //
+   //      //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo_elements);
+   ////::i32 iError16 = glGetError();
+   //
+   ////::i32 size = 0; 
+   ////glGetBufferParameteriv(GL_ELEMENT_ARRAY_BUFFER, GL_BUFFER_SIZE, &size);
+   ////::i32 iError17 = glGetError();
+   //
+   ////glDrawElements(GL_TRIANGLES, size / sizeof(GLushort), GL_UNSIGNED_SHORT, 0);
+   ////::i32 iError18 = glGetError();
+   //
+   //
+   //
+   //
+   //      //ASSERT(is_current_task());
+   //
+   //      ////      glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
+   //
+   //      //      // Clear the screen
+   //      //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+   //
+   //      ////glClear(GL_COLOR_BUFFER_BIT);
+   //
+   //      //if (m_pprogram && m_pprogram->m_pshader)
+   //      //{
+   //
+   //      //   m_pprogram->m_pshader->use();
+   //
+   //      //}
+   //      //// Use our shader
+   //      ////glUseProgram(programID);
+   //
+   //      //// be sure to activate the shader
+   //      ////glUseProgram(shaderProgram);
+   //
+   //      //// update the uniform color
+   //      ////::f32 timeValue = glfwGetTime();
+   //      ////::f32 greenValue = sin(timeValue) / 2.0f + 0.5f;
+   //      ////::i32 vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
+   //      ////glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
+   //
+   //      ////return ::success;
+   //
+   //   }
 
 
 
@@ -319,7 +321,7 @@ namespace gpu_directx11
    }
 
 
-   void context::set_bitmap_1(::image::image* pimage)
+   void context::set_bitmap_1(::image::image * pimage)
    {
 
       ASSERT(is_current_task());
@@ -557,205 +559,205 @@ namespace gpu_directx11
 
    }
 
-   
-//::pointer<::gpu::texture> context::load_cube_map(const ::scoped_string &scopedstrName, const ::file::path &path,
-//                                                    bool b32)
-//   {
-//
-//      /*VkFormat vkformat;
-//
-//      if (!b32)
-//      {
-//
-//         vkformat = VK_FORMAT_R16G16B16A16_SFLOAT;
-//      }
-//      else
-//      {
-//
-//         vkformat = VK_FORMAT_R32G32B32A32_SFLOAT;
-//      }*/
-//
-//      ::cast<gpu_directx11::context> pcontext = m_pgpurenderer->m_pgpucontext;
-//
-//      ///::cast<gpu_directx11::queue> pqueueCopy = pcontext->m_pgpudevice->transfer_queue();
-//
-//      //auto vkqueueCopy = pqueueCopy->m_vkqueue;
-//
-//      //VkImageUsageFlags usageFlags = VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT;
-//
-//      //VkImageLayout initialLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-//
-//      //auto ptexture = loadCubemap(scopedstrName, path, vkformat, vkqueueCopy, usageFlags, initialLayout);
-//      auto ptexture = loadCubemap(scopedstrName, path, b32);
-//
-//      return ptexture;
-//   }
-//
-//
-//
-//::pointer<::gpu::texture> context::loadCubemap(const ::scoped_string &name, const ::scoped_string &scopedstrFileName,bool b32)
-//   {
-//
-//      auto pgputexture = createø<::gpu::texture>();
-//
-//      ::cast<::gpu_directx11::texture> ptexture = pgputexture;
-//
-//      ptexture->m_pgpurenderer = m_pgpurenderer;
-//
-//      try
-//      {
-//
-//         if (scopedstrFileName.case_insensitive_ends(".ktx"))
-//         {
-//
-//            //::cast<::gpu_directx11::queue> pqueueGraphics = m_pgpudevice->graphics_queue();
-//
-//            throw "todoKtxLoadCubemapFromFile";
-//
-//            //ptexture->KtxLoadCubemapFromFile(name, scopedstrFileName, format, pqueueGraphics->m_vkqueue, usageFlags,
-//                                             //initialLayout);
-//         }
-//         else if (scopedstrFileName.case_insensitive_ends(".hdr"))
-//         {
-//
-//            try
-//            {
-//
-//               auto ptexture = cubemap_from_hdr(scopedstrFileName);
-//               return ptexture;
-//            }
-//            catch (const ::exception &e)
-//            {
-//
-//               throw ::exception(e.m_estatus, "Failed to load HDR cubemap '" + name + "': " + e.get_message());
-//            }
-//         }
-//         else
-//         {
-//
-//            warning() << "not implemented loadCubemap case";
-//         }
-//      }
-//      catch (const ::exception &e)
-//      {
-//
-//         throw ::exception(e.m_estatus, "Failed to load HDR cubemap '" + name + "': " + e.get_message());
-//      }
-//
-//      return pgputexture;
-//   }
 
-
-
-   //   string context::load_fragment(const ::scoped_string & scopedstrPath, enum_shader & eshader)
+   //::pointer<::gpu::texture> context::load_cube_map(const ::scoped_string &scopedstrName, const ::file::path &path,
+   //                                                    bool b32)
    //   {
    //
-   //      ::file::path path(pszPath);
+   //      /*VkFormat vkformat;
    //
-   //      auto & app = papp;
-   //
-   //      auto & file = app.file();
-   //
-   //      string strFragment = file.as_string(path);
-   //
-   //      string strExtension = path.extension();
-   //
-   //      string strVersion = get_shader_version_text();
-   //
-   //      if (strExtension.case_insensitive_begins("shadertoy"))
+   //      if (!b32)
    //      {
    //
-   //         eshader = e_shader_shadertoy;
-   //
-   //         strFragment =
-   //            //"#" + strVersion + "\n"
-   //            //"\n"
-   //            //"precision highp ::f32;\n"
-   //            "\n"
-   //            "uniform vec2 iResolution;\n"
-   //            "uniform ::f32 iTime;\n"
-   //            "uniform vec2 iMouse;\n"
-   //            "uniform sampler2D backbuffer;\n"
-   //            "\n"
-   //            "\n"
-   //            + strFragment;
-   //
-   //
-   //         strFragment +=
-   //            "\n\n"
-   //            "void main(void)\n"
-   //            "{\n"
-   //            "   mainImage(gl_FragColor, gl_FragCoord.xy);\n"
-   //            "}\n";
-   //
+   //         vkformat = VK_FORMAT_R16G16B16A16_SFLOAT;
    //      }
    //      else
    //      {
    //
-   //         strFragment =
-   ////            "#" + strVersion + "\n"
-   ////            "\n"
-   //            + strFragment;
+   //         vkformat = VK_FORMAT_R32G32B32A32_SFLOAT;
+   //      }*/
    //
-   //         eshader = e_shader_neort;
+   //      ::cast<gpu_directx11::context> pcontext = m_pgpurenderer->m_pgpucontext;
    //
+   //      ///::cast<gpu_directx11::queue> pqueueCopy = pcontext->m_pgpudevice->transfer_queue();
+   //
+   //      //auto vkqueueCopy = pqueueCopy->m_vkqueue;
+   //
+   //      //VkImageUsageFlags usageFlags = VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT;
+   //
+   //      //VkImageLayout initialLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+   //
+   //      //auto ptexture = loadCubemap(scopedstrName, path, vkformat, vkqueueCopy, usageFlags, initialLayout);
+   //      auto ptexture = loadCubemap(scopedstrName, path, b32);
+   //
+   //      return ptexture;
+   //   }
+   //
+   //
+   //
+   //::pointer<::gpu::texture> context::loadCubemap(const ::scoped_string &name, const ::scoped_string &scopedstrFileName,bool b32)
+   //   {
+   //
+   //      auto pgputexture = createø<::gpu::texture>();
+   //
+   //      ::cast<::gpu_directx11::texture> ptexture = pgputexture;
+   //
+   //      ptexture->m_pgpurenderer = m_pgpurenderer;
+   //
+   //      try
+   //      {
+   //
+   //         if (scopedstrFileName.case_insensitive_ends(".ktx"))
+   //         {
+   //
+   //            //::cast<::gpu_directx11::queue> pqueueGraphics = m_pgpudevice->graphics_queue();
+   //
+   //            throw "todoKtxLoadCubemapFromFile";
+   //
+   //            //ptexture->KtxLoadCubemapFromFile(name, scopedstrFileName, format, pqueueGraphics->m_vkqueue, usageFlags,
+   //                                             //initialLayout);
+   //         }
+   //         else if (scopedstrFileName.case_insensitive_ends(".hdr"))
+   //         {
+   //
+   //            try
+   //            {
+   //
+   //               auto ptexture = cubemap_from_hdr(scopedstrFileName);
+   //               return ptexture;
+   //            }
+   //            catch (const ::exception &e)
+   //            {
+   //
+   //               throw ::exception(e.m_estatus, "Failed to load HDR cubemap '" + name + "': " + e.get_message());
+   //            }
+   //         }
+   //         else
+   //         {
+   //
+   //            warning() << "not implemented loadCubemap case";
+   //         }
+   //      }
+   //      catch (const ::exception &e)
+   //      {
+   //
+   //         throw ::exception(e.m_estatus, "Failed to load HDR cubemap '" + name + "': " + e.get_message());
    //      }
    //
-   //      return strFragment;
-   //
+   //      return pgputexture;
    //   }
 
 
-      //string context::get_shader_version_text()
-      //{
 
-      //   return "version 330 core";
-
-      //}
-
-      //void context::translate_shader(string& strFragment)
-      //{
-
-      //   string_array_base stra;
-
-      //   stra.add_lines(strFragment);
-
-      //   auto pFind = stra.case_insensitive_find_first_begins("#version ");
-
-      //   if (::is_set(pFind))
+      //   string context::load_fragment(const ::scoped_string & scopedstrPath, enum_shader & eshader)
       //   {
-
-      //      stra[iFind] = get_shader_version_text();
-
+      //
+      //      ::file::path path(pszPath);
+      //
+      //      auto & app = papp;
+      //
+      //      auto & file = app.file();
+      //
+      //      string strFragment = file.as_string(path);
+      //
+      //      string strExtension = path.extension();
+      //
+      //      string strVersion = get_shader_version_text();
+      //
+      //      if (strExtension.case_insensitive_begins("shadertoy"))
+      //      {
+      //
+      //         eshader = e_shader_shadertoy;
+      //
+      //         strFragment =
+      //            //"#" + strVersion + "\n"
+      //            //"\n"
+      //            //"precision highp ::f32;\n"
+      //            "\n"
+      //            "uniform vec2 iResolution;\n"
+      //            "uniform ::f32 iTime;\n"
+      //            "uniform vec2 iMouse;\n"
+      //            "uniform sampler2D backbuffer;\n"
+      //            "\n"
+      //            "\n"
+      //            + strFragment;
+      //
+      //
+      //         strFragment +=
+      //            "\n\n"
+      //            "void main(void)\n"
+      //            "{\n"
+      //            "   mainImage(gl_FragColor, gl_FragCoord.xy);\n"
+      //            "}\n";
+      //
+      //      }
+      //      else
+      //      {
+      //
+      //         strFragment =
+      ////            "#" + strVersion + "\n"
+      ////            "\n"
+      //            + strFragment;
+      //
+      //         eshader = e_shader_neort;
+      //
+      //      }
+      //
+      //      return strFragment;
+      //
       //   }
-      //   else
-      //   {
-
-      //      stra.insert_at(0, get_shader_version_text());
-
-      //   }
-
-      //   _translate_shader(stra);
-
-      //   strFragment = stra.implode("\n");
-
-      //}
 
 
-      //void context::_translate_shader(string_array_base& stra)
-      //{
+         //string context::get_shader_version_text()
+         //{
 
-      //}
+         //   return "version 330 core";
+
+         //}
+
+         //void context::translate_shader(string& strFragment)
+         //{
+
+         //   string_array_base stra;
+
+         //   stra.add_lines(strFragment);
+
+         //   auto pFind = stra.case_insensitive_find_first_begins("#version ");
+
+         //   if (::is_set(pFind))
+         //   {
+
+         //      stra[iFind] = get_shader_version_text();
+
+         //   }
+         //   else
+         //   {
+
+         //      stra.insert_at(0, get_shader_version_text());
+
+         //   }
+
+         //   _translate_shader(stra);
+
+         //   strFragment = stra.implode("\n");
+
+         //}
 
 
-   void context::set_matrix_uniform(const ::gpu::payload& uniformMatrix)
+         //void context::_translate_shader(string_array_base& stra)
+         //{
+
+         //}
+
+
+   void context::set_matrix_uniform(const ::gpu::payload & uniformMatrix)
    {
 
       //m_iMatrixUniform = uniformMatrix.m_iUniform;
 
    }
 
-   ::gpu::context_pointer allocate_system_context(::particle* pparticle)
+   ::gpu::context_pointer allocate_system_context(::particle * pparticle)
    {
 
       return pparticle->create_newø <context>();
@@ -785,7 +787,7 @@ namespace gpu_directx11
    }
 
 
-   void context::_create_offscreen_window(const ::i32_size& size)
+   void context::_create_offscreen_window(const ::i32_size & size)
    {
       //if (::IsWindow(m_hwnd))
       //{
@@ -851,7 +853,7 @@ namespace gpu_directx11
    }
 
 
-   void context::_create_context_directx11(::gpu::device* pgpudeviceParam, const ::gpu::enum_output& eoutput, ::acme::windowing::window* pwindow, const ::i32_size& size)
+   void context::_create_context_directx11(::gpu::device * pgpudeviceParam, const ::gpu::enum_output & eoutput, ::acme::windowing::window * pwindow, const ::i32_point & pointInput, const ::i32_point & pointOutput, const ::i32_size & size, const ::i32_size & sizeRaw)
    {
 
       ::cast < device > pgpudevice = pgpudeviceParam;
@@ -865,7 +867,7 @@ namespace gpu_directx11
 
       m_pgpudevice = pgpudeviceParam;
 
-      auto& pdevicecontext = pgpudevice->m_pd3d11devicecontext;
+      auto & pdevicecontext = pgpudevice->m_pd3d11devicecontextMain;
 
       ::defer_throw_hresult(pdevicecontext.as(m_pcontext));
 
@@ -874,25 +876,26 @@ namespace gpu_directx11
    }
 
 
-   void context::_create_gpu_context(::gpu::device* pgpudevice, const ::gpu::enum_output& eoutput, const ::gpu::enum_scene& escene, ::acme::windowing::window* pacmewindowingwindow, const ::i32_size& size)
+   void context::_create_gpu_context(::gpu::device * pgpudevice, const ::gpu::enum_output & eoutput, const ::gpu::enum_scene & escene, ::acme::windowing::window * pacmewindowingwindow, const ::i32_point & pointInput, const ::i32_point & pointOutput, const ::i32_size & size, const ::i32_size & sizeRaw)
    {
 
-      ::gpu_gpu::context::_create_gpu_context(pgpudevice, eoutput, escene, pacmewindowingwindow, size);
+      ::gpu_gpu::context::_create_gpu_context(pgpudevice, eoutput, escene, pacmewindowingwindow, pointInput, pointOutput, size, sizeRaw);
 
-      _create_context_directx11(pgpudevice, eoutput, pacmewindowingwindow, size);
+      _create_context_directx11(pgpudevice, eoutput, pacmewindowingwindow, pointInput, pointOutput, size, sizeRaw);
 
    }
 
 
-   void context::__bind_draw2d_compositor(::gpu::compositor* pgpucompositor, ::gpu::layer * pgpulayer)
+   void context::__bind_draw2d_compositor(::gpu::compositor * pgpucompositor, ::gpu::layer * pgpulayer)
    {
 
       ::cast < ::dxgi_surface_bindable > pdxgisurfacebindable = pgpucompositor;
 
       auto pgpurendertarget = get_gpu_renderer()->render_target();
 
-      ::cast<::gpu_directx11::texture> ptexture =
-         pgpurendertarget->current_texture(::gpu::current_layer());
+      auto ptexturesite = pgpurendertarget->current_texture(::gpu::current_layer(), true);
+      
+      ::cast<::gpu_directx11::texture> ptexture = ptexturesite->gpu_texture();
 
       auto pgpuwindowattachment = ::gpu::window_attachment::get(pgpurendertarget);
 
@@ -1128,65 +1131,65 @@ namespace gpu_directx11
    //   //   set_ok_flag();
 
    //}
-void SetTextureRectangle(
-    ID3D11DeviceContext * context,
-    ID3D11Texture2D * texture,
-    UINT left,
-    UINT top,
-    UINT right,
-    UINT bottom,
-    uint8_t red,
-    uint8_t green,
-    uint8_t blue,
-    uint8_t alpha)
-{
-   const UINT width = right - left;
-   const UINT height = bottom - top;
+   void SetTextureRectangle(
+       ID3D11DeviceContext * context,
+       ID3D11Texture2D * texture,
+       UINT left,
+       UINT top,
+       UINT right,
+       UINT bottom,
+       uint8_t red,
+       uint8_t green,
+       uint8_t blue,
+       uint8_t alpha)
+   {
+      const UINT width = right - left;
+      const UINT height = bottom - top;
 
-   const uint32_t color =
-      uint32_t(red)
-      | uint32_t(green) << 8
-      | uint32_t(blue) << 16
-      | uint32_t(alpha) << 24;
+      const uint32_t color =
+         uint32_t(red)
+         | uint32_t(green) << 8
+         | uint32_t(blue) << 16
+         | uint32_t(alpha) << 24;
 
-   std::vector<uint32_t> pixels(width * height, color);
+      std::vector<uint32_t> pixels(width * height, color);
 
-   const D3D11_BOX box{
-       .left = left,
-       .top = top,
-       .front = 0,
-       .right = right,
-       .bottom = bottom,
-       .back = 1,
-   };
+      const D3D11_BOX box{
+          .left = left,
+          .top = top,
+          .front = 0,
+          .right = right,
+          .bottom = bottom,
+          .back = 1,
+      };
 
-   context->UpdateSubresource(
-       texture,
-       0,                         // subresource
-       &box,
-       pixels.data(),
-       width * sizeof(uint32_t),  // source row pitch
-       0);                        // unused for 2D textures
-}
+      context->UpdateSubresource(
+          texture,
+          0,                         // subresource
+          &box,
+          pixels.data(),
+          width * sizeof(uint32_t),  // source row pitch
+          0);                        // unused for 2D textures
+   }
 
-   void context::copy(::gpu::texture *pgputextureTarget, ::gpu::texture *pgputextureSource,
-                      ::pointer<::gpu::fence> *pgpufence, ::pointer < ::gpu::semaphore > * pgpusemaphoreReady)
+   void context::copy(::gpu::texture_site * pgputexturesiteTarget, ::gpu::texture_site * pgputexturesiteSource,
+                      ::pointer<::gpu::fence> * pgpufence, ::pointer < ::gpu::semaphore > * pgpusemaphoreReady)
    {
 
       ::gpu::context_lock context_lock(this);
 
-      ::cast < ::gpu_directx11::texture > ptextureDst = pgputextureTarget;
+      ::cast < ::gpu_directx11::texture > ptextureDst = pgputexturesiteTarget->gpu_texture();
 
       if (ptextureDst->m_prendertargetview)
       {
 
-         copy_using_shader(pgputextureTarget, pgputextureSource);
+         copy_using_shader(pgputexturesiteTarget, pgputexturesiteSource);
 
       }
       else
       {
 
-         ::cast < ::gpu_directx11::texture > ptextureSrc = pgputextureSource;
+         ::cast < ::gpu_directx11::texture > ptextureSrc = pgputexturesiteSource->gpu_texture();
 
          int iLayerIndex = ::gpu::current_layer()->m_iLayerIndex;
 
@@ -1247,7 +1250,7 @@ void SetTextureRectangle(
    //END_GPU_PROPERTIES()
 
 
-   void context::copy_using_shader(::gpu::texture* pgputextureTarget, ::gpu::texture* pgputextureSource)
+   void context::copy_using_shader(::gpu::texture_site * pgputexturesiteTarget, ::gpu::texture_site * pgputexturesiteSource)
    {
 
       ::gpu::context_lock context_lock(this);
@@ -1314,47 +1317,47 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
          ::cast < device > pgpudevice = m_pgpudevice;
 
 
-    //     Vertex vertices[] = {
-    //        //   x     y     u     v
-    ////  Position         Texcoord
-    //{ { -1.0f, -1.0f }, { 0.0f, 1.0f } }, // Bottom-left
-    //{ { -1.0f,  1.0f }, { 0.0f, 0.0f } }, // Top-left
-    //{ {  1.0f, -1.0f }, { 1.0f, 1.0f } }, // Bottom-right
-    //{ {  1.0f,  1.0f }, { 1.0f, 0.0f } }, // Top-right         
-    //     };
+         //     Vertex vertices[] = {
+         //        //   x     y     u     v
+         ////  Position         Texcoord
+         //{ { -1.0f, -1.0f }, { 0.0f, 1.0f } }, // Bottom-left
+         //{ { -1.0f,  1.0f }, { 0.0f, 0.0f } }, // Top-left
+         //{ {  1.0f, -1.0f }, { 1.0f, 1.0f } }, // Bottom-right
+         //{ {  1.0f,  1.0f }, { 1.0f, 0.0f } }, // Top-right         
+         //     };
 
-         //m_iVertexBufferSizeCopyUsingShader = sizeof(vertices);
-         //D3D11_BUFFER_DESC bufferdesc = {};
-         //bufferdesc.Usage = D3D11_USAGE_DEFAULT;
-         //bufferdesc.ByteWidth = m_iVertexBufferSizeCopyUsingShader;
-         //bufferdesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-         //bufferdesc.CPUAccessFlags = 0;
+              //m_iVertexBufferSizeCopyUsingShader = sizeof(vertices);
+              //D3D11_BUFFER_DESC bufferdesc = {};
+              //bufferdesc.Usage = D3D11_USAGE_DEFAULT;
+              //bufferdesc.ByteWidth = m_iVertexBufferSizeCopyUsingShader;
+              //bufferdesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+              //bufferdesc.CPUAccessFlags = 0;
 
-         //D3D11_SUBRESOURCE_DATA subresourceddata = {};
-         //subresourceddata.pSysMem = vertices;
+              //D3D11_SUBRESOURCE_DATA subresourceddata = {};
+              //subresourceddata.pSysMem = vertices;
 
-         //HRESULT hr = pgpudevice->m_pd3d11device->CreateBuffer(
-         //   &bufferdesc,
-         //   &subresourceddata,
-         //   &m_pd3d11bufferVertexCopyUsingShader);
+              //HRESULT hr = pgpudevice->m_pd3d11device->CreateBuffer(
+              //   &bufferdesc,
+              //   &subresourceddata,
+              //   &m_pd3d11bufferVertexCopyUsingShader);
 
 
-         //::defer_throw_hresult(hr);
+              //::defer_throw_hresult(hr);
 
       }
 
 
       //m_pshaderCopyUsingShader->bind(nullptr, pgputextureTarget, pgputextureSource);
-      m_pshaderCopyUsingShader->bind(nullptr, pgputextureTarget);
-      m_pshaderCopyUsingShader->bind_source(nullptr, pgputextureSource, 0);
+      m_pshaderCopyUsingShader->bind(nullptr, pgputexturesiteTarget);
+      m_pshaderCopyUsingShader->bind_source(nullptr, pgputexturesiteSource, 0);
 
       D3D11_VIEWPORT viewport = {};
       //viewport.TopLeftX = pgputextureSource->m_rectangleTarget.left;
       //viewport.TopLeftY = pgputextureSource->m_rectangleTarget.top;
       viewport.TopLeftX = 0;
       viewport.TopLeftY = 0;
-      viewport.Width = (FLOAT)pgputextureSource->width();   // usually swap chain buffer width
-      viewport.Height = (FLOAT)pgputextureSource->height();  // usually swap chain buffer height
+      viewport.Width = (FLOAT)pgputexturesiteSource->width();   // usually swap chain buffer width
+      viewport.Height = (FLOAT)pgputexturesiteSource->height();  // usually swap chain buffer height
       viewport.MinDepth = 0.0f;    // near depth
       viewport.MaxDepth = 1.0f;    // far depth
 
@@ -1367,13 +1370,13 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       //scissorRect.bottom = pgputextureSource->m_rectangleTarget.bottom;
       scissorRect.left = 0;
       scissorRect.top = 0;
-      scissorRect.right = pgputextureSource->m_textureattributes.m_rectangleTarget.width();
-      scissorRect.bottom = pgputextureSource->m_textureattributes.m_rectangleTarget.height();
+      scissorRect.right = pgputexturesiteSource->width();
+      scissorRect.bottom = pgputexturesiteSource->height();
 
       m_pcontext->RSSetScissorRects(1, &scissorRect);
 
 
-      ::cast <::gpu_directx11::texture > ptextureDst = pgputextureTarget;
+      ::cast <::gpu_directx11::texture > ptextureDst = pgputexturesiteTarget->gpu_texture();
       //::f32 clearColor[4] = { 0.4*0.5, 0.35*0.5, 0.2*0.5, 0.5 }; // Clear to transparent
       ::f32 clearColor[4] = { 0.f, 0.f, 0.f, 0.f }; // Clear to transparent
       m_pcontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor);
@@ -1423,7 +1426,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 //   // ... do some GPU work (Draw/Dispatch/UpdateSubresource)
 //   pAnnotation->EndEvent();
 //}
-   void context::start_debug_happening(::gpu::command_buffer * pgpucommandbuffer, const ::scoped_string& scopedstrDebugHappening)
+   void context::start_debug_happening(::gpu::command_buffer * pgpucommandbuffer, const ::scoped_string & scopedstrDebugHappening)
    {
 
       if (!m_puserdefinedannotation)
@@ -1449,269 +1452,458 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    }
 
 
-   void context::merge_layers(::gpu::command_buffer *pgpucommandbuffer, ::gpu::texture *ptextureTarget,
-                              ::pointer_array<::gpu::layer> *pgpulayera)
+   void context::merge_layers(::gpu::command_buffer * pgpucommandbuffer, ::gpu::texture_site * pgputexturesiteTarget,
+                              ::pointer_array<::gpu::layer> * pgpulayera)
    {
 
-      ::gpu::context_lock context_lock(this);
+      ::gpu::context::merge_layers(pgpucommandbuffer, pgputexturesiteTarget,
+         pgpulayera);
 
-      if (!m_pshaderBlend3)
-      {
-
-         const_char_pointer full_screen_triangle_vertex_shader = R"hlsl(
-struct VSOut {
-    float4 pos : SV_POSITION;
-    float2 uv  : TEXCOORD0;
-};
-
-VSOut main(uint vid : SV_VertexID) {
-    float2 verts[3] = {
-        float2(-1, -1),
-        float2(-1, +3),
-        float2(+3, -1)
-    };
-
-    VSOut o;
-    o.pos = float4(verts[vid], 0, 1);
-
-    // Map clip-space [-1..1] to texture-space [0..1]
-    float2 uv = 0.5f * (verts[vid] + float2(1.0f, 1.0f));
-    uv.y = 1.0f - uv.y;
-    o.uv = uv;
-    return o;
-}
-)hlsl";
-
-         const_char_pointer full_screen_triangle_fragment_shader = R"hlsl(
-Texture2D tex : register(t0);
-SamplerState samp : register(s0);
-
-float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
-    return tex.Sample(samp, uv);
-}
-)hlsl";
-
-         defer_construct_newø(m_pshaderBlend3);
-
-         m_pshaderBlend3->initialize_shader_with_block(
-            m_pgpurenderer,
-            ::as_block(full_screen_triangle_vertex_shader),
-            ::as_block(full_screen_triangle_fragment_shader)
-            //,
-            //{},
-            //{},
-            //{},
-            //{},
-            //copy_using_shader_input_layout_properties()
-         );
-
-      }
-
-
-      if (!m_pd3d11blendstateBlend3)
-      {
-
-         D3D11_BLEND_DESC blendDesc = { 0 };
-         blendDesc.RenderTarget[0].BlendEnable = TRUE;
-         blendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_ONE;              // Premultiplied alpha
-         blendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;   // Use inverse of alpha
-         blendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
-
-         blendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;         // Alpha blending (optional)
-         blendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_INV_SRC_ALPHA;
-         blendDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
-
-         blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
-
-         ::cast < ::gpu_directx11::device > pgpudevice = m_pgpudevice;
-
-         HRESULT hr = pgpudevice->m_pd3d11device->CreateBlendState(
-            &blendDesc, 
-            &m_pd3d11blendstateBlend3);
-         ::defer_throw_hresult(hr);
-
-      }
-
-
-      //m_pcontext->OMSetDepthStencilState(depth_stencil_state_disabled(), 0);
-
-
-      {
-
-         D3D11_VIEWPORT vp = {};
-         vp.TopLeftX = 0;
-         vp.TopLeftY = 0;
-         vp.Width = static_cast<::f32>(this->width());
-         vp.Height = static_cast<::f32>(this->height());
-         vp.MinDepth = 0.0f;
-         vp.MaxDepth = 1.0f;
-         m_pcontext->RSSetViewports(1, &vp);
-
-         D3D11_RECT rectScissor;
-         rectScissor.left = 0;
-         rectScissor.top = 0;
-         rectScissor.right = this->width();
-         rectScissor.bottom = this->height();
-         
-         m_pcontext->RSSetScissorRects(1, &rectScissor);
-
-      }
-
-
-      ::cast <::gpu_directx11::texture > ptextureDst = ptextureTarget;
-      //::f32 clearColor[4] = { 0.95f * 0.5f, 0.95f * 0.5f, 0.25f * 0.5f, 0.5f }; // Translucent Yellow
-      ::f32 clearColor[4] = { 0.f, 0.f, 0.f, 0.f }; // Clear to transparent
-      m_pcontext->ClearRenderTargetView(
-         ptextureDst->m_prendertargetview, clearColor);
-
-
-      m_pshaderBlend3->bind(nullptr, ptextureTarget);
-
-
-
-      {
-         ::f32 blendFactor[4] = { 0, 0, 0, 0 }; // Ignored with this blend mode
-         UINT sampleMask = 0xFFFFFFFF;
-         m_pcontext->OMSetBlendState(m_pd3d11blendstateBlend3, blendFactor, sampleMask);
-      }
-
-
-      if(!m_prasterizerstateMergeLayers)
-      {
-
-         D3D11_RASTERIZER_DESC rasterDesc = {};
-         rasterDesc.FillMode = D3D11_FILL_SOLID;
-         rasterDesc.CullMode = D3D11_CULL_BACK;
-         rasterDesc.ScissorEnable = TRUE;
-
-         ::cast < ::gpu_directx11::device > pgpudevice = m_pgpudevice;
-
-         HRESULT hrCreateRasterizerState = pgpudevice->m_pd3d11device->CreateRasterizerState(&rasterDesc, 
-            &m_prasterizerstateMergeLayers);
-
-         ::defer_throw_hresult(hrCreateRasterizerState);
-
-      }
-
-      m_pcontext->RSSetState(m_prasterizerstateMergeLayers);
-
-      //::f32 clearColor[4] = { 0.f, 0.f, 0.f, 0.f }; // Clear to transparent
-      //m_pcontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor);
-
-
-      //ID3D11RenderTargetView* rendertargetview[] = { ptextureDst->m_prendertargetview };
-
-      //m_p(1, rendertargetview, nullptr);
-
-      //m_pcontext->OMSetBlendState(g_blendState, nullptr, 0xffffffff);
-      //g_context->VSSetShader(g_vs, nullptr, 0);
-      //g_context->PSSetShader(g_ps, nullptr, 0);
-      //g_context->PSSetSamplers(0, 1, &g_sampler);
-
-      for (auto pgpulayer : *pgpulayera)
-      {
-         
-         ::cast <::gpu_directx11::texture > ptexture = pgpulayer->texture(false);
-
-         m_pshaderBlend3->bind_source(nullptr, ptexture, 0);
-
-         if (ptexture == ptextureDst)
-         {
-
-            warningf("What?!? Source texture and destination texture are the same?!?!");
-
-         }
-
-         //ID3D11SamplerState* samplerstatea[] =
-         //{ ptexture->m_psamplerstate };
-         //ID3D11ShaderResourceView* sharedresourceviewa[] =
-         //{ ptexture->m_pshaderresourceview };
-         D3D11_VIEWPORT vp = {};
-         vp.TopLeftX = (FLOAT) ptexture->rectangle().left;
-         vp.TopLeftY = (FLOAT) ptexture->rectangle().top;
-         vp.Width = static_cast<::f32>(ptexture->rectangle().width());
-         vp.Height = static_cast<::f32>(ptexture->rectangle().height());
-         vp.MinDepth = 0.0f;
-         vp.MaxDepth = 1.0f;
-         m_pcontext->RSSetViewports(1, &vp);
-
-
-
-         D3D11_RECT rectScissor;
-         //rectScissor.left = ptexture->rectangle().left;
-         //rectScissor.top = ptexture->rectangle().top;
-         //rectScissor.right = ptexture->rectangle().right;
-         //rectScissor.bottom = ptexture->rectangle().bottom;
-         rectScissor.left = ptexture->rectangle().left;
-         rectScissor.top = ptexture->rectangle().top;
-         rectScissor.right = ptexture->rectangle().right;
-         rectScissor.bottom = ptexture->rectangle().bottom;
-
-         m_pcontext->RSSetScissorRects(1, &rectScissor);
-
-         //m_pcontext->PSSetSamplers(0, 1, samplerstatea);
-         //m_pcontext->PSSetShaderResources(0, 1, sharedresourceviewa);
-
-         m_pcontext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-         m_pcontext->Draw(3, 0); // Fullscreen triangle
-         
-      }
+//      return;
+//
+//      ::gpu::context_lock context_lock(this);
+//      
+//
+//      if (!m_pmodelbufferDummy)
+//      {
+//
+//         defer_constructø(m_pmodelbufferDummy);
+//
+//         m_pmodelbufferDummy->initialize_dummy_model(m_pgpurenderer, 3);
+//
+//         //m_pmodelbufferDummy->m_iVertexCount = 3;
+//
+//      }
+//
+//
+//      if (!m_pshaderBlend3)
+//      {
+//
+//         const ::i8 full_screen_triangle_vertex_shader[] = R"vert(
+//
+//cbuffer QuadBuffer : register(b0)
+//{
+//
+//   float4 quad;
+//   // left, top, right, bottom
+//   // or more generally: u0, v0, u1, v1
+//
+//};
+//
+//struct VS_OUTPUT
+//{
+//
+//   float4 position : SV_POSITION;
+//   float2 uv       : TEXCOORD0;
+//
+//};
+//
+//VS_OUTPUT main(uint vertexId : SV_VertexID)
+//{
+//
+//   static const float2 pos[3] =
+//   {
+//      float2(-1.0f, -1.0f),
+//      float2(-1.0f,  3.0f),
+//      float2( 3.0f, -1.0f)
+//   };
+//
+//   static const float2 tex[3] =
+//   {
+//      float2(0.0f, 0.0f),
+//      float2(0.0f, 2.0f),
+//      float2(2.0f, 0.0f)
+//   };
+//
+//   VS_OUTPUT output;
+//
+//   output.position = float4(pos[vertexId], 0.0f, 1.0f);
+//
+//   float2 uvFull = tex[vertexId];
+//
+//   output.uv = float2(
+//      lerp(quad.x, quad.z, uvFull.x),
+//      lerp(quad.y, quad.w, uvFull.y)
+//   );
+//
+//   return output;
+//
+//}
+//
+//)vert";
+//
+//         const ::i8 full_screen_triangle_fragment_shader[] = R"frag(
+//
+//Texture2D uTexture : register(t0);
+//
+//SamplerState uSampler : register(s0);
+//
+//struct PS_INPUT
+//{
+//
+//   float4 position : SV_POSITION;
+//   float2 uv       : TEXCOORD0;
+//
+//};
+//
+//float4 main(PS_INPUT input) : SV_TARGET
+//{
+//
+//   return uTexture.Sample(uSampler, input.uv);
+//
+//}
+//
+//)frag";
+//
+//         defer_construct_newø(m_pshaderBlend3);
+//
+//         m_pshaderBlend3->m_bEnableBlend = true;
+//         //m_pshaderBlend3->m_bindingSampler.set();
+//         m_pshaderBlend3->m_bDisableDepthTest = true;
+//
+//         auto pbindingSampler = m_pshaderBlend3->binding();
+//         pbindingSampler->m_ebinding = ::gpu::e_binding_sampler2d;
+//         pbindingSampler->m_iTextureUnit = 0;
+//         //m_pshaderBlend3->m_bT
+//         //m_pshaderBlend3->m_pgpurenderer = this;
+//         //m_pshaderBlend3->m_setbindingSampler = 0;
+//         // Image Blend descriptors
+//         //if (!m_psetdescriptorlayoutImageBlend)
+//         m_pshaderBlend3->m_propertiesPushShared.set_properties(
+//::gpu_properties<::gpu::quad>());
+//         layout_push_constants(m_pshaderBlend3->m_propertiesPushShared, false);
+//
+//
+//         m_pshaderBlend3->initialize_shader_with_block(
+//            m_pgpurenderer,
+//            ::as_block(full_screen_triangle_vertex_shader),
+//            ::as_block(full_screen_triangle_fragment_shader)
+//            //,
+//            //{},
+//            //{},
+//            //{},
+//            //{},
+//            //copy_using_shader_input_layout_properties()
+//         );
+//
+//      }
+//
+//
+//      //if (!m_pd3d11blendstateBlend3)
+//      //{
+//
+//      //   D3D11_BLEND_DESC blendDesc = { 0 };
+//      //   blendDesc.RenderTarget[0].BlendEnable = TRUE;
+//      //   blendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_ONE;              // Premultiplied alpha
+//      //   blendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;   // Use inverse of alpha
+//      //   blendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+//
+//      //   blendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;         // Alpha blending (optional)
+//      //   blendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_INV_SRC_ALPHA;
+//      //   blendDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+//
+//      //   blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+//
+//      //   ::cast < ::gpu_directx11::device > pgpudevice = m_pgpudevice;
+//
+//      //   HRESULT hr = pgpudevice->m_pd3d11device->CreateBlendState(
+//      //      &blendDesc,
+//      //      &m_pd3d11blendstateBlend3);
+//      //   ::defer_throw_hresult(hr);
+//
+//      //}
+//
+//
+//      //m_pcontext->OMSetDepthStencilState(depth_stencil_state_disabled(), 0);
+//
+//
+//      //{
+//
+//      //   D3D11_VIEWPORT vp = {};
+//      //   vp.TopLeftX = 0;
+//      //   vp.TopLeftY = 0;
+//      //   vp.Width = static_cast<::f32>(this->width());
+//      //   vp.Height = static_cast<::f32>(this->height());
+//      //   vp.MinDepth = 0.0f;
+//      //   vp.MaxDepth = 1.0f;
+//      //   m_pcontext->RSSetViewports(1, &vp);
+//
+//      //   D3D11_RECT rectScissor;
+//      //   rectScissor.left = 0;
+//      //   rectScissor.top = 0;
+//      //   rectScissor.right = this->width();
+//      //   rectScissor.bottom = this->height();
+//
+//      //   m_pcontext->RSSetScissorRects(1, &rectScissor);
+//
+//      //}
+//
+//
+//      ::cast <::gpu_directx11::texture > ptextureDst = pgputexturesiteTarget->gpu_texture();
+//      //::f32 clearColor[4] = { 0.95f * 0.5f, 0.95f * 0.5f, 0.25f * 0.5f, 0.5f }; // Translucent Yellow
+//      ::f32 clearColor[4] = { 0.f, 0.f, 0.f, 0.f }; // Clear to transparent
+//      m_pcontext->ClearRenderTargetView(
+//         ptextureDst->m_prendertargetview, clearColor);
+//
+//
+//      m_pshaderBlend3->bind(nullptr, pgputexturesiteTarget);
+//
+//
+//
+//      //{
+//      //   ::f32 blendFactor[4] = { 0, 0, 0, 0 }; // Ignored with this blend mode
+//      //   UINT sampleMask = 0xFFFFFFFF;
+//      //   m_pcontext->OMSetBlendState(m_pd3d11blendstateBlend3, blendFactor, sampleMask);
+//      //}
+//
+//
+//      //if (!m_prasterizerstateMergeLayers)
+//      //{
+//
+//      //   D3D11_RASTERIZER_DESC rasterDesc = {};
+//      //   rasterDesc.FillMode = D3D11_FILL_SOLID;
+//      //   rasterDesc.CullMode = D3D11_CULL_BACK;
+//      //   rasterDesc.ScissorEnable = TRUE;
+//
+//      //   ::cast < ::gpu_directx11::device > pgpudevice = m_pgpudevice;
+//
+//      //   HRESULT hrCreateRasterizerState = pgpudevice->m_pd3d11device->CreateRasterizerState(&rasterDesc,
+//      //      &m_prasterizerstateMergeLayers);
+//
+//      //   ::defer_throw_hresult(hrCreateRasterizerState);
+//
+//      //}
+//
+//      //m_pcontext->RSSetState(m_prasterizerstateMergeLayers);
+//
+//      //::f32 clearColor[4] = { 0.f, 0.f, 0.f, 0.f }; // Clear to transparent
+//      //m_pcontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor);
+//
+//
+//      //ID3D11RenderTargetView* rendertargetview[] = { ptextureDst->m_prendertargetview };
+//
+//      //m_p(1, rendertargetview, nullptr);
+//
+//      //m_pcontext->OMSetBlendState(g_blendState, nullptr, 0xffffffff);
+//      //g_context->VSSetShader(g_vs, nullptr, 0);
+//      //g_context->PSSetShader(g_ps, nullptr, 0);
+//      //g_context->PSSetSamplers(0, 1, &g_sampler);
+//
+//      for (auto pgpulayer : *pgpulayera)
+//      {
+//
+//         auto ptexturesiteSrc = pgpulayer->texture(false);
+//
+//         ::cast <::gpu_directx11::texture > ptextureSrc = ptexturesiteSrc->gpu_texture();
+//
+//         m_pshaderBlend3->bind_source(nullptr, ptexturesiteSrc, 0);
+//
+//         if (ptextureSrc == ptextureDst)
+//         {
+//
+//            warningf("What?!? Source texture and destination texture are the same?!?!");
+//
+//         }
+//
+//         ////ID3D11SamplerState* samplerstatea[] =
+//         ////{ ptexture->m_psamplerstate };
+//         ////ID3D11ShaderResourceView* sharedresourceviewa[] =
+//         ////{ ptexture->m_pshaderresourceview };
+//         //D3D11_VIEWPORT vp = {};
+//         //vp.TopLeftX = (FLOAT)pgputexturesiteTarget->output_left();
+//         //vp.TopLeftY = (FLOAT)pgputexturesiteTarget->output_top();
+//         //vp.Width = static_cast<::f32>(pgputexturesiteTarget->width());
+//         //vp.Height = static_cast<::f32>(pgputexturesiteTarget->height());
+//         //vp.MinDepth = 0.0f;
+//         //vp.MaxDepth = 1.0f;
+//         //m_pcontext->RSSetViewports(1, &vp);
+//
+//
+//
+//         //D3D11_RECT rectScissor;
+//         ////rectScissor.left = ptexture->rectangle().left;
+//         ////rectScissor.top = ptexture->rectangle().top;
+//         ////rectScissor.right = ptexture->rectangle().right;
+//         ////rectScissor.bottom = ptexture->rectangle().bottom;
+//         //rectScissor.left = pgputexturesiteTarget->output_left();
+//         //rectScissor.top = pgputexturesiteTarget->output_top();
+//         //rectScissor.right = pgputexturesiteTarget->output_right();
+//         //rectScissor.bottom = pgputexturesiteTarget->output_bottom();
+//
+//         //m_pcontext->RSSetScissorRects(1, &rectScissor);
+//
+//
+//         auto rectangleSourceOutput = ptexturesiteSrc->output_placement();
+//
+//         ::f32_rectangle rectangleOutput = rectangleSourceOutput;
+//
+//         ::f32_size sizeSrc = ptexturesiteSrc->size();
+//
+//         ::f32_size sizeSrcRaw = ptexturesiteSrc->raw_size();
+//
+//         //::i32 h = r.height();
+//
+//         //::i32 iH = ptextureDst->height();
+//
+//         //r.top = iH - r.bottom;
+//
+//         //r.bottom = r.top + h;
+//
+//         pgpucommandbuffer->set_viewport(rectangleSourceOutput);
+//
+//         pgpucommandbuffer->set_scissor(rectangleSourceOutput);
+//
+//
+//
+//         /* float uLeft =
+//             100.0f / 1920.0f;
+//
+//          float uRight =
+//             1380.0f / 1920.0f;
+//
+//          float vBottom =
+//             (1080.0f - 800.0f) / 1080.0f;
+//
+//          float vTop =
+//             (1080.0f - 80.0f) / 1080.0f;*/
+//
+//             //auto left = rectangleOutput.left / sizeSrcRaw.cx;
+//             //auto bottom = (sizeSrcRaw.cy - rectangleOutput.bottom) / sizeSrcRaw.cy;
+//             //auto right = rectangleOutput.right / sizeSrcRaw.cx;
+//             //auto top = (sizeSrcRaw.cy - rectangleOutput.top) / sizeSrcRaw.cy;
+//
+//         auto u0 = rectangleOutput.left / sizeSrcRaw.cx;
+//         auto v0 = rectangleOutput.top / sizeSrcRaw.cy;
+//         auto u1 = rectangleOutput.right / sizeSrcRaw.cx;
+//         auto v1 = rectangleOutput.bottom / sizeSrcRaw.cy;
+//
+//
+//         ::floating_sequence4 quad{ u0, v0, u1, v1 };
+//
+//         m_pshaderBlend3->set_sequence4("quad", quad);
+//
+//
+//         //m_pmodelbufferDummy->bind(pcommandbuffer);
+//
+//         m_pshaderBlend3->push_properties(pgpucommandbuffer);
+//
+//
+//         {
+//
+//            //GLint objName = 0;
+//            //glGetFramebufferAttachmentParameteriv(target, GL_COLOR_ATTACHMENT0,
+//            //   GL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME, &objName);
+//
+//            // GLint drawFbo = 0;
+//            // glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &drawFbo);
+//            //
+//            // GLint readFbo = 0;
+//            // glGetIntegerv(GL_READ_FRAMEBUFFER_BINDING, &readFbo);
+//            //
+//            // ::string strMessage;
+//            //
+//            // strMessage.formatf("ø merge%d drawFbo=%d readFbo=%d texDst=%d", iLayer, drawFbo, readFbo,
+//            //                    ptextureDst->m_gluTextureID);
+//            //
+//            // glDebugMessageInsert(GL_DEBUG_SOURCE_APPLICATION,
+//            //                      GL_DEBUG_TYPE_MARKER,
+//            //                      0,
+//            //                      GL_DEBUG_SEVERITY_NOTIFICATION,
+//            //                      -1,
+//            //                      strMessage);
+//
+//         }
+//
+//         {
+//
+//            // GLint activeTex = -1;
+//            //
+//            // glGetIntegerv(GL_TEXTURE_BINDING_2D, &activeTex); // query the bound texture for target
+//            //
+//            // auto samplerTex = ptextureSrc->m_gluTextureID;
+//            //
+//            // ::string strMessage;
+//            //
+//            // strMessage.formatf("ø merge%d activeTex=%d samplerTex=%d", iLayer, activeTex, samplerTex);
+//            //
+//            // glDebugMessageInsert(GL_DEBUG_SOURCE_APPLICATION,
+//            //                      GL_DEBUG_TYPE_MARKER,
+//            //                      0,
+//            //                      GL_DEBUG_SEVERITY_NOTIFICATION,
+//            //                      -1,
+//            //                      strMessage);
+//
+//         }
+//
+//
+//         //m_pcontext->PSSetSamplers(0, 1, samplerstatea);
+//         //m_pcontext->PSSetShaderResources(0, 1, sharedresourceviewa);
+//         pgpucommandbuffer->draw(m_pmodelbufferDummy);
+//         //m_pcontext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+//         //m_pcontext->Draw(3, 0); // Fullscreen triangle
+//
+//      }
+//      //}
+//
+//      //m_pshaderBlend3->unbind(nullptr);
+//
+//      pgpucommandbuffer->end_render();
+//
+//      defer_unbind_shader();
+//
+//
+//      //bool bClearAtEndDebug = true;
+//
+//      //if (bClearAtEndDebug)
+//      //{
+//
+//      //   D3D11_VIEWPORT vp = {};
+//      //   vp.TopLeftX = 0;
+//      //   vp.TopLeftY = 0;
+//      //   vp.Width = static_cast<::f32>(m_rectangle.width());
+//      //   vp.Height = static_cast<::f32>(m_rectangle.height());
+//      //   vp.MinDepth = 0.0f;
+//      //   vp.MaxDepth = 1.0f;
+//      //   m_pcontext->RSSetViewports(1, &vp);
+//
+//      //   D3D11_RECT rectScissor;
+//      //   rectScissor.left = 0;
+//      //   rectScissor.top = 0;
+//      //   rectScissor.right = m_rectangle.width();
+//      //   rectScissor.bottom = m_rectangle.height();
+//
+//      //   m_pcontext->RSSetScissorRects(1, &rectScissor);
+//
+//      //   //::cast <texture > ptextureDst = ptextureTarget;
+//      //   ::f32 clearColor2[4] = { 0.95f * 0.5f, 0.75f * 0.5f, 0.95f * 0.5f, 0.5f };
+//      //   m_pcontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor2);
+//
+//      //}
+//
+//      //{
+//
+//      //   D3D11_RECT rect = {};
+//      //   rect.left = 200;
+//      //   rect.top = 100;
+//      //   rect.right = 300;
+//      //   rect.bottom = 200;
+//
+//      //   ::f32 clearColor[4] = { 0.95f * 0.5f, 0.75f * 0.5f, 0.95f * 0.5f, 0.5f };
+//
+//      //   m_pcontext1->ClearView(ptextureDst->m_prendertargetview, clearColor, &rect, 1);
+//
+//      //}
+//
+//      //{
+//
+//      //   ID3D11ShaderResourceView * nullSRV[1] = { nullptr };
+//      //   m_pcontext->PSSetShaderResources(0, 1, nullSRV);
+//      //   ID3D11RenderTargetView * nullRTV[1] = { nullptr };
+//      //   m_pcontext->OMSetRenderTargets(1, nullRTV, nullptr);
+//      //   ID3D11SamplerState * nullSampler[1] = { nullptr };
+//      //   m_pcontext->PSSetSamplers(0, 1, nullSampler);
+//
       //}
-
-      m_pshaderBlend3->unbind(nullptr);
-
-      //bool bClearAtEndDebug = true;
-
-      //if (bClearAtEndDebug)
-      //{
-
-      //   D3D11_VIEWPORT vp = {};
-      //   vp.TopLeftX = 0;
-      //   vp.TopLeftY = 0;
-      //   vp.Width = static_cast<::f32>(m_rectangle.width());
-      //   vp.Height = static_cast<::f32>(m_rectangle.height());
-      //   vp.MinDepth = 0.0f;
-      //   vp.MaxDepth = 1.0f;
-      //   m_pcontext->RSSetViewports(1, &vp);
-
-      //   D3D11_RECT rectScissor;
-      //   rectScissor.left = 0;
-      //   rectScissor.top = 0;
-      //   rectScissor.right = m_rectangle.width();
-      //   rectScissor.bottom = m_rectangle.height();
-
-      //   m_pcontext->RSSetScissorRects(1, &rectScissor);
-
-      //   //::cast <texture > ptextureDst = ptextureTarget;
-      //   ::f32 clearColor2[4] = { 0.95f * 0.5f, 0.75f * 0.5f, 0.95f * 0.5f, 0.5f };
-      //   m_pcontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor2);
-
-      //}
-
-      //{
-
-      //   D3D11_RECT rect = {};
-      //   rect.left = 200;
-      //   rect.top = 100;
-      //   rect.right = 300;
-      //   rect.bottom = 200;
-
-      //   ::f32 clearColor[4] = { 0.95f * 0.5f, 0.75f * 0.5f, 0.95f * 0.5f, 0.5f };
-
-      //   m_pcontext1->ClearView(ptextureDst->m_prendertargetview, clearColor, &rect, 1);
-
-      //}
-
-      {
-
-         ID3D11ShaderResourceView* nullSRV[1] = { nullptr };
-         m_pcontext->PSSetShaderResources(0, 1, nullSRV);
-         ID3D11RenderTargetView* nullRTV[1] = { nullptr };
-         m_pcontext->OMSetRenderTargets(1, nullRTV, nullptr);
-         ID3D11SamplerState* nullSampler[1] = { nullptr };
-         m_pcontext->PSSetSamplers(0, 1, nullSampler);
-
-      }
 
    }
 
@@ -1798,21 +1990,21 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    }
 
 
-      void context::draw2d_on_end_draw(::gpu::graphics *pgpugraphics)
+   void context::draw2d_on_end_draw(::gpu::graphics * pgpugraphics)
    {
 
       if (m_papplication->m_gpu.m_bUseSwapChainWindow)
       {
 
-         auto pgpuwindowattachment = ::gpu::window_attachment::get(this);
+         //auto pgpuwindowattachment = ::gpu::window_attachment::get(this);
 
-         auto pswapchain = pgpuwindowattachment->window_context()->get_swap_chain();
+         //auto pswapchain = pgpuwindowattachment->window_context()->get_swap_chain();
 
-         if (pswapchain)
-         {
+         //if (pswapchain)
+         //{
 
-            pswapchain->swap_buffers();
-         }
+         //   pswapchain->swap_buffers();
+         //}
       }
    }
 
@@ -1871,7 +2063,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
 
 
-   void context::_create_cpu_buffer(const ::i32_size& size)
+   void context::_create_cpu_buffer(const ::i32_size & size)
    {
 
       throw todo;
@@ -1908,7 +2100,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    //}
 
 
-   void context::resize_cpu_buffer(const ::i32_size& sizeParam)
+   void context::resize_cpu_buffer(const ::i32_size & sizeParam)
    {
 
       //throw todo;
@@ -2034,30 +2226,30 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
       return hlsl_context::rectangle_shader_vert();
 
-//      const ::i8 proto_vert[] = R"vert(
-//// Vertex input structure
-//struct VSInput {
-//    float2 inPos   : POSITION; // matches location=0 in GLSL
-//    float4 inColor : COLOR0;   // matches location=1 in GLSL
-//};
-//
-//// Vertex output structure
-//struct VSOutput {
-//    float4 pos     : SV_Position; // required for position in HLSL
-//    float4 color   : COLOR0;      // passed to pixel shader
-//};
-//
-//// Vertex shader
-//VSOutput main(VSInput input) {
-//    VSOutput output;
-//    output.pos   = float4(input.inPos, 0.0, 1.0); // clip-space position
-//    output.color = input.inColor;
-//    return output;
-//}
-//
-//)vert";
-//
-//      return ::as_memory_block(proto_vert);
+      //      const ::i8 proto_vert[] = R"vert(
+      //// Vertex input structure
+      //struct VSInput {
+      //    float2 inPos   : POSITION; // matches location=0 in GLSL
+      //    float4 inColor : COLOR0;   // matches location=1 in GLSL
+      //};
+      //
+      //// Vertex output structure
+      //struct VSOutput {
+      //    float4 pos     : SV_Position; // required for position in HLSL
+      //    float4 color   : COLOR0;      // passed to pixel shader
+      //};
+      //
+      //// Vertex shader
+      //VSOutput main(VSInput input) {
+      //    VSOutput output;
+      //    output.pos   = float4(input.inPos, 0.0, 1.0); // clip-space position
+      //    output.color = input.inColor;
+      //    return output;
+      //}
+      //
+      //)vert";
+      //
+      //      return ::as_memory_block(proto_vert);
 
    }
 
@@ -2067,26 +2259,26 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
       return hlsl_context::rectangle_shader_frag();
 
-//
-//      const ::i8 proto_frag[] = R"frag(
-//struct PSInput {
-//   float4 pos   : SV_Position; // required for position in HLSL
-//   float4 color : COLOR0; // Matches VS output COLOR0
-//};
-//
-//float4 main(PSInput input) : SV_Target {
-//    return input.color;
-//}
-//
-//)frag";
-//
-//      return ::as_memory_block(proto_frag);
+      //
+      //      const ::i8 proto_frag[] = R"frag(
+      //struct PSInput {
+      //   float4 pos   : SV_Position; // required for position in HLSL
+      //   float4 color : COLOR0; // Matches VS output COLOR0
+      //};
+      //
+      //float4 main(PSInput input) : SV_Target {
+      //    return input.color;
+      //}
+      //
+      //)frag";
+      //
+      //      return ::as_memory_block(proto_frag);
 
    }
 
 
 
-   void context::_translate_shader(string_array_base& stra)
+   void context::_translate_shader(string_array_base & stra)
    {
 
       ::gpu::context::_translate_shader(stra);
@@ -2695,7 +2887,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    //   vkDestroyFence(this->logicalDevice(), fence, nullptr);
    //}
 
-   ::gpu_directx11::descriptor_pool* context::get_global_pool(::i32 iFrameCount)
+   ::gpu_directx11::descriptor_pool * context::get_global_pool(::i32 iFrameCount)
    {
 
       return m_pdescriptorpoolGlobal;
@@ -2705,17 +2897,17 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
    void context::layout_push_constants(::gpu::properties & properties, bool bGlobalUbo)
    {
-    
+
       _layout_hlsl(properties);
 
    }
 
 
-   void context::layout_global_ubo(::gpu::properties *pproperties)
+   void context::layout_global_ubo(::gpu::properties * pproperties)
    {
-      
-      _layout_hlsl(*pproperties); 
-   
+
+      _layout_hlsl(*pproperties);
+
    }
 
 
@@ -2761,7 +2953,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    // }
 
 
-   void context::update_global_ubo1(::gpu::block *pgpublockGlobalUbo1)
+   void context::update_global_ubo1(::gpu::block * pgpublockGlobalUbo1)
    {
 
       ::gpu::context_lock context_lock(this);
@@ -2797,10 +2989,10 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
          m_pcontext->Unmap(pbuffer, 0);
 
-               //auto pVS = m_pbufferGlobalUbo.m_p;
-         //m_pcontext->VSSetConstantBuffers(0, 1, &pVS);
-               //auto pPS = m_pbufferGlobalUbo.m_p;
-         //m_pcontext->PSSetConstantBuffers(0, 1, &pPS);
+         //auto pVS = m_pbufferGlobalUbo.m_p;
+   //m_pcontext->VSSetConstantBuffers(0, 1, &pVS);
+         //auto pPS = m_pbufferGlobalUbo.m_p;
+   //m_pcontext->PSSetConstantBuffers(0, 1, &pPS);
 
 
       }
@@ -2811,13 +3003,13 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    }
 
 
-   void context::set_viewport(::gpu::command_buffer *pgpucommandbuffer, const ::i32_rectangle &rectangle)
+   void context::set_viewport(::gpu::command_buffer * pgpucommandbuffer, const ::i32_rectangle & rectangle, const ::i32_size & sizeRaw)
    {
-      
+
       D3D11_VIEWPORT viewport = {};
 
-      viewport.TopLeftX = (::f32) rectangle.left;
-      viewport.TopLeftY = (::f32) rectangle.top;
+      viewport.TopLeftX = (::f32)rectangle.left;
+      viewport.TopLeftY = (::f32)rectangle.top;
       viewport.Width = (::f32)rectangle.width();
       viewport.Height = (::f32)rectangle.height();
       viewport.MinDepth = 0.0f;
@@ -2828,32 +3020,33 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    }
 
 
-   void context::set_scissor(::gpu::command_buffer *pgpucommandbuffer,
-                              const ::i32_rectangle &rectangle)
+   void context::set_scissor(::gpu::command_buffer * pgpucommandbuffer,
+                              const ::i32_rectangle & rectangle, const ::i32_size & sizeRaw)
    {
-         D3D11_RECT scissorRect;
-   // scissorRect.left = pgputextureSource->m_rectangleTarget.left;
-   // scissorRect.top = pgputextureSource->m_rectangleTarget.top;
-   // scissorRect.right = pgputextureSource->m_rectangleTarget.right;
-   // scissorRect.bottom = pgputextureSource->m_rectangleTarget.bottom;
-   scissorRect.left = rectangle.left;
-   scissorRect.top = rectangle.top;
-   scissorRect.right = rectangle.right;
-   scissorRect.bottom = rectangle.bottom;
+      D3D11_RECT scissorRect;
+      // scissorRect.left = pgputextureSource->m_rectangleTarget.left;
+      // scissorRect.top = pgputextureSource->m_rectangleTarget.top;
+      // scissorRect.right = pgputextureSource->m_rectangleTarget.right;
+      // scissorRect.bottom = pgputextureSource->m_rectangleTarget.bottom;
+      scissorRect.left = rectangle.left;
+      scissorRect.top = rectangle.top;
+      scissorRect.right = rectangle.right;
+      scissorRect.bottom = rectangle.bottom;
 
-   m_pcontext->RSSetScissorRects(1, &scissorRect);
+      m_pcontext->RSSetScissorRects(1, &scissorRect);
 
-    }
+   }
 
-   void context::clear(::gpu::texture * pgputexture, const ::color::color &color)
+
+   void context::clear(::gpu::texture * pgputexture, const ::color::color & color)
    {
 
       ::cast<::gpu_directx11::texture> ptexture = pgputexture;
 
-      ::f32 clearColor[4] = {color.f32_red(), color.f32_green(), color.f32_blue(), color.f32_opacity()};
+      ::f32 clearColor[4] = { color.f32_red(), color.f32_green(), color.f32_blue(), color.f32_opacity() };
 
       m_pcontext->ClearRenderTargetView(ptexture->m_prendertargetview, clearColor);
-         
+
    }
 
 
@@ -2888,7 +3081,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
    }
 
-      // Remap OpenGL clip-space Z [-1,1] to DirectX [0,1]
+   // Remap OpenGL clip-space Z [-1,1] to DirectX [0,1]
    floating_matrix4 ClipRemap()
    {
       floating_matrix4 remap(1.0f);
@@ -2903,7 +3096,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
    }
 
-    floating_matrix4 ConvertViewRHtoLH(const floating_matrix4 &viewRH)
+   floating_matrix4 ConvertViewRHtoLH(const floating_matrix4 & viewRH)
    {
       floating_matrix4 viewLH = viewRH;
 
@@ -2915,14 +3108,14 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
       return viewLH;
    }
-   floating_matrix4 context::defer_remap_impact_matrix(const floating_matrix4 &m){
+   floating_matrix4 context::defer_remap_impact_matrix(const floating_matrix4 & m) {
 
       return ConvertViewRHtoLH(m);
 
    }
 
 
-   ID3D11DeviceContext* context::draw_get_d3d11_device_context()
+   ID3D11DeviceContext * context::draw_get_d3d11_device_context()
    {
 
       return m_pcontext;
@@ -2930,15 +3123,15 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    }
 
 
-   ID3D11DeviceContext1* context::draw_get_d3d11_device_context1()
+   ID3D11DeviceContext1 * context::draw_get_d3d11_device_context1()
    {
 
       return m_pcontext1;
 
    }
-   
-   
-   floating_matrix4 context::defer_transpose(const floating_matrix4 &m) 
+
+
+   floating_matrix4 context::defer_transpose(const floating_matrix4 & m)
    {
 
       return m.transposed();
@@ -2946,7 +3139,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    }
 
 
-   bool context::create_offscreen_graphics_for_swap_chain_blitting(::gpu::graphics* pgraphics, const ::i32_size& size)
+   bool context::create_offscreen_graphics_for_swap_chain_blitting(::gpu::graphics * pgraphics, const ::i32_size & size)
    {
 
       ::cast < swap_chain > pswapchain = get_swap_chain();
@@ -2963,7 +3156,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    }
 
 
-   floating_sequence3 context::front(const ::graphics3d::floating_rotation &rotation)
+   floating_sequence3 context::front(const ::graphics3d::floating_rotation & rotation)
    {
 
       //throw ::interface_only();

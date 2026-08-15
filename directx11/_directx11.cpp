@@ -1,5 +1,5 @@
 // Created by camilo on 2025-06-11 19:42 <3ThomasBorregaardSørensen!!
-#include "framework.h"
+#include "platform.h"
 
 
 namespace directx11

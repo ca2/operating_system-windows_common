@@ -64,7 +64,7 @@ namespace draw2d_directx11
 
       
       protected:
-      void _map(bool bApplyAlphaTransform = true) override;
+      void _map(const ::i32_rectangle & rectangle, bool bApplyAlphaTransform = true) override;
       void _unmap(bool bDoUnmap = false) override;
 
    };

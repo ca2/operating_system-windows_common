@@ -1,4 +1,4 @@
-#include "framework.h"
+#include "platform.h"
 #include "graphics.h"
 #include "bitmap.h"
 #include "path.h"
@@ -21,6 +21,7 @@
 #include "aura/graphics/draw2d/lock.h"
 #include "aura/graphics/draw2d/region.h"
 #include "aura/graphics/draw2d/device_lock.h"
+#include "aura/graphics/graphics/buffer_item.h"
 #include "aura/graphics/image/context.h"
 #include "aura/graphics/image/drawing.h"
 #include "aura/graphics/image/frame_array.h"
@@ -33,6 +34,7 @@
 #include "bred/gpu/layer.h"
 #include "bred/gpu/renderer.h"
 #include "bred/gpu/swap_chain.h"
+#include "bred/gpu/texture_site.h"
 #include "bred/gpu/types.h"
 #include "bred/gpu/window_attachment.h"
 #include <math.h>
@@ -162,6 +164,16 @@ namespace draw2d_direct2d_for_directx11
    }
 
 
+   bool graphics::_is_ok() const
+   {
+
+      auto pcontext = ((graphics *)this)->gpu_context();
+
+      return ::is_set(this) & m_pdevicecontext.is_set();
+
+   }
+
+
    void graphics::create_for_window_draw2d(::user::interaction *puserinteraction, const ::i32_size &size)
    {
 
@@ -177,19 +189,38 @@ namespace draw2d_direct2d_for_directx11
 
       auto pgpuwindowattachment = ::gpu::window_attachment::get(m_pacmeuserinteractionAffinity);
 
-      //auto pgpucontextNew = pgpudevice->draw2d_context();
+      auto pgpucontextNew = pgpudevice->allocate_gpu_context();
+
+      auto pacmewindowingwindow = m_pacmeuserinteractionAffinity->m_pacmewindowingwindow;
+
+      auto rectangleWindow = pacmewindowingwindow->get_window_rectangle();
+
+      auto pointOutput = rectangleWindow.origin();
+
+      auto sizeWindow = rectangleWindow.size();
+
+      auto sizeRaw = pacmewindowingwindow->m_sizeRaw;
+
+      sizeRaw = puserinteraction->m_pacmewindowingwindow->get_raw_buffer_size().maximum(sizeRaw);
+
+      pgpucontextNew->create_draw2d_gpu_context(pgpudevice, m_pacmeuserinteractionAffinity
+      ->m_pacmewindowingwindow, {}, pointOutput, sizeWindow, sizeRaw);
+
+      m_pgpucontextOwned = pgpucontextNew;
 
       //auto pgpucontextWindow = pgpuwindowattachment->m_pgpucontextWindow;
 
-      m_pgpucontextOwned = pgpudevice->create_draw2d_gpu_context(puserinteraction->m_pacmewindowingwindow, size);
+      //::i32_rectangle rectanglePlacement(size);
 
-      //pgpucontextWindow->m_pgpucompositor = this;
+      
 
-      //set_gpu_context(pgpucontextWindow);
+      //m_pgpucontextOwned = pgpudevice->allocate_gpu_context();
+
+      //m_pgpucontextOwned->create_draw2d_gpu_context(pgpudevice, puserinteraction->m_pacmewindowingwindow, {}, {}, size, sizeRaw);
 
       ::cast<::dxgi_device_source> pdxgidevicesource = m_pgpucontextOwned;
 
-      m_pdevicecontext = direct2d()->default_d2d1_device_context(pdxgidevicesource);
+      m_pdevicecontext = direct2d()->create_d2d1_device_context(pdxgidevicesource);
 
       m_pdevicecontext.as(m_pdevicecontext1);
 
@@ -200,6 +231,19 @@ namespace draw2d_direct2d_for_directx11
 
       void * pDataRenderTarget = m_pd2d1rendertarget.m_p;
       m_osdata[data_render_target] = pDataRenderTarget;
+
+      //if (m_pgraphicsbufferitem)
+      //{
+
+        // constructø(m_pgraphicsbufferitem->m_pimageBufferItem);
+
+         //m_pgraphicsbufferitem->m_pimageBufferItem->create_as_render_target(size, puserinteraction, this);
+
+      //}
+
+      //pgpucontextWindow->m_pgpucompositor = this;
+
+      //set_gpu_context(pgpucontextWindow);
 
       defer_create_swap_chain(puserinteraction);
 
@@ -650,7 +694,7 @@ namespace draw2d_direct2d_for_directx11
 
       auto pwindow = puserinteraction->window();
 
-      auto rectanglePlacement = pwindow->get_window_rectangle();
+      //auto rectanglePlacement = pwindow->get_window_rectangle();
 
       auto pgpuapproach = m_papplication->get_gpu_approach();
 
@@ -676,7 +720,11 @@ namespace draw2d_direct2d_for_directx11
 
       auto pgpucontextNew = pgpudevice->allocate_gpu_context();
 
-      pgpucontextNew->create_draw2d_gpu_context(pgpudevice, pacmewindowingwindow, size);
+      //::i32_rectangle rectanglePlacement(size);
+
+      auto sizeRaw = pacmewindowingwindow->get_raw_buffer_size().maximum(size);
+
+      pgpucontextNew->create_draw2d_gpu_context(pgpudevice, pacmewindowingwindow, {}, {}, size, sizeRaw);
 
       set_gpu_context(pgpucontextNew);
 
@@ -5811,6 +5859,24 @@ namespace draw2d_direct2d_for_directx11
 
       //}
 
+
+      if (!m_bBeginDraw)
+      {
+
+         m_bBeginDraw = true;
+
+         auto pgputexturesiteTarget = current_target_texture(::gpu::current_layer());
+
+         prepare_gpu_draw2d_graphics_render_target(pgputexturesiteTarget->gpu_texture());
+
+         m_pdevicecontext->BeginDraw();
+
+         set_alpha_mode(::draw2d::e_alpha_mode_set);
+
+         fill_solid_rectangle({ ::i32_point(), m_sizeImpact2 }, ::color::transparent);
+
+      }
+
    }
 
 
@@ -5834,6 +5900,16 @@ namespace draw2d_direct2d_for_directx11
       //   //direct2d()->m_pd2d1multithread->Leave();
 
       //}
+
+
+      if (m_bBeginDraw)
+      {
+
+         m_bBeginDraw = false;
+
+         m_pdevicecontext->EndDraw();
+
+      }
 
       defer_soft_unbind_draw2d_compositor(pgpulayer);
 
@@ -6543,7 +6619,15 @@ namespace draw2d_direct2d_for_directx11
 
             m_bBeginDraw = true;
 
+            auto pgputexturesiteTarget = current_target_texture(::gpu::current_layer());
+
+            prepare_gpu_draw2d_graphics_render_target(pgputexturesiteTarget->gpu_texture());
+
             m_pdevicecontext->BeginDraw();
+
+            set_alpha_mode(::draw2d::e_alpha_mode_set);
+
+            fill_solid_rectangle({ ::i32_point(), m_sizeImpact2 }, ::color::transparent);
 
          }
 
@@ -6816,6 +6900,40 @@ namespace draw2d_direct2d_for_directx11
    }
 
 
+   void graphics::prepare_gpu_draw2d_graphics_render_target(::gpu::texture * pgputexture)
+   {
+
+      auto & pimage = pgputexture->m_pimageGpuTexture;
+
+      if (!pimage)
+      {
+
+         constructø(pimage);
+
+         auto puserinteraction = m_pacmeuserinteractionAffinity->user_interaction();
+
+         ::cast < ::gpu::image > pgpuimage = pimage;
+
+         pgpuimage->create_gpu_texture_image(pgputexture, this);
+
+      }
+
+      ::cast <::draw2d_direct2d_for_directx11::bitmap> pbitmap = pimage->m_pbitmap;
+
+      auto & pd2d1bitmap = pbitmap->m_pbitmap;
+
+      if (!pd2d1bitmap)
+      {
+
+         throw ::exception(error_failed);
+
+      }
+
+      m_pdevicecontext->SetTarget(pd2d1bitmap);
+
+   }
+
+
    void graphics::start_layer(bool bFirstLayer)
    {
 
@@ -6845,27 +6963,37 @@ namespace draw2d_direct2d_for_directx11
 
             m_bBeginDraw = true;
 
-            ::cast < ::draw2d_direct2d_for_directx11::image > pimage = m_pimage;
 
-            if (::is_set(pimage))
-            {
+            auto pgputexturesiteTarget = ::gpu::current_layer()->texture(true);
 
-               if (!pimage->m_pbitmap)
-               {
+            prepare_gpu_draw2d_graphics_render_target(pgputexturesiteTarget->gpu_texture());
 
-                  pimage->create_bitmap(m_pacmeuserinteractionAffinity, this);
 
-               }
+            //::cast < ::draw2d_direct2d_for_directx11::image > pimage = m_pimage;
 
-               ::cast <::draw2d_direct2d::bitmap> pbitmap = pimage->m_pbitmap;
+            //if (::is_set(pimage))
+            //{
 
-               auto & pd2d1bitmap = pbitmap->m_pbitmap;
+            //   if (!pimage->m_pbitmap)
+            //   {
 
-               m_pdevicecontext->SetTarget(pd2d1bitmap);
+            //      pimage->create_bitmap(m_pacmeuserinteractionAffinity, this);
 
-            }
+            //   }
+
+            //   ::cast <::draw2d_direct2d::bitmap> pbitmap = pimage->m_pbitmap;
+
+            //   auto & pd2d1bitmap = pbitmap->m_pbitmap;
+
+            //   m_pdevicecontext->SetTarget(pd2d1bitmap);
+
+            //}
 
             m_pd2d1rendertarget->BeginDraw();
+
+            set_alpha_mode(::draw2d::e_alpha_mode_set);
+
+            fill_solid_rectangle({ ::i32_point(), m_sizeImpact2 }, ::color::transparent);
 
          }
 
@@ -6929,7 +7057,7 @@ namespace draw2d_direct2d_for_directx11
 
             m_pd2d1rendertarget->EndDraw();
 
-            m_pdevicecontext->Flush();
+            //m_pdevicecontext->Flush();
 
             m_pdevicecontext->SetTarget(nullptr);
 
@@ -7009,6 +7137,56 @@ namespace draw2d_direct2d_for_directx11
    //   return get_handle();
 
    //}
+
+
+   void graphics::begin_draw()
+   {
+
+      ::gpu::graphics::begin_draw();
+
+      //auto pgputexturesiteTarget = current_target_texture(::gpu::current_layer());
+
+      //prepare_nanovg_render_target(pgputexturesiteTarget->gpu_texture());
+
+      //auto size = m_size;
+
+      //nvgBeginFrame(m_pdc, (float)size.width(), (float)size.height(), 1.0f);
+
+      if (!m_bBeginDraw)
+      {
+
+         m_bBeginDraw = true;
+
+         auto pgputexturesiteTarget = current_target_texture(::gpu::current_layer());
+
+         prepare_gpu_draw2d_graphics_render_target(pgputexturesiteTarget->gpu_texture());
+
+         m_pdevicecontext->BeginDraw();
+
+         set_alpha_mode(::draw2d::e_alpha_mode_set);
+
+         fill_solid_rectangle({ ::i32_point(), m_sizeImpact2 }, ::color::transparent);
+
+      }
+
+   }
+
+
+   void graphics::end_draw()
+   {
+
+      if (m_bBeginDraw)
+      {
+
+         m_bBeginDraw = false;
+
+         m_pdevicecontext->EndDraw();
+
+      }
+
+      ::gpu::graphics::end_draw();
+
+   }
 
 
    //void graphics::gpu_layer_on_after_begin_render()
@@ -8047,16 +8225,18 @@ namespace draw2d_direct2d_for_directx11
    void graphics::flush()
    {
 
-      if (!m_bBeginDraw)
+      if (m_bBeginDraw)
       {
 
          //return false;
 
          //throw ::exception(error_null_pointer);
 
+         HRESULT hr = m_pd2d1rendertarget->Flush();
+
       }
 
-      HRESULT hr = m_pd2d1rendertarget->Flush();
+      //HRESULT hr = m_pd2d1rendertarget->Flush();
 
       //return SUCCEEDED(hr);
 

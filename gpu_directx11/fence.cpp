@@ -1,7 +1,7 @@
 //
 // Created by camilo on 2026-06-08.
 //
-#include "framework.h"
+#include "platform.h"
 #include "fence.h"
 
 #include "context.h"
@@ -27,12 +27,12 @@ namespace gpu_directx11
    }
 
 
-   void fence::initialize_gpu_fence(::gpu::context * pgpucontext, bool bCreateSignaled)
+   void fence::initialize_gpu_fence(::gpu::device * pgpudevice, bool bCreateSignaled)
    {
 
-      ::gpu::fence::initialize_gpu_fence(pgpucontext, bCreateSignaled);
+      ::gpu::fence::initialize_gpu_fence(pgpudevice, bCreateSignaled);
 
-      ::cast < ::gpu_directx11::device > pdevice = m_pgpucontext->m_pgpudevice;
+      ::cast < ::gpu_directx11::device > pdevice = pgpudevice;
 
       D3D11_QUERY_DESC querydesc = {};
 
@@ -53,9 +53,9 @@ namespace gpu_directx11
    void fence::reset_gpu_fence()
    {
 
-      ::cast < ::gpu_directx11::context > pcontext = m_pgpucontext;
+      ::cast < ::gpu_directx11::device > pdevice = m_pgpudevice;
 
-      pcontext->m_pcontext->End(m_pquery);
+      pdevice->m_pd3d11devicecontextMain->End(m_pquery);
 
       m_bPending = true;
 
@@ -72,12 +72,12 @@ namespace gpu_directx11
 
       }
 
-      ::cast < ::gpu_directx11::context > pcontext = m_pgpucontext;
+      ::cast < ::gpu_directx11::device > pdevice = m_pgpudevice;
 
       while (true)
       {
 
-         auto hresult = pcontext->m_pcontext->GetData(m_pquery, nullptr, 0, 0);
+         auto hresult = pdevice->m_pd3d11devicecontextMain->GetData(m_pquery, nullptr, 0, 0);
 
          if (hresult == S_OK)
          {

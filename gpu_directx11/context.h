@@ -140,14 +140,14 @@ namespace gpu_directx11
       void set_bitmap_1(::image::image *pimage) override;
 
       
-      void copy(::gpu::texture *pgputextureTarget, ::gpu::texture *pgputextureSource,
+      void copy(::gpu::texture_site *pgputexturesiteTarget, ::gpu::texture_site *pgputexturesiteSource,
                 ::pointer<::gpu::fence> *pgpufence, ::pointer < ::gpu::semaphore > * pgpusemaphoreReady) override;
 
-      virtual void copy_using_shader(::gpu::texture* pgputextureTarget, ::gpu::texture* pgputextureSource);
+      virtual void copy_using_shader(::gpu::texture_site* pgputexturesiteTarget, ::gpu::texture_site* pgputexturesiteSource);
 
-      virtual void merge_layers(::gpu::command_buffer *pgpucommandbuffer,
-                                                 ::gpu::texture *ptextureTarget,
-                                                 ::pointer_array<::gpu::layer> *playera);
+      void merge_layers(::gpu::command_buffer *pgpucommandbuffer,
+                                                 ::gpu::texture_site *pgputexturesiteTarget,
+                                                 ::pointer_array<::gpu::layer> *playera) override;
 
 
       void on_start_layer(::gpu::layer * pgpulayer) override;
@@ -204,9 +204,9 @@ namespace gpu_directx11
       bool create_offscreen_graphics_for_swap_chain_blitting(::gpu::graphics* pgraphics, const ::i32_size& size) override;
 
 
-      virtual void _create_context_directx11(::gpu::device* pgpudevice, const ::gpu::enum_output& eoutput, ::acme::windowing::window* pwindow, const ::i32_size& size);
+      virtual void _create_context_directx11(::gpu::device* pgpudevice, const ::gpu::enum_output& eoutput, ::acme::windowing::window* pwindow, const ::i32_point & pointInput, const ::i32_point & pointOutput, const ::i32_size & size, const ::i32_size & sizeRaw);
 
-      void _create_gpu_context(::gpu::device* pgpudevice, const ::gpu::enum_output& eoutput, const ::gpu::enum_scene& escene, ::acme::windowing::window* pacmewindowingwindow, const ::i32_size& size) override;
+      void _create_gpu_context(::gpu::device* pgpudevice, const ::gpu::enum_output& eoutput, const ::gpu::enum_scene& escene, ::acme::windowing::window* pacmewindowingwindow, const ::i32_point & pointInput, const ::i32_point & pointOutput, const ::i32_size & size, const ::i32_size & sizeRaw) override;
 
 
       void __bind_draw2d_compositor(::gpu::compositor* pgpucompositor, ::gpu::layer * pgpulayer) override;
@@ -317,8 +317,8 @@ namespace gpu_directx11
       //void create_global_ubo(::i32 iSize, ::i32 iFrameCount) override;
       void update_global_ubo1(::gpu::block * pblockGlobalUbo1) override;
 
-      void set_viewport(::gpu::command_buffer *pgpucommandbuffer, const ::i32_rectangle &rectangle) override;
-      void set_scissor(::gpu::command_buffer *pgpucommandbuffer, const ::i32_rectangle &rectangle) override;
+      void set_viewport(::gpu::command_buffer * pgpucommandbuffer, const ::i32_rectangle & rectangle, const ::i32_size & sizeRaw = {}) override;
+      void set_scissor(::gpu::command_buffer * pgpucommandbuffer, const ::i32_rectangle & rectangle, const ::i32_size & sizeRaw = {}) override;
 
       void clear(::gpu::texture * pgputexture, const ::color::color &color) override; 
       void engine_on_frame_context_initialization() override;

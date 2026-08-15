@@ -1,4 +1,4 @@
-#include "framework.h"
+#include "platform.h"
 #include "direct2d.h"
 //#include "swap_chain.h"
 #include "acme/exception/interface_only.h"

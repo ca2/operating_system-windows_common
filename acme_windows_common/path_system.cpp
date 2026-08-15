@@ -1,6 +1,6 @@
 // From acme/filesystem/file/_.cpp by camilo on 2021-08-09 
 // 14:17 BRT <3ThomasBorregaardSorensen
-#include "framework.h"
+#include "platform.h"
 #include "path_system.h"
 #include "file_system.h"
 #include "acme/_operating_system.h"

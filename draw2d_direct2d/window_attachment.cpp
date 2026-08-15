@@ -1,5 +1,5 @@
 // Created by camilo on 2026-07-31 17:19 <3ThomasBorregaardSørensen!! Mummi!! Bilbo!!
-#include "framework.h"
+#include "platform.h"
 #include "window_attachment.h"
 #include "aura/graphics/graphics/graphics.h"
 #include "aura/windowing/window.h"
@@ -64,7 +64,7 @@ namespace draw2d_direct2d
          auto rendertargetproperties = D2D1::RenderTargetProperties(
             D2D1_RENDER_TARGET_TYPE_DEFAULT,
             D2D1::PixelFormat(DXGI_FORMAT_B8G8R8A8_UNORM, D2D1_ALPHA_MODE_PREMULTIPLIED),
-            dpi, dpi);
+            (FLOAT) dpi, (FLOAT) dpi);
 
          auto hrCreateDCRenderTarget =
             ::direct2d::get()->d2d1_factory1()->CreateDCRenderTarget(

@@ -14,10 +14,10 @@
 		07B6577B190F3CA2002DAADE /* libios_gpu_directx11.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 07B65764190F3CA2002DAADE /* libios_gpu_directx11.dylib */; };
 		9A1DDEC529A9EEB500C9C80E /* assimp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A1DDEC129A9EEB400C9C80E /* assimp.cpp */; };
 		9A1DDEC629A9EEB500C9C80E /* assimp.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A1DDEC429A9EEB500C9C80E /* assimp.h */; };
-		9A204A6E2433C68300D45614 /* framework.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A204A3A2433C68300D45614 /* framework.cpp */; };
+		9A204A6E2433C68300D45614 /* platform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A204A3A2433C68300D45614 /* platform.cpp */; };
 		9A204A6F2433C68300D45614 /* factory_exchange.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A204A3B2433C68300D45614 /* factory_exchange.h */; };
 		9A204A742433C68300D45614 /* _factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A204A592433C68300D45614 /* _factory.cpp */; };
-		9A204A762433C68300D45614 /* framework.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A204A5E2433C68300D45614 /* framework.h */; };
+		9A204A762433C68300D45614 /* platform.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A204A5E2433C68300D45614 /* platform.h */; };
 		9A204A7A2433C68300D45614 /* _.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A204A662433C68300D45614 /* _.h */; };
 		9A6A479B2660E6E2004ED97A /* libacme.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A6A479A2660E6E2004ED97A /* libacme.dylib */; };
 		9A6A479D2660E6E2004ED97A /* libapex.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A6A479C2660E6E2004ED97A /* libapex.dylib */; };
@@ -114,10 +114,10 @@
 		07B65777190F3CA2002DAADE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		9A1DDEC129A9EEB400C9C80E /* assimp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = assimp.cpp; sourceTree = "<group>"; };
 		9A1DDEC429A9EEB500C9C80E /* assimp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = assimp.h; sourceTree = "<group>"; };
-		9A204A3A2433C68300D45614 /* framework.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = framework.cpp; sourceTree = "<group>"; };
+		9A204A3A2433C68300D45614 /* platform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = platform.cpp; sourceTree = "<group>"; };
 		9A204A3B2433C68300D45614 /* factory_exchange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = factory_exchange.h; sourceTree = "<group>"; };
 		9A204A592433C68300D45614 /* _factory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = _factory.cpp; sourceTree = "<group>"; };
-		9A204A5E2433C68300D45614 /* framework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = framework.h; sourceTree = "<group>"; };
+		9A204A5E2433C68300D45614 /* platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = platform.h; sourceTree = "<group>"; };
 		9A204A662433C68300D45614 /* _.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _.h; sourceTree = "<group>"; };
 		9A54A6212A2D626E0052BAB6 /* _____release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "_____release.xcconfig"; sourceTree = "<group>"; };
 		9A54A6242A2D626E0052BAB6 /* _____debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "_____debug.xcconfig"; sourceTree = "<group>"; };
@@ -225,8 +225,8 @@
 				9A8B646024CBE90100A93185 /* context.cpp */,
 				9A8B645B24CBE90100A93185 /* context.h */,
 				9A204A3B2433C68300D45614 /* factory_exchange.h */,
-				9A204A3A2433C68300D45614 /* framework.cpp */,
-				9A204A5E2433C68300D45614 /* framework.h */,
+				9A204A3A2433C68300D45614 /* platform.cpp */,
+				9A204A5E2433C68300D45614 /* platform.h */,
 				9A8B645524CBE90100A93185 /* image_directx11.cpp */,
 				9A866074296689DE000C82F0 /* object.cpp */,
 				9A866073296689DD000C82F0 /* object.h */,
@@ -292,7 +292,7 @@
 				9A204A6F2433C68300D45614 /* factory_exchange.h in Headers */,
 				9A8B646724CBE90100A93185 /* directx11.h in Headers */,
 				9A204A7A2433C68300D45614 /* _.h in Headers */,
-				9A204A762433C68300D45614 /* framework.h in Headers */,
+				9A204A762433C68300D45614 /* platform.h in Headers */,
 				9A8B647024CBE90100A93185 /* cpu_buffer.h in Headers */,
 				9A8B646324CBE90100A93185 /* shader.h in Headers */,
 				9A866075296689DE000C82F0 /* object.h in Headers */,
@@ -494,7 +494,7 @@
 				9A8B646824CBE90100A93185 /* shader.cpp in Sources */,
 				9A866076296689DE000C82F0 /* object.cpp in Sources */,
 				9A8B646424CBE90100A93185 /* cpu_buffer.cpp in Sources */,
-				9A204A6E2433C68300D45614 /* framework.cpp in Sources */,
+				9A204A6E2433C68300D45614 /* platform.cpp in Sources */,
 				9A8B647124CBE90100A93185 /* context.cpp in Sources */,
 				9A8B646624CBE90100A93185 /* image_directx11.cpp in Sources */,
 				9ABBB6F82AEB9E7F007611C5 /* context_cgl.cpp in Sources */,
@@ -648,7 +648,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = framework.h;
+				GCC_PREFIX_HEADER = platform.h;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					GL_SILENCE_DEPRECATION,
 					_DEBUG,
@@ -742,7 +742,7 @@
 				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = framework.h;
+				GCC_PREFIX_HEADER = platform.h;
 				GCC_PREPROCESSOR_DEFINITIONS = GL_SILENCE_DEPRECATION;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;

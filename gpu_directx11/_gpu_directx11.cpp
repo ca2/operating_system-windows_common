@@ -1,5 +1,5 @@
 // Created by camilo on 2025-05-21 04:47 <3ThomasBorregaardSorensen!!
-#include "framework.h"
+#include "platform.h"
 #include "initializers.h"
 #include "bred/gpu/properties.h"
 #include "bred/gpu/types.h"

@@ -1,5 +1,5 @@
 // Created by camilo on 2025-06-10 14:28 <3ThomasBorregaardSørensen!!
-#include "framework.h"
+#include "platform.h"
 //#include "graphics.h"
 //#include "swap_chain.h"
 //#include "directx11/directx11.h"

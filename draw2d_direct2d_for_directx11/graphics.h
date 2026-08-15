@@ -96,11 +96,18 @@ namespace draw2d_direct2d_for_directx11
       //void end_layer(::e_graphics egraphics) override;
       void start_layer(bool bFirstLayer = false) override;
       void end_layer(bool bClosingLayer = false) override;
+
+
+      void begin_draw() override;
+      void end_draw() override;
+
+
+      virtual void prepare_gpu_draw2d_graphics_render_target(::gpu::texture * pgputexture);
       
       //void on_begin_draw1() override;
       //void on_end_draw1() override;
 
-
+      bool _is_ok() const override;
       void just_after_new_frame() override;
 
 

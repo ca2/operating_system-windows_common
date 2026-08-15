@@ -95,7 +95,7 @@ v.1.0 (2006-Dec-16, by Andrei Belogortseff)
 The first release.
 */
 
-#include "framework.h"
+#include "platform.h"
 #include "acme/operating_system.h"
 #include "uac_tools.h"
 #include <VersionHelpers.h>

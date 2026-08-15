@@ -13,7 +13,7 @@
  of the MessageIO class
 //
 
-#include "framework.h"
+#include "platform.h"
 #include "ppl.h"
 
 using namespace Platform::Collections;

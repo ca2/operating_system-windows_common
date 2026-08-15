@@ -1,4 +1,4 @@
-#include "framework.h"
+#include "platform.h"
 //#include "directx11/CustomTextRenderer.h"
 
 #undef ___new

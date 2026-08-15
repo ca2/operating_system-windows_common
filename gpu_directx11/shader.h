@@ -95,19 +95,19 @@ namespace gpu_directx11
 
       //void on_set_constant_buffer(const ::scoped_string& scopedstrName) override;
 
-      void bind(::gpu::command_buffer *pgpucommandbuffer, ::gpu::texture *pgputextureTarget) override;
+      void bind(::gpu::command_buffer *pgpucommandbuffer, ::gpu::texture_site *pgputexturesiteTarget) override;
       //void bind(::gpu::command_buffer *pgpucommandbuffer, ::gpu::texture *pgputextureTarget,
                 //::gpu::texture *pgputextureSource) override;
-      void bind_source(::gpu::command_buffer *pgpucommandbuffer, ::gpu::texture *pgputextureSource, ::i32 iSlot) override;
+      void bind_source(::gpu::command_buffer *pgpucommandbuffer, ::gpu::texture_site *pgputextureSourcesite, ::i32 iSlot) override;
       //void bind(::gpu::command_buffer *pgpucommandbuffer) override;
       //void _bind(::gpu::command_buffer *pgpucommandbuffer, ::gpu::enum_scene escene) override;
       void unbind(::gpu::command_buffer *pgpucommandbuffer) override;
       
       void on_bind_already_bound(::gpu::command_buffer *pgpucommandbuffer,
-                                         ::gpu::texture *pgputextureTarget) override;
+                                         ::gpu::texture_site *pgputexturesiteTarget) override;
 
       virtual void defer_bind_frame_buffer_layer(::gpu::command_buffer *pgpucommandbuffer,
-                                                 ::gpu::texture *pgputextureTarget);
+                                                 ::gpu::texture_site *pgputexturesiteTarget);
       void push_properties(::gpu::command_buffer * pgpucommandbuffer) override;
       void setModelViewProjection(const floating_matrix4 &model, const floating_matrix4 &view, const floating_matrix4 &projection) override;
       void bind_slot_set(::gpu::command_buffer *pgpucommandbuffer, ::i32 iSet,

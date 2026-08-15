@@ -1,4 +1,4 @@
-#include "framework.h"
+#include "platform.h"
 #include "bitmap.h"
 #include "graphics.h"
 #include "window_attachment.h"
@@ -55,6 +55,8 @@ namespace draw2d_direct2d
          pgraphics,
          pimage->m_sizeRaw,
          pimage->image32(),
+         pimage->origin(),
+         pimage->size(),
          pimage->m_iScan,
          pacmeuserinteractionAffinity);
 
@@ -65,6 +67,8 @@ namespace draw2d_direct2d
       ::draw2d::graphics * pgraphics,
       const ::i32_size & sizeParam,
       const void * pbits,
+      const ::i32_point & pointBits,
+      const ::i32_size & sizeBits,
       ::i32 stride,
       ::acme::user::interaction * pacmeuserinteractionAffinity)
    {
@@ -88,8 +92,8 @@ namespace draw2d_direct2d
 
       D2D1_SIZE_F size;
 
-      size.width = sizeParam.cx;
-      size.height = sizeParam.cy;
+      size.width = (FLOAT) sizeParam.cx;
+      size.height = (FLOAT) sizeParam.cy;
 
       D2D1_SIZE_U sizeu;
 
@@ -190,15 +194,15 @@ namespace draw2d_direct2d
       }
 
 
-      if (pbits && stride >= size.width * 4)
+      if (pbits && stride >= sizeBits.cx * 4)
       {
 
          D2D1_RECT_U r;
 
-         r.left = 0;
-         r.top = 0;
-         r.right = size.width;
-         r.bottom = size.height;
+         r.left = pointBits.x;
+         r.top = pointBits.y;
+         r.right = sizeBits.cx;
+         r.bottom = sizeBits.cy;
 
          m_pbitmap->CopyFromMemory(&r, pbits, stride);
 
@@ -287,6 +291,8 @@ namespace draw2d_direct2d
          nullptr,
          size,
          nullptr,
+         {},
+         {},
          0,
          pimage->m_pacmeuserinteractionAffinity);
 
@@ -299,8 +305,8 @@ namespace draw2d_direct2d
 
          rectSource.left = 0;
          rectSource.top = 0;
-         rectSource.right = minimum(sizeMinimum.width, size.cx);
-         rectSource.bottom = minimum(sizeMinimum.height, size.cy);
+         rectSource.right = (UINT32)minimum(sizeMinimum.width, size.cx);
+         rectSource.bottom = (UINT32) minimum(sizeMinimum.height, size.cy);
 
          D2D1_POINT_2U pointTarget;
 
@@ -336,6 +342,8 @@ namespace draw2d_direct2d
          pgraphics,
          size,
          pbits,
+         {},
+         size,
          stride,
          pacmeuserinteractionAffinity);
 
@@ -481,44 +489,26 @@ namespace draw2d_direct2d
 
    }
 
-   //i32_size bitmap::SetBitmapDimension(::i32 nWidth, ::i32 nHeight)
-   //{
-
-
-   //   throw ::interface_only();
-
-   //   return ::i32_size(0, 0);
-
-   //}
 
    ID2D1Bitmap1 * bitmap::_map_bitmap1()
    {
 
-      D2D1_SIZE_U sizeu1{};
+      D2D1_SIZE_U sizeuMap{};
       
       if (m_pbitmap1Map)
       {
 
-         sizeu1 = m_pbitmap1Map->GetPixelSize();
+         sizeuMap = m_pbitmap1Map->GetPixelSize();
 
       }
 
-      auto sizeu2 = m_pbitmap1->GetPixelSize();
+      ::i32_size sizeMap(sizeuMap.width, sizeuMap.height);
 
-      ::i32_size size1;
+      auto sizeuThis = m_pbitmap1->GetPixelSize();
 
-      size1.cx = sizeu1.width;
+      ::i32_size sizeThis(sizeuThis.width, sizeuThis.height);
 
-      size1.cy = sizeu1.height;
-
-      ::i32_size size2;
-
-      size2.cx = sizeu2.width;
-
-      size2.cy = sizeu2.height;
-
-
-      if (!m_pbitmap1Map || size1 != size2)
+      if (!m_pbitmap1Map || sizeMap != sizeThis)
       {
 
          if (m_pbitmap1Map)
@@ -534,7 +524,7 @@ namespace draw2d_direct2d
          );
 
          auto hrCreateMapBitmap = m_pdevicecontext->CreateBitmap(
-             sizeu2,
+             sizeuThis,
              nullptr,
              0,
              &stagingProperties,
@@ -566,8 +556,8 @@ namespace draw2d_direct2d
                (ID2D1DeviceContext *)m_pdevicecontext,
                (ID2D1Bitmap1 *)m_pbitmap1,
                (ID2D1Bitmap1 *)m_pbitmap1Map,
-               (unsigned int)sizeu2.width,
-               (unsigned int)sizeu2.height,
+               (unsigned int)sizeuThis.width,
+               (unsigned int)sizeuThis.height,
                (unsigned int)stagingSize.width,
                (unsigned int)stagingSize.height,
                (unsigned int)stagingOptions,

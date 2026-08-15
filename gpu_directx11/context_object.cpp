@@ -1,6 +1,6 @@
 // From bred/gpu/context_object.cpp by 
 // camilo on 2025-06-29 16:07 <3ThomasBorregaardSørensen!!
-#include "framework.h"
+#include "platform.h"
 #include "context.h"
 #include "context_object.h"
 

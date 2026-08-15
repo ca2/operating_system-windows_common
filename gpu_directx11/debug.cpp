@@ -5,7 +5,7 @@
  *
  * this code is licensed under the mit license (mit) (http://opensource.org/licenses/mit)
  */
-#include "framework.h"
+#include "platform.h"
 #include "debug.h"
  //#include <iostream>
 

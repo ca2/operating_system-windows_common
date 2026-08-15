@@ -1,6 +1,6 @@
 // Created on 2021-04-28 21:56 BRT <3TBS_!! Second celebration of Mummis Birthday 70!!
 // party with Carols Family!!
-#include "framework.h"
+#include "platform.h"
 
 
 HRESULT win_create_link(const ::wide_character* pszPathObj, const ::wide_character* pszPathLink, const ::wide_character* pszDesc, const ::wide_character* pszIconPath, ::i32 iIcon)

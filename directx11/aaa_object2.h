@@ -1,6 +1,6 @@
 // From draw2d_directx11/pen.cpp by camilo
 // on 2014-12-30 01:48 <3ThomasBorregaardSorensen!!
-#include "framework.h"
+#include "platform.h"
 
 
 namespace directx11

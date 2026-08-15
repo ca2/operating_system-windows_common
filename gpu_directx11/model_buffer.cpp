@@ -1,5 +1,5 @@
 // Created by camilo on 2025-06-11 01:08 <3ThomasBorregaardSørensen!!
-#include "framework.h"
+#include "platform.h"
 //#include "command_buffer.h"
 #include "context.h"
 #include "input_layout.h"
@@ -779,7 +779,7 @@ namespace gpu_directx11
             
             ::cast < ::gpu_directx11::context > pcontext = m_pgpucontext;
 
-            pcontext->m_pcontext->DrawIndexed(m_pmodeldatabase2->index_count(), 0, 0);
+            pcontext->m_pcontext->DrawIndexed((UINT) m_pmodeldatabase2->index_count(), 0, 0);
 
          }
          else
@@ -787,7 +787,7 @@ namespace gpu_directx11
 
             ::cast < ::gpu_directx11::context > pcontext = m_pgpucontext;
 
-            pcontext->m_pcontext->Draw(m_pmodeldatabase2->vertex_count(), 0); 
+            pcontext->m_pcontext->Draw((UINT) m_pmodeldatabase2->vertex_count(), 0); 
 
          }
 
@@ -797,7 +797,7 @@ namespace gpu_directx11
 
          ::cast < ::gpu_directx11::context > pcontext = m_pgpucontext;
 
-         pcontext->m_pcontext->Draw(m_pmodeldatabase2->vertex_count(), 0);
+         pcontext->m_pcontext->Draw((UINT) m_pmodeldatabase2->vertex_count(), 0);
 
       }
 

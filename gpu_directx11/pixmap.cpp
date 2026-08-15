@@ -1,6 +1,6 @@
 // From bred/gpu/pixmap.cpp by
 //  camilo on 2025-07-05 09:26 <3ThomasBorregaardSørensen!!
-#include "framework.h"
+#include "platform.h"
 //#include "device.h"
 //#include "pixmap.h"
 //#include "renderer.h"

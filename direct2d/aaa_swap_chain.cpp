@@ -1,5 +1,5 @@
 // Created by camilo on 2025-06-04 23:11 <3ThomasBorregaardSørensen!!
-#include "framework.h"
+#include "platform.h"
 #include "swap_chain.h"
 #include "direct2d.h"
 #include "aura/windowing/window.h"

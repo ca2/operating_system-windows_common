@@ -1,5 +1,5 @@
 // Created by camilo on 2025-06-04 23:11 <3ThomasBorregaardSørensen!!
-#include "framework.h"
+#include "platform.h"
 #include "swap_chain.h"
 #include "directx11.h"
 #include "aura/windowing/window.h"
@@ -168,36 +168,34 @@ namespace directx11
 
       ::gpu::swap_chain::initialize_swap_chain_window(pgpucontext, pwindow);
 
-      if (IsRenderDocAttached())
+      if (::directx11::from_gpu_device(pgpucontext->m_pgpudevice)->use_composition())
       {
 
-         return;
+         ::cast < ::windowing_win32::window > pwin32window = pwindow;
+
+         auto & pdcompositiondevice = m_pdcompositiondevice;
+         auto & pdcompositiontarget = m_pdcompositiontarget;
+         auto & pdcompositionvisual = m_pdcompositionvisual;
+
+         auto pdxgidevice = _get_dxgi_device();
+
+         HRESULT hrDCompositionCreateDevice = DCompositionCreateDevice(
+            pdxgidevice,
+            __interface_of(pdcompositiondevice));
+
+         ::defer_throw_hresult(hrDCompositionCreateDevice);
+
+         ::defer_throw_hresult(
+            pdcompositiondevice->CreateTargetForHwnd((HWND)pwin32window->_HWND(),
+               true,
+               &pdcompositiontarget));
+
+         ::defer_throw_hresult(pdcompositiondevice->CreateVisual(&pdcompositionvisual));
+         ::defer_throw_hresult(pdcompositionvisual->SetContent(m_pdxgiswapchain1));
+         ::defer_throw_hresult(pdcompositiontarget->SetRoot(pdcompositionvisual));
+         ::defer_throw_hresult(pdcompositiondevice->Commit());
 
       }
-
-      ::cast < ::windowing_win32::window > pwin32window = pwindow;
-
-      auto& pdcompositiondevice = m_pdcompositiondevice;
-      auto& pdcompositiontarget = m_pdcompositiontarget;
-      auto& pdcompositionvisual = m_pdcompositionvisual;
-
-      auto pdxgidevice = _get_dxgi_device();
-
-      HRESULT hrDCompositionCreateDevice = DCompositionCreateDevice(
-         pdxgidevice,
-         __interface_of(pdcompositiondevice));
-
-      ::defer_throw_hresult(hrDCompositionCreateDevice);
-
-      ::defer_throw_hresult(
-         pdcompositiondevice->CreateTargetForHwnd((HWND) pwin32window->_HWND(),
-         true,
-         &pdcompositiontarget));
-
-      ::defer_throw_hresult(pdcompositiondevice->CreateVisual(&pdcompositionvisual));
-      ::defer_throw_hresult(pdcompositionvisual->SetContent(m_pdxgiswapchain1));
-      ::defer_throw_hresult(pdcompositiontarget->SetRoot(pdcompositionvisual));
-      ::defer_throw_hresult(pdcompositiondevice->Commit());
 
    }
 

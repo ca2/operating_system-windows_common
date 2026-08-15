@@ -8,8 +8,8 @@ list(APPEND library_source
         _factory.cpp
         direct2d.cpp
         draw2d1.cpp
-        framework.cpp
-        framework.h
+        platform.cpp
+        platform.h
         geometry.cpp
         geometry.h
         geometry_sink_text_renderer.cpp
@@ -22,7 +22,7 @@ list(APPEND library_source
 
 add_library(${PROJECT_NAME} SHARED ${library_source})
 
-target_precompile_headers(${PROJECT_NAME} PRIVATE framework.h)
+target_precompile_headers(${PROJECT_NAME} PRIVATE platform.h)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 

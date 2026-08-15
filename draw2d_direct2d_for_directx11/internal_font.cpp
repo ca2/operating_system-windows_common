@@ -1,4 +1,4 @@
-#include "framework.h"
+#include "platform.h"
 #include "font.h"
 #include "internal_font.h"
 #include "direct2d/direct2d.h"

@@ -1,7 +1,7 @@
 // From github:/tristancalderbank/OpenGL-PBR-Renderer/cubemap_framebuffer.cpp by
 // camilo on 2025-09-26 19:52 <3ThomasBorregaardSorensen!!
 // From gpu_directx11 by camilo on 2025-10-16 17:37 <3ThomasBorregaardSorensen!!
-#include "framework.h"
+#include "platform.h"
 #include "cubemap_framebuffer.h"
 #include "bred/gpu/context_lock.h"
 #include "bred/gpu/shader.h"

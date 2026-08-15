@@ -6,8 +6,8 @@ list(APPEND library_source
    _.cpp
    _.h
    _factory.cpp
-   framework.cpp
-   framework.h
+   platform.cpp
+   platform.h
    node.cpp
    node.h
    single_threaded_handler_manager.cpp
@@ -18,8 +18,8 @@ list(APPEND library_source
 add_library(${PROJECT_NAME} SHARED ${library_source})
 add_library(static_${PROJECT_NAME} STATIC ${library_source})
 
-target_precompile_headers(${PROJECT_NAME} PRIVATE framework.h)
-target_precompile_headers(static_${PROJECT_NAME} PRIVATE framework.h)
+target_precompile_headers(${PROJECT_NAME} PRIVATE platform.h)
+target_precompile_headers(static_${PROJECT_NAME} PRIVATE platform.h)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 target_compile_definitions(static_${PROJECT_NAME} PRIVATE CUBE)

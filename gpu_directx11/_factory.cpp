@@ -1,4 +1,4 @@
-#include "framework.h"
+#include "platform.h"
 #include "bred/gltf/vertex.h"
 #include "approach.h"
 #include "buffer.h"

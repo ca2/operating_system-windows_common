@@ -1,5 +1,5 @@
 // Created by camilo on 2025-06-08 18:14 < 3ThomasBorregaardSørensen!!
-#include "framework.h"
+#include "platform.h"
 #include "texture.h"
 #include <stb/stb_image.h>
 #include "acme/graphics/image/pixmap.h"
@@ -30,8 +30,8 @@ namespace gpu_directx11
 
             m_texture2ddesc = {};
       // 1. Create offscreen render target texture
-      m_texture2ddesc.Width = this->width();
-      m_texture2ddesc.Height = this->height();
+      m_texture2ddesc.Width = this->raw_width();
+      m_texture2ddesc.Height = this->raw_height();
       if (m_textureattributes.m_etexture == ::gpu::e_texture_cube_map)
       {
 
@@ -512,7 +512,7 @@ namespace gpu_directx11
 
       if (!m_ptextureDepthStencil)
       {
-         auto size = m_textureattributes.m_rectangleTarget.size();
+         auto size = m_textureattributes.m_size;
 
          D3D11_TEXTURE2D_DESC depthDesc = {};
          depthDesc.Width = size.cx;
@@ -697,7 +697,7 @@ namespace gpu_directx11
    //   return true;
    //}
 
-   void texture::read_pixels(::gpu::command_buffer * pgpucommandbuffer, ::pixmap_t * ppixmap)
+   void texture::read_pixels(::gpu::command_buffer * pgpucommandbuffer, ::pixmap_t * ppixmap, const ::i32_point & pointOutput)
    {
 
       D3D11_TEXTURE2D_DESC desc{};
@@ -854,16 +854,16 @@ namespace gpu_directx11
    }
 
 
-   void texture::initialize_with_image_data(::gpu::context *pgpucontext, const ::i32_rectangle &rectangleTarget,
+   void texture::create_with_image_data(::gpu::context *pgpucontext, const ::i32_size & size,
                                             ::i32 channels, bool bSrgb, const void *pdata, ::gpu::enum_texture etexture)
    {
       m_pgpucontext = pgpucontext;
-      auto width = rectangleTarget.width();
-      auto height = rectangleTarget.height();
+      auto width = size.width();
+      auto height = size.height();
       auto imagedata = (::u8 *)pdata;
 
       // m_etexture = etype;
-      m_textureattributes.m_rectangleTarget = rectangleTarget;
+      m_textureattributes.m_size = size;
 
       m_textureflags.m_bWithDepth = false;
 
@@ -980,7 +980,7 @@ namespace gpu_directx11
    }
 
 
-   void texture::initialize_hdr_texture_on_memory(::gpu::context *pgpucontext, const ::block &block)
+   void texture::create_hdr_texture_on_memory(::gpu::context *pgpucontext, const ::block &block)
    {
 
       ::gpu::context_lock contextlock(pgpucontext);
@@ -1012,7 +1012,7 @@ namespace gpu_directx11
       //stbi_set_flip_vertically_on_load(0);
 
       // m_textureattributes.m_etexture = etype;
-      m_textureattributes.m_rectangleTarget = ::i32_rectangle(::i32_size(width, height));
+      m_textureattributes.m_size = { width, height };
 
       m_textureflags.m_bWithDepth = false;
 

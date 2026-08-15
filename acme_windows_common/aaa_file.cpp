@@ -1,4 +1,4 @@
-#include "framework.h"
+#include "platform.h"
 //#include "acme/operating_system.h"
 
 
@@ -159,7 +159,7 @@ CLASS_DECL_ACME_WINDOWS_COMMON memsize hfile_read(hfile hfile, void* p, memsize 
 
 
 
-//#include "framework.h"
+//#include "platform.h"
 #include "acme/operating_system/time.h"
 #include "file.h"
 

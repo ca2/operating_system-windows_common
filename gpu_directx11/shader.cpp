@@ -1,14 +1,8 @@
-#include "framework.h"
+#include "platform.h"
 // Co-creating with V0idsEmbrace@Twitch with
 // camilo on 2025-05-19 04:59 <3ThomasBorregaardSorensen!!
 #include <d3dcompiler.h>
-#include "acme/operating_system/windows_common/com/hresult_exception.h"
 #include "approach.h"
-#include "bred/gpu/binding.h"
-#include "bred/gpu/command_buffer.h"
-#include "bred/gpu/context_lock.h"
-#include "bred/gpu/layer.h"
-#include "bred/gpu/types.h"
 #include "context.h"
 #include "descriptors.h"
 #include "input_layout.h"
@@ -17,8 +11,14 @@
 #include "renderer.h"
 #include "shader.h"
 #include "texture.h"
-
 #include "block.h"
+#include "acme/operating_system/windows_common/com/hresult_exception.h"
+#include "bred/gpu/binding.h"
+#include "bred/gpu/command_buffer.h"
+#include "bred/gpu/context_lock.h"
+#include "bred/gpu/layer.h"
+#include "bred/gpu/texture_site.h"
+#include "bred/gpu/types.h"
 #include "bred/graphics3d/engine.h"
 #include "bred/graphics3d/immersion_layer.h"
 #include "bred/graphics3d/scene_base.h"
@@ -417,7 +417,7 @@ namespace gpu_directx11
    //}
 
 
-   void shader::bind_source(::gpu::command_buffer *pgpucommandbuffer, ::gpu::texture *pgputextureSource, ::i32 iSlot)
+   void shader::bind_source(::gpu::command_buffer *pgpucommandbuffer, ::gpu::texture_site *pgputexturesiteSource, ::i32 iSlot)
    {
 
       ::cast<context> pgpucontext = m_pgpurenderer->m_pgpucontext;
@@ -426,10 +426,10 @@ namespace gpu_directx11
 
       ::cast<device> pgpudevice = pgpucontext->m_pgpudevice;
 
-      if (pgputextureSource)
+      if (pgputexturesiteSource)
       {
 
-         ::cast<texture> ptextureSrc = pgputextureSource;
+         ::cast<texture> ptextureSrc = pgputexturesiteSource->gpu_texture();
 
          if (!ptextureSrc->m_pshaderresourceview)
          {
@@ -459,7 +459,7 @@ namespace gpu_directx11
    }
 
 
-   void shader::bind(::gpu::command_buffer *pgpucommandbuffer, ::gpu::texture *pgputextureTarget)
+   void shader::bind(::gpu::command_buffer *pgpucommandbuffer, ::gpu::texture_site *pgputexturesiteTarget)
    {
 
 
@@ -540,7 +540,7 @@ namespace gpu_directx11
 
       //::cast <device> pgpudevice = pgpucontext->m_pgpudevice;
 
-      if (!pgputextureTarget)
+      if (!pgputexturesiteTarget)
       {
 
          ::cast<renderer> prenderer = m_pgpurenderer;
@@ -555,17 +555,22 @@ namespace gpu_directx11
             if (pgpurendertargetview)
             {
 
-               ::cast<texture> ptexture = pgpurendertargetview->current_texture(::gpu::current_layer());
+               auto ptexturesite = pgpurendertargetview->current_texture(::gpu::current_layer(), true);
 
-               pgputextureTarget = ptexture.m_p;
+               //::cast<texture> ptexture = ptexturesite->gpu_texture();
+
+               pgputexturesiteTarget = ptexturesite;
+
             }
+
          }
+
       }
 
-      if (pgputextureTarget)
+      if (pgputexturesiteTarget)
       {
 
-         ::cast<texture> ptextureDst = pgputextureTarget;
+         ::cast<texture> ptextureDst = pgputexturesiteTarget->gpu_texture();
 
          if (!ptextureDst->m_prendertargetview)
          {
@@ -595,15 +600,16 @@ namespace gpu_directx11
          }
       }
 
-      defer_bind_frame_buffer_layer(pgpucommandbuffer, pgputextureTarget);
+      defer_bind_frame_buffer_layer(pgpucommandbuffer, pgputexturesiteTarget);
+
    }
 
 
    void shader::defer_bind_frame_buffer_layer(::gpu::command_buffer *pgpucommandbuffer,
-                                              ::gpu::texture *pgputextureTarget)
+                                              ::gpu::texture_site *pgputexturesiteTarget)
    {
 
-      ::cast<texture> ptexture = pgputextureTarget;
+      ::cast<texture> ptexture = pgputexturesiteTarget->gpu_texture();
 
       if (ptexture->m_textureattributes.m_etexture == ::gpu::e_texture_cube_map)
       {
@@ -631,11 +637,11 @@ namespace gpu_directx11
       }
    }
 
-   void shader::on_bind_already_bound(::gpu::command_buffer *pgpucommandbuffer, ::gpu::texture *pgputextureTarget)
+   void shader::on_bind_already_bound(::gpu::command_buffer *pgpucommandbuffer, ::gpu::texture_site *pgputexturesiteTarget)
    
    {
    
-      defer_bind_frame_buffer_layer(pgpucommandbuffer, pgputextureTarget);
+      defer_bind_frame_buffer_layer(pgpucommandbuffer, pgputexturesiteTarget);
    
    }
 
@@ -791,7 +797,7 @@ namespace gpu_directx11
          if (pgpurendertargetview)
          {
 
-            ::cast<texture> ptexture = pgpurendertargetview->current_texture(::gpu::current_layer());
+            ::cast<texture> ptexture = pgpurendertargetview->current_texture(::gpu::current_layer(), true);
 
             //::cast < offscreen_render_target_view > poffscreenrendertargetview = pgpurendertargetview;
 
@@ -947,10 +953,10 @@ namespace gpu_directx11
             auto pPS = pbuffer.m_p;
             pcontext->m_pcontext->PSSetConstantBuffers(iBinding, 1, &pPS);
          }
-         else if (bindingslot.m_ptexture)
+         else if (bindingslot.m_ptexturesite.ok())
          {
 
-            ::cast<::gpu_directx11::texture> ptexture = bindingslot.m_ptexture;
+            ::cast<::gpu_directx11::texture> ptexture = bindingslot.m_ptexturesite->gpu_texture();
 
             ::i32 iBinding = bindingslot.m_pbinding->m_iBindingPoint2;
 

@@ -147,10 +147,10 @@
 		<Unit filename="/home/camilo/solution/basis/source/app/gpu_directx11/context_glx.h">
 			<Option target="gpu_directx11"/>
 		</Unit>
-		<Unit filename="/home/camilo/solution/basis/source/app/gpu_directx11/framework.cpp">
+		<Unit filename="/home/camilo/solution/basis/source/app/gpu_directx11/platform.cpp">
 			<Option target="gpu_directx11"/>
 		</Unit>
-		<Unit filename="/home/camilo/solution/basis/source/app/gpu_directx11/framework.h">
+		<Unit filename="/home/camilo/solution/basis/source/app/gpu_directx11/platform.h">
 			<Option target="gpu_directx11"/>
 		</Unit>
 		<Unit filename="/home/camilo/solution/basis/source/app/gpu_directx11/image_directx11.cpp">

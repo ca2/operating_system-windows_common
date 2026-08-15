@@ -1,6 +1,6 @@
 // Created by camilo 2021-01
 // Recreated by camilo 2021-02-10 <3TBS_!!
-#include "framework.h"
+#include "platform.h"
 
 
 namespace write_text_win32

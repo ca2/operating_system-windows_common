@@ -1,4 +1,4 @@
-#include "framework.h"
+#include "platform.h"
 #include "directx11.h"
 #include "swap_chain.h"
 #include "acme/graphics/write_text/font_weight.h"
@@ -7,6 +7,8 @@
 #include "bred/gpu/bred_approach.h"
 #include "bred/gpu/device.h"
 #include "aura/windowing/window.h"
+
+CLASS_DECL_DIRECTX11 bool IsRenderDocAttached();
 
 
 namespace directx11
@@ -42,6 +44,24 @@ namespace directx11
    {
 
       ::app_consumer<::aura::application>::initialize(pparticle);
+
+   }
+
+
+   bool directx11::use_composition()
+   {
+
+      if (IsRenderDocAttached())
+      {
+
+         return false;
+
+      }
+
+      return true;
+
+      //return false;
+
 
    }
 
@@ -116,16 +136,21 @@ namespace directx11
    CLASS_DECL_DIRECTX11 directx11* from_gpu_device(::gpu::device* pgpudevice)
    {
 
-      ::cast < directx11 > pdirectx11 = pgpudevice->payload("directx11").as_subparticle();
+      ::cast < directx11::container > pdirectx11container = pgpudevice;
+
+      if (!pdirectx11container)
+      {
+
+         return nullptr;
+
+      }
+
+      auto & pdirectx11 = pdirectx11container->m_pdirectx11;
 
       if (!pdirectx11)
       {
 
          pdirectx11 = pgpudevice->create_newø < directx11>();
-
-         pgpudevice->payload("directx11") = pdirectx11;
-
-         pdirectx11.m_p = dynamic_cast < directx11 * > (pgpudevice->payload("directx11").as_subparticle());
 
       }
 

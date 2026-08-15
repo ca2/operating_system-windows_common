@@ -7,7 +7,7 @@
 //                      occurred.
 //
 //*****************************************************************************
-#include "framework.h"
+#include "platform.h"
 
 
 manual_reset_happening::manual_reset_happening(::i8 * sz, bool bInitiallyOwn) :

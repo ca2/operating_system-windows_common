@@ -1,5 +1,5 @@
 // Created by camilo on 2022-10-28 14:35 <3ThomasBorregaardSorensen!!
-#include "framework.h"
+#include "platform.h"
 #include "synchronization_object.h"
 #include "acme/exception/exception.h"
 #include "acme/parallelization/task.h"

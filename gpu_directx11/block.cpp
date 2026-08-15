@@ -1,5 +1,5 @@
 // Created by camilo on 2025-12-11 16:03 <3ThomasBorregaardSørensen!!
-#include "framework.h"
+#include "platform.h"
 #include "binding.h"
 #include "block.h"
 //#include "command_buffer.h"
@@ -28,7 +28,7 @@ namespace gpu_directx11
       cbd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
       cbd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
       ::cast<device> pgpudevice = m_pgpucontext->m_pgpudevice;
-      ::i32 iSize = this->size(false);
+      auto iSize = this->size(false);
       // GlobalUbo
       cbd.ByteWidth = (iSize + 15) & ~15;
       pgpudevice->m_pd3d11device->CreateBuffer(&cbd, nullptr, &m_pbuffer);

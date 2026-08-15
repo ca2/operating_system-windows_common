@@ -61,6 +61,8 @@ namespace draw2d_direct2d
          ::draw2d::graphics * pgraphics,
          const ::i32_size & size,
          const void * pbits,
+         const ::i32_point & pointBits,
+         const ::i32_size & sizeBits,
          ::i32 stride,
          ::acme::user::interaction * pacmeuserinteractionAffinity);
 

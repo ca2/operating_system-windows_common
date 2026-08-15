@@ -1,4 +1,4 @@
-#include "framework.h"
+#include "platform.h"
 #include "bitmap.h"
 #include "image.h"
 #include "graphics.h"
@@ -335,7 +335,6 @@ namespace draw2d_direct2d
 
       pdraw2dgraphics->create_for_image(this);
 
-
       if (m_pbitmap.ok())
       {
 
@@ -343,7 +342,7 @@ namespace draw2d_direct2d
 
          m_iScan = m_pbitmap->m_iStride;
 
-         map({ ::i32_point(), sizeRaw });
+         //map({ ::i32_point(), sizeRaw });
 
          set_ok_flag();
 
@@ -1448,12 +1447,8 @@ namespace draw2d_direct2d
    //}
 
 
-   void image::_map(bool bApplyAlphaTransform)
+   void image::_map(const ::i32_rectangle & rectangle, bool bApplyAlphaTransform)
    {
-
-      //::draw2d::lock draw2dlock;
-
-      //::draw2d::device_lock devicelock(this);
 
       if (m_bMapped)
       {
@@ -1465,37 +1460,48 @@ namespace draw2d_direct2d
       if (m_pbitmap.is_null())
       {
 
-         ::image::image::_map(bApplyAlphaTransform);
+         ::image::image::_map(rectangle, bApplyAlphaTransform);
 
          return;
 
-         //throw ::exception(error_invalid_empty_argument);
+      }
+
+      D2D1_POINT_2U destPoint;
+      D2D1_RECT_U srcRect;
+      
+      if (rectangle.is_empty())
+      {
+         
+         destPoint = D2D1_POINT_2U{ (UINT32) m_point.x, (UINT32)m_point.y };
+         srcRect = D2D1_RECT_U{ (UINT32)m_point.x, (UINT32)m_point.y, (UINT32)(m_point.x + m_size.cx), (UINT32)(m_point.y + m_size.cy) };
+
+      }
+      else
+      {
+
+         destPoint = D2D1_POINT_2U{ (UINT32)rectangle.left, (UINT32)rectangle.top };
+         srcRect = D2D1_RECT_U{ (UINT32)rectangle.left,(UINT32)rectangle.top,(UINT32)rectangle.right, (UINT32)rectangle.bottom };
 
       }
 
       ::cast<::draw2d_direct2d::bitmap> pbitmap = m_pbitmap;
 
-      //pbitmap->m_pbitmap1->
+      auto pbitmap1This = pbitmap->m_pbitmap1;
 
-         
+      auto pbitmap1Map = pbitmap->_map_bitmap1();
+
+      auto hrCopyFromBitmap = pbitmap1Map->CopyFromBitmap(&destPoint, pbitmap1This, &srcRect);
+
       D2D1_MAPPED_RECT mappedrect = {};
 
-      auto pbitmap1 = pbitmap->_map_bitmap1();
+      auto hrMap = pbitmap1Map->Map(D2D1_MAP_OPTIONS_READ, &mappedrect);
 
-      // Copy render target content to CPU-readable staging bitmap
-      D2D1_POINT_2U destPoint = { m_point.x, m_point.y };
-      D2D1_RECT_U srcRect = { m_point.x, m_point.y, m_point.x + m_size.cx, m_point.y + m_size.cy };
-
-      auto hrCopyFromBitmap = pbitmap1->CopyFromBitmap(&destPoint,pbitmap->m_pbitmap, &srcRect);
-
-      auto hrMap = pbitmap1->Map(D2D1_MAP_OPTIONS_READ, &mappedrect);
-
-      auto sourceSize = pbitmap->m_pbitmap1->GetPixelSize();
-      auto sourcePixelFormat = pbitmap->m_pbitmap1->GetPixelFormat();
-      auto sourceOptions = pbitmap->m_pbitmap1->GetOptions();
-      auto stagingSize = pbitmap1->GetPixelSize();
-      auto stagingPixelFormat = pbitmap1->GetPixelFormat();
-      auto stagingOptions = pbitmap1->GetOptions();
+      auto sourceSize = pbitmap1This->GetPixelSize();
+      auto sourcePixelFormat = pbitmap1This->GetPixelFormat();
+      auto sourceOptions = pbitmap1This->GetOptions();
+      auto stagingSize = pbitmap1Map->GetPixelSize();
+      auto stagingPixelFormat = pbitmap1Map->GetPixelFormat();
+      auto stagingOptions = pbitmap1Map->GetOptions();
 
       static ::std::atomic<unsigned int> s_uReadbackDiagnosticCount{ 0 };
       auto uReadbackDiagnosticCount = s_uReadbackDiagnosticCount.fetch_add(1, ::std::memory_order_relaxed);
@@ -1549,7 +1555,7 @@ namespace draw2d_direct2d
              (unsigned long)::GetCurrentThreadId(),
              this,
              (ID2D1Bitmap *)pbitmap->m_pbitmap,
-             pbitmap1,
+             pbitmap1Map,
              (unsigned int)sourceSize.width,
              (unsigned int)sourceSize.height,
              (unsigned int)sourceOptions,
@@ -1561,10 +1567,10 @@ namespace draw2d_direct2d
              (unsigned int)stagingPixelFormat.format,
              (unsigned int)stagingPixelFormat.alphaMode,
              m_point.x,
-            m_point.y,
-            m_size.cx,
-            m_size.cy,
-            m_sizeRaw.cx,
+             m_point.y,
+             m_size.cx,
+             m_size.cy,
+             m_sizeRaw.cx,
              m_sizeRaw.cy,
              (unsigned int)mappedrect.pitch,
              mappedrect.bits,
@@ -1577,94 +1583,11 @@ namespace draw2d_direct2d
 
       m_bMappedD2 = true;
       
-      // hr = m_pbitmap1Map->Map(D2D1_MAP_OPTIONS_READ, &map_base);
-
-      // if (FAILED(hr) || map_base.bits == nullptr)
-      //{
-
-      //   throw ::exception(error_failed);
-
-      //}
-
-      // auto pimage32 = (::image32_t *)map_base.bits;
-
-      // auto p = pimage32;
-
-      // auto iScan = map_base.pitch;
-
-      // auto area = (iScan / sizeof(*pimage32)) * m_size.cy;
-
-      // initialize_pixmap(m_size, pimage32, iScan);
-      //auto pgraphics2d = m_pgraphics.cast < ::draw2d_direct2d::graphics>();
-
-      //::gpu::context_lock contextlock(pgraphics2d->gpu_context());
-
-      //D2D1_SIZE_U size;
-
-      //size.width = m_size.cx;
-      //size.height = m_size.cy;
-
-      //HRESULT hrFlush = pgraphics2d->m_pdevicecontext->Flush();
-
-      //if (FAILED(hrFlush))
-      //{
-
-      //   throw ::exception(error_failed);
-
-      //}
-
-      //m_hrEndDraw = pgraphics2d->m_pdevicecontext->EndDraw();
-
-      //if (FAILED(m_hrEndDraw))
-      //{
-
-      //   throw ::exception(error_failed);
-
-      //}
-
-      //auto pbitmap = m_pbitmap->get_os_data < ID2D1Bitmap * >(data_bitmap);
-
-      //D2D1_BITMAP_OPTIONS options = 
-      //   D2D1_BITMAP_OPTIONS_CPU_READ |
-      //   D2D1_BITMAP_OPTIONS_CANNOT_DRAW;
-
-      //auto props = D2D1::BitmapProperties1(options, pbitmap->GetPixelFormat());
-
-      //HRESULT hr = pgraphics2d->m_pdevicecontext->CreateBitmap(size, nullptr, 0, props, &m_pbitmap1Map);
-
-      //if (FAILED(hr))
-      //{
-
-      //   throw ::exception(error_failed);
-
-      //}
-
-      //D2D1_POINT_2U pointDst = {};
-
-      //D2D1_RECT_U srcRect = {};
-
-      //srcRect.right = width();
-
-      //srcRect.bottom = height();
-
-      //hr = m_pbitmap1Map->CopyFromBitmap(&pointDst, pbitmap, &srcRect);
-
-      //D2D1_MAPPED_RECT map_base = {};
-
-      //hr = m_pbitmap1Map->Map(D2D1_MAP_OPTIONS_READ, &map_base);
-
-      //if (FAILED(hr) || map_base.bits == nullptr)
-      //{
-
-      //   throw ::exception(error_failed);
-
-      //}
-
       auto pimage32 = (::image32_t *)mappedrect.bits;
 
       auto p = pimage32;
 
-      auto iScan = mappedrect.pitch;
+      auto iScan = (::i32)  mappedrect.pitch;
 
       if (iScan < m_sizeRaw.cx * 4)
       {
@@ -1679,7 +1602,20 @@ namespace draw2d_direct2d
 
       initialize_pixmap(m_sizeRaw, (::image32_t *) m_memoryPixmap.data(), iScan);
 
-      pixmap_map();
+      if (rectangle.is_empty())
+      {
+
+         pixmap_map();
+
+      }
+      else
+      {
+
+         pixmap_map(rectangle);
+
+      }
+
+      ::i32_size sizeCopy;
 
       if (::is_null(pimage32))
       {
@@ -1687,18 +1623,28 @@ namespace draw2d_direct2d
          m_memoryPixmap.zero();
 
       }
-      else
+      else if (rectangle.is_empty())
       {
+
+         sizeCopy = m_size;
+
+         this->pixmap_t::copy(sizeCopy, pimage32->offset(m_point.x, m_point.y, mappedrect.pitch), mappedrect.pitch);
+
+      }
+      else 
+      {
+
+         sizeCopy = rectangle.size();
        
-         this->pixmap_t::copy(m_size, pimage32->offset(m_point.x, m_point.y, mappedrect.pitch), mappedrect.pitch);
+         this->pixmap_t::copy(sizeCopy, pimage32->offset(rectangle.left, rectangle.top, mappedrect.pitch), mappedrect.pitch);
+
+         //this->pixmap_t::copy(m_size, pimage32, mappedrect.pitch);
 
       }
 
-      pbitmap1->Unmap();
+      pbitmap1Map->Unmap();
 
       m_bMapped = true;
-
-      //return true;
 
    }
 
@@ -1740,8 +1686,20 @@ namespace draw2d_direct2d
          //auto pbitmap = m_pbitmap->get_os_data < ID2D1Bitmap * >(data_bitmap);
 
          ::cast<::draw2d_direct2d::bitmap> pbitmap = m_pbitmap;
-         D2D1_RECT_U srcRect = { 0, 0, m_size.cx, m_size.cy };
-         auto hr = pbitmap->m_pbitmap1->CopyFromMemory(&srcRect, m_pimage32Raw, m_iScan);
+         D2D1_RECT_U srcRect = { (UINT32) m_point.x, (UINT32)m_point.y,(UINT32)(m_point.x + m_size.cx), (UINT32)(m_point.y + m_size.cy )};
+
+         auto sizeCopy = m_size;
+
+         if (sizeCopy.height() == 643)
+         {
+
+            blend_color({ 200, m_size.cy + m_point.y - 50, 250, m_size.cy + m_point.y}, argb(200, 100, 140, 220));
+
+         }
+
+
+
+         auto hr = pbitmap->m_pbitmap1->CopyFromMemory(&srcRect, m_pimage32, m_iScan);
          //pbitmap->m_pbitmap1Map->Unmap();
 
          // Copy render target content to CPU-readable staging bitmap

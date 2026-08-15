@@ -778,7 +778,7 @@
     <ClInclude Include="swap_chain_render_target_view.h" />
     <ClInclude Include="texture.h" />
     <ClInclude Include="_.h" />
-    <ClInclude Include="framework.h" />
+    <ClInclude Include="platform.h" />
     <ClInclude Include="_gpu_directx11.h" />
   </ItemGroup>
   <ItemGroup>
@@ -894,7 +894,7 @@
     <ClCompile Include="swap_chain_render_target_view.cpp" />
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="_factory.cpp" />
-    <ClCompile Include="framework.cpp">
+    <ClCompile Include="platform.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticDebug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>

@@ -1,4 +1,4 @@
-#include "framework.h"
+#include "platform.h"
 #include "program.h"
 //#include "bred/gpu/shader.h"
 //

@@ -1,5 +1,5 @@
 // Created by camilo on 2023-06-13 03:14 <3ThomasBorregaardSorensen!!
-#include "framework.h"
+#include "platform.h"
 #include "directx11.h"
 #include "geometry.h"
 #include "acme/prototype/geometry2d/ellipse.h"

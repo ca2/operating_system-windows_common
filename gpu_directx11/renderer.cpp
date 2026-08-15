@@ -1,4 +1,4 @@
-#include "framework.h"
+#include "platform.h"
 #include "approach.h"
 #include "descriptors.h"
 #include "window_attachment.h"
@@ -6,7 +6,6 @@
 #include "input_layout.h"
 #include "renderer.h"
 #include "texture.h"
-#include "bred/gpu/frame.h"
 #include "offscreen_render_target_view.h"
 #include "physical_device.h"
 #include "swap_chain_render_target_view.h"
@@ -14,9 +13,11 @@
 #include "bred/gpu/command_buffer.h"
 #include "bred/gpu/context_lock.h"
 #include "bred/gpu/buffer.h"
+#include "bred/gpu/frame.h"
 #include "bred/gpu/layer.h"
 //#include "bred/gpu/render_state.h"
 #include "bred/gpu/swap_chain.h"
+#include "bred/gpu/texture_site.h"
 #include "gpu_directx11/shader.h"
 #include "acme/parallelization/synchronous_lock.h"
 #include "acme/platform/application.h"
@@ -740,7 +741,9 @@ namespace gpu_directx11
 
       ID3D11DeviceContext* context = pgpucontext->m_pcontext;
 
-      ::cast < ::gpu_directx11::texture > ptexture = poffscreenrendertargetview->current_texture(::gpu::current_layer());
+      auto ptexturesite = poffscreenrendertargetview->current_texture(::gpu::current_layer(), true);
+
+      ::cast < ::gpu_directx11::texture > ptexture = ptexturesite->gpu_texture();
 
       ID3D11Texture2D* offscreenTexture = ptexture->m_ptextureOffscreen;
 
@@ -980,7 +983,9 @@ namespace gpu_directx11
       if (pgpurendertargetview)
       {
 
-         ::cast < texture > ptexture = pgpurendertargetview->current_texture(pgpulayer);
+         auto ptexturesite = pgpurendertargetview->current_texture(pgpulayer, true);
+
+         ::cast < texture > ptexture = ptexturesite->gpu_texture();
 
          ::comptr < ID3D11RenderTargetView > prendertargetview;
 
@@ -1151,7 +1156,9 @@ HRESULT hrCreateDepthStencilState = pgpudevice->m_pd3d11device->CreateDepthStenc
 
       //::cast < render_target_view > pgpurendertargetview = m_pgpurendertarget;
 
-      ::cast < texture > ptexture = pgpurendertargetview->current_texture(::gpu::current_layer());
+      auto ptexturesite = pgpurendertargetview->current_texture(::gpu::current_layer(), true);
+
+      ::cast < texture > ptexture = ptexturesite->gpu_texture();
 
       if (!ptexture->m_prendertargetview)
       {
@@ -1284,7 +1291,7 @@ HRESULT hrCreateDepthStencilState = pgpudevice->m_pd3d11device->CreateDepthStenc
 
       prenderer = prendererSrc;
 
-      m_pgpucontext->set_placement(prenderer->m_pgpucontext->get_placement());
+      m_pgpucontext->set_input_placement(prenderer->m_pgpucontext->output_placement());
 
       defer_update_renderer();
 
