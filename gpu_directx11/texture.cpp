@@ -854,6 +854,14 @@ namespace gpu_directx11
    }
 
 
+   void texture::set_pixels(::gpu::command_buffer * pgpucommandbuffer, const ::i32_rectangle & rectangle, const void * data)
+   {
+
+      set_pixels(pgpucommandbuffer, rectangle, data);
+
+   }
+
+
    void texture::create_with_image_data(::gpu::context *pgpucontext, const ::i32_size & size,
                                             ::i32 channels, bool bSrgb, const void *pdata, ::gpu::enum_texture etexture)
    {

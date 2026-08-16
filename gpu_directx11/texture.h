@@ -115,6 +115,7 @@ namespace gpu_directx11
       virtual IDXGISurface* __get_dxgi_surface();
 
       void set_pixels(const ::i32_rectangle& rectangle, const void* data) override;
+      void set_pixels(::gpu::command_buffer * pgpucommandbuffer, const ::i32_rectangle & rectangle, const void * data) override;
       void create_with_image_data(::gpu::context *pgpucontext, const ::i32_size & size,
                                       ::i32 numChannels, bool bSrgb, const void *pdata, ::gpu::enum_texture etexture) override;
 
