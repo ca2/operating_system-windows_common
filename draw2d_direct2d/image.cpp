@@ -430,14 +430,14 @@ namespace draw2d_direct2d
       if (size() != s)
       {
 
-         auto mapImage = pimage->map();
+         auto ppixmapImage = pimage->map();
          
-         if (::is_set(mapImage.data()) && mapImage.scan_size() > 0)
+         if (::is_set(ppixmapImage->data()) && ppixmapImage->scan_size() > 0)
          {
 
             //initialize(s, pimage->m_pimage32Raw, pimage->m_iScan, eflagCreate);
 
-            create_from_data(mapImage.size(), mapImage.data(), mapImage.scan_size(), eflagCreate);
+            create_from_data(ppixmapImage.size(), mapImage->data(), ppixmapImage->scan_size(), eflagCreate);
 
             bCreated = true;
             //if (initialize(s, pimage->m_pimage32Raw, pimage->m_iScan, eflagCreate))

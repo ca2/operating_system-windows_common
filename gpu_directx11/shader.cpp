@@ -375,7 +375,7 @@ namespace gpu_directx11
    //
    //      //D3D11_MAPPED_SUBRESOURCE mapped;
    //      //pgpucontext->m_pcontext->Map(pd3d11buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
-   //      //memcpy(mapped.pData, p1->m_element2.m_memory.data(), p1->m_element2.m_memory.size());
+   //      //memcpy(ppixmapped.pData, p1->m_element2.m_memory->data(), p1->m_element2.m_memory.size());
    //      //pgpucontext->m_pcontext->Unmap(pd3d11buffer, 0);
 
    //      if (constantbuffer.m_i1FragmentShader >= 0

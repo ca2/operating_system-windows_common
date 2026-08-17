@@ -1549,7 +1549,7 @@ namespace draw2d_gdiplus
 
       }
 
-      auto pgraphicsSrc = imagedrawing.m_pimage->g();
+      auto pgraphicsSrc = imagedrawing.m_pgraphicsImage->;
 
       if (pgraphicsSrc == nullptr || pgraphicsSrc->get_current_bitmap() == nullptr)
       {
@@ -7268,7 +7268,7 @@ namespace draw2d_gdiplus
 
    //            }
    //            
-   //            estatus = pimage1->create(rectangleBlt.::f64_size());
+   //            estatus = pimage1->create_as_descriptor(rectangleBlt.::f64_size());
 
    //            if (!estatus)
    //            {

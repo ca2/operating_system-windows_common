@@ -1409,7 +1409,7 @@ namespace draw2d_direct2d_for_directx11
       //if(m_pd2d1rendertarget == nullptr)
       //{
 
-        // create_compatible_graphics(nullptr);
+        // create_memory_graphics({}, nullptr); // create_compatible_graphics(nullptr);
 
       //}
 

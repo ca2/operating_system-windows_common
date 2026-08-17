@@ -251,7 +251,7 @@ namespace imaging_wic
 
             BITMAPINFO* _ = (BITMAPINFO*)m.data();
 
-            pimage->create({ _->bmiHeader.biWidth,  _->bmiHeader.biHeight });
+            pimage->create_as_descriptor({ _->bmiHeader.biWidth,  _->bmiHeader.biHeight });
 
             pimage->map();
 

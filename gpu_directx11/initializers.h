@@ -604,7 +604,7 @@ namespace directx11
       //{
       //   VkSpecializationInfo specializationInfo{};
       //   specializationInfo.mapEntryCount = static_cast<uint32_t>(mapEntries.size());
-      //   specializationInfo.pMapEntries = mapEntries.data();
+      //   specializationInfo.pMapEntries = ppixmapEntries->data();
       //   specializationInfo.dataSize = dataSize;
       //   specializationInfo.pData = data;
       //   return specializationInfo;
