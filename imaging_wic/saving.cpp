@@ -269,11 +269,11 @@ namespace imaging_wic
 
       }
 
-      pimage->map();
+      auto ppixmapImage = pimage->map();
 
-      auto pimage32 = pimage->data();
+      auto pimage32 = ppixmapImage->data();
 
-      auto iScan = pimage->scan_size();
+      auto iScan = ppixmapImage->scan_size();
 
       if (SUCCEEDED(hr))
       {
@@ -301,9 +301,9 @@ namespace imaging_wic
                   pimage->width(),
                   pimage->height(),
                   GUID_WICPixelFormat32bppBGRA,
-                  pimage->scan_size(),
-                  pimage->scan_size() * pimage->height(),
-                  (::u8 *)pimage->data(),
+                  ppixmapImage->scan_size(),
+                  ppixmapImage->scan_size() * pimage->height(),
+                  (::u8 *)ppixmapImage->data(),
                   &pbitmap
                );
 

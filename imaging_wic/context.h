@@ -34,7 +34,7 @@ namespace imaging_wic
       //void _load_pixmap(::pixmap * ppixmap, const ::payload &payloadFile,
         //               const ::image::load_options &loadoptions = ::image::load_options()) override;
 
-      void _load_image(::image::image * pimage, ::pointer<::image::image_frame_array>& pframea, ::memory & memory) override;
+      void _load_image(::pixmap * ppixmap, ::pointer<::image::image_frame_array>& pframea, ::memory & memory) override;
       void save_image(memory & memory, ::image::image * pimage, const ::image::encoding_options & encodingoptions) override;
 
 

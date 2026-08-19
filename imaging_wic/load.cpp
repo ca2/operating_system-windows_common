@@ -46,7 +46,7 @@ namespace imaging_wic
 
    comptr < IWICImagingFactory > get_imaging_factory();
 
-   bool windows_image_from_bitmap_source(::image::load_image * pimageFrame, IWICBitmapSource * pbitmapsource, IWICImagingFactory * pimagingfactory);
+   bool windows_load_image_from_bitmap_source(::image::load_image * ploadimage, IWICBitmapSource * pbitmapsource, IWICImagingFactory * pimagingfactory);
 
 
    void image_context::_load_image(::image::load_image * ploadimage, const ::payload & payloadFile, const ::image::load_options & loadoptions)
@@ -67,9 +67,9 @@ namespace imaging_wic
 
       //ploadimage->m_pimage = pimageParam;
 
-      ploadimage->m_ppixmap->m_estatus = error_failed;
+      ploadimage->m_estatus = error_failed;
 
-      ploadimage->m_ppixmap->set_nok();
+      ploadimage->set_nok();
 
       ploadimage->m_payload = payloadFile;
 
@@ -159,9 +159,9 @@ namespace imaging_wic
    void image_context::_os_load_image(::image::load_image * ploadimage, memory & memory)
    {
 
-      ploadimage->m_ppixmap->m_estatus = ::error_failed;
+      ploadimage->m_estatus = ::error_failed;
 
-      ploadimage->m_ppixmap->set_nok();
+      ploadimage->set_nok();
 
       comptr < IWICImagingFactory > pimagingfactory;
 
@@ -301,22 +301,15 @@ namespace imaging_wic
 
       }
 
-      if (!windows_image_from_bitmap_source(ploadimage, pbitmapsource, pimagingfactory))
+      if (!windows_load_image_from_bitmap_source(ploadimage, pbitmapsource, pimagingfactory))
       {
 
          return;
 
       }
 
-      ploadimage->m_ppixmap->set_exif_orientation(iOrientation);
-
-      ploadimage->m_ppixmap->on_load_image();
-
-      ploadimage->m_ppixmap->set_ok_flag();
-
-      ploadimage->m_ppixmap->m_estatus = ::success;
-
    }
+
 
    bool node_save_image(IStream * pstream, ::image::image * pimage, const ::image::encoding_options & encodingoptions);
 
@@ -646,7 +639,8 @@ namespace imaging_wic
       bool m_bLocked = false;
    };
 
-   bool windows_image_from_bitmap_source(::image::load_image * ploadimageFrame, IWICBitmapSource * pbitmapsource, IWICImagingFactory * pimagingfactory)
+
+   bool windows_pixmap_from_bitmap_source(::pixmap * ppixmap, IWICBitmapSource * pbitmapsource, IWICImagingFactory * pimagingfactory)
    {
 
       comptr < IWICBitmap > piBmp;
@@ -673,14 +667,97 @@ namespace imaging_wic
 
       }
 
-      if (ploadimageFrame->m_sizePreferred.area() > 0)
+      WICRect rc;
+
+      rc.X = 0;
+      rc.Y = 0;
+      rc.Width = uWidth;
+      rc.Height = uHeight;
+
+      comptr < IWICBitmapLock > piLock;
+
+      hr = piBmp->Lock(&rc, WICBitmapLockRead, &piLock);
+
+      if (hr != S_OK)
       {
 
-         if (ploadimageFrame->m_sizePreferred.cx != uWidth || ploadimageFrame->m_sizePreferred.cy != uHeight)
+         return false;
+
+      }
+
+      ::u32 cbStride;
+
+      piLock->GetStride(&cbStride);
+
+      if (hr != S_OK)
+      {
+
+         return false;
+
+      }
+
+      ::u32 uArea;
+
+      ::u8 * pData;
+
+      hr = piLock->GetDataPointer(&uArea, &pData);
+
+      if (hr != S_OK)
+      {
+
+         return false;
+
+      }
+
+      ppixmap->create_from_data({(::i32)uWidth, (::i32)uHeight}, (::image32_t *)pData, cbStride);
+
+      if (!ppixmap->is_ok())
+      {
+
+         return false;
+
+      }
+
+      return true;
+
+   }
+
+
+   bool windows_load_image_from_bitmap_source(::image::load_image * ploadimage, IWICBitmapSource * pbitmapsource, IWICImagingFactory * pimagingfactory)
+   {
+
+      comptr < IWICBitmap > piBmp;
+
+      HRESULT hr = pimagingfactory->CreateBitmapFromSource(pbitmapsource, WICBitmapCacheOnLoad, &piBmp);
+
+      if (hr != S_OK)
+      {
+
+         return false;
+
+      }
+
+      ::u32 uWidth;
+
+      ::u32 uHeight;
+
+      hr = piBmp->GetSize(&uWidth, &uHeight);
+
+      if (hr != S_OK)
+      {
+
+         return false;
+
+      }
+
+      if (ploadimage->m_sizePreferred.area() > 0)
+      {
+
+         if (ploadimage->m_sizePreferred.cx != uWidth || ploadimage->m_sizePreferred.cy != uHeight)
          {
 
             std::unique_ptr<Gdiplus::Bitmap> pResized = create_stretched_gdiplus_bitmap(piBmp, 
-               ploadimageFrame->m_sizePreferred.cx, ploadimageFrame->m_sizePreferred.cy);
+               ploadimage->m_sizePreferred.cx, ploadimage->m_sizePreferred.cy);
 
             if (pResized)
             {
@@ -695,13 +772,15 @@ namespace imaging_wic
                   INT scanSize = lock.stride();
                   size_t storageSize = lock.storage_size();
 
-                  ploadimageFrame->on_load_image((::image32_t *)pStorage, {(::i32)width, (::i32)height}, scanSize);
+                  ploadimage->on_load_image({(::i32)width, (::i32)height}, (::image32_t *)pStorage, scanSize);
 
-                  if (ploadimageFrame->m_ppixmap->is_ok())
+                  if (ploadimage->is_ok())
                   {
 
                      return true;
+
                   }
+
                }
 
             }
@@ -753,9 +832,9 @@ namespace imaging_wic
 
       }
 
-      ploadimageFrame->on_load_image((::image32_t *)pData, {(::i32)uWidth, (::i32)uHeight}, cbStride);
+      ploadimage->on_load_image({(::i32)uWidth, (::i32)uHeight}, (::image32_t *)pData, cbStride);
 
-      if (!ploadimageFrame->m_ppixmap->is_ok())
+      if (!ploadimage->is_ok())
       {
 
          return false;

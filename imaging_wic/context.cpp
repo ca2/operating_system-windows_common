@@ -52,7 +52,7 @@ namespace imaging_wic
 {
 
 
-   bool windows_image_from_bitmap_source(::image::load_image * pimageFrame, IWICBitmapSource * pbitmapsource, IWICImagingFactory * pimagingfactory);
+   bool windows_load_image_from_bitmap_source(::image::load_image * ploadimage, IWICBitmapSource * pbitmapsource, IWICImagingFactory * pimagingfactory);
 
 
    image_context::image_context() { initialize_gdiplus();

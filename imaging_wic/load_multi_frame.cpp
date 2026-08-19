@@ -1,7 +1,7 @@
 #include "platform.h"
 #include "context.h"
 #include "acme/exception/exception.h"
-#include "aura/graphics/image/frame_array.h"
+#include "acme/graphics/image/frame_array.h"
 #include "aura/graphics/image/load_image.h"
 #include "acme/operating_system/windows_common/com/comptr.h"
 
@@ -36,11 +36,12 @@ namespace imaging_wic
    comptr < IWICImagingFactory > get_imaging_factory();
 
    //bool draw2d_gif_load_frame(::image::image * pimageCanvas, image_frame_array * pframea, ::image::image_frame * pframe, ::i32 uFrameIndex, ::u8 * ba, ::i32 iScan, color_array & colora, ::i32 transparentIndex);
-   bool windows_image_from_bitmap_source(::image::load_image * pimage, IWICBitmapSource * pbitmapsource, IWICImagingFactory * pimagingfactory);
+   bool windows_load_image_from_bitmap_source(::image::load_image * ploadimage, IWICBitmapSource * pbitmapsource, IWICImagingFactory * pimagingfactory);
+   bool windows_pixmap_from_bitmap_source(::pixmap * ppixmap, IWICBitmapSource * pbitmapsource, IWICImagingFactory * pimagingfactory);
    ::color::color windows_image_metadata_get_background_color(IWICMetadataQueryReader * pqueryreader, IWICBitmapDecoder * pbitmapdecoder, IWICImagingFactory * pimagingfactory);
 
 
-   void image_context::_load_image(::image::image * pimageCompose, ::pointer<::image::image_frame_array>& pframea, memory & memory)
+   void image_context::_load_image(::pixmap * ppixmapCompose, ::pointer<::image::image_frame_array>& pframea, memory & memory)
    {
 
       HRESULT hr = E_FAIL;
@@ -173,7 +174,7 @@ namespace imaging_wic
 
          pframea->set_size(cFrame);
 
-         ::image::image_pointer pimageFrame;
+         ::pixmap_pointer ppixmapFrame;
 
          for (::collection::index iFrame = 0; iFrame < cFrame; iFrame++)
          {
@@ -184,7 +185,7 @@ namespace imaging_wic
 
             //auto estatus =
             
-            constructø(pframe->m_pimage);
+            construct_newø(pframe->m_ppixmap);
 
             //if (!estatus)
             //{
@@ -195,11 +196,11 @@ namespace imaging_wic
 
             pframe->m_iFrame = iFrame;
 
-            defer_constructø(pimageFrame);
+            defer_construct_newø(ppixmapFrame);
 
             //estatus = 
             
-            pimageFrame->create_as_descriptor(pframea->m_size, e_flag_none);
+            ppixmapFrame->create_as_descriptor(pframea->m_size, e_flag_none);
 
             //if (!estatus)
             //{
@@ -244,11 +245,11 @@ namespace imaging_wic
                if (SUCCEEDED(hr))
                {
 
-                  auto ploadimageFrame = create_newø<::image::load_image>();
+                  //auto ploadimageFrame = create_newø<::image::load_image>();
 
-                  ploadimageFrame->initialize_load_image(this, pimageFrame);
+                  //ploadimageFrame->initialize_load_image(this);
 
-                  hr = windows_image_from_bitmap_source(ploadimageFrame, pformatconverter, pimagingfactory) ? S_OK : E_FAIL;
+                  hr = windows_pixmap_from_bitmap_source(ppixmapFrame, pformatconverter, pimagingfactory) ? S_OK : E_FAIL;
 
                }
 
@@ -448,7 +449,7 @@ namespace imaging_wic
                if (SUCCEEDED(hr))
                {
 
-                  pimageFrame->set_ok_flag();
+                  ppixmapFrame->set_ok_flag();
 
                }
 
@@ -458,10 +459,10 @@ namespace imaging_wic
 
             //pframe->m_edisposal = edisposal;
 
-            if (pimageFrame.ok())
+            if (ppixmapFrame.ok())
             {
 
-               pframe->_001Process(pimageCompose, pimageFrame, pframea);
+               pframe->_001Process(ppixmapCompose, ppixmapFrame, pframea);
 
             }
 
@@ -607,7 +608,7 @@ namespace imaging_wic
 
 
 
-   HRESULT windows_image_get_frame(::image::image * pimageCompose,
+   HRESULT windows_image_get_frame(::pixmap * ppixmapCompose,
       WICColor * rgColors,
       ::i32 iUsed,
       ::image::image_frame_array * pframea,
@@ -658,15 +659,15 @@ namespace imaging_wic
 
       }
 
-      pframe->m_pimage->create_as_descriptor({ (::i32)width, (::i32)height });
+      pframe->m_ppixmap->create_as_descriptor({ (::i32)width, (::i32)height });
 
-      pframe->m_pimage->map();
+      ///pframe->m_ppimage->map();
 
       byte_array ba;
 
-      ba.set_size((memsize)pframe->m_pimage->area());
+      ba.set_size((memsize)pframe->m_ppixmap->area());
 
-      hr = pbitmap->CopyPixels(nullptr, pframe->m_pimage->width(), (::u32)ba.size(), (::u8 *)ba.data());
+      hr = pbitmap->CopyPixels(nullptr, pframe->m_ppixmap->width(), (::u32)ba.size(), (::u8 *)ba.data());
 
       if (FAILED(hr))
       {
@@ -967,13 +968,13 @@ namespace imaging_wic
          if (transparentIndex >= 0)
          {
 
-            pimageCompose->clear(color::transparent);
+            ppixmapCompose->clear(color::transparent);
 
          }
          else
          {
 
-            pimageCompose->clear(pframea->m_colorBack);
+            ppixmapCompose->clear(pframea->m_colorBack);
 
 
          }
