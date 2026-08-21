@@ -174,6 +174,18 @@ namespace imaging_wic
 
          pframea->set_size(cFrame);
 
+         ppixmapCompose->create_as_descriptor(pframea->m_size);
+
+         {
+
+            auto ppixmapComposeMapped = ppixmapCompose->map();
+
+            ppixmapComposeMapped->clear(pframea->m_colorBack);
+
+         }
+
+         pframea->m_ppixmap = ppixmapCompose;
+
          ::pixmap_pointer ppixmapFrame;
 
          for (::collection::index iFrame = 0; iFrame < cFrame; iFrame++)
@@ -196,11 +208,11 @@ namespace imaging_wic
 
             pframe->m_iFrame = iFrame;
 
-            defer_construct_newø(ppixmapFrame);
+            construct_newø(ppixmapFrame);
 
             //estatus = 
             
-            ppixmapFrame->create_as_descriptor(pframea->m_size, e_flag_none);
+            //ppixmapFrame->create_as_descriptor(pframea->m_size, e_flag_none);
 
             //if (!estatus)
             //{
@@ -465,6 +477,12 @@ namespace imaging_wic
                pframe->_001Process(ppixmapCompose, ppixmapFrame, pframea);
 
             }
+
+            pframe->m_ppixmap->create_as_descriptor(pframea->m_size);
+
+            pframe->m_ppixmap->copy_from(ppixmapCompose);
+
+            pframea->m_timeTotal += pframe->m_time;
 
          }
 

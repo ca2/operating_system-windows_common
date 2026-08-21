@@ -67,13 +67,47 @@ namespace imaging_wic
 
       //ploadimage->m_pimage = pimageParam;
 
+      if (ploadimage->m_iRedLower < 0)
+      {
+
+         ploadimage->m_iRedLower = 1;
+
+      }
+
       ploadimage->m_estatus = error_failed;
 
       ploadimage->set_nok();
 
       ploadimage->m_payload = payloadFile;
 
-      ploadimage->m_functionLoaded = loadoptions.functionLoaded;
+      if (loadoptions.functionLoaded)
+      {
+
+         if (ploadimage->m_loadoptions.functionLoaded)
+         {
+
+            auto function1 = ploadimage->m_loadoptions.functionLoaded;
+
+            auto function2 = loadoptions.functionLoaded;
+
+            ploadimage->m_loadoptions.functionLoaded = [function1, function2](::image::load_image * ploadimage)
+            {
+
+               function1(ploadimage);
+
+               function2(ploadimage);
+
+            };
+
+         }
+         else
+         {
+
+            ploadimage->m_loadoptions.functionLoaded = loadoptions.functionLoaded;
+
+         }
+
+      }
 
       ploadimage->m_bCreateHelperMaps = loadoptions.helper_maps;
 

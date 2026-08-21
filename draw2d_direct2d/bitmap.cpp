@@ -51,14 +51,31 @@ namespace draw2d_direct2d
       ::draw2d::graphics * pgraphics)
    {
 
-      _create_bitmap(
-         pgraphics,
-         pimage->m_sizeRaw,
-         pimage->image32(),
-         pimage->origin(),
-         pimage->size(),
-         pimage->m_iScan,
-         pacmeuserinteractionAffinity);
+      if (pimage->m_ppixmapOwned)
+      {
+
+         _create_bitmap(
+            pgraphics,
+            pimage->m_sizeRaw,
+            pimage->m_ppixmapOwned->image32(),
+            pimage->origin(),
+            pimage->size(),
+            pimage->m_ppixmapOwned->m_iScan,
+            pacmeuserinteractionAffinity);
+
+      }
+      else
+      {
+         _create_bitmap(
+     pgraphics,
+     pimage->m_sizeRaw,
+     nullptr,
+     pimage->origin(),
+     pimage->size(),
+     pimage->m_iScan,
+     pacmeuserinteractionAffinity);
+
+      }
 
    }
 
@@ -358,7 +375,7 @@ namespace draw2d_direct2d
    }
 
 
-   void bitmap::create_bitmap(::draw2d::graphics* pgraphics, const ::i32_size & size, ::memory & memory,  ::i32 * piScan)
+   void bitmap::create_bitmap(::draw2d::graphics* pgraphics, const ::i32_size & size, ::pixmap * ppixmap)
    {
 
       //::draw2d::lock draw2dlock;
@@ -408,7 +425,18 @@ namespace draw2d_direct2d
 
       props.bitmapOptions = D2D1_BITMAP_OPTIONS_TARGET;
 
-      HRESULT hr = ((ID2D1DeviceContext *)pgraphics->get_os_data())->CreateBitmap(usize, nullptr, 0, props, &m_pbitmap1);
+      auto pdevicecontext = (ID2D1DeviceContext *) pgraphics->get_os_data();
+
+      if (!pdevicecontext)
+      {
+
+         throw ::exception(error_wrong_state);
+
+      }
+
+      m_pdevicecontext = pdevicecontext;
+
+      HRESULT hr = pdevicecontext->CreateBitmap(usize, nullptr, 0, props, &m_pbitmap1);
 
       if (FAILED(hr) || m_pbitmap1 == nullptr)
       {
@@ -428,16 +456,18 @@ namespace draw2d_direct2d
 
       int iScan = size.cx * 4;
 
-      if (piScan && *piScan > iScan)
+      if (ppixmap && ppixmap->m_iScan > iScan)
       {
 
-         iScan = *piScan;
+         iScan = ppixmap->m_iScan;
 
       }
 
+      //defer_construct_newø(m_ppixmapOwned);
+
       HRESULT hrResultCopyBitmap = S_OK;
 
-      if (memory.data_if_at_least(size.cy * iScan))
+      if (ppixmap && ppixmap->m_memoryPixmap.data_if_at_least(size.cy * iScan))
       {
 
          D2D1_RECT_U rectangleDst = {};
@@ -446,7 +476,7 @@ namespace draw2d_direct2d
 
          rectangleDst.bottom = size.cy;
 
-         hrResultCopyBitmap = m_pbitmap->CopyFromMemory(&rectangleDst, memory.data(), iScan);
+         hrResultCopyBitmap = m_pbitmap->CopyFromMemory(&rectangleDst, ppixmap->m_memoryPixmap.data(), iScan);
 
       }
 
@@ -457,6 +487,192 @@ namespace draw2d_direct2d
       m_osdata[1] = m_pbitmap1;
 
       //return true;
+
+   }
+
+
+   void bitmap::read_pixels(
+      const ::i32_size & size,
+      const ::i32_point & point,
+      ::image32_t * pimage32,
+      ::i32 iScan)
+   {
+
+      if (size.cx <= 0 || size.cy <= 0)
+      {
+
+         return;
+
+      }
+
+      if (!pimage32)
+      {
+
+         throw ::exception(error_null_pointer);
+
+      }
+
+      if (iScan < size.cx * (::i32) sizeof(::image32_t))
+      {
+
+         throw ::exception(error_bad_argument);
+
+      }
+
+      ::draw2d::device_lock devicelock(this);
+
+      if (!m_pbitmap1 || !m_pdevicecontext)
+      {
+
+         throw ::exception(error_wrong_state);
+
+      }
+
+      auto sizeBitmap = m_pbitmap1->GetPixelSize();
+
+      if (point.x < 0 || point.y < 0
+         || point.x > (::i32) sizeBitmap.width - size.cx
+         || point.y > (::i32) sizeBitmap.height - size.cy)
+      {
+
+         throw ::exception(error_bad_argument);
+
+      }
+
+      auto pbitmap1Map = _map_bitmap1();
+
+      if (!pbitmap1Map)
+      {
+
+         throw ::exception(error_wrong_state);
+
+      }
+
+      auto hrCopy = pbitmap1Map->CopyFromBitmap(nullptr, m_pbitmap1, nullptr);
+
+      if (FAILED(hrCopy))
+      {
+
+         throw hresult_exception(hrCopy, "Failed to copy Direct2D bitmap for pixel readback");
+
+      }
+
+      D2D1_MAPPED_RECT mappedrect{};
+
+      auto hrMap = pbitmap1Map->Map(D2D1_MAP_OPTIONS_READ, &mappedrect);
+
+      if (FAILED(hrMap))
+      {
+
+         throw hresult_exception(hrMap, "Failed to map Direct2D bitmap for pixel readback");
+
+      }
+
+      try
+      {
+
+         if (!mappedrect.bits
+            || mappedrect.pitch < sizeBitmap.width * sizeof(::image32_t))
+         {
+
+            throw ::exception(error_failed);
+
+         }
+
+         auto pimage32Source = (const ::image32_t *)
+            (mappedrect.bits
+               + point.y * mappedrect.pitch
+               + point.x * sizeof(::image32_t));
+
+         auto pimage32Target = pimage32;
+
+         pimage32Target->copy(size, iScan, pimage32Source, (::i32) mappedrect.pitch);
+
+      }
+      catch (...)
+      {
+
+         pbitmap1Map->Unmap();
+
+         throw;
+
+      }
+
+      auto hrUnmap = pbitmap1Map->Unmap();
+
+      if (FAILED(hrUnmap))
+      {
+
+         throw hresult_exception(hrUnmap, "Failed to unmap Direct2D bitmap after pixel readback");
+
+      }
+
+   }
+
+
+   void bitmap::write_pixels(
+      const ::i32_size & size,
+      const ::i32_point & point,
+      const ::image32_t * pimage32,
+      ::i32 iScan)
+   {
+
+      if (size.cx <= 0 || size.cy <= 0)
+      {
+
+         return;
+
+      }
+
+      if (!pimage32)
+      {
+
+         throw ::exception(error_null_pointer);
+
+      }
+
+      if (iScan < size.cx * (::i32) sizeof(::image32_t))
+      {
+
+         throw ::exception(error_bad_argument);
+
+      }
+
+      ::draw2d::device_lock devicelock(this);
+
+      if (!m_pbitmap1)
+      {
+
+         throw ::exception(error_wrong_state);
+
+      }
+
+      auto sizeBitmap = m_pbitmap1->GetPixelSize();
+
+      if (point.x < 0 || point.y < 0
+         || point.x > (::i32) sizeBitmap.width - size.cx
+         || point.y > (::i32) sizeBitmap.height - size.cy)
+      {
+
+         throw ::exception(error_bad_argument);
+
+      }
+
+      D2D1_RECT_U rectangleDst{};
+
+      rectangleDst.left = (UINT32) point.x;
+      rectangleDst.top = (UINT32) point.y;
+      rectangleDst.right = (UINT32) (point.x + size.cx);
+      rectangleDst.bottom = (UINT32) (point.y + size.cy);
+
+      auto hrCopy = m_pbitmap1->CopyFromMemory(&rectangleDst, pimage32, (UINT32) iScan);
+
+      if (FAILED(hrCopy))
+      {
+
+         throw hresult_exception(hrCopy, "Failed to write pixels to Direct2D bitmap");
+
+      }
 
    }
 
@@ -520,7 +736,7 @@ namespace draw2d_direct2d
 
          D2D1_BITMAP_PROPERTIES1 stagingProperties = D2D1::BitmapProperties1(
             D2D1_BITMAP_OPTIONS_CANNOT_DRAW | D2D1_BITMAP_OPTIONS_CPU_READ,
-            { DXGI_FORMAT_B8G8R8A8_UNORM,D2D1_ALPHA_MODE_PREMULTIPLIED }
+            m_pbitmap1->GetPixelFormat()
          );
 
          auto hrCreateMapBitmap = m_pdevicecontext->CreateBitmap(
@@ -627,7 +843,7 @@ namespace draw2d_direct2d
       size.width = nWidth;
       size.height = nHeight;
 
-      D2D1_BITMAP_PROPERTIES1 props;
+      D2D1_BITMAP_PROPERTIES1 props{};
 
       props.pixelFormat.alphaMode = D2D1_ALPHA_MODE_PREMULTIPLIED;
       props.pixelFormat.format = DXGI_FORMAT_B8G8R8A8_UNORM_SRGB;
@@ -636,7 +852,7 @@ namespace draw2d_direct2d
 
       pgraphics2d->m_pd2d1rendertarget->GetDpi(&props.dpiX, &props.dpiY); // Thanks again and a third time https://repo.anl-external.org/repos/BlueTBB/tbb41_20130314oss/examples/common/gui/d2dvideo.cpp      props.bitmapOptions = D2D1_BITMAP_OPTIONS_CPU_READ | D2D1_BITMAP_OPTIONS_CANNOT_DRAW;
 
-      props.bitmapOptions = D2D1_BITMAP_OPTIONS_TARGET | D2D1_BITMAP_OPTIONS_CPU_READ;
+      props.bitmapOptions = D2D1_BITMAP_OPTIONS_TARGET;
 
       //if(ppdata != nullptr)
       {
@@ -645,7 +861,32 @@ namespace draw2d_direct2d
       //else
       //      ID2D1Bitmap1 * pbitmap1;
       {
-         ((ID2D1DeviceContext *)pgraphics->get_os_data())->CreateBitmap(size, nullptr, size.width * sizeof(::color32_t), props, &m_pbitmap1);
+
+         auto pdevicecontext = (ID2D1DeviceContext *) pgraphics->get_os_data();
+
+         if (!pdevicecontext)
+         {
+
+            throw ::exception(error_wrong_state);
+
+         }
+
+         m_pdevicecontext = pdevicecontext;
+
+         auto hrCreateBitmap = pdevicecontext->CreateBitmap(
+            size,
+            nullptr,
+            0,
+            props,
+            &m_pbitmap1);
+
+         if (FAILED(hrCreateBitmap) || !m_pbitmap1)
+         {
+
+            throw hresult_exception(hrCreateBitmap, "Failed to create compatible Direct2D bitmap");
+
+         }
+
       }
       m_pbitmap = m_pbitmap1;
 
@@ -677,7 +918,7 @@ namespace draw2d_direct2d
       size.width = nWidth;
       size.height = nHeight;
 
-      D2D1_BITMAP_PROPERTIES1 props;
+      D2D1_BITMAP_PROPERTIES1 props{};
 
       props.pixelFormat.alphaMode = D2D1_ALPHA_MODE_PREMULTIPLIED;
       props.pixelFormat.format = DXGI_FORMAT_B8G8R8A8_UNORM_SRGB;
@@ -686,7 +927,7 @@ namespace draw2d_direct2d
 
       pgraphics2d->m_pd2d1rendertarget->GetDpi(&props.dpiX, &props.dpiY); // One more time, Thank you very much https://repo.anl-external.org/repos/BlueTBB/tbb41_20130314oss/examples/common/gui/d2dvideo.cpp      props.bitmapOptions = D2D1_BITMAP_OPTIONS_CPU_READ | D2D1_BITMAP_OPTIONS_CANNOT_DRAW;
 
-      props.bitmapOptions = D2D1_BITMAP_OPTIONS_TARGET | D2D1_BITMAP_OPTIONS_CPU_READ;
+      props.bitmapOptions = D2D1_BITMAP_OPTIONS_TARGET;
 
       //if(ppdata != nullptr)
       {
@@ -694,7 +935,32 @@ namespace draw2d_direct2d
       }
       //else
       {
-         ((ID2D1DeviceContext *)pgraphics->get_os_data())->CreateBitmap(size, nullptr, size.width * sizeof(::color32_t), &props, &m_pbitmap1);
+
+         auto pdevicecontext = (ID2D1DeviceContext *) pgraphics->get_os_data();
+
+         if (!pdevicecontext)
+         {
+
+            throw ::exception(error_wrong_state);
+
+         }
+
+         m_pdevicecontext = pdevicecontext;
+
+         auto hrCreateBitmap = pdevicecontext->CreateBitmap(
+            size,
+            nullptr,
+            0,
+            &props,
+            &m_pbitmap1);
+
+         if (FAILED(hrCreateBitmap) || !m_pbitmap1)
+         {
+
+            throw hresult_exception(hrCreateBitmap, "Failed to create discardable Direct2D bitmap");
+
+         }
+
       }
       m_pbitmap = m_pbitmap1;
 
@@ -779,9 +1045,15 @@ namespace draw2d_direct2d
    void bitmap::destroy_os_data()
    {
 
+      m_pbitmap1Map = nullptr;
+
       m_pbitmap = nullptr;
 
       m_pbitmap1 = nullptr;
+
+      m_pbitmaprendertarget = nullptr;
+
+      m_pdevicecontext = nullptr;
 
       object::destroy_os_data();
 

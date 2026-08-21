@@ -22,6 +22,8 @@ namespace draw2d_direct2d
    {
 
       defer_create_synchronization();
+      m_pimage32Dib = nullptr;
+       
       m_hbitmapOld = nullptr;
       m_hdcMemory = nullptr;
       m_hbitmap = nullptr;
@@ -57,9 +59,9 @@ namespace draw2d_direct2d
 
       m_sizeRaw = m_size;
 
-      m_pimage32 = nullptr;
+      //m_pimage32 = nullptr;
 
-      m_pimage32Raw = nullptr;
+      //m_pimage32Raw = nullptr;
 
       m_iScan = 0;
 
@@ -254,19 +256,19 @@ namespace draw2d_direct2d
       info.bmiHeader.biBitCount = 32; // Memory order is BGRA.
       info.bmiHeader.biCompression = BI_RGB;
 
-      m_pimage32Raw = nullptr;
+      m_pimage32Dib = nullptr;
 
       m_hdcMemory = CreateCompatibleDC(nullptr);
 
-      m_hbitmap = CreateDIBSection(m_hdcMemory, &info, DIB_RGB_COLORS, (void **)&m_pimage32Raw, nullptr, 0);
+      m_hbitmap = CreateDIBSection(m_hdcMemory, &info, DIB_RGB_COLORS, (void **)&m_pimage32Dib, nullptr, 0);
 
-      if (!m_hdcMemory || !m_hbitmap || !m_pimage32Raw)
+      if (!m_hdcMemory || !m_hbitmap || !m_pimage32Dib)
       {
          // return false;
-         throw ::interface_only();
+         throw ::exception(error_failed);
       }
 
-      m_pimage32 = m_pimage32Raw;
+      //m_pimage32 = m_pimage32Raw;
 
       m_hbitmapOld = (HBITMAP)SelectObject(m_hdcMemory, m_hbitmap);
 
@@ -332,6 +334,22 @@ namespace draw2d_direct2d
       m_sizeRaw = sizeRaw;
 
       //m_pgraphicsOwned->create_for_image(this);
+
+      if (::is_null(pdraw2dgraphics))
+      {
+
+         if (defer_constructø(m_pgraphicsOwned))
+         {
+
+            ::cast < ::draw2d_direct2d::graphics > pgraphics = m_pgraphicsOwned;
+
+            pgraphics->_create_memory_graphics(sizeRaw, m_pacmeuserinteractionAffinity);
+
+         }
+
+         pdraw2dgraphics = m_pgraphicsOwned;
+
+      }
 
       pdraw2dgraphics->create_for_image(this);
 
@@ -420,53 +438,53 @@ namespace draw2d_direct2d
    }
 
 
-   void image::copy_from(::image::image * pimage, ::enum_flag eflagCreate)
-   {
+   //void image::copy_from(::image::image * pimage, ::enum_flag eflagCreate)
+   //{
 
-      ::i32_size s(pimage->width(), pimage->height());
+   //   ::i32_size s(pimage->width(), pimage->height());
 
-      bool bCreated = false;
+   //   bool bCreated = false;
 
-      if (size() != s)
-      {
+   //   if (size() != s)
+   //   {
 
-         auto ppixmapImage = pimage->map();
-         
-         if (::is_set(ppixmapImage->data()) && ppixmapImage->scan_size() > 0)
-         {
+   //      auto ppixmapImage = pimage->map();
+   //      
+   //      if (::is_set(ppixmapImage->data()) && ppixmapImage->scan_size() > 0)
+   //      {
 
-            //initialize(s, pimage->m_pimage32Raw, pimage->m_iScan, eflagCreate);
+   //         //initialize(s, pimage->m_pimage32Raw, pimage->m_iScan, eflagCreate);
 
-            create_from_data(ppixmapImage.size(), mapImage->data(), ppixmapImage->scan_size(), eflagCreate);
+   //         create_from_data(ppixmapImage.size(), mapImage->data(), ppixmapImage->scan_size(), eflagCreate);
 
-            bCreated = true;
-            //if (initialize(s, pimage->m_pimage32Raw, pimage->m_iScan, eflagCreate))
-            //{
+   //         bCreated = true;
+   //         //if (initialize(s, pimage->m_pimage32Raw, pimage->m_iScan, eflagCreate))
+   //         //{
 
-            //   return true;
+   //         //   return true;
 
-            //}
+   //         //}
 
-         }
+   //      }
 
-      }
+   //   }
 
-      if (!bCreated)
-      {
-         //auto bOk = 
-         ::image::image::copy_from(pimage, 0, eflagCreate);
-      }
+   //   if (!bCreated)
+   //   {
+   //      //auto bOk = 
+   //      ::image::image::copy_from(pimage, 0, eflagCreate);
+   //   }
 
-      //if (!bOk)
-      //{
+   //   //if (!bOk)
+   //   //{
 
-      //   return bOk;
+   //   //   return bOk;
 
-      //}
+   //   //}
 
-      //return true;
+   //   //return true;
 
-   }
+   //}
 
 
    void image::destroy()
@@ -680,7 +698,7 @@ namespace draw2d_direct2d
 
 
 
-   void image::SetIconMask(::image::icon * picon, ::i32 cx, ::i32 cy)
+   void image::set_image_icon(::image::icon * picon, ::i32 cx, ::i32 cy)
    {
 
       if (cx <= 0 || cy <= 0)
@@ -705,11 +723,11 @@ namespace draw2d_direct2d
       // White blend image
       auto pimage1 = ::particle::image()->create_image({cx,  cy});
 
-      pimage1->clear(rgba(0, 255, 255, 255));
-
       {
 
          auto pgraphicsImage1 = pimage1->acquire_graphics();
+
+         pgraphicsImage1->clear(::color::white);
 
          ::image::image_source imagesource(picon);
 
@@ -724,11 +742,11 @@ namespace draw2d_direct2d
       // Black blend image
       auto pimage2 = ::particle::image()->create_image({cx,  cy});
 
-      pimage2->clear(::color::transparent);
-
       {
 
          auto pgraphicsImage2 = pimage2->acquire_graphics();
+
+         pgraphicsImage2->clear(::color::transparent);
 
          ::image::image_source imagesource(picon);
 
@@ -769,38 +787,47 @@ namespace draw2d_direct2d
 
       }
 
-      ::u8 * r1 = (::u8*) pimage1->image32();
-      ::u8 * r2 = (::u8*) pimage2->image32();
-      ::u8 * srcM = (::u8*) pimageM->image32();
-      ::u8 * dest = (::u8*) image32();
-      ::i32 iSize = cx * cy;
-
-      ::u8 b;
-      ::u8 bMax;
-      while (iSize-- > 0)
       {
-         if (srcM[0] == 255)
+
+         auto ppixmapImage1 = pimage1->map();
+         auto ppixmapImage2 = pimage2->map();
+         auto ppixmapImageM = pimageM->map();
+         auto ppixmapImageThis = this->map();
+
+         ::u8 * r1 = (::u8 *)ppixmapImage1->image32();
+         ::u8 * r2 = (::u8 *)ppixmapImage2->image32();
+         ::u8 * srcM = (::u8 *)ppixmapImageM->image32();
+         ::u8 * dest = (::u8 *)ppixmapImageThis->image32();
+         ::i32 iSize = cx * cy;
+
+         ::u8 b;
+         ::u8 bMax;
+         while (iSize-- > 0)
          {
-            bMax = 0;
+            if (srcM[0] == 255)
+            {
+               bMax = 0;
+            }
+            else
+            {
+               bMax = 0;
+               b = (::u8)(r1[0] - r2[0]);
+               bMax = maximum(b, bMax);
+               b = (::u8)(r1[1] - r2[1]);
+               bMax = maximum(b, bMax);
+               b = (::u8)(r1[2] - r2[2]);
+               bMax = maximum(b, bMax);
+               bMax = 255 - bMax;
+            }
+            dest[0] = bMax;
+            dest[1] = bMax;
+            dest[2] = bMax;
+            dest += 4;
+            srcM += 4;
+            r1 += 4;
+            r2 += 4;
          }
-         else
-         {
-            bMax = 0;
-            b = (::u8)(r1[0] - r2[0]);
-            bMax = maximum(b, bMax);
-            b = (::u8)(r1[1] - r2[1]);
-            bMax = maximum(b, bMax);
-            b = (::u8)(r1[2] - r2[2]);
-            bMax = maximum(b, bMax);
-            bMax = 255 - bMax;
-         }
-         dest[0] = bMax;
-         dest[1] = bMax;
-         dest[2] = bMax;
-         dest += 4;
-         srcM += 4;
-         r1 += 4;
-         r2 += 4;
+
       }
 
       //return true;
@@ -1447,22 +1474,24 @@ namespace draw2d_direct2d
    //}
 
 
-   void image::_map(const ::i32_rectangle & rectangle, bool bApplyAlphaTransform)
+   ::image_pixmap_lease image::_map(const ::i32_rectangle & rectangle)
    {
 
-      if (m_bMapped)
-      {
+      _tidy_map(rectangle);
 
-         throw ::exception(error_invalid_empty_argument);
+      //if (m_bMapped)
+      //{
 
-      }
+      //   throw ::exception(error_invalid_empty_argument);
+
+      //}
 
       if (m_pbitmap.is_null())
       {
 
-         ::image::image::_map(rectangle, bApplyAlphaTransform);
+         return ::transfer(::image::image::_map(rectangle));
 
-         return;
+         //return;
 
       }
 
@@ -1598,73 +1627,84 @@ namespace draw2d_direct2d
 
       auto area = (iScan / sizeof(*pimage32)) * m_sizeRaw.cy;
 
-      m_memoryPixmap.set_size(iScan * m_sizeRaw.cy);
+      defer_construct_newø(m_ppixmapOwned);
 
-      initialize_pixmap(m_sizeRaw, (::image32_t *) m_memoryPixmap.data(), iScan);
+      m_ppixmapOwned->create_as_descriptor(m_sizeRaw, DEFAULT_CREATE_IMAGE_FLAG, iScan);
 
-      if (rectangle.is_empty())
+      //initialize_pixmap(m_sizeRaw, (::image32_t *) m_memoryPixmap.data(), iScan);
+
       {
+         auto ppixmapOwned = m_ppixmapOwned->map(rectangle);
 
-         pixmap_map();
+         //if (rectangle.is_empty())
+         //{
+
+         //   ppixmapOwned->pixmap_map();
+
+         //}
+         //else
+         //{
+
+         //   pixmap_map(rectangle);
+
+         //}
+
+         ::i32_size sizeCopy;
+
+         if (::is_null(pimage32))
+         {
+
+            ppixmapOwned->fill_byte(0);
+
+         }
+         else if (rectangle.is_empty())
+         {
+
+            sizeCopy = m_size;
+
+            ppixmapOwned->copy(sizeCopy, pimage32->offset(m_point.x, m_point.y, mappedrect.pitch), mappedrect.pitch);
+
+         }
+         else
+         {
+
+            sizeCopy = rectangle.size();
+
+            ppixmapOwned->copy(sizeCopy, pimage32->offset(rectangle.left, rectangle.top, mappedrect.pitch), mappedrect.pitch);
+
+            //this->pixmap_t::copy(m_size, pimage32, mappedrect.pitch);
+
+         }
+
+         pbitmap1Map->Unmap();
 
       }
-      else
-      {
 
-         pixmap_map(rectangle);
+      //m_bMapped = true;
 
-      }
-
-      ::i32_size sizeCopy;
-
-      if (::is_null(pimage32))
-      {
-
-         m_memoryPixmap.zero();
-
-      }
-      else if (rectangle.is_empty())
-      {
-
-         sizeCopy = m_size;
-
-         this->pixmap_t::copy(sizeCopy, pimage32->offset(m_point.x, m_point.y, mappedrect.pitch), mappedrect.pitch);
-
-      }
-      else 
-      {
-
-         sizeCopy = rectangle.size();
-       
-         this->pixmap_t::copy(sizeCopy, pimage32->offset(rectangle.left, rectangle.top, mappedrect.pitch), mappedrect.pitch);
-
-         //this->pixmap_t::copy(m_size, pimage32, mappedrect.pitch);
-
-      }
-
-      pbitmap1Map->Unmap();
-
-      m_bMapped = true;
+      return { this, m_ppixmapOwned };
 
    }
 
 
-   void image::_unmap(bool bDoUnmap)
+   void image::_unmap(::image_pixmap_lease * pimagepixmaplease)
    {
+
+      _tidy_unmap(pimagepixmaplease);
 
       //::draw2d::lock draw2dlock;
 
-      if (!m_bMapped)
-      {
+      //if (!m_bMapped)
+      //{
 
-         throw ::exception(error_wrong_state);
+      //   throw ::exception(error_wrong_state);
 
-      }
+      //}
 
       if (m_pbitmap.is_null())
       {
 
-         ::image::image::_unmap(bDoUnmap);
+         ::image::image::_unmap(pimagepixmaplease);
 
          return;
 
@@ -1693,13 +1733,13 @@ namespace draw2d_direct2d
          if (sizeCopy.height() == 643)
          {
 
-            blend_color({ 200, m_size.cy + m_point.y - 50, 250, m_size.cy + m_point.y}, argb(200, 100, 140, 220));
+            m_ppixmapOwned->blend_color({ 200, m_size.cy + m_point.y - 50, 250, m_size.cy + m_point.y}, argb(200, 100, 140, 220));
 
          }
 
 
 
-         auto hr = pbitmap->m_pbitmap1->CopyFromMemory(&srcRect, m_pimage32, m_iScan);
+         auto hr = pbitmap->m_pbitmap1->CopyFromMemory(&srcRect, m_ppixmapOwned->m_pimage32, m_iScan);
          //pbitmap->m_pbitmap1Map->Unmap();
 
          // Copy render target content to CPU-readable staging bitmap
@@ -1710,9 +1750,9 @@ namespace draw2d_direct2d
 
          m_pbitmap1Map = nullptr;
 
-         m_pimage32Raw = nullptr;
+         //m_pimage32Raw = nullptr;
 
-         m_pimage32 = nullptr;
+         //m_pimage32 = nullptr;
 
          //if (FAILED(hr))
          //{
@@ -1737,9 +1777,11 @@ namespace draw2d_direct2d
 
       }
 
-      m_bMapped = false;
+      ::image::image::_unmap(pimagepixmaplease);
 
-      m_bTrans = false;
+      //m_bMapped = false;
+
+      //m_bTrans = false;
 
       //return true;
 
@@ -1965,220 +2007,220 @@ namespace draw2d_direct2d
    //}
 
 
-   void image::blend(const ::i32_point & pointDst, ::image::image * pimageSrc, const ::i32_point & pointSrc, const ::i32_size & sizeParam, ::u8 bA)
-   {
+   //void image::blend(const ::i32_point & pointDst, ::image::image * pimageSrc, const ::i32_point & pointSrc, const ::i32_size & sizeParam, ::u8 bA)
+   //{
 
-      //return 
-      
-      //::image::blend(pointDst, pimageSrc, pointSrc, sizeParam, bA);
+   //   //return 
+   //   
+   //   //::image::blend(pointDst, pimageSrc, pointSrc, sizeParam, bA);
 
-      //::i32_size size(sizeParam);
+   //   //::i32_size size(sizeParam);
 
-      //::draw2d::lock draw2dlock;
+   //   //::draw2d::lock draw2dlock;
 
-      //try
-      //{
+   //   //try
+   //   //{
 
-      //   ::draw2d::graphics * pgraphicsMap = pgraphicsImageSrc;
+   //   //   ::draw2d::graphics * pgraphicsMap = pgraphicsImageSrc;
 
-      //   if (pgraphicsMap == nullptr)
-      //   {
+   //   //   if (pgraphicsMap == nullptr)
+   //   //   {
 
-      //      return false;
+   //   //      return false;
 
-      //   }
+   //   //   }
 
-      //   if (pgraphicsMap->get_current_bitmap() == nullptr)
-      //   {
+   //   //   if (pgraphicsMap->get_current_bitmap() == nullptr)
+   //   //   {
 
-      //      return false;
+   //   //      return false;
 
-      //   }
+   //   //   }
 
-      //   if (pgraphicsMap->get_current_bitmap()->get_os_data() == nullptr)
-      //   {
+   //   //   if (pgraphicsMap->get_current_bitmap()->get_os_data() == nullptr)
+   //   //   {
 
-      //      return false;
+   //   //      return false;
 
-      //   }
+   //   //   }
 
-      //   if (get_graphics() != nullptr &&
-      //         get_graphics()->get_current_bitmap() != nullptr &&
-      //         get_graphics()->get_current_bitmap()->get_os_data() != nullptr)
-      //   {
+   //   //   if (get_graphics() != nullptr &&
+   //   //         get_graphics()->get_current_bitmap() != nullptr &&
+   //   //         get_graphics()->get_current_bitmap()->get_os_data() != nullptr)
+   //   //   {
 
-      //      D2D1_SIZE_U sz = ((ID2D1Bitmap *)get_graphics()->get_current_bitmap()->get_os_data())->GetPixelSize();
+   //   //      D2D1_SIZE_U sz = ((ID2D1Bitmap *)get_graphics()->get_current_bitmap()->get_os_data())->GetPixelSize();
 
-      //      if (natural(size.cx + pointDst.x) > sz.width)
-      //         size.cx = sz.width - pointDst.x;
+   //   //      if (natural(size.cx + pointDst.x) > sz.width)
+   //   //         size.cx = sz.width - pointDst.x;
 
-      //      if (natural(size.cy + pointDst.y) > sz.height)
-      //         size.cy = sz.height - pointDst.y;
+   //   //      if (natural(size.cy + pointDst.y) > sz.height)
+   //   //         size.cy = sz.height - pointDst.y;
 
-      //   }
+   //   //   }
 
-      //   bool bSmallerSourceRegion = false;
+   //   //   bool bSmallerSourceRegion = false;
 
-      //   ::i32_size sizeSource;
+   //   //   ::i32_size sizeSource;
 
-      //   {
+   //   //   {
 
-      //      D2D1_SIZE_U sz = ((ID2D1Bitmap *)pgraphicsMap->get_current_bitmap()->get_os_data())->GetPixelSize();
+   //   //      D2D1_SIZE_U sz = ((ID2D1Bitmap *)pgraphicsMap->get_current_bitmap()->get_os_data())->GetPixelSize();
 
-      //      sizeSource.cx = sz.width;
+   //   //      sizeSource.cx = sz.width;
 
-      //      sizeSource.cy = sz.height;
+   //   //      sizeSource.cy = sz.height;
 
-      //      if (natural(size.cx + pointSrc.x) > sz.width)
-      //      {
+   //   //      if (natural(size.cx + pointSrc.x) > sz.width)
+   //   //      {
 
-      //         size.cx = sz.width - pointSrc.x;
+   //   //         size.cx = sz.width - pointSrc.x;
 
-      //         bSmallerSourceRegion = true;
+   //   //         bSmallerSourceRegion = true;
 
-      //      }
+   //   //      }
 
-      //      if (natural(size.cy + pointSrc.y) < sz.height)
-      //      {
+   //   //      if (natural(size.cy + pointSrc.y) < sz.height)
+   //   //      {
 
-      //         size.cy = sz.height - pointSrc.y;
+   //   //         size.cy = sz.height - pointSrc.y;
 
-      //         bSmallerSourceRegion = true;
+   //   //         bSmallerSourceRegion = true;
 
-      //      }
+   //   //      }
 
-      //   }
+   //   //   }
 
-      //   if (pointDst.x > 0 || pointDst.y > 0)
-      //   {
+   //   //   if (pointDst.x > 0 || pointDst.y > 0)
+   //   //   {
 
-      //      bSmallerSourceRegion = true;
+   //   //      bSmallerSourceRegion = true;
 
-      //   }
+   //   //   }
 
-      //   D2D1_RECT_F rectangleTarget = D2D1::RectF((::f32)pointDst.x, (::f32)pointDst.y, (::f32)(pointDst.x + size.cx), (::f32)(pointDst.y + size.cy));
+   //   //   D2D1_RECT_F rectangleTarget = D2D1::RectF((::f32)pointDst.x, (::f32)pointDst.y, (::f32)(pointDst.x + size.cx), (::f32)(pointDst.y + size.cy));
 
-      //   D2D1_RECT_F rectangleSource = D2D1::RectF((::f32)pointSrc.x, (::f32)pointSrc.y, (::f32)(pointSrc.x + size.cx), (::f32)(pointSrc.y + size.cy));
+   //   //   D2D1_RECT_F rectangleSource = D2D1::RectF((::f32)pointSrc.x, (::f32)pointSrc.y, (::f32)(pointSrc.x + size.cx), (::f32)(pointSrc.y + size.cy));
 
-      //   HRESULT hr = ((ID2D1DeviceContext *)pgraphicsMap->get_os_data())->EndDraw();
+   //   //   HRESULT hr = ((ID2D1DeviceContext *)pgraphicsMap->get_os_data())->EndDraw();
 
-      //   ::draw2d_direct2d::graphics * pgraphics = dynamic_cast <::draw2d_direct2d::graphics *> (get_graphics());
+   //   //   ::draw2d_direct2d::graphics * pgraphics = dynamic_cast <::draw2d_direct2d::graphics *> (get_graphics());
 
-      //   pgraphics->set_alpha_mode(::draw2d::e_alpha_mode_set);
+   //   //   pgraphics->set_alpha_mode(::draw2d::e_alpha_mode_set);
 
-      //   {
+   //   //   {
 
-      //      D2D1_POINT_2F p;
-      //      p.x = rectangleTarget.left;
-      //      p.y = rectangleTarget.top;
+   //   //      D2D1_POINT_2F p;
+   //   //      p.x = rectangleTarget.left;
+   //   //      p.y = rectangleTarget.top;
 
-      //      pgraphics->m_pdevicecontext->DrawImage((ID2D1Bitmap *)pgraphicsMap->get_current_bitmap()->get_os_data(), p, rectangleSource, pgraphics->m_interpolationmode, D2D1_COMPOSITE_MODE_DESTINATION_IN);
+   //   //      pgraphics->m_pdevicecontext->DrawImage((ID2D1Bitmap *)pgraphicsMap->get_current_bitmap()->get_os_data(), p, rectangleSource, pgraphics->m_interpolationmode, D2D1_COMPOSITE_MODE_DESTINATION_IN);
 
-      //   }
+   //   //   }
 
-      //   if(bSmallerSourceRegion)
-      //   {
+   //   //   if(bSmallerSourceRegion)
+   //   //   {
 
-      //      ::draw2d::savedc k1(pgraphics);
+   //   //      ::draw2d::savedc k1(pgraphics);
 
-      //      ::i32_rectangle rDst;
-      //      rDst.left = pointDst.x;
-      //      rDst.top = pointDst.y;
-      //      rDst.right = pointDst.x + size.cx;
-      //      rDst.bottom = pointDst.y + size.cy;
+   //   //      ::i32_rectangle rDst;
+   //   //      rDst.left = pointDst.x;
+   //   //      rDst.top = pointDst.y;
+   //   //      rDst.right = pointDst.x + size.cx;
+   //   //      rDst.bottom = pointDst.y + size.cy;
 
-      //      pgraphics->ExcludeClipRect(rDst);
+   //   //      pgraphics->ExcludeClipRect(rDst);
 
-      //      D2D1_RECT_F r1;
-      //      r1.left = (FLOAT) (pointDst.x);
-      //      r1.top = (FLOAT)(pointDst.y);
-      //      r1.right = (FLOAT)(pointDst.x + sizeParam.cx);
-      //      r1.bottom = (FLOAT)(pointDst.y + sizeParam.cy);
+   //   //      D2D1_RECT_F r1;
+   //   //      r1.left = (FLOAT) (pointDst.x);
+   //   //      r1.top = (FLOAT)(pointDst.y);
+   //   //      r1.right = (FLOAT)(pointDst.x + sizeParam.cx);
+   //   //      r1.bottom = (FLOAT)(pointDst.y + sizeParam.cy);
 
-      //      D2D1_RECT_F r2;
-      //      r2.left = (FLOAT)(pointSrc.x);
-      //      r2.top = (FLOAT)(pointSrc.y);
-      //      r2.right = (FLOAT)(pointSrc.x + sizeParam.cx);
-      //      r2.bottom = (FLOAT)(pointSrc.y + sizeParam.cy);
+   //   //      D2D1_RECT_F r2;
+   //   //      r2.left = (FLOAT)(pointSrc.x);
+   //   //      r2.top = (FLOAT)(pointSrc.y);
+   //   //      r2.right = (FLOAT)(pointSrc.x + sizeParam.cx);
+   //   //      r2.bottom = (FLOAT)(pointSrc.y + sizeParam.cy);
 
-      //      pgraphics->m_pdevicecontext->DrawBitmap((ID2D1Bitmap *)pgraphicsMap->get_current_bitmap()->get_os_data(), r1,bA / 255.0f, pgraphics->m_interpolationmode, r2);
+   //   //      pgraphics->m_pdevicecontext->DrawBitmap((ID2D1Bitmap *)pgraphicsMap->get_current_bitmap()->get_os_data(), r1,bA / 255.0f, pgraphics->m_interpolationmode, r2);
 
-      //   }
-      //   else
-      //   {
+   //   //   }
+   //   //   else
+   //   //   {
 
-      //      output_debug_string("opt.out.exc.draw");
+   //   //      output_debug_string("opt.out.exc.draw");
 
-      //   }
+   //   //   }
 
-      //   //hr = m_prendertarget->Flush();
-      //   pgraphics->flush();
+   //   //   //hr = m_prendertarget->Flush();
+   //   //   pgraphics->flush();
 
-      //   if (SUCCEEDED(hr))
-      //   {
+   //   //   if (SUCCEEDED(hr))
+   //   //   {
 
-      //      ((ID2D1DeviceContext *)pgraphicsMap->get_os_data())->BeginDraw();
+   //   //      ((ID2D1DeviceContext *)pgraphicsMap->get_os_data())->BeginDraw();
 
-      //      //dynamic_cast <::draw2d_direct2d::graphics *> (pgraphicsMap)->RestoreClip();
+   //   //      //dynamic_cast <::draw2d_direct2d::graphics *> (pgraphicsMap)->RestoreClip();
 
-      //   }
+   //   //   }
 
-      //   return true;
+   //   //   return true;
 
-      //}
-      //catch (...)
-      //{
-      //   return false;
-      //}
+   //   //}
+   //   //catch (...)
+   //   //{
+   //   //   return false;
+   //   //}
 
-   }
+   //}
 
 
-   void image::tint(::image::image * pimage, ::color::color color)
-   {
+   //void image::tint(::image::image * pimage, ::color::color color)
+   //{
 
-      //return 
-      
-      ::image::image::tint(pimage, color);
+   //   //return 
+   //   
+   //   ::image::image::tint(pimage, color);
 
-      //if (pimage.nok()) // || pimage->get_bitmap() || !pimage->get_bitmap()->m_osdata[0])
-      //{
+   //   //if (pimage.nok()) // || pimage->get_bitmap() || !pimage->get_bitmap()->m_osdata[0])
+   //   //{
 
-      //   return false;
+   //   //   return false;
 
-      //}
+   //   //}
 
-      //if (!create(pimage->get_size()))
-      //{
+   //   //if (!create(pimage->get_size()))
+   //   //{
 
-      //   return false;
+   //   //   return false;
 
-      //}
+   //   //}
 
-      //::i32_rectangle rectangleDib1(::i32_point(), pimage->get_size());
+   //   //::i32_rectangle rectangleDib1(::i32_point(), pimage->get_size());
 
-      //fill(a_rgb(255, rgb));
+   //   //fill(a_rgb(255, rgb));
 
-      //auto pgraphicsDib1 = __graphics(get_graphics());
+   //   //auto pgraphicsDib1 = __graphics(get_graphics());
 
-      //auto pgraphicsDib2 = __graphics(pgraphicsImage);
+   //   //auto pgraphicsDib2 = __graphics(pgraphicsImage);
 
-      //pgraphicsDib2->m_pdevicecontext->EndDraw();
+   //   //pgraphicsDib2->m_pdevicecontext->EndDraw();
 
-      //pgraphicsDib1->m_pdevicecontext->DrawImage(
-      //pimage->get_bitmap()->get_os_data< ID2D1Bitmap>(),
-      //D2D1::Point2F(0.f, 0.f),
-      //d2d1::f32_rectangle(rectangleDib1),
-      //D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR,
-      //D2D1_COMPOSITE_MODE_SOU_IN);
+   //   //pgraphicsDib1->m_pdevicecontext->DrawImage(
+   //   //pimage->get_bitmap()->get_os_data< ID2D1Bitmap>(),
+   //   //D2D1::Point2F(0.f, 0.f),
+   //   //d2d1::f32_rectangle(rectangleDib1),
+   //   //D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR,
+   //   //D2D1_COMPOSITE_MODE_SOU_IN);
 
-      //set_alpha_mode(::draw2d::e_alpha_mode_blend);
+   //   //set_alpha_mode(::draw2d::e_alpha_mode_blend);
 
-      //pgraphicsDib2->m_pdevicecontext->BeginDraw();
+   //   //pgraphicsDib2->m_pdevicecontext->BeginDraw();
 
-      //return true;
+   //   //return true;
 
-   }
+   //}
 
 
 } // namespace draw2d_direct2d

@@ -34,6 +34,8 @@ list(APPEND library_source
         #printer.cpp
         region.cpp
         region.h
+   window_attachment.cpp
+   window_attachment.h
 )
 
 

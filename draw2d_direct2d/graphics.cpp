@@ -25,7 +25,7 @@
 #include "aura/graphics/graphics/buffer_item.h"
 #include "aura/graphics/image/context.h"
 #include "aura/graphics/image/drawing.h"
-#include "aura/graphics/image/frame_array.h"
+#include "acme/graphics/image/frame_array.h"
 #include "aura/platform/session.h"
 #include "aura/windowing/window.h"
 #include "bred/gpu/bred_approach.h"
@@ -258,6 +258,13 @@ namespace draw2d_direct2d
       //   pacmeuserinteractionAffinity = m_pacmeuserinteractionAffinity;
 
       //}
+
+      if (!m_pacmeuserinteractionAffinity)
+      {
+
+         m_pacmeuserinteractionAffinity = pacmeuserinteractionAffinity;
+
+      }
 
       //m_pbitmap->create_bitmap_for_image(
       //   this,
@@ -1544,7 +1551,13 @@ namespace draw2d_direct2d
 
             //}
 
-            pimage1->blend2(::f64_point(), m_pimageAlphaBlend, ::f64_point(x - m_pointAlphaBlend.x, y - m_pointAlphaBlend.y), rectangleBlt.size(), 255);
+            {
+               auto ppixmapImage1 = pimage1->map();
+
+               auto ppixmapImageAlphaBlend = m_pimageAlphaBlend->map();
+
+               ppixmapImage1->blend2(::f64_point(), ppixmapImageAlphaBlend, ::f64_point(x - m_pointAlphaBlend.x, y - m_pointAlphaBlend.y), rectangleBlt.size(), 255);
+            }
 
             ::image::image_drawing_options imagedrawingoptions;
 
@@ -3063,17 +3076,17 @@ namespace draw2d_direct2d
 
             D2D1_SIZE_U sz = pd2d1bitmap->GetPixelSize();
 
-            if (nWidth + x + m_pointOrigin.x > sz.width)
+            if (nWidth + x + m_pointTarget.x > sz.width)
             {
 
-               nWidth = sz.width - x - m_pointOrigin.x;
+               nWidth = sz.width - x - m_pointTarget.x;
 
             }
 
-            if (nHeight + y + m_pointOrigin.y > sz.height)
+            if (nHeight + y + m_pointTarget.y > sz.height)
             {
 
-               nHeight = sz.height - y - m_pointOrigin.y;
+               nHeight = sz.height - y - m_pointTarget.y;
 
             }
 
@@ -3245,13 +3258,19 @@ namespace draw2d_direct2d
 
                   pframeTarget->m_iFrame = pframeSource->m_iFrame;
 
-                  auto & pimageSource = pframeSource->m_pimage;
+                  auto & ppixmapSource = pframeSource->m_ppixmap;
 
-                  pimageSource->set_ok_flag();
+                  ppixmapSource->set_ok_flag();
 
-                  auto & pimageTarget = pframeTarget->m_pimage;
+                  auto pimageSource = createø<::image::image>();
 
-                  defer_constructø(pimageTarget);
+                  pimageSource->create_as_descriptor(ppixmapSource->size(), DEFAULT_CREATE_IMAGE_FLAG, ppixmapSource->m_iScan);
+
+                  pimageSource->m_ppixmapOwned = ppixmapSource;
+
+                  auto pimageTarget = createø<::image::image>();
+
+                  pframeTarget->m_pparticleImage = pimageTarget;
 
                   pimageTarget->create_as_descriptor(m_pimage->size());
 
@@ -7168,9 +7187,9 @@ namespace draw2d_direct2d
 
       m_pd2d1rendertarget->DrawLine(p1, p2, pbrush, (FLOAT)(dynamic_cast <::draw2d_direct2d::pen *> (m_ppen.m_p))->m_dWidth);
 
-      m_point.x = x2;
+      m_pointCurrent.x = x2;
 
-      m_point.y = y2;
+      m_pointCurrent.y = y2;
 
       //return true;
 
@@ -7209,9 +7228,9 @@ namespace draw2d_direct2d
 
       m_pd2d1rendertarget->DrawLine(p1, p2, pbrush, fWidth);
 
-      m_point.x = x2;
+      m_pointCurrent.x = x2;
 
-      m_point.y = y2;
+      m_pointCurrent.y = y2;
 
       //return true;
 
@@ -7230,8 +7249,10 @@ namespace draw2d_direct2d
       set_smooth_mode(::draw2d::e_smooth_mode_high);
 
       //::gpu::graphics::start_layer(bFirstLayer);
-      m_pointOrigin = m_pacmeuserinteractionAffinity->m_pacmewindowingwindow->m_pointWindow;
-      m_sizeImpact2 = m_pacmeuserinteractionAffinity->m_pacmewindowingwindow->m_sizeWindow;
+      m_pointTarget = m_pacmeuserinteractionAffinity->m_pacmewindowingwindow->m_pointWindow;
+      m_sizeTarget = m_pacmeuserinteractionAffinity->m_pacmewindowingwindow->m_sizeWindow;
+      m_bTargetRectangleModified = false;
+      update_matrix();
 
 
 

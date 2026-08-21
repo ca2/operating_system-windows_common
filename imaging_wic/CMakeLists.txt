@@ -41,6 +41,8 @@ if (MSVC)
       aura
       acme_windows_common
       apex_windows_common
+      gdiplus
+      gdiplus_library
       windowscodecs Shlwapi)
 elseif (LINUX)
    target_compile_options(${PROJECT_NAME} PRIVATE -fpermissive)

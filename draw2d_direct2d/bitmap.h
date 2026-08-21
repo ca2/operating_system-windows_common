@@ -44,8 +44,6 @@ namespace draw2d_direct2d
       //void dump(dump_context& dumpcontext) const override;
 
 
-      void map();
-      void unmap();
 
 
       bool LoadBitmap(const ::scoped_string & scopedstrResourceName);
@@ -71,8 +69,16 @@ namespace draw2d_direct2d
       virtual bool CreateBitmapIndirect(::draw2d::graphics * pgraphics, LPBITMAP lpBitmap);
       virtual void CreateCompatibleBitmap(::draw2d::graphics * pgraphics, ::i32 nWidth, ::i32 nHeight);
       virtual void CreateDiscardableBitmap(::draw2d::graphics * pgraphics, ::i32 nWidth, ::i32 nHeight);
-      virtual void create_bitmap(::draw2d::graphics * pgraphics, const ::i32_size & size, memory & memory, ::i32 * piScan) override;
+      virtual void create_bitmap(::draw2d::graphics * pgraphics, const ::i32_size & size, ::pixmap * ppixmap) override;
       virtual void CreateDIBitmap(::draw2d::graphics * pgraphics, ::i32 cx, ::i32 cy, ::u32 flInit, const void *pjBits, ::u32 iUsage) override;
+
+
+      void read_pixels(const ::i32_size & size, const ::i32_point & point, ::image32_t * pimage32, ::i32 iScan) override;
+      void write_pixels(const ::i32_size & size, const ::i32_point & point, const ::image32_t * pimage32, ::i32 iScan) override;
+
+
+      void map();
+      void unmap();
 
 
       virtual void attach(void * posdata);

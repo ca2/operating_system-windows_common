@@ -34,7 +34,8 @@ if (MSVC)
     target_link_libraries(${PROJECT_NAME} PRIVATE
             apex_windows_common
             acme_windows_common
-            acme apex aqua aura axis berg bred directx11 gpu_directx11 d2d1 dwrite Gdiplus)
+       acme apex aqua aura axis d2d1 dwrite Gdiplus)
+    #        acme apex aqua aura axis berg bred directx11 gpu_directx11 d2d1 dwrite Gdiplus)
 elseif (LINUX)
 
     if (NOT DONT_USE_PKG_CONFIG)
