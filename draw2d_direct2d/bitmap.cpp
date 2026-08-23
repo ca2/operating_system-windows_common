@@ -45,7 +45,7 @@ namespace draw2d_direct2d
    }
 
 
-   void bitmap::create_bitmap_for_image(
+   void bitmap::update_bitmap_as_image_render_target(
       ::image::image * pimage,
       ::acme::user::interaction * pacmeuserinteractionAffinity, 
       ::draw2d::graphics * pgraphics)
@@ -56,7 +56,7 @@ namespace draw2d_direct2d
 
          _create_bitmap(
             pgraphics,
-            pimage->m_sizeRaw,
+            pimage->raw_size(),
             pimage->m_ppixmapOwned->image32(),
             pimage->origin(),
             pimage->size(),
@@ -66,14 +66,26 @@ namespace draw2d_direct2d
       }
       else
       {
-         _create_bitmap(
-     pgraphics,
-     pimage->m_sizeRaw,
-     nullptr,
-     pimage->origin(),
-     pimage->size(),
-     pimage->m_iScan,
-     pacmeuserinteractionAffinity);
+
+         if (m_pbitmap)
+         {
+
+            set_size(pimage->raw_size(), true);
+
+         }
+         else
+         {
+
+            _create_bitmap(
+              pgraphics,
+              pimage->raw_size(),
+              nullptr,
+              pimage->origin(),
+              pimage->size(),
+              pimage->m_iScan,
+              pacmeuserinteractionAffinity);
+
+         }
 
       }
 
@@ -802,6 +814,196 @@ namespace draw2d_direct2d
       D2D1_SIZE_U size = m_pbitmap->GetPixelSize();
 
       return ::i32_size(size.width, size.height);
+
+   }
+
+
+   i32_size bitmap::size() const
+   {
+
+      return GetBitmapDimension();
+
+   }
+
+
+   void bitmap::set_size(const ::i32_size & size, bool bPreserve)
+   {
+
+      if (size.cx <= 0 || size.cy <= 0)
+      {
+
+         throw ::exception(error_bad_argument);
+
+      }
+
+      auto sizeOld = GetBitmapDimension();
+
+      if (size == sizeOld)
+      {
+
+         return;
+
+      }
+
+      ::draw2d::device_lock devicelock(this);
+
+      if (!m_pbitmap || !m_pdevicecontext)
+      {
+
+         throw ::exception(error_wrong_state);
+
+      }
+
+      D2D1_SIZE_U sizeNew{};
+
+      sizeNew.width = (UINT32) size.cx;
+      sizeNew.height = (UINT32) size.cy;
+
+      comptr<ID2D1Bitmap> pbitmapNew;
+      comptr<ID2D1Bitmap1> pbitmap1New;
+      comptr<ID2D1BitmapRenderTarget> pbitmaprendertargetNew;
+      comptr<ID2D1DeviceContext> pdevicecontextNew;
+
+      if (m_pbitmaprendertarget)
+      {
+
+         D2D1_SIZE_F sizeNewDips{};
+
+         sizeNewDips.width = (FLOAT) size.cx;
+         sizeNewDips.height = (FLOAT) size.cy;
+
+         auto pixelformat = m_pbitmap->GetPixelFormat();
+
+         auto hr = m_pbitmaprendertarget->CreateCompatibleRenderTarget(
+            &sizeNewDips,
+            &sizeNew,
+            &pixelformat,
+            D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS_NONE,
+            &pbitmaprendertargetNew);
+
+         if (FAILED(hr))
+         {
+
+            throw hresult_exception(hr, "Failed to resize Direct2D bitmap render target");
+
+         }
+
+         hr = pbitmaprendertargetNew.as(pdevicecontextNew);
+
+         if (FAILED(hr))
+         {
+
+            throw hresult_exception(hr, "Failed to query resized Direct2D bitmap device context");
+
+         }
+
+         D2D1_COLOR_F colorTransparent{};
+
+         pbitmaprendertargetNew->BeginDraw();
+         pbitmaprendertargetNew->Clear(&colorTransparent);
+
+         hr = pbitmaprendertargetNew->EndDraw();
+
+         if (FAILED(hr))
+         {
+
+            throw hresult_exception(hr, "Failed to clear resized Direct2D bitmap");
+
+         }
+
+         hr = pbitmaprendertargetNew->GetBitmap(&pbitmapNew);
+
+         if (FAILED(hr))
+         {
+
+            throw hresult_exception(hr, "Failed to get resized Direct2D bitmap");
+
+         }
+
+         hr = pbitmapNew.as(pbitmap1New);
+
+         if (FAILED(hr))
+         {
+
+            throw hresult_exception(hr, "Failed to query resized ID2D1Bitmap1");
+
+         }
+
+      }
+      else
+      {
+
+         D2D1_BITMAP_PROPERTIES1 properties{};
+
+         properties.pixelFormat = m_pbitmap->GetPixelFormat();
+         m_pbitmap->GetDpi(&properties.dpiX, &properties.dpiY);
+         properties.bitmapOptions = D2D1_BITMAP_OPTIONS_TARGET;
+
+         auto iStride = size.cx * (::i32) sizeof(::image32_t);
+         ::memory memoryTransparent((memsize) iStride * size.cy);
+         memoryTransparent.set(0);
+
+         auto hr = m_pdevicecontext->CreateBitmap(
+            sizeNew,
+            memoryTransparent.data(),
+            (UINT32) iStride,
+            &properties,
+            &pbitmap1New);
+
+         if (FAILED(hr))
+         {
+
+            throw hresult_exception(hr, "Failed to create resized Direct2D bitmap");
+
+         }
+
+         hr = pbitmap1New.as(pbitmapNew);
+
+         if (FAILED(hr))
+         {
+
+            throw hresult_exception(hr, "Failed to query resized ID2D1Bitmap");
+
+         }
+
+         pdevicecontextNew = m_pdevicecontext;
+
+      }
+
+      if (bPreserve)
+      {
+
+         D2D1_RECT_U rectangleSource{};
+
+         rectangleSource.right = (UINT32)minimum(sizeOld.cx, size.cx);
+         rectangleSource.bottom = (UINT32)minimum(sizeOld.cy, size.cy);
+
+         auto hrCopy = pbitmapNew->CopyFromBitmap(nullptr, m_pbitmap, &rectangleSource);
+
+         if (FAILED(hrCopy))
+         {
+
+            throw hresult_exception(hrCopy, "Failed to preserve resized Direct2D bitmap contents");
+
+         }
+
+      }
+
+      m_pbitmap = ::transfer(pbitmapNew);
+      m_pbitmap1 = ::transfer(pbitmap1New);
+      m_pbitmap1Map = nullptr;
+
+      if (pbitmaprendertargetNew)
+      {
+
+         m_pbitmaprendertarget = ::transfer(pbitmaprendertargetNew);
+
+      }
+
+      m_pdevicecontext = ::transfer(pdevicecontextNew);
+      m_osdata[0] = m_pbitmap;
+      m_osdata[1] = m_pbitmap1;
+      m_size = size;
 
    }
 

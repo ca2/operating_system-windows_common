@@ -40,7 +40,7 @@ namespace draw2d_direct2d
 
 
       //virtual ::draw2d::graphics * _get_graphics() const override;
-      virtual ::draw2d::bitmap_pointer get_bitmap() const;
+      //virtual ::draw2d::bitmap_pointer get_bitmap() const;
       virtual ::draw2d::bitmap_pointer detach_bitmap();
 
 
@@ -49,7 +49,7 @@ namespace draw2d_direct2d
       virtual void _create_dib_hbitmap(const ::i32_size &sizeRaw);
       virtual void _delete_dib_hbitmap();
       //using ::image::image::create;
-      void create_as_render_target(const ::i32_size & size, ::user::interaction * puserinteraction, ::draw2d::graphics * pdraw2dgraphics, ::enum_flag eflagCreate = DEFAULT_CREATE_IMAGE_FLAG, ::i32 iStride = -1, bool bPreserve = false, bool bTopDraw2d = false) override;
+      void update_as_render_target(const ::i32_size & size, ::user::interaction * puserinteraction, ::draw2d::graphics * pdraw2dgraphics, ::enum_flag eflagCreate = DEFAULT_CREATE_IMAGE_FLAG, ::i32 iStride = -1, bool bPreserve = false, bool bTopDraw2d = false) override;
       //void create_for_image(::image::image *pimage) override;
       //using ::image::image::initialize;
       //void initialize(const ::i32_size & size, ::image32_t * pimage32, ::i32 iScan, ::enum_flag eflagCreate = DEFAULT_CREATE_IMAGE_FLAG) override;
@@ -58,7 +58,9 @@ namespace draw2d_direct2d
       void destroy_os_data() override;
 
 
-      bool host(::windowing::window_buffer *pwindowbuffer, ::windowing::window *pwindow, const ::i32_size & sizeRaw) override;
+      //bool host(::windowing::window_buffer *pwindowbuffer, ::windowing::window *pwindow, const ::i32_size & sizeRaw) override;
+
+      //bool on_host_read_pixels(::pixmap_t * ppixmapHost) const override;
 
 
       //virtual void create_ex(const ::i32_size & size, ::image32_t * pimage32, ::i32 iScan, ::enum_flag eflagCreate = DEFAULT_CREATE_IMAGE_FLAG, ::i32 iStride = -1, bool bPreserve = false);

@@ -67,10 +67,10 @@ namespace imaging_wic
 
       //ploadimage->m_pimage = pimageParam;
 
-      if (ploadimage->m_iRedLower < 0)
+      //if (ploadimage->m_iRedLower < 0)
       {
 
-         ploadimage->m_iRedLower = 1;
+         ploadimage->m_iRedLower = 0;
 
       }
 

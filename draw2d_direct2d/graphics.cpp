@@ -78,6 +78,8 @@ namespace draw2d_direct2d
 
       m_iLayerCount = 0;
 
+      m_state.m_iLayerIndex = 0;
+
       m_ealphamodeDevice = ::draw2d::e_alpha_mode_none;
 
       clear_os_data();
@@ -162,7 +164,7 @@ namespace draw2d_direct2d
 
          constructø(m_pgraphicsbufferitem->m_pimageBufferItem);
 
-         m_pgraphicsbufferitem->m_pimageBufferItem->create_as_render_target(size, puserinteraction, this);
+         m_pgraphicsbufferitem->m_pimageBufferItem->update_as_render_target(size, puserinteraction, this);
 
          //create_for_image(m_pgraphicsbufferitem->m_pimageBufferItem);
 
@@ -172,7 +174,7 @@ namespace draw2d_direct2d
 
 
    
-   void graphics::create_for_image(::image::image * pimage)
+   void graphics::update_as_image_render_target(::image::image * pimage)
    {
 
       m_pacmeuserinteractionAffinity = pimage->m_pacmeuserinteractionAffinity;
@@ -226,7 +228,7 @@ namespace draw2d_direct2d
       else
       {
          
-         pimage->create_bitmap(pimage->m_pacmeuserinteractionAffinity);
+         pimage->update_bitmap_as_render_target(pimage->m_pacmeuserinteractionAffinity);
 
          ::cast < ::draw2d_direct2d::bitmap > pbitmap = pimage->m_pbitmap;
 
@@ -2559,6 +2561,13 @@ namespace draw2d_direct2d
 
       }
 
+      if (m_bTargetRectangleModified)
+      {
+
+         defer_on_target_rectangle_update();
+
+      }
+
       if (m_pbrush->m_ebrush == ::draw2d::e_brush_box_gradient)
       {
 
@@ -3096,7 +3105,7 @@ namespace draw2d_direct2d
 
       {
 
-         D2D1_SIZE_U sz = ((ID2D1Bitmap *)pimage->get_bitmap(this)->get_os_data())->GetPixelSize();
+         D2D1_SIZE_U sz = ((ID2D1Bitmap *)pimage->get_bitmap_as_source(this)->get_os_data())->GetPixelSize();
 
          if (nWidth + xSrc > sz.width)
          {
@@ -3120,7 +3129,7 @@ namespace draw2d_direct2d
 
          D2D1_RECT_F rectangleSource = D2D1::RectF((::f32)xSrc, (::f32)ySrc, (::f32)(xSrc + nWidth), (::f32)(ySrc + nHeight));
 
-         auto pd2d1bitmap = ((ID2D1Bitmap *)pimage->get_bitmap()->get_os_data());
+         auto pd2d1bitmap = ((ID2D1Bitmap *)pimage->get_bitmap_as_source()->get_os_data());
 
          ::i32 cx = pd2d1bitmap->GetPixelSize().width;
 
@@ -3290,9 +3299,9 @@ namespace draw2d_direct2d
 
       }
 
-      pimage->create_bitmap(m_pacmeuserinteractionAffinity);
+      pimage->update_bitmap_as_render_target(m_pacmeuserinteractionAffinity);
 
-      if (pimage->get_bitmap() == nullptr)
+      if (pimage->get_bitmap_as_source() == nullptr)
       {
 
          //return false;
@@ -3341,7 +3350,7 @@ namespace draw2d_direct2d
 
          defer_primitive_blend();
 
-         auto pd2d1bitmap = (ID2D1Bitmap*)pimage->get_bitmap()->get_os_data();
+         auto pd2d1bitmap = (ID2D1Bitmap*)pimage->get_bitmap_as_source()->get_os_data();
 
          if (m_pd2d1rendertarget != nullptr)
          {
@@ -5879,6 +5888,12 @@ namespace draw2d_direct2d
    void graphics::intersect_clip(const ::f64_rectangle & rectangle)
    {
 
+      if (m_bTargetRectangleModified)
+      {
+
+         defer_on_target_rectangle_update();
+
+      }
       //auto r = rectangle + m_pointAddShapeTranslate;
 
       auto r = rectangle;
@@ -6501,6 +6516,13 @@ namespace draw2d_direct2d
 
       }
 
+      if (m_bTargetRectangleModified)
+      {
+
+         defer_on_target_rectangle_update();
+
+      }
+
       ID2D1Brush * pbrush = m_pbrush->get_os_data < ID2D1Brush * >(this);
 
       if (::is_null(pbrush))
@@ -6858,6 +6880,13 @@ namespace draw2d_direct2d
 
       }
 
+      if (m_bTargetRectangleModified)
+      {
+
+         defer_on_target_rectangle_update();
+
+      }
+
       D2D1_COLOR_F d2d1color;
 
       copy(d2d1color, color);
@@ -6877,48 +6906,205 @@ namespace draw2d_direct2d
    }
 
 
+   bool graphics::is_memory_graphics_pool_compatible(
+      ::acme::user::interaction * pacmeuserinteractionAffinity) const
+   {
+
+      if (!pacmeuserinteractionAffinity
+         || m_bBeginDraw
+         || m_pimage
+         || m_pbitmap
+         || m_iLayerCount != 0
+         || m_pdevicecontext
+         || m_pd2d1rendertarget)
+      {
+
+         return false;
+
+      }
+
+      ::cast < ::windowing::window > pwindow =
+         pacmeuserinteractionAffinity->acme_windowing_window();
+
+      if (!pwindow)
+      {
+
+         return false;
+
+      }
+
+      ::cast < ::draw2d_direct2d::window_attachment > pwindowattachment =
+         pwindow->m_pdraw2dwindowattachment;
+
+      if (!pwindowattachment)
+      {
+
+         return false;
+
+      }
+
+      _synchronous_lock synchronouslock(
+         pwindowattachment->_d2d1_device_context_mutex());
+
+      auto pdevicecontext = pwindowattachment->_d2d1_device_context();
+
+      if (!pdevicecontext)
+      {
+
+         return false;
+
+      }
+
+      comptr < ID2D1Device > pdevice;
+
+      pdevicecontext->GetDevice(&pdevice);
+
+      return pdevice
+         && m_pdeviceMemoryGraphicsPool
+         && pdevice.m_p == m_pdeviceMemoryGraphicsPool.m_p;
+
+   }
+
+
    void graphics::on_acquire_memory_graphics(
       ::image::image * pimage,
       const ::i32_size & size,
       ::acme::user::interaction * pacmeuserinteractionAffinity)
    {
 
-      //if (::is_set(pimage))
-      //{
-
-      //   pimage->create_bitmap(pacmeuserinteractionAffinity);
-
-      //}
-
-      ::draw2d::graphics::on_acquire_memory_graphics(
-         pimage,
-         size,
-         pacmeuserinteractionAffinity);
-
-
-
-      if (!m_bBeginDraw)
+      if (m_bBeginDraw)
       {
 
-         m_bBeginDraw = true;
+         throw ::exception(
+            error_wrong_state,
+            "pooled Direct2D graphics was acquired with an active drawing scope");
 
-         if (::is_set(pimage))
+      }
+
+      if (pimage)
+      {
+
+         if (!pimage->m_pbitmap)
          {
 
-            if (!pimage->m_pbitmap)
-            {
-
-               pimage->create_bitmap(pacmeuserinteractionAffinity, this);
-
-            }
-
-            ::cast <::draw2d_direct2d::bitmap> pbitmap = pimage->m_pbitmap;
-
-            m_pdevicecontext->SetTarget(pbitmap->m_pbitmap);
+            pimage->update_bitmap_as_render_target(pacmeuserinteractionAffinity, this);
 
          }
 
-         m_pdevicecontext->BeginDraw();
+         ::cast < ::draw2d_direct2d::bitmap > pbitmap = pimage->m_pbitmap;
+
+         if (!pbitmap
+            || !pbitmap->m_pbitmap
+            || !pbitmap->m_pdevicecontext)
+         {
+
+            throw ::exception(
+               error_wrong_state,
+               "Direct2D image has no usable bitmap render target");
+
+         }
+
+         if (m_pdevicecontext
+            && m_pdevicecontext.m_p != pbitmap->m_pdevicecontext.m_p)
+         {
+
+            throw ::exception(
+               error_wrong_state,
+               "Direct2D graphics retained a different image render target");
+
+         }
+
+         if (!m_pdevicecontext && m_pd2d1rendertarget)
+         {
+
+            throw ::exception(
+               error_wrong_state,
+               "Direct2D graphics retained an incomplete render target");
+
+         }
+
+         m_pbitmaprendertargetCompatibleMemoryGraphics.release();
+         m_pdcrendertarget.release();
+         m_pdevicecontext = pbitmap->m_pdevicecontext;
+         m_pdevicecontext.as(m_pd2d1rendertarget);
+         m_pdevicecontext.as(m_pdevicecontext1);
+         m_pdevicecontext->SetTarget(pbitmap->m_pbitmap);
+
+      }
+      else
+      {
+
+         if (m_pdevicecontext || m_pd2d1rendertarget)
+         {
+
+            throw ::exception(
+               error_wrong_state,
+               "pooled Direct2D graphics retained a previous render target");
+
+         }
+
+         _create_memory_graphics(size, pacmeuserinteractionAffinity);
+
+      }
+
+      if (!m_pdevicecontext || !m_pd2d1rendertarget)
+      {
+
+         throw ::exception(
+            error_wrong_state,
+            "Direct2D memory graphics has no render target");
+
+      }
+
+      m_pdevicecontext->GetDevice(&m_pdeviceMemoryGraphicsPool);
+      m_osdata[data_device_context] = m_pdevicecontext;
+      m_osdata[data_render_target] = m_pd2d1rendertarget;
+      m_iLayerCount = 0;
+      m_iaPushLayer.erase_all();
+      m_iaPushLayerCount.erase_all();
+      m_statea.erase_all();
+      m_state.m_iLayerIndex = 0;
+      m_matrix = {};
+      m_sizeScaling = { 1.0, 1.0 };
+      m_pointTranslateOutput = {};
+      m_sizeScaleOutput = { 1.0, 1.0 };
+      m_iYFlipHeight = 0;
+      m_dSizeScaler = 1.0;
+
+      m_pdevicecontext->BeginDraw();
+      m_bBeginDraw = true;
+
+      try
+      {
+
+         ::draw2d::graphics::on_acquire_memory_graphics(
+            pimage,
+            size,
+            pacmeuserinteractionAffinity);
+
+         defer_on_target_rectangle_update();
+         m_pdevicecontext->SetPrimitiveBlend(
+            D2D1_PRIMITIVE_BLEND_SOURCE_OVER);
+         m_pdevicecontext->SetAntialiasMode(
+            D2D1_ANTIALIAS_MODE_PER_PRIMITIVE);
+         m_pdevicecontext->SetTextAntialiasMode(
+            D2D1_TEXT_ANTIALIAS_MODE_DEFAULT);
+         m_ealphamodeDevice = ::draw2d::e_alpha_mode_blend;
+         m_etextrenderinghintDevice =
+            ::write_text::e_rendering_undefined;
+
+      }
+      catch (...)
+      {
+
+         _pop_all_layers();
+         m_pdevicecontext->EndDraw();
+         m_bBeginDraw = false;
+         m_pdevicecontext1.release();
+         m_pd2d1rendertarget.release();
+         m_pdevicecontext.release();
+         clear_os_data();
+         throw;
 
       }
 
@@ -6928,22 +7114,60 @@ namespace draw2d_direct2d
    void graphics::on_release_memory_graphics()
    {
 
-
       auto pimageBeforeRelease = m_pimage;
+      auto pdevicecontextBeforeRelease = m_pdevicecontext;
 
-      ::draw2d::graphics::on_release_memory_graphics();
-
-      HRESULT hrEndDraw = S_OK;
-
-      if (m_bBeginDraw)
+      if (!m_bBeginDraw || !pdevicecontextBeforeRelease)
       {
 
          m_bBeginDraw = false;
+         m_pdevicecontext1.release();
+         m_pd2d1rendertarget.release();
+         m_pdevicecontext.release();
+         clear_os_data();
 
-         hrEndDraw = m_pdevicecontext->EndDraw();
-
+         throw ::exception(
+            error_wrong_state,
+            "Direct2D memory graphics was released outside its drawing scope");
 
       }
+
+      try
+      {
+
+         ::draw2d::graphics::on_release_memory_graphics();
+         _pop_all_layers();
+
+      }
+      catch (...)
+      {
+
+         pdevicecontextBeforeRelease->EndDraw();
+         m_bBeginDraw = false;
+         m_pdevicecontext1.release();
+         m_pd2d1rendertarget.release();
+         m_pdevicecontext.release();
+         clear_os_data();
+         throw;
+
+      }
+
+      auto hrEndDraw = pdevicecontextBeforeRelease->EndDraw();
+
+      m_bBeginDraw = false;
+      m_iLayerCount = 0;
+      m_iaPushLayer.erase_all();
+      m_iaPushLayerCount.erase_all();
+      m_statea.erase_all();
+      m_state.m_iLayerIndex = 0;
+      m_player.release();
+      m_ppathgeometryClip.release();
+      m_pdevicecontext1.release();
+      m_pd2d1rendertarget.release();
+      m_pdevicecontext.release();
+      m_pdcrendertarget.release();
+      m_pbitmaprendertargetCompatibleMemoryGraphics.release();
+      clear_os_data();
 
       static ::std::atomic<unsigned int> s_uEndDrawDiagnosticCount{ 0 };
       auto uEndDrawDiagnosticCount = s_uEndDrawDiagnosticCount.fetch_add(1, ::std::memory_order_relaxed);
@@ -6956,18 +7180,18 @@ namespace draw2d_direct2d
             (unsigned long)hrEndDraw,
             this,
             pimageBeforeRelease,
-            (ID2D1DeviceContext *)m_pdevicecontext);
+            (ID2D1DeviceContext *)pdevicecontextBeforeRelease);
 
       }
 
       if (FAILED(hrEndDraw))
       {
 
-         warning("graphics::on_release_memory_graphics : EndDraw failed: {}", hresult_text(hrEndDraw));
+         throw hresult_exception(
+            hrEndDraw,
+            "Direct2D memory graphics EndDraw failed");
 
       }
-
-      //m_pdevicecontext->SetTarget(nullptr);
 
    }
 
@@ -7007,6 +7231,13 @@ namespace draw2d_direct2d
          //return false;
 
          throw ::exception(error_wrong_state);
+
+      }
+
+      if (m_bTargetRectangleModified)
+      {
+
+         defer_on_target_rectangle_update();
 
       }
 
@@ -7160,6 +7391,13 @@ namespace draw2d_direct2d
    void graphics::line(::f64 x1, ::f64 y1, ::f64 x2, ::f64 y2, ::draw2d::pen * ppen)
    {
 
+      if (m_bTargetRectangleModified)
+      {
+
+         defer_on_target_rectangle_update();
+
+      }
+
       D2D1_POINT_2F p1;
 
       p1.x = (FLOAT)x1;
@@ -7198,6 +7436,13 @@ namespace draw2d_direct2d
 
    void graphics::line(::f64 x1, ::f64 y1, ::f64 x2, ::f64 y2)
    {
+
+      if (m_bTargetRectangleModified)
+      {
+
+         defer_on_target_rectangle_update();
+
+      }
 
       D2D1_POINT_2F p1;
 
@@ -7270,6 +7515,12 @@ namespace draw2d_direct2d
          if (m_pgraphicsbufferitem)
          {
 
+            m_pointTarget = m_pgraphicsbufferitem->m_pointBufferItem;
+            m_sizeTarget = m_pgraphicsbufferitem->m_sizeBufferItem;
+            m_bTargetRectangleModified = false;
+            update_matrix();
+
+
             //m_pgraphicsbufferitem->m_pimageBufferItem = m_pimage;
 
             auto pimage = m_pgraphicsbufferitem->m_pimageBufferItem;
@@ -7277,8 +7528,10 @@ namespace draw2d_direct2d
             if (pimage)
             {
 
-               auto point = m_pacmeuserinteractionAffinity->m_pacmewindowingwindow->m_pointWindow;
-               auto size = m_pacmeuserinteractionAffinity->m_pacmewindowingwindow->m_sizeWindow;
+               //auto point = m_pacmeuserinteractionAffinity->m_pacmewindowingwindow->m_pointWindow;
+               //auto size = m_pacmeuserinteractionAffinity->m_pacmewindowingwindow->m_sizeWindow;
+               auto point = m_pgraphicsbufferitem->m_pointBufferItem;
+               auto size = m_pgraphicsbufferitem->m_sizeBufferItem;
 
             //   ::f64_point pointf64Image = pimage->m_point;
             //   ::f64_size sizef64Image = pimage->m_size;
@@ -7300,6 +7553,8 @@ namespace draw2d_direct2d
             }
 
             set_target_image(m_pgraphicsbufferitem->m_pimageBufferItem);
+
+            update_matrix();
 
          }
 
@@ -7371,19 +7626,19 @@ namespace draw2d_direct2d
 
       }
 
-      if (m_egraphics == ::e_graphics_draw)
-      {
+      //if (m_egraphics == ::e_graphics_draw)
+      //{
 
-         if (m_bBeginDraw)
-         {
+      //   if (m_bBeginDraw)
+      //   {
 
-            m_bBeginDraw = false;
+      //      m_bBeginDraw = false;
 
-            m_pd2d1rendertarget->EndDraw();
+      //      m_pd2d1rendertarget->EndDraw();
 
-         }
+      //   }
 
-      }
+      //}
 
       //::gpu::graphics::end_layer(bClosingLayer);
 
@@ -8089,6 +8344,13 @@ namespace draw2d_direct2d
    void graphics::draw(::draw2d::path * ppathParam, ::draw2d::pen * ppen)
    {
 
+      if (m_bTargetRectangleModified)
+      {
+
+         defer_on_target_rectangle_update();
+
+      }
+
       scoped_restore(m_bOutline);
 
       m_bOutline = true;
@@ -8227,7 +8489,12 @@ namespace draw2d_direct2d
 
       }
 
+      if (m_bTargetRectangleModified)
+      {
 
+         defer_on_target_rectangle_update();
+
+      }
 
       //ID2D1Brush * pbrush = pbrushParam->get_os_data < ID2D1Brush * >(this);
 

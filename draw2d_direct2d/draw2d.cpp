@@ -229,43 +229,7 @@ namespace draw2d_direct2d
                                                              const ::i32_size &size)
    {
 
-      if (::is_set(pimage))
-      {
-
-         auto pgraphicsOwned = pimage->m_pgraphicsOwned;
-
-         if (pgraphicsOwned)
-         {
-
-            return pgraphicsOwned;
-
-         }
-
-         auto pgraphics = allocate_graphics(pacmeuserinteractionAffinity);
-
-         pgraphics->create_for_image(pimage);
-
-         return pgraphics;
-
-         //auto pbitmap = pimage->get_bitmap();
-
-         //if (::is_set(pbitmap))
-         //{
-
-         //   pgraphics->create_bitmap_graphics(pbitmap);
-         //}
-         //else
-         //{
-
-         //   throw ::exception(error_wrong_state);
-         //}
-      }
-      else
-      {
-         auto pgraphics = allocate_graphics(pacmeuserinteractionAffinity);
-         pgraphics->create_memory_graphics(size, pacmeuserinteractionAffinity);
-         return pgraphics;
-      }
+      return allocate_graphics(pacmeuserinteractionAffinity);
 
       
 

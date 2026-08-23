@@ -42,6 +42,7 @@ namespace draw2d_direct2d
       comptr<ID2D1DCRenderTarget>                        m_pdcrendertarget; // 3
       comptr<ID2D1DeviceContext1>                        m_pdevicecontext1; // 4
       comptr<ID2D1BitmapRenderTarget>                    m_pbitmaprendertargetCompatibleMemoryGraphics; // 2
+      comptr<ID2D1Device>                                m_pdeviceMemoryGraphicsPool;
 
       //comptr<IDXGISurface>                               m_pdxgisurface;
       comptr < ID2D1Bitmap1>                              m_pd2d1bitmap;
@@ -83,6 +84,8 @@ namespace draw2d_direct2d
          ::image::image * pimage,
          const ::i32_size & size,
          ::acme::user::interaction * pacmeuserinteractionAffinity) override;
+      bool is_memory_graphics_pool_compatible(
+         ::acme::user::interaction * pacmeuserinteractionAffinity) const override;
       void on_release_memory_graphics() override;
 
       bool TextOutAlphaBlend(::f64 x, ::f64 y, const ::scoped_string & scopedstr) override;
@@ -165,7 +168,7 @@ namespace draw2d_direct2d
       //bool CreateIC(const ::scoped_string & scopedstrDriverName, const ::scoped_string & scopedstrDeviceName,
       //              const_char_pointer pszOutput, const void * lpInitData) override;
       void create_for_window_draw2d(::user::interaction * puserinteraction, const ::i32_size & size) override;
-      void create_for_image(::image::image *pimage) override;
+      void update_as_image_render_target(::image::image *pimage) override;
       void _create_memory_graphics(const ::i32_size &size, ::acme::user::interaction * pacmeuserinteractionAffinity) override;
       //void create_compatible_graphics(::draw2d::graphics * pgraphics) override;
       //virtual void _create_from_dxgi_surface(::i32 iIndex, ::i32 iLayerIndex, IDXGISurface* pdxgisurface);
