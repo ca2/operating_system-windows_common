@@ -23,7 +23,7 @@ namespace draw2d_directx11
 
 
 
-      void copy_from(::image::image * pimage, enum_flag eflagCreate = e_flag_success) override;
+      //void copy_from(::image::image * pimage, enum_flag eflagCreate = e_flag_success) override;
 
 
       //virtual ::draw2d::graphics * _get_graphics() const override;
@@ -31,7 +31,7 @@ namespace draw2d_directx11
       virtual ::draw2d::bitmap_pointer detach_bitmap();
 
 
-      void dc_select(bool bSelect = true);
+      //void dc_select(bool bSelect = true);
 
 
       //using ::image::image::create;
@@ -48,7 +48,7 @@ namespace draw2d_directx11
       //virtual bool _draw_raw(const ::i32_rectangle & rectangleTarget, ::image::image * pimage, const ::i32_point & pointSrc) override;
 
 
-      virtual void SetIconMask(::image::icon * picon, ::i32 cx, ::i32 cy) override;
+      virtual void set_image_icon(::image::icon * picon, ::i32 cx, ::i32 cy) override;
 
 
       virtual void defer_realize(::draw2d::graphics * pgraphics) const;
@@ -56,16 +56,16 @@ namespace draw2d_directx11
       virtual void unrealize() const;
       virtual bool is_realized() const;
 
-      using ::image::image::blend;
-      virtual void blend(const ::i32_point & pointDst, ::image::image * pimageSrc, const ::i32_point & pointSrc, const ::i32_size & size, ::u8 bA) override;
+      //using ::image::image::blend;
+      //virtual void blend(const ::i32_point & pointDst, ::image::image * pimageSrc, const ::i32_point & pointSrc, const ::i32_size & size, ::u8 bA) override;
 
-      using ::image::image::tint;
-      virtual void tint(::image::image * pimage, ::color::color color32) override;
+      //using ::image::image::tint;
+      //virtual void tint(::image::image * pimage, ::color::color color32) override;
 
       
       protected:
-      void _map(const ::i32_rectangle & rectangle, bool bApplyAlphaTransform = true) override;
-      void _unmap(bool bDoUnmap = false) override;
+      ::image_pixmap_lease _map(const ::i32_rectangle & rectangle) override;
+      void _unmap(::image_pixmap_lease * pimagepixmaplease) override;
 
    };
 

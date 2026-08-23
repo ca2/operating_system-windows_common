@@ -10,6 +10,7 @@
 #include "direct2d/geometry.h"
 #include "CustomRenderer.h"
 #include "acme/exception/not_implemented.h"
+#include "acme/graphics/image/frame_array.h"
 #include "acme/parallelization/synchronous_lock.h"
 #include "acme/platform/node.h"
 #include "acme/platform/scoped_restore.h"
@@ -24,7 +25,6 @@
 #include "aura/graphics/graphics/buffer_item.h"
 #include "aura/graphics/image/context.h"
 #include "aura/graphics/image/drawing.h"
-#include "aura/graphics/image/frame_array.h"
 #include "aura/platform/session.h"
 #include "aura/windowing/window.h"
 #include "bred/gpu/bred_approach.h"
@@ -1264,7 +1264,11 @@ namespace draw2d_direct2d_for_directx11
 
             //}
 
-            pimage1->blend2(::f64_point(), m_pimageAlphaBlend, ::f64_point(x - m_pointAlphaBlend.x, y - m_pointAlphaBlend.y), rectangleBlt.size(), 255);
+            auto ppixmapImage1 = pimage1->map();
+
+            auto ppixmapImageAlphaBlend = m_pimageAlphaBlend->map();
+
+            ppixmapImage1->blend2(::f64_point(), ppixmapImageAlphaBlend, ::f64_point(x - m_pointAlphaBlend.x, y - m_pointAlphaBlend.y), rectangleBlt.size(), 255);
 
             ::image::image_drawing_options imagedrawingoptions;
 
@@ -2705,7 +2709,7 @@ namespace draw2d_direct2d_for_directx11
       //try
       //{
 
-      if (pimage == nullptr || pimage->get_bitmap() == nullptr)
+      if (pimage == nullptr || pimage->get_bitmap_as_source() == nullptr)
       {
 
          //return false;
@@ -2767,17 +2771,17 @@ namespace draw2d_direct2d_for_directx11
 
             D2D1_SIZE_U sz = pd2d1bitmap->GetPixelSize();
 
-            if (nWidth + x + m_pointOrigin.x > sz.width)
+            if (nWidth + x + m_pointTarget.x > sz.width)
             {
 
-               nWidth = sz.width - x - m_pointOrigin.x;
+               nWidth = sz.width - x - m_pointTarget.x;
 
             }
 
-            if (nHeight + y + m_pointOrigin.y > sz.height)
+            if (nHeight + y + m_pointTarget.y > sz.height)
             {
 
-               nHeight = sz.height - y - m_pointOrigin.y;
+               nHeight = sz.height - y - m_pointTarget.y;
 
             }
 
@@ -2787,7 +2791,7 @@ namespace draw2d_direct2d_for_directx11
 
       {
 
-         D2D1_SIZE_U sz = ((ID2D1Bitmap *)pimage->get_bitmap()->get_os_data())->GetPixelSize();
+         D2D1_SIZE_U sz = ((ID2D1Bitmap *)pimage->get_bitmap_as_source()->get_os_data())->GetPixelSize();
 
          if (nWidth + xSrc > sz.width)
          {
@@ -2811,7 +2815,7 @@ namespace draw2d_direct2d_for_directx11
 
          D2D1_RECT_F rectangleSource = D2D1::RectF((::f32)xSrc, (::f32)ySrc, (::f32)(xSrc + nWidth), (::f32)(ySrc + nHeight));
 
-         auto pd2d1bitmap = ((ID2D1Bitmap *)pimage->get_bitmap()->get_os_data());
+         auto pd2d1bitmap = ((ID2D1Bitmap *)pimage->get_bitmap_as_source()->get_os_data());
 
          ::i32 cx = pd2d1bitmap->GetPixelSize().width;
 
@@ -2949,15 +2953,19 @@ namespace draw2d_direct2d_for_directx11
 
                   pframeTarget->m_iFrame = pframeSource->m_iFrame;
 
-                  auto & pimageSource = pframeSource->m_pimage;
+                  auto & ppixmapSource = pframeSource->m_ppixmap;
 
-                  pimageSource->set_ok_flag();
+                  ppixmapSource->set_ok_flag();
 
-                  auto & pimageTarget = pframeTarget->m_pimage;
+                  auto pimageSource = createø<::image::image>();
 
-                  defer_constructø(pimageTarget);
+                  pimageSource->create_as_descriptor(ppixmapSource->size(), DEFAULT_CREATE_IMAGE_FLAG, ppixmapSource->m_iScan);
 
-                  pimageTarget->create_as_descriptor(m_pimage->size());
+                  pimageSource->m_ppixmapOwned = ppixmapSource;
+
+                  auto pimageTarget = createø<::image::image>();
+
+                  pframeTarget->m_pparticleImage = pimageTarget;
 
                   auto pgraphicsImageTarget = pimageTarget->acquire_graphics();
 
@@ -2975,7 +2983,7 @@ namespace draw2d_direct2d_for_directx11
 
       }
 
-      if (pimage->get_bitmap() == nullptr)
+      if (pimage->get_bitmap_as_source() == nullptr)
       {
 
          //return false;
@@ -3019,7 +3027,7 @@ namespace draw2d_direct2d_for_directx11
 
          defer_primitive_blend();
 
-         auto pd2d1bitmap = (ID2D1Bitmap*)pimage->get_bitmap()->get_os_data();
+         auto pd2d1bitmap = (ID2D1Bitmap*)pimage->get_bitmap_as_source()->get_os_data();
 
          if (m_pd2d1rendertarget != nullptr)
          {
@@ -5873,7 +5881,7 @@ namespace draw2d_direct2d_for_directx11
 
          set_alpha_mode(::draw2d::e_alpha_mode_set);
 
-         fill_solid_rectangle({ ::i32_point(), m_sizeImpact2 }, ::color::transparent);
+         fill_solid_rectangle({ ::i32_point(), m_sizeTarget }, ::color::transparent);
 
       }
 
@@ -6602,7 +6610,9 @@ namespace draw2d_direct2d_for_directx11
             if (!pimage->m_pbitmap)
             {
 
-               pimage->create_bitmap(pacmeuserinteractionAffinity, this);
+               ::cast < ::user::interaction > puserinteractionAffinity = pacmeuserinteractionAffinity;
+
+               pimage->update_as_render_target(size, puserinteractionAffinity, this);
 
             }
 
@@ -6627,7 +6637,7 @@ namespace draw2d_direct2d_for_directx11
 
             set_alpha_mode(::draw2d::e_alpha_mode_set);
 
-            fill_solid_rectangle({ ::i32_point(), m_sizeImpact2 }, ::color::transparent);
+            fill_solid_rectangle({ ::i32_point(), m_sizeTarget }, ::color::transparent);
 
          }
 
@@ -6850,9 +6860,9 @@ namespace draw2d_direct2d_for_directx11
 
       m_pd2d1rendertarget->DrawLine(p1, p2, pbrush, (FLOAT)(dynamic_cast <::draw2d_direct2d_for_directx11::pen *> (m_ppen.m_p))->m_dWidth);
 
-      m_point.x = x2;
+      m_pointCurrent.x = x2;
 
-      m_point.y = y2;
+      m_pointCurrent.y = y2;
 
       //return true;
 
@@ -6891,9 +6901,9 @@ namespace draw2d_direct2d_for_directx11
 
       m_pd2d1rendertarget->DrawLine(p1, p2, pbrush, fWidth);
 
-      m_point.x = x2;
+      m_pointCurrent.x = x2;
 
-      m_point.y = y2;
+      m_pointCurrent.y = y2;
 
       //return true;
 
@@ -6993,7 +7003,7 @@ namespace draw2d_direct2d_for_directx11
 
             set_alpha_mode(::draw2d::e_alpha_mode_set);
 
-            fill_solid_rectangle({ ::i32_point(), m_sizeImpact2 }, ::color::transparent);
+            fill_solid_rectangle({ ::i32_point(), m_sizeTarget }, ::color::transparent);
 
          }
 
@@ -7165,7 +7175,7 @@ namespace draw2d_direct2d_for_directx11
 
          set_alpha_mode(::draw2d::e_alpha_mode_set);
 
-         fill_solid_rectangle({ ::i32_point(), m_sizeImpact2 }, ::color::transparent);
+         fill_solid_rectangle({ ::i32_point(), m_sizeTarget }, ::color::transparent);
 
       }
 

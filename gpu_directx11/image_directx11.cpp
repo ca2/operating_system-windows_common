@@ -12,21 +12,21 @@
 //#endif
 
 
-CLASS_DECL_GPU_DIRECTX11 void image_gl_set(::image::image *pimage)
-{
-
-   ::u8* data = (::u8 *) pimage->m_pimage32Raw;
-
-   //if (data)
-   //{
-
-   //   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, pimage->m_size.cx, pimage->m_size.cy, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-
-   //   glGenerateMipmap(GL_TEXTURE_2D);
-
-   //}
-
-}
+//CLASS_DECL_GPU_DIRECTX11 void image_gl_set(::image::image *pimage)
+//{
+//
+//   ::u8* data = (::u8 *) pimage->m_pimage32Raw;
+//
+//   //if (data)
+//   //{
+//
+//   //   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, pimage->m_size.cx, pimage->m_size.cy, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+//
+//   //   glGenerateMipmap(GL_TEXTURE_2D);
+//
+//   //}
+//
+//}
 
 
 

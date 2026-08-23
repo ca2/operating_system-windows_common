@@ -30,13 +30,13 @@ namespace draw2d_direct2d_for_directx11
    }
 
 
-   void bitmap::create_bitmap_for_image(
+   void bitmap::update_bitmap_as_image_render_target(
       ::image::image * pimage,
       ::acme::user::interaction * pacmeuserinteractionAffinity,
       ::draw2d::graphics * pgraphics)
    {
 
-      ::draw2d::bitmap::create_bitmap_for_image(
+      ::draw2d::bitmap::update_bitmap_as_image_render_target(
          pimage,
          pacmeuserinteractionAffinity,
          pgraphics);
@@ -217,7 +217,7 @@ namespace draw2d_direct2d_for_directx11
    }
 
 
-   void bitmap::create_bitmap(::draw2d::graphics* pgraphics, const ::i32_size & size, ::memory & memory,  ::i32 * piScan)
+   void bitmap::create_bitmap(::draw2d::graphics* pgraphics, const ::i32_size & size, ::pixmap * ppixmap)
    {
 
       //::draw2d::lock draw2dlock;
@@ -287,16 +287,16 @@ namespace draw2d_direct2d_for_directx11
 
       int iScan = size.cx * 4;
 
-      if (piScan && *piScan > iScan)
+      if (ppixmap && ppixmap->m_iScan > iScan)
       {
 
-         iScan = *piScan;
+         iScan = ppixmap->m_iScan;
 
       }
 
       HRESULT hrResultCopyBitmap = S_OK;
 
-      if (memory.data_if_at_least(size.cy * iScan))
+      if (ppixmap && ppixmap->m_memoryPixmap.data_if_at_least(size.cy * iScan))
       {
 
          D2D1_RECT_U rectangleDst = {};
@@ -305,7 +305,7 @@ namespace draw2d_direct2d_for_directx11
 
          rectangleDst.bottom = size.cy;
 
-         hrResultCopyBitmap = m_pbitmap->CopyFromMemory(&rectangleDst, memory.data(), iScan);
+         hrResultCopyBitmap = m_pbitmap->CopyFromMemory(&rectangleDst, ppixmap->image32(), iScan);
 
       }
 

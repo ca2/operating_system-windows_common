@@ -29,19 +29,20 @@ namespace draw2d_direct2d_for_directx11
 
       void create_gpu_texture_image(::gpu::texture * pgputexture, ::gpu::graphics * pgpugraphics) override;
 
-      void copy_from(::image::image * pimage, enum_flag eflagCreate = e_flag_success) override;
+      //void copy_from(::image::image * pimage, enum_flag eflagCreate = e_flag_success) override;
 
 
       //virtual ::draw2d::graphics * _get_graphics() const override;
-      virtual ::draw2d::bitmap_pointer get_bitmap() const;
-      virtual ::draw2d::bitmap_pointer detach_bitmap();
+      virtual ::draw2d::bitmap_pointer get_bitmap_as_target(::draw2d::graphics * pdraw2dgraphics = nullptr) const override;
+      virtual ::draw2d::bitmap_pointer get_bitmap_as_source(::draw2d::graphics * pdraw2dgraphics = nullptr) const override;
+      virtual ::draw2d::bitmap_pointer detach_bitmap() override;
 
 
-      void dc_select(bool bSelect = true);
+      ///void dc_select(bool bSelect = true);
 
 
       //using ::image::image::create;
-      void create_as_render_target(const ::i32_size & size, ::user::interaction * puserinteraction, ::draw2d::graphics * pdraw2dgraphics, ::enum_flag eflagCreate = DEFAULT_CREATE_IMAGE_FLAG, ::i32 iStride = -1, bool bPreserve = false, bool bTopDraw2d = false) override;
+      void update_as_render_target(const ::i32_size & size, ::user::interaction * puserinteraction, ::draw2d::graphics * pdraw2dgraphics, ::enum_flag eflagCreate = DEFAULT_CREATE_IMAGE_FLAG, ::i32 iStride = -1, bool bPreserve = false, bool bTopDraw2d = false) override;
       //using ::image::image::initialize;
       //void initialize(const ::i32_size & size, ::image32_t * pimage32, ::i32 iScan, ::enum_flag eflagCreate = DEFAULT_CREATE_IMAGE_FLAG) override;
       bool _create(::draw2d::graphics * pgraphics);
@@ -54,7 +55,7 @@ namespace draw2d_direct2d_for_directx11
       //virtual bool _draw_raw(const ::i32_rectangle & rectangleTarget, ::image::image * pimage, const ::i32_point & pointSrc) override;
 
 
-      virtual void SetIconMask(::image::icon * picon, ::i32 cx, ::i32 cy) override;
+      virtual void set_image_icon(::image::icon * picon, ::i32 cx, ::i32 cy) override;
 
 
       virtual void defer_realize(::draw2d::graphics * pgraphics) const;
@@ -62,16 +63,16 @@ namespace draw2d_direct2d_for_directx11
       virtual void unrealize() const;
       virtual bool is_realized() const;
 
-      using ::image::image::blend;
-      virtual void blend(const ::i32_point & pointDst, ::image::image * pimageSrc, const ::i32_point & pointSrc, const ::i32_size & size, ::u8 bA) override;
+      //using ::image::image::blend;
+      //virtual void blend(const ::i32_point & pointDst, ::image::image * pimageSrc, const ::i32_point & pointSrc, const ::i32_size & size, ::u8 bA) override;
 
-      using ::image::image::tint;
-      virtual void tint(::image::image * pimage, ::color::color color32) override;
+      //using ::image::image::tint;
+      //virtual void tint(::image::image * pimage, ::color::color color32) override;
 
       
 protected:
-      void _map(const ::i32_rectangle & rectangle, bool bApplyAlphaTransform = true) override;
-      void _unmap(bool bDoUnmap = false) override;
+      ::image_pixmap_lease _map(const ::i32_rectangle & rectangle) override;
+      void _unmap(::image_pixmap_lease * pimagepixmaplease) override;
 
    };
 

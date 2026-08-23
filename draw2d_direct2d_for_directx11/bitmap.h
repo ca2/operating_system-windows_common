@@ -50,7 +50,7 @@ namespace draw2d_direct2d_for_directx11
 
 
       void _create_from_dxgi_surface(::i32 iIndex, ::i32 iLayerIndex, IDXGISurface * pdxgisurface, ::draw2d_direct2d_for_directx11::graphics * pgraphics);
-      void create_bitmap_for_image(
+      void update_bitmap_as_image_render_target(
          ::image::image * pimage,
          ::acme::user::interaction * pacmeuserinteractionAffinity = nullptr,
          ::draw2d::graphics * pgraphics = nullptr) override;
@@ -58,7 +58,7 @@ namespace draw2d_direct2d_for_directx11
       virtual bool CreateBitmapIndirect(::draw2d::graphics * pgraphics, LPBITMAP lpBitmap);
       virtual void CreateCompatibleBitmap(::draw2d::graphics * pgraphics, ::i32 nWidth, ::i32 nHeight);
       virtual void CreateDiscardableBitmap(::draw2d::graphics * pgraphics, ::i32 nWidth, ::i32 nHeight);
-      virtual void create_bitmap(::draw2d::graphics * pgraphics, const ::i32_size & size, memory & memory, ::i32 * piScan) override;
+      virtual void create_bitmap(::draw2d::graphics * pgraphics, const ::i32_size & size, ::pixmap * ppixmap) override;
       virtual void CreateDIBitmap(::draw2d::graphics * pgraphics, ::i32 cx, ::i32 cy, ::u32 flInit, const void *pjBits, ::u32 iUsage) override;
 
 

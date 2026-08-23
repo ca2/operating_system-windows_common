@@ -9,6 +9,7 @@
 //#include "directx11/geometry.h"
 #include "CustomRenderer.h"
 #include "acme/exception/not_implemented.h"
+#include "acme/graphics/image/frame_array.h"
 #include "acme/parallelization/synchronous_lock.h"
 #include "acme/platform/node.h"
 #include "acme/platform/scoped_restore.h"
@@ -22,7 +23,6 @@
 #include "aura/graphics/draw2d/device_lock.h"
 #include "aura/graphics/image/context.h"
 #include "aura/graphics/image/drawing.h"
-#include "aura/graphics/image/frame_array.h"
 #include "aura/platform/session.h"
 #include "aura/windowing/window.h"
 #include "bred/gpu/bred_approach.h"
@@ -864,7 +864,11 @@ namespace draw2d_directx11
 
             //}
 
-            pimage1->blend2(::f64_point(), m_pimageAlphaBlend, ::f64_point(x - m_pointAlphaBlend.x, y - m_pointAlphaBlend.y), rectangleBlt.size(), 255);
+            auto ppixmapImage1 = pimage1->map();
+
+            auto ppixmapImageAlphaBlend = m_pimageAlphaBlend->map();
+
+            ppixmapImage1->blend2(::f64_point(), ppixmapImageAlphaBlend, ::f64_point(x - m_pointAlphaBlend.x, y - m_pointAlphaBlend.y), rectangleBlt.size(), 255);
 
             ::image::image_drawing_options imagedrawingoptions;
 
@@ -2369,7 +2373,7 @@ namespace draw2d_directx11
       //try
       //{
 
-      if (pimage == nullptr || pimage->get_bitmap() == nullptr)
+      if (pimage == nullptr || pimage->get_bitmap_as_source() == nullptr)
       {
 
          //return false;
@@ -2613,13 +2617,15 @@ namespace draw2d_directx11
 
                   pframeTarget->m_iFrame = pframeSource->m_iFrame;
 
-                  auto & pimageSource = pframeSource->m_pimage;
+                  ::cast < ::image::image > pimageSource = pframeSource->m_pparticleImage;
 
                   pimageSource->set_ok_flag();
 
-                  auto & pimageTarget = pframeTarget->m_pimage;
+                  auto pimageTarget = createø<::image::image>();
 
-                  defer_constructø(pimageTarget);
+                  pframeTarget->m_pparticleImage = pimageTarget;
+
+                  //defer_constructø(pimageTarget);
 
                   pimageTarget->create_as_descriptor(m_pimage->size());
 
@@ -2639,7 +2645,7 @@ namespace draw2d_directx11
 
       }
 
-      if (pimage->get_bitmap() == nullptr)
+      if (pimage->get_bitmap_as_source() == nullptr)
       {
 
          //return false;
