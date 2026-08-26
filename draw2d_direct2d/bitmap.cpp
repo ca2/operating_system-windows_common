@@ -25,12 +25,12 @@ namespace draw2d_direct2d
       DRAW2D_BITMAP_TRANSFER(bitmap),
       draw2d_direct2d::object(::transfer(bitmap)),
       direct2d::object(::transfer(bitmap)),
-      m_pbitmap(::transfer(bitmap.m_pbitmap)),
-      m_pbitmap1(::transfer(bitmap.m_pbitmap1)),
+      m_pd2d1bitmap(::transfer(bitmap.m_pd2d1bitmap)),
+      m_pd2d1bitmap1(::transfer(bitmap.m_pd2d1bitmap1)),
       m_memory(::transfer(bitmap.m_memory)),
-      m_pbitmap1Map(::transfer(bitmap.m_pbitmap1Map)),
-      m_pbitmaprendertarget(::transfer(bitmap.m_pbitmaprendertarget)),
-      m_pdevicecontext(::transfer(bitmap.m_pdevicecontext))
+      m_pd2d1bitmap1Map(::transfer(bitmap.m_pd2d1bitmap1Map)),
+      m_pd2d1bitmaprendertarget(::transfer(bitmap.m_pd2d1bitmaprendertarget)),
+      m_pd2d1devicecontext(::transfer(bitmap.m_pd2d1devicecontext))
    {
 
 
@@ -67,7 +67,7 @@ namespace draw2d_direct2d
       else
       {
 
-         if (m_pbitmap)
+         if (m_pd2d1bitmap)
          {
 
             set_size(pimage->raw_size(), true);
@@ -110,7 +110,7 @@ namespace draw2d_direct2d
 
       ::draw2d::device_lock devicelock(this);
 
-      if (m_pbitmap != nullptr)
+      if (m_pd2d1bitmap != nullptr)
       {
 
          destroy();
@@ -185,7 +185,7 @@ namespace draw2d_direct2d
          sizeu,
          pixelformat,
          options,
-         &m_pbitmaprendertarget);
+         &m_pd2d1bitmaprendertarget);
 
       if (FAILED(hrCreateCompatibleRenderTarget))
       {
@@ -203,7 +203,7 @@ namespace draw2d_direct2d
       bitmapproperties1.dpiY = 96.0f;
       bitmapproperties1.colorContext = nullptr;
 
-      auto hrQueryDeviceContext = m_pbitmaprendertarget.as(m_pdevicecontext);
+      auto hrQueryDeviceContext = m_pd2d1bitmaprendertarget.as(m_pd2d1devicecontext);
       //if(ppdata != nullptr)
       {
          // g.m_pdc->CreateBitmap(size, *ppdata, cx * sizeof(::color32_t), props, &m_pbitmap);
@@ -211,7 +211,7 @@ namespace draw2d_direct2d
       //else
       //{
       //HRESULT hr = ((ID2D1DeviceContext *)pgraphics->get_os_data())->CreateBitmap(size, lpBits, stride, props, &m_pbitmap1);
-      HRESULT hrCreateBitmap = m_pbitmaprendertarget->GetBitmap(&m_pbitmap);
+      HRESULT hrCreateBitmap = m_pd2d1bitmaprendertarget->GetBitmap(&m_pd2d1bitmap);
 
       //}
 
@@ -233,12 +233,12 @@ namespace draw2d_direct2d
          r.right = sizeBits.cx;
          r.bottom = sizeBits.cy;
 
-         m_pbitmap->CopyFromMemory(&r, pbits, stride);
+         m_pd2d1bitmap->CopyFromMemory(&r, pbits, stride);
 
       }
 
 
-      auto hrQueryBitmap1 = m_pbitmap.as(m_pbitmap1);
+      auto hrQueryBitmap1 = m_pd2d1bitmap.as(m_pd2d1bitmap1);
 
       static ::std::atomic<unsigned int> s_uBitmapCreationDiagnosticCount{ 0 };
       auto uBitmapCreationDiagnosticCount = s_uBitmapCreationDiagnosticCount.fetch_add(1, ::std::memory_order_relaxed);
@@ -260,10 +260,10 @@ namespace draw2d_direct2d
             sizeParam.cx,
             sizeParam.cy,
             pd2d1devicecontext,
-            (ID2D1BitmapRenderTarget *)m_pbitmaprendertarget,
-            (ID2D1Bitmap *)m_pbitmap,
-            (ID2D1Bitmap1 *)m_pbitmap1,
-            (ID2D1DeviceContext *)m_pdevicecontext);
+            (ID2D1BitmapRenderTarget *)m_pd2d1bitmaprendertarget,
+            (ID2D1Bitmap *)m_pd2d1bitmap,
+            (ID2D1Bitmap1 *)m_pd2d1bitmap1,
+            (ID2D1DeviceContext *)m_pd2d1devicecontext);
 
       }
 
@@ -289,7 +289,7 @@ namespace draw2d_direct2d
       //
       //if(ppdata != nullptr)
       // *ppdata = (::color::color *) m_map.bits;
-      m_osdata[0] = m_pbitmap;
+      m_osdata[0] = m_pd2d1bitmap;
 
       //return true;
 
@@ -306,13 +306,12 @@ namespace draw2d_direct2d
 
       auto pbitmapThis = ::as_pointer(this);
 
-      auto pbitmap = ::transfer(m_pbitmap);
-      auto pbitmap1 = ::transfer(m_pbitmap1);
+      auto pd2d1bitmap = ::transfer(m_pd2d1bitmap);
+      auto pd2d1bitmap1 = ::transfer(m_pd2d1bitmap1);
       auto memory = ::transfer(m_memory);
-      auto pbitmap1Map = ::transfer(m_pbitmap1Map);
-      auto pbitmaprendertarget = ::transfer(m_pbitmaprendertarget);
-      auto pdevicecontext = ::transfer(m_pdevicecontext);
-
+      auto pd2d1bitmap1Map = ::transfer(m_pd2d1bitmap1Map);
+      auto pd2d1bitmaprendertarget = ::transfer(m_pd2d1bitmaprendertarget);
+      auto pd2d1devicecontext = ::transfer(m_pd2d1devicecontext);
 
       pimage->create_as_descriptor(size);
 
@@ -325,12 +324,12 @@ namespace draw2d_direct2d
          0,
          pimage->m_pacmeuserinteractionAffinity);
 
-      if (pbitmap)
+      if (pd2d1bitmap)
       {
 
          D2D1_RECT_U rectSource;
 
-         auto sizeMinimum = pbitmap->GetSize();
+         auto sizeMinimum = pd2d1bitmap->GetSize();
 
          rectSource.left = 0;
          rectSource.top = 0;
@@ -342,7 +341,7 @@ namespace draw2d_direct2d
          pointTarget.x = 0;
          pointTarget.y = 0;
 
-         auto hrCopyFromBitmap = m_pbitmap->CopyFromBitmap(&pointTarget, pbitmap, &rectSource);
+         auto hrCopyFromBitmap = m_pd2d1bitmap->CopyFromBitmap(&pointTarget, pd2d1bitmap, &rectSource);
 
       }
 
@@ -394,7 +393,7 @@ namespace draw2d_direct2d
 
       ::draw2d::device_lock devicelock(this);
 
-      if (m_pbitmap != nullptr)
+      if (m_pd2d1bitmap != nullptr)
       {
 
          destroy();
@@ -446,18 +445,18 @@ namespace draw2d_direct2d
 
       }
 
-      m_pdevicecontext = pdevicecontext;
+      m_pd2d1devicecontext = pdevicecontext;
 
-      HRESULT hr = pdevicecontext->CreateBitmap(usize, nullptr, 0, props, &m_pbitmap1);
+      HRESULT hr = pdevicecontext->CreateBitmap(usize, nullptr, 0, props, &m_pd2d1bitmap1);
 
-      if (FAILED(hr) || m_pbitmap1 == nullptr)
+      if (FAILED(hr) || m_pd2d1bitmap1 == nullptr)
       {
 
          throw ::exception(error_failed);
 
       }
 
-      if (FAILED(m_pbitmap1.as(m_pbitmap)))
+      if (FAILED(m_pd2d1bitmap1.as(m_pd2d1bitmap)))
       {
 
          throw ::exception(error_failed);
@@ -488,15 +487,15 @@ namespace draw2d_direct2d
 
          rectangleDst.bottom = size.cy;
 
-         hrResultCopyBitmap = m_pbitmap->CopyFromMemory(&rectangleDst, ppixmap->m_memoryPixmap.data(), iScan);
+         hrResultCopyBitmap = m_pd2d1bitmap->CopyFromMemory(&rectangleDst, ppixmap->m_memoryPixmap.data(), iScan);
 
       }
 
       m_size = size;
 
-      m_osdata[0] = m_pbitmap;
+      m_osdata[0] = m_pd2d1bitmap;
 
-      m_osdata[1] = m_pbitmap1;
+      m_osdata[1] = m_pd2d1bitmap1;
 
       //return true;
 
@@ -533,14 +532,14 @@ namespace draw2d_direct2d
 
       ::draw2d::device_lock devicelock(this);
 
-      if (!m_pbitmap1 || !m_pdevicecontext)
+      if (!m_pd2d1bitmap1 || !m_pd2d1devicecontext)
       {
 
          throw ::exception(error_wrong_state);
 
       }
 
-      auto sizeBitmap = m_pbitmap1->GetPixelSize();
+      auto sizeBitmap = m_pd2d1bitmap1->GetPixelSize();
 
       if (point.x < 0 || point.y < 0
          || point.x > (::i32) sizeBitmap.width - size.cx
@@ -560,7 +559,7 @@ namespace draw2d_direct2d
 
       }
 
-      auto hrCopy = pbitmap1Map->CopyFromBitmap(nullptr, m_pbitmap1, nullptr);
+      auto hrCopy = pbitmap1Map->CopyFromBitmap(nullptr, m_pd2d1bitmap1, nullptr);
 
       if (FAILED(hrCopy))
       {
@@ -652,14 +651,14 @@ namespace draw2d_direct2d
 
       ::draw2d::device_lock devicelock(this);
 
-      if (!m_pbitmap1)
+      if (!m_pd2d1bitmap1)
       {
 
          throw ::exception(error_wrong_state);
 
       }
 
-      auto sizeBitmap = m_pbitmap1->GetPixelSize();
+      auto sizeBitmap = m_pd2d1bitmap1->GetPixelSize();
 
       if (point.x < 0 || point.y < 0
          || point.x > (::i32) sizeBitmap.width - size.cx
@@ -677,7 +676,7 @@ namespace draw2d_direct2d
       rectangleDst.right = (UINT32) (point.x + size.cx);
       rectangleDst.bottom = (UINT32) (point.y + size.cy);
 
-      auto hrCopy = m_pbitmap1->CopyFromMemory(&rectangleDst, pimage32, (UINT32) iScan);
+      auto hrCopy = m_pd2d1bitmap1->CopyFromMemory(&rectangleDst, pimage32, (UINT32) iScan);
 
       if (FAILED(hrCopy))
       {
@@ -723,40 +722,40 @@ namespace draw2d_direct2d
 
       D2D1_SIZE_U sizeuMap{};
       
-      if (m_pbitmap1Map)
+      if (m_pd2d1bitmap1Map)
       {
 
-         sizeuMap = m_pbitmap1Map->GetPixelSize();
+         sizeuMap = m_pd2d1bitmap1Map->GetPixelSize();
 
       }
 
       ::i32_size sizeMap(sizeuMap.width, sizeuMap.height);
 
-      auto sizeuThis = m_pbitmap1->GetPixelSize();
+      auto sizeuThis = m_pd2d1bitmap1->GetPixelSize();
 
       ::i32_size sizeThis(sizeuThis.width, sizeuThis.height);
 
-      if (!m_pbitmap1Map || sizeMap != sizeThis)
+      if (!m_pd2d1bitmap1Map || sizeMap != sizeThis)
       {
 
-         if (m_pbitmap1Map)
+         if (m_pd2d1bitmap1Map)
          {
 
-            m_pbitmap1Map.release();
+            m_pd2d1bitmap1Map.release();
 
          }
 
          D2D1_BITMAP_PROPERTIES1 stagingProperties = D2D1::BitmapProperties1(
             D2D1_BITMAP_OPTIONS_CANNOT_DRAW | D2D1_BITMAP_OPTIONS_CPU_READ,
-            m_pbitmap1->GetPixelFormat()
+            m_pd2d1bitmap1->GetPixelFormat()
          );
 
-         auto hrCreateMapBitmap = m_pdevicecontext->CreateBitmap(
+         auto hrCreateMapBitmap = m_pd2d1devicecontext->CreateBitmap(
              sizeuThis,
              nullptr,
              0,
              &stagingProperties,
-             &m_pbitmap1Map
+             &m_pd2d1bitmap1Map
          ); 
 
          if (FAILED(hrCreateMapBitmap))
@@ -766,9 +765,9 @@ namespace draw2d_direct2d
 
          }
 
-         auto stagingSize = m_pbitmap1Map->GetPixelSize();
-         auto stagingPixelFormat = m_pbitmap1Map->GetPixelFormat();
-         auto stagingOptions = m_pbitmap1Map->GetOptions();
+         auto stagingSize = m_pd2d1bitmap1Map->GetPixelSize();
+         auto stagingPixelFormat = m_pd2d1bitmap1Map->GetPixelFormat();
+         auto stagingOptions = m_pd2d1bitmap1Map->GetOptions();
 
          static ::std::atomic<unsigned int> s_uStagingCreationDiagnosticCount{ 0 };
          auto uStagingCreationDiagnosticCount = s_uStagingCreationDiagnosticCount.fetch_add(1, ::std::memory_order_relaxed);
@@ -781,9 +780,9 @@ namespace draw2d_direct2d
                "requested=(%u,%u) actual=(%u,%u) options=0x%08x format=%u alpha=%u",
                (unsigned long)hrCreateMapBitmap,
                (unsigned long)::GetCurrentThreadId(),
-               (ID2D1DeviceContext *)m_pdevicecontext,
-               (ID2D1Bitmap1 *)m_pbitmap1,
-               (ID2D1Bitmap1 *)m_pbitmap1Map,
+               (ID2D1DeviceContext *)m_pd2d1devicecontext,
+               (ID2D1Bitmap1 *)m_pd2d1bitmap1,
+               (ID2D1Bitmap1 *)m_pd2d1bitmap1Map,
                (unsigned int)sizeuThis.width,
                (unsigned int)sizeuThis.height,
                (unsigned int)stagingSize.width,
@@ -796,32 +795,41 @@ namespace draw2d_direct2d
 
       }
 
-      return m_pbitmap1Map;
+      return m_pd2d1bitmap1Map;
 
    }
 
 
-   i32_size bitmap::GetBitmapDimension() const
+   //i32_size bitmap::GetBitmapDimension() const
+   //{
+
+   //   if (!m_pd2d1bitmap)
+   //   {
+
+   //      return ::i32_size(0, 0);
+
+   //   }
+
+   //   D2D1_SIZE_U size = m_pd2d1bitmap->GetPixelSize();
+
+   //   return ::i32_size(size.width, size.height);
+
+   //}
+
+
+   i32_size bitmap::size() const
    {
 
-      if (!m_pbitmap)
+      if (!m_pd2d1bitmap)
       {
 
          return ::i32_size(0, 0);
 
       }
 
-      D2D1_SIZE_U size = m_pbitmap->GetPixelSize();
+      D2D1_SIZE_U size = m_pd2d1bitmap->GetPixelSize();
 
       return ::i32_size(size.width, size.height);
-
-   }
-
-
-   i32_size bitmap::size() const
-   {
-
-      return GetBitmapDimension();
 
    }
 
@@ -836,7 +844,7 @@ namespace draw2d_direct2d
 
       }
 
-      auto sizeOld = GetBitmapDimension();
+      auto sizeOld = this->size();
 
       if (size == sizeOld)
       {
@@ -847,7 +855,7 @@ namespace draw2d_direct2d
 
       ::draw2d::device_lock devicelock(this);
 
-      if (!m_pbitmap || !m_pdevicecontext)
+      if (!m_pd2d1bitmap || !m_pd2d1devicecontext)
       {
 
          throw ::exception(error_wrong_state);
@@ -864,7 +872,7 @@ namespace draw2d_direct2d
       comptr<ID2D1BitmapRenderTarget> pbitmaprendertargetNew;
       comptr<ID2D1DeviceContext> pdevicecontextNew;
 
-      if (m_pbitmaprendertarget)
+      if (m_pd2d1bitmaprendertarget)
       {
 
          D2D1_SIZE_F sizeNewDips{};
@@ -872,9 +880,9 @@ namespace draw2d_direct2d
          sizeNewDips.width = (FLOAT) size.cx;
          sizeNewDips.height = (FLOAT) size.cy;
 
-         auto pixelformat = m_pbitmap->GetPixelFormat();
+         auto pixelformat = m_pd2d1bitmap->GetPixelFormat();
 
-         auto hr = m_pbitmaprendertarget->CreateCompatibleRenderTarget(
+         auto hr = m_pd2d1bitmaprendertarget->CreateCompatibleRenderTarget(
             &sizeNewDips,
             &sizeNew,
             &pixelformat,
@@ -935,15 +943,15 @@ namespace draw2d_direct2d
 
          D2D1_BITMAP_PROPERTIES1 properties{};
 
-         properties.pixelFormat = m_pbitmap->GetPixelFormat();
-         m_pbitmap->GetDpi(&properties.dpiX, &properties.dpiY);
+         properties.pixelFormat = m_pd2d1bitmap->GetPixelFormat();
+         m_pd2d1bitmap->GetDpi(&properties.dpiX, &properties.dpiY);
          properties.bitmapOptions = D2D1_BITMAP_OPTIONS_TARGET;
 
          auto iStride = size.cx * (::i32) sizeof(::image32_t);
          ::memory memoryTransparent((memsize) iStride * size.cy);
          memoryTransparent.set(0);
 
-         auto hr = m_pdevicecontext->CreateBitmap(
+         auto hr = m_pd2d1devicecontext->CreateBitmap(
             sizeNew,
             memoryTransparent.data(),
             (UINT32) iStride,
@@ -966,7 +974,7 @@ namespace draw2d_direct2d
 
          }
 
-         pdevicecontextNew = m_pdevicecontext;
+         pdevicecontextNew = m_pd2d1devicecontext;
 
       }
 
@@ -978,7 +986,7 @@ namespace draw2d_direct2d
          rectangleSource.right = (UINT32)minimum(sizeOld.cx, size.cx);
          rectangleSource.bottom = (UINT32)minimum(sizeOld.cy, size.cy);
 
-         auto hrCopy = pbitmapNew->CopyFromBitmap(nullptr, m_pbitmap, &rectangleSource);
+         auto hrCopy = pbitmapNew->CopyFromBitmap(nullptr, m_pd2d1bitmap, &rectangleSource);
 
          if (FAILED(hrCopy))
          {
@@ -989,20 +997,20 @@ namespace draw2d_direct2d
 
       }
 
-      m_pbitmap = ::transfer(pbitmapNew);
-      m_pbitmap1 = ::transfer(pbitmap1New);
-      m_pbitmap1Map = nullptr;
+      m_pd2d1bitmap = ::transfer(pbitmapNew);
+      m_pd2d1bitmap1 = ::transfer(pbitmap1New);
+      m_pd2d1bitmap1Map = nullptr;
 
       if (pbitmaprendertargetNew)
       {
 
-         m_pbitmaprendertarget = ::transfer(pbitmaprendertargetNew);
+         m_pd2d1bitmaprendertarget = ::transfer(pbitmaprendertargetNew);
 
       }
 
-      m_pdevicecontext = ::transfer(pdevicecontextNew);
-      m_osdata[0] = m_pbitmap;
-      m_osdata[1] = m_pbitmap1;
+      m_pd2d1devicecontext = ::transfer(pdevicecontextNew);
+      m_osdata[0] = m_pd2d1bitmap;
+      m_osdata[1] = m_pd2d1bitmap1;
       m_size = size;
 
    }
@@ -1033,7 +1041,7 @@ namespace draw2d_direct2d
 
       ::draw2d::device_lock devicelock(this);
 
-      if (m_pbitmap != nullptr)
+      if (m_pd2d1bitmap != nullptr)
       {
 
          destroy();
@@ -1073,16 +1081,16 @@ namespace draw2d_direct2d
 
          }
 
-         m_pdevicecontext = pdevicecontext;
+         m_pd2d1devicecontext = pdevicecontext;
 
          auto hrCreateBitmap = pdevicecontext->CreateBitmap(
             size,
             nullptr,
             0,
             props,
-            &m_pbitmap1);
+            &m_pd2d1bitmap1);
 
-         if (FAILED(hrCreateBitmap) || !m_pbitmap1)
+         if (FAILED(hrCreateBitmap) || !m_pd2d1bitmap1)
          {
 
             throw hresult_exception(hrCreateBitmap, "Failed to create compatible Direct2D bitmap");
@@ -1090,11 +1098,12 @@ namespace draw2d_direct2d
          }
 
       }
-      m_pbitmap = m_pbitmap1;
 
-      m_osdata[0] = m_pbitmap;
+      m_pd2d1bitmap = m_pd2d1bitmap1;
 
-      m_osdata[1] = m_pbitmap1;
+      m_osdata[0] = m_pd2d1bitmap;
+
+      m_osdata[1] = m_pd2d1bitmap1;
 
       //return true;
 
@@ -1108,7 +1117,7 @@ namespace draw2d_direct2d
 
       ::draw2d::device_lock devicelock(this);
 
-      if (m_pbitmap != nullptr)
+      if (m_pd2d1bitmap != nullptr)
       {
 
          destroy();
@@ -1147,16 +1156,16 @@ namespace draw2d_direct2d
 
          }
 
-         m_pdevicecontext = pdevicecontext;
+         m_pd2d1devicecontext = pdevicecontext;
 
          auto hrCreateBitmap = pdevicecontext->CreateBitmap(
             size,
             nullptr,
             0,
             &props,
-            &m_pbitmap1);
+            &m_pd2d1bitmap1);
 
-         if (FAILED(hrCreateBitmap) || !m_pbitmap1)
+         if (FAILED(hrCreateBitmap) || !m_pd2d1bitmap1)
          {
 
             throw hresult_exception(hrCreateBitmap, "Failed to create discardable Direct2D bitmap");
@@ -1164,11 +1173,11 @@ namespace draw2d_direct2d
          }
 
       }
-      m_pbitmap = m_pbitmap1;
+      m_pd2d1bitmap = m_pd2d1bitmap1;
 
-      m_osdata[0] = m_pbitmap;
+      m_osdata[0] = m_pd2d1bitmap;
 
-      m_osdata[1] = m_pbitmap1;
+      m_osdata[1] = m_pd2d1bitmap1;
 
       //m_pbitmap->Map(D2D1_MAP_OPTIONS_READ | D2D1_MAP_OPTIONS_WRITE, &m_map);
 
@@ -1202,20 +1211,20 @@ namespace draw2d_direct2d
    void bitmap::attach(void * hbitmap)
    {
 
-      if (m_pbitmap != nullptr)
+      if (m_pd2d1bitmap != nullptr)
       {
 
          destroy();
 
       }
 
-      m_pbitmap = (ID2D1Bitmap *)hbitmap;
+      m_pd2d1bitmap = (ID2D1Bitmap *)hbitmap;
 
-      m_pbitmap.as(m_pbitmap1);
+      m_pd2d1bitmap.as(m_pd2d1bitmap1);
 
-      m_osdata[0] = m_pbitmap;
+      m_osdata[0] = m_pd2d1bitmap;
 
-      m_osdata[1] = m_pbitmap1;
+      m_osdata[1] = m_pd2d1bitmap1;
 
       //return true;
 
@@ -1227,9 +1236,9 @@ namespace draw2d_direct2d
 
       clear_os_data();
 
-      m_pbitmap1 = nullptr;
+      m_pd2d1bitmap1 = nullptr;
 
-      return m_pbitmap.detach();
+      return m_pd2d1bitmap.detach();
 
    }
 
@@ -1247,15 +1256,15 @@ namespace draw2d_direct2d
    void bitmap::destroy_os_data()
    {
 
-      m_pbitmap1Map = nullptr;
+      m_pd2d1bitmap1Map = nullptr;
 
-      m_pbitmap = nullptr;
+      m_pd2d1bitmap = nullptr;
 
-      m_pbitmap1 = nullptr;
+      m_pd2d1bitmap1 = nullptr;
 
-      m_pbitmaprendertarget = nullptr;
+      m_pd2d1bitmaprendertarget = nullptr;
 
-      m_pdevicecontext = nullptr;
+      m_pd2d1devicecontext = nullptr;
 
       object::destroy_os_data();
 

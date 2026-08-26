@@ -249,7 +249,7 @@ namespace gpu_directx11
 
          D3D11_MAPPED_SUBRESOURCE mapped;
 
-         pcontext->m_pcontext->Map(
+         pcontext->m_pd3d11devicecontext->Map(
             m_pbuffer, 0, m_iBufferOffset == 0 ? D3D11_MAP_WRITE_DISCARD :
 
             D3D11_MAP_WRITE_NO_OVERWRITE, 0, &mapped);
@@ -265,7 +265,7 @@ namespace gpu_directx11
 
          D3D11_MAPPED_SUBRESOURCE mapped;
 
-         pcontext->m_pcontext->Map(
+         pcontext->m_pd3d11devicecontext->Map(
             m_pbuffer, 0, bDiscard ? D3D11_MAP_WRITE_DISCARD :
 
             D3D11_MAP_WRITE_NO_OVERWRITE, 0, &mapped);
@@ -284,7 +284,7 @@ namespace gpu_directx11
 
       ::cast < ::gpu_directx11::context > pcontext = m_pcontext;
 
-      pcontext->m_pcontext->Unmap(m_pbuffer, 0);
+      pcontext->m_pd3d11devicecontext->Unmap(m_pbuffer, 0);
 
    }
 
@@ -301,7 +301,7 @@ namespace gpu_directx11
 
          ::cast < ::gpu_directx11::context > pcontext = m_pcontext;
 
-         pcontext->m_pcontext->IASetVertexBuffers(0, 1, m_pbuffer.pp(), &stride, &offset);
+         pcontext->m_pd3d11devicecontext->IASetVertexBuffers(0, 1, m_pbuffer.pp(), &stride, &offset);
 
       }
       else if (m_etype == e_type_index_buffer)
@@ -309,7 +309,7 @@ namespace gpu_directx11
 
          ::cast < ::gpu_directx11::context > pcontext = m_pcontext;
 
-         pcontext->m_pcontext->IASetIndexBuffer(m_pbuffer, DXGI_FORMAT_R32_UINT, 0);
+         pcontext->m_pd3d11devicecontext->IASetIndexBuffer(m_pbuffer, DXGI_FORMAT_R32_UINT, 0);
 
       }
 

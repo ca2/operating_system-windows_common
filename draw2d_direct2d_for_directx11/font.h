@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "aura/graphics/write_text/font.h"
+#include "operating_system-windows_common/draw2d_direct2d/font.h"
 #include "object.h"
 
 
@@ -11,15 +11,15 @@ namespace draw2d_direct2d_for_directx11
 
    class CLASS_DECL_DRAW2D_DIRECT2D_FOR_DIRECTX11 font :
       virtual public ::draw2d_direct2d_for_directx11::object,
-      virtual public ::write_text::font
+      virtual public ::draw2d_direct2d::font
    {
    public:
 
 
-      comptr < IDWriteFontCollection >    m_pcollection;
-      comptr < IDWriteFontFamily >        m_pfamily;
-      comptr < IDWriteTextFormat >        m_pformat;
-      comptr < IDWriteFont >              m_pfont;
+      //comptr < IDWriteFontCollection >    m_pcollection;
+      //comptr < IDWriteFontFamily >        m_pfamily;
+      //comptr < IDWriteTextFormat >        m_pformat;
+      //comptr < IDWriteFont >              m_pfont;
 
 
       font();

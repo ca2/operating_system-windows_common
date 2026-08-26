@@ -327,8 +327,9 @@ namespace gpu_directx11
          // rasterizerDesc.FrontCounterClockwise = true;
          // rasterizerDesc.DepthClipEnable = TRUE;
 
-         HRESULT hr =
-            pgpucontext->m_pgpudevice->m_pd3d11device->CreateRasterizerState(&rasterizerDesc, &m_prasterizerstate2);
+         ::cast < ::gpu_directx11::device > pgpudevice = pgpucontext->m_pgpudevice;
+
+         HRESULT hr = pgpudevice->m_pd3d11device->CreateRasterizerState(&rasterizerDesc, &m_prasterizerstate2);
 
          ::defer_throw_hresult(hr);
       }
@@ -443,7 +444,7 @@ namespace gpu_directx11
          {
 
             ID3D11ShaderResourceView *shaderresourceviewa[] = {pshaderresourceview};
-            pgpucontext->m_pcontext->PSSetShaderResources(0, 1, shaderresourceviewa);
+            pgpucontext->m_pd3d11devicecontext->PSSetShaderResources(0, 1, shaderresourceviewa);
          }
 
          auto psamplerstate = ptextureSrc->m_psamplerstate;
@@ -453,7 +454,7 @@ namespace gpu_directx11
 
             ID3D11SamplerState *samplerstatea[] = {psamplerstate};
 
-            pgpucontext->m_pcontext->PSSetSamplers(0, 1, samplerstatea);
+            pgpucontext->m_pd3d11devicecontext->PSSetSamplers(0, 1, samplerstatea);
          }
       }
    }
@@ -472,11 +473,11 @@ namespace gpu_directx11
 
       // defer_throw_hresult(hr1);
 
-      pgpucontext->m_pcontext->VSSetShader(m_pvertexshader, nullptr, 0);
+      pgpucontext->m_pd3d11devicecontext->VSSetShader(m_pvertexshader, nullptr, 0);
 
       /// defer_throw_hresult(hr2);
 
-      pgpucontext->m_pcontext->PSSetShader(m_ppixelshader, nullptr, 0);
+      pgpucontext->m_pd3d11devicecontext->PSSetShader(m_ppixelshader, nullptr, 0);
 
 
       if (m_pinputlayout)
@@ -488,25 +489,25 @@ namespace gpu_directx11
             throw ::exception(error_wrong_state);
          }
 
-         pgpucontext->m_pcontext->IASetInputLayout(m_pd3d11inputlayout);
+         pgpucontext->m_pd3d11devicecontext->IASetInputLayout(m_pd3d11inputlayout);
       }
       else
       {
 
-         pgpucontext->m_pcontext->IASetInputLayout(nullptr);
+         pgpucontext->m_pd3d11devicecontext->IASetInputLayout(nullptr);
       }
 
       if (m_pdepthstencilstate2)
       {
 
          // Bind the new depth-stencil state
-         pgpucontext->m_pcontext->OMSetDepthStencilState(m_pdepthstencilstate2, 0);
+         pgpucontext->m_pd3d11devicecontext->OMSetDepthStencilState(m_pdepthstencilstate2, 0);
       }
 
       if (m_prasterizerstate2)
       {
 
-         pgpucontext->m_pcontext->RSSetState(m_prasterizerstate2);
+         pgpucontext->m_pd3d11devicecontext->RSSetState(m_prasterizerstate2);
 
       }
 
@@ -516,13 +517,13 @@ namespace gpu_directx11
          ::f32 blendFactor[4] = {0, 0, 0, 0}; // Ignored with this blend mode
          UINT sampleMask = 0xFFFFFFFF;
 
-         pgpucontext->m_pcontext->OMSetBlendState(m_pblendstate2, blendFactor, sampleMask);
+         pgpucontext->m_pd3d11devicecontext->OMSetBlendState(m_pblendstate2, blendFactor, sampleMask);
 
       }
 
       auto etopology = ::directx11::as_d3d11_topology(m_etopology);
 
-      pgpucontext->m_pcontext->IASetPrimitiveTopology(etopology);
+      pgpucontext->m_pd3d11devicecontext->IASetPrimitiveTopology(etopology);
 
       //::cast<::gpu_directx11::block> pblockGlobalUbo1 =
       //   pgpucontext->m_pengine->m_pimmersionlayer->m_pscene->global_ubo1(pgpucontext);
@@ -590,12 +591,12 @@ namespace gpu_directx11
             if (pdepthstencilview)
             {
 
-               pgpucontext->m_pcontext->OMSetRenderTargets(1, rendertargetviewa, pdepthstencilview);
+               pgpucontext->m_pd3d11devicecontext->OMSetRenderTargets(1, rendertargetviewa, pdepthstencilview);
             }
             else
             {
 
-               pgpucontext->m_pcontext->OMSetRenderTargets(1, rendertargetviewa, nullptr);
+               pgpucontext->m_pd3d11devicecontext->OMSetRenderTargets(1, rendertargetviewa, nullptr);
             }
          }
       }
@@ -626,16 +627,17 @@ namespace gpu_directx11
             ID3D11DepthStencilView *pdepthstencilview = ptexture->m_pdepthstencilview;
             if (pdepthstencilview)
             {
-               pgpucontext->m_pcontext->OMSetRenderTargets(1, rendertargetviewa, pdepthstencilview);
+               pgpucontext->m_pd3d11devicecontext->OMSetRenderTargets(1, rendertargetviewa, pdepthstencilview);
             }
             else
             {
 
-               pgpucontext->m_pcontext->OMSetRenderTargets(1, rendertargetviewa, nullptr);
+               pgpucontext->m_pd3d11devicecontext->OMSetRenderTargets(1, rendertargetviewa, nullptr);
             }
          }
       }
    }
+
 
    void shader::on_bind_already_bound(::gpu::command_buffer *pgpucommandbuffer, ::gpu::texture_site *pgputexturesiteTarget)
    
@@ -778,7 +780,7 @@ namespace gpu_directx11
       if (m_pvertexshader)
       {
 
-         pgpucontext->m_pcontext->VSSetShader(nullptr, nullptr, 0);
+         pgpucontext->m_pd3d11devicecontext->VSSetShader(nullptr, nullptr, 0);
       }
 
       /// defer_throw_hresult(hr2);
@@ -786,7 +788,7 @@ namespace gpu_directx11
       if (m_ppixelshader)
       {
 
-         pgpucontext->m_pcontext->PSSetShader(nullptr, nullptr, 0);
+         pgpucontext->m_pd3d11devicecontext->PSSetShader(nullptr, nullptr, 0);
       }
 
       if (prenderer)
@@ -811,7 +813,7 @@ namespace gpu_directx11
 
                   ID3D11ShaderResourceView *nullSRV[1] = {nullptr};
 
-                  pgpucontext->m_pcontext->PSSetShaderResources(0, 1, nullSRV);
+                  pgpucontext->m_pd3d11devicecontext->PSSetShaderResources(0, 1, nullSRV);
                }
             }
          }
@@ -875,7 +877,7 @@ namespace gpu_directx11
 
       D3D11_MAPPED_SUBRESOURCE mapped;
       HRESULT hrMap =
-         pgpucontext->m_pcontext->Map(m_pbufferSharedPushConstants, 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
+         pgpucontext->m_pd3d11devicecontext->Map(m_pbufferSharedPushConstants, 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
 
       if (FAILED(hrMap))
       {
@@ -884,7 +886,7 @@ namespace gpu_directx11
       }
 
       memcpy(mapped.pData, m_propertiesPushShared.data(false), m_propertiesPushShared.size(false));
-      pgpucontext->m_pcontext->Unmap(m_pbufferSharedPushConstants, 0);
+      pgpucontext->m_pd3d11devicecontext->Unmap(m_pbufferSharedPushConstants, 0);
 
 
       // pgpucontext->m_pcontext->VSSetConstantBuffers(0, 1, pgpucontext->m_pbufferGlobalUbo.pp());
@@ -892,9 +894,9 @@ namespace gpu_directx11
 
 
       auto pVS = m_pbufferSharedPushConstants.m_p;
-      pgpucontext->m_pcontext->VSSetConstantBuffers(1, 1, &pVS);
+      pgpucontext->m_pd3d11devicecontext->VSSetConstantBuffers(1, 1, &pVS);
       auto pPS = m_pbufferSharedPushConstants.m_p;
-      pgpucontext->m_pcontext->PSSetConstantBuffers(1, 1, &pPS);
+      pgpucontext->m_pd3d11devicecontext->PSSetConstantBuffers(1, 1, &pPS);
    }
 
 
@@ -915,8 +917,8 @@ namespace gpu_directx11
    {
 
       ::cast<context> pgpucontext = m_pgpurenderer->m_pgpucontext;
-      pgpucontext->m_pcontext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-      pgpucontext->m_pcontext->Draw(6, 0);
+      pgpucontext->m_pd3d11devicecontext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+      pgpucontext->m_pd3d11devicecontext->Draw(6, 0);
       //   ::cast < renderer > prenderer = m_pgpurenderer;
 
       //   auto commandBuffer = prenderer->getCurrentCommandBuffer();
@@ -949,9 +951,9 @@ namespace gpu_directx11
                pgpucommandbuffer->m_pgpurendertarget->m_pgpurenderer->m_pgpucontext;
 
             auto pVS = pbuffer.m_p;
-            pcontext->m_pcontext->VSSetConstantBuffers(iBinding, 1, &pVS);
+            pcontext->m_pd3d11devicecontext->VSSetConstantBuffers(iBinding, 1, &pVS);
             auto pPS = pbuffer.m_p;
-            pcontext->m_pcontext->PSSetConstantBuffers(iBinding, 1, &pPS);
+            pcontext->m_pd3d11devicecontext->PSSetConstantBuffers(iBinding, 1, &pPS);
          }
          else if (bindingslot.m_ptexturesite.ok())
          {
@@ -976,7 +978,7 @@ namespace gpu_directx11
             {
 
                ID3D11ShaderResourceView *shaderresourceviewa[] = {pshaderresourceview};
-               pgpucontext->m_pcontext->PSSetShaderResources(iBinding, 1, shaderresourceviewa);
+               pgpucontext->m_pd3d11devicecontext->PSSetShaderResources(iBinding, 1, shaderresourceviewa);
             }
 
             if (iSlotIndex == 0)
@@ -989,7 +991,7 @@ namespace gpu_directx11
 
                   ID3D11SamplerState *samplerstatea[] = {psamplerstate};
 
-                  pgpucontext->m_pcontext->PSSetSamplers(iBinding, 1, samplerstatea);
+                  pgpucontext->m_pd3d11devicecontext->PSSetSamplers(iBinding, 1, samplerstatea);
                }
 
             }

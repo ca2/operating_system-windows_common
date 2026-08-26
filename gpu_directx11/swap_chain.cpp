@@ -16,9 +16,9 @@
 
 CLASS_DECL_DIRECTX11 bool IsRenderDocAttached();
 
+
 namespace gpu_directx11
 {
-
 
 
    swap_chain::swap_chain()
@@ -186,7 +186,7 @@ namespace gpu_directx11
 
       ID3D11RenderTargetView* nullRTV[1] = { nullptr };
 
-      pgpucontext->m_pcontext->OMSetRenderTargets(1, nullRTV, nullptr);
+      pgpucontext->m_pd3d11devicecontext->OMSetRenderTargets(1, nullRTV, nullptr);
 
       m_size = pgpucontext->size();
 
@@ -326,6 +326,34 @@ namespace gpu_directx11
 
       //present_shader();
 
+      //auto pcontext = gpu_context();
+
+      //auto pgputexturesite = pcontext->m_pgpurenderer->m_pgpurendertarget2->current_texture(::gpu::current_layer(), true);
+
+      if (0)
+      {
+
+         ::cast < ::gpu_directx11::texture > ptexture = pgputexturesite->gpu_texture();
+         //D3D11_RECT rect = {};
+         //rect.left = 100;
+         //rect.top = 100;
+         //rect.right = 200;
+         //rect.bottom = 200;
+
+         //::f32 clearColor[4] = { 0.5f * 0.5f,0.75f * 0.5f, 0.95f * 0.5f, 0.5f };
+
+         ::f32 clearColor[4] = { 0.1f ,0.1f, 0.1f, 0.1f };
+
+         auto prendertargetview = ptexture->m_prendertargetview;
+
+         //::f32 clearColor[4] = { 1.f ,1.f, 1.f, 1.f };
+
+         pgpucontext->m_pd3d11devicecontextDeferred->ClearRenderTargetView(prendertargetview, clearColor);
+
+         //pcontext->m_pd3d11devicecontext1->ClearView(prendertargetview, clearColor, NULL, 0);
+
+      }
+
       ::gpu::swap_chain::present(pgputexturesite, pgpucommandbuffer);
 
       //pgpucontext->m_pcontext->OMSetDepthStencilState(pgpucontext->depth_stencil_state_disabled(), 0);
@@ -392,15 +420,28 @@ namespace gpu_directx11
 
       ////pgpucontext->m_pcontext->ClearRenderTargetView(ptextureSwapChain->m_prendertargetview, colorRGBA2);
 
-      ////D3D11_RECT rect = {};
-      ////rect.left = 100;
-      ////rect.top = 100;
-      ////rect.right = 200;
-      ////rect.bottom = 200;
+      if (0)
+      {
 
-      ////::f32 clearColor[4] = { 0.5f * 0.5f,0.75f * 0.5f, 0.95f * 0.5f, 0.5f }; 
+         D3D11_RECT rect = {};
+         rect.left = 100;
+         rect.top = 100;
+         rect.right = 200;
+         rect.bottom = 200;
 
-      ////pgpucontext->m_pcontext1->ClearView(ptextureSwapChain->m_prendertargetview, clearColor, &rect, 1);
+         ::f32 clearColor[4] = { 0.5f * 0.5f,0.75f * 0.5f, 0.95f * 0.5f, 0.5f };
+
+         pgpucontext->m_pd3d11devicecontext1->ClearView(ptextureSwapChain->m_prendertargetview, clearColor, &rect, 1);
+
+      }
+
+      //auto pgpuwindowattachment = ::gpu::window_attachment::get(this);
+
+      auto iFrameCount = pgpuwindowattachment->get_frame_count();
+
+        m_iCurrentSwapChainFrame = (m_iCurrentSwapChainFrame + 1) % iFrameCount;
+
+        //auto iCurrentFrame3 = get_swap_chain()->m_iCurrentSwapChainFrame;
 
 
       ////{

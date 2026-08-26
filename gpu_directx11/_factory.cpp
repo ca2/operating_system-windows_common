@@ -2,7 +2,7 @@
 #include "bred/gltf/vertex.h"
 #include "approach.h"
 #include "buffer.h"
-//#include "cube.h"
+#include "command_buffer.h"
 #include "frame.h"
 #include "frame_storage.h"
 #include "fence.h"
@@ -80,6 +80,7 @@ __FACTORY_EXPORT void gpu_directx11_factory(::factory::factory * pfactory)
    //pfactory->add_factory_item < ::gpu_directx11::pixmap, ::gpu::pixmap >();
    pfactory->add_factory_item < ::gpu::pixmap >();
 
+   pfactory->add_factory_item < ::gpu_directx11::command_buffer, ::gpu::command_buffer >();
    //pfactory->add_factory_item < ::gpu_directx11::frame_storage, ::gpu::frame_storage >();
 
    pfactory->add_factory_item < ::gpu::frame_ephemeral >();

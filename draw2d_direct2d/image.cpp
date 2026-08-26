@@ -1569,7 +1569,7 @@ namespace draw2d_direct2d
 
       ::cast<::draw2d_direct2d::bitmap> pbitmap = m_pbitmap;
 
-      auto pbitmap1This = pbitmap->m_pbitmap1;
+      auto pbitmap1This = pbitmap->m_pd2d1bitmap1;
 
       auto pbitmap1Map = pbitmap->_map_bitmap1();
 
@@ -1637,7 +1637,7 @@ namespace draw2d_direct2d
              (unsigned long)hrMap,
              (unsigned long)::GetCurrentThreadId(),
              this,
-             (ID2D1Bitmap *)pbitmap->m_pbitmap,
+             (ID2D1Bitmap *)pbitmap->m_pd2d1bitmap,
              pbitmap1Map,
              (unsigned int)sourceSize.width,
              (unsigned int)sourceSize.height,
@@ -1796,16 +1796,13 @@ namespace draw2d_direct2d
 
          }
 
-
-
-         auto hr = pbitmap->m_pbitmap1->CopyFromMemory(&srcRect, m_ppixmapOwned->m_pimage32, m_iScan);
+         auto hr = pbitmap->m_pd2d1bitmap1->CopyFromMemory(&srcRect, m_ppixmapOwned->m_pimage32, m_iScan);
          //pbitmap->m_pbitmap1Map->Unmap();
 
          // Copy render target content to CPU-readable staging bitmap
          //D2D1_POINT_2U destPoint = { 0, 0 };
 
          //pbitmap->m_pbitmap1->CopyFromBitmap(&destPoint, pbitmap->m_pbitmap1Map, &srcRect);
-
 
          m_pbitmap1Map = nullptr;
 

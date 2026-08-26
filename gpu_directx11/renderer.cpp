@@ -654,9 +654,9 @@ namespace gpu_directx11
 
       }
 
-      pcontext->m_pcontext->Flush();
+      pcontext->m_pd3d11devicecontext->Flush();
 
-      pcontext->m_pcontext->CopyResource(
+      pcontext->m_pd3d11devicecontext->CopyResource(
          (ID3D11Resource*)m_ptextureStaging, 
          (ID3D11Resource*)ptextureSource);
 
@@ -672,7 +672,7 @@ namespace gpu_directx11
 
       ::gpu::context_lock context_lock(m_pgpucontext);
 
-      if (FAILED(pcontext->m_pcontext->Map((ID3D11Resource*)m_ptextureStaging, 0, D3D11_MAP_READ, 0, &mapped)))
+      if (FAILED(pcontext->m_pd3d11devicecontext->Map((ID3D11Resource*)m_ptextureStaging, 0, D3D11_MAP_READ, 0, &mapped)))
       {
          
          warning() << "Failed to map_base staging texture.";
@@ -709,7 +709,7 @@ namespace gpu_directx11
          (::i32)rowPitch,
          false);
 
-      pcontext->m_pcontext->Unmap((ID3D11Resource*)m_ptextureStaging, 0);
+      pcontext->m_pd3d11devicecontext->Unmap((ID3D11Resource*)m_ptextureStaging, 0);
 
    }
 
@@ -739,7 +739,7 @@ namespace gpu_directx11
 
       ID3D11Device* device = pgpudevice->m_pd3d11device;
 
-      ID3D11DeviceContext* context = pgpucontext->m_pcontext;
+      ID3D11DeviceContext* context = pgpucontext->m_pd3d11devicecontext;
 
       auto ptexturesite = poffscreenrendertargetview->current_texture(::gpu::current_layer(), true);
 
@@ -974,11 +974,15 @@ namespace gpu_directx11
 
       ::gpu::context_lock context_lock(m_pgpucontext);
 
-      auto pcontext = pgpucontext->m_pcontext;
+      auto pcontext = pgpucontext->m_pd3d11devicecontext;
 
       ::cast < render_target_view > pgpurendertargetview = render_target();
 
       auto size = pgpucontext->size();
+
+      ID3D11ShaderResourceView * nullSRV = nullptr;
+
+      pcontext->PSSetShaderResources(0, 1, &nullSRV);
 
       if (pgpurendertargetview)
       {
@@ -1057,23 +1061,45 @@ HRESULT hrCreateDepthStencilState = pgpudevice->m_pd3d11device->CreateDepthStenc
 
          }
 
-         if (prendertargetview)
+         if (pgpulayer->m_estartlayer & ::gpu::e_start_layer_dont_set_gpu_render_target)
          {
 
-            if (m_pdepthstencilstateForCleaning && pdepthstencilview)
-            { 
+            ID3D11RenderTargetView * nullRTV = nullptr;
 
-               pcontext->OMSetDepthStencilState(m_pdepthstencilstateForCleaning, 0);
+            pcontext->OMSetRenderTargets(1, &nullRTV, nullptr);
 
-               pcontext->OMSetRenderTargets(1, ptexture->m_prendertargetview.pp(), pdepthstencilview);
-
-               pcontext->ClearDepthStencilView(pdepthstencilview, D3D11_CLEAR_DEPTH, 1.0f, 0);
-
-            }
-            else
+            if (pdepthstencilview)
             {
 
-               pcontext->OMSetRenderTargets(1, ptexture->m_prendertargetview.pp(), nullptr);
+               pcontext->ClearDepthStencilView(pdepthstencilview, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+
+            }
+
+            pcontext->OMSetDepthStencilState(nullptr, 0);
+
+         }
+         else
+         {
+
+            if (prendertargetview)
+            {
+
+               if (m_pdepthstencilstateForCleaning && pdepthstencilview)
+               {
+
+                  pcontext->OMSetDepthStencilState(m_pdepthstencilstateForCleaning, 0);
+
+                  pcontext->OMSetRenderTargets(1, ptexture->m_prendertargetview.pp(), pdepthstencilview);
+
+                  pcontext->ClearDepthStencilView(pdepthstencilview, D3D11_CLEAR_DEPTH, 1.0f, 0);
+
+               }
+               else
+               {
+
+                  pcontext->OMSetRenderTargets(1, ptexture->m_prendertargetview.pp(), nullptr);
+
+               }
 
             }
 
@@ -1167,7 +1193,7 @@ HRESULT hrCreateDepthStencilState = pgpudevice->m_pd3d11device->CreateDepthStenc
 
       }
 
-      pgpucontext->m_pcontext->ClearRenderTargetView(
+      pgpucontext->m_pd3d11devicecontext->ClearRenderTargetView(
          ptexture->m_prendertargetview, clear);
 
    }

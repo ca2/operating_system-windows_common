@@ -220,7 +220,7 @@ namespace draw2d_direct2d_for_directx11
 
             ID2D1Image* pimage = m_pimage->m_pbitmap->get_os_data < ID2D1Bitmap * >();
 
-            HRESULT hr = pgraphics->m_pdevicecontext->CreateImageBrush(
+            HRESULT hr = pgraphics->m_pd2d1devicecontext->CreateImageBrush(
                pimage,
                imagebrushproperties,
                &m_pimagebrush);

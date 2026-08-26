@@ -37,6 +37,36 @@ namespace draw2d_direct2d_for_directx11
    }
 
 
+   void image::update_as_backed_by_gpu_texture(const ::i32_size & size, ::gpu::texture * pgputexture, ::draw2d::graphics * pdraw2dgraphics)
+   {
+
+      ::cast < ::draw2d_direct2d_for_directx11::bitmap > pbitmap = m_pbitmap;
+
+      if (!pbitmap)
+      {
+
+         defer_constructø(m_pbitmap);
+
+         pbitmap = m_pbitmap;
+
+      }
+
+      if (pbitmap->m_pgputexture != pgputexture)
+      {
+
+         pbitmap->m_pgputexture = pgputexture;
+
+         m_size = pgputexture->m_textureattributes.m_size;
+
+         m_sizeRaw = pgputexture->m_textureattributes.m_sizeRaw;
+
+         pbitmap->update_bitmap_as_backed_by_gpu_texture(pgputexture, pdraw2dgraphics);
+
+      }
+
+   }
+
+
    void image::create_gpu_texture_image(::gpu::texture * pgputexture, ::gpu::graphics * pgpugraphics)
    {
 
@@ -54,7 +84,7 @@ namespace draw2d_direct2d_for_directx11
 
       ptexture->m_ptextureOffscreen.as(pdxgisurface);
 
-      pbitmap->_create_from_dxgi_surface(0, 0, pdxgisurface, pgraphics);
+      pbitmap->update_bitmap_as_backed_by_gpu_texture(ptexture, pgraphics);
 
       m_pbitmap = pbitmap;
 
@@ -224,7 +254,7 @@ namespace draw2d_direct2d_for_directx11
 //   }
 
 
-   void image::update_as_render_target(const ::i32_size & sizeRaw, ::user::interaction * puserinteraction, ::draw2d::graphics * pdraw2dgraphics, ::enum_flag eflagCreate, ::i32 iStride, bool bPreserve, bool bTopDraw2d)
+   void image::update_as_gpu_render_target(const ::i32_size & sizeRaw, ::user::interaction * puserinteraction, ::draw2d::graphics * pdraw2dgraphics, ::enum_flag eflagCreate, ::i32 iStride, bool bPreserve, bool bTopDraw2d)
    {
 
       if (!puserinteraction)
@@ -329,7 +359,7 @@ namespace draw2d_direct2d_for_directx11
 
       ::cast < ::draw2d_direct2d_for_directx11::bitmap > pbitmap = pdraw2dbitmap;
 
-      pbitmap->CreateBitmap(pdraw2dgraphics, sizeRaw, 0, 32, nullptr, 0);
+      pbitmap->create_gpu_bitmap(pdraw2dgraphics, sizeRaw);
 
       m_pbitmap = pbitmap;
 
@@ -360,6 +390,14 @@ namespace draw2d_direct2d_for_directx11
 
       //      m_pgputexture->write_pixels(size, pimage32, iScan);
 
+
+   }
+
+
+   void image::update_as_render_target(const ::i32_size & sizeRaw, ::user::interaction * puserinteraction, ::draw2d::graphics * pdraw2dgraphics, ::enum_flag eflagCreate, ::i32 iStride, bool bPreserve, bool bTopDraw2d)
+   {
+
+      ::draw2d_direct2d::image::update_as_render_target(sizeRaw, puserinteraction, pdraw2dgraphics, eflagCreate, iStride, bPreserve, bTopDraw2d);
 
    }
 

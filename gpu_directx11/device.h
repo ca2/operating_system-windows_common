@@ -16,7 +16,8 @@ namespace gpu_directx11
 
    class CLASS_DECL_GPU_DIRECTX11 device :
       virtual public ::gpu::device,
-      virtual public ::directx11::directx11::container
+      virtual public ::directx11::directx11::container,
+      virtual public ::dxgi_device_source
    {
    public:
 
@@ -129,10 +130,18 @@ namespace gpu_directx11
 
       virtual void initialize_d3d11_device();
 
+
+
+
       //svirtual void initialize_swap_chain(::windowing::window * pwindow);
       
       void initialize_gpu_device_for_swap_chain(::gpu::approach* pgpuapproach, ::windowing::window *pwindow) override;
       void initialize_gpu_device_for_off_screen(::gpu::approach* pgpuapproach, const ::i32_rectangle& rectanglePlacement) override;
+
+
+
+      virtual void create_main_gpu_context();
+
 
       //string _001GetIntroProjection() override;
       //string _001GetIntroFragment() override;
@@ -282,7 +291,8 @@ namespace gpu_directx11
 
       ID3D11Device* draw_get_d3d11_device();
       ID3D11Device1* draw_get_d3d11_device1();
-      virtual IDXGIDevice* _get_dxgi_device();
+      IDXGIDevice * _get_dxgi_device() override;
+
 
       ::i32 get_type_size(::gpu::enum_type etype) override;
       void set_matrix4(void* p, const floating_matrix4& mat4) override;

@@ -27,13 +27,13 @@ namespace draw2d_direct2d
       };
 
 
-      comptr<ID2D1Bitmap>                    m_pbitmap;
-      comptr<ID2D1Bitmap1>                   m_pbitmap1;
+      comptr<ID2D1Bitmap>                    m_pd2d1bitmap;
+      comptr<ID2D1Bitmap1>                   m_pd2d1bitmap1;
       memory                                 m_memory;
 
-      comptr<ID2D1Bitmap1>                   m_pbitmap1Map;
-      comptr<ID2D1BitmapRenderTarget>        m_pbitmaprendertarget;
-      comptr<ID2D1DeviceContext>             m_pdevicecontext;
+      comptr<ID2D1Bitmap1>                   m_pd2d1bitmap1Map;
+      comptr<ID2D1BitmapRenderTarget>        m_pd2d1bitmaprendertarget;
+      comptr<ID2D1DeviceContext>             m_pd2d1devicecontext;
 
 
       bitmap();
@@ -89,7 +89,7 @@ namespace draw2d_direct2d
       ::u32 SetBitmapBits(::u32 dwCount, const void * lpBits);
       ::u32 GetBitmapBits(::u32 dwCount, LPVOID lpBits) const;
       //::i32_size SetBitmapDimension(::i32 nWidth, ::i32 nHeight);
-      ::i32_size GetBitmapDimension() const;
+      //::i32_size GetBitmapDimension() const;
 
       ::i32_size size() const override;
       void set_size(const ::i32_size & size, bool bPreserve) override;

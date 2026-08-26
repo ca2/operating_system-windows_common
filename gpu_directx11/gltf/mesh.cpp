@@ -329,8 +329,8 @@ namespace gpu_directx11
             if (sampler)
             {
                ID3D11SamplerState *samplers[1] = {sampler};
-               pcontext->m_pcontext->PSSetSamplers(1, 1, samplers);
-               pcontext->m_pcontext->PSSetShaderResources(3, 5, srv);
+               pcontext->m_pd3d11devicecontext->PSSetSamplers(1, 1, samplers);
+               pcontext->m_pd3d11devicecontext->PSSetShaderResources(3, 5, srv);
             }
 
          }

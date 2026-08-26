@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "aura/graphics/draw2d/pen.h"
+#include "operating_system-windows_common/draw2d_direct2d/pen.h"
 #include "object.h"
 
 
@@ -11,15 +11,15 @@ namespace draw2d_direct2d_for_directx11
 
    class CLASS_DECL_DRAW2D_DIRECT2D_FOR_DIRECTX11 pen :
       virtual public ::draw2d_direct2d_for_directx11::object,
-      virtual public ::draw2d::pen
+      virtual public ::draw2d_direct2d::pen
    {
    public:
 
 
-      comptr<ID2D1SolidColorBrush>                 m_pbrush;
-      comptr<ID2D1StrokeStyle1>                    m_pstrokestyle;
-      bool                                         m_bMetroColor;
-      ::color::color                               m_colorMetro;
+      //comptr<ID2D1SolidColorBrush>                 m_pbrush;
+      //comptr<ID2D1StrokeStyle1>                    m_pstrokestyle;
+      //bool                                         m_bMetroColor;
+      //::color::color                               m_colorMetro;
 
 
       pen();
@@ -47,8 +47,8 @@ namespace draw2d_direct2d_for_directx11
 
       //void dump(dump_context & dumpcontext) const override;
 
-      static HRESULT s_RenderPatternToCommandList(ID2D1RenderTarget * pgraphics,D2D1_COLOR_F *pcr);
-      static HRESULT s_CreatePatternBrush(ID2D1DeviceContext *pDeviceContext, D2D1_COLOR_F * pcr, ID2D1ImageBrush **ppImageBrush);
+      //static HRESULT s_RenderPatternToCommandList(ID2D1RenderTarget * pgraphics,D2D1_COLOR_F *pcr);
+      //static HRESULT s_CreatePatternBrush(ID2D1DeviceContext *pDeviceContext, D2D1_COLOR_F * pcr, ID2D1ImageBrush **ppImageBrush);
 
 
    };

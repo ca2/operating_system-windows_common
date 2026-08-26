@@ -96,7 +96,7 @@ namespace draw2d_directx11
 
       //void start_layer(::e_graphics egraphics) override;
       //void end_layer(::e_graphics egraphics) override;
-      void start_layer(bool bFirstLayer = false) override;
+      void start_layer(bool bFirstLayer = false, ::user::interaction * puserinteraction = nullptr) override;
       void end_layer(bool bClosingLayer = false) override;
       // void on_begin_draw1() override;
       //void on_end_draw1() override;

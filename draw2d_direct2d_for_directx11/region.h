@@ -1,6 +1,7 @@
 #pragma once
 
 
+#include "operating_system-windows_common/draw2d_direct2d/region.h"
 #include "object.h"
 
 
@@ -8,14 +9,14 @@ namespace draw2d_direct2d_for_directx11
 {
 
 
-   class region :
+   class CLASS_DECL_DRAW2D_DIRECT2D_FOR_DIRECTX11 region :
       virtual public ::draw2d_direct2d_for_directx11::object,
-      virtual public ::draw2d::region
+      virtual public ::draw2d_direct2d::region
    {
    public:
 
 
-      comptr<ID2D1Geometry>            m_pgeometry;
+      //comptr<ID2D1Geometry>            m_pgeometry;
 
 
       region();

@@ -158,10 +158,9 @@ namespace gpu_directx11
 
 #endif
 
+      create_main_gpu_context();
+
    }
-
-
-
 
 
    void device::initialize_gpu_device_for_swap_chain(::gpu::approach* pgpuapproachParam, ::windowing::window * pwindow)
@@ -1973,7 +1972,29 @@ bool device::_is_ok() const
 
 #endif
 
+      create_main_gpu_context();
+
       //return ::success;
+
+   }
+
+
+   void device::create_main_gpu_context()
+   {
+
+      defer_constructø(m_pgpucontextMain);
+
+      ::cast < ::gpu_directx11::context > pgpucontextMain = m_pgpucontextMain;
+
+      pgpucontextMain->m_pgpudevice = this;
+
+      m_pd3d11devicecontextMain.as(pgpucontextMain->m_pd3d11devicecontext);
+
+      m_pd3d11devicecontextMain.as(pgpucontextMain->m_pd3d11devicecontext1);
+
+      m_pd3d11devicecontextMain.as(pgpucontextMain->m_pd3d11devicecontextImmediate);
+
+      m_pgpucontextMain->branch_synchronously();
 
    }
 

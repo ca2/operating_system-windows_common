@@ -701,7 +701,9 @@ namespace gpu_directx11
    {
 
       D3D11_TEXTURE2D_DESC desc{};
+
       m_ptextureOffscreen->GetDesc(&desc);
+
       D3D11_TEXTURE2D_DESC stagingDesc{};
 
       if (m_ptextureStaging)
@@ -720,7 +722,6 @@ namespace gpu_directx11
       }
 
       ::cast<::gpu_directx11::context> pgpucontext = m_pgpucontext;
-
 
       if (!m_ptextureStaging)
       {
@@ -741,7 +742,6 @@ namespace gpu_directx11
 
          auto pdevice = pgpudevice->m_pd3d11device;
 
-
          HRESULT hrCreateTexture2D = pdevice->CreateTexture2D(
             &stagingDesc,
             nullptr,
@@ -756,28 +756,46 @@ namespace gpu_directx11
 
       }
 
-      pgpucontext->m_pcontext->CopyResource(
+      pgpucontext->m_pd3d11devicecontext->CopyResource(
          m_ptextureStaging,
          m_ptextureOffscreen);
 
-      D3D11_MAPPED_SUBRESOURCE mapped{};
+      HRESULT hrMap = E_FAIL;
 
-      auto hrMap = pgpucontext->m_pcontext->Map(
-         m_ptextureStaging,
-         0,
-         D3D11_MAP_READ,
-         0,
-         &mapped);
+      //pgpucontext->m_pgpudevice->main_gpu_context()->send([&]()
+         {
+         ::cast < ::gpu_directx11::context > pgpucontextMain = pgpucontext->m_pgpudevice->main_gpu_context();
+         ::gpu::context_lock contextlock(pgpucontextMain);
 
-      if (FAILED(hrMap))
-      {
-         throw ::hresult_exception(hrMap);
-      }
+            D3D11_MAPPED_SUBRESOURCE mapped{};
+
+            
+
+            hrMap = pgpucontextMain->m_pd3d11devicecontext->Map(
+               m_ptextureStaging,
+               0,
+               D3D11_MAP_READ,
+               0,
+               &mapped);
+
+            if (FAILED(hrMap))
+            {
+               //return;
+               throw ::hresult_exception(hrMap);
+            }
 
 
-      ppixmap->copy({ desc.Width, desc.Height }, (const ::image32_t *)mapped.pData, mapped.RowPitch);
+            ppixmap->copy({ desc.Width, desc.Height }, (const ::image32_t *)mapped.pData, mapped.RowPitch);
 
-      pgpucontext->m_pcontext->Unmap(m_ptextureStaging, 0);
+            pgpucontextMain->m_pd3d11devicecontext->Unmap(m_ptextureStaging, 0);
+
+      }//);
+
+      //if (FAILED(hrMap))
+      //{
+        // throw ::hresult_exception(hrMap);
+      //}
+
 
       //stagingTexture->Release();
 
@@ -818,19 +836,27 @@ namespace gpu_directx11
       box.front = 0;
       box.right = rectangle.right;
       box.bottom = rectangle.bottom;
-      ;
+      
       box.back = 1;
 
       UINT rowPitch = rectangle.width() * 4;
 
-      // Upload the sub-region
-      pgpucontext->m_pcontext->UpdateSubresource(m_ptextureOffscreen, // destination texture
-                                                 0, // subresource (mip 0, array slice 0)
-                                                 &box, // region to update
-                                                 data, // source pixels (must be tightly packed)
-                                                 rowPitch, // bytes per row
-                                                 0 // bytes per slice (not used for 2D textures)
-      );
+      {
+         ::cast < ::gpu_directx11::context > pgpucontextMain = pgpucontext->m_pgpudevice->main_gpu_context();
+         ::gpu::context_lock contextlock(pgpucontextMain);
+
+         // Upload the sub-region
+         pgpucontextMain->m_pd3d11devicecontext->UpdateSubresource(m_ptextureOffscreen, // destination texture
+                                                    0, // subresource (mip 0, array slice 0)
+                                                    &box, // region to update
+                                                    data, // source pixels (must be tightly packed)
+                                                    rowPitch, // bytes per row
+                                                    0 // bytes per slice (not used for 2D textures)
+
+
+         );
+
+      }
       // HRESULT hrMap = pgpucontext->m_pcontext->Map(
       //    m_ptextureOffscreen, 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
 
@@ -1163,10 +1189,10 @@ namespace gpu_directx11
 
       ::cast<gpu_directx11::context> pcontext = pgpucommandbuffer->m_pgpurendertarget->m_pgpurenderer->m_pgpucontext;
 
-      pcontext->m_pcontext->Flush();
+      pcontext->m_pd3d11devicecontext->Flush();
 
       // Now generate mipmaps using DirectX
-      pcontext->m_pcontext->GenerateMips(m_pshaderresourceview);
+      pcontext->m_pd3d11devicecontext->GenerateMips(m_pshaderresourceview);
 
    }
 

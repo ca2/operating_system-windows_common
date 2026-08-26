@@ -13,15 +13,16 @@ namespace gpu_directx11
 
    class CLASS_DECL_GPU_DIRECTX11 context :
       virtual public ::gpu::hlsl_context, 
-      virtual public ::gpu_gpu::context,
-      virtual public ::dxgi_device_source
+      virtual public ::gpu_gpu::context
    {
    public:
 
 
 //      comptr < ID3D11Buffer>              m_pbufferGlobalUbo;
-      comptr<ID3D11DeviceContext>         m_pcontext;
-      comptr<ID3D11DeviceContext1>        m_pcontext1;
+      comptr<ID3D11DeviceContext>         m_pd3d11devicecontext;
+      comptr<ID3D11DeviceContext1>        m_pd3d11devicecontext1;
+      comptr<ID3D11DeviceContext>         m_pd3d11devicecontextImmediate;
+      comptr<ID3D11DeviceContext>         m_pd3d11devicecontextDeferred;
 
       //comptr < ID3D11RasterizerState> m_prasterizerstate;
       ::comptr < ID3D11RasterizerState > m_prasterizerstateMergeLayers;
@@ -54,7 +55,7 @@ namespace gpu_directx11
 
          /** @brief Physical device representation */
       //VkPhysicalDevice m_physicaldevice;
-      ::pointer < device >                m_pgpudevice;
+      //::pointer < device >                m_pgpudevice;
 //      /** @brief Logical device representation (application's view of the device) */
 //      VkDevice m_vkdevice;
 //      ///** @brief Properties of the physical device including limits that the application can check against */
@@ -127,7 +128,6 @@ namespace gpu_directx11
 
       void _context_lock() override;
       void _context_unlock() override;
-      IDXGIDevice* _get_dxgi_device() override;
 
       string _001GetIntroProjection() override;
       string _001GetIntroFragment() override;
@@ -159,6 +159,12 @@ namespace gpu_directx11
 
       void start_debug_happening(::gpu::command_buffer * pgpucommandbuffer, const ::scoped_string& scopedstrDebugHappening) override;
       void end_debug_happening(::gpu::command_buffer * pgpucommandbuffer) override;
+
+
+
+      ::pointer < ::gpu::command_buffer > beginSingleTimeCommands(::gpu::queue * pgpuqueue, ::gpu::enum_command_buffer ecommandbuffer = ::gpu::e_command_buffer_graphics) override;
+      void endSingleTimeCommands(::gpu::command_buffer * pcommandbuffer) override;
+
 
       //void defer_bind(::gpu::shader* pgpushader) override;
       //void swap_buffers() override;
@@ -204,9 +210,9 @@ namespace gpu_directx11
       bool create_offscreen_graphics_for_swap_chain_blitting(::gpu::graphics* pgraphics, const ::i32_size& size) override;
 
 
-      virtual void _create_context_directx11(::gpu::device* pgpudevice, const ::gpu::enum_output& eoutput, ::acme::windowing::window* pwindow, const ::i32_point & pointInput, const ::i32_point & pointOutput, const ::i32_size & size, const ::i32_size & sizeRaw);
+      virtual void _create_context_directx11(::gpu::device* pgpudevice, const ::gpu::enum_output& eoutput, ::acme::windowing::window* pwindow, ::draw2d::graphics * pdraw2dgraphics, const ::i32_point & pointInput, const ::i32_point & pointOutput, const ::i32_size & size, const ::i32_size & sizeRaw);
 
-      void _create_gpu_context(::gpu::device* pgpudevice, const ::gpu::enum_output& eoutput, const ::gpu::enum_scene& escene, ::acme::windowing::window* pacmewindowingwindow, const ::i32_point & pointInput, const ::i32_point & pointOutput, const ::i32_size & size, const ::i32_size & sizeRaw) override;
+      void _create_gpu_context(::gpu::device* pgpudevice, const ::gpu::enum_output& eoutput, const ::gpu::enum_scene& escene, ::acme::windowing::window* pacmewindowingwindow, ::draw2d::graphics * pdraw2dgraphics, const ::i32_point & pointInput, const ::i32_point & pointOutput, const ::i32_size & size, const ::i32_size & sizeRaw) override;
 
 
       void __bind_draw2d_compositor(::gpu::compositor* pgpucompositor, ::gpu::layer * pgpulayer) override;

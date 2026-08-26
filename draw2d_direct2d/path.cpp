@@ -559,7 +559,7 @@ namespace draw2d_direct2d
 
          ::cast < ::draw2d_direct2d::graphics > pgraphics = pgraphicsParam;
 
-         HRESULT hr = pgraphics->m_pdevicecontext1->CreateStrokedGeometryRealization(
+         HRESULT hr = pgraphics->m_pd2d1devicecontext1->CreateStrokedGeometryRealization(
             m_ppathHollow,
             1.0f,
             (FLOAT)iWidth,
@@ -587,7 +587,7 @@ namespace draw2d_direct2d
 
          ::cast<graphics> pgraphics = pgraphicsParam;
 
-         HRESULT hr = pgraphics->m_pdevicecontext1->CreateFilledGeometryRealization(
+         HRESULT hr = pgraphics->m_pd2d1devicecontext1->CreateFilledGeometryRealization(
             m_ppathFilled,
             1.0f,
             &prealization);

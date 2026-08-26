@@ -1,5 +1,6 @@
 #include "platform.h"
 #include "approach.h"
+#include "command_buffer.h"
 #include "memory_buffer.h"
 #include "context.h"
 #include "device.h"
@@ -85,14 +86,14 @@ namespace gpu_directx11
    }
 
 
-   IDXGIDevice * context::_get_dxgi_device()
-   {
+   //IDXGIDevice * context::_get_dxgi_device()
+   //{
 
-      ::cast < device > pdevice = m_pgpudevice;
+   //   ::cast < device > pdevice = m_pgpudevice;
 
-      return pdevice->_get_dxgi_device();
+   //   return pdevice->_get_dxgi_device();
 
-   }
+   //}
 
 
    void context::draw()
@@ -853,7 +854,7 @@ namespace gpu_directx11
    }
 
 
-   void context::_create_context_directx11(::gpu::device * pgpudeviceParam, const ::gpu::enum_output & eoutput, ::acme::windowing::window * pwindow, const ::i32_point & pointInput, const ::i32_point & pointOutput, const ::i32_size & size, const ::i32_size & sizeRaw)
+   void context::_create_context_directx11(::gpu::device * pgpudeviceParam, const ::gpu::enum_output & eoutput, ::acme::windowing::window * pwindow, ::draw2d::graphics * pdraw2dgraphics, const ::i32_point & pointInput, const ::i32_point & pointOutput, const ::i32_size & size, const ::i32_size & sizeRaw)
    {
 
       ::cast < device > pgpudevice = pgpudeviceParam;
@@ -867,21 +868,40 @@ namespace gpu_directx11
 
       m_pgpudevice = pgpudeviceParam;
 
-      auto & pdevicecontext = pgpudevice->m_pd3d11devicecontextMain;
+      if (m_pgpudevice->m_pgpucontextMain == this ||
+         (::is_set(pdraw2dgraphics) && !pdraw2dgraphics->use_deferred_gpu_context()))
+      {
 
-      ::defer_throw_hresult(pdevicecontext.as(m_pcontext));
+         auto & pdevicecontext = pgpudevice->m_pd3d11devicecontextMain;
 
-      ::defer_throw_hresult(pdevicecontext.as(m_pcontext1));
+         ::defer_throw_hresult(pdevicecontext.as(m_pd3d11devicecontext));
+
+         ::defer_throw_hresult(pdevicecontext.as(m_pd3d11devicecontext1));
+
+      }
+      else
+      {
+
+         auto hrCreateDeferredContext = pgpudevice->m_pd3d11device->CreateDeferredContext(
+            0,
+            &m_pd3d11devicecontextDeferred);
+
+         ::defer_throw_hresult(m_pd3d11devicecontextDeferred.as(m_pd3d11devicecontext));
+
+         ::defer_throw_hresult(m_pd3d11devicecontextDeferred.as(m_pd3d11devicecontext1));
+
+
+      }
 
    }
 
 
-   void context::_create_gpu_context(::gpu::device * pgpudevice, const ::gpu::enum_output & eoutput, const ::gpu::enum_scene & escene, ::acme::windowing::window * pacmewindowingwindow, const ::i32_point & pointInput, const ::i32_point & pointOutput, const ::i32_size & size, const ::i32_size & sizeRaw)
+   void context::_create_gpu_context(::gpu::device * pgpudevice, const ::gpu::enum_output & eoutput, const ::gpu::enum_scene & escene, ::acme::windowing::window * pacmewindowingwindow, ::draw2d::graphics * pdraw2dgraphics, const ::i32_point & pointInput, const ::i32_point & pointOutput, const ::i32_size & size, const ::i32_size & sizeRaw)
    {
 
-      ::gpu_gpu::context::_create_gpu_context(pgpudevice, eoutput, escene, pacmewindowingwindow, pointInput, pointOutput, size, sizeRaw);
+      ::gpu_gpu::context::_create_gpu_context(pgpudevice, eoutput, escene, pacmewindowingwindow, pdraw2dgraphics, pointInput, pointOutput, size, sizeRaw);
 
-      _create_context_directx11(pgpudevice, eoutput, pacmewindowingwindow, pointInput, pointOutput, size, sizeRaw);
+      _create_context_directx11(pgpudevice, eoutput, pacmewindowingwindow, pdraw2dgraphics, pointInput, pointOutput, size, sizeRaw);
 
    }
 
@@ -1215,7 +1235,7 @@ namespace gpu_directx11
          //}
 
 
-         m_pcontext->CopyResource(
+         m_pd3d11devicecontext->CopyResource(
             ptextureDst->m_ptextureOffscreen,
             ptextureSrc->m_ptextureOffscreen);
 
@@ -1361,7 +1381,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       viewport.MinDepth = 0.0f;    // near depth
       viewport.MaxDepth = 1.0f;    // far depth
 
-      m_pcontext->RSSetViewports(1, &viewport);
+      m_pd3d11devicecontext->RSSetViewports(1, &viewport);
 
       D3D11_RECT scissorRect;
       //scissorRect.left = pgputextureSource->m_rectangleTarget.left;
@@ -1373,19 +1393,19 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       scissorRect.right = pgputexturesiteSource->width();
       scissorRect.bottom = pgputexturesiteSource->height();
 
-      m_pcontext->RSSetScissorRects(1, &scissorRect);
+      m_pd3d11devicecontext->RSSetScissorRects(1, &scissorRect);
 
 
       ::cast <::gpu_directx11::texture > ptextureDst = pgputexturesiteTarget->gpu_texture();
       //::f32 clearColor[4] = { 0.4*0.5, 0.35*0.5, 0.2*0.5, 0.5 }; // Clear to transparent
       ::f32 clearColor[4] = { 0.f, 0.f, 0.f, 0.f }; // Clear to transparent
-      m_pcontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor);
+      m_pd3d11devicecontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor);
 
       //UINT stride = sizeof(Vertex);
       //UINT offset = 0;
       //ID3D11Buffer* buffera[] = { m_pd3d11bufferVertexCopyUsingShader };
 
-      m_pcontext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+      m_pd3d11devicecontext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
       //m_pcontext->IASetVertexBuffers(0, 1, buffera, &stride, &offset);
       //for (auto player : *playera)
       //{
@@ -1407,7 +1427,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       //g_context->PSSetShader(g_ps, nullptr, 0);
       //g_context->PSSetSamplers(0, 1, &g_sampler);
 
-      m_pcontext->Draw(4, 0); // Fullscreen triangle
+      m_pd3d11devicecontext->Draw(4, 0); // Fullscreen triangle
       m_pshaderCopyUsingShader->unbind(nullptr);
 
 
@@ -1432,7 +1452,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       if (!m_puserdefinedannotation)
       {
 
-         m_pcontext.as(m_puserdefinedannotation);
+         m_pd3d11devicecontext.as(m_puserdefinedannotation);
 
       }
 
@@ -1450,6 +1470,46 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       m_puserdefinedannotation->EndEvent();
 
    }
+
+
+   ::pointer < ::gpu::command_buffer > context::beginSingleTimeCommands(::gpu::queue * pgpuqueue, ::gpu::enum_command_buffer ecommandbuffer)
+   {
+
+      auto pcommandbuffer = create_newø<::gpu_directx11::command_buffer>();
+
+      pcommandbuffer->initialize_command_buffer(get_gpu_renderer()->m_pgpurendertarget2, pgpuqueue, ecommandbuffer);
+
+      pcommandbuffer->begin_command_buffer(true);
+
+      return pcommandbuffer;
+
+   }
+
+
+   void context::endSingleTimeCommands(::gpu::command_buffer * pcommandbuffer)
+   {
+
+      if (m_pgpudevice->m_pgpucontextMain == this)
+      {
+
+         pcommandbuffer->submit_command_buffer(nullptr);
+
+         return;
+
+      }
+
+      pcommandbuffer->submit_command_buffer(nullptr);
+
+//      //auto pcommandbuffer = create_newø<::gpu_directx11::command_buffer>();
+////
+//  //    pcommandbuffer->initialize_command_buffer(get_gpu_renderer()->m_pgpurendertarget2, pgpuqueue, ecommandbuffer);
+//
+//      //pcommandbuffer->m_pd3d11devicecontextDeferred = m_pd3d11devicecontextDeferred;
+//
+//      //return pcommandbuffer;
+
+   }
+
 
 
    void context::merge_layers(::gpu::command_buffer * pgpucommandbuffer, ::gpu::texture_site * pgputexturesiteTarget,
@@ -2983,11 +3043,11 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
          D3D11_MAPPED_SUBRESOURCE mapped;
 
-         m_pcontext->Map(pbuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
+         m_pd3d11devicecontext->Map(pbuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
 
          memcpy(mapped.pData, pgpublockGlobalUbo1->data(false), pgpublockGlobalUbo1->size(false));
 
-         m_pcontext->Unmap(pbuffer, 0);
+         m_pd3d11devicecontext->Unmap(pbuffer, 0);
 
          //auto pVS = m_pbufferGlobalUbo.m_p;
    //m_pcontext->VSSetConstantBuffers(0, 1, &pVS);
@@ -3015,7 +3075,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       viewport.MinDepth = 0.0f;
       viewport.MaxDepth = 1.0f;
 
-      m_pcontext->RSSetViewports(1, &viewport);
+      m_pd3d11devicecontext->RSSetViewports(1, &viewport);
 
    }
 
@@ -3033,7 +3093,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       scissorRect.right = rectangle.right;
       scissorRect.bottom = rectangle.bottom;
 
-      m_pcontext->RSSetScissorRects(1, &scissorRect);
+      m_pd3d11devicecontext->RSSetScissorRects(1, &scissorRect);
 
    }
 
@@ -3045,7 +3105,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
       ::f32 clearColor[4] = { color.f32_red(), color.f32_green(), color.f32_blue(), color.f32_opacity() };
 
-      m_pcontext->ClearRenderTargetView(ptexture->m_prendertargetview, clearColor);
+      m_pd3d11devicecontext->ClearRenderTargetView(ptexture->m_prendertargetview, clearColor);
 
    }
 
@@ -3118,7 +3178,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    ID3D11DeviceContext * context::draw_get_d3d11_device_context()
    {
 
-      return m_pcontext;
+      return m_pd3d11devicecontext;
 
    }
 
@@ -3126,7 +3186,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    ID3D11DeviceContext1 * context::draw_get_d3d11_device_context1()
    {
 
-      return m_pcontext1;
+      return m_pd3d11devicecontext1;
 
    }
 

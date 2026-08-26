@@ -94,7 +94,7 @@ namespace draw2d_direct2d_for_directx11
 
       //void start_layer(::e_graphics egraphics) override;
       //void end_layer(::e_graphics egraphics) override;
-      void start_layer(bool bFirstLayer = false) override;
+      void start_layer(bool bFirstLayer = false, ::user::interaction * puserinteraction = nullptr) override;
       void end_layer(bool bClosingLayer = false) override;
 
 
@@ -149,6 +149,12 @@ namespace draw2d_direct2d_for_directx11
          }
 
       }
+
+
+      bool use_deferred_gpu_context() override;
+
+
+      ::image::image_pointer get_current_target_image() override;
 
       ::draw2d::bitmap *get_target_bitmap() override;
 

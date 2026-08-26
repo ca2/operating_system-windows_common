@@ -8,7 +8,7 @@ namespace draw2d_direct2d
 {
 
 
-   class region :
+   class CLASS_DECL_DRAW2D_DIRECT2D region :
       virtual public ::draw2d_direct2d::object,
       virtual public ::draw2d::region
    {

@@ -193,7 +193,7 @@ namespace draw2d_direct2d
             D2D1::PixelFormat(DXGI_FORMAT_B8G8R8A8_UNORM, D2D1_ALPHA_MODE_PREMULTIPLIED),
             96.0f, 96.0f);
 
-         auto hrCreateDCRenderTarget = direct2d()->d2d1_factory1()->CreateDCRenderTarget(&properties, &m_pdcrendertarget);
+         auto hrCreateDCRenderTarget = direct2d()->d2d1_factory1()->CreateDCRenderTarget(&properties, &m_pd2d1dcrendertarget);
 
          if (FAILED(hrCreateDCRenderTarget))
          {
@@ -209,7 +209,7 @@ namespace draw2d_direct2d
 
          }
 
-         auto hrBindDC = m_pdcrendertarget->BindDC(hdcMemory, &bounds);
+         auto hrBindDC = m_pd2d1dcrendertarget->BindDC(hdcMemory, &bounds);
 
          if (FAILED(hrBindDC))
          {
@@ -218,29 +218,29 @@ namespace draw2d_direct2d
 
          }
 
-         m_pdcrendertarget.as(m_pd2d1rendertarget);
+         m_pd2d1dcrendertarget.as(m_pd2d1rendertarget);
 
-         m_pdcrendertarget.as(m_pdevicecontext);
+         m_pd2d1dcrendertarget.as(m_pd2d1devicecontext);
 
-         m_pdcrendertarget.as(m_pdevicecontext1);
+         m_pd2d1dcrendertarget.as(m_pd2d1devicecontext1);
 
       }
       else
       {
          
-         pimage->update_bitmap_as_render_target(pimage->m_pacmeuserinteractionAffinity);
+         pimage->update_bitmap_as_render_target(pimage->m_pacmeuserinteractionAffinity, this);
 
          ::cast < ::draw2d_direct2d::bitmap > pbitmap = pimage->m_pbitmap;
 
-         pbitmap->m_pdevicecontext.as(m_pdevicecontext);
+         pbitmap->m_pd2d1devicecontext.as(m_pd2d1devicecontext);
 
-         m_pdevicecontext.as(m_pd2d1rendertarget);
+         m_pd2d1devicecontext.as(m_pd2d1rendertarget);
 
-         m_pdevicecontext.as(m_pdevicecontext1);
+         m_pd2d1devicecontext.as(m_pd2d1devicecontext1);
 
       }
 
-      m_osdata[data_device_context] = m_pdevicecontext;
+      m_osdata[data_device_context] = m_pd2d1devicecontext;
 
       m_osdata[data_render_target] = m_pd2d1rendertarget;
 
@@ -279,7 +279,7 @@ namespace draw2d_direct2d
 
       ::draw2d::device_lock devicelock(this);
 
-      if (m_pdevicecontext)
+      if (m_pd2d1devicecontext)
       {
 
          destroy();
@@ -351,7 +351,7 @@ namespace draw2d_direct2d
          sizeu,
          pixelformat,
          options,
-         &m_pbitmaprendertargetCompatibleMemoryGraphics);
+         &m_pd2d1bitmaprendertargetCompatibleMemoryGraphics);
 
       if (FAILED(hrCreateCompatibleRenderTarget))
       {
@@ -369,7 +369,7 @@ namespace draw2d_direct2d
       bitmapproperties1.dpiY = 96.0f;
       bitmapproperties1.colorContext = nullptr;
 
-      auto hrQueryDeviceContext = m_pbitmaprendertargetCompatibleMemoryGraphics.as(m_pdevicecontext);
+      auto hrQueryDeviceContext = m_pd2d1bitmaprendertargetCompatibleMemoryGraphics.as(m_pd2d1devicecontext);
       //if(ppdata != nullptr)
       {
          // g.m_pdc->CreateBitmap(size, *ppdata, cx * sizeof(::color32_t), props, &m_pbitmap);
@@ -468,11 +468,11 @@ namespace draw2d_direct2d
 
       //pbitmap->m_pdevicecontext.as(m_pdevicecontext);
 
-      m_pdevicecontext.as(m_pd2d1rendertarget);
+      m_pd2d1devicecontext.as(m_pd2d1rendertarget);
 
-      m_pdevicecontext.as(m_pdevicecontext1);
+      m_pd2d1devicecontext.as(m_pd2d1devicecontext1);
 
-   m_osdata[data_device_context] = m_pdevicecontext;
+   m_osdata[data_device_context] = m_pd2d1devicecontext;
 
    m_osdata[data_render_target] = m_pd2d1rendertarget;
 
@@ -488,6 +488,13 @@ namespace draw2d_direct2d
    //
    //}
 
+
+   ::image::image_pointer graphics::get_current_target_image()
+   {
+
+      return m_pgraphicsbufferitem->m_pimageBufferItem;
+
+   }
 
    void graphics::defer_set_size(const ::i32_size &size)
    {
@@ -619,7 +626,7 @@ namespace draw2d_direct2d
    ::draw2d::bitmap * graphics::get_target_bitmap()
    {
 
-      if (!m_pbitmaprendertarget)
+      if (!m_pd2d1bitmaprendertarget)
       {
 
          throw ::exception(error_wrong_state);
@@ -630,7 +637,7 @@ namespace draw2d_direct2d
 
       ::cast<::draw2d_direct2d::bitmap> pbitmap = m_pbitmapTarget;
 
-      auto hrGetBitmap = m_pbitmaprendertarget->GetBitmap(&pbitmap->m_pbitmap);
+      auto hrGetBitmap = m_pd2d1bitmaprendertarget->GetBitmap(&pbitmap->m_pd2d1bitmap);
 
       if (FAILED(hrGetBitmap))
       {
@@ -639,9 +646,9 @@ namespace draw2d_direct2d
 
       }
 
-      pbitmap->m_pbitmap.as(pbitmap->m_pbitmap1);
+      pbitmap->m_pd2d1bitmap.as(pbitmap->m_pd2d1bitmap1);
 
-      auto size = pbitmap->m_pbitmap->GetSize();
+      auto size = pbitmap->m_pd2d1bitmap->GetSize();
 
       pbitmap->m_size.cx = (::i32) size.width;
 
@@ -1656,7 +1663,7 @@ namespace draw2d_direct2d
 
          copy(&rectfDib1, &rectangleDib1);
 
-         pgraphicsDib1->m_pdevicecontext->DrawImage(
+         pgraphicsDib1->m_pd2d1devicecontext->DrawImage(
          (ID2D1Bitmap *)pgraphicsDib2->get_current_bitmap()->m_osdata[0],
          D2D1::Point2F(0.f, 0.f),
          rectfDib1,
@@ -1834,7 +1841,7 @@ namespace draw2d_direct2d
 
       ////}
 
-      m_pdevicecontext->SetTarget(pbitmap->m_pbitmap);
+      m_pd2d1devicecontext->SetTarget(pbitmap->m_pd2d1bitmap);
 
       m_pbitmap = pbitmap;
 
@@ -2628,7 +2635,7 @@ namespace draw2d_direct2d
 
       defer_primitive_blend();
 
-      m_pdevicecontext->FillEllipse(&ellipse, pbrush);
+      m_pd2d1devicecontext->FillEllipse(&ellipse, pbrush);
 
       //return true;
 
@@ -2667,7 +2674,7 @@ namespace draw2d_direct2d
 
       defer_primitive_blend();
 
-      m_pdevicecontext->DrawEllipse(&ellipse, pbrush, (FLOAT)m_ppen->m_dWidth);
+      m_pd2d1devicecontext->DrawEllipse(&ellipse, pbrush, (FLOAT)m_ppen->m_dWidth);
 
       //return true;
 
@@ -3146,14 +3153,14 @@ namespace draw2d_direct2d
          if (imagedrawingoptions.is_identity())
          {
 
-            m_pdevicecontext->DrawBitmap(pd2d1bitmap, rectangleTarget, (FLOAT)imagedrawingoptions.opacity().f32_opacity(), D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR, rectangleSource);
+            m_pd2d1devicecontext->DrawBitmap(pd2d1bitmap, rectangleTarget, (FLOAT)imagedrawingoptions.opacity().f32_opacity(), D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR, rectangleSource);
 
          }
          else
          {
 
             comptr<ID2D1Effect> colorMatrixEffect;
-            HRESULT hr = m_pdevicecontext->CreateEffect(CLSID_D2D1ColorMatrix, &colorMatrixEffect);
+            HRESULT hr = m_pd2d1devicecontext->CreateEffect(CLSID_D2D1ColorMatrix, &colorMatrixEffect);
 
             defer_throw_hresult(hr);
 
@@ -3185,7 +3192,7 @@ namespace draw2d_direct2d
             pointTarget.x = rectangleTarget.left;
             pointTarget.y = rectangleTarget.top;
             //m_pdevicecontext->BeginDraw();
-            m_pdevicecontext->DrawImage(colorMatrixEffect, &pointTarget, &rectangleSource, D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR);
+            m_pd2d1devicecontext->DrawImage(colorMatrixEffect, &pointTarget, &rectangleSource, D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR);
             //m_pdevicecontext->EndDraw();
 
          }
@@ -3361,7 +3368,7 @@ namespace draw2d_direct2d
          else
          {
 
-            m_pdevicecontext->DrawBitmap(pd2d1bitmap, rectangleTarget, 1.0, m_interpolationmode, rectangleSource);
+            m_pd2d1devicecontext->DrawBitmap(pd2d1bitmap, rectangleTarget, 1.0, m_interpolationmode, rectangleSource);
 
          }
 
@@ -6090,13 +6097,13 @@ namespace draw2d_direct2d
          if (m_ealphamodeDevice == ::draw2d::e_alpha_mode_blend)
          {
 
-            m_pdevicecontext->SetPrimitiveBlend(D2D1_PRIMITIVE_BLEND_SOURCE_OVER);
+            m_pd2d1devicecontext->SetPrimitiveBlend(D2D1_PRIMITIVE_BLEND_SOURCE_OVER);
 
          }
          else if (m_ealphamodeDevice == ::draw2d::e_alpha_mode_set)
          {
 
-            m_pdevicecontext->SetPrimitiveBlend(D2D1_PRIMITIVE_BLEND_COPY);
+            m_pd2d1devicecontext->SetPrimitiveBlend(D2D1_PRIMITIVE_BLEND_COPY);
 
          }
 
@@ -6165,7 +6172,7 @@ namespace draw2d_direct2d
 
          m_ealphamodeDevice = m_ealphamode;
 
-         m_pdevicecontext->SetPrimitiveBlend(D2D1_PRIMITIVE_BLEND_SOURCE_OVER);
+         m_pd2d1devicecontext->SetPrimitiveBlend(D2D1_PRIMITIVE_BLEND_SOURCE_OVER);
 
       }
 
@@ -6871,7 +6878,7 @@ namespace draw2d_direct2d
    void graphics::fill_rectangle(const ::f64_rectangle & rectangleParam, const ::color::color & color)
    {
 
-      if (!m_pdevicecontext)
+      if (!m_pd2d1devicecontext)
       {
 
          //return false;
@@ -6901,7 +6908,7 @@ namespace draw2d_direct2d
 
       defer_primitive_blend();
 
-      m_pdevicecontext->FillRectangle(&rectangle, psolidbrush);
+      m_pd2d1devicecontext->FillRectangle(&rectangle, psolidbrush);
 
    }
 
@@ -6915,7 +6922,7 @@ namespace draw2d_direct2d
          || m_pimage
          || m_pbitmap
          || m_iLayerCount != 0
-         || m_pdevicecontext
+         || m_pd2d1devicecontext
          || m_pd2d1rendertarget)
       {
 
@@ -6960,8 +6967,8 @@ namespace draw2d_direct2d
       pdevicecontext->GetDevice(&pdevice);
 
       return pdevice
-         && m_pdeviceMemoryGraphicsPool
-         && pdevice.m_p == m_pdeviceMemoryGraphicsPool.m_p;
+         && m_pd2d1deviceMemoryGraphicsPool
+         && pdevice.m_p == m_pd2d1deviceMemoryGraphicsPool.m_p;
 
    }
 
@@ -6994,8 +7001,8 @@ namespace draw2d_direct2d
          ::cast < ::draw2d_direct2d::bitmap > pbitmap = pimage->m_pbitmap;
 
          if (!pbitmap
-            || !pbitmap->m_pbitmap
-            || !pbitmap->m_pdevicecontext)
+            || !pbitmap->m_pd2d1bitmap
+            || !pbitmap->m_pd2d1devicecontext)
          {
 
             throw ::exception(
@@ -7004,8 +7011,8 @@ namespace draw2d_direct2d
 
          }
 
-         if (m_pdevicecontext
-            && m_pdevicecontext.m_p != pbitmap->m_pdevicecontext.m_p)
+         if (m_pd2d1devicecontext
+            && m_pd2d1devicecontext.m_p != pbitmap->m_pd2d1devicecontext.m_p)
          {
 
             throw ::exception(
@@ -7014,7 +7021,7 @@ namespace draw2d_direct2d
 
          }
 
-         if (!m_pdevicecontext && m_pd2d1rendertarget)
+         if (!m_pd2d1devicecontext && m_pd2d1rendertarget)
          {
 
             throw ::exception(
@@ -7023,18 +7030,18 @@ namespace draw2d_direct2d
 
          }
 
-         m_pbitmaprendertargetCompatibleMemoryGraphics.release();
-         m_pdcrendertarget.release();
-         m_pdevicecontext = pbitmap->m_pdevicecontext;
-         m_pdevicecontext.as(m_pd2d1rendertarget);
-         m_pdevicecontext.as(m_pdevicecontext1);
-         m_pdevicecontext->SetTarget(pbitmap->m_pbitmap);
+         m_pd2d1bitmaprendertargetCompatibleMemoryGraphics.release();
+         m_pd2d1dcrendertarget.release();
+         m_pd2d1devicecontext = pbitmap->m_pd2d1devicecontext;
+         m_pd2d1devicecontext.as(m_pd2d1rendertarget);
+         m_pd2d1devicecontext.as(m_pd2d1devicecontext1);
+         m_pd2d1devicecontext->SetTarget(pbitmap->m_pd2d1bitmap);
 
       }
       else
       {
 
-         if (m_pdevicecontext || m_pd2d1rendertarget)
+         if (m_pd2d1devicecontext || m_pd2d1rendertarget)
          {
 
             throw ::exception(
@@ -7047,7 +7054,7 @@ namespace draw2d_direct2d
 
       }
 
-      if (!m_pdevicecontext || !m_pd2d1rendertarget)
+      if (!m_pd2d1devicecontext || !m_pd2d1rendertarget)
       {
 
          throw ::exception(
@@ -7056,8 +7063,8 @@ namespace draw2d_direct2d
 
       }
 
-      m_pdevicecontext->GetDevice(&m_pdeviceMemoryGraphicsPool);
-      m_osdata[data_device_context] = m_pdevicecontext;
+      m_pd2d1devicecontext->GetDevice(&m_pd2d1deviceMemoryGraphicsPool);
+      m_osdata[data_device_context] = m_pd2d1devicecontext;
       m_osdata[data_render_target] = m_pd2d1rendertarget;
       m_iLayerCount = 0;
       m_iaPushLayer.erase_all();
@@ -7071,7 +7078,7 @@ namespace draw2d_direct2d
       m_iYFlipHeight = 0;
       m_dSizeScaler = 1.0;
 
-      m_pdevicecontext->BeginDraw();
+      m_pd2d1devicecontext->BeginDraw();
       m_bBeginDraw = true;
 
       try
@@ -7083,11 +7090,11 @@ namespace draw2d_direct2d
             pacmeuserinteractionAffinity);
 
          defer_on_target_rectangle_update();
-         m_pdevicecontext->SetPrimitiveBlend(
+         m_pd2d1devicecontext->SetPrimitiveBlend(
             D2D1_PRIMITIVE_BLEND_SOURCE_OVER);
-         m_pdevicecontext->SetAntialiasMode(
+         m_pd2d1devicecontext->SetAntialiasMode(
             D2D1_ANTIALIAS_MODE_PER_PRIMITIVE);
-         m_pdevicecontext->SetTextAntialiasMode(
+         m_pd2d1devicecontext->SetTextAntialiasMode(
             D2D1_TEXT_ANTIALIAS_MODE_DEFAULT);
          m_ealphamodeDevice = ::draw2d::e_alpha_mode_blend;
          m_etextrenderinghintDevice =
@@ -7098,11 +7105,11 @@ namespace draw2d_direct2d
       {
 
          _pop_all_layers();
-         m_pdevicecontext->EndDraw();
+         m_pd2d1devicecontext->EndDraw();
          m_bBeginDraw = false;
-         m_pdevicecontext1.release();
+         m_pd2d1devicecontext1.release();
          m_pd2d1rendertarget.release();
-         m_pdevicecontext.release();
+         m_pd2d1devicecontext.release();
          clear_os_data();
          throw;
 
@@ -7114,16 +7121,17 @@ namespace draw2d_direct2d
    void graphics::on_release_memory_graphics()
    {
 
-      auto pimageBeforeRelease = m_pimage;
-      auto pdevicecontextBeforeRelease = m_pdevicecontext;
 
-      if (!m_bBeginDraw || !pdevicecontextBeforeRelease)
+      auto pimageBeforeRelease = m_pimage;
+      auto pdevicecontextBeforeRelease = m_pd2d1devicecontext;
+
+      if (m_egraphics == e_graphics_draw && (!m_bBeginDraw || !pdevicecontextBeforeRelease))
       {
 
          m_bBeginDraw = false;
-         m_pdevicecontext1.release();
+         m_pd2d1devicecontext1.release();
          m_pd2d1rendertarget.release();
-         m_pdevicecontext.release();
+         m_pd2d1devicecontext.release();
          clear_os_data();
 
          throw ::exception(
@@ -7142,11 +7150,11 @@ namespace draw2d_direct2d
       catch (...)
       {
 
-         pdevicecontextBeforeRelease->EndDraw();
+         //pdevicecontextBeforeRelease->EndDraw();
          m_bBeginDraw = false;
-         m_pdevicecontext1.release();
+         m_pd2d1devicecontext1.release();
          m_pd2d1rendertarget.release();
-         m_pdevicecontext.release();
+         m_pd2d1devicecontext.release();
          clear_os_data();
          throw;
 
@@ -7161,37 +7169,37 @@ namespace draw2d_direct2d
       m_statea.erase_all();
       m_state.m_iLayerIndex = 0;
       m_player.release();
-      m_ppathgeometryClip.release();
-      m_pdevicecontext1.release();
-      m_pd2d1rendertarget.release();
-      m_pdevicecontext.release();
-      m_pdcrendertarget.release();
-      m_pbitmaprendertargetCompatibleMemoryGraphics.release();
+      //m_ppathgeometryClip.release();
+      //m_pd2d1devicecontext1.release();
+      //m_pd2d1rendertarget.release();
+      //m_pd2d1devicecontext.release();
+      //m_pd2d1dcrendertarget.release();
+      //m_pd2d1bitmaprendertargetCompatibleMemoryGraphics.release();
       clear_os_data();
 
-      static ::std::atomic<unsigned int> s_uEndDrawDiagnosticCount{ 0 };
-      auto uEndDrawDiagnosticCount = s_uEndDrawDiagnosticCount.fetch_add(1, ::std::memory_order_relaxed);
+      //static ::std::atomic<unsigned int> s_uEndDrawDiagnosticCount{ 0 };
+      //auto uEndDrawDiagnosticCount = s_uEndDrawDiagnosticCount.fetch_add(1, ::std::memory_order_relaxed);
 
-      if (uEndDrawDiagnosticCount < 32 || FAILED(hrEndDraw))
-      {
+      //if (uEndDrawDiagnosticCount < 32 || FAILED(hrEndDraw))
+      //{
 
-         informationf(
-            "Direct2DEndDrawDiagnostic result=0x%08lx graphics=%p image=%p target=%p",
-            (unsigned long)hrEndDraw,
-            this,
-            pimageBeforeRelease,
-            (ID2D1DeviceContext *)pdevicecontextBeforeRelease);
+      //   informationf(
+      //      "Direct2DEndDrawDiagnostic result=0x%08lx graphics=%p image=%p target=%p",
+      //      (unsigned long)hrEndDraw,
+      //      this,
+      //      pimageBeforeRelease,
+      //      (ID2D1DeviceContext *)pdevicecontextBeforeRelease);
 
-      }
+      //}
 
-      if (FAILED(hrEndDraw))
-      {
+//      if (FAILED(hrEndDraw))
+      //{
 
-         throw hresult_exception(
-            hrEndDraw,
-            "Direct2D memory graphics EndDraw failed");
+      //   throw hresult_exception(
+      //      hrEndDraw,
+      //      "Direct2D memory graphics EndDraw failed");
 
-      }
+      //}
 
    }
 
@@ -7482,8 +7490,10 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::start_layer(bool bFirstLayer)
+   void graphics::start_layer(bool bFirstLayer, ::user::interaction * puserinteraction)
    {
+
+      m_pacmeuserinteractionAffinity = puserinteraction;
 
       reset_clip();
 
@@ -7501,7 +7511,7 @@ namespace draw2d_direct2d
 
 
 
-      if (m_egraphics == ::e_graphics_draw)
+      //if (m_egraphics == ::e_graphics_draw)
       {
 
       //   //auto rectangleHost = m_puserinteractionDraw2dGraphics->raw_rectangle();
@@ -7559,7 +7569,7 @@ namespace draw2d_direct2d
          }
 
 
-         if (!m_bBeginDraw)
+         if (!m_bBeginDraw && !bFirstLayer)
          {
 
             m_bBeginDraw = true;
@@ -7578,17 +7588,17 @@ namespace draw2d_direct2d
 
       ::cast < ::draw2d_direct2d::bitmap > pbitmap = pimage->m_pbitmap;
 
-      pbitmap->m_pdevicecontext.as(m_pdevicecontext);
+      pbitmap->m_pd2d1devicecontext.as(m_pd2d1devicecontext);
       
-      pbitmap->m_pbitmaprendertarget.as(m_pbitmaprendertarget);
+      pbitmap->m_pd2d1bitmaprendertarget.as(m_pd2d1bitmaprendertarget);
 
-      m_pdevicecontext.as(m_pdevicecontext1);
+      m_pd2d1devicecontext.as(m_pd2d1devicecontext1);
 
-      m_pbitmaprendertarget.as(m_pd2d1rendertarget);
+      m_pd2d1bitmaprendertarget.as(m_pd2d1rendertarget);
 
-      m_pdevicecontext.as(m_pdcrendertarget);
+      m_pd2d1devicecontext.as(m_pd2d1dcrendertarget);
 
-      m_osdata[data_device_context] = m_pdevicecontext;
+      m_osdata[data_device_context] = m_pd2d1devicecontext;
 
       m_osdata[data_render_target] = m_pd2d1rendertarget;
 
@@ -7849,11 +7859,11 @@ namespace draw2d_direct2d
 
       m_pd2d1rendertarget = pd2d1rendertarget;
 
-      m_pd2d1rendertarget.as(m_pdevicecontext);
+      m_pd2d1rendertarget.as(m_pd2d1devicecontext);
 
-      m_pd2d1rendertarget.as(m_pdevicecontext1);
+      m_pd2d1rendertarget.as(m_pd2d1devicecontext1);
 
-      m_pdevicecontext->SetTarget(pd2d1bitmap);
+      m_pd2d1devicecontext->SetTarget(pd2d1bitmap);
 
    }
 
@@ -7861,10 +7871,10 @@ namespace draw2d_direct2d
    void graphics::attach(void * pdata)
    {
 
-      if (m_pdevicecontext != nullptr)
+      if (m_pd2d1devicecontext != nullptr)
       {
 
-         m_pdevicecontext = nullptr;
+         m_pd2d1devicecontext = nullptr;
 
       }
 
@@ -7875,36 +7885,36 @@ namespace draw2d_direct2d
 
       }
 
-      if (m_pbitmaprendertarget != nullptr)
+      if (m_pd2d1bitmaprendertarget != nullptr)
       {
 
-         m_pbitmaprendertarget = nullptr;
+         m_pd2d1bitmaprendertarget = nullptr;
 
       }
 
-      m_pdevicecontext = (ID2D1DeviceContext *)pdata;
+      m_pd2d1devicecontext = (ID2D1DeviceContext *)pdata;
 
-      HRESULT hr = m_pdevicecontext.as(m_pdevicecontext1);
+      HRESULT hr = m_pd2d1devicecontext.as(m_pd2d1devicecontext1);
 
       if (FAILED(hr))
       {
 
-         m_pdevicecontext = nullptr;
+         m_pd2d1devicecontext = nullptr;
 
-         m_pdevicecontext1 = nullptr;
+         m_pd2d1devicecontext1 = nullptr;
 
          throw ::exception(error_null_pointer);
 
       }
 
-      hr = m_pdevicecontext.as(m_pd2d1rendertarget);
+      hr = m_pd2d1devicecontext.as(m_pd2d1rendertarget);
 
       if (FAILED(hr))
       {
 
-         m_pdevicecontext = nullptr;
+         m_pd2d1devicecontext = nullptr;
 
-         m_pdevicecontext1 = nullptr;
+         m_pd2d1devicecontext1 = nullptr;
 
          m_pd2d1rendertarget = nullptr;
 
@@ -7912,14 +7922,14 @@ namespace draw2d_direct2d
 
       }
 
-      hr = m_pd2d1rendertarget.as(m_pbitmaprendertarget);
+      hr = m_pd2d1rendertarget.as(m_pd2d1bitmaprendertarget);
 
       if (FAILED(hr))
       {
-         m_pbitmaprendertarget = nullptr;
+         m_pd2d1bitmaprendertarget = nullptr;
       }
 
-      m_osdata[data_device_context] = m_pdevicecontext;
+      m_osdata[data_device_context] = m_pd2d1devicecontext;
 
       m_osdata[data_render_target] = m_pd2d1rendertarget;
 
@@ -7933,13 +7943,13 @@ namespace draw2d_direct2d
 
       m_pd2d1rendertarget = nullptr;
 
-      m_pbitmaprendertarget = nullptr;
+      m_pd2d1bitmaprendertarget = nullptr;
 
       m_osdata[data_device_context] = nullptr;
 
       m_osdata[data_render_target] = nullptr;
 
-      return m_pdevicecontext.detach();
+      return m_pd2d1devicecontext.detach();
 
    }
 
@@ -8056,9 +8066,9 @@ namespace draw2d_direct2d
 
       m_pd2d1rendertarget = nullptr;
 
-      m_pdevicecontext = nullptr;
+      m_pd2d1devicecontext = nullptr;
 
-      m_pbitmaprendertarget = nullptr;
+      m_pd2d1bitmaprendertarget = nullptr;
 
       ::draw2d::graphics::destroy_os_data();
 
@@ -8315,7 +8325,7 @@ namespace draw2d_direct2d
 
       }
 
-      m_pdevicecontext1->DrawGeometryRealization(prealization, pbrush);
+      m_pd2d1devicecontext1->DrawGeometryRealization(prealization, pbrush);
 
       return true;
 
@@ -8334,7 +8344,7 @@ namespace draw2d_direct2d
 
       }
 
-      m_pdevicecontext1->DrawGeometryRealization(prealization, pd2d1brush);
+      m_pd2d1devicecontext1->DrawGeometryRealization(prealization, pd2d1brush);
 
       return true;
 

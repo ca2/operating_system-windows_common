@@ -48,6 +48,12 @@ namespace gpu_directx11
          return "BINORMAL";
 
       }
+      else if (scopedstr.case_insensitive_equals("local_position"))
+      {
+
+         return "TEXCOORD";
+
+      }
       else
       {
 

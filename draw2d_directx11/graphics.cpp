@@ -171,7 +171,7 @@ namespace draw2d_directx11
 
    void graphics::defer_set_size(const ::i32_size& size)
    {
-      _create_memory_graphics(size);
+      //_create_memory_graphics(size);
       /*m_pgpucontextCompositor->sendø() << [this, size]()
          {
             m_pgpucontextCompositor->sendø() << [this, size]()
@@ -269,7 +269,12 @@ namespace draw2d_directx11
    void graphics::_create_memory_graphics(const ::i32_size & size, ::acme::user::interaction * pacmeuserinteractionAffinity)
    {
 
-      m_pacmeuserinteractionAffinity = pacmeuserinteractionAffinity;
+      if (pacmeuserinteractionAffinity)
+      {
+
+         m_pacmeuserinteractionAffinity = pacmeuserinteractionAffinity;
+
+      }
 
       auto pcontext = gpu_context();
 
@@ -323,6 +328,7 @@ namespace draw2d_directx11
          //;; ::gpu::e_output_gpu_buffer,
          pgpudevice,
          m_pacmeuserinteractionAffinity->m_pacmewindowingwindow,
+         this,
          //rectanglePlacement,
          {},
       {},
@@ -1937,6 +1943,8 @@ namespace draw2d_directx11
          throw ::exception(error_null_pointer);
 
       }
+
+      ::gpu::graphics::draw_ellipse(rectangle);
 
       //auto pbrush = m_ppen->get_os_data < ID2D1Brush * >(this);
 
@@ -5540,7 +5548,7 @@ namespace draw2d_directx11
 
          }
          ::f32 clearColor[4] = { 0, 0, 0, 0 }; // Clear to transparent
-         pcontext->m_pcontext->ClearRenderTargetView(ptexture->m_prendertargetview,
+         pcontext->m_pd3d11devicecontext->ClearRenderTargetView(ptexture->m_prendertargetview,
             clearColor
             );
 
@@ -6565,7 +6573,7 @@ namespace draw2d_directx11
    }
 
 
-   void graphics::start_layer(bool bFirstLayer)
+   void graphics::start_layer(bool bFirstLayer, ::user::interaction * puserinteraction)
    {
 
       reset_clip();
@@ -6576,7 +6584,34 @@ namespace draw2d_directx11
 
       set_smooth_mode(::draw2d::e_smooth_mode_high);
 
-      ::gpu::graphics::start_layer(bFirstLayer);
+      ::gpu::graphics::start_layer(bFirstLayer, puserinteraction);
+
+      auto pcontext = gpu_context();
+
+      auto pgputexturesite = pcontext->m_pgpurenderer->m_pgpurendertarget2->current_texture(::gpu::current_layer(), true);
+
+      ::cast < ::gpu_directx11::texture > ptexture = pgputexturesite->gpu_texture();
+      //D3D11_RECT rect = {};
+      //rect.left = 100;
+      //rect.top = 100;
+      //rect.right = 200;
+      //rect.bottom = 200;
+
+      //::f32 clearColor[4] = { 0.5f * 0.5f,0.75f * 0.5f, 0.95f * 0.5f, 0.5f };
+
+      //::f32 clearColor[4] = { 0.f ,0.f, 0.f, 0.f };
+
+      //auto prendertargetview = ptexture->m_prendertargetview;
+
+      //::f32 clearColor[4] = { 1.f ,1.f, 1.f, 1.f };
+
+      //pcontext->m_pd3d11devicecontextDeferred->ClearRenderTargetView(prendertargetview, clearColor);
+
+      //pcontext->m_pd3d11devicecontext1->ClearView(prendertargetview, clearColor, NULL, 0);
+
+      //set_alpha_mode(::draw2d::e_alpha_mode_set);
+
+      //fill_solid_rectangle({ ::i32_point(), m_sizeTarget }, ::color::transparent);
 
       //if (m_egraphics == ::e_graphics_draw)
       //{
@@ -6718,7 +6753,7 @@ namespace draw2d_directx11
                ::f32 blendFactor[4] = { 0, 0, 0, 0 }; // Ignored with this blend mode
                UINT sampleMask = 0xFFFFFFFF;
 
-               pcontext->m_pcontext->OMSetBlendState(m_pblendstateAlphaMode,
+               pcontext->m_pd3d11devicecontext->OMSetBlendState(m_pblendstateAlphaMode,
                   blendFactor, sampleMask);
 
             }
@@ -6751,7 +6786,7 @@ namespace draw2d_directx11
 
                UINT sampleMask = 0xFFFFFFFF;
 
-               pcontext->m_pcontext->OMSetBlendState(m_pblendstateSetMode,
+               pcontext->m_pd3d11devicecontext->OMSetBlendState(m_pblendstateSetMode,
                   nullptr, sampleMask);
 
             }

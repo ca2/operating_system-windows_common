@@ -754,10 +754,10 @@ namespace gpu_directx11
          ::cast <::gpu_directx11::context> pcontext = m_pgpucontext;
 
          // No input layout (we're not feeding vertex attributes)
-         pcontext->m_pcontext->IASetInputLayout(nullptr);
+         pcontext->m_pd3d11devicecontext->IASetInputLayout(nullptr);
 
          // No vertex buffers
-         pcontext->m_pcontext->IASetVertexBuffers(0, 0, nullptr, nullptr, nullptr);
+         pcontext->m_pd3d11devicecontext->IASetVertexBuffers(0, 0, nullptr, nullptr, nullptr);
 
          //glBindVertexArray(m_gluVao);
          //GLCheckError("");
@@ -779,7 +779,7 @@ namespace gpu_directx11
             
             ::cast < ::gpu_directx11::context > pcontext = m_pgpucontext;
 
-            pcontext->m_pcontext->DrawIndexed((UINT) m_pmodeldatabase2->index_count(), 0, 0);
+            pcontext->m_pd3d11devicecontext->DrawIndexed((UINT) m_pmodeldatabase2->index_count(), 0, 0);
 
          }
          else
@@ -787,7 +787,7 @@ namespace gpu_directx11
 
             ::cast < ::gpu_directx11::context > pcontext = m_pgpucontext;
 
-            pcontext->m_pcontext->Draw((UINT) m_pmodeldatabase2->vertex_count(), 0); 
+            pcontext->m_pd3d11devicecontext->Draw((UINT) m_pmodeldatabase2->vertex_count(), 0);
 
          }
 
@@ -797,7 +797,7 @@ namespace gpu_directx11
 
          ::cast < ::gpu_directx11::context > pcontext = m_pgpucontext;
 
-         pcontext->m_pcontext->Draw((UINT) m_pmodeldatabase2->vertex_count(), 0);
+         pcontext->m_pd3d11devicecontext->Draw((UINT) m_pmodeldatabase2->vertex_count(), 0);
 
       }
 

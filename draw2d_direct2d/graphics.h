@@ -35,19 +35,19 @@ namespace draw2d_direct2d
       ::i32                                                m_iLayerCount;
 
       //comptr<ID2D1Device>                                m_pdevice;
-      comptr<ID2D1DeviceContext>                         m_pdevicecontext; // 0
+      comptr<ID2D1DeviceContext>                         m_pd2d1devicecontext; // 0
       comptr<ID2D1RenderTarget>                          m_pd2d1rendertarget; // 1
       array < array < comptr<ID2D1RenderTarget> > >      m_d2d1rendertargeta; // 1
-      comptr<ID2D1BitmapRenderTarget>                    m_pbitmaprendertarget; // 2
-      comptr<ID2D1DCRenderTarget>                        m_pdcrendertarget; // 3
-      comptr<ID2D1DeviceContext1>                        m_pdevicecontext1; // 4
-      comptr<ID2D1BitmapRenderTarget>                    m_pbitmaprendertargetCompatibleMemoryGraphics; // 2
-      comptr<ID2D1Device>                                m_pdeviceMemoryGraphicsPool;
+      comptr<ID2D1BitmapRenderTarget>                    m_pd2d1bitmaprendertarget; // 2
+      comptr<ID2D1DCRenderTarget>                        m_pd2d1dcrendertarget; // 3
+      comptr<ID2D1DeviceContext1>                        m_pd2d1devicecontext1; // 4
+      comptr<ID2D1BitmapRenderTarget>                    m_pd2d1bitmaprendertargetCompatibleMemoryGraphics; // 2
+      comptr<ID2D1Device>                                m_pd2d1deviceMemoryGraphicsPool;
 
       //comptr<IDXGISurface>                               m_pdxgisurface;
-      comptr < ID2D1Bitmap1>                              m_pd2d1bitmap;
+      comptr < ID2D1Bitmap1>                             m_pd2d1bitmap;
 
-      ::array<::array <comptr < ID2D1Bitmap1>   > >          m_d2d1bitmapa;
+      ::array<::array <comptr < ID2D1Bitmap1>   > >      m_d2d1bitmapa;
 
       //comptr<IDXGIAdapter>                               m_padapter;
       //comptr<IDXGIFactory2>                              m_pfactory2;
@@ -98,7 +98,7 @@ namespace draw2d_direct2d
 
       ////void start_layer(::e_graphics egraphics) override;
       ////void end_layer(::e_graphics egraphics) override;
-      void start_layer(bool bFirstLayer = false) override;
+      void start_layer(bool bFirstLayer = false, ::user::interaction * puserinteraction = nullptr) override;
       void end_layer(bool bClosingLayer = false) override;
       //
       ////void on_begin_draw1() override;
@@ -175,7 +175,7 @@ namespace draw2d_direct2d
       //void _create_memory_graphics(const ::i32_size& size = {}) override;
       void create_bitmap_graphics(::draw2d::bitmap *pbitmap) override;
       void defer_set_size(const ::i32_size& size = {}) override;
-
+      ::image::image_pointer get_current_target_image() override;
       //void create_offscreen_graphics_for_swap_chain_blitting(const ::i32_size& size) override;
       //void create_for_window_draw2d(::user::interaction* puserinteraction, const ::i32_size & size) override;
       //void create_connector() override;
