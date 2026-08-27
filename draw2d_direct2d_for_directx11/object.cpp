@@ -24,12 +24,12 @@ namespace draw2d_direct2d_for_directx11
    }
 
 
-   void object::initialize_draw2d_direct2d_object(::draw2d_direct2d_for_directx11::graphics* pgraphics)
+   void object::initialize_draw2d_direct2d_object(::draw2d_direct2d_for_directx11::graphics* pdraw2dgraphics)
    {
 
-      initialize(pgraphics);
+      initialize(pdraw2dgraphics);
 
-      ::cast < ::draw2d_direct2d::graphics > pdraw2direct2dgraphics = pgraphics;
+      ::cast < ::draw2d_direct2d::graphics > pdraw2direct2dgraphics = pdraw2dgraphics;
 
       //::cast < ::draw2d_direct2d::draw2d > pdraw2direct2ddraw2d = pdraw2direct2dgraphics->direct2d();
 
@@ -83,7 +83,7 @@ namespace draw2d_direct2d_for_directx11
 
    //bool object::delete_object()
    //{
-   //   //if (get_os_data() == nullptr)
+   //   //if (nok())
    //   // return false;
    //   //return ::DeleteObject(Detach());
    //   return false;
@@ -127,19 +127,19 @@ namespace draw2d_direct2d_for_directx11
    //}
 
 
-   void object::defer_update(::draw2d::graphics* pgraphics, ::i8 i) const
+   void object::defer_update(::draw2d::graphics * pdraw2dgraphics)
    {
 
       if (!m_pdirect2d_)
       {
 
-         ::cast < graphics> pdirect2dgraphics = pgraphics;
+         ::cast < graphics> pdirect2dgraphics = pdraw2dgraphics;
 
          ((object*)this)->initialize_draw2d_direct2d_object(pdirect2dgraphics);
 
       }
 
-      ::draw2d::object::defer_update(pgraphics, i);
+      ::draw2d::object::defer_update(pdraw2dgraphics);
 
    }
 

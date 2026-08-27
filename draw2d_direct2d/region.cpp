@@ -107,14 +107,14 @@ namespace draw2d_direct2d
    //}
 
 
-   bool region::contains(::draw2d::graphics* pgraphics, ::i32 x, ::i32 y) const
+   bool region::contains(::draw2d::graphics * pdraw2dgraphics, ::i32 x, ::i32 y) const
    {
 
-      ((region *) this)->defer_update(pgraphics, 0);
+      ((region *) this)->defer_update(pdraw2dgraphics);
 
       BOOL b = false;
 
-      HRESULT hr = m_pgeometry->FillContainsPoint(D2D1::Point2F((FLOAT) x, (FLOAT) y), nullptr, &b);
+      HRESULT hr = m_pd2d1geometry->FillContainsPoint(D2D1::Point2F((FLOAT) x, (FLOAT) y), nullptr, &b);
 
       if(FAILED(hr))
          return false;
@@ -130,10 +130,10 @@ namespace draw2d_direct2d
    }
 
 
-   bool region::contains(::draw2d::graphics* pgraphics, const ::i32_point & point) const
+   bool region::contains(::draw2d::graphics * pdraw2dgraphics, const ::i32_point & point) const
    {
 
-      return contains(pgraphics, point.x, point.y);
+      return contains(pdraw2dgraphics, point.x, point.y);
 
       //throw ::exception(todo);
 
@@ -166,17 +166,17 @@ namespace draw2d_direct2d
    }
 
 
-   void region::create(::draw2d::graphics * pgraphics, ::i8 iCreate)
+   void region::update(::draw2d::graphics * pdraw2dgraphics)
    {
 
-      m_osdata[0] = get(pgraphics);
+      m_pd2d1geometry = get(pdraw2dgraphics);
 
       //return m_pgeometry != nullptr;
 
    }
 
 
-   ID2D1Geometry * region::get(::draw2d::graphics* pgraphics)
+   comptr < ID2D1Geometry > region::get(::draw2d::graphics * pdraw2dgraphics)
    {
 
       auto eitem = m_pitem->type();
@@ -197,15 +197,15 @@ namespace draw2d_direct2d
 
       }
       case ::draw2d::e_item_rectangle:
-         return get_rectangle(pgraphics);
+         return get_rectangle(pdraw2dgraphics);
       case ::draw2d::e_item_ellipse:
-         return get_ellipse(pgraphics);
+         return get_ellipse(pdraw2dgraphics);
       case ::draw2d::e_item_polygon:
-         return get_polygon(pgraphics);
+         return get_polygon(pdraw2dgraphics);
       case ::draw2d::e_item_poly_polygon:
-         return get_polygon(pgraphics);
+         return get_polygon(pdraw2dgraphics);
       case ::draw2d::e_item_combine:
-         return get_combine(pgraphics);
+         return get_combine(pdraw2dgraphics);
       default:
          throw ::interface_only();
       }
@@ -215,16 +215,16 @@ namespace draw2d_direct2d
    }
 
 
-   ID2D1Geometry * region::get_rectangle(::draw2d::graphics* pgraphicsParam)
+   comptr < ID2D1Geometry > region::get_rectangle(::draw2d::graphics * pdraw2dgraphics)
    {
 
       //ID2D1RectangleGeometry * pgeometry = nullptr;
 
-      //auto pgraphics = __graphics(pgraphicsParam);
+      //auto pdraw2dgraphics = __graphics(pdraw2dgraphics);
 
-      ::cast<graphics> pgraphics = pgraphicsParam;
+      ::cast<::draw2d_direct2d::graphics> pdraw2ddirect2dgraphics = pdraw2dgraphics;
 
-      if (!pgraphics)
+      if (!pdraw2ddirect2dgraphics)
       {
 
          return nullptr;
@@ -241,12 +241,16 @@ namespace draw2d_direct2d
 
       //direct2d()->d2d1_factory1()->CreateRectangleGeometry(r, &pgeometry);
 
-      return prectanglegeometry;
+      comptr < ID2D1Geometry > pd2d1geometry;
+
+      prectanglegeometry.as(pd2d1geometry);
+
+      return pd2d1geometry;
 
    }
 
 
-   ID2D1Geometry * region::get_ellipse(::draw2d::graphics* pgraphics)
+   comptr < ID2D1Geometry > region::get_ellipse(::draw2d::graphics * pdraw2dgraphics)
    {
 
       //D2D1_ELLIPSE ellipse;
@@ -267,15 +271,19 @@ namespace draw2d_direct2d
 
       auto pellipsegeometry = ::direct2d::geometry::create_ellipse(direct2d(),pitem->m_item);
 
-      return pellipsegeometry;
+      comptr < ID2D1Geometry > pd2d1geometry;
+
+      pellipsegeometry.as(pd2d1geometry);
+
+      return pd2d1geometry;
 
    }
 
 
-   ID2D1Geometry * region::get_polygon(::draw2d::graphics* pgraphics)
+   comptr < ID2D1Geometry > region::get_polygon(::draw2d::graphics * pdraw2dgraphics)
    {
 
-      //auto ppath = pgraphics->createø < ::draw2d::path > ();
+      //auto pdraw2dpath = pdraw2dgraphics->createø < ::draw2d::path > ();
 
       /*i32_point_array pa;
 
@@ -297,25 +305,29 @@ namespace draw2d_direct2d
 
       ::pointer<::geometry2d::polygon_item>pitem = m_pitem;
 
-      //ppath->begin_figure();
-      //ppath->add_polygon(pitem->m_polygon.data(), pitem->m_polygon.size());
-      //ppath->close_figure();
+      //pdraw2dpath->begin_figure();
+      //pdraw2dpath->add_polygon(pitem->m_polygon.data(), pitem->m_polygon.size());
+      //pdraw2dpath->close_figure();
 
-      //ppath->get_os_data(pgraphics, path_filled);
+      //pdraw2dpath->get_os_data(pdraw2dgraphics, path_filled);
 
-      //m_pgeometry = ::transfer((ID2D1PathGeometry *) ppath->detach());
+      //m_pgeometry = ::transfer((ID2D1PathGeometry *) pdraw2dpath->detach());
 
       auto ppathgeometry = ::direct2d::geometry::create_polygon(direct2d(), pitem->m_polygon);
 
-      return ppathgeometry;
+      comptr < ID2D1Geometry > pd2d1geometry;
+
+      ppathgeometry.as(pd2d1geometry);
+
+      return pd2d1geometry;
 
    }
 
 
-   ID2D1Geometry * region::get_poly_polygon(::draw2d::graphics* pgraphics)
+   comptr < ID2D1Geometry > region::get_poly_polygon(::draw2d::graphics * pdraw2dgraphics)
    {
 
-      auto ppath = pgraphics->createø < ::draw2d::path > ();
+      auto pdraw2dpath = pdraw2dgraphics->createø < ::draw2d::path > ();
 
       f64_point_array pa;
 
@@ -342,19 +354,21 @@ namespace draw2d_direct2d
          //   pa.add(::f64_point(m_lppoints[n].x, m_lppoints[n].y));
          //   n++;
          //}
-         //ppath->begin_figure(true, m_efillmode);
-         ppath->begin_figure();
-         ppath->add_polygon(ppolygon->data(), (::i32) ppolygon->size());
-         //ppath->end_figure(true);
-         ppath->close_figure();
+         //pdraw2dpath->begin_figure(true, m_efillmode);
+         pdraw2dpath->begin_figure();
+         pdraw2dpath->add_polygon(ppolygon->data(), (::i32) ppolygon->size());
+         //pdraw2dpath->end_figure(true);
+         pdraw2dpath->close_figure();
       }
 
-      return (ID2D1PathGeometry *) ppath->detach();
+      ::cast < ::draw2d_direct2d::path > pdraw2ddirect2dpath = pdraw2dpath;
+
+      return pdraw2ddirect2dpath->m_pd2d1pathgeometry;
 
    }
 
 
-   ID2D1Geometry * region::get_combine(::draw2d::graphics* pgraphics)
+   comptr < ID2D1Geometry > region::get_combine(::draw2d::graphics * pdraw2dgraphics)
    {
 
       comptr < ID2D1PathGeometry > ppathgeometry ;
@@ -381,15 +395,15 @@ namespace draw2d_direct2d
 
       ::pointer < ::geometry2d::combine_item > pitem = m_pitem;
 
-      ::pointer < graphics > pdirect2dgraphics = pgraphics;
+      ::pointer < graphics > pdirect2dgraphics = pdraw2dgraphics;
 
       auto pgeometry1 = pdirect2dgraphics->defer_update_os_data(pitem->m_pregion1);
 
       auto pgeometry2 = pdirect2dgraphics->defer_update_os_data(pitem->m_pregion2);
 
-      //auto pgeometry1 = pitem->m_pregion1->get_os_data < ID2D1Geometry * >(pgraphics);
+      //auto pgeometry1 = pitem->m_pregion1->get_os_data < ID2D1Geometry * >(pdraw2dgraphics);
 
-      //auto pgeometry2 = pitem->m_pregion2->get_os_data < ID2D1Geometry * >(pgraphics);
+      //auto pgeometry2 = pitem->m_pregion2->get_os_data < ID2D1Geometry * >(pdraw2dgraphics);
 
       if(pitem->m_ecombine == ::draw2d::e_combine_add)
       {
@@ -440,19 +454,21 @@ namespace draw2d_direct2d
    void region::destroy()
    {
 
-      destroy_os_data();
+      m_pd2d1geometry = nullptr;
+
+      //destroy_os_data();
 
    }
 
 
-   void region::destroy_os_data()
-   {
+   //void region::destroy_os_data()
+   //{
 
-      m_pgeometry = nullptr;
+   //   m_pgeometry = nullptr;
 
-      object::destroy_os_data();
+   //   object::destroy_os_data();
 
-   }
+   //}
 
 
 } // namespace draw2d_direct2d

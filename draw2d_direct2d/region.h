@@ -15,7 +15,7 @@ namespace draw2d_direct2d
    public:
 
 
-      comptr<ID2D1Geometry>            m_pgeometry;
+      comptr<ID2D1Geometry>            m_pd2d1geometry;
 
 
       region();
@@ -24,8 +24,8 @@ namespace draw2d_direct2d
       //void defer_update();
 
       void destroy() override;
-      void destroy_os_data() override;
-      void create(::draw2d::graphics * pgraphics, ::i8 iCreate) override;
+      // void destroy_os_data() override;
+      void update(::draw2d::graphics * pdraw2dgraphics) override;
 
 
       void SetRectRgn(::i32 x1, ::i32 y1, ::i32 x2, ::i32 y2);
@@ -36,18 +36,18 @@ namespace draw2d_direct2d
       ::i32 OffsetRgn(::i32 x, ::i32 y);
       ::i32 OffsetRgn(const ::i32_point & point);
       ::i32 GetRgnBox(::i32_rectangle * prectangle) const;
-      bool contains(::draw2d::graphics * pgraphics, ::i32 x, ::i32 y) const;
-      bool contains(::draw2d::graphics * pgraphics, const ::i32_point & point) const;
+      bool contains(::draw2d::graphics * pdraw2dgraphics, ::i32 x, ::i32 y) const;
+      bool contains(::draw2d::graphics * pdraw2dgraphics, const ::i32_point & point) const;
       bool RectInRegion(const ::i32_rectangle & rectangle) const;
       ::i32 GetRegionData(LPRGNDATA lpRgnData, ::i32 nCount) const;
 
 
-      ID2D1Geometry * get(::draw2d::graphics * pgraphics);
-      ID2D1Geometry * get_rectangle(::draw2d::graphics * pgraphics);
-      ID2D1Geometry * get_ellipse(::draw2d::graphics * pgraphics);
-      ID2D1Geometry * get_polygon(::draw2d::graphics * pgraphics);
-      ID2D1Geometry * get_poly_polygon(::draw2d::graphics * pgraphics);
-      ID2D1Geometry * get_combine(::draw2d::graphics * pgraphics);
+      virtual comptr<ID2D1Geometry> get(::draw2d::graphics * pdraw2dgraphics);
+      virtual comptr<ID2D1Geometry> get_rectangle(::draw2d::graphics * pdraw2dgraphics);
+      virtual comptr<ID2D1Geometry> get_ellipse(::draw2d::graphics * pdraw2dgraphics);
+      virtual comptr<ID2D1Geometry> get_polygon(::draw2d::graphics * pdraw2dgraphics);
+      virtual comptr<ID2D1Geometry> get_poly_polygon(::draw2d::graphics * pdraw2dgraphics);
+      virtual comptr<ID2D1Geometry> get_combine(::draw2d::graphics * pdraw2dgraphics);
 
    };
 

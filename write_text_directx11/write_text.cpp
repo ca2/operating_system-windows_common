@@ -25,9 +25,9 @@ namespace write_text_directx11
    ::write_text::font_pointer write_text::font(const ::write_text::font_family_pointer& pfontfamily, const ::write_text::font_size& fontsize, ::i32 iFontWeight)
    {
 
-      auto pfont = ::write_text::write_text::font(pfontfamily, fontsize, iFontWeight);
+      auto pwritetextfont = ::write_text::write_text::font(pfontfamily, fontsize, iFontWeight);
 
-      ::cast < ::directx11::object > pdirectx11object = pfont;
+      ::cast < ::directx11::object > pdirectx11object = pwritetextfont;
 
       if (pdirectx11object)
       {
@@ -36,7 +36,7 @@ namespace write_text_directx11
 
       }
 
-      return pfont;
+      return pwritetextfont;
 
    }
 

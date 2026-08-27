@@ -34,7 +34,7 @@ namespace draw2d_directx11
    //}
 
 
-   //comptr < ID2D1StrokeStyle1 > pen::_create_stroke_style(::draw2d::graphics * pgraphicsParam)
+   //comptr < ID2D1StrokeStyle1 > pen::_create_stroke_style(::draw2d::graphics * pdraw2dgraphics)
    //{
 
    //   bool bProperties = false;
@@ -76,24 +76,24 @@ namespace draw2d_directx11
 
    //}
 
-   void pen::create(::draw2d::graphics* pgraphicsParam, ::i8 iCreate)
+   void pen::update(::draw2d::graphics * pdraw2dgraphics)
    {
 
-      auto pgraphics = __graphics(pgraphicsParam);
+      ::cast< ::draw2d_directx11::graphics > pdraw2directx11graphics = pdraw2dgraphics;
 
-      if((!m_bMetroColor || m_colorMetro != m_color) || m_pbrush == nullptr)
+      if((!m_bMetroColor || m_colorMetro != m_color) || m_pdraw2dbrush == nullptr)
       {
 
          //D2D1_COLOR_F color;
 
          //copy(color, m_color);
 
-         //pgraphics->m_pd2d1rendertarget->CreateSolidColorBrush(color, &m_pbrush);
+         //pdraw2dgraphics->m_pd2d1rendertarget->CreateSolidColorBrush(color, &m_pdraw2dbrush);
 
-         //if(m_pbrush != nullptr)
+         //if(m_pdraw2dbrush != nullptr)
          //{
 
-         //   m_osdata[0] = (ID2D1Brush *) m_pbrush;
+         //   m_osdata[0] = (ID2D1Brush *) m_pdraw2dbrush;
          //   
          //   m_colorMetro       = m_color;
 
@@ -101,7 +101,7 @@ namespace draw2d_directx11
          //   
          //}
 
-         //m_pstrokestyle = _create_stroke_style(pgraphics,
+         //m_pstrokestyle = _create_stroke_style(pdraw2dgraphics,
          //   m_elinecapBeg,
          //   m_elinecapEnd);
 
@@ -120,46 +120,46 @@ namespace draw2d_directx11
    }
 
 
+   //void pen::destroy()
+   //{
+
+   //   destroy_os_data();
+
+   //   ::draw2d::pen::destroy();
+
+   //}
+
+
+
    void pen::destroy()
    {
 
-      destroy_os_data();
-
-      ::draw2d::pen::destroy();
-
-   }
-
-
-
-   void pen::destroy_os_data()
-   {
-
-      m_pbrush = nullptr;
+      m_pdraw2dbrush = nullptr;
 
       //m_pstrokestyle = nullptr;
 
-      object::destroy_os_data();
+      object::destroy();
 
    }
 
-   //HRESULT pen::s_RenderPatternToCommandList(ID2D1RenderTarget * pgraphics,D2D1_COLOR_F *pcr)
+   //HRESULT pen::s_RenderPatternToCommandList(ID2D1RenderTarget * pdraw2dgraphics,D2D1_COLOR_F *pcr)
    //{
 
    //   HRESULT hr = S_OK;
 
-   //   //pgraphics->BeginDraw();
+   //   //pdraw2dgraphics->BeginDraw();
 
-   //   pgraphics->Clear(pcr);
+   //   pdraw2dgraphics->Clear(pcr);
 
    //   ID2D1SolidColorBrush * pbr = nullptr;
 
-   //   //hr = pgraphics->CreateSolidColorBrush(*pcr, &pbr);
+   //   //hr = pdraw2dgraphics->CreateSolidColorBrush(*pcr, &pbr);
 
-   //   //pgraphics->DrawRectangle(D2D1::RectF(0.f, 0.f, 256.f, 256.f), pbr, 0.f);
+   //   //pdraw2dgraphics->DrawRectangle(D2D1::RectF(0.f, 0.f, 256.f, 256.f), pbr, 0.f);
 
    //   //pbr->Release();
 
-   //   ///hr = pgraphics->EndDraw();
+   //   ///hr = pdraw2dgraphics->EndDraw();
 
    //   return hr;
 

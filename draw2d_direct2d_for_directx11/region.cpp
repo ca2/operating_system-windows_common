@@ -107,33 +107,35 @@ namespace draw2d_direct2d_for_directx11
    //}
 
 
-   bool region::contains(::draw2d::graphics* pgraphics, ::i32 x, ::i32 y) const
+   bool region::contains(::draw2d::graphics * pdraw2dgraphics, ::i32 x, ::i32 y) const
    {
 
-      ((region *) this)->defer_update(pgraphics, 0);
+      return ::draw2d_direct2d::region::contains(pdraw2dgraphics, x, y);
 
-      BOOL b = false;
+      //((region *) this)->defer_update(pdraw2dgraphics, 0);
 
-      HRESULT hr = m_pgeometry->FillContainsPoint(D2D1::Point2F((FLOAT) x, (FLOAT) y), nullptr, &b);
+      //BOOL b = false;
 
-      if(FAILED(hr))
-         return false;
+      //HRESULT hr = m_pgeometry->FillContainsPoint(D2D1::Point2F((FLOAT) x, (FLOAT) y), nullptr, &b);
 
-      return b != false;
+      //if(FAILED(hr))
+      //   return false;
 
-      //Gdiplus::PointF ::f32_point((Gdiplus::REAL) x, (Gdiplus::REAL) y);
-      //
-      //ASSERT(get_os_data() != nullptr); //return ::PtInRegion((HRGN)get_os_data(), x, y);
+      //return b != false;
 
-      //return m_pgeometry->IsVisible(::f32_point)  != false;
+      ////Gdiplus::PointF ::f32_point((Gdiplus::REAL) x, (Gdiplus::REAL) y);
+      ////
+      ////ASSERT(get_os_data() != nullptr); //return ::PtInRegion((HRGN)get_os_data(), x, y);
+
+      ////return m_pgeometry->IsVisible(::f32_point)  != false;
 
    }
 
 
-   bool region::contains(::draw2d::graphics* pgraphics, const ::i32_point & point) const
+   bool region::contains(::draw2d::graphics * pdraw2dgraphics, const ::i32_point & point) const
    {
 
-      return contains(pgraphics, point.x, point.y);
+      return contains(pdraw2dgraphics, point.x, point.y);
 
       //throw ::exception(todo);
 
@@ -166,289 +168,291 @@ namespace draw2d_direct2d_for_directx11
    }
 
 
-   void region::create(::draw2d::graphics * pgraphics, ::i8 iCreate)
+   void region::update(::draw2d::graphics * pdraw2dgraphics)
    {
 
-      m_osdata[0] = get(pgraphics);
+      //m_osdata[0] = get(pdraw2dgraphics);
 
       //return m_pgeometry != nullptr;
 
    }
 
 
-   ID2D1Geometry * region::get(::draw2d::graphics* pgraphics)
-   {
+   //comptr < ID2D1Geometry > region::get(::draw2d::graphics * pdraw2dgraphics)
+   //{
 
-      auto eitem = m_pitem->type();
+   //   auto eitem = m_pitem->type();
 
-      switch(eitem)
-      {
-      case ::draw2d::e_item_none:
-      {
+   //   switch(eitem)
+   //   {
+   //   case ::draw2d::e_item_none:
+   //   {
 
-         ID2D1PathGeometry * ppathgeometry = nullptr;
+   //      ID2D1PathGeometry * ppathgeometry = nullptr;
 
-         HRESULT hr = direct2d()->d2d1_factory1()->CreatePathGeometry(&ppathgeometry);
+   //      HRESULT hr = direct2d()->d2d1_factory1()->CreatePathGeometry(&ppathgeometry);
 
-         if(FAILED(hr))
-            return nullptr;
+   //      if(FAILED(hr))
+   //         return nullptr;
 
-         return ppathgeometry;
+   //      return ppathgeometry;
 
-      }
-      case ::draw2d::e_item_rectangle:
-         return get_rectangle(pgraphics);
-      case ::draw2d::e_item_ellipse:
-         return get_ellipse(pgraphics);
-      case ::draw2d::e_item_polygon:
-         return get_polygon(pgraphics);
-      case ::draw2d::e_item_poly_polygon:
-         return get_polygon(pgraphics);
-      case ::draw2d::e_item_combine:
-         return get_combine(pgraphics);
-      default:
-         throw ::interface_only();
-      }
+   //   }
+   //   case ::draw2d::e_item_rectangle:
+   //      return get_rectangle(pdraw2dgraphics);
+   //   case ::draw2d::e_item_ellipse:
+   //      return get_ellipse(pdraw2dgraphics);
+   //   case ::draw2d::e_item_polygon:
+   //      return get_polygon(pdraw2dgraphics);
+   //   case ::draw2d::e_item_poly_polygon:
+   //      return get_polygon(pdraw2dgraphics);
+   //   case ::draw2d::e_item_combine:
+   //      return get_combine(pdraw2dgraphics);
+   //   default:
+   //      throw ::interface_only();
+   //   }
 
-      return nullptr;
+   //   return nullptr;
 
-   }
+   //}
 
 
-   ID2D1Geometry * region::get_rectangle(::draw2d::graphics* pgraphicsParam)
-   {
+   //ID2D1Geometry * region::get_rectangle(::draw2d::graphics * pdraw2dgraphics)
+   //{
 
-      //ID2D1RectangleGeometry * pgeometry = nullptr;
+   //   //ID2D1RectangleGeometry * pgeometry = nullptr;
 
-      auto pgraphics = __graphics(pgraphicsParam);
+   //   auto pdraw2dgraphics = __graphics(pdraw2dgraphics);
 
-      if (!pgraphics)
-      {
+   //   if (!pdraw2dgraphics)
+   //   {
 
-         return nullptr;
+   //      return nullptr;
 
-      }
+   //   }
 
-      ::pointer<::geometry2d::rectangle_item>pitem = m_pitem;
+   //   ::pointer<::geometry2d::rectangle_item>pitem = m_pitem;
 
-      //D2D1_RECT_F r;
-      //
-      //copy(r, pitem->m_item);
+   //   //D2D1_RECT_F r;
+   //   //
+   //   //copy(r, pitem->m_item);
 
-      auto prectanglegeometry = ::direct2d::geometry::create_rectangle(direct2d(), pitem->m_item);
+   //   auto prectanglegeometry = ::direct2d::geometry::create_rectangle(direct2d(), pitem->m_item);
 
-      //m_pdirect2d->d2d1_factory1()->CreateRectangleGeometry(r, &pgeometry);
+   //   //m_pdirect2d->d2d1_factory1()->CreateRectangleGeometry(r, &pgeometry);
 
-      return prectanglegeometry;
+   //   return prectanglegeometry;
 
-   }
+   //}
 
 
-   ID2D1Geometry * region::get_ellipse(::draw2d::graphics* pgraphics)
-   {
+   //ID2D1Geometry * region::get_ellipse(::draw2d::graphics * pdraw2dgraphics)
+   //{
 
-      //D2D1_ELLIPSE ellipse;
+   //   //D2D1_ELLIPSE ellipse;
 
-      ::pointer<::geometry2d::ellipse_item>pitem = m_pitem;
+   //   ::pointer<::geometry2d::ellipse_item>pitem = m_pitem;
 
-      //auto pointCenter = pitem->m_item.center();
-      //auto sizeRadius = pitem->m_item.size() / 2.0;
+   //   //auto pointCenter = pitem->m_item.center();
+   //   //auto sizeRadius = pitem->m_item.size() / 2.0;
 
-      //ellipse.point.x = (::f32)pointCenter.x;
-      //ellipse.point.y = (::f32)pointCenter.y;
-      //ellipse.radiusX = (::f32)sizeRadius.cx;
-      //ellipse.radiusY = (::f32)sizeRadius.cy;
+   //   //ellipse.point.x = (::f32)pointCenter.x;
+   //   //ellipse.point.y = (::f32)pointCenter.y;
+   //   //ellipse.radiusX = (::f32)sizeRadius.cx;
+   //   //ellipse.radiusY = (::f32)sizeRadius.cy;
 
-      //ID2D1EllipseGeometry * pgeometry = nullptr;
+   //   //ID2D1EllipseGeometry * pgeometry = nullptr;
 
-      //m_pdirect2d->d2d1_factory1()->CreateEllipseGeometry(ellipse, &pgeometry);
+   //   //m_pdirect2d->d2d1_factory1()->CreateEllipseGeometry(ellipse, &pgeometry);
 
-      auto pellipsegeometry = ::direct2d::geometry::create_ellipse(direct2d(), pitem->m_item);
+   //   auto pellipsegeometry = ::direct2d::geometry::create_ellipse(direct2d(), pitem->m_item);
 
-      return pellipsegeometry;
+   //   return pellipsegeometry;
 
-   }
+   //}
 
 
-   ID2D1Geometry * region::get_polygon(::draw2d::graphics* pgraphics)
-   {
+   //ID2D1Geometry * region::get_polygon(::draw2d::graphics * pdraw2dgraphics)
+   //{
 
-      //auto ppath = pgraphics->createø < ::draw2d::path > ();
+   //   //auto pdraw2dpath = pdraw2dgraphics->createø < ::draw2d::path > ();
 
-      /*i32_point_array pa;
+   //   /*i32_point_array pa;
 
-      for(::i32 i = 0; i < m_nCount; i++)
-      {
-         pa.add(Gdiplus::PointF((Gdiplus::REAL) m_lppoints[i].x, (Gdiplus::REAL) m_lppoints[i].y));
-      }*/
+   //   for(::i32 i = 0; i < m_nCount; i++)
+   //   {
+   //      pa.add(Gdiplus::PointF((Gdiplus::REAL) m_lppoints[i].x, (Gdiplus::REAL) m_lppoints[i].y));
+   //   }*/
 
-      /*
-      if(m_efillmode == ::draw2d::e_fill_mode_alternate)
-      {
-         path.SetFillMode(Gdiplus::FillModeAlternate);
-      }
-      else
-      {
-         path.SetFillMode(Gdiplus::FillModeWinding);
-      }
-      */
+   //   /*
+   //   if(m_efillmode == ::draw2d::e_fill_mode_alternate)
+   //   {
+   //      path.SetFillMode(Gdiplus::FillModeAlternate);
+   //   }
+   //   else
+   //   {
+   //      path.SetFillMode(Gdiplus::FillModeWinding);
+   //   }
+   //   */
 
-      ::pointer<::geometry2d::polygon_item>pitem = m_pitem;
+   //   ::pointer<::geometry2d::polygon_item>pitem = m_pitem;
 
-      //ppath->begin_figure();
-      //ppath->add_polygon(pitem->m_polygon.data(), pitem->m_polygon.size());
-      //ppath->close_figure();
+   //   //pdraw2dpath->begin_figure();
+   //   //pdraw2dpath->add_polygon(pitem->m_polygon.data(), pitem->m_polygon.size());
+   //   //pdraw2dpath->close_figure();
 
-      //ppath->get_os_data(pgraphics, path_filled);
+   //   //pdraw2dpath->get_os_data(pdraw2dgraphics, path_filled);
 
-      //m_pgeometry = ::transfer((ID2D1PathGeometry *) ppath->detach());
+   //   //m_pgeometry = ::transfer((ID2D1PathGeometry *) pdraw2dpath->detach());
 
-      auto ppathgeometry = ::direct2d::geometry::create_polygon(direct2d(), pitem->m_polygon);
+   //   auto ppathgeometry = ::direct2d::geometry::create_polygon(direct2d(), pitem->m_polygon);
 
-      return ppathgeometry;
+   //   return ppathgeometry;
 
-   }
+   //}
 
 
-   ID2D1Geometry * region::get_poly_polygon(::draw2d::graphics* pgraphics)
-   {
+   //ID2D1Geometry * region::get_poly_polygon(::draw2d::graphics * pdraw2dgraphics)
+   //{
 
-      auto ppath = pgraphics->createø < ::draw2d::path > ();
+   //   auto pdraw2dpath = pdraw2dgraphics->createø < ::draw2d::path > ();
 
-      f64_point_array pa;
+   //   f64_point_array pa;
 
-      /*if(m_efillmode == ::draw2d::e_fill_mode_alternate)
-      {
-         path.SetFillMode(Gdiplus::FillModeAlternate);
-      }
-      else
-      {
-         path.SetFillMode(Gdiplus::FillModeWinding);
-      }*/
+   //   /*if(m_efillmode == ::draw2d::e_fill_mode_alternate)
+   //   {
+   //      path.SetFillMode(Gdiplus::FillModeAlternate);
+   //   }
+   //   else
+   //   {
+   //      path.SetFillMode(Gdiplus::FillModeWinding);
+   //   }*/
 
-      ::i32 n = 0;
+   //   ::i32 n = 0;
 
-      ::pointer<::geometry2d::poly_polygon_item>pitem = m_pitem;
+   //   ::pointer<::geometry2d::poly_polygon_item>pitem = m_pitem;
 
-      for(::i32 i = 0; i < pitem->m_polypolygon.get_size(); i++)
-      {
-         auto ppolygon = pitem->m_polypolygon[i];
-         auto jCount = ppolygon->get_size();
-         //pa.erase_all();
-         //for(::i32 j = 0; j < jCount; j++)
-         //{
-         //   pa.add(::f64_point(m_lppoints[n].x, m_lppoints[n].y));
-         //   n++;
-         //}
-         //ppath->begin_figure(true, m_efillmode);
-         ppath->begin_figure();
-         ppath->add_polygon(ppolygon->data(), (::i32) ppolygon->size());
-         //ppath->end_figure(true);
-         ppath->close_figure();
-      }
+   //   for(::i32 i = 0; i < pitem->m_polypolygon.get_size(); i++)
+   //   {
+   //      auto ppolygon = pitem->m_polypolygon[i];
+   //      auto jCount = ppolygon->get_size();
+   //      //pa.erase_all();
+   //      //for(::i32 j = 0; j < jCount; j++)
+   //      //{
+   //      //   pa.add(::f64_point(m_lppoints[n].x, m_lppoints[n].y));
+   //      //   n++;
+   //      //}
+   //      //pdraw2dpath->begin_figure(true, m_efillmode);
+   //      pdraw2dpath->begin_figure();
+   //      pdraw2dpath->add_polygon(ppolygon->data(), (::i32) ppolygon->size());
+   //      //pdraw2dpath->end_figure(true);
+   //      pdraw2dpath->close_figure();
+   //   }
 
-      return (ID2D1PathGeometry *) ppath->detach();
+   //   return (ID2D1PathGeometry *) pdraw2dpath->detach();
 
-   }
+   //}
 
 
-   ID2D1Geometry * region::get_combine(::draw2d::graphics* pgraphics)
-   {
+   //ID2D1Geometry * region::get_combine(::draw2d::graphics * pdraw2dgraphics)
+   //{
 
-      comptr < ID2D1PathGeometry > ppathgeometry ;
+   //   comptr < ID2D1PathGeometry > ppathgeometry ;
 
-      HRESULT hr = direct2d()->d2d1_factory1()->CreatePathGeometry(&ppathgeometry);
+   //   HRESULT hr = direct2d()->d2d1_factory1()->CreatePathGeometry(&ppathgeometry);
 
-      comptr < ID2D1GeometrySink > psink ;
+   //   comptr < ID2D1GeometrySink > psink ;
 
-      if (FAILED(hr))
-      {
+   //   if (FAILED(hr))
+   //   {
 
-         return nullptr;
+   //      return nullptr;
 
-      }
+   //   }
 
-      hr = ppathgeometry->Open(&psink);
+   //   hr = ppathgeometry->Open(&psink);
 
-      if(FAILED(hr))
-      {
+   //   if(FAILED(hr))
+   //   {
 
-         return nullptr;
+   //      return nullptr;
 
-      }
+   //   }
 
-      ::pointer < ::geometry2d::combine_item > pitem = m_pitem;
+   //   ::pointer < ::geometry2d::combine_item > pitem = m_pitem;
 
-      ::pointer < graphics > pdirect2dgraphics = pgraphics;
+   //   ::pointer < graphics > pdirect2dgraphics = pdraw2dgraphics;
 
-      auto pgeometry1 = pdirect2dgraphics->defer_update_os_data(pitem->m_pregion1);
+   //   auto pgeometry1 = pdirect2dgraphics->defer_update_os_data(pitem->m_pregion1);
 
-      auto pgeometry2 = pdirect2dgraphics->defer_update_os_data(pitem->m_pregion2);
+   //   auto pgeometry2 = pdirect2dgraphics->defer_update_os_data(pitem->m_pregion2);
 
-      //auto pgeometry1 = pitem->m_pregion1->get_os_data < ID2D1Geometry * >(pgraphics);
+   //   //auto pgeometry1 = pitem->m_pregion1->get_os_data < ID2D1Geometry * >(pdraw2dgraphics);
 
-      //auto pgeometry2 = pitem->m_pregion2->get_os_data < ID2D1Geometry * >(pgraphics);
+   //   //auto pgeometry2 = pitem->m_pregion2->get_os_data < ID2D1Geometry * >(pdraw2dgraphics);
 
-      if(pitem->m_ecombine == ::draw2d::e_combine_add)
-      {
+   //   if(pitem->m_ecombine == ::draw2d::e_combine_add)
+   //   {
 
-         hr = pgeometry1->CombineWithGeometry(pgeometry2, D2D1_COMBINE_MODE_UNION, nullptr, 0.f, psink);
+   //      hr = pgeometry1->CombineWithGeometry(pgeometry2, D2D1_COMBINE_MODE_UNION, nullptr, 0.f, psink);
 
-      }
-      else if(pitem->m_ecombine == ::draw2d::e_combine_exclude)
-      {
+   //   }
+   //   else if(pitem->m_ecombine == ::draw2d::e_combine_exclude)
+   //   {
 
-         hr = pgeometry1->CombineWithGeometry(pgeometry2, D2D1_COMBINE_MODE_EXCLUDE, nullptr, 0.f, psink);
+   //      hr = pgeometry1->CombineWithGeometry(pgeometry2, D2D1_COMBINE_MODE_EXCLUDE, nullptr, 0.f, psink);
 
-      }
-      else if(pitem->m_ecombine == ::draw2d::e_combine_intersect)
-      {
+   //   }
+   //   else if(pitem->m_ecombine == ::draw2d::e_combine_intersect)
+   //   {
 
-         hr = pgeometry1->CombineWithGeometry(pgeometry2, D2D1_COMBINE_MODE_INTERSECT, nullptr, 0.f, psink);
+   //      hr = pgeometry1->CombineWithGeometry(pgeometry2, D2D1_COMBINE_MODE_INTERSECT, nullptr, 0.f, psink);
 
-      }
-      else
-      {
+   //   }
+   //   else
+   //   {
 
-         hr = pgeometry1->CombineWithGeometry(pgeometry2, D2D1_COMBINE_MODE_UNION, nullptr, 0.f, psink);
+   //      hr = pgeometry1->CombineWithGeometry(pgeometry2, D2D1_COMBINE_MODE_UNION, nullptr, 0.f, psink);
 
-      }
+   //   }
 
-      if(FAILED(hr))
-      {
+   //   if(FAILED(hr))
+   //   {
 
-         return nullptr;
+   //      return nullptr;
 
-      }
+   //   }
 
-      hr = psink->Close();
+   //   hr = psink->Close();
 
-      if(FAILED(hr))
-      {
+   //   if(FAILED(hr))
+   //   {
 
-         return nullptr;
+   //      return nullptr;
 
-      }
+   //   }
 
-      return ppathgeometry.detach();
+   //   return ppathgeometry.detach();
 
-   }
+   //}
+
+
+   ////void region::destroy()
+   ////{
+
+   ////   destroy_os_data();
+
+   ////}
 
 
    void region::destroy()
    {
 
-      destroy_os_data();
+      ::draw2d_direct2d::region::destroy();
 
-   }
+      //m_pgeometry = nullptr;
 
-
-   void region::destroy_os_data()
-   {
-
-      m_pgeometry = nullptr;
-
-      object::destroy_os_data();
+      //object::destroy();
 
    }
 

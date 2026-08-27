@@ -34,7 +34,7 @@ namespace draw2d_direct2d
       ~image() override;
 
 
-      void create_from_graphics(::draw2d::graphics *pgraphics) override;
+      void create_from_graphics(::draw2d::graphics *pdraw2dgraphics) override;
 
       //void copy_from(::image::image * pimage, enum_flag eflagCreate = e_flag_success) override;
 
@@ -53,9 +53,9 @@ namespace draw2d_direct2d
       //void create_for_image(::image::image *pimage) override;
       //using ::image::image::initialize;
       //void initialize(const ::i32_size & size, ::image32_t * pimage32, ::i32 iScan, ::enum_flag eflagCreate = DEFAULT_CREATE_IMAGE_FLAG) override;
-      bool _create(::draw2d::graphics * pgraphics);
+      bool _create(::draw2d::graphics * pdraw2dgraphics);
       void destroy() override;
-      void destroy_os_data() override;
+      // void destroy_os_data() override;
 
 
       //bool host(::windowing::window_buffer *pwindowbuffer, ::windowing::window *pwindow, const ::i32_size & sizeRaw) override;
@@ -71,8 +71,8 @@ namespace draw2d_direct2d
       void set_image_icon(::image::icon * picon, ::i32 cx, ::i32 cy) override;
 
 
-      virtual void defer_realize(::draw2d::graphics * pgraphics) const;
-      //virtual bool realize(::draw2d::graphics * pgraphics) const;
+      virtual void defer_realize(::draw2d::graphics * pdraw2dgraphics) const;
+      //virtual bool realize(::draw2d::graphics * pdraw2dgraphics) const;
       virtual void unrealize() const;
       virtual bool is_realized() const;
 

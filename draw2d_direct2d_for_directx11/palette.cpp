@@ -38,8 +38,8 @@ namespace draw2d_direct2d_for_directx11
 //
 //   bool palette::CreateHalftonePalette(::image::image * pimage)
 //   {
-//      //ASSERT(pgraphics != nullptr && (dynamic_cast<::draw2d_direct2d_for_directx11::graphics * >(pgraphics))->get_handle1() != nullptr);
-//      //return Attach(::CreateHalftonePalette((dynamic_cast<::draw2d_direct2d_for_directx11::graphics * >(pgraphics))->get_handle1()));
+//      //ASSERT(pdraw2dgraphics != nullptr && (dynamic_cast<::draw2d_direct2d_for_directx11::graphics * >(pdraw2dgraphics))->get_handle1() != nullptr);
+//      //return Attach(::CreateHalftonePalette((dynamic_cast<::draw2d_direct2d_for_directx11::graphics * >(pdraw2dgraphics))->get_handle1()));
 //      return false;
 //
 //   }

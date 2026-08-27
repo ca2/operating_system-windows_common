@@ -21,7 +21,7 @@ namespace draw2d_direct2d_for_directx11
       ~object() override;
 
 
-      void initialize_draw2d_direct2d_object(::draw2d_direct2d_for_directx11::graphics* pgraphics);
+      void initialize_draw2d_direct2d_object(::draw2d_direct2d_for_directx11::graphics* pdraw2dgraphics);
 
 
       ::i32 get_object(::i32 nCount, LPVOID lpObject) const;
@@ -43,7 +43,7 @@ namespace draw2d_direct2d_for_directx11
       }
 
 
-      void defer_update(::draw2d::graphics* pgraphics, ::i8 i) const override;
+      void defer_update(::draw2d::graphics * pdraw2dgraphics) override;
 
 
    };

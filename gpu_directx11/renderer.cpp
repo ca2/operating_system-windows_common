@@ -762,7 +762,7 @@ namespace gpu_directx11
    }
 
 
-   void renderer::gpu_blend(::draw2d::graphics * pgraphics)
+   void renderer::gpu_blend(::draw2d::graphics * pdraw2dgraphics)
    {
 
       m_pcpubuffersampler->send_sample();
@@ -1324,7 +1324,7 @@ HRESULT hrCreateDepthStencilState = pgpudevice->m_pd3d11device->CreateDepthStenc
    }
 
 
-   void renderer::endDraw(::gpu::graphics * pgraphics, ::user::interaction* puserinteraction)
+   void renderer::endDraw(::gpu::graphics * pdraw2dgraphics, ::user::interaction* puserinteraction)
    {
 
       ::cast < renderer > prenderer = this;
@@ -1341,7 +1341,7 @@ HRESULT hrCreateDepthStencilState = pgpudevice->m_pd3d11device->CreateDepthStenc
          
          auto pswapchain = m_pgpucontext->m_pgpudevice->get_swap_chain();
 
-         pswapchain->endDraw(pgraphics, puserinteraction, this);
+         pswapchain->endDraw(pdraw2dgraphics, puserinteraction, this);
 
       }*/
 

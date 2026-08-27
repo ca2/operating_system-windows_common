@@ -923,7 +923,7 @@ namespace gpu_directx11
 
       auto pdxgisurface = ptexture->__get_dxgi_surface();
 
-      pdxgisurfacebindable->_bind(iFrameIndex, pgpulayer->m_iLayerIndex, pdxgisurface);
+      //pdxgisurfacebindable->_bind(iFrameIndex, pgpulayer->m_iGpuLayerIndex, pdxgisurface);
 
    }
 
@@ -1211,9 +1211,9 @@ namespace gpu_directx11
 
          ::cast < ::gpu_directx11::texture > ptextureSrc = pgputexturesiteSource->gpu_texture();
 
-         int iLayerIndex = ::gpu::current_layer()->m_iLayerIndex;
+         int iGpuLayerIndex = ::gpu::current_layer()->m_iGpuLayerIndex;
 
-         informationf("layer_end_copy (%d)", iLayerIndex);
+         informationf("layer_end_copy (%d)", iGpuLayerIndex);
 
          //if (iLayerIndex == 0)
          //{
@@ -3199,7 +3199,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    }
 
 
-   bool context::create_offscreen_graphics_for_swap_chain_blitting(::gpu::graphics * pgraphics, const ::i32_size & size)
+   bool context::create_offscreen_graphics_for_swap_chain_blitting(::gpu::graphics * pdraw2dgraphics, const ::i32_size & size)
    {
 
       ::cast < swap_chain > pswapchain = get_swap_chain();

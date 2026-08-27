@@ -79,10 +79,10 @@
 //   //}
 //
 //
-//   void directx11_swap_chain::endDraw(::draw2d_gpu::graphics* pgraphics, ::user::interaction* puserinteraction, ::gpu::renderer* prendererSrc)
+//   void directx11_swap_chain::endDraw(::draw2d_gpu::graphics* pdraw2dgraphics, ::user::interaction* puserinteraction, ::gpu::renderer* prendererSrc)
 //   {
 //
-//      ::draw2d_directx11::swap_chain::endDraw(pgraphics, puserinteraction, prendererSrc);
+//      ::draw2d_directx11::swap_chain::endDraw(pdraw2dgraphics, puserinteraction, prendererSrc);
 //
 //   }
 //

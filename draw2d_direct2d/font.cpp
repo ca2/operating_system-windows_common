@@ -71,36 +71,36 @@ namespace draw2d_direct2d
    }
 
 
-   ::f32 font::_dwrite_font_size(::draw2d::graphics * pgraphics)
+   ::f32 font::_dwrite_font_size(::draw2d::graphics * pdraw2dgraphics)
    {
       ::f32 fFontSize;
 
       //::acme::windowing::window * pacmewindowingwindow = nullptr;
       //
-      //if (::is_set(pgraphics))
+      //if (::is_set(pdraw2dgraphics))
       //{
       // 
-      //   oswindow = pgraphics->get_window_handle();
+      //   oswindow = pdraw2dgraphics->get_window_handle();
 
       //}
 
       if (m_fontsize.eunit() == ::e_unit_point)
       {
 
-         fFontSize = (::f32)pgraphics->m_pacmeuserinteractionAffinity->point_dpi(m_fontsize.as_f64());
+         fFontSize = (::f32)pdraw2dgraphics->m_pacmeuserinteractionAffinity->point_dpi(m_fontsize.as_f64());
 
       }
       else
       {
 
-         fFontSize = (::f32)pgraphics->m_pacmeuserinteractionAffinity->dpiy(m_fontsize.as_f64());
+         fFontSize = (::f32)pdraw2dgraphics->m_pacmeuserinteractionAffinity->dpiy(m_fontsize.as_f64());
 
       }
 
-      if (::is_set(pgraphics))
+      if (::is_set(pdraw2dgraphics))
       {
 
-         fFontSize *= (::f32)pgraphics->m_dSizeScaler;
+         fFontSize *= (::f32)pdraw2dgraphics->m_dSizeScaler;
 
       }
 
@@ -118,13 +118,13 @@ namespace draw2d_direct2d
    }
 
 
-   void font::create(::draw2d::graphics * pgraphics, ::i8 iCreate)
+   void font::update(::draw2d::graphics * pdraw2dgraphics)
    {
 
-      if(m_pformat == nullptr || is_modified(::draw2d::e_default_object))
+      if(m_pdwritetextformat == nullptr || is_modified())
       {
 
-         if(m_pformat)
+         if(m_pdwritetextformat)
          {
 
             destroy();
@@ -133,7 +133,7 @@ namespace draw2d_direct2d
 
          IDWriteFactory * pfactory = direct2d()->dwrite_factory();
 
-         if (!defer_load_internal_font(pgraphics))
+         if (!defer_load_internal_font(pdraw2dgraphics))
          {
 
             HRESULT hr = pfactory->CreateTextFormat(
@@ -142,11 +142,11 @@ namespace draw2d_direct2d
                _dwrite_font_weight(),
                _dwrite_font_style(),
                _dwrite_font_stretch(),
-               _dwrite_font_size(pgraphics),
+               _dwrite_font_size(pdraw2dgraphics),
                L"",
-               &m_pformat);
+               &m_pdwritetextformat);
 
-            if (FAILED(hr) || m_pformat == nullptr)
+            if (FAILED(hr) || m_pdwritetextformat == nullptr)
             {
 
                warning() << "font::get_os_font: " << hresult_text(hr);
@@ -159,27 +159,27 @@ namespace draw2d_direct2d
 
          }
 
-         create_text_metrics(pgraphics);
+         create_text_metrics(pdraw2dgraphics);
 
       }
 
-      m_osdata[0] = m_pformat;
+      //m_osdata[0] = m_pdwritetextformat;
 
-      m_baCalculated[0] = true;
+      //m_baCalculated[0] = true;
 
-      //return (IDWriteTextFormat *) m_pformat;
+      //return (IDWriteTextFormat *) m_pdwritetextformat;
 
    }
 
 
-   void font::create_text_metrics(::draw2d::graphics * pgraphics)
+   void font::create_text_metrics(::draw2d::graphics * pdraw2dgraphics)
    {
 
       WCHAR name[256];
       ::u32 findex;
       BOOL exists;
 
-      if (::is_null(m_pformat))
+      if (::is_null(m_pdwritetextformat))
       {
 
          m_textmetric2.m_dAscent = 0;
@@ -194,14 +194,14 @@ namespace draw2d_direct2d
 
       }
 
-      if (!m_pcollection)
+      if (!m_pdwritefontcollection)
       {
 
-         m_pformat->GetFontFamilyName(name, 256);
+         m_pdwritetextformat->GetFontFamilyName(name, 256);
 
-         m_pformat->GetFontCollection(&m_pcollection);
+         m_pdwritetextformat->GetFontCollection(&m_pdwritefontcollection);
 
-         if (!m_pcollection)
+         if (!m_pdwritefontcollection)
          {
 
             m_textmetric2.m_dAscent = 0;
@@ -218,17 +218,17 @@ namespace draw2d_direct2d
 
       }
 
-      if (!m_pfamily)
+      if (!m_pdwritefontfamily)
       {
 
-         auto iFontFamilyCount = m_pcollection->GetFontFamilyCount();
+         auto iFontFamilyCount = m_pdwritefontcollection->GetFontFamilyCount();
 
-         m_pcollection->FindFamilyName(name, &findex, &exists);
+         m_pdwritefontcollection->FindFamilyName(name, &findex, &exists);
 
          if (!exists)
          {
 
-            m_pcollection->FindFamilyName(L"Arial", &findex, &exists);
+            m_pdwritefontcollection->FindFamilyName(L"Arial", &findex, &exists);
 
             if (!exists)
             {
@@ -247,9 +247,9 @@ namespace draw2d_direct2d
 
          }
 
-         m_pcollection->GetFontFamily(findex, &m_pfamily);
+         m_pdwritefontcollection->GetFontFamily(findex, &m_pdwritefontfamily);
 
-         if (!m_pfamily)
+         if (!m_pdwritefontfamily)
          {
 
             m_textmetric2.m_dAscent = 0;
@@ -268,24 +268,24 @@ namespace draw2d_direct2d
 
       HRESULT hrFindFont = E_FAIL;
 
-      if (!m_pfont)
+      if (!m_pdwritefont)
       {
 
-         auto weight = m_pformat->GetFontWeight();
+         auto weight = m_pdwritetextformat->GetFontWeight();
 
-         auto stretch = m_pformat->GetFontStretch();
+         auto stretch = m_pdwritetextformat->GetFontStretch();
 
-         auto style = m_pformat->GetFontStyle();
+         auto style = m_pdwritetextformat->GetFontStyle();
 
          while (true)
          {
 
-            hrFindFont = m_pfamily->GetFirstMatchingFont(
+            hrFindFont = m_pdwritefontfamily->GetFirstMatchingFont(
               weight,
               stretch,
-              style, &m_pfont);
+              style, &m_pdwritefont);
 
-            if (SUCCEEDED(hrFindFont) && m_pfont)
+            if (SUCCEEDED(hrFindFont) && m_pdwritefont)
             {
 
                break;
@@ -344,7 +344,7 @@ namespace draw2d_direct2d
 
       }
 
-      if (FAILED(hrFindFont) || !m_pfont)
+      if (FAILED(hrFindFont) || !m_pdwritefont)
       {
 
          m_textmetric2.m_dAscent = 0;
@@ -361,9 +361,9 @@ namespace draw2d_direct2d
 
       DWRITE_FONT_METRICS metrics;
 
-      m_pfont->GetMetrics(&metrics);
+      m_pdwritefont->GetMetrics(&metrics);
 
-      ::f64 ratio = m_pformat->GetFontSize() / (::f32)metrics.designUnitsPerEm;
+      ::f64 ratio = m_pdwritetextformat->GetFontSize() / (::f32)metrics.designUnitsPerEm;
 
       m_textmetric2.m_dAscent = (::f64) (metrics.ascent * ratio);
       m_textmetric2.m_dDescent = (::f64)(metrics.descent * ratio);
@@ -374,22 +374,22 @@ namespace draw2d_direct2d
    }
 
 
+   //void font::destroy()
+   //{
+
+   //   destroy_os_data();
+
+   //   ::write_text::font::destroy();
+
+   //}
+
+
    void font::destroy()
    {
 
-      destroy_os_data();
+      //m_pdwritetextformat = nullptr;
 
-      ::write_text::font::destroy();
-
-   }
-
-
-   void font::destroy_os_data()
-   {
-
-      m_pformat = nullptr;
-
-      object::destroy_os_data();
+      //object::destroy_os_data();
 
    }
 

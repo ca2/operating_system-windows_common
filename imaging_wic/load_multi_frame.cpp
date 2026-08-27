@@ -577,12 +577,12 @@ namespace imaging_wic
          else
          {
 
-            comptr<IWICFormatConverter> pbitmap;
+            comptr<IWICFormatConverter> pdraw2dbitmap;
 
             if (SUCCEEDED(hr))
             {
 
-               hr = pimagingfactory->CreateFormatConverter(&pbitmap);
+               hr = pimagingfactory->CreateFormatConverter(&pdraw2dbitmap);
 
             }
 
@@ -591,7 +591,7 @@ namespace imaging_wic
             if (SUCCEEDED(hr))
             {
 
-               hr = pbitmap->Initialize(pframe, px, WICBitmapDitherTypeNone, nullptr, 0.f, WICBitmapPaletteTypeCustom);
+               hr = pdraw2dbitmap->Initialize(pframe, px, WICBitmapDitherTypeNone, nullptr, 0.f, WICBitmapPaletteTypeCustom);
             }
 
             //Step 4: Create render target and D2D bitmap from IWICBitmapSource
@@ -599,14 +599,14 @@ namespace imaging_wic
             ::u32 height = 0;
             if (SUCCEEDED(hr))
             {
-               hr = pbitmap->GetSize(&width, &height);
+               hr = pdraw2dbitmap->GetSize(&width, &height);
             }
 
             pimage->create_as_descriptor({(::i32)width, (::i32)height});
 
             auto ppixmapImage = pimage->map();
 
-            hr = pbitmap->CopyPixels(nullptr, ppixmapImage->scan_size(), ppixmapImage->scan_area_in_bytes(),
+            hr = pdraw2dbitmap->CopyPixels(nullptr, ppixmapImage->scan_size(), ppixmapImage->scan_area_in_bytes(),
                                      (::u8 *)ppixmapImage->data());
 
 
@@ -644,19 +644,19 @@ namespace imaging_wic
       // Retrieve the current frame
       HRESULT hr = pbitmapdecoder->GetFrame(uFrameIndex, &pbitmapframedecode);
 
-      comptr < IWICFormatConverter > pbitmap;
+      comptr < IWICFormatConverter > pdraw2dbitmap;
 
       if (SUCCEEDED(hr))
       {
 
-         hr = pimagingfactory->CreateFormatConverter(&pbitmap);
+         hr = pimagingfactory->CreateFormatConverter(&pdraw2dbitmap);
 
       }
 
       if (SUCCEEDED(hr))
       {
 
-         hr = pbitmap->Initialize(
+         hr = pdraw2dbitmap->Initialize(
             pbitmapframedecode,
             GUID_WICPixelFormat8bppIndexed,
             WICBitmapDitherTypeNone,
@@ -673,7 +673,7 @@ namespace imaging_wic
       if (SUCCEEDED(hr))
       {
 
-         hr = pbitmap->GetSize(&width, &height);
+         hr = pdraw2dbitmap->GetSize(&width, &height);
 
       }
 
@@ -685,7 +685,7 @@ namespace imaging_wic
 
       ba.set_size((memsize)pframe->m_ppixmap->area());
 
-      hr = pbitmap->CopyPixels(nullptr, pframe->m_ppixmap->width(), (::u32)ba.size(), (::u8 *)ba.data());
+      hr = pdraw2dbitmap->CopyPixels(nullptr, pframe->m_ppixmap->width(), (::u32)ba.size(), (::u8 *)ba.data());
 
       if (FAILED(hr))
       {

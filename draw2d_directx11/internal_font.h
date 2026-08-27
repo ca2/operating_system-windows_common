@@ -19,8 +19,8 @@ namespace draw2d_directx11
    {
    public:
 
-      ::comptr < IDWriteFontFileLoader > m_pfontfileloader;
-      ::comptr < IDWriteFontCollectionLoader > m_pfontcollectionloader;
+      ::comptr < IDWriteFontFileLoader > m_pdwritefontfileloader;
+      ::comptr < IDWriteFontCollectionLoader > m_pdwritefontcollectionloader;
 
       ::comptr<IDWriteFontCollection>                       m_pcollection;
       ::array < ::comptr < IDWriteFontFamily > >            m_familya;
@@ -34,7 +34,7 @@ namespace draw2d_directx11
 
 
       void load_from_memory(::memory_base * pmemory) override;
-      void on_create_font(::draw2d::graphics * pgraphics, ::write_text::font * pfont) override;
+      void on_create_font(::draw2d::graphics * pdraw2dgraphics, ::write_text::font * pwritetextfont) override;
 
 
    };

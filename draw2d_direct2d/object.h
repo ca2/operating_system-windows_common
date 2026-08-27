@@ -23,7 +23,7 @@ namespace draw2d_direct2d
       ~object() override;
 
 
-      void initialize_draw2d_direct2d_object(::draw2d_direct2d::graphics* pgraphics);
+      void initialize_draw2d_direct2d_object(::draw2d_direct2d::graphics* pdraw2dgraphics);
 
 
       ::i32 get_object(::i32 nCount, LPVOID lpObject) const;
@@ -37,6 +37,8 @@ namespace draw2d_direct2d
       //void assert_ok() const override;
 
 
+      
+
       ::draw2d_direct2d::draw2d * draw2d()
       {
 
@@ -45,7 +47,7 @@ namespace draw2d_direct2d
       }
 
 
-      void defer_update(::draw2d::graphics* pgraphics, ::i8 i) const override;
+      void defer_update(::draw2d::graphics * pdraw2dgraphics) override;
 
 
    };

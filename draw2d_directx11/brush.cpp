@@ -32,12 +32,12 @@ namespace draw2d_directx11
    //}
 
 
-   void brush::create(::draw2d::graphics* pgraphicsParam, ::i8 iCreate)
+   void brush::update(::draw2d::graphics * pdraw2dgraphics)
    {
 
-      auto pgraphics = __graphics(pgraphicsParam);
+      ::cast < ::draw2d_directx11::graphics > pdraw2ddirectx11graphics = pdraw2dgraphics;
 
-      //if (pgraphics->m_pd2d1rendertarget == nullptr)
+      //if (pdraw2dgraphics->m_pd2d1rendertarget == nullptr)
       //{
 
       //   throw ::exception(error_null_pointer);
@@ -54,7 +54,7 @@ namespace draw2d_directx11
 
          //   copy(color, m_color);
 
-         //   pgraphics->m_pd2d1rendertarget->CreateSolidColorBrush(color, &m_psolidbrush);
+         //   pdraw2dgraphics->m_pd2d1rendertarget->CreateSolidColorBrush(color, &m_psolidbrush);
 
          //   if(m_psolidbrush != nullptr)
          //   {
@@ -78,7 +78,7 @@ namespace draw2d_directx11
 
          //   D2D1_LINEAR_GRADIENT_BRUSH_PROPERTIES prop{};
 
-         //   //auto pointViewport = pgraphics->GetViewportOrg();
+         //   //auto pointViewport = pdraw2dgraphics->GetViewportOrg();
          //   ::i32_point pointViewport(0, 0);
 
          //   prop.startPoint.x    = (FLOAT) m_point1.x + pointViewport.x;
@@ -100,14 +100,14 @@ namespace draw2d_directx11
 
          //   // Create the ID2D1GradientStopCollection from a previously
          //   // declared array of D2D1_GRADIENT_STOP structs.
-         //   HRESULT hr = pgraphics->m_pd2d1rendertarget->CreateGradientStopCollection(gradientstops, 2, D2D1_GAMMA_2_2, D2D1_EXTEND_MODE_CLAMP, &pstopcollection);
+         //   HRESULT hr = pdraw2dgraphics->m_pd2d1rendertarget->CreateGradientStopCollection(gradientstops, 2, D2D1_GAMMA_2_2, D2D1_EXTEND_MODE_CLAMP, &pstopcollection);
 
          //   D2D1_BRUSH_PROPERTIES brushproperties = {};
 
          //   brushproperties.opacity = 1.0f;
          //   brushproperties.transform =  D2D1::IdentityMatrix();
 
-         //   hr = pgraphics->m_pd2d1rendertarget->CreateLinearGradientBrush(&prop, &brushproperties, pstopcollection, &m_plineargradientbrush);
+         //   hr = pdraw2dgraphics->m_pd2d1rendertarget->CreateLinearGradientBrush(&prop, &brushproperties, pstopcollection, &m_plineargradientbrush);
 
          //   if(m_plineargradientbrush != nullptr)
          //   {
@@ -143,7 +143,7 @@ namespace draw2d_directx11
 
          //   // Create the ID2D1GradientStopCollection from a previously
          //   // declared array of D2D1_GRADIENT_STOP structs.
-         //   HRESULT hr = pgraphics->m_pd2d1rendertarget->CreateGradientStopCollection(
+         //   HRESULT hr = pdraw2dgraphics->m_pd2d1rendertarget->CreateGradientStopCollection(
          //                gradientstops,
          //                2,
          //                D2D1_GAMMA_2_2,
@@ -163,7 +163,7 @@ namespace draw2d_directx11
          //      ::f64 radiusx = m_size.cx;
          //      ::f64 radiusy = m_size.cy;
 
-         //      hr = pgraphics->m_pd2d1rendertarget->CreateRadialGradientBrush(
+         //      hr = pdraw2dgraphics->m_pd2d1rendertarget->CreateRadialGradientBrush(
          //           D2D1::RadialGradientBrushProperties(
          //           D2D1::Point2F((FLOAT) (centerx), (FLOAT)(centery)),
          //           D2D1::Point2F((FLOAT)(offsetx), (FLOAT)(offsety)),
@@ -220,9 +220,9 @@ namespace draw2d_directx11
          //      D2D1_INTERPOLATION_MODE_LINEAR
          //   );
 
-         //   ID2D1Image* pimage = m_pimage->m_pbitmap->get_os_data < ID2D1Bitmap * >();
+         //   ID2D1Image* pimage = m_pimage->m_pdraw2dbitmap->get_os_data < ID2D1Bitmap * >();
 
-         //   HRESULT hr = pgraphics->m_pdevicecontext->CreateImageBrush(
+         //   HRESULT hr = pdraw2dgraphics->m_pdevicecontext->CreateImageBrush(
          //      pimage,
          //      imagebrushproperties,
          //      &m_pimagebrush);
@@ -244,7 +244,7 @@ namespace draw2d_directx11
       else
       {
 
-         //return (ID2D1Brush *) m_pbrush;
+         //return (ID2D1Brush *) m_pdraw2dbrush;
 
       }
 
@@ -256,25 +256,25 @@ namespace draw2d_directx11
    void brush::destroy()
    {
 
-      destroy_os_data();
+      //destroy_os_data();
 
       ::draw2d::brush::destroy();
 
    }
 
 
-   void brush::destroy_os_data()
-   {
+   //void brush::destroy_os_data()
+   //{
 
-      //m_psolidbrush = nullptr;
-      //m_plineargradientbrush = nullptr;
-      //m_pradialgradientbrush = nullptr;
-      //m_pbrush = nullptr;
-      //m_pimagebrush = nullptr;
+   //   //m_psolidbrush = nullptr;
+   //   //m_plineargradientbrush = nullptr;
+   //   //m_pradialgradientbrush = nullptr;
+   //   //m_pdraw2dbrush = nullptr;
+   //   //m_pimagebrush = nullptr;
 
-      object::destroy_os_data();
+   //   object::destroy_os_data();
 
-   }
+   //}
 
 
 } // namespace draw2d_directx11

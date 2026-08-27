@@ -235,31 +235,31 @@ namespace draw2d_direct2d
 
       //return ::draw2d::draw2d::do_allocation_strategy(pdraw2dhost, pimage, size);
 
-      //auto pgraphics = create_memory_graphics(pdraw2dhost, size);
+      //auto pdraw2dgraphics = create_memory_graphics(pdraw2dhost, size);
 
       //if (::is_set(pimage))
       //{
 
-      //   pimage->create_from_graphics(pgraphics);
+      //   pimage->create_from_graphics(pdraw2dgraphics);
 
       //}
 
-      //return pgraphics;
+      //return pdraw2dgraphics;
 
    }
 
    
-   void draw2d::do_release_to_pool_strategy(::draw2d::graphics_pointer &pgraphics, ::image::image *pimage)
+   void draw2d::do_release_to_pool_strategy(::draw2d::graphics_pointer &pdraw2dgraphics, ::image::image *pimage)
    {
 
-      ::draw2d::draw2d::do_release_to_pool_strategy(pgraphics, pimage);
+      ::draw2d::draw2d::do_release_to_pool_strategy(pdraw2dgraphics, pimage);
 
       //if (::is_set(pimage))
       //{
 
       //   auto pgraphicsOwned = pimage->m_pgraphicsOwned;
 
-      //   if (pgraphicsOwned && pgraphicsOwned == pgraphics)
+      //   if (pgraphicsOwned && pgraphicsOwned == pdraw2dgraphics)
       //   {
 
       //      return;
@@ -268,9 +268,9 @@ namespace draw2d_direct2d
 
       //}
 
-      //m_graphicsaMemoryPoolIdle.add(pgraphics);
+      //m_graphicsaMemoryPoolIdle.add(pdraw2dgraphics);
 
-      //pgraphics.release();
+      //pdraw2dgraphics.release();
 
    }
 

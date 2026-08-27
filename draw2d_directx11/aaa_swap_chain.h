@@ -26,7 +26,7 @@
 //
 //      IDXGIDevice * _get_dxgi_device() override;
 //
-//      void endDraw(::draw2d_gpu::graphics* pgraphics, ::user::interaction* puserinteraction, ::gpu::renderer* prendererSrc) override;
+//      void endDraw(::draw2d_gpu::graphics* pdraw2dgraphics, ::user::interaction* puserinteraction, ::gpu::renderer* prendererSrc) override;
 //
 //
 //   };

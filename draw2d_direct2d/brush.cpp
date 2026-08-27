@@ -1,4 +1,5 @@
 #include "platform.h"
+#include "bitmap.h"
 #include "brush.h"
 #include "graphics.h"
 #include "aura/graphics/image/image.h"
@@ -30,13 +31,13 @@ namespace draw2d_direct2d
    //}
 
 
-   void brush::create(::draw2d::graphics* pgraphicsParam, ::i8 iCreate)
+   void brush::update(::draw2d::graphics * pdraw2dgraphics)
    {
 
-      //auto pgraphics = __graphics(pgraphicsParam);
-      ::cast<graphics> pgraphics = pgraphicsParam;
+      //auto pdraw2dgraphics = __graphics(pdraw2dgraphics);
+      ::cast<::draw2d_direct2d::graphics> pdirect2ddraw2dgraphics = pdraw2dgraphics;
 
-      if (pgraphics->m_pd2d1rendertarget == nullptr)
+      if (pdirect2ddraw2dgraphics->m_pd2d1devicecontext == nullptr)
       {
 
          throw ::exception(error_null_pointer);
@@ -46,21 +47,21 @@ namespace draw2d_direct2d
       if(m_ebrush == ::draw2d::e_brush_solid)
       {
 
-         if(m_psolidbrush == nullptr)
+         if(m_pd2d1solidcolorbrush == nullptr)
          {
 
             D2D1_COLOR_F color;
 
             copy(color, m_color);
 
-            pgraphics->m_pd2d1rendertarget->CreateSolidColorBrush(color, &m_psolidbrush);
+            pdirect2ddraw2dgraphics->m_pd2d1devicecontext->CreateSolidColorBrush(color, &m_pd2d1solidcolorbrush);
 
-            if(m_psolidbrush != nullptr)
+            if(m_pd2d1solidcolorbrush != nullptr)
             {
 
-               m_osdata[0] = (ID2D1Brush*)m_psolidbrush;
+               //m_osdata[0] = (ID2D1Brush*)m_psolidbrush;
                
-               m_baCalculated[0] = true;
+               //m_baCalculated[0] = true;
 
             }
 
@@ -72,12 +73,12 @@ namespace draw2d_direct2d
       else if(m_ebrush == ::draw2d::e_brush_linear_gradient_point_color)
       {
 
-         if(m_plineargradientbrush == nullptr)
+         if(m_pd2d1lineargradientbrush == nullptr)
          {
 
             D2D1_LINEAR_GRADIENT_BRUSH_PROPERTIES prop{};
 
-            //auto pointViewport = pgraphics->GetViewportOrg();
+            //auto pointViewport = pdraw2dgraphics->GetViewportOrg();
             ::i32_point pointViewport(0, 0);
 
             prop.startPoint.x    = (FLOAT) m_point1.x + pointViewport.x;
@@ -99,21 +100,21 @@ namespace draw2d_direct2d
 
             // Create the ID2D1GradientStopCollection from a previously
             // declared array of D2D1_GRADIENT_STOP structs.
-            HRESULT hr = pgraphics->m_pd2d1rendertarget->CreateGradientStopCollection(gradientstops, 2, D2D1_GAMMA_2_2, D2D1_EXTEND_MODE_CLAMP, &pstopcollection);
+            HRESULT hr = pdirect2ddraw2dgraphics->m_pd2d1devicecontext->CreateGradientStopCollection(gradientstops, 2, D2D1_GAMMA_2_2, D2D1_EXTEND_MODE_CLAMP, &pstopcollection);
 
             D2D1_BRUSH_PROPERTIES brushproperties = {};
 
             brushproperties.opacity = 1.0f;
             brushproperties.transform =  D2D1::IdentityMatrix();
 
-            hr = pgraphics->m_pd2d1rendertarget->CreateLinearGradientBrush(&prop, &brushproperties, pstopcollection, &m_plineargradientbrush);
+            hr = pdirect2ddraw2dgraphics->m_pd2d1devicecontext->CreateLinearGradientBrush(&prop, &brushproperties, pstopcollection, &m_pd2d1lineargradientbrush);
 
-            if(m_plineargradientbrush != nullptr)
+            if(m_pd2d1lineargradientbrush != nullptr)
             {
                
-               m_osdata[0] = (ID2D1Brush*)m_plineargradientbrush;
+               //m_osdata[0] = (ID2D1Brush*)m_plineargradientbrush;
 
-               m_baCalculated[0] = true;
+               //m_baCalculated[0] = true;
 
             }
 
@@ -125,7 +126,7 @@ namespace draw2d_direct2d
       else if(m_ebrush == ::draw2d::e_brush_radial_gradient_color)
       {
 
-         if(m_plineargradientbrush == nullptr)
+         if(m_pd2d1lineargradientbrush == nullptr)
          {
 
             // Create an array of gradient stops to put in the gradient stop
@@ -142,7 +143,7 @@ namespace draw2d_direct2d
 
             // Create the ID2D1GradientStopCollection from a previously
             // declared array of D2D1_GRADIENT_STOP structs.
-            HRESULT hr = pgraphics->m_pd2d1rendertarget->CreateGradientStopCollection(
+            HRESULT hr = pdirect2ddraw2dgraphics->m_pd2d1devicecontext->CreateGradientStopCollection(
                          gradientstops,
                          2,
                          D2D1_GAMMA_2_2,
@@ -162,25 +163,25 @@ namespace draw2d_direct2d
                ::f64 radiusx = m_size.cx;
                ::f64 radiusy = m_size.cy;
 
-               hr = pgraphics->m_pd2d1rendertarget->CreateRadialGradientBrush(
+               hr = pdirect2ddraw2dgraphics->m_pd2d1devicecontext->CreateRadialGradientBrush(
                     D2D1::RadialGradientBrushProperties(
                     D2D1::Point2F((FLOAT) (centerx), (FLOAT)(centery)),
                     D2D1::Point2F((FLOAT)(offsetx), (FLOAT)(offsety)),
                     (FLOAT)(radiusx), (FLOAT)(radiusy)),
                     pgradientstops,
-                    &m_pradialgradientbrush
+                    &m_pd2d1radialgradientbrush
                     );
 
             }
 
             pgradientstops->Release();
 
-            if(m_pradialgradientbrush != nullptr)
+            if(m_pd2d1radialgradientbrush != nullptr)
             {
 
-               m_osdata[0] = (ID2D1Brush*)m_pradialgradientbrush;
+               //m_osdata[0] = (ID2D1Brush*)m_pradialgradientbrush;
 
-               m_baCalculated[0] = true;
+               //m_baCalculated[0] = true;
 
             }
 
@@ -201,7 +202,7 @@ namespace draw2d_direct2d
 
          }
 
-         if (m_pimagebrush == nullptr)
+         if (m_pd2d1imagebrush == nullptr)
          {
 
             //m_pimage->unmap();
@@ -219,19 +220,21 @@ namespace draw2d_direct2d
                D2D1_INTERPOLATION_MODE_LINEAR
             );
 
-            ID2D1Image* pimage = m_pimage->m_pbitmap->get_os_data < ID2D1Bitmap * >();
+            ::cast < ::draw2d_direct2d::bitmap > pdraw2ddirect2dbitmap = m_pimage->m_pdraw2dbitmap;
 
-            HRESULT hr = pgraphics->m_pd2d1devicecontext->CreateImageBrush(
-               pimage,
+            ID2D1Image* pd2d1image = pdraw2ddirect2dbitmap->m_pd2d1bitmap;
+
+            HRESULT hr = pdirect2ddraw2dgraphics->m_pd2d1devicecontext->CreateImageBrush(
+               pd2d1image,
                imagebrushproperties,
-               &m_pimagebrush);
+               &m_pd2d1imagebrush);
 
-            if (SUCCEEDED(hr) && m_pimagebrush != nullptr)
+            if (SUCCEEDED(hr) && m_pd2d1imagebrush != nullptr)
             {
 
-               m_osdata[0] = (ID2D1Brush*)m_pimagebrush;
+               //m_osdata[0] = (ID2D1Brush*)m_pimagebrush;
 
-               m_baCalculated[0] = true;
+               //m_baCalculated[0] = true;
 
             }
 
@@ -243,7 +246,7 @@ namespace draw2d_direct2d
       else
       {
 
-         //return (ID2D1Brush *) m_pbrush;
+         //return (ID2D1Brush *) m_pdraw2dbrush;
 
       }
 
@@ -252,26 +255,26 @@ namespace draw2d_direct2d
    }
 
 
+   //void brush::destroy()
+   //{
+
+   //   destroy_os_data();
+
+   //   ::draw2d::brush::destroy();
+
+   //}
+
+
    void brush::destroy()
    {
 
-      destroy_os_data();
-
-      ::draw2d::brush::destroy();
-
-   }
-
-
-   void brush::destroy_os_data()
-   {
-
-      m_psolidbrush = nullptr;
-      m_plineargradientbrush = nullptr;
-      m_pradialgradientbrush = nullptr;
-      m_pbrush = nullptr;
-      m_pimagebrush = nullptr;
-
-      object::destroy_os_data();
+      m_pd2d1solidcolorbrush = nullptr;
+      m_pd2d1lineargradientbrush = nullptr;
+      m_pd2d1radialgradientbrush = nullptr;
+      m_pd2d1brush = nullptr;
+      m_pd2d1imagebrush = nullptr;
+      
+      object::destroy();
 
    }
 

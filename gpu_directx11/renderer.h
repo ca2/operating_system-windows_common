@@ -142,7 +142,7 @@ namespace gpu_directx11
 
       void do_sampling_to_cpu21();
       void sample_to_cpu_buffer21() override;
-      void gpu_blend(::draw2d::graphics * pgraphics);
+      void gpu_blend(::draw2d::graphics * pdraw2dgraphics);
       //void resolve_color_and_alpha_accumulation_buffers();
       //void _resolve_color_and_alpha_accumulation_buffers();
       void swap_chain();
@@ -194,7 +194,7 @@ namespace gpu_directx11
       //void _on_end_render(::gpu::layer * pgpulayer) override;
       //void endFrame() override;
       //void end_frame() override;
-      void endDraw(::gpu::graphics * pgraphics, ::user::interaction * puserinteraction) override;
+      void endDraw(::gpu::graphics * pdraw2dgraphics, ::user::interaction * puserinteraction) override;
 
 
       //void copy(::gpu::texture* pgputextureTarget, ::gpu::texture* pgputextureSource) override;

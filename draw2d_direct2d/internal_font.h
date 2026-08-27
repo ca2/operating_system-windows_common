@@ -13,17 +13,17 @@ namespace draw2d_direct2d
 {
 
 
-   class internal_font :
+   class CLASS_DECL_DRAW2D_DIRECT2D internal_font :
       virtual public ::write_text::internal_font,
       virtual public ::direct2d::object
    {
    public:
 
-      ::comptr < IDWriteFontFileLoader > m_pfontfileloader;
-      ::comptr < IDWriteFontCollectionLoader > m_pfontcollectionloader;
+      ::comptr < IDWriteFontFileLoader > m_pdwritefontfileloader;
+      ::comptr < IDWriteFontCollectionLoader > m_pdwritefontcollectionloader;
 
-      ::comptr<IDWriteFontCollection>                       m_pcollection;
-      ::array < ::comptr < IDWriteFontFamily > >            m_familya;
+      ::comptr<IDWriteFontCollection>                       m_pdwritefontcollection;
+      ::array < ::comptr < IDWriteFontFamily > >            m_dwritefontfamilya;
       //auto_pointer < Gdiplus::PrivateFontCollection >    m_pcollection;
       //::raw_array < Gdiplus::FontFamily >                m_familya;
       //::i32                                                m_iFamilyCount;
@@ -34,7 +34,7 @@ namespace draw2d_direct2d
 
 
       void load_from_memory(::memory_base * pmemory) override;
-      void on_create_font(::draw2d::graphics * pgraphics, ::write_text::font * pfont) override;
+      void on_create_font(::draw2d::graphics * pdraw2dgraphics, ::write_text::font * pwritetextfont) override;
 
 
    };

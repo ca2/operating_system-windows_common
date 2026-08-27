@@ -68,7 +68,7 @@ namespace draw2d_directx11
       ID3D11Device* _get_d3d11_device() override;
       //::comptr < IDXGISurface > _create_dxgi_surface() override;
 
-      void endDraw(::draw2d_gpu::graphics* pgraphics, ::user::interaction* puserinteraction, ::gpu::renderer* prendererSrc) override;
+      void endDraw(::draw2d_gpu::graphics* pdraw2dgraphics, ::user::interaction* puserinteraction, ::gpu::renderer* prendererSrc) override;
       void present();
 
    };

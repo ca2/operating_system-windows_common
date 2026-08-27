@@ -6,6 +6,7 @@
 #include "aura/graphics/write_text/internal_font.h"
 #include "acme/_operating_system.h"
 #include "acme/operating_system/windows_common/com/comptr.h"
+#include "operating_system-windows_common/draw2d_direct2d/internal_font.h"
 #include <dwrite.h>
 
 
@@ -14,13 +15,12 @@ namespace draw2d_direct2d_for_directx11
 
 
    class internal_font :
-      virtual public ::write_text::internal_font,
-      virtual public ::direct2d::object
+      virtual public ::draw2d_direct2d::internal_font
    {
    public:
 
-      ::comptr < IDWriteFontFileLoader > m_pfontfileloader;
-      ::comptr < IDWriteFontCollectionLoader > m_pfontcollectionloader;
+      ::comptr < IDWriteFontFileLoader > m_pdwritefontfileloader;
+      ::comptr < IDWriteFontCollectionLoader > m_pdwritefontcollectionloader;
 
       ::comptr<IDWriteFontCollection>                       m_pcollection;
       ::array < ::comptr < IDWriteFontFamily > >            m_familya;
@@ -34,7 +34,7 @@ namespace draw2d_direct2d_for_directx11
 
 
       void load_from_memory(::memory_base * pmemory) override;
-      void on_create_font(::draw2d::graphics * pgraphics, ::write_text::font * pfont) override;
+      void on_create_font(::draw2d::graphics * pdraw2dgraphics, ::write_text::font * pwritetextfont) override;
 
 
    };

@@ -328,11 +328,11 @@ class CustomFontCollectionLoader :
 {
 public:
 
-   ::comptr< IDWriteFontFileLoader >m_pfontfileloader;
+   ::comptr< IDWriteFontFileLoader >m_pdwritefontfileloader;
 
 
    CustomFontCollectionLoader(IDWriteFontFileLoader * pfontfileloader) :
-      m_pfontfileloader(pfontfileloader) 
+      m_pdwritefontfileloader(pfontfileloader) 
    {
    
    }
@@ -361,7 +361,7 @@ public:
 
       *fontFileEnumerator = new CustomFontFileEnumerator(factory,
          *pdatasizekey,
-         m_pfontfileloader);
+         m_pdwritefontfileloader);
 
       return S_OK;
 
@@ -388,8 +388,8 @@ namespace draw2d_directx11
       
       //IDWriteFactory * pfactory = m_pdirectx11->dwrite_factory();
 
-      //pfactory->UnregisterFontFileLoader(m_pfontfileloader);
-      //pfactory->UnregisterFontCollectionLoader(m_pfontcollectionloader);
+      //pfactory->UnregisterFontFileLoader(m_pdwritefontfileloader);
+      //pfactory->UnregisterFontCollectionLoader(m_pdwritefontcollectionloader);
 
    }
 
@@ -407,16 +407,16 @@ namespace draw2d_directx11
       //IDWriteFactory * pfactory = m_pdirectx11->dwrite_factory();
 
       ////// Register custom loader
-      //m_pfontfileloader.m_p = new CustomFontFileLoader();
-      //HRESULT hr = pfactory->RegisterFontFileLoader(m_pfontfileloader);
+      //m_pdwritefontfileloader.m_p = new CustomFontFileLoader();
+      //HRESULT hr = pfactory->RegisterFontFileLoader(m_pdwritefontfileloader);
       //if (FAILED(hr)) {
       //   throw ::exception(error_failed);
       //}
 
       //// Register custom loader
-      //m_pfontcollectionloader.m_p = new CustomFontCollectionLoader(m_pfontfileloader);
+      //m_pdwritefontcollectionloader.m_p = new CustomFontCollectionLoader(m_pdwritefontfileloader);
 
-      //hr = pfactory->RegisterFontCollectionLoader(m_pfontcollectionloader);
+      //hr = pfactory->RegisterFontCollectionLoader(m_pdwritefontcollectionloader);
       //if (FAILED(hr)) {
       //   throw ::exception(error_failed);
       //}
@@ -437,7 +437,7 @@ namespace draw2d_directx11
       //// Create font file reference
       ////::comptr<IDWriteFontCollection> pfontCollection;
       //hr = pfactory->CreateCustomFontCollection(
-      //   m_pfontcollectionloader, 
+      //   m_pdwritefontcollectionloader, 
       //   &datasizekey,
       //   sizeof(datasizekey),
       //   &m_pcollection);
@@ -494,10 +494,10 @@ namespace draw2d_directx11
    //}
 
 
-   void internal_font::on_create_font(::draw2d::graphics * pgraphics, ::write_text::font * pfont)
+   void internal_font::on_create_font(::draw2d::graphics * pdraw2dgraphics, ::write_text::font * pwritetextfont)
    {
 
-      ::cast < ::draw2d_directx11::font> pdraw2ddirectx11font = pfont;
+      ::cast < ::draw2d_directx11::font> pdraw2ddirectx11font = pwritetextfont;
 
       //IDWriteFactory * pfactory = m_pdirectx11->dwrite_factory();
 
@@ -591,7 +591,7 @@ namespace draw2d_directx11
       //auto weight = pdraw2ddirectx11font->_dwrite_font_weight();
       //auto style = pdraw2ddirectx11font->_dwrite_font_style();
       //auto stretch = pdraw2ddirectx11font->_dwrite_font_stretch();
-      //auto size = pdraw2ddirectx11font->_dwrite_font_size(pgraphics);
+      //auto size = pdraw2ddirectx11font->_dwrite_font_size(pdraw2dgraphics);
 
       //HRESULT hr = pfactory->CreateTextFormat(
       //   wstrFamilyName.c_str(),
@@ -620,7 +620,7 @@ namespace draw2d_directx11
 
       //}
 
-      //::cast < ::draw2d_directx11::font> pdraw2ddirectx11font = pfont;
+      //::cast < ::draw2d_directx11::font> pdraw2ddirectx11font = pwritetextfont;
 
       //::i32 iFoundFamily = -1;
 
@@ -736,7 +736,7 @@ namespace draw2d_directx11
       //         pdraw2ddirectx11font->_dwrite_font_style(),
       //         &pdwritefont);
 
-      //if (FAILED(hrFirstMatchingFont) || !pfont)
+      //if (FAILED(hrFirstMatchingFont) || !pwritetextfont)
       //{
 
       //   throw exception(error_resource);
@@ -752,7 +752,7 @@ namespace draw2d_directx11
 
       //////}
 
-      //////auto pfont = ___new Gdiplus::Font(
+      //////auto pwritetextfont = ___new Gdiplus::Font(
       //////   wszGetFamilyName,
       //////   (Gdiplus::REAL)m_dFontSize,
       //////   iStyle,
@@ -761,7 +761,7 @@ namespace draw2d_directx11
 
       ////pfontfamily
 
-      ////set_gdiplus_font(pfont);
+      ////set_gdiplus_font(pwritetextfont);
 
       ////bFont = true;
 
@@ -777,13 +777,13 @@ namespace draw2d_directx11
       ////else
       ////{
 
-      ////   auto pfont = ___new Gdiplus::Font(
+      ////   auto pwritetextfont = ___new Gdiplus::Font(
       ////      &pprivatefont->m_familya.first(),
       ////      (Gdiplus::REAL)m_dFontSize,
       ////      iStyle,
       ////      unit);
 
-      ////   set_gdiplus_font(pfont);
+      ////   set_gdiplus_font(pwritetextfont);
 
       ////   bFont = true;
 

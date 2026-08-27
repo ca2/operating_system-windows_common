@@ -332,11 +332,11 @@ namespace draw2d_direct2d_for_directx11
    {
    public:
 
-      ::comptr< IDWriteFontFileLoader >m_pfontfileloader;
+      ::comptr< IDWriteFontFileLoader >m_pdwritefontfileloader;
 
 
       CustomFontCollectionLoader(IDWriteFontFileLoader * pfontfileloader) :
-         m_pfontfileloader(pfontfileloader)
+         m_pdwritefontfileloader(pfontfileloader)
       {
 
       }
@@ -365,7 +365,7 @@ namespace draw2d_direct2d_for_directx11
 
          *fontFileEnumerator = new CustomFontFileEnumerator(factory,
             *pdatasizekey,
-            m_pfontfileloader);
+            m_pdwritefontfileloader);
 
          return S_OK;
 
@@ -387,8 +387,8 @@ namespace draw2d_direct2d_for_directx11
       
       IDWriteFactory * pfactory = direct2d()->dwrite_factory();
 
-      pfactory->UnregisterFontFileLoader(m_pfontfileloader);
-      pfactory->UnregisterFontCollectionLoader(m_pfontcollectionloader);
+      pfactory->UnregisterFontFileLoader(m_pdwritefontfileloader);
+      pfactory->UnregisterFontCollectionLoader(m_pdwritefontcollectionloader);
 
    }
 
@@ -406,16 +406,16 @@ namespace draw2d_direct2d_for_directx11
       IDWriteFactory * pfactory = direct2d()->dwrite_factory();
 
       //// Register custom loader
-      m_pfontfileloader.m_p = new CustomFontFileLoader();
-      HRESULT hr = pfactory->RegisterFontFileLoader(m_pfontfileloader);
+      m_pdwritefontfileloader.m_p = new CustomFontFileLoader();
+      HRESULT hr = pfactory->RegisterFontFileLoader(m_pdwritefontfileloader);
       if (FAILED(hr)) {
          throw ::exception(error_failed);
       }
 
       // Register custom loader
-      m_pfontcollectionloader.m_p = new CustomFontCollectionLoader(m_pfontfileloader);
+      m_pdwritefontcollectionloader.m_p = new CustomFontCollectionLoader(m_pdwritefontfileloader);
 
-      hr = pfactory->RegisterFontCollectionLoader(m_pfontcollectionloader);
+      hr = pfactory->RegisterFontCollectionLoader(m_pdwritefontcollectionloader);
       if (FAILED(hr)) {
          throw ::exception(error_failed);
       }
@@ -436,7 +436,7 @@ namespace draw2d_direct2d_for_directx11
       // Create font file reference
       //::comptr<IDWriteFontCollection> pfontCollection;
       hr = pfactory->CreateCustomFontCollection(
-         m_pfontcollectionloader, 
+         m_pdwritefontcollectionloader, 
          &datasizekey,
          sizeof(datasizekey),
          &m_pcollection);
@@ -493,233 +493,118 @@ namespace draw2d_direct2d_for_directx11
    //}
 
 
-   void internal_font::on_create_font(::draw2d::graphics * pgraphics, ::write_text::font * pfont)
+   void internal_font::on_create_font(::draw2d::graphics * pdraw2dgraphics, ::write_text::font * pwritetextfont)
    {
 
-      ::cast < ::draw2d_direct2d_for_directx11::font> pdraw2ddirect2dfont = pfont;
+      ::draw2d_direct2d::internal_font::on_create_font(pdraw2dgraphics, pwritetextfont);
 
-      IDWriteFactory * pfactory = direct2d()->dwrite_factory();
+      //::cast < ::draw2d_direct2d_for_directx11::font> pdraw2ddirect2dfont = pwritetextfont;
 
-      ::wstring wstrFamilyName;
+      //IDWriteFactory * pfactory = direct2d()->dwrite_factory();
 
-      pdraw2ddirect2dfont->m_pcollection = m_pcollection;
+      //::wstring wstrFamilyName;
 
-      if (pdraw2ddirect2dfont->::write_text::font::m_pfontfamily->m_strFamilyName.has_character())
-      {
-
-         wstrFamilyName = pdraw2ddirect2dfont->::write_text::font::m_pfontfamily->m_strFamilyName;
-
-      }
-      else
-      {
-
-         auto uFamilyCount = m_pcollection->GetFontFamilyCount();
-
-         if (uFamilyCount <= 0)
-         {
-
-            throw exception(error_resource);
-
-         }
-
-         auto & pdwritefontfamily = pdraw2ddirect2dfont->m_pfamily;
-
-         HRESULT hrItem = m_pcollection->GetFontFamily(0, &pdwritefontfamily);
-
-         ::comptr<IDWriteLocalizedStrings> pFamilyNames;
-
-         // Get a list_base of localized strings for the family name.
-         if (SUCCEEDED(hrItem))
-         {
-
-            hrItem = pdwritefontfamily->GetFamilyNames(&pFamilyNames);
-
-         }
-
-         UINT32 index = 0;
-
-         BOOL exists = false;
-
-         if (SUCCEEDED(hrItem))
-         {
-
-            hrItem = pFamilyNames->FindLocaleName(L"en-us", &index, &exists);
-
-         }
-
-         if (!exists)
-         {
-
-            index = 0;
-
-         }
-
-         UINT32 length = 0;
-
-         if (SUCCEEDED(hrItem))
-         {
-
-            hrItem = pFamilyNames->GetStringLength(index, &length);
-
-         }
-
-         // Allocate a string big enough to hold the name.
-         wchar_t * name = new (std::nothrow) wchar_t[length + 1];
-
-         if (name == NULL)
-         {
-
-            hrItem = E_OUTOFMEMORY;
-
-         }
-
-         // Get the family name.
-         if (SUCCEEDED(hrItem))
-         {
-
-            hrItem = pFamilyNames->GetString(index, name, length + 1);
-
-         }
-
-         wstrFamilyName = name;
-
-         delete name;
-
-      }
-
-      auto weight = pdraw2ddirect2dfont->_dwrite_font_weight();
-      auto style = pdraw2ddirect2dfont->_dwrite_font_style();
-      auto stretch = pdraw2ddirect2dfont->_dwrite_font_stretch();
-      auto size = pdraw2ddirect2dfont->_dwrite_font_size(pgraphics);
-
-      HRESULT hr = pfactory->CreateTextFormat(
-         wstrFamilyName.c_str(),
-         m_pcollection,
-         weight,
-         style,
-         stretch,
-         size,
-         L"",
-         &pdraw2ddirect2dfont->m_pformat);
-
-      if (FAILED(hr))
-      {
-
-         throw exception(error_resource);
-
-      }
-
-
-      //auto uFamilyCount = m_pcollection->GetFontFamilyCount();
-
-      //if (uFamilyCount <= 0)
-      //{
-
-      //   throw exception(error_resource);
-
-      //}
-
-      //::cast < ::draw2d_direct2d_for_directx11::font> pdraw2ddirect2dfont = pfont;
-
-      //::i32 iFoundFamily = -1;
-
-      ////WCHAR wszGetFamilyName[LF_FACESIZE];
-
-      //auto & pfamily = pdraw2ddirect2dfont->m_pfamily;
+      //pdraw2ddirect2dfont->m_pd2d1collection = m_pcollection;
 
       //if (pdraw2ddirect2dfont->::write_text::font::m_pfontfamily->m_strFamilyName.has_character())
       //{
 
-      //   for (decltype(uFamilyCount) iFamily = 0; iFamily < uFamilyCount; iFamily++)
+      //   wstrFamilyName = pdraw2ddirect2dfont->::write_text::font::m_pfontfamily->m_strFamilyName;
+
+      //}
+      //else
+      //{
+
+      //   auto uFamilyCount = m_pcollection->GetFontFamilyCount();
+
+      //   if (uFamilyCount <= 0)
       //   {
 
-      //      ::comptr < IDWriteFontFamily > pdwritefontfamily;
-
-      //      HRESULT hrItem = m_pcollection->GetFontFamily(0, &pdwritefontfamily);
-
-      //      m_familya.add(pdwritefontfamily);
-
-      //      IDWriteLocalizedStrings * pFamilyNames = NULL;
-
-      //      // Get a list_base of localized strings for the family name.
-      //      if (SUCCEEDED(hrItem))
-      //      {
-      //         hrItem = pdwritefontfamily->GetFamilyNames(&pFamilyNames);
-      //      }
-
-      //      UINT32 index = 0;
-      //      BOOL exists = false;
-
-      //      wchar_t localeName[LOCALE_NAME_MAX_LENGTH];
-
-      //      if (SUCCEEDED(hrItem))
-      //      {
-      //         // Get the default locale for this user.
-      //         ::i32 defaultLocaleSuccess = GetUserDefaultLocaleName(localeName, LOCALE_NAME_MAX_LENGTH);
-
-      //         // If the default locale is returned, find that locale name, otherwise use "en-us".
-      //         if (defaultLocaleSuccess)
-      //         {
-      //            hrItem = pFamilyNames->FindLocaleName(localeName, &index, &exists);
-      //         }
-      //         if (SUCCEEDED(hrItem) && !exists) // if the above find did not find a match, retry with US English
-      //         {
-      //            hrItem = pFamilyNames->FindLocaleName(L"en-us", &index, &exists);
-      //         }
-      //      }
-
-      //      // If the specified locale doesn't exist, select the first on the list_base.
-      //      if (!exists)
-      //         index = 0;
-
-      //      UINT32 length = 0;
-
-      //      // Get the string length.
-      //      if (SUCCEEDED(hrItem))
-      //      {
-      //         hrItem = pFamilyNames->GetStringLength(index, &length);
-      //      }
-
-      //      // Allocate a string big enough to hold the name.
-      //      wchar_t * name = new (std::nothrow) wchar_t[length + 1];
-      //      if (name == NULL)
-      //      {
-      //         hrItem = E_OUTOFMEMORY;
-      //      }
-
-      //      // Get the family name.
-      //      if (SUCCEEDED(hrItem))
-      //      {
-      //         hrItem = pFamilyNames->GetString(index, name, length + 1);
-      //      }
-
-      //      ::string strName;
-
-      //      strName = name;
-
-      //      delete name;
-
-      //      if (strName == pdraw2ddirect2dfont->m_pfontfamily->m_strFamilyName)
-      //      {
-
-      //         pfamily = pdwritefontfamily;
-
-      //         break;
-
-      //      }
+      //      throw exception(error_resource);
 
       //   }
 
+      //   auto & pdwritefontfamily = pdraw2ddirect2dfont->m_pfamily;
+
+      //   HRESULT hrItem = m_pcollection->GetFontFamily(0, &pdwritefontfamily);
+
+      //   ::comptr<IDWriteLocalizedStrings> pFamilyNames;
+
+      //   // Get a list_base of localized strings for the family name.
+      //   if (SUCCEEDED(hrItem))
+      //   {
+
+      //      hrItem = pdwritefontfamily->GetFamilyNames(&pFamilyNames);
+
+      //   }
+
+      //   UINT32 index = 0;
+
+      //   BOOL exists = false;
+
+      //   if (SUCCEEDED(hrItem))
+      //   {
+
+      //      hrItem = pFamilyNames->FindLocaleName(L"en-us", &index, &exists);
+
+      //   }
+
+      //   if (!exists)
+      //   {
+
+      //      index = 0;
+
+      //   }
+
+      //   UINT32 length = 0;
+
+      //   if (SUCCEEDED(hrItem))
+      //   {
+
+      //      hrItem = pFamilyNames->GetStringLength(index, &length);
+
+      //   }
+
+      //   // Allocate a string big enough to hold the name.
+      //   wchar_t * name = new (std::nothrow) wchar_t[length + 1];
+
+      //   if (name == NULL)
+      //   {
+
+      //      hrItem = E_OUTOFMEMORY;
+
+      //   }
+
+      //   // Get the family name.
+      //   if (SUCCEEDED(hrItem))
+      //   {
+
+      //      hrItem = pFamilyNames->GetString(index, name, length + 1);
+
+      //   }
+
+      //   wstrFamilyName = name;
+
+      //   delete name;
+
       //}
 
-      //if (::is_null(pfamily))
-      //{
+      //auto weight = pdraw2ddirect2dfont->_dwrite_font_weight();
+      //auto style = pdraw2ddirect2dfont->_dwrite_font_style();
+      //auto stretch = pdraw2ddirect2dfont->_dwrite_font_stretch();
+      //auto size = pdraw2ddirect2dfont->_dwrite_font_size(pdraw2dgraphics);
 
-      //   pfamily = m_familya.first();
+      //HRESULT hr = pfactory->CreateTextFormat(
+      //   wstrFamilyName.c_str(),
+      //   m_pcollection,
+      //   weight,
+      //   style,
+      //   stretch,
+      //   size,
+      //   L"",
+      //   &pdraw2ddirect2dfont->m_pformat);
 
-      //}
-
-      //if (::is_null(pfamily))
+      //if (FAILED(hr))
       //{
 
       //   throw exception(error_resource);
@@ -727,66 +612,183 @@ namespace draw2d_direct2d_for_directx11
       //}
 
 
-      //::comptr < IDWriteFont > pdwritefont;
+      ////auto uFamilyCount = m_pcollection->GetFontFamilyCount();
 
-      //HRESULT hrFirstMatchingFont = pfamily->GetFirstMatchingFont(
-      //         pdraw2ddirect2dfont->_dwrite_font_weight(),
-      //         pdraw2ddirect2dfont->_dwrite_font_stretch(),
-      //         pdraw2ddirect2dfont->_dwrite_font_style(),
-      //         &pdwritefont);
-
-      //if (FAILED(hrFirstMatchingFont) || !pfont)
-      //{
-
-      //   throw exception(error_resource);
-
-      //}
-
-      ////pfontfamily = &pprivatefont->m_familya[iFoundFamily];
-
-      //////if (pfontfamily->GetFamilyName(wszGetFamilyName) != Gdiplus::Ok)
-      //////{
-
-      //////   throw exception(error_resource);
-
-      //////}
-
-      //////auto pfont = ___new Gdiplus::Font(
-      //////   wszGetFamilyName,
-      //////   (Gdiplus::REAL)m_dFontSize,
-      //////   iStyle,
-      //////   unit,
-      //////   pprivatefont->m_pcollection);
-
-      ////pfontfamily
-
-      ////set_gdiplus_font(pfont);
-
-      ////bFont = true;
-
-      ////auto pgdiplusfont = øraw_new Gdiplus::Font(
-      ////   pgdiplusfontfamily,
-      ////   gdiplus_font_size(pdraw2dgdiplusfont->m_fontsize),
-      ////   pdraw2dgdiplusfont->m_iStyle,
-      ////   gdiplus_font_unit(pdraw2dgdiplusfont->m_fontsize));
-
-      ////pdraw2dgdiplusfont->set_gdiplus_font(pgdiplusfont);
-
-      ////}
-      ////else
+      ////if (uFamilyCount <= 0)
       ////{
 
-      ////   auto pfont = ___new Gdiplus::Font(
-      ////      &pprivatefont->m_familya.first(),
-      ////      (Gdiplus::REAL)m_dFontSize,
-      ////      iStyle,
-      ////      unit);
-
-      ////   set_gdiplus_font(pfont);
-
-      ////   bFont = true;
+      ////   throw exception(error_resource);
 
       ////}
+
+      ////::cast < ::draw2d_direct2d_for_directx11::font> pdraw2ddirect2dfont = pwritetextfont;
+
+      ////::i32 iFoundFamily = -1;
+
+      //////WCHAR wszGetFamilyName[LF_FACESIZE];
+
+      ////auto & pfamily = pdraw2ddirect2dfont->m_pfamily;
+
+      ////if (pdraw2ddirect2dfont->::write_text::font::m_pfontfamily->m_strFamilyName.has_character())
+      ////{
+
+      ////   for (decltype(uFamilyCount) iFamily = 0; iFamily < uFamilyCount; iFamily++)
+      ////   {
+
+      ////      ::comptr < IDWriteFontFamily > pdwritefontfamily;
+
+      ////      HRESULT hrItem = m_pcollection->GetFontFamily(0, &pdwritefontfamily);
+
+      ////      m_familya.add(pdwritefontfamily);
+
+      ////      IDWriteLocalizedStrings * pFamilyNames = NULL;
+
+      ////      // Get a list_base of localized strings for the family name.
+      ////      if (SUCCEEDED(hrItem))
+      ////      {
+      ////         hrItem = pdwritefontfamily->GetFamilyNames(&pFamilyNames);
+      ////      }
+
+      ////      UINT32 index = 0;
+      ////      BOOL exists = false;
+
+      ////      wchar_t localeName[LOCALE_NAME_MAX_LENGTH];
+
+      ////      if (SUCCEEDED(hrItem))
+      ////      {
+      ////         // Get the default locale for this user.
+      ////         ::i32 defaultLocaleSuccess = GetUserDefaultLocaleName(localeName, LOCALE_NAME_MAX_LENGTH);
+
+      ////         // If the default locale is returned, find that locale name, otherwise use "en-us".
+      ////         if (defaultLocaleSuccess)
+      ////         {
+      ////            hrItem = pFamilyNames->FindLocaleName(localeName, &index, &exists);
+      ////         }
+      ////         if (SUCCEEDED(hrItem) && !exists) // if the above find did not find a match, retry with US English
+      ////         {
+      ////            hrItem = pFamilyNames->FindLocaleName(L"en-us", &index, &exists);
+      ////         }
+      ////      }
+
+      ////      // If the specified locale doesn't exist, select the first on the list_base.
+      ////      if (!exists)
+      ////         index = 0;
+
+      ////      UINT32 length = 0;
+
+      ////      // Get the string length.
+      ////      if (SUCCEEDED(hrItem))
+      ////      {
+      ////         hrItem = pFamilyNames->GetStringLength(index, &length);
+      ////      }
+
+      ////      // Allocate a string big enough to hold the name.
+      ////      wchar_t * name = new (std::nothrow) wchar_t[length + 1];
+      ////      if (name == NULL)
+      ////      {
+      ////         hrItem = E_OUTOFMEMORY;
+      ////      }
+
+      ////      // Get the family name.
+      ////      if (SUCCEEDED(hrItem))
+      ////      {
+      ////         hrItem = pFamilyNames->GetString(index, name, length + 1);
+      ////      }
+
+      ////      ::string strName;
+
+      ////      strName = name;
+
+      ////      delete name;
+
+      ////      if (strName == pdraw2ddirect2dfont->m_pfontfamily->m_strFamilyName)
+      ////      {
+
+      ////         pfamily = pdwritefontfamily;
+
+      ////         break;
+
+      ////      }
+
+      ////   }
+
+      ////}
+
+      ////if (::is_null(pfamily))
+      ////{
+
+      ////   pfamily = m_familya.first();
+
+      ////}
+
+      ////if (::is_null(pfamily))
+      ////{
+
+      ////   throw exception(error_resource);
+
+      ////}
+
+
+      ////::comptr < IDWriteFont > pdwritefont;
+
+      ////HRESULT hrFirstMatchingFont = pfamily->GetFirstMatchingFont(
+      ////         pdraw2ddirect2dfont->_dwrite_font_weight(),
+      ////         pdraw2ddirect2dfont->_dwrite_font_stretch(),
+      ////         pdraw2ddirect2dfont->_dwrite_font_style(),
+      ////         &pdwritefont);
+
+      ////if (FAILED(hrFirstMatchingFont) || !pwritetextfont)
+      ////{
+
+      ////   throw exception(error_resource);
+
+      ////}
+
+      //////pfontfamily = &pprivatefont->m_familya[iFoundFamily];
+
+      ////////if (pfontfamily->GetFamilyName(wszGetFamilyName) != Gdiplus::Ok)
+      ////////{
+
+      ////////   throw exception(error_resource);
+
+      ////////}
+
+      ////////auto pwritetextfont = ___new Gdiplus::Font(
+      ////////   wszGetFamilyName,
+      ////////   (Gdiplus::REAL)m_dFontSize,
+      ////////   iStyle,
+      ////////   unit,
+      ////////   pprivatefont->m_pcollection);
+
+      //////pfontfamily
+
+      //////set_gdiplus_font(pwritetextfont);
+
+      //////bFont = true;
+
+      //////auto pgdiplusfont = øraw_new Gdiplus::Font(
+      //////   pgdiplusfontfamily,
+      //////   gdiplus_font_size(pdraw2dgdiplusfont->m_fontsize),
+      //////   pdraw2dgdiplusfont->m_iStyle,
+      //////   gdiplus_font_unit(pdraw2dgdiplusfont->m_fontsize));
+
+      //////pdraw2dgdiplusfont->set_gdiplus_font(pgdiplusfont);
+
+      //////}
+      //////else
+      //////{
+
+      //////   auto pwritetextfont = ___new Gdiplus::Font(
+      //////      &pprivatefont->m_familya.first(),
+      //////      (Gdiplus::REAL)m_dFontSize,
+      //////      iStyle,
+      //////      unit);
+
+      //////   set_gdiplus_font(pwritetextfont);
+
+      //////   bFont = true;
+
+      //////}
 
    }
 

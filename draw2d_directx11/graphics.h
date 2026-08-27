@@ -105,7 +105,7 @@ namespace draw2d_directx11
       void just_after_new_frame() override;
 
 
-      void _bind(::i32 iIndex, ::i32 iLayerIndex, IDXGISurface* psurface) override;
+      //void _bind(::i32 iIndex, ::i32 iLayerIndex, IDXGISurface* psurface) override;
 
 
       //void start_gpu_layer(::gpu::layer * pgpulayer) override;
@@ -113,7 +113,7 @@ namespace draw2d_directx11
 
 
       using ::draw2d::graphics::set;
-      void set(::draw2d::bitmap* pbitmap) override;
+      void set(::draw2d::bitmap* pdraw2dbitmap) override;
 
 
       //oswindow get_window_handle();
@@ -165,7 +165,7 @@ namespace draw2d_directx11
       //              const_char_pointer pszOutput, const void * lpInitData) override;
       //bool CreateIC(const ::scoped_string & scopedstrDriverName, const ::scoped_string & scopedstrDeviceName,
       //              const_char_pointer pszOutput, const void * lpInitData) override;
-      //void create_compatible_graphics(::draw2d::graphics * pgraphics) override;
+      //void create_compatible_graphics(::draw2d::graphics * pdraw2dgraphics) override;
       //void _create_memory_graphics(const ::i32_size& size = {}) override;
       void _create_memory_graphics(const ::i32_size & size = {}, ::acme::user::interaction * pacmeuserinteractionAffinity = nullptr) override;
       void defer_set_size(const ::i32_size& size = {}) override;
@@ -196,7 +196,7 @@ namespace draw2d_directx11
   //                    ::i32 (CALLBACK* lpfn)(LPVOID, LPARAM), LPARAM lpData) override;
 
       //virtual ::draw2d::object* set_stock_object(::i32 nIndex) override;
-      //virtual void set(::write_text::font * pfont) override;
+      //virtual void set(::write_text::font * pwritetextfont) override;
       //virtual void set(::draw2d::pen* pPen) override;
       //virtual void set(::draw2d::brush* pBrush) override;
       //virtual void set(::write_text::font* pFont) override;
@@ -240,17 +240,17 @@ namespace draw2d_directx11
 
       void clear_current_point() override;
 
-      void draw(::draw2d::path * ppath) override;
-      void fill(::draw2d::path * ppath) override;
-      void path(::draw2d::path * ppath) override;
+      void draw(::draw2d::path * pdraw2dpath) override;
+      void fill(::draw2d::path * pdraw2dpath) override;
+      void path(::draw2d::path * pdraw2dpath) override;
 
-      //virtual bool draw(ID2D1PathGeometry * pgeometry, ::draw2d::pen * ppen);
-      //virtual bool fill(ID2D1PathGeometry * pgeometry, ::draw2d::brush * pbrush);
-      //virtual bool draw(ID2D1GeometryRealization * prealization, ::draw2d::pen * ppen);
-      //virtual bool fill(ID2D1GeometryRealization * prealization, ::draw2d::brush * ppen);
+      //virtual bool draw(ID2D1PathGeometry * pgeometry, ::draw2d::pen * pdraw2dpen);
+      //virtual bool fill(ID2D1PathGeometry * pgeometry, ::draw2d::brush * pdraw2dbrush);
+      //virtual bool draw(ID2D1GeometryRealization * prealization, ::draw2d::pen * pdraw2dpen);
+      //virtual bool fill(ID2D1GeometryRealization * prealization, ::draw2d::brush * pdraw2dpen);
 
-      void draw(::draw2d::path * ppath, ::draw2d::pen * ppen) override;
-      void fill(::draw2d::path * ppath, ::draw2d::brush * pbrush) override;
+      void draw(::draw2d::path * pdraw2dpath, ::draw2d::pen * pdraw2dpen) override;
+      void fill(::draw2d::path * pdraw2dpath, ::draw2d::brush * pdraw2dbrush) override;
 
       // World transform
       //bool SetWorldTransform(const XFORM* pXform) override;
@@ -330,9 +330,9 @@ namespace draw2d_directx11
 
 
       //virtual void _add_clip_item(ID2D1GeometrySink * pgeometrysink, ::draw2d::clip_item * pclipitem);
-      //virtual void _add_shape(Gdiplus::GraphicsPath * ppath, const ::f64_rectangle & rectangle);
-      //virtual void _add_shape(Gdiplus::GraphicsPath * ppath, const ::f64_ellipse & ellipse);
-      //virtual void _add_shape(Gdiplus::GraphicsPath * ppath, const ::f64_polygon & polygon);
+      //virtual void _add_shape(Gdiplus::GraphicsPath * pdraw2dpath, const ::f64_rectangle & rectangle);
+      //virtual void _add_shape(Gdiplus::GraphicsPath * pdraw2dpath, const ::f64_ellipse & ellipse);
+      //virtual void _add_shape(Gdiplus::GraphicsPath * pdraw2dpath, const ::f64_polygon & polygon);
 
       //void _intersect_clip() override;
       //void _add_clipping_shape(const ::f64_rectangle & rectangle) override;
@@ -361,7 +361,7 @@ namespace draw2d_directx11
       //    ::f64_point move_to(const ::f64_point & point) override;
       using ::draw2d::graphics::line;
       void line(::f64 x1, ::f64 y1, ::f64 x2, ::f64 y2) override;
-      void line(::f64 x1, ::f64 y1, ::f64 x2, ::f64 y2, ::draw2d::pen * ppen) override;
+      void line(::f64 x1, ::f64 y1, ::f64 x2, ::f64 y2, ::draw2d::pen * pdraw2dpen) override;
       //  bool line_to(const ::f64_point & point) override;
       void arc(::f64 x1, ::f64 y1, ::f64 w, ::f64 h, ::f64_angle start, ::f64_angle extends) override;
       void arc(::f64 x1, ::f64 y1, ::f64 x2, ::f64 y2, ::f64 x3, ::f64 y3, ::f64 x4, ::f64 y4) override;
@@ -440,10 +440,10 @@ namespace draw2d_directx11
       using ::draw2d::graphics::draw_round_rectangle;
       using ::draw2d::graphics::fill_round_rectangle;
       void rectangle(const ::f64_rectangle & rectangle) override;
-      void draw_rectangle(const ::f64_rectangle & rectangle, ::draw2d::pen * ppen) override;
-      void fill_rectangle(const ::f64_rectangle & rectangle, ::draw2d::brush * pbrush) override;
-      void draw_round_rectangle(const ::f64_rectangle & rectangle, ::draw2d::pen * ppen, ::f64 dRadius) override;
-      void fill_round_rectangle(const ::f64_rectangle & rectangle, ::draw2d::brush * pbrush, ::f64 dRadius) override;
+      void draw_rectangle(const ::f64_rectangle & rectangle, ::draw2d::pen * pdraw2dpen) override;
+      void fill_rectangle(const ::f64_rectangle & rectangle, ::draw2d::brush * pdraw2dbrush) override;
+      void draw_round_rectangle(const ::f64_rectangle & rectangle, ::draw2d::pen * pdraw2dpen, ::f64 dRadius) override;
+      void fill_round_rectangle(const ::f64_rectangle & rectangle, ::draw2d::brush * pdraw2dbrush, ::f64 dRadius) override;
 
 
       //virtual bool _draw_raw(const ::f64_rectangle & rectangleTarget, ::image::image * pimage, const ::image::image_drawing_options & imagedrawingoptions, const ::f64_point & rectangleSource = ::f64_point()) override;
@@ -650,21 +650,21 @@ namespace draw2d_directx11
 
       void destroy() override;
 
-      void destroy_os_data() override;
+      // void destroy_os_data() override;
 
-      //IDWriteTextFormat * get_os_font(::write_text::font * pfont);
-      //ID2D1Brush * get_os_brush(::draw2d::brush * pbrush);
-      //ID2D1Brush * get_os_pen_brush(::draw2d::pen * ppen);
+      //IDWriteTextFormat * get_os_font(::write_text::font * pwritetextfont);
+      //ID2D1Brush * get_os_brush(::draw2d::brush * pdraw2dbrush);
+      //ID2D1Brush * get_os_pen_brush(::draw2d::pen * pdraw2dpen);
 
       using ::draw2d::graphics::draw;
 
-      virtual bool draw(const ::write_text::text_out & textout, ::draw2d::pen * ppen);
+      virtual bool draw(const ::write_text::text_out & textout, ::draw2d::pen * pdraw2dpen);
 
-      virtual bool fill(const ::write_text::text_out & textout, ::draw2d::brush * pbrush);
+      virtual bool fill(const ::write_text::text_out & textout, ::draw2d::brush * pdraw2dbrush);
 
-      virtual bool draw(const ::write_text::draw_text & drawtext, ::draw2d::pen* ppen);
+      virtual bool draw(const ::write_text::draw_text & drawtext, ::draw2d::pen* pdraw2dpen);
 
-      virtual bool fill(const ::write_text::draw_text & drawtext, ::draw2d::brush* pbrush);
+      virtual bool fill(const ::write_text::draw_text & drawtext, ::draw2d::brush* pdraw2dbrush);
 
 
       void flush() override;

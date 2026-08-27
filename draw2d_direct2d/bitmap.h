@@ -32,7 +32,7 @@ namespace draw2d_direct2d
       memory                                 m_memory;
 
       comptr<ID2D1Bitmap1>                   m_pd2d1bitmap1Map;
-      comptr<ID2D1BitmapRenderTarget>        m_pd2d1bitmaprendertarget;
+      //comptr<ID2D1BitmapRenderTarget>        m_pd2d1bitmaprendertarget;
       comptr<ID2D1DeviceContext>             m_pd2d1devicecontext;
 
 
@@ -54,9 +54,9 @@ namespace draw2d_direct2d
       void update_bitmap_as_image_render_target(
          ::image::image * pimage,
          ::acme::user::interaction * pacmeuserinteractionAffinity = nullptr,
-         ::draw2d::graphics * pgraphics = nullptr) override;
-      void _create_bitmap(
-         ::draw2d::graphics * pgraphics,
+         ::draw2d::graphics * pdraw2dgraphics = nullptr) override;
+      void _create_d2d1_bitmap(
+         ::draw2d::graphics * pdraw2dgraphics,
          const ::i32_size & size,
          const void * pbits,
          const ::i32_point & pointBits,
@@ -65,12 +65,12 @@ namespace draw2d_direct2d
          ::acme::user::interaction * pacmeuserinteractionAffinity);
 
       void preserve_image(const ::i32_size & size, ::image::image * pimage) override;
-      virtual void CreateBitmap(::draw2d::graphics * pgraphics, const ::i32_size& size, ::u32 nPlanes, ::u32 nBitcount, const void * lpBits, ::i32 stride) override;
-      virtual bool CreateBitmapIndirect(::draw2d::graphics * pgraphics, LPBITMAP lpBitmap);
-      virtual void CreateCompatibleBitmap(::draw2d::graphics * pgraphics, ::i32 nWidth, ::i32 nHeight);
-      virtual void CreateDiscardableBitmap(::draw2d::graphics * pgraphics, ::i32 nWidth, ::i32 nHeight);
-      virtual void create_bitmap(::draw2d::graphics * pgraphics, const ::i32_size & size, ::pixmap * ppixmap) override;
-      virtual void CreateDIBitmap(::draw2d::graphics * pgraphics, ::i32 cx, ::i32 cy, ::u32 flInit, const void *pjBits, ::u32 iUsage) override;
+      virtual void CreateBitmap(::draw2d::graphics * pdraw2dgraphics, const ::i32_size& size, ::u32 nPlanes, ::u32 nBitcount, const void * lpBits, ::i32 stride) override;
+      virtual bool CreateBitmapIndirect(::draw2d::graphics * pdraw2dgraphics, LPBITMAP lpBitmap);
+      virtual void CreateCompatibleBitmap(::draw2d::graphics * pdraw2dgraphics, ::i32 nWidth, ::i32 nHeight);
+      virtual void CreateDiscardableBitmap(::draw2d::graphics * pdraw2dgraphics, ::i32 nWidth, ::i32 nHeight);
+      virtual void create_bitmap(::draw2d::graphics * pdraw2dgraphics, const ::i32_size & size, ::pixmap * ppixmap) override;
+      virtual void CreateDIBitmap(::draw2d::graphics * pdraw2dgraphics, ::i32 cx, ::i32 cy, ::u32 flInit, const void *pjBits, ::u32 iUsage) override;
 
 
       void read_pixels(const ::i32_size & size, const ::i32_point & point, ::image32_t * pimage32, ::i32 iScan) override;
@@ -81,10 +81,10 @@ namespace draw2d_direct2d
       void unmap();
 
 
-      virtual void attach(void * posdata);
-      virtual void * detach();
+      //virtual void attach(void * posdata);
+      //virtual void * detach();
 
-      virtual void defer_update(::draw2d::graphics * pgraphics) const;
+      virtual void defer_update(::draw2d::graphics * pdraw2dgraphics) const;
 
       ::u32 SetBitmapBits(::u32 dwCount, const void * lpBits);
       ::u32 GetBitmapBits(::u32 dwCount, LPVOID lpBits) const;
@@ -98,7 +98,7 @@ namespace draw2d_direct2d
       
 
       void destroy() override;
-      void destroy_os_data() override;
+      // void destroy_os_data() override;
 
 
    };

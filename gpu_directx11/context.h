@@ -207,7 +207,7 @@ namespace gpu_directx11
       void set_matrix_uniform(const ::gpu::payload & uniformMatrix) override;
 
 
-      bool create_offscreen_graphics_for_swap_chain_blitting(::gpu::graphics* pgraphics, const ::i32_size& size) override;
+      bool create_offscreen_graphics_for_swap_chain_blitting(::gpu::graphics* pdraw2dgraphics, const ::i32_size& size) override;
 
 
       virtual void _create_context_directx11(::gpu::device* pgpudevice, const ::gpu::enum_output& eoutput, ::acme::windowing::window* pwindow, ::draw2d::graphics * pdraw2dgraphics, const ::i32_point & pointInput, const ::i32_point & pointOutput, const ::i32_size & size, const ::i32_size & sizeRaw);

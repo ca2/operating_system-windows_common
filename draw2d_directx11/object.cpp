@@ -23,12 +23,12 @@ namespace draw2d_directx11
    }
 
 
-   void object::initialize_draw2d_directx11_object(::draw2d_directx11::graphics* pgraphics)
+   void object::initialize_draw2d_directx11_object(::draw2d_directx11::graphics* pdraw2dgraphics)
    {
 
-      initialize(pgraphics);
+      initialize(pdraw2dgraphics);
 
-      initialize_directx11_object(pgraphics->m_pdirectx11);
+      initialize_directx11_object(pdraw2dgraphics->m_pdirectx11);
 
    }
 
@@ -77,7 +77,7 @@ namespace draw2d_directx11
 
    //bool object::delete_object()
    //{
-   //   //if (get_os_data() == nullptr)
+   //   //if (nok())
    //   // return false;
    //   //return ::DeleteObject(Detach());
    //   return false;
@@ -121,19 +121,19 @@ namespace draw2d_directx11
    //}
 
 
-   void object::defer_update(::draw2d::graphics* pgraphics, ::i8 i) const
+   void object::defer_update(::draw2d::graphics * pdraw2dgraphics)
    {
 
       if (!m_pdirectx11)
       {
 
-         ::cast < graphics> pdirectx11graphics = pgraphics;
+         ::cast < graphics> pdirectx11graphics = pdraw2dgraphics;
 
          ((object*)this)->initialize_draw2d_directx11_object(pdirectx11graphics);
 
       }
 
-      ::draw2d::object::defer_update(pgraphics, i);
+      ::draw2d::object::defer_update(pdraw2dgraphics);
 
    }
 

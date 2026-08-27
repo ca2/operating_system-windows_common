@@ -24,7 +24,7 @@ namespace directx11
 
 
       //virtual comptr < ID2D1StrokeStyle1 > _create_stroke_style(
-      //   ::draw2d_gpu::graphics* pgraphics,
+      //   ::draw2d_gpu::graphics* pdraw2dgraphics,
       //   ::draw2d::enum_line_cap elinecapBeg,
       //   ::draw2d::enum_line_cap elinecapEnd
       //);

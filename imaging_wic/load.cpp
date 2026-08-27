@@ -1226,7 +1226,7 @@ namespace imaging_wic
    //      else
    //      {
 
-   //         comptr <IWICBitmap> pbitmap;
+   //         comptr <IWICBitmap> pdraw2dbitmap;
 
    //         if (SUCCEEDED(hr))
    //         {
@@ -1238,7 +1238,7 @@ namespace imaging_wic
    //               pimage->scan_size(),
    //               pimage->scan_size() * pimage->height(),
    //               (::u8 *)pcr,
-   //               &pbitmap
+   //               &pdraw2dbitmap
    //            );
 
    //         }
@@ -1255,7 +1255,7 @@ namespace imaging_wic
    //         if (SUCCEEDED(hr))
    //         {
 
-   //            hr = pconverter->Initialize(pbitmap, formatGUID, WICBitmapDitherTypeNone, nullptr, 0.f, WICBitmapPaletteTypeCustom);
+   //            hr = pconverter->Initialize(pdraw2dbitmap, formatGUID, WICBitmapDitherTypeNone, nullptr, 0.f, WICBitmapPaletteTypeCustom);
 
    //         }
 
