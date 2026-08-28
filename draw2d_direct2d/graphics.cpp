@@ -152,6 +152,33 @@ namespace draw2d_direct2d
    //}
 
 
+   void graphics::_create_d2d1_device_context()
+   {
+
+      defer_constructø(direct2d()->m_pdxgidevicesource);
+
+      ::cast<::dxgi_device_source> pdxgidevicesource = direct2d()->m_pdxgidevicesource;
+
+      m_pd2d1devicecontext = direct2d()->create_d2d1_device_context(pdxgidevicesource);
+
+      ::defer_throw_hresult(m_pd2d1devicecontext.as(m_pd2d1devicecontext1));
+
+      void * pDataDeviceContext = m_pd2d1devicecontext.m_p;
+      //m_osdata[::draw2d_direct2d::data_device_context] = pDataDeviceContext;
+
+
+      //comptr<ID2D1DeviceContext> pd2dDeviceContext;
+
+      //HRESULT hr = pd2dDevice->CreateDeviceContext(
+      //   D2D1_DEVICE_CONTEXT_OPTIONS_NONE,
+      //   &pd2dDeviceContext);
+
+      //::defer_throw_hresult(hr);
+
+   }
+
+
+
    void graphics::create_for_window_draw2d(::user::interaction * puserinteraction, const ::i32_size & size)
    {
 

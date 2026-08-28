@@ -90,7 +90,7 @@ namespace draw2d_direct2d
 
       bool TextOutAlphaBlend(::f64 x, ::f64 y, const ::scoped_string & scopedstr) override;
       bool _draw_blend(const ::image::image_drawing & imagedrawing) override;
-
+      virtual void _create_d2d1_device_context();
 
       void set_target_image(::image::image * pimage) override;
 

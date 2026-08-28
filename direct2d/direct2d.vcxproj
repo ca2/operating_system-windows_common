@@ -1042,6 +1042,7 @@
     <ClInclude Include="geometry.h" />
     <ClInclude Include="geometry_sink_text_renderer.h" />
     <ClInclude Include="object.h" />
+    <ClInclude Include="tiny_dxgi_device_source.h" />
     <ClInclude Include="_.h" />
   </ItemGroup>
   <ItemGroup>
@@ -1063,6 +1064,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='StaticRelease|ARM64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="object.cpp" />
+    <ClCompile Include="tiny_dxgi_device_source.cpp" />
     <ClCompile Include="_factory.cpp" />
     <ClCompile Include="platform.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -1108,6 +1110,9 @@
     <ProjectReference Include="..\acme_windows_common\acme_windows_common.vcxproj">
       <Project>{eb9dc9c0-0573-4da0-8700-4dbb371773f1}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="direct2d.def" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
