@@ -29,13 +29,13 @@
 #include "acme/graphics/image/frame_array.h"
 #include "aura/platform/session.h"
 #include "aura/windowing/window.h"
-#include "bred/gpu/bred_approach.h"
-#include "bred/gpu/context.h"
-#include "bred/gpu/context_lock.h"
-#include "bred/gpu/device.h"
-#include "bred/gpu/renderer.h"
-#include "bred/gpu/swap_chain.h"
-#include "bred/gpu/types.h"
+//#include "bred/gpu/bred_approach.h"
+//#include "bred/gpu/context.h"
+//#include "bred/gpu/context_lock.h"
+//#include "bred/gpu/device.h"
+//#include "bred/gpu/renderer.h"
+//#include "bred/gpu/swap_chain.h"
+//#include "bred/gpu/types.h"
 #include "operating_system-windows_common/direct2d/direct2d.h"
 #include <math.h>
 #include "acme_windows_common/dxgi_device_source.h"
@@ -188,8 +188,8 @@ namespace draw2d_direct2d
 
       m_sizeTotal2 = size;
 
-      if (m_pgraphicsbufferitem)
-      {
+      //if (m_pgraphicsbufferitem)
+      //{
 
          constructø(m_pgraphicsbufferitem->m_pimageBufferItem);
 
@@ -197,7 +197,16 @@ namespace draw2d_direct2d
 
          //create_for_image(m_pgraphicsbufferitem->m_pimageBufferItem);
 
-      }
+         m_pdraw2dbitmapTarget = m_pgraphicsbufferitem->m_pimageBufferItem->m_pdraw2dbitmap;
+
+         //::memory memory;
+
+         //m_pdraw2dbitmapTarget->create_bitmap(this, size, memory, nullptr);
+         //
+         create_bitmap_graphics(m_pdraw2dbitmapTarget);
+
+
+      //}
 
    }
 
@@ -317,26 +326,26 @@ namespace draw2d_direct2d
 
 
 
-      D2D1_SIZE_F size;
+      //D2D1_SIZE_F size;
 
-      size.width = (FLOAT) sizeParam.cx;
-      size.height = (FLOAT) sizeParam.cy;
+      //size.width = (FLOAT) sizeParam.cx;
+      //size.height = (FLOAT) sizeParam.cy;
 
-      D2D1_SIZE_U sizeu;
+      //D2D1_SIZE_U sizeu;
 
-      sizeu.width = sizeParam.cx;
-      sizeu.height = sizeParam.cy;
+      //sizeu.width = sizeParam.cx;
+      //sizeu.height = sizeParam.cy;
 
-      D2D1_PIXEL_FORMAT pixelformat{};
+      //D2D1_PIXEL_FORMAT pixelformat{};
 
-      pixelformat.alphaMode = D2D1_ALPHA_MODE_PREMULTIPLIED;
-      pixelformat.format = DXGI_FORMAT_B8G8R8A8_UNORM;
-      //properties.dpiX = 96.0;
-      //properties.dpiY = 96.0;
+      //pixelformat.alphaMode = D2D1_ALPHA_MODE_PREMULTIPLIED;
+      //pixelformat.format = DXGI_FORMAT_B8G8R8A8_UNORM;
+      ////properties.dpiX = 96.0;
+      ////properties.dpiY = 96.0;
 
-      D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS options;
+      //D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS options;
 
-      options = D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS_NONE;
+      //options = D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS_NONE;
 
       ::cast < ::windowing::window > pwindow;
 
@@ -389,14 +398,14 @@ namespace draw2d_direct2d
 
       //}
 
-      D2D1_BITMAP_PROPERTIES1 bitmapproperties1 = {};
+      //D2D1_BITMAP_PROPERTIES1 bitmapproperties1 = {};
 
-      bitmapproperties1.bitmapOptions = D2D1_BITMAP_OPTIONS_TARGET;
-      bitmapproperties1.pixelFormat = pixelformat;
-      //props.bitmapOptions = D2D1_BITMAP_OPTIONS_TARGET | D2D1_BITMAP_OPTIONS_CANNOT_DRAW;
-      bitmapproperties1.dpiX = 96.0f;
-      bitmapproperties1.dpiY = 96.0f;
-      bitmapproperties1.colorContext = nullptr;
+      //bitmapproperties1.bitmapOptions = D2D1_BITMAP_OPTIONS_TARGET;
+      //bitmapproperties1.pixelFormat = pixelformat;
+      ////props.bitmapOptions = D2D1_BITMAP_OPTIONS_TARGET | D2D1_BITMAP_OPTIONS_CANNOT_DRAW;
+      //bitmapproperties1.dpiX = 96.0f;
+      //bitmapproperties1.dpiY = 96.0f;
+      //bitmapproperties1.colorContext = nullptr;
 
       //auto hrQueryDeviceContext = m_pd2d1bitmaprendertargetCompatibleMemoryGraphics.as(m_pd2d1devicecontext);
       ////if(ppdata != nullptr)

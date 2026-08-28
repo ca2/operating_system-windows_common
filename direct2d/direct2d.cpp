@@ -6,11 +6,11 @@
 #include "acme/prototype/geometry2d/rectangle.h"
 #include "acme_windows_common/dxgi_device_source.h"
 #include "acme/operating_system/windows_common/com/hresult_exception.h"
-#include "bred/gpu/bred_approach.h"
-#include "bred/gpu/device.h"
+//#include "bred/gpu/bred_approach.h"
+//#include "bred/gpu/device.h"
 #include "aura/windowing/window.h"
-#include "directx11/directx11.h"
-#include "gpu_directx11/swap_chain.h"
+//#include "directx11/directx11.h"
+//#include "gpu_directx11/swap_chain.h"
 
 
 
