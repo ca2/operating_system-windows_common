@@ -9,7 +9,7 @@
 #include "aura/graphics/image/drawing.h"
 #include "aura/user/user/interaction.h"
 #include "operating_system-windows/aura_windows/layered_window_buffer.h"
-#include "bred/gpu/context_lock.h"
+//#include "bred/gpu/context_lock.h"
 #include <atomic>
 #include <d2d1_1.h>
 
