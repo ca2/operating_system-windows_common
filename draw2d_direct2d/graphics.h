@@ -94,6 +94,9 @@ namespace draw2d_direct2d
 
       void set_target_image(::image::image * pimage) override;
 
+
+      void begin_draw() override;
+      void end_draw() overrid;
       ////bool IsPrinting() override;            // true if being used for printing
 
       ////void start_layer(::e_graphics egraphics) override;

@@ -7652,6 +7652,225 @@ namespace draw2d_direct2d
    }
 
 
+   void graphics::begin_draw()
+   {
+
+      ::gpu::graphics::begin_draw();
+
+      //auto pgputexturesiteTarget = current_target_texture(::gpu::current_layer());
+
+      //prepare_nanovg_render_target(pgputexturesiteTarget->gpu_texture());
+
+      //auto size = m_size;
+
+      //nvgBeginFrame(m_pdc, (float)size.width(), (float)size.height(), 1.0f);
+
+      if (!m_bBeginDraw)
+      {
+
+         if (::gpu::current_layer())
+         {
+
+            m_bBeginDraw = true;
+
+            auto pgputexturesiteTarget = ::gpu::current_layer()->texture(true);
+
+            //prepare_gpu_draw2d_graphics_render_target(pgputexturesiteTarget->gpu_texture());
+
+            //::cast < ::draw2d_direct2d_for_directx11::image > pimage = m_pimage;
+
+            //if (::is_set(pimage))
+            //{
+
+            //   if (!pimage->m_pdraw2dbitmap)
+            //   {
+
+            //      pimage->create_bitmap(m_pacmeuserinteractionAffinity, this);
+
+            //   }
+
+            //   ::cast <::draw2d_direct2d::bitmap> pdraw2dbitmap = pimage->m_pdraw2dbitmap;
+
+            //   auto & pd2d1bitmap = pdraw2dbitmap->m_pdraw2dbitmap;
+
+            //   m_pdevicecontext->SetTarget(pd2d1bitmap);
+
+            //}
+
+            auto ptexture = pgputexturesiteTarget->gpu_texture();
+
+            defer_constructø(ptexture->m_pimageGpuTexture);
+
+            ptexture->m_pimageGpuTexture->update_as_backed_by_gpu_texture(ptexture->m_textureattributes.m_sizeRaw, ptexture, this);
+
+            ::cast <::draw2d_direct2d_for_directx11::bitmap> pdraw2dbitmap = ptexture->m_pimageGpuTexture->m_pdraw2dbitmap;
+
+            m_pd2d1devicecontext->SetTarget(pdraw2dbitmap->m_pd2d1bitmap);
+
+            m_pd2d1devicecontext->BeginDraw();
+
+            m_pd2d1devicecontext->Clear(D2D1::ColorF(0.0f, 0.0f, 0.0f, 0.0f));
+
+            //set_alpha_mode(::draw2d::e_alpha_mode_set);
+
+            //fill_solid_rectangle({ ::i32_point(), m_sizeTarget }, ::color::transparent);
+
+            //auto pgputexturesiteTarget = current_target_texture(::gpu::current_layer());
+
+            //prepare_gpu_draw2d_graphics_render_target(pgputexturesiteTarget->gpu_texture());
+
+            //::cast <::draw2d_direct2d_for_directx11::bitmap> pdraw2dbitmap = m_pimage->m_pdraw2dbitmap;
+
+            //m_pd2d1devicecontext->SetTarget(pdraw2dbitmap->m_pd2d1bitmap);
+
+            //m_pd2d1devicecontext->BeginDraw();
+
+            //set_alpha_mode(::draw2d::e_alpha_mode_set);
+
+            //fill_solid_rectangle({ ::i32_point(), m_sizeTarget }, ::color::transparent);
+
+         }
+
+      }
+
+   }
+
+
+   void graphics::end_draw()
+   {
+
+      if (m_bBeginDraw)
+      {
+
+         m_bBeginDraw = false;
+
+
+         //int iLayerIndex = ::gpu::current_layer()->m_iLayerIndex;
+
+//if (iLayerIndex == 0)
+//{
+
+         //m_bBeginDraw = false;
+
+         if (0)
+         {
+            auto pgpucontext = gpu_context();
+
+            ::gpu::context_lock context_lock(pgpucontext);
+
+
+            auto ptexturesite = pgpucontext->m_pgpurenderer->m_pgpurendertarget2->current_texture(::gpu::current_layer(), false);
+
+            ::cast < ::gpu_directx11::texture > ptexture = ptexturesite->gpu_texture();
+
+            auto pd3d11texture = ptexture->m_ptextureOffscreen;
+
+
+            comptr<ID2D1Image > pd2d1image;
+
+            m_pd2d1devicecontext->GetTarget(&pd2d1image);
+
+            comptr<ID2D1Bitmap1>pd2d1bitmap;
+
+            pd2d1image.as(pd2d1bitmap);
+
+            comptr<IDXGISurface> psurfaceFromBitmap;
+
+            HRESULT hr =
+               pd2d1bitmap->GetSurface(
+                  &psurfaceFromBitmap);
+
+            ::defer_throw_hresult(hr);
+
+            comptr<ID3D11Texture2D> ptextureFromBitmap;
+
+            hr =
+               psurfaceFromBitmap->QueryInterface(
+                  IID_PPV_ARGS(&ptextureFromBitmap));
+
+            ::defer_throw_hresult(hr);
+
+
+            comptr<IUnknown> punknownOriginal;
+            comptr<IUnknown> punknownFromD2D;
+
+            pd3d11texture.as(punknownOriginal);
+
+            ptextureFromBitmap.as(punknownFromD2D);
+
+            informationf(
+               "original=%p fromD2D=%p same=%d",
+               punknownOriginal.m_p,
+               punknownFromD2D.m_p,
+               punknownOriginal.m_p == punknownFromD2D.m_p);
+
+            //   D2D1_COLOR_F color;
+            //   color.r = 0.7f;
+            //   color.g = 0.7f;
+            //   color.b = 0.2f;
+            //   color.a = 0.5f;
+
+            //   m_pd2d1devicecontext->Clear(color);
+
+            //}
+
+   //           m_pd2d1devicecontext->Clear(
+   //D2D1::ColorF(
+   //   D2D1::ColorF::Green,
+   //   1.0f));
+
+         }
+         D2D1_TAG tag1 = 0;
+         D2D1_TAG tag2 = 0;
+
+         HRESULT hrEndDraw = m_pd2d1devicecontext->EndDraw(&tag1, &tag2);
+
+         //informationf("hrEndDraw %d", hrEndDraw);
+         informationf(
+"D2D EndDraw hr=0x%08X tag1=%llu tag2=%llu",
+(unsigned int)hrEndDraw,
+(unsigned long long) tag1,
+(unsigned long long) tag2);
+
+
+
+
+         //if (1)
+         //{
+
+         //   pgpucontext->m_pd3d11devicecontext->Flush();
+
+         //}
+
+         //m_pdevicecontext->Flush();
+
+
+         //m_pd2d1devicecontext->EndDraw();
+
+         m_pd2d1devicecontext->SetTarget(nullptr);
+
+
+
+         //if (1)
+         //{
+
+         //   ::cast < ::gpu_directx11::context > pgpucontext = gpu_context();
+
+         //   ::gpu::context_lock context_lock(pgpucontext);
+
+         //   pgpucontext->m_pd3d11devicecontext->Flush();
+
+         //}
+
+
+      }
+
+      ::gpu::graphics::end_draw();
+
+   }
+
+
+
    void graphics::start_layer(bool bFirstLayer, ::user::interaction * puserinteraction)
    {
 
@@ -7734,9 +7953,11 @@ namespace draw2d_direct2d
          if (!m_bBeginDraw && !bFirstLayer)
          {
 
-            m_bBeginDraw = true;
+            //m_bBeginDraw = true;
 
-            m_pd2d1devicecontext->BeginDraw();
+            //m_pd2d1devicecontext->BeginDraw();
+
+            begin_draw();
 
          }
 
