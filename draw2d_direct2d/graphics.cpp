@@ -7236,6 +7236,14 @@ namespace draw2d_direct2d
       m_pd2d1devicecontext->BeginDraw();
       m_bBeginDraw = true;
 
+      // A target bitmap can be reused after a resize and newly allocated GPU
+      // pixels have undefined contents. Clear the complete target before any
+      // frame drawing; ID2D1DeviceContext::Clear is not limited by the current
+      // transform or clip, so newly exposed areas cannot leak diagnostic or
+      // stale pixels into the layered-window bitmap.
+      m_pd2d1devicecontext->Clear(
+         D2D1::ColorF(0.0f, 0.0f, 0.0f, 0.0f));
+
       try
       {
 
@@ -7673,7 +7681,7 @@ namespace draw2d_direct2d
    void graphics::begin_draw()
    {
 
-      ::gpu::graphics::begin_draw();
+      ::draw2d::graphics::begin_draw();
 
       //auto pgputexturesiteTarget = current_target_texture(::gpu::current_layer());
 
@@ -7686,12 +7694,12 @@ namespace draw2d_direct2d
       if (!m_bBeginDraw)
       {
 
-         if (::gpu::current_layer())
+         //if (::gpu::current_layer())
          {
 
             m_bBeginDraw = true;
 
-            auto pgputexturesiteTarget = ::gpu::current_layer()->texture(true);
+            //auto pgputexturesiteTarget = ::gpu::current_layer()->texture(true);
 
             //prepare_gpu_draw2d_graphics_render_target(pgputexturesiteTarget->gpu_texture());
 
@@ -7715,13 +7723,13 @@ namespace draw2d_direct2d
 
             //}
 
-            auto ptexture = pgputexturesiteTarget->gpu_texture();
+            //auto ptexture = pgputexturesiteTarget->gpu_texture();
 
-            defer_constructø(ptexture->m_pimageGpuTexture);
+            //defer_constructø(ptexture->m_pimageGpuTexture);
 
-            ptexture->m_pimageGpuTexture->update_as_backed_by_gpu_texture(ptexture->m_textureattributes.m_sizeRaw, ptexture, this);
+            //ptexture->m_pimageGpuTexture->update_as_backed_by_gpu_texture(ptexture->m_textureattributes.m_sizeRaw, ptexture, this);
 
-            ::cast <::draw2d_direct2d_for_directx11::bitmap> pdraw2dbitmap = ptexture->m_pimageGpuTexture->m_pdraw2dbitmap;
+            ::cast <::draw2d_direct2d::bitmap> pdraw2dbitmap = m_pdraw2dbitmapTarget;
 
             m_pd2d1devicecontext->SetTarget(pdraw2dbitmap->m_pd2d1bitmap);
 
@@ -7770,74 +7778,74 @@ namespace draw2d_direct2d
 
          //m_bBeginDraw = false;
 
-         if (0)
-         {
-            auto pgpucontext = gpu_context();
+   //      if (0)
+   //      {
+   //         auto pgpucontext = gpu_context();
 
-            ::gpu::context_lock context_lock(pgpucontext);
-
-
-            auto ptexturesite = pgpucontext->m_pgpurenderer->m_pgpurendertarget2->current_texture(::gpu::current_layer(), false);
-
-            ::cast < ::gpu_directx11::texture > ptexture = ptexturesite->gpu_texture();
-
-            auto pd3d11texture = ptexture->m_ptextureOffscreen;
+   //         ::gpu::context_lock context_lock(pgpucontext);
 
 
-            comptr<ID2D1Image > pd2d1image;
+   //         auto ptexturesite = pgpucontext->m_pgpurenderer->m_pgpurendertarget2->current_texture(::gpu::current_layer(), false);
 
-            m_pd2d1devicecontext->GetTarget(&pd2d1image);
+   //         ::cast < ::gpu_directx11::texture > ptexture = ptexturesite->gpu_texture();
 
-            comptr<ID2D1Bitmap1>pd2d1bitmap;
-
-            pd2d1image.as(pd2d1bitmap);
-
-            comptr<IDXGISurface> psurfaceFromBitmap;
-
-            HRESULT hr =
-               pd2d1bitmap->GetSurface(
-                  &psurfaceFromBitmap);
-
-            ::defer_throw_hresult(hr);
-
-            comptr<ID3D11Texture2D> ptextureFromBitmap;
-
-            hr =
-               psurfaceFromBitmap->QueryInterface(
-                  IID_PPV_ARGS(&ptextureFromBitmap));
-
-            ::defer_throw_hresult(hr);
+   //         auto pd3d11texture = ptexture->m_ptextureOffscreen;
 
 
-            comptr<IUnknown> punknownOriginal;
-            comptr<IUnknown> punknownFromD2D;
+   //         comptr<ID2D1Image > pd2d1image;
 
-            pd3d11texture.as(punknownOriginal);
+   //         m_pd2d1devicecontext->GetTarget(&pd2d1image);
 
-            ptextureFromBitmap.as(punknownFromD2D);
+   //         comptr<ID2D1Bitmap1>pd2d1bitmap;
 
-            informationf(
-               "original=%p fromD2D=%p same=%d",
-               punknownOriginal.m_p,
-               punknownFromD2D.m_p,
-               punknownOriginal.m_p == punknownFromD2D.m_p);
+   //         pd2d1image.as(pd2d1bitmap);
 
-            //   D2D1_COLOR_F color;
-            //   color.r = 0.7f;
-            //   color.g = 0.7f;
-            //   color.b = 0.2f;
-            //   color.a = 0.5f;
+   //         comptr<IDXGISurface> psurfaceFromBitmap;
 
-            //   m_pd2d1devicecontext->Clear(color);
+   //         HRESULT hr =
+   //            pd2d1bitmap->GetSurface(
+   //               &psurfaceFromBitmap);
 
-            //}
+   //         ::defer_throw_hresult(hr);
 
-   //           m_pd2d1devicecontext->Clear(
-   //D2D1::ColorF(
-   //   D2D1::ColorF::Green,
-   //   1.0f));
+   //         comptr<ID3D11Texture2D> ptextureFromBitmap;
 
-         }
+   //         hr =
+   //            psurfaceFromBitmap->QueryInterface(
+   //               IID_PPV_ARGS(&ptextureFromBitmap));
+
+   //         ::defer_throw_hresult(hr);
+
+
+   //         comptr<IUnknown> punknownOriginal;
+   //         comptr<IUnknown> punknownFromD2D;
+
+   //         pd3d11texture.as(punknownOriginal);
+
+   //         ptextureFromBitmap.as(punknownFromD2D);
+
+   //         informationf(
+   //            "original=%p fromD2D=%p same=%d",
+   //            punknownOriginal.m_p,
+   //            punknownFromD2D.m_p,
+   //            punknownOriginal.m_p == punknownFromD2D.m_p);
+
+   //         //   D2D1_COLOR_F color;
+   //         //   color.r = 0.7f;
+   //         //   color.g = 0.7f;
+   //         //   color.b = 0.2f;
+   //         //   color.a = 0.5f;
+
+   //         //   m_pd2d1devicecontext->Clear(color);
+
+   //         //}
+
+   ////           m_pd2d1devicecontext->Clear(
+   ////D2D1::ColorF(
+   ////   D2D1::ColorF::Green,
+   ////   1.0f));
+
+   //      }
          D2D1_TAG tag1 = 0;
          D2D1_TAG tag2 = 0;
 
@@ -7883,7 +7891,7 @@ namespace draw2d_direct2d
 
       }
 
-      ::gpu::graphics::end_draw();
+      ::draw2d::graphics::end_draw();
 
    }
 
@@ -8037,21 +8045,19 @@ namespace draw2d_direct2d
 
       }
 
-      //if (m_egraphics == ::e_graphics_draw)
-      //{
+      if (m_egraphics == ::e_graphics_draw)
+      {
 
-      //   if (m_bBeginDraw)
-      //   {
+         if (m_bBeginDraw && !bClosingLayer)
+         {
 
-      //      m_bBeginDraw = false;
+            end_draw();
 
-      //      m_pd2d1devicecontext->EndDraw();
+         }
 
-      //   }
+      }
 
-      //}
-
-      //::gpu::graphics::end_layer(bClosingLayer);
+      ::draw2d::graphics::end_layer(bClosingLayer);
 
    }
 

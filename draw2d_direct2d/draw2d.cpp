@@ -159,6 +159,18 @@ namespace draw2d_direct2d
    }
 
 
+   bool draw2d::graphics_context_does_full_redraw()
+   {
+
+      // Direct2D clears the complete offscreen target when a frame is
+      // acquired. Damage-region clipping would therefore leave every pixel
+      // outside the damage rectangles transparent instead of preserved from
+      // the preceding frame.
+      return true;
+
+   }
+
+
    bool draw2d::lock_device()
    {
 

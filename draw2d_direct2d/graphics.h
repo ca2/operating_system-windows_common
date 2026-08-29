@@ -96,7 +96,7 @@ namespace draw2d_direct2d
 
 
       void begin_draw() override;
-      void end_draw() overrid;
+      void end_draw() override;
       ////bool IsPrinting() override;            // true if being used for printing
 
       ////void start_layer(::e_graphics egraphics) override;

@@ -38,6 +38,8 @@ namespace draw2d_direct2d
 
       virtual string write_text_get_default_implementation_name() override;
 
+      bool graphics_context_does_full_redraw() override;
+
       bool lock_device() override;
       void unlock_device() override;
 
