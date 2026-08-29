@@ -703,7 +703,7 @@ namespace draw2d_direct2d
    //}
 
 
-   void image::destroy()
+   void image::clear_node_data()
    {
 
       //::draw2d::device_lock devicelock(this);
@@ -1512,6 +1512,12 @@ namespace draw2d_direct2d
    ::image_pixmap_lease image::_map(const ::i32_rectangle & rectangleParameter)
    {
 
+      // The common image implementation allocates the CPU pixmap and asks this
+      // backend's bitmap::read_pixels() to populate it. That readback copies
+      // each row using D2D1_MAPPED_RECT::pitch, so the staging surface must not
+      // be exposed through a second, independently mapped pixmap here.
+      return ::transfer(::image::image::_map(rectangleParameter));
+
       _tidy_map(rectangleParameter);
 
       auto rectangle = rectangleParameter;
@@ -1748,6 +1754,13 @@ namespace draw2d_direct2d
 
    void image::_unmap(::image_pixmap_lease * pimagepixmaplease)
    {
+
+      // Match the common mapping lifecycle. A CPU read performed for
+      // UpdateLayeredWindow is not a request to copy the pixels back into the
+      // Direct2D render target when the lease goes out of scope.
+      ::image::image::_unmap(pimagepixmaplease);
+
+      return;
 
       _tidy_unmap(pimagepixmaplease);
 

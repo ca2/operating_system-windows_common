@@ -333,7 +333,7 @@ namespace draw2d_direct2d
       void _add_shape(const ::f64_polygon_base & polygon) override;
 
 
-      virtual void intersect_clip(const ::draw2d::clip_group & clipgroup);
+      void intersect_clip(::draw2d::clip_group  * pclipgroup) override;
       virtual void _add_clip_item(::draw2d::clip_item * pclipitem);
 
 

@@ -27,7 +27,7 @@ namespace draw2d_direct2d
 
 
 
-      void destroy() override;
+      void clear_node_data() override;
       // void destroy_os_data() override;
       void update(::draw2d::graphics * pdraw2dgraphics) override;
 

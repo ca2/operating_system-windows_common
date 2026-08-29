@@ -384,10 +384,10 @@ namespace draw2d_direct2d
    //}
 
 
-   void font::destroy()
+   void font::clear_node_data()
    {
 
-      //m_pdwritetextformat = nullptr;
+      m_pdwritetextformat = nullptr;
 
       //object::destroy_os_data();
 

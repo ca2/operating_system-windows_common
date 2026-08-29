@@ -54,7 +54,7 @@ namespace draw2d_direct2d
       //using ::image::image::initialize;
       //void initialize(const ::i32_size & size, ::image32_t * pimage32, ::i32 iScan, ::enum_flag eflagCreate = DEFAULT_CREATE_IMAGE_FLAG) override;
       bool _create(::draw2d::graphics * pdraw2dgraphics);
-      void destroy() override;
+      void clear_node_data() override;
       // void destroy_os_data() override;
 
 

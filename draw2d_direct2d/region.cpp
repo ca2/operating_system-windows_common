@@ -451,7 +451,7 @@ namespace draw2d_direct2d
    }
 
 
-   void region::destroy()
+   void region::clear_node_data()
    {
 
       m_pd2d1geometry = nullptr;

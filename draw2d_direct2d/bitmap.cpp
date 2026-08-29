@@ -1,5 +1,6 @@
 #include "platform.h"
 #include "bitmap.h"
+#include "draw2d.h"
 #include "graphics.h"
 #include "window_attachment.h"
 #include "aura/graphics/image/image.h"
@@ -7,6 +8,7 @@
 #include "aura/graphics/draw2d/device_lock.h"
 #include "aura/windowing/window.h"
 #include "aura/user/user/interaction_thread.h"
+#include "operating_system-windows_common/direct2d/direct2d.h"
 #include <atomic>
 
 
@@ -28,9 +30,9 @@ namespace draw2d_direct2d
       m_pd2d1bitmap(::transfer(bitmap.m_pd2d1bitmap)),
       m_pd2d1bitmap1(::transfer(bitmap.m_pd2d1bitmap1)),
       m_memory(::transfer(bitmap.m_memory)),
-      m_pd2d1bitmap1Map(::transfer(bitmap.m_pd2d1bitmap1Map)),
+      m_pd2d1bitmap1Map(::transfer(bitmap.m_pd2d1bitmap1Map)) //,
       //m_pd2d1bitmaprendertarget(::transfer(bitmap.m_pd2d1bitmaprendertarget)),
-      m_pd2d1devicecontext(::transfer(bitmap.m_pd2d1devicecontext))
+      //m_pd2d1devicecontext(::transfer(bitmap.m_pd2d1devicecontext))
    {
 
 
@@ -286,9 +288,10 @@ namespace draw2d_direct2d
       {
 
          informationf(
-            "Direct2DBitmapCreationDiagnostic compatible=0x%08lx queryContext=0x%08lx getBitmap=0x%08lx "
-            "queryBitmap1=0x%08lx thread=%lu requested=(%d,%d) sourceContext=%p bitmapTarget=%p "
-            "bitmap=%p bitmap1=%p bitmapContext=%p",
+            "Direct2DBitmapCreationDiagnostic create=0x%08lx queryBitmap1=0x%08lx "
+            "thread=%lu requested=(%d,%d) sourceContext=%p "
+            "bitmap=%p bitmap1=%p ",
+            //"bitmap=%p bitmap1=%p bitmapContext=%p",
             //(unsigned long)hrCreateCompatibleRenderTarget,
             //(unsigned long)hrQueryDeviceContext,
             (unsigned long)hrCreateBitmap,
@@ -297,10 +300,10 @@ namespace draw2d_direct2d
             sizeParam.cx,
             sizeParam.cy,
             pd2d1devicecontext,
-            //(ID2D1BitmapRenderTarget *)m_pd2d1bitmaprendertarget,
             (ID2D1Bitmap *)m_pd2d1bitmap,
-            (ID2D1Bitmap1 *)m_pd2d1bitmap1,
-            (ID2D1DeviceContext *)m_pd2d1devicecontext);
+            (ID2D1Bitmap1 *)m_pd2d1bitmap1
+            //,           (ID2D1DeviceContext *)m_pd2d1devicecontext
+         );
 
       }
 
@@ -348,7 +351,7 @@ namespace draw2d_direct2d
       auto memory = ::transfer(m_memory);
       auto pd2d1bitmap1Map = ::transfer(m_pd2d1bitmap1Map);
       //auto pd2d1bitmaprendertarget = ::transfer(m_pd2d1bitmaprendertarget);
-      auto pd2d1devicecontext = ::transfer(m_pd2d1devicecontext);
+      //auto pd2d1devicecontext = ::transfer(m_pd2d1devicecontext);
 
       pimage->create_as_descriptor(size);
 
@@ -484,7 +487,7 @@ namespace draw2d_direct2d
 
       }
 
-      m_pd2d1devicecontext = pd2d1devicecontext;
+      //m_pd2d1devicecontext = pd2d1devicecontext;
 
       HRESULT hr = pd2d1devicecontext->CreateBitmap(usize, nullptr, 0, props, &m_pd2d1bitmap1);
 
@@ -571,7 +574,8 @@ namespace draw2d_direct2d
 
       ::draw2d::device_lock devicelock(this);
 
-      if (!m_pd2d1bitmap1 || !m_pd2d1devicecontext)
+      //if (!m_pd2d1bitmap1 || !m_pd2d1devicecontext)
+      if (!m_pd2d1bitmap1)
       {
 
          throw ::exception(error_wrong_state);
@@ -789,18 +793,28 @@ namespace draw2d_direct2d
             m_pd2d1bitmap1->GetPixelFormat()
          );
 
-         auto hrCreateMapBitmap = m_pd2d1devicecontext->CreateBitmap(
-             sizeuThis,
-             nullptr,
-             0,
-             &stagingProperties,
-             &m_pd2d1bitmap1Map
-         ); 
-
-         if (FAILED(hrCreateMapBitmap))
          {
 
-            throw hresult_exception(hrCreateMapBitmap, "Failed to create map bitmap");
+            auto pdraw2ddirect2d = ::draw2d_direct2d::draw2d::get();
+
+            synchronous_lock synchronouslock(pdraw2ddirect2d->default_device_context_mutex());
+
+            auto pd2d1devicecontextDefault = pdraw2ddirect2d->default_d2d1_device_context();
+
+            auto hrCreateMapBitmap = pd2d1devicecontextDefault->CreateBitmap(
+                sizeuThis,
+                nullptr,
+                0,
+                &stagingProperties,
+                &m_pd2d1bitmap1Map
+            );
+
+            if (FAILED(hrCreateMapBitmap))
+            {
+
+               throw hresult_exception(hrCreateMapBitmap, "Failed to create map bitmap");
+
+            }
 
          }
 
@@ -815,11 +829,11 @@ namespace draw2d_direct2d
          {
 
             informationf(
-               "Direct2DStagingCreationDiagnostic create=0x%08lx thread=%lu context=%p source=%p staging=%p "
+               "Direct2DStagingCreationDiagnostic thread=%lu source=%p staging=%p "
                "requested=(%u,%u) actual=(%u,%u) options=0x%08x format=%u alpha=%u",
-               (unsigned long)hrCreateMapBitmap,
+               //(unsigned long)hrCreateMapBitmap,
                (unsigned long)::GetCurrentThreadId(),
-               (ID2D1DeviceContext *)m_pd2d1devicecontext,
+               //(ID2D1DeviceContext *)m_pd2d1devicecontext,
                (ID2D1Bitmap1 *)m_pd2d1bitmap1,
                (ID2D1Bitmap1 *)m_pd2d1bitmap1Map,
                (unsigned int)sizeuThis.width,
@@ -894,7 +908,8 @@ namespace draw2d_direct2d
 
       ::draw2d::device_lock devicelock(this);
 
-      if (!m_pd2d1bitmap || !m_pd2d1devicecontext)
+      //if (!m_pd2d1bitmap || !m_pd2d1devicecontext)
+      if (!m_pd2d1bitmap)
       {
 
          throw ::exception(error_wrong_state);
@@ -909,7 +924,7 @@ namespace draw2d_direct2d
       comptr<ID2D1Bitmap> pbitmapNew;
       comptr<ID2D1Bitmap1> pbitmap1New;
       comptr<ID2D1BitmapRenderTarget> pbitmaprendertargetNew;
-      comptr<ID2D1DeviceContext> pdevicecontextNew;
+      //comptr<ID2D1DeviceContext> pdevicecontextNew;
 
       //if (m_pd2d1bitmaprendertarget)
       //{
@@ -980,6 +995,10 @@ namespace draw2d_direct2d
       //else
       {
 
+         auto pdirect2d = ::direct2d::get();
+
+         synchronous_lock synchronouslock(pdirect2d->m_pmutexDeviceContextDefault);
+
          D2D1_BITMAP_PROPERTIES1 properties{};
 
          properties.pixelFormat = m_pd2d1bitmap->GetPixelFormat();
@@ -990,7 +1009,7 @@ namespace draw2d_direct2d
          ::memory memoryTransparent((memsize) iStride * size.cy);
          memoryTransparent.set(0);
 
-         auto hr = m_pd2d1devicecontext->CreateBitmap(
+         auto hr = pdirect2d->m_pd2d1devicecontextDefault->CreateBitmap(
             sizeNew,
             memoryTransparent.data(),
             (UINT32) iStride,
@@ -1013,7 +1032,7 @@ namespace draw2d_direct2d
 
          }
 
-         pdevicecontextNew = m_pd2d1devicecontext;
+         //pdevicecontextNew = pdirect2d->m_pd2d1devicecontext;
 
       }
 
@@ -1047,7 +1066,7 @@ namespace draw2d_direct2d
 
       //}
 
-      m_pd2d1devicecontext = ::transfer(pdevicecontextNew);
+      //m_pd2d1devicecontext = ::transfer(pdevicecontextNew);
       //m_osdata[0] = m_pd2d1bitmap;
       //m_osdata[1] = m_pd2d1bitmap1;
       m_size = size;
@@ -1120,7 +1139,7 @@ namespace draw2d_direct2d
 
          }
 
-         m_pd2d1devicecontext = pd2d1devicecontext;
+         //m_pd2d1devicecontext = pd2d1devicecontext;
 
          auto hrCreateBitmap = pd2d1devicecontext->CreateBitmap(
             size,
@@ -1295,7 +1314,7 @@ namespace draw2d_direct2d
    //}
 
 
-   void bitmap::destroy()
+   void bitmap::clear_node_data()
    {
 
       m_pd2d1bitmap1Map = nullptr;
@@ -1306,9 +1325,9 @@ namespace draw2d_direct2d
 
       //m_pd2d1bitmaprendertarget = nullptr;
 
-      m_pd2d1devicecontext = nullptr;
+      //m_pd2d1devicecontext = nullptr;
 
-      object::destroy();
+      //object::destroy();
 
    }
 

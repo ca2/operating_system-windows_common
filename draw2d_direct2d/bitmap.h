@@ -33,7 +33,7 @@ namespace draw2d_direct2d
 
       comptr<ID2D1Bitmap1>                   m_pd2d1bitmap1Map;
       //comptr<ID2D1BitmapRenderTarget>        m_pd2d1bitmaprendertarget;
-      comptr<ID2D1DeviceContext>             m_pd2d1devicecontext;
+      //comptr<ID2D1DeviceContext>             m_pd2d1devicecontext;
 
 
       bitmap();
@@ -97,7 +97,7 @@ namespace draw2d_direct2d
       virtual ID2D1Bitmap1 * _map_bitmap1();
       
 
-      void destroy() override;
+      void clear_node_data() override;
       // void destroy_os_data() override;
 
 

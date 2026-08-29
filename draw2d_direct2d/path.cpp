@@ -747,7 +747,7 @@ namespace draw2d_direct2d
    //}
 
 
-   void path::destroy()
+   void path::clear_node_data()
    {
 
       m_pd2d1geometrysink = nullptr;
@@ -762,7 +762,7 @@ namespace draw2d_direct2d
 
       m_pd2d1geometryrealizationFilled.release();
 
-      object::destroy();
+      //object::destroy();
 
    }
 

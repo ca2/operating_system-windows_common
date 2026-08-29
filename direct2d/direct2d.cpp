@@ -3,6 +3,7 @@
 //#include "swap_chain.h"
 #include "acme/exception/interface_only.h"
 #include "acme/graphics/write_text/font_weight.h"
+#include "acme/platform/node.h"
 #include "acme/prototype/geometry2d/rectangle.h"
 #include "acme_windows_common/dxgi_device_source.h"
 #include "acme/operating_system/windows_common/com/hresult_exception.h"
@@ -67,6 +68,8 @@ namespace direct2d
       ::app_consumer<::aura::application>::initialize(pdxgidevicesource);
 
       m_pdxgidevicesource = pdxgidevicesource;
+
+      m_pmutexDeviceContextDefault = node()->create_mutex();
 
    }
 

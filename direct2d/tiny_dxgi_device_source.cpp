@@ -2,6 +2,7 @@
 #include "platform.h"
 #include "tiny_dxgi_device_source.h"
 #include "acme/_operating_system.h"
+#include "acme/operating_system/windows_common/com/hresult_exception.h"
 #include "operating_system-windows_common/acme_windows_common/dxgi_device_source.h"
 #include <windows.h>
 
@@ -57,33 +58,16 @@ namespace direct2d
       IDXGIDevice * _get_dxgi_device() override
       {
 
-         UINT flags =
-            D3D11_CREATE_DEVICE_BGRA_SUPPORT;
-
-         HRESULT hr =
-            D3D11CreateDevice(
-               nullptr,
-               D3D_DRIVER_TYPE_HARDWARE,
-               nullptr,
-               flags,
-               nullptr,
-               0,
-               D3D11_SDK_VERSION,
-               &m_pd3d11device,
-               nullptr,
-               nullptr);          // no ID3D11DeviceContext needed
-
-         if (FAILED(hr))
+         if (!m_pdxgidevice)
          {
 
-            //
-            // Optional software fallback.
-            //
+            UINT flags =
+               D3D11_CREATE_DEVICE_BGRA_SUPPORT;
 
-            hr =
+            HRESULT hr =
                D3D11CreateDevice(
                   nullptr,
-                  D3D_DRIVER_TYPE_WARP,
+                  D3D_DRIVER_TYPE_HARDWARE,
                   nullptr,
                   flags,
                   nullptr,
@@ -91,7 +75,41 @@ namespace direct2d
                   D3D11_SDK_VERSION,
                   &m_pd3d11device,
                   nullptr,
-                  nullptr);
+                  nullptr);          // no ID3D11DeviceContext needed
+
+            if (FAILED(hr))
+            {
+
+               //
+               // Optional software fallback.
+               //
+
+               hr =
+                  D3D11CreateDevice(
+                     nullptr,
+                     D3D_DRIVER_TYPE_WARP,
+                     nullptr,
+                     flags,
+                     nullptr,
+                     0,
+                     D3D11_SDK_VERSION,
+                     &m_pd3d11device,
+                     nullptr,
+                     nullptr);
+
+               if (FAILED(hr))
+               {
+
+                  ::defer_throw_hresult(hr);
+
+                  return nullptr;
+
+               }
+
+            }
+
+
+            hr = m_pd3d11device.as(m_pdxgidevice);
 
             if (FAILED(hr))
             {
@@ -103,19 +121,6 @@ namespace direct2d
             }
 
          }
-
-
-         hr = m_pd3d11device.as(m_pdxgidevice);
-
-         if (FAILED(hr))
-         {
-
-            ::defer_throw_hresult(hr);
-
-            return nullptr;
-
-         }
-
 
          return m_pdxgidevice;
 

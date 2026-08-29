@@ -5,6 +5,7 @@
 #include "window_attachment.h"
 #include "acme/platform/node.h"
 #include "aura/windowing/window.h"
+#include "operating_system-windows_common/acme_windows_common/dxgi_device_source.h"
 
 
 namespace draw2d_direct2d
@@ -185,6 +186,38 @@ namespace draw2d_direct2d
 
    }
 
+   
+   ::dxgi_device_source * draw2d::_dxgi_device_source()
+   {
+
+      auto pdirect2d = direct2d();
+
+      if (!pdirect2d->m_pdxgidevicesource)
+      {
+
+         constructø(pdirect2d->m_pdxgidevicesource);
+
+      }
+
+      return pdirect2d->m_pdxgidevicesource;
+         
+
+   }
+
+
+   ID2D1DeviceContext * draw2d::default_d2d1_device_context()
+   {
+
+      auto pdxgidevicesource = _dxgi_device_source();
+
+      auto pdirect2d = direct2d();
+
+      auto pd2d1devicecontext = pdirect2d->default_d2d1_device_context(pdxgidevicesource);
+
+      return pd2d1devicecontext;
+
+   }
+
 
    void draw2d::unlock_device()
    {
@@ -194,6 +227,29 @@ namespace draw2d_direct2d
       auto pmultithread = pdirect2d->m_pd2d1multithread.m_p;
 
       pmultithread->Leave();
+
+   }
+
+
+   ::draw2d_direct2d::draw2d * draw2d::get()
+   {
+
+      ::cast < ::draw2d_direct2d::draw2d > pdraw2d = ::system()->draw2d();
+
+      return pdraw2d;
+
+
+   }
+
+   
+   ::particle * draw2d::default_device_context_mutex()
+   {
+
+      auto pdirect2d = direct2d();
+
+      auto pmutexDeviceContextDefault = pdirect2d->m_pmutexDeviceContextDefault;
+
+      return pmutexDeviceContextDefault;
 
    }
 

@@ -56,6 +56,8 @@ namespace draw2d_direct2d
 
             pdirect2ddraw2dgraphics->m_pd2d1devicecontext->CreateSolidColorBrush(color, &m_pd2d1solidcolorbrush);
 
+            m_pd2d1brush = m_pd2d1solidcolorbrush;
+
             if(m_pd2d1solidcolorbrush != nullptr)
             {
 
@@ -108,6 +110,8 @@ namespace draw2d_direct2d
             brushproperties.transform =  D2D1::IdentityMatrix();
 
             hr = pdirect2ddraw2dgraphics->m_pd2d1devicecontext->CreateLinearGradientBrush(&prop, &brushproperties, pstopcollection, &m_pd2d1lineargradientbrush);
+
+            m_pd2d1brush = m_pd2d1radialgradientbrush;
 
             if(m_pd2d1lineargradientbrush != nullptr)
             {
@@ -174,6 +178,8 @@ namespace draw2d_direct2d
 
             }
 
+            m_pd2d1brush = m_pd2d1radialgradientbrush;
+
             pgradientstops->Release();
 
             if(m_pd2d1radialgradientbrush != nullptr)
@@ -229,6 +235,8 @@ namespace draw2d_direct2d
                imagebrushproperties,
                &m_pd2d1imagebrush);
 
+            m_pd2d1brush = m_pd2d1imagebrush;
+
             if (SUCCEEDED(hr) && m_pd2d1imagebrush != nullptr)
             {
 
@@ -265,7 +273,7 @@ namespace draw2d_direct2d
    //}
 
 
-   void brush::destroy()
+   void brush::clear_node_data()
    {
 
       m_pd2d1solidcolorbrush = nullptr;
@@ -274,7 +282,7 @@ namespace draw2d_direct2d
       m_pd2d1brush = nullptr;
       m_pd2d1imagebrush = nullptr;
       
-      object::destroy();
+      //object::destroy();
 
    }
 

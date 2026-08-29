@@ -203,7 +203,8 @@ namespace draw2d_direct2d
 
          //m_pdraw2dbitmapTarget->create_bitmap(this, size, memory, nullptr);
          //
-         create_bitmap_graphics(m_pdraw2dbitmapTarget);
+         //create_bitmap_graphics(m_pdraw2dbitmapTarget);
+         _create_d2d1_device_context();
 
 
       //}
@@ -268,13 +269,13 @@ namespace draw2d_direct2d
          
          pimage->update_bitmap_as_render_target(pimage->m_pacmeuserinteractionAffinity, this);
 
-         ::cast < ::draw2d_direct2d::bitmap > pdraw2dbitmap = pimage->m_pdraw2dbitmap;
+         //::cast < ::draw2d_direct2d::bitmap > pdraw2dbitmap = pimage->m_pdraw2dbitmap;
 
-         pdraw2dbitmap->m_pd2d1devicecontext.as(m_pd2d1devicecontext);
+         //pdraw2dbitmap->m_pd2d1devicecontext.as(m_pd2d1devicecontext);
 
-         m_pd2d1devicecontext.as(m_pd2d1devicecontext);
+         //m_pd2d1devicecontext.as(m_pd2d1devicecontext);
 
-         m_pd2d1devicecontext.as(m_pd2d1devicecontext1);
+         //m_pd2d1devicecontext.as(m_pd2d1devicecontext1);
 
       }
 
@@ -5878,7 +5879,7 @@ namespace draw2d_direct2d
 
    //}
 
-   void graphics::intersect_clip(const ::draw2d::clip_group& clipgroup)
+   void graphics::intersect_clip(::draw2d::clip_group * pclipgroup)
    {
 
       comptr<ID2D1PathGeometry> ppathgeometry;
@@ -5887,7 +5888,7 @@ namespace draw2d_direct2d
 
       ::i32_rectangle_array_base rectanglea;
 
-      if (clipgroup.is_rectangle_only(rectanglea))
+      if (pclipgroup->is_rectangle_only(rectanglea))
       {
 
          _push_layer(rectanglea);
@@ -5902,7 +5903,7 @@ namespace draw2d_direct2d
 
          pgeometrysink->SetFillMode(D2D1_FILL_MODE_WINDING);
 
-         for (auto& pclipitem : clipgroup)
+         for (auto& pclipitem : *pclipgroup)
          {
 
             _add_clip_item(pgeometrysink, pclipitem);
@@ -7146,41 +7147,49 @@ namespace draw2d_direct2d
          ::cast < ::draw2d_direct2d::bitmap > pdraw2dbitmap = pimage->m_pdraw2dbitmap;
 
          if (!pdraw2dbitmap
-            || !pdraw2dbitmap->m_pd2d1bitmap
-            || !pdraw2dbitmap->m_pd2d1devicecontext)
+            || !pdraw2dbitmap->m_pd2d1bitmap)
+            //|| !pdraw2dbitmap->m_pd2d1devicecontext)
          {
 
             throw ::exception(
                error_wrong_state,
-               "Direct2D image has no usable bitmap render target");
+               //"Direct2D image has no usable bitmap render target");
+               "Direct2D image has no usable bitmap");
 
          }
 
-         if (m_pd2d1devicecontext
-            && m_pd2d1devicecontext.m_p != pdraw2dbitmap->m_pd2d1devicecontext.m_p)
+         //if (m_pd2d1devicecontext
+         //   && m_pd2d1devicecontext.m_p != pdraw2dbitmap->m_pd2d1devicecontext.m_p)
+         //{
+
+         //   throw ::exception(
+         //      error_wrong_state,
+         //      "Direct2D graphics retained a different image render target");
+
+         //}
+
+         //if (!m_pd2d1devicecontext && m_pd2d1devicecontext)
+         //{
+
+         //   throw ::exception(
+         //      error_wrong_state,
+         //      "Direct2D graphics retained an incomplete render target");
+
+         //}
+
+         if (!m_pd2d1devicecontext)
          {
 
-            throw ::exception(
-               error_wrong_state,
-               "Direct2D graphics retained a different image render target");
-
-         }
-
-         if (!m_pd2d1devicecontext && m_pd2d1devicecontext)
-         {
-
-            throw ::exception(
-               error_wrong_state,
-               "Direct2D graphics retained an incomplete render target");
+            _create_d2d1_device_context();
 
          }
 
          //m_pd2d1bitmaprendertargetCompatibleMemoryGraphics.release();
-         m_pd2d1dcrendertarget.release();
-         m_pd2d1devicecontext = pdraw2dbitmap->m_pd2d1devicecontext;
+         //m_pd2d1dcrendertarget.release();
+         //m_pd2d1devicecontext = pdraw2dbitmap->m_pd2d1devicecontext;
          //m_osdata[0] = m_pd2d1devicecontext.m_p;
-         m_pd2d1devicecontext.as(m_pd2d1devicecontext);
-         m_pd2d1devicecontext.as(m_pd2d1devicecontext1);
+         //m_pd2d1devicecontext.as(m_pd2d1devicecontext);
+         //m_pd2d1devicecontext.as(m_pd2d1devicecontext1);
          m_pd2d1devicecontext->SetTarget(pdraw2dbitmap->m_pd2d1bitmap);
 
       }
@@ -7978,17 +7987,17 @@ namespace draw2d_direct2d
    void graphics::set_target_image(::image::image * pimage)
    {
 
-      ::cast < ::draw2d_direct2d::bitmap > pdraw2dbitmap = pimage->m_pdraw2dbitmap;
+      //::cast < ::draw2d_direct2d::bitmap > pdraw2dbitmap = pimage->m_pdraw2dbitmap;
 
-      pdraw2dbitmap->m_pd2d1devicecontext.as(m_pd2d1devicecontext);
+      //pdraw2dbitmap->m_pd2d1devicecontext.as(m_pd2d1devicecontext);
       
       //pdraw2dbitmap->m_pd2d1bitmaprendertarget.as(m_pd2d1bitmaprendertarget);
 
-      m_pd2d1devicecontext.as(m_pd2d1devicecontext1);
+      //m_pd2d1devicecontext.as(m_pd2d1devicecontext1);
 
       //m_pd2d1bitmaprendertarget.as(m_pd2d1devicecontext);
 
-      m_pd2d1devicecontext.as(m_pd2d1dcrendertarget);
+      //m_pd2d1devicecontext.as(m_pd2d1dcrendertarget);
 
       //m_osdata[data_device_context] = m_pd2d1devicecontext;
 

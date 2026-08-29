@@ -31,7 +31,7 @@ namespace draw2d_direct2d
       // virtual IDWriteTextFormat* get_os_data(::draw2d::graphics * pdraw2dgraphics, ::collection::index i) const;
       //virtual void * _get_os_data(::draw2d::graphics * pdraw2dgraphics, ::collection::index i) const override;
 
-      void destroy() override;
+      void clear_node_data() override;
       // void destroy_os_data() override;
       void update(::draw2d::graphics * pdraw2dgraphics) override;
       void create_text_metrics(::draw2d::graphics * pdraw2dgraphics) override;

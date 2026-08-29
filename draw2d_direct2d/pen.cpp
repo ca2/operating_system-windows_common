@@ -76,6 +76,7 @@ namespace draw2d_direct2d
 
    //}
 
+
    void pen::update(::draw2d::graphics * pdraw2dgraphics)
    {
 
@@ -99,11 +100,11 @@ namespace draw2d_direct2d
          //if(m_pdraw2dbrush != nullptr)
          //{
 
-            //m_osdata[0] = (ID2D1Brush *) m_pdraw2dbrush;
+         //m_osdata[0] = (ID2D1Brush *) m_pdraw2dbrush;
             
-            // m_colorMetro = m_color;
+         //m_colorMetro = m_color;
 
-            m_bMetroColor   = true;
+         m_bMetroColor   = true;
             
  //
 
@@ -118,7 +119,6 @@ namespace draw2d_direct2d
 
          }
 
-
       }
 
       //return m_osdata[0] != nullptr;
@@ -126,7 +126,7 @@ namespace draw2d_direct2d
    }
 
 
-   void pen::destroy()
+   void pen::clear_node_data()
    {
 
       //destroy_os_data();
@@ -134,10 +134,9 @@ namespace draw2d_direct2d
 
       m_pd2d1strokestyle1 = nullptr;
 
-      ::draw2d::pen::destroy();
+      //::draw2d::pen::destroy();
 
    }
-
 
 
    //void pen::destroy_os_data()
@@ -146,6 +145,7 @@ namespace draw2d_direct2d
    //   object::destroy_os_data();
 
    //}
+
 
    HRESULT pen::s_RenderPatternToCommandList(ID2D1RenderTarget * pdraw2dgraphics,D2D1_COLOR_F *pcr)
    {
@@ -170,6 +170,7 @@ namespace draw2d_direct2d
 
    }
 
+
    HRESULT pen::s_CreatePatternBrush(ID2D1DeviceContext *pDeviceContext, D2D1_COLOR_F * pcr, ID2D1ImageBrush **ppImageBrush)
    {
 
@@ -185,16 +186,22 @@ namespace draw2d_direct2d
       //}
 
       HRESULT hr = S_OK;
+
       ID2D1Image *pOldTarget = nullptr;
+
       pDeviceContext->GetTarget(&pOldTarget);
 
       ID2D1CommandList *pCommandList = nullptr;
+
       hr = pDeviceContext->CreateCommandList(&pCommandList);
 
       if(SUCCEEDED(hr))
       {
+         
          pDeviceContext->SetTarget(pCommandList);
+         
          hr = s_RenderPatternToCommandList(pDeviceContext,pcr);
+
       }
 
       pDeviceContext->SetTarget(pOldTarget);
@@ -203,7 +210,9 @@ namespace draw2d_direct2d
 
       if(SUCCEEDED(hr))
       {
+         
          hr = pCommandList->Close();
+
       }
 
       if(SUCCEEDED(hr))
@@ -251,10 +260,13 @@ namespace draw2d_direct2d
       {
 
          *ppImageBrush = nullptr;
+
       }
 
       return hr;
+
    }
+
 
 } // namespace draw2d_direct2d
 

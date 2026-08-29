@@ -42,7 +42,7 @@ namespace draw2d_direct2d
 
 
       void update(::draw2d::graphics * pdraw2dgraphics) override;
-      void destroy() override;
+      void clear_node_data() override;
       // void destroy_os_data() override;
 
       virtual ID2D1PathGeometry * _hollow_path_geometry(::draw2d::graphics * pdraw2dgraphics);
