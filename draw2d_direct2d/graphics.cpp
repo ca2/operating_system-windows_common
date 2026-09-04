@@ -6790,6 +6790,134 @@ namespace draw2d_direct2d
    }
 
 
+   void graphics::_005DrawText(const ::scoped_string & scopedstr, ::f64 x, ::f64 y)
+   {
+
+      if (scopedstr.is_empty())
+      {
+
+         return;
+
+      }
+
+      if (m_pwritetextfont.is_null())
+      {
+
+         throw ::exception(error_wrong_state);
+
+      }
+
+      if (m_bTargetRectangleModified)
+      {
+
+         defer_on_target_rectangle_update();
+
+      }
+
+      m_pwritetextfont->defer_update(this);
+
+      ::cast < ::draw2d_direct2d::font > pdraw2ddirect2dfont = m_pwritetextfont;
+
+      auto pdwritetextformat = pdraw2ddirect2dfont->m_pdwritetextformat;
+
+      if (::is_null(pdwritetextformat))
+      {
+
+         throw ::exception(error_wrong_state);
+
+      }
+
+      if (m_pdraw2dbrush.is_null())
+      {
+
+         throw ::exception(error_null_pointer);
+
+      }
+
+      m_pdraw2dbrush->defer_update(this);
+
+      ::cast < ::draw2d_direct2d::brush > pdraw2ddirect2dbrush = m_pdraw2dbrush;
+
+      auto pd2d1brush = pdraw2ddirect2dbrush->m_pd2d1brush;
+
+      if (::is_null(pd2d1brush))
+      {
+
+         throw ::exception(error_null_pointer);
+
+      }
+
+      pdwritetextformat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
+
+      pdwritetextformat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
+
+      pdwritetextformat->SetWordWrapping(DWRITE_WORD_WRAPPING_NO_WRAP);
+
+      comptr < IDWriteTextLayout > ptextlayout;
+
+      wstring wstr(scopedstr);
+
+      auto hr = direct2d()->dwrite_factory()->CreateTextLayout(
+         wstr,
+         (::u32)wstr.length(),
+         pdwritetextformat,
+         1024.f * 1024.f,
+         1024.f * 1024.f,
+         &ptextlayout);
+
+      if (FAILED(hr) || ptextlayout == nullptr)
+      {
+
+         ::draw2d::graphics::_005DrawText(scopedstr, x, y);
+
+         return;
+
+      }
+
+      synchronous_lock synchronouslock(this->synchronization());
+
+      defer_text_primitive_blend();
+
+      defer_text_rendering_hint();
+
+      if (m_pwritetextfont->m_dFontWidth == 1.0)
+      {
+
+         m_pd2d1devicecontext->DrawTextLayout(
+            D2D1::Point2F((FLOAT)x, (FLOAT)y),
+            ptextlayout,
+            pd2d1brush,
+            D2D1_DRAW_TEXT_OPTIONS_NONE);
+
+      }
+      else
+      {
+
+         D2D1::Matrix3x2F matrixOriginal;
+
+         m_pd2d1devicecontext->GetTransform(&matrixOriginal);
+
+         auto matrix = matrixOriginal;
+
+         matrix._11 *= (FLOAT)m_pwritetextfont->m_dFontWidth;
+         matrix._31 += (FLOAT)x;
+         matrix._32 += (FLOAT)y;
+
+         m_pd2d1devicecontext->SetTransform(&matrix);
+
+         m_pd2d1devicecontext->DrawTextLayout(
+            D2D1::Point2F(0.f, 0.f),
+            ptextlayout,
+            pd2d1brush,
+            D2D1_DRAW_TEXT_OPTIONS_NONE);
+
+         m_pd2d1devicecontext->SetTransform(&matrixOriginal);
+
+      }
+
+   }
+
+
    //::f64_size graphics::get_text_extent(const ::scoped_string & scopedstr, character_count iIndex)
    //{
 
@@ -7236,13 +7364,16 @@ namespace draw2d_direct2d
       m_pd2d1devicecontext->BeginDraw();
       m_bBeginDraw = true;
 
-      // A target bitmap can be reused after a resize and newly allocated GPU
-      // pixels have undefined contents. Clear the complete target before any
-      // frame drawing; ID2D1DeviceContext::Clear is not limited by the current
-      // transform or clip, so newly exposed areas cannot leak diagnostic or
-      // stale pixels into the layered-window bitmap.
-      m_pd2d1devicecontext->Clear(
-         D2D1::ColorF(0.0f, 0.0f, 0.0f, 0.0f));
+      // A load acquisition edits an existing image and must retain pixels
+      // outside the caller's drawing rectangle. A don't-load acquisition is
+      // a fresh frame/temporary target, so initialize its complete surface.
+      if (!pimage || pimage->m_eacquire == ::draw2d::e_acquire_dont_load)
+      {
+
+         m_pd2d1devicecontext->Clear(
+            D2D1::ColorF(0.0f, 0.0f, 0.0f, 0.0f));
+
+      }
 
       try
       {
@@ -7333,6 +7464,14 @@ namespace draw2d_direct2d
          m_bBeginDraw = false;
 
       }
+
+      if (pdevicecontextBeforeRelease)
+      {
+
+         pdevicecontextBeforeRelease->SetTarget(nullptr);
+
+      }
+
       m_iLayerCount = 0;
       m_iaPushLayer.erase_all();
       m_iaPushLayerCount.erase_all();
@@ -8471,9 +8610,11 @@ namespace draw2d_direct2d
 
       m_pd2d1pathgeometryClip = nullptr;
 
-      m_pd2d1devicecontext = nullptr;
+      m_pd2d1devicecontext1 = nullptr;
 
       m_pd2d1devicecontext = nullptr;
+
+      ::draw2d::graphics::destroy();
 
       //m_pd2d1bitmaprendertarget = nullptr;
 
