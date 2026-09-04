@@ -130,15 +130,6 @@ namespace draw2d_direct2d_for_directx11
    void object::defer_update(::draw2d::graphics * pdraw2dgraphics)
    {
 
-      if (!m_pdirect2d_)
-      {
-
-         ::cast < graphics> pdirect2dgraphics = pdraw2dgraphics;
-
-         ((object*)this)->initialize_draw2d_direct2d_object(pdirect2dgraphics);
-
-      }
-
       ::draw2d::object::defer_update(pdraw2dgraphics);
 
    }

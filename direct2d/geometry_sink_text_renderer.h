@@ -55,7 +55,7 @@ namespace direct2d
       unsigned long                    m_cReference;
       ::f64                           m_dDpi;
       D2D1_FIGURE_BEGIN                m_figurebeginOverride;
-      comptr<ID2D1Factory>             m_pfactory;
+      comptr<ID2D1Factory>             m_pd2d1factory;
       comptr<ID2D1GeometrySink>        m_pgeometrysink;
       FLOAT                            m_xOffset;
       FLOAT                            m_yOffset;

@@ -15,8 +15,7 @@ namespace direct2d
 
 
    object::object(object && object) :
-      PARTICLE_TRANSFER(object),
-      m_pdirect2d_(::transfer(object.m_pdirect2d_))
+      PARTICLE_TRANSFER(object)
    {
 
 
@@ -88,14 +87,7 @@ namespace direct2d
    ::direct2d::direct2d *object::direct2d()
    {
 
-      if (!m_pdirect2d_)
-      {
-
-         m_pdirect2d_ = ::direct2d::get();
-
-      }
-
-      return m_pdirect2d_;
+      return ::direct2d::get();
 
    }
 

@@ -235,11 +235,31 @@ namespace draw2d_direct2d
 
       comptr<ID2D1Bitmap1> pdraw2dbitmap;
 
+      ::memory memoryTransparent;
+
+      const void * pInitialBits = nullptr;
+      UINT32 iInitialStride = 0;
+
+      if (!pbits)
+      {
+
+         iInitialStride =
+            sizeParam.cx * (::i32)sizeof(::image32_t);
+
+         memoryTransparent.set_size(
+            (memsize)iInitialStride * sizeParam.cy);
+
+         memoryTransparent.set(0);
+
+         pInitialBits = memoryTransparent.data();
+
+      }
+
       HRESULT hrCreateBitmap =
          pd2d1devicecontext->CreateBitmap(
             sizeu,
-            nullptr,
-            0,
+            pInitialBits,
+            iInitialStride,
             &properties,
             &pdraw2dbitmap);
 
@@ -344,47 +364,204 @@ namespace draw2d_direct2d
    void bitmap::preserve_image(const ::i32_size & size, ::image::image * pimage)
    {
 
-      auto pbitmapThis = ::as_pointer(this);
-
-      auto pd2d1bitmap = ::transfer(m_pd2d1bitmap);
-      auto pd2d1bitmap1 = ::transfer(m_pd2d1bitmap1);
-      auto memory = ::transfer(m_memory);
-      auto pd2d1bitmap1Map = ::transfer(m_pd2d1bitmap1Map);
-      //auto pd2d1bitmaprendertarget = ::transfer(m_pd2d1bitmaprendertarget);
-      //auto pd2d1devicecontext = ::transfer(m_pd2d1devicecontext);
-
-      pimage->create_as_descriptor(size);
-
-      _create_d2d1_bitmap(
-         nullptr,
-         size,
-         nullptr,
-         {},
-         {},
-         0,
-         pimage->m_pacmeuserinteractionAffinity);
-
-      if (pd2d1bitmap)
+      if (size.cx <= 0 || size.cy <= 0)
       {
 
-         D2D1_RECT_U rectSource;
-
-         auto sizeMinimum = pd2d1bitmap->GetSize();
-
-         rectSource.left = 0;
-         rectSource.top = 0;
-         rectSource.right = (UINT32)minimum(sizeMinimum.width, size.cx);
-         rectSource.bottom = (UINT32) minimum(sizeMinimum.height, size.cy);
-
-         D2D1_POINT_2U pointTarget;
-
-         pointTarget.x = 0;
-         pointTarget.y = 0;
-
-         auto hrCopyFromBitmap = m_pd2d1bitmap->CopyFromBitmap(&pointTarget, pd2d1bitmap, &rectSource);
+         throw ::exception(error_bad_argument);
 
       }
 
+      if (!pimage)
+      {
+
+         throw ::exception(error_null_pointer);
+
+      }
+
+      if (!m_pd2d1bitmap)
+      {
+
+         pimage->create_as_descriptor(size);
+
+         _create_d2d1_bitmap(
+            nullptr, size, nullptr, {}, {}, 0,
+            pimage->m_pacmeuserinteractionAffinity);
+
+         pimage->m_pdraw2dbitmap = this;
+
+         return;
+
+      }
+
+      auto sizeOld = m_pd2d1bitmap->GetPixelSize();
+
+      if (sizeOld.width == (UINT32)size.cx
+         && sizeOld.height == (UINT32)size.cy)
+      {
+
+         pimage->create_as_descriptor(size);
+
+         return;
+
+      }
+
+      auto pacmeuserinteractionAffinity = pimage->m_pacmeuserinteractionAffinity;
+
+      if (!pacmeuserinteractionAffinity)
+      {
+
+         throw ::exception(
+            error_wrong_state,
+            "Direct2D bitmap preservation requires an interaction affinity");
+
+      }
+
+      ::cast < ::windowing::window > pwindow =
+         pacmeuserinteractionAffinity->acme_windowing_window();
+
+      if (!pwindow)
+      {
+
+         throw ::exception(
+            error_wrong_state,
+            "Direct2D bitmap preservation requires a window");
+
+      }
+
+      ::cast < ::draw2d_direct2d::window_attachment > pwindowattachment =
+         pwindow->m_pdraw2dwindowattachment;
+
+      if (!pwindowattachment)
+      {
+
+         throw ::exception(
+            error_wrong_state,
+            "Direct2D bitmap preservation requires a Direct2D window attachment");
+
+      }
+
+      _synchronous_lock synchronouslock(
+         pwindowattachment->_d2d1_device_context_mutex());
+
+      auto pd2d1devicecontext = pwindowattachment->_d2d1_device_context();
+
+      if (!pd2d1devicecontext)
+      {
+
+         throw ::exception(
+            error_wrong_state,
+            "Direct2D bitmap preservation requires a device context");
+
+      }
+
+      auto pd2d1bitmapOld = m_pd2d1bitmap;
+
+      comptr < ID2D1Image > pd2d1imageTarget;
+
+      pd2d1devicecontext->GetTarget(&pd2d1imageTarget);
+
+      bool bOldBitmapWasTarget = false;
+
+      if (pd2d1imageTarget)
+      {
+
+         comptr < IUnknown > punknownTarget;
+         comptr < IUnknown > punknownOldBitmap;
+
+         pd2d1imageTarget.as(punknownTarget);
+         pd2d1bitmapOld.as(punknownOldBitmap);
+
+         bOldBitmapWasTarget = punknownTarget.m_p == punknownOldBitmap.m_p;
+
+         if (bOldBitmapWasTarget)
+         {
+
+            pd2d1devicecontext->SetTarget(nullptr);
+
+         }
+
+      }
+
+      D2D1_BITMAP_PROPERTIES1 properties{};
+
+      properties.pixelFormat = pd2d1bitmapOld->GetPixelFormat();
+      pd2d1bitmapOld->GetDpi(&properties.dpiX, &properties.dpiY);
+      properties.bitmapOptions = D2D1_BITMAP_OPTIONS_TARGET;
+
+      D2D1_SIZE_U sizeNew{};
+
+      sizeNew.width = (UINT32)size.cx;
+      sizeNew.height = (UINT32)size.cy;
+
+      auto iStride = size.cx * (::i32)sizeof(::image32_t);
+
+      ::memory memoryTransparent((memsize)iStride * size.cy);
+
+      memoryTransparent.set(0);
+
+      comptr < ID2D1Bitmap1 > pd2d1bitmapNew;
+
+      auto hr = pd2d1devicecontext->CreateBitmap(
+         sizeNew,
+         memoryTransparent.data(),
+         (UINT32)iStride,
+         &properties,
+         &pd2d1bitmapNew);
+
+      if (FAILED(hr))
+      {
+
+         if (bOldBitmapWasTarget)
+         {
+
+            pd2d1devicecontext->SetTarget(pd2d1bitmapOld);
+
+         }
+
+         throw hresult_exception(
+            hr,
+            "Failed to create a preserving Direct2D bitmap");
+
+      }
+
+      D2D1_RECT_U rectangleSource{};
+
+      rectangleSource.right = minimum(sizeOld.width, sizeNew.width);
+      rectangleSource.bottom = minimum(sizeOld.height, sizeNew.height);
+
+      if (rectangleSource.right > 0 && rectangleSource.bottom > 0)
+      {
+
+         hr = pd2d1bitmapNew->CopyFromBitmap(
+            nullptr,
+            pd2d1bitmapOld,
+            &rectangleSource);
+
+         if (FAILED(hr))
+         {
+
+            if (bOldBitmapWasTarget)
+            {
+
+               pd2d1devicecontext->SetTarget(pd2d1bitmapOld);
+
+            }
+
+            throw hresult_exception(
+               hr,
+               "Failed to preserve resized Direct2D bitmap contents");
+
+         }
+
+      }
+
+      m_pd2d1bitmap = pd2d1bitmapNew;
+      m_pd2d1bitmap1 = pd2d1bitmapNew;
+      m_pd2d1bitmap1Map = nullptr;
+      m_memory.set_size(0);
+      m_size = size;
+
+      pimage->create_as_descriptor(size);
       pimage->m_pdraw2dbitmap = this;
 
    }
@@ -452,7 +629,7 @@ namespace draw2d_direct2d
 
       props.pixelFormat.format = DXGI_FORMAT_B8G8R8A8_UNORM;
 
-      draw2d_direct2d::graphics * pgraphics2d = dynamic_cast < ::draw2d_direct2d::graphics * > (pdraw2dgraphics);
+      ::cast < draw2d_direct2d::graphics > pgraphics2d = pdraw2dgraphics;
 
       if (!::is_set(pgraphics2d))
       {
@@ -529,7 +706,24 @@ namespace draw2d_direct2d
 
          rectangleDst.bottom = size.cy;
 
-         hrResultCopyBitmap = m_pd2d1bitmap->CopyFromMemory(&rectangleDst, ppixmap->m_memoryPixmap.data(), iScan);
+         memory memory;
+
+         auto pimage32Source = (::image32_t *)ppixmap->m_memoryPixmap.data();
+
+         if (!ppixmap->m_bTopLeft)
+         {
+
+            memory.set_size(iScan * size.cy);
+
+            auto pimage32Target = (::image32_t *)memory.data();
+
+            pimage32Target->y_swap_copy(size, iScan, pimage32Source, iScan);
+
+            pimage32Source = (::image32_t *)memory.data();
+
+         }
+
+         hrResultCopyBitmap = m_pd2d1bitmap->CopyFromMemory(&rectangleDst, pimage32Source , iScan);
 
       }
 
@@ -668,7 +862,8 @@ namespace draw2d_direct2d
       const ::i32_size & size,
       const ::i32_point & point,
       const ::image32_t * pimage32,
-      ::i32 iScan)
+      ::i32 iScan, 
+      bool bTopDown)
    {
 
       if (size.cx <= 0 || size.cy <= 0)
@@ -712,14 +907,32 @@ namespace draw2d_direct2d
 
       }
 
+
       D2D1_RECT_U rectangleDst{};
 
-      rectangleDst.left = (UINT32) point.x;
-      rectangleDst.top = (UINT32) point.y;
-      rectangleDst.right = (UINT32) (point.x + size.cx);
-      rectangleDst.bottom = (UINT32) (point.y + size.cy);
+      rectangleDst.left = (UINT32)point.x;
+      rectangleDst.top = (UINT32)point.y;
+      rectangleDst.right = (UINT32)(point.x + size.cx);
+      rectangleDst.bottom = (UINT32)(point.y + size.cy);
 
-      auto hrCopy = m_pd2d1bitmap1->CopyFromMemory(&rectangleDst, pimage32, (UINT32) iScan);
+      memory memory;
+
+      auto pimage32Source = (::image32_t *) pimage32;
+
+      if (!bTopDown)
+      {
+
+         memory.set_size(iScan * size.cy);
+
+         auto pimage32Target = (::image32_t *)memory.data();
+
+         pimage32Target->y_swap_copy(size, iScan, pimage32, iScan);
+
+         pimage32Source = (::image32_t *)memory.data();
+
+      }
+
+      auto hrCopy = m_pd2d1bitmap1->CopyFromMemory(&rectangleDst, pimage32Source, (UINT32)iScan);
 
       if (FAILED(hrCopy))
       {

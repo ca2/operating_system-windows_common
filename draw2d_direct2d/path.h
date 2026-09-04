@@ -27,10 +27,10 @@ namespace draw2d_direct2d
    public:
 
 
-      comptr<ID2D1PathGeometry>                       m_pd2d1pathgeometryHollow1;
-      comptr<ID2D1PathGeometry>                       m_pd2d1pathgeometryFilled1;
-      comptr<ID2D1PathGeometry>                       m_pd2d1pathgeometry;
-      comptr<ID2D1GeometrySink>                       m_pd2d1geometrysink;
+      comptr<ID2D1PathGeometry>                       m_pd2d1pathgeometryHollow;
+      comptr<ID2D1PathGeometry>                       m_pd2d1pathgeometryFilled;
+      comptr<ID2D1PathGeometry>                       m_pd2d1pathgeometryTime;
+      comptr<ID2D1GeometrySink>                       m_pd2d1geometrysinkTime;
       D2D1_FIGURE_BEGIN                               m_d2d2figurebegin;
       // width 
       i32_map < comptr<ID2D1GeometryRealization> >    m_mapD2D1HollowGeometryRealization;
@@ -78,22 +78,6 @@ namespace draw2d_direct2d
       virtual bool internal_start_figure(::draw2d::graphics * pdraw2dgraphics, ::f64 x, ::f64 y);
 
       virtual bool internal_get_arc(::f64_point & pointStart, D2D1_ARC_SEGMENT & arcseg, const ::f64_arc & arc);
-
-      virtual void * detach(::draw2d::graphics * pdraw2dgraphics);
-
-      virtual bool create();
-
-      //virtual bool _set(::draw2d::graphics * pdraw2dgraphics, ::draw2d::path::begin * pbegin) override;
-      //virtual bool _set(::draw2d::graphics * pdraw2dgraphics, ::draw2d::path::arc * parc) override;
-      ////virtual bool _set(::draw2d::graphics * pdraw2dgraphics, const ::draw2d::path::move & move);
-      //virtual bool _set(::draw2d::graphics * pdraw2dgraphics, ::draw2d::path::i32_rectangle* prectangle) override;
-      //virtual bool _set(::draw2d::graphics * pdraw2dgraphics, ::draw2d::path::line * pline) override;
-      //virtual bool _set(::draw2d::graphics * pdraw2dgraphics, ::draw2d::path::lines* plines) override;
-      //virtual bool _set(::draw2d::graphics * pdraw2dgraphics, ::draw2d::path::i32_polygon* pline) override;
-      //virtual bool _set(::draw2d::graphics * pdraw2dgraphics, ::draw2d::path::text_out * ptextout) override;
-      //virtual bool _set(::draw2d::graphics * pdraw2dgraphics, ::draw2d::path::draw_text * pdrawtext) override;
-      //virtual bool _set(::draw2d::graphics * pdraw2dgraphics, ::draw2d::path::close* pclose) override;
-
 
       virtual bool _set(::draw2d::graphics * pdraw2dgraphics, const ::draw2d::enum_item& eitem);
 

@@ -79,7 +79,9 @@ namespace gpu_directx11
    }
 #define GL_COMPRESSED_RGBA_BPTC_UNORM 0x8E8C
 #define GL_COMPRESSED_SRGB_ALPHA_BPTC_UNORM 0x8E8D
+#if !defined(GL_R8)
 #define GL_R8 33321
+#endif
    DXGI_FORMAT GlInternalFormatToDxgi(GLenum internalFormat, GLenum format, GLenum type)
    {
       switch (internalFormat)

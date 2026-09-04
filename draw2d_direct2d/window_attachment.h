@@ -58,6 +58,9 @@ namespace draw2d_direct2d
       virtual ID2D1DeviceContext *_d2d1_device_context();
 
 
+      void destroy() override;
+
+
    };
 
 

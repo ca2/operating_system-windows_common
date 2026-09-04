@@ -43,7 +43,7 @@ namespace draw2d_direct2d_for_directx11
       void map();
       void unmap();
 
-
+      void preserve_image(const ::i32_size & size, ::image::image * pimage) override;
       bool LoadBitmap(const ::scoped_string & scopedstrResourceName);
       bool LoadBitmap(::u32 nIDResource);
       bool LoadOEMBitmap(::u32 nIDBitmap); // for OBM_/OCR_/OIC_
@@ -70,6 +70,9 @@ namespace draw2d_direct2d_for_directx11
       virtual void * detach();
 
       virtual void defer_update(::draw2d::graphics * pdraw2dgraphics) const;
+
+
+      void write_pixels(const ::i32_size & size, const ::i32_point & point, const ::image32_t * pimage32, ::i32 iScan, bool bTopDown) override;
 
       ::u32 SetBitmapBits(::u32 dwCount, const void * lpBits);
       ::u32 GetBitmapBits(::u32 dwCount, LPVOID lpBits) const;

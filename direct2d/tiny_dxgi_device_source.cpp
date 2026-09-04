@@ -174,7 +174,23 @@ namespace direct2d
 //         return hr;
 //
 //      }
+
+
+      void destroy() override;
+
    };
+
+
+   void tiny_dxgi_device_source::destroy()
+   {
+
+       m_pd3d11device.release();
+      m_pdxgidevice.release();
+
+
+      ::dxgi_device_source::destroy();
+
+   }
 
 
 } // namespace direct2d

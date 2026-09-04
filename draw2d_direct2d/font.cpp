@@ -121,15 +121,15 @@ namespace draw2d_direct2d
    void font::update(::draw2d::graphics * pdraw2dgraphics)
    {
 
-      if(m_pdwritetextformat == nullptr || is_modified())
-      {
+      //if(m_pdwritetextformat == nullptr || is_modified())
+      //{
 
-         if(m_pdwritetextformat)
-         {
+         //if(m_pdwritetextformat)
+         //{
 
-            destroy();
+         //   clear_node_data();
 
-         }
+         //}
 
          IDWriteFactory * pfactory = direct2d()->dwrite_factory();
 
@@ -161,7 +161,7 @@ namespace draw2d_direct2d
 
          create_text_metrics(pdraw2dgraphics);
 
-      }
+      //}
 
       //m_osdata[0] = m_pdwritetextformat;
 
@@ -374,6 +374,8 @@ namespace draw2d_direct2d
    }
 
 
+
+
    //void font::destroy()
    //{
 
@@ -388,6 +390,9 @@ namespace draw2d_direct2d
    {
 
       m_pdwritetextformat = nullptr;
+      m_pdwritefontcollection = nullptr;
+      m_pdwritefontfamily = nullptr;
+      m_pdwritefont = nullptr;
 
       //object::destroy_os_data();
 

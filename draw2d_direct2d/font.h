@@ -36,6 +36,7 @@ namespace draw2d_direct2d
       void update(::draw2d::graphics * pdraw2dgraphics) override;
       void create_text_metrics(::draw2d::graphics * pdraw2dgraphics) override;
 
+      //void _get_text_metric(::draw2d::graphics * pdraw2dgraphics, ::write_text::text_metric & tm) override;
 
 
       DWRITE_FONT_STYLE _dwrite_font_style();

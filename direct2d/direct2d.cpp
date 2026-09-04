@@ -164,7 +164,7 @@ namespace direct2d
 
       }
 
-      m_geometrysinktextrenderer.m_pfactory = m_pd2d1factory;
+      m_geometrysinktextrenderer.m_pd2d1factory = m_pd2d1factory;
 
       return m_pd2d1factory;
 
@@ -275,6 +275,25 @@ namespace direct2d
    }
 
 
+   void direct2d::destroy()
+   {
+
+      m_pd2d1device.release();
+
+      m_pdxgidevicesource.defer_destroy_and_release();
+
+      m_pwritefactory.release();
+      m_pd2d1factory.release();
+
+      m_pmutexDeviceContextDefault.release();
+      m_pd2d1devicecontextDefault.release();
+
+      m_pd2d1multithread.release();
+
+      ::app_consumer<::aura::application>::destroy();
+
+   }
+
    //::direct2d::direct2d * direct2d::direct2d()
    //{
 
@@ -359,29 +378,24 @@ namespace direct2d
    //}
 
 
-   static ::pointer<::direct2d::direct2d> g_pdirect2d;
+   //static ::pointer<::direct2d::direct2d> g_pdirect2d;
 
    CLASS_DECL_DIRECT2D::direct2d::direct2d * get()
    {
 
-      if (!g_pdirect2d)
-      {
+      auto pdirect2d = ::system()->singleton<::direct2d::direct2d>();
 
-         g_pdirect2d = ::system()->create_newø<::direct2d::direct2d>();
-
-      }
-
-      return g_pdirect2d;
+      return pdirect2d;
 
    }
 
 
-   CLASS_DECL_DIRECT2D void release()
-   {
+   //CLASS_DECL_DIRECT2D void _release()
+   //{
 
-      g_pdirect2d.release();
+   //   g_pdirect2d.defer_destroy_and_release();
 
-   }
+   //}
 
 
 } // namespace draw2d_direct2d

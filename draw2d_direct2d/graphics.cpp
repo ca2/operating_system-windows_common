@@ -197,7 +197,7 @@ namespace draw2d_direct2d
 
          //create_for_image(m_pgraphicsbufferitem->m_pimageBufferItem);
 
-         m_pdraw2dbitmapTarget = m_pgraphicsbufferitem->m_pimageBufferItem->m_pdraw2dbitmap;
+         m_pimageTarget = m_pgraphicsbufferitem->m_pimageBufferItem;
 
          //::memory memory;
 
@@ -213,10 +213,21 @@ namespace draw2d_direct2d
 
 
    
-   void graphics::update_as_image_render_target(::image::image * pimage)
+   void graphics::update_as_image_render_target(::image::image * pimage, ::acme::user::interaction * pacmeuserinteractionAffinity)
    {
 
-      m_pacmeuserinteractionAffinity = pimage->m_pacmeuserinteractionAffinity;
+      if (::is_set(pacmeuserinteractionAffinity))
+      {
+
+         m_pacmeuserinteractionAffinity = pacmeuserinteractionAffinity;
+
+      }
+      else
+      {
+
+         m_pacmeuserinteractionAffinity = pimage->m_pacmeuserinteractionAffinity;
+
+      }
 
       ::cast<::draw2d_direct2d::image> pdirect2dimage = pimage;
 
@@ -291,32 +302,32 @@ namespace draw2d_direct2d
    void graphics::_create_memory_graphics(const ::i32_size & sizeParam, ::acme::user::interaction * pacmeuserinteractionAffinity)
    {
 
-      //constructø(m_pdraw2dbitmap);
+      ////constructø(m_pdraw2dbitmap);
 
-      //if (!pacmeuserinteractionAffinity)
+      ////if (!pacmeuserinteractionAffinity)
+      ////{
+
+      ////   pacmeuserinteractionAffinity = m_pacmeuserinteractionAffinity;
+
+      ////}
+
+      //if (!m_pacmeuserinteractionAffinity)
       //{
 
-      //   pacmeuserinteractionAffinity = m_pacmeuserinteractionAffinity;
+      //   m_pacmeuserinteractionAffinity = pacmeuserinteractionAffinity;
 
       //}
 
-      if (!m_pacmeuserinteractionAffinity)
-      {
+      ////m_pdraw2dbitmap->create_bitmap_for_image(
+      ////   this,
+      ////   pacmeuserinteractionAffinity);
+      //////::draw2d::lock draw2dlock;
 
-         m_pacmeuserinteractionAffinity = pacmeuserinteractionAffinity;
+      ////__UNREFERENCED_PARAMETER(pdraw2dgraphics);
+      //////__UNREFERENCED_PARAMETER(pbits);
+      //////__UNREFERENCED_PARAMETER(stride);
 
-      }
-
-      //m_pdraw2dbitmap->create_bitmap_for_image(
-      //   this,
-      //   pacmeuserinteractionAffinity);
-      ////::draw2d::lock draw2dlock;
-
-      //__UNREFERENCED_PARAMETER(pdraw2dgraphics);
-      ////__UNREFERENCED_PARAMETER(pbits);
-      ////__UNREFERENCED_PARAMETER(stride);
-
-      ::draw2d::device_lock devicelock(this);
+      //::draw2d::device_lock devicelock(this);
 
       if (m_pd2d1devicecontext)
       {
@@ -348,174 +359,188 @@ namespace draw2d_direct2d
 
       //options = D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS_NONE;
 
-      ::cast < ::windowing::window > pwindow;
+      //::cast < ::windowing::window > pwindow;
 
-      if (m_pacmeuserinteractionAffinity)
-      {
-
-         pwindow = m_pacmeuserinteractionAffinity->acme_windowing_window();
-
-      }
-
-      if (!pwindow)
-      {
-
-         throw ::exception(
-            error_wrong_state,
-            "Direct2D bitmap interaction affinity has no window");
-
-      }
-
-      ::cast < ::draw2d_direct2d::window_attachment > pwindowattachment = pwindow->m_pdraw2dwindowattachment;
-
-      if (!pwindowattachment)
-      {
-
-         throw ::exception(
-            error_wrong_state,
-            "Direct2D bitmap window has no Direct2D attachment");
-
-      }
-
-      _synchronous_lock synchronouslock(pwindowattachment->_d2d1_device_context_mutex());
-
-      //draw2d_direct2d::graphics * pgraphics2d = dynamic_cast < ::draw2d_direct2d::graphics * > (pdraw2dgraphics);
-
-      //pgraphics2d->m_pd2d1devicecontext->GetDpi(&props.dpiX, &props.dpiY); // Thank you https://repo.anl-external.org/repos/BlueTBB/tbb41_20130314oss/examples/common/gui/d2dvideo.cpp
-
-      auto pd2d1devicecontext = pwindowattachment->_d2d1_device_context();
-
-      //auto hrCreateCompatibleRenderTarget = pd2d1devicecontext->CreateCompatibleRenderTarget(
-      //   size,
-      //   sizeu,
-      //   pixelformat,
-      //   options,
-      //   &m_pd2d1bitmaprendertargetCompatibleMemoryGraphics);
-
-      //if (FAILED(hrCreateCompatibleRenderTarget))
+      //if (m_pacmeuserinteractionAffinity)
       //{
 
-      //   throw hresult_exception(hrCreateCompatibleRenderTarget, "Failed to create compatible bitmap render target");
+      //   pwindow = m_pacmeuserinteractionAffinity->acme_windowing_window();
 
       //}
 
-      //D2D1_BITMAP_PROPERTIES1 bitmapproperties1 = {};
-
-      //bitmapproperties1.bitmapOptions = D2D1_BITMAP_OPTIONS_TARGET;
-      //bitmapproperties1.pixelFormat = pixelformat;
-      ////props.bitmapOptions = D2D1_BITMAP_OPTIONS_TARGET | D2D1_BITMAP_OPTIONS_CANNOT_DRAW;
-      //bitmapproperties1.dpiX = 96.0f;
-      //bitmapproperties1.dpiY = 96.0f;
-      //bitmapproperties1.colorContext = nullptr;
-
-      //auto hrQueryDeviceContext = m_pd2d1bitmaprendertargetCompatibleMemoryGraphics.as(m_pd2d1devicecontext);
-      ////if(ppdata != nullptr)
+      //if (!pwindow)
       //{
-      //   // g.m_pdc->CreateBitmap(size, *ppdata, cx * sizeof(::color32_t), props, &m_pdraw2dbitmap);
+
+      //   throw ::exception(
+      //      error_wrong_state,
+      //      "Direct2D bitmap interaction affinity has no window");
+
       //}
-      ////else
+
+      //::cast < ::draw2d_direct2d::window_attachment > pwindowattachment = pwindow->m_pdraw2dwindowattachment;
+
+      //if (!pwindowattachment)
+      //{
+
+      //   throw ::exception(
+      //      error_wrong_state,
+      //      "Direct2D bitmap window has no Direct2D attachment");
+
+      //}
+
+      //_synchronous_lock synchronouslock(pwindowattachment->_d2d1_device_context_mutex());
+
+      ////draw2d_direct2d::graphics * pgraphics2d = dynamic_cast < ::draw2d_direct2d::graphics * > (pdraw2dgraphics);
+
+      ////pgraphics2d->m_pd2d1devicecontext->GetDpi(&props.dpiX, &props.dpiY); // Thank you https://repo.anl-external.org/repos/BlueTBB/tbb41_20130314oss/examples/common/gui/d2dvideo.cpp
+
+      //auto pd2d1devicecontext = pwindowattachment->_d2d1_device_context();
+
+      ////auto hrCreateCompatibleRenderTarget = pd2d1devicecontext->CreateCompatibleRenderTarget(
+      ////   size,
+      ////   sizeu,
+      ////   pixelformat,
+      ////   options,
+      ////   &m_pd2d1bitmaprendertargetCompatibleMemoryGraphics);
+
+      ////if (FAILED(hrCreateCompatibleRenderTarget))
       ////{
-      ////HRESULT hr = ((ID2D1DeviceContext *)pdraw2dgraphics->get_os_data())->CreateBitmap(size, lpBits, stride, props, &m_pbitmap1);
-      ////HRESULT hrCreateBitmap = m_pbitmaprendertarget->GetBitmap(&m_pdraw2dbitmap);
+
+      ////   throw hresult_exception(hrCreateCompatibleRenderTarget, "Failed to create compatible bitmap render target");
+
+      ////}
+
+      ////D2D1_BITMAP_PROPERTIES1 bitmapproperties1 = {};
+
+      ////bitmapproperties1.bitmapOptions = D2D1_BITMAP_OPTIONS_TARGET;
+      ////bitmapproperties1.pixelFormat = pixelformat;
+      //////props.bitmapOptions = D2D1_BITMAP_OPTIONS_TARGET | D2D1_BITMAP_OPTIONS_CANNOT_DRAW;
+      ////bitmapproperties1.dpiX = 96.0f;
+      ////bitmapproperties1.dpiY = 96.0f;
+      ////bitmapproperties1.colorContext = nullptr;
+
+      ////auto hrQueryDeviceContext = m_pd2d1bitmaprendertargetCompatibleMemoryGraphics.as(m_pd2d1devicecontext);
+      //////if(ppdata != nullptr)
+      ////{
+      ////   // g.m_pdc->CreateBitmap(size, *ppdata, cx * sizeof(::color32_t), props, &m_pdraw2dbitmap);
+      ////}
+      //////else
+      //////{
+      //////HRESULT hr = ((ID2D1DeviceContext *)pdraw2dgraphics->get_os_data())->CreateBitmap(size, lpBits, stride, props, &m_pbitmap1);
+      //////HRESULT hrCreateBitmap = m_pbitmaprendertarget->GetBitmap(&m_pdraw2dbitmap);
+
+      ////////}
+
+      //////if (FAILED(hrCreateBitmap))
+      //////{
+
+      //////   throw ::exception(error_failed);
 
       //////}
 
-      ////if (FAILED(hrCreateBitmap))
-      ////{
 
-      ////   throw ::exception(error_failed);
+      //////if (pbits && stride >= size.width * 4)
+      //////{
 
-      ////}
+      //////   D2D1_RECT_U r;
 
+      //////   r.left = 0;
+      //////   r.top = 0;
+      //////   r.right = size.width;
+      //////   r.bottom = size.height;
 
-      ////if (pbits && stride >= size.width * 4)
-      ////{
+      //////   m_pdraw2dbitmap->CopyFromMemory(&r, pbits, stride);
 
-      ////   D2D1_RECT_U r;
-
-      ////   r.left = 0;
-      ////   r.top = 0;
-      ////   r.right = size.width;
-      ////   r.bottom = size.height;
-
-      ////   m_pdraw2dbitmap->CopyFromMemory(&r, pbits, stride);
-
-      ////}
+      //////}
 
 
-      ////auto hrQueryBitmap1 = m_pdraw2dbitmap.as(m_pbitmap1);
+      //////auto hrQueryBitmap1 = m_pdraw2dbitmap.as(m_pbitmap1);
 
-      ////static ::std::atomic<unsigned int> s_uBitmapCreationDiagnosticCount{ 0 };
-      ////auto uBitmapCreationDiagnosticCount = s_uBitmapCreationDiagnosticCount.fetch_add(1, ::std::memory_order_relaxed);
+      //////static ::std::atomic<unsigned int> s_uBitmapCreationDiagnosticCount{ 0 };
+      //////auto uBitmapCreationDiagnosticCount = s_uBitmapCreationDiagnosticCount.fetch_add(1, ::std::memory_order_relaxed);
 
-      ////if (uBitmapCreationDiagnosticCount < 32
-      ////   || FAILED(hrQueryDeviceContext)
-      ////   || FAILED(hrQueryBitmap1))
-      ////{
+      //////if (uBitmapCreationDiagnosticCount < 32
+      //////   || FAILED(hrQueryDeviceContext)
+      //////   || FAILED(hrQueryBitmap1))
+      //////{
 
-      ////   informationf(
-      ////      "Direct2DBitmapCreationDiagnostic compatible=0x%08lx queryContext=0x%08lx getBitmap=0x%08lx "
-      ////      "queryBitmap1=0x%08lx thread=%lu requested=(%d,%d) sourceContext=%p bitmapTarget=%p "
-      ////      "bitmap=%p bitmap1=%p bitmapContext=%p",
-      ////      (unsigned long)hrCreateCompatibleRenderTarget,
-      ////      (unsigned long)hrQueryDeviceContext,
-      ////      (unsigned long)hrCreateBitmap,
-      ////      (unsigned long)hrQueryBitmap1,
-      ////      (unsigned long)::GetCurrentThreadId(),
-      ////      sizeParam.cx,
-      ////      sizeParam.cy,
-      ////      pd2d1devicecontext,
-      ////      (ID2D1BitmapRenderTarget *)m_pbitmaprendertarget,
-      ////      (ID2D1Bitmap *)m_pdraw2dbitmap,
-      ////      (ID2D1Bitmap1 *)m_pbitmap1,
-      ////      (ID2D1DeviceContext *)m_pdevicecontext);
+      //////   informationf(
+      //////      "Direct2DBitmapCreationDiagnostic compatible=0x%08lx queryContext=0x%08lx getBitmap=0x%08lx "
+      //////      "queryBitmap1=0x%08lx thread=%lu requested=(%d,%d) sourceContext=%p bitmapTarget=%p "
+      //////      "bitmap=%p bitmap1=%p bitmapContext=%p",
+      //////      (unsigned long)hrCreateCompatibleRenderTarget,
+      //////      (unsigned long)hrQueryDeviceContext,
+      //////      (unsigned long)hrCreateBitmap,
+      //////      (unsigned long)hrQueryBitmap1,
+      //////      (unsigned long)::GetCurrentThreadId(),
+      //////      sizeParam.cx,
+      //////      sizeParam.cy,
+      //////      pd2d1devicecontext,
+      //////      (ID2D1BitmapRenderTarget *)m_pbitmaprendertarget,
+      //////      (ID2D1Bitmap *)m_pdraw2dbitmap,
+      //////      (ID2D1Bitmap1 *)m_pbitmap1,
+      //////      (ID2D1DeviceContext *)m_pdevicecontext);
 
-      ////}
+      //////}
 
-      ////if (FAILED(hrQueryDeviceContext))
-      ////{
+      //////if (FAILED(hrQueryDeviceContext))
+      //////{
 
-      ////   throw hresult_exception(hrQueryDeviceContext, "Failed to query bitmap device context");
+      //////   throw hresult_exception(hrQueryDeviceContext, "Failed to query bitmap device context");
 
-      ////}
+      //////}
 
-      ////if (FAILED(hrQueryBitmap1))
-      ////{
+      //////if (FAILED(hrQueryBitmap1))
+      //////{
 
-      ////   throw hresult_exception(hrQueryBitmap1, "Failed to query ID2D1Bitmap1");
+      //////   throw hresult_exception(hrQueryBitmap1, "Failed to query ID2D1Bitmap1");
 
-      ////}
-
-
-      ////m_pdevicecontext->SetTarget(m_pbitmap1);
-
-      ////zero(m_map);
-      ////    m_pdraw2dbitmap->Map(D2D1_MAP_OPTIONS_READ | D2D1_MAP_OPTIONS_WRITE, &m_map);
-      ////
-      ////if(ppdata != nullptr)
-      //// *ppdata = (::color::color *) m_map.bits;
-      ////m_osdata[0] = m_pdraw2dbitmap;
-
-      ////return true;
-
-      /////set_ok_flag();
-
-      m_estatus = success;
+      //////}
 
 
-      //::cast < ::draw2d_direct2d::bitmap > pdraw2dbitmap = pimage->m_pdraw2dbitmap;
+      //////m_pdevicecontext->SetTarget(m_pbitmap1);
 
-      //pdraw2dbitmap->m_pdevicecontext.as(m_pdevicecontext);
+      //////zero(m_map);
+      //////    m_pdraw2dbitmap->Map(D2D1_MAP_OPTIONS_READ | D2D1_MAP_OPTIONS_WRITE, &m_map);
+      //////
+      //////if(ppdata != nullptr)
+      ////// *ppdata = (::color::color *) m_map.bits;
+      //////m_osdata[0] = m_pdraw2dbitmap;
 
-      m_pd2d1devicecontext.as(m_pd2d1devicecontext);
+      //////return true;
 
-      m_pd2d1devicecontext.as(m_pd2d1devicecontext1);
+      ///////set_ok_flag();
 
-   //m_osdata[data_device_context] = m_pd2d1devicecontext;
+      //m_estatus = success;
 
-   //m_osdata[data_render_target] = m_pd2d1devicecontext;
 
-   set_ok_flag();
+      ////::cast < ::draw2d_direct2d::bitmap > pdraw2dbitmap = pimage->m_pdraw2dbitmap;
+
+      ////pdraw2dbitmap->m_pdevicecontext.as(m_pdevicecontext);
+
+      //m_pd2d1devicecontext.as(m_pd2d1devicecontext);
+
+      //m_pd2d1devicecontext.as(m_pd2d1devicecontext1);
+
+      //m_osdata[data_device_context] = m_pd2d1devicecontext;
+
+      //m_osdata[data_render_target] = m_pd2d1devicecontext;
+
+      _create_d2d1_device_context();
+
+      defer_constructø(m_pimageTarget);
+
+      m_pimageTarget->create_as_descriptor(sizeParam);
+
+      defer_constructø(m_pimageTarget->m_pdraw2dbitmap);
+
+      m_pimageTarget->m_pdraw2dbitmap->create_bitmap(this, sizeParam, nullptr);
+
+      ::cast < ::draw2d_direct2d::bitmap > pdraw2ddirect2dbitmap = m_pimageTarget->m_pdraw2dbitmap;
+
+      m_pd2d1devicecontext->SetTarget(pdraw2ddirect2dbitmap->m_pd2d1bitmap);
+
+      set_ok_flag();
 
    }
 
@@ -535,19 +560,21 @@ namespace draw2d_direct2d
 
    }
 
+
    void graphics::defer_set_size(const ::i32_size &size)
    {
-      if (m_pimage)
-      {
 
-         if (m_pimage->m_size == size)
-         {
+      //if (m_pimageTarget)
+      //{
 
-            return;
+      //   if (m_pimageTarget->m_size == size)
+      //   {
 
-         }
+      //      return;
 
-      }
+      //   }
+
+      //}
 
       //_create_memory_graphics(size);
       /*m_pgpucontextCompositor->sendø() << [this, size]()
@@ -672,9 +699,11 @@ namespace draw2d_direct2d
 
       //}
 
-      constructø(m_pdraw2dbitmapTarget);
+      defer_constructø(m_pimageTarget);
 
-      ::cast<::draw2d_direct2d::bitmap> pdraw2dbitmap = m_pdraw2dbitmapTarget;
+      defer_constructø(m_pimageTarget->m_pdraw2dbitmap);
+
+      ::cast<::draw2d_direct2d::bitmap> pdraw2dbitmap = m_pimageTarget->m_pdraw2dbitmap;
 
       //auto hrGetBitmap = m_pd2d1bitmaprendertarget->GetBitmap(&pdraw2dbitmap->m_pd2d1bitmap);
 
@@ -725,7 +754,7 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::create_bitmap_graphics(::draw2d::bitmap *pdraw2dbitmap)
+   void graphics::create_bitmap_graphics(::draw2d::bitmap *pdraw2dbitmap, ::acme::user::interaction *pacmeuserinteractionAffinity)
    {
 
       throw ::interface_only();
@@ -3234,7 +3263,7 @@ namespace draw2d_direct2d
 
       {
 
-         ::cast < ::draw2d_direct2d::bitmap > pdirect2dbitmapSource = pimage->get_bitmap_as_source();
+         ::cast < ::draw2d_direct2d::bitmap > pdirect2dbitmapSource = pimage->get_bitmap_as_source(this);
 
          auto pd2d1bitmapSource = pdirect2dbitmapSource->m_pd2d1bitmap;
 
@@ -3377,12 +3406,12 @@ namespace draw2d_direct2d
       if (pimage->m_pextension && pimage->m_pextension->m_pframea)
       {
 
-         if (m_pimage)
+         if (m_pimageTarget)
          {
 
             auto & pframeaSource = pimage->m_pextension->m_pframea;
 
-            auto & pframeaTarget = m_pimage->get_extension()->m_pframea;
+            auto & pframeaTarget = m_pimageTarget->get_extension()->m_pframea;
 
             defer_construct_newø(pframeaTarget);
 
@@ -3418,7 +3447,7 @@ namespace draw2d_direct2d
 
                   pframeTarget->m_pparticleImage = pimageTarget;
 
-                  pimageTarget->create_as_descriptor(m_pimage->size());
+                  pimageTarget->create_as_descriptor(m_pimageTarget->size());
 
                   auto pgraphicsImageTarget = pimageTarget->acquire_graphics();
 
@@ -3744,7 +3773,9 @@ namespace draw2d_direct2d
 
       m_pwritetextfont->defer_update(this);
 
-      m_pwritetextfont->get_text_metric(this, *pmetrics);
+      //m_pwritetextfont->get_text_metric(this, *pmetrics);
+
+      *pmetrics = m_pwritetextfont->m_textmetric2;
 
       //memory_copy(pmetrics, &m_pwritetextfont->m_textmetric2, sizeof(m_pwritetextfont->m_textmetric2));
 
@@ -6679,7 +6710,7 @@ namespace draw2d_direct2d
 
       }
 
-      m_pwritetextfont->update(this);
+      m_pwritetextfont->defer_update(this);
 
       ::cast < ::draw2d_direct2d::font > pdraw2ddirect2dfont = m_pwritetextfont;
 
@@ -6786,6 +6817,134 @@ namespace draw2d_direct2d
       }
 
       //return 1;
+
+   }
+
+
+   void graphics::_005DrawText(const ::scoped_string & scopedstr, ::f64 x, ::f64 y)
+   {
+
+      if (scopedstr.is_empty())
+      {
+
+         return;
+
+      }
+
+      if (m_pwritetextfont.is_null())
+      {
+
+         throw ::exception(error_wrong_state);
+
+      }
+
+      if (m_bTargetRectangleModified)
+      {
+
+         defer_on_target_rectangle_update();
+
+      }
+
+      m_pwritetextfont->defer_update(this);
+
+      ::cast < ::draw2d_direct2d::font > pdraw2ddirect2dfont = m_pwritetextfont;
+
+      auto pdwritetextformat = pdraw2ddirect2dfont->m_pdwritetextformat;
+
+      if (::is_null(pdwritetextformat))
+      {
+
+         throw ::exception(error_wrong_state);
+
+      }
+
+      if (m_pdraw2dbrush.is_null())
+      {
+
+         throw ::exception(error_null_pointer);
+
+      }
+
+      m_pdraw2dbrush->defer_update(this);
+
+      ::cast < ::draw2d_direct2d::brush > pdraw2ddirect2dbrush = m_pdraw2dbrush;
+
+      auto pd2d1brush = pdraw2ddirect2dbrush->m_pd2d1brush;
+
+      if (::is_null(pd2d1brush))
+      {
+
+         throw ::exception(error_null_pointer);
+
+      }
+
+      pdwritetextformat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
+
+      pdwritetextformat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
+
+      pdwritetextformat->SetWordWrapping(DWRITE_WORD_WRAPPING_NO_WRAP);
+
+      comptr < IDWriteTextLayout > ptextlayout;
+
+      wstring wstr(scopedstr);
+
+      auto hr = direct2d()->dwrite_factory()->CreateTextLayout(
+         wstr,
+         (::u32)wstr.length(),
+         pdwritetextformat,
+         1024.f * 1024.f,
+         1024.f * 1024.f,
+         &ptextlayout);
+
+      if (FAILED(hr) || ptextlayout == nullptr)
+      {
+
+         ::draw2d::graphics::_005DrawText(scopedstr, x, y);
+
+         return;
+
+      }
+
+      synchronous_lock synchronouslock(this->synchronization());
+
+      defer_text_primitive_blend();
+
+      defer_text_rendering_hint();
+
+      if (m_pwritetextfont->m_dFontWidth == 1.0)
+      {
+
+         m_pd2d1devicecontext->DrawTextLayout(
+            D2D1::Point2F((FLOAT)x, (FLOAT)y),
+            ptextlayout,
+            pd2d1brush,
+            D2D1_DRAW_TEXT_OPTIONS_NONE);
+
+      }
+      else
+      {
+
+         D2D1::Matrix3x2F matrixOriginal;
+
+         m_pd2d1devicecontext->GetTransform(&matrixOriginal);
+
+         auto matrix = matrixOriginal;
+
+         matrix._11 *= (FLOAT)m_pwritetextfont->m_dFontWidth;
+         matrix._31 += (FLOAT)x;
+         matrix._32 += (FLOAT)y;
+
+         m_pd2d1devicecontext->SetTransform(&matrix);
+
+         m_pd2d1devicecontext->DrawTextLayout(
+            D2D1::Point2F(0.f, 0.f),
+            ptextlayout,
+            pd2d1brush,
+            D2D1_DRAW_TEXT_OPTIONS_NONE);
+
+         m_pd2d1devicecontext->SetTransform(&matrixOriginal);
+
+      }
 
    }
 
@@ -6912,7 +7071,7 @@ namespace draw2d_direct2d
 
       }
 
-      m_pwritetextfont->update(this);
+      m_pwritetextfont->defer_update(this);
 
       ::cast < ::draw2d_direct2d::font > pdraw2ddirect2dfont = m_pwritetextfont;
 
@@ -7065,7 +7224,7 @@ namespace draw2d_direct2d
 
       if (!pacmeuserinteractionAffinity
          || m_bBeginDraw
-         || m_pimage
+         || m_pimageTarget
          || m_pdraw2dbitmap
          || m_iLayerCount != 0
          || m_pd2d1devicecontext
@@ -7120,19 +7279,22 @@ namespace draw2d_direct2d
 
 
    void graphics::on_acquire_memory_graphics(
+      bool bExternalRendering,
       ::image::image * pimage,
       const ::i32_size & size,
       ::acme::user::interaction * pacmeuserinteractionAffinity)
    {
 
-      if (m_bBeginDraw)
+      /*if (m_bBeginDraw)
       {
 
          throw ::exception(
             error_wrong_state,
             "pooled Direct2D graphics was acquired with an active drawing scope");
 
-      }
+      }*/
+
+      ::image::image_pointer pimageTarget;
 
       if (pimage)
       {
@@ -7144,53 +7306,55 @@ namespace draw2d_direct2d
 
          }
 
-         ::cast < ::draw2d_direct2d::bitmap > pdraw2dbitmap = pimage->m_pdraw2dbitmap;
+         pimageTarget = pimage;
 
-         if (!pdraw2dbitmap
-            || !pdraw2dbitmap->m_pd2d1bitmap)
-            //|| !pdraw2dbitmap->m_pd2d1devicecontext)
-         {
+         //::cast < ::draw2d_direct2d::bitmap > pdraw2dbitmap = pimage->m_pdraw2dbitmap;
 
-            throw ::exception(
-               error_wrong_state,
-               //"Direct2D image has no usable bitmap render target");
-               "Direct2D image has no usable bitmap");
-
-         }
-
-         //if (m_pd2d1devicecontext
-         //   && m_pd2d1devicecontext.m_p != pdraw2dbitmap->m_pd2d1devicecontext.m_p)
+         //if (!pdraw2dbitmap
+         //   || !pdraw2dbitmap->m_pd2d1bitmap)
+         //   //|| !pdraw2dbitmap->m_pd2d1devicecontext)
          //{
 
          //   throw ::exception(
          //      error_wrong_state,
-         //      "Direct2D graphics retained a different image render target");
+         //      //"Direct2D image has no usable bitmap render target");
+         //      "Direct2D image has no usable bitmap");
 
          //}
 
-         //if (!m_pd2d1devicecontext && m_pd2d1devicecontext)
+         ////if (m_pd2d1devicecontext
+         ////   && m_pd2d1devicecontext.m_p != pdraw2dbitmap->m_pd2d1devicecontext.m_p)
+         ////{
+
+         ////   throw ::exception(
+         ////      error_wrong_state,
+         ////      "Direct2D graphics retained a different image render target");
+
+         ////}
+
+         ////if (!m_pd2d1devicecontext && m_pd2d1devicecontext)
+         ////{
+
+         ////   throw ::exception(
+         ////      error_wrong_state,
+         ////      "Direct2D graphics retained an incomplete render target");
+
+         ////}
+
+         //if (!m_pd2d1devicecontext)
          //{
 
-         //   throw ::exception(
-         //      error_wrong_state,
-         //      "Direct2D graphics retained an incomplete render target");
+         //   _create_d2d1_device_context();
 
          //}
 
-         if (!m_pd2d1devicecontext)
-         {
-
-            _create_d2d1_device_context();
-
-         }
-
-         //m_pd2d1bitmaprendertargetCompatibleMemoryGraphics.release();
-         //m_pd2d1dcrendertarget.release();
-         //m_pd2d1devicecontext = pdraw2dbitmap->m_pd2d1devicecontext;
-         //m_osdata[0] = m_pd2d1devicecontext.m_p;
-         //m_pd2d1devicecontext.as(m_pd2d1devicecontext);
-         //m_pd2d1devicecontext.as(m_pd2d1devicecontext1);
-         m_pd2d1devicecontext->SetTarget(pdraw2dbitmap->m_pd2d1bitmap);
+         ////m_pd2d1bitmaprendertargetCompatibleMemoryGraphics.release();
+         ////m_pd2d1dcrendertarget.release();
+         ////m_pd2d1devicecontext = pdraw2dbitmap->m_pd2d1devicecontext;
+         ////m_osdata[0] = m_pd2d1devicecontext.m_p;
+         ////m_pd2d1devicecontext.as(m_pd2d1devicecontext);
+         ////m_pd2d1devicecontext.as(m_pd2d1devicecontext1);
+         //m_pd2d1devicecontext->SetTarget(pdraw2dbitmap->m_pd2d1bitmap);
 
       }
       else
@@ -7207,9 +7371,18 @@ namespace draw2d_direct2d
 
          _create_memory_graphics(size, pacmeuserinteractionAffinity);
 
+         pimageTarget = m_pimageTarget;
+
       }
 
-      if (!m_pd2d1devicecontext || !m_pd2d1devicecontext)
+      if (!m_pd2d1devicecontext)
+      {
+
+         _create_d2d1_device_context();
+
+      }
+
+      if (!m_pd2d1devicecontext)
       {
 
          throw ::exception(
@@ -7233,22 +7406,31 @@ namespace draw2d_direct2d
       m_iYFlipHeight = 0;
       m_dSizeScaler = 1.0;
 
-      m_pd2d1devicecontext->BeginDraw();
-      m_bBeginDraw = true;
+      ::i32_rectangle rectangleFrame;
 
-      // A target bitmap can be reused after a resize and newly allocated GPU
-      // pixels have undefined contents. Clear the complete target before any
-      // frame drawing; ID2D1DeviceContext::Clear is not limited by the current
-      // transform or clip, so newly exposed areas cannot leak diagnostic or
-      // stale pixels into the layered-window bitmap.
-      m_pd2d1devicecontext->Clear(
-         D2D1::ColorF(0.0f, 0.0f, 0.0f, 0.0f));
+      rectangleFrame.set(::i32_point(), size);
+
+      begin_draw(true, pacmeuserinteractionAffinity->user_interaction(), rectangleFrame, pimageTarget);
+      //m_pd2d1devicecontext->BeginDraw();
+      //m_bBeginDraw = true;
+
+      //// A load acquisition edits an existing image and must retain pixels
+      //// outside the caller's drawing rectangle. A don't-load acquisition is
+      //// a fresh frame/temporary target, so initialize its complete surface.
+      //if (!pimage || pimage->m_eacquire == ::draw2d::e_acquire_dont_load)
+      //{
+
+      //   m_pd2d1devicecontext->Clear(
+      //      D2D1::ColorF(0.0f, 0.0f, 0.0f, 0.0f));
+
+      //}
 
       try
       {
 
          ::draw2d::graphics::on_acquire_memory_graphics(
-            pimage,
+            bExternalRendering,
+            pimageTarget,
             size,
             pacmeuserinteractionAffinity);
 
@@ -7285,7 +7467,7 @@ namespace draw2d_direct2d
    {
 
 
-      auto pimageBeforeRelease = m_pimage;
+      auto pimageBeforeRelease = m_pimageTarget;
       auto pdevicecontextBeforeRelease = m_pd2d1devicecontext;
 
       //if (m_egraphics == e_graphics_draw && (!m_bBeginDraw || !pdevicecontextBeforeRelease))
@@ -7333,6 +7515,14 @@ namespace draw2d_direct2d
          m_bBeginDraw = false;
 
       }
+
+      if (pdevicecontextBeforeRelease)
+      {
+
+         pdevicecontextBeforeRelease->SetTarget(nullptr);
+
+      }
+
       m_iLayerCount = 0;
       m_iaPushLayer.erase_all();
       m_iaPushLayerCount.erase_all();
@@ -7419,7 +7609,7 @@ namespace draw2d_direct2d
 
       }
 
-      m_pwritetextfont->update(this);
+      m_pwritetextfont->defer_update(this);
 
       ::cast < ::draw2d_direct2d::font > pdraw2ddirect2dfont = m_pwritetextfont;
 
@@ -7678,10 +7868,10 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::begin_draw()
+   void graphics::begin_draw(bool bExternalRendering, ::user::interaction * puserinteraction, const ::i32_rectangle & rectangleFrame, ::image::image * pimageTarget)
    {
 
-      ::draw2d::graphics::begin_draw();
+      ::draw2d::graphics::begin_draw(bExternalRendering, puserinteraction, rectangleFrame, pimageTarget);
 
       //auto pgputexturesiteTarget = current_target_texture(::gpu::current_layer());
 
@@ -7691,13 +7881,6 @@ namespace draw2d_direct2d
 
       //nvgBeginFrame(m_pdc, (float)size.width(), (float)size.height(), 1.0f);
 
-      if (!m_bBeginDraw)
-      {
-
-         //if (::gpu::current_layer())
-         {
-
-            m_bBeginDraw = true;
 
             //auto pgputexturesiteTarget = ::gpu::current_layer()->texture(true);
 
@@ -7729,13 +7912,38 @@ namespace draw2d_direct2d
 
             //ptexture->m_pimageGpuTexture->update_as_backed_by_gpu_texture(ptexture->m_textureattributes.m_sizeRaw, ptexture, this);
 
-            ::cast <::draw2d_direct2d::bitmap> pdraw2dbitmap = m_pdraw2dbitmapTarget;
+            //::cast <::draw2d_direct2d::bitmap> pdraw2dbitmap = m_pdraw2dbitmapTarget;
 
-            m_pd2d1devicecontext->SetTarget(pdraw2dbitmap->m_pd2d1bitmap);
+            ::cast <::draw2d_direct2d::bitmap> pdraw2dbitmap = m_pimageTarget->m_pdraw2dbitmap;
 
-            m_pd2d1devicecontext->BeginDraw();
+            if (!m_bBeginDraw)
+            {
 
-            m_pd2d1devicecontext->Clear(D2D1::ColorF(0.0f, 0.0f, 0.0f, 0.0f));
+               //if (::gpu::current_layer())
+               {
+
+                  m_bBeginDraw = true;
+
+                  m_pd2d1devicecontext->SetTarget(pdraw2dbitmap->m_pd2d1bitmap);
+
+                  m_pd2d1devicecontext->BeginDraw();
+
+               }
+
+            }
+
+            // A load acquisition edits an existing image and must retain pixels
+// outside the caller's drawing rectangle. A don't-load acquisition is
+// a fresh frame/temporary target, so initialize its complete surface.
+            if (!pimageTarget || pimageTarget->m_eacquire == ::draw2d::e_acquire_dont_load)
+            {
+
+               m_pd2d1devicecontext->Clear(
+                  D2D1::ColorF(0.0f, 0.0f, 0.0f, 0.0f));
+
+            }
+
+            //m_pd2d1devicecontext->Clear(D2D1::ColorF(0.0f, 0.0f, 0.0f, 0.0f));
 
             //set_alpha_mode(::draw2d::e_alpha_mode_set);
 
@@ -7755,9 +7963,9 @@ namespace draw2d_direct2d
 
             //fill_solid_rectangle({ ::i32_point(), m_sizeTarget }, ::color::transparent);
 
-         }
+         //}
 
-      }
+      //}
 
    }
 
@@ -7911,15 +8119,24 @@ namespace draw2d_direct2d
       set_smooth_mode(::draw2d::e_smooth_mode_high);
 
       //::gpu::graphics::start_layer(bFirstLayer);
-      m_pointTarget = m_pacmeuserinteractionAffinity->m_pacmewindowingwindow->m_pointWindow;
-      m_sizeTarget = m_pacmeuserinteractionAffinity->m_pacmewindowingwindow->m_sizeWindow;
-      m_bTargetRectangleModified = false;
-      update_matrix();
+      //m_pointTarget = m_pacmeuserinteractionAffinity->m_pacmewindowingwindow->m_pointWindow;
+      //m_sizeTarget = m_pacmeuserinteractionAffinity->m_pacmewindowingwindow->m_sizeWindow;
+      //m_bTargetRectangleModified = false;
+      //update_matrix();
 
+      ::image::image_pointer pimageTarget;
+
+      ::i32_rectangle rectangleFrame;
+
+      rectangleFrame.set(
+         m_pacmeuserinteractionAffinity->m_pacmewindowingwindow->m_pointWindow,
+         m_pacmeuserinteractionAffinity->m_pacmewindowingwindow->m_sizeWindow);
+      //m_pointTarget = ;
+      //m_sizeTarget = m_pacmeuserinteractionAffinity->m_pacmewindowingwindow->m_sizeWindow;
 
 
       //if (m_egraphics == ::e_graphics_draw)
-      {
+      //{
 
       //   //auto rectangleHost = m_puserinteractionDraw2dGraphics->raw_rectangle();
 
@@ -7929,65 +8146,70 @@ namespace draw2d_direct2d
 
 
 
-         if (m_pgraphicsbufferitem)
+      if (m_pgraphicsbufferitem)
+      {
+
+         rectangleFrame.set(
+            m_pacmeuserinteractionAffinity->m_pacmewindowingwindow->m_pointWindow,
+            m_pacmeuserinteractionAffinity->m_pacmewindowingwindow->m_sizeWindow);
+
+         //m_pointTarget = m_pgraphicsbufferitem->m_pointBufferItem;
+         //m_sizeTarget = m_pgraphicsbufferitem->m_sizeBufferItem;
+         //m_bTargetRectangleModified = false;
+         //update_matrix();
+
+
+         //m_pgraphicsbufferitem->m_pimageBufferItem = m_pimage;
+
+         pimageTarget = m_pgraphicsbufferitem->m_pimageBufferItem;
+
+         if (pimageTarget)
          {
 
-            m_pointTarget = m_pgraphicsbufferitem->m_pointBufferItem;
-            m_sizeTarget = m_pgraphicsbufferitem->m_sizeBufferItem;
-            m_bTargetRectangleModified = false;
-            update_matrix();
+            //auto point = m_pacmeuserinteractionAffinity->m_pacmewindowingwindow->m_pointWindow;
+            //auto size = m_pacmeuserinteractionAffinity->m_pacmewindowingwindow->m_sizeWindow;
+            //auto point = m_pgraphicsbufferitem->m_pointBufferItem;
+            //auto size = m_pgraphicsbufferitem->m_sizeBufferItem;
+            rectangleFrame.set(m_pgraphicsbufferitem->m_pointBufferItem,
+               m_pgraphicsbufferitem->m_sizeBufferItem);
+         //   ::f64_point pointf64Image = pimage->m_point;
+         //   ::f64_size sizef64Image = pimage->m_size;
+         //   ::f64_size sizef64ImageRaw = pimage->m_sizeRaw;
 
-
-            //m_pgraphicsbufferitem->m_pimageBufferItem = m_pimage;
-
-            auto pimage = m_pgraphicsbufferitem->m_pimageBufferItem;
-
-            if (pimage)
+            if (pimageTarget->m_point != rectangleFrame.origin() || pimageTarget->m_size !=rectangleFrame.size())
             {
 
-               //auto point = m_pacmeuserinteractionAffinity->m_pacmewindowingwindow->m_pointWindow;
-               //auto size = m_pacmeuserinteractionAffinity->m_pacmewindowingwindow->m_sizeWindow;
-               auto point = m_pgraphicsbufferitem->m_pointBufferItem;
-               auto size = m_pgraphicsbufferitem->m_sizeBufferItem;
+               pimageTarget->m_point = rectangleFrame.origin();
 
-            //   ::f64_point pointf64Image = pimage->m_point;
-            //   ::f64_size sizef64Image = pimage->m_size;
-            //   ::f64_size sizef64ImageRaw = pimage->m_sizeRaw;
+               pimageTarget->m_size = rectangleFrame.size();
 
-               if (pimage->m_point != point || pimage->m_size != size)
-               {
+               pimageTarget->set_ok_flag();
 
-                  pimage->m_point = point;
-
-                  pimage->m_size = size;
-
-                  pimage->set_ok_flag();
-
-                  pimage->m_estatus = success;
-
-               }
+               pimageTarget->m_estatus = success;
 
             }
 
-            set_target_image(m_pgraphicsbufferitem->m_pimageBufferItem);
-
-            update_matrix();
-
          }
 
+         //set_target_image(m_pgraphicsbufferitem->m_pimageBufferItem);
 
-         if (!m_bBeginDraw && !bFirstLayer)
-         {
-
-            //m_bBeginDraw = true;
-
-            //m_pd2d1devicecontext->BeginDraw();
-
-            begin_draw();
-
-         }
+         //update_matrix();
 
       }
+
+
+      //if (!m_bBeginDraw && !bFirstLayer)
+      //{
+
+         //m_bBeginDraw = true;
+
+         //m_pd2d1devicecontext->BeginDraw();
+
+         begin_draw(false, puserinteraction, rectangleFrame, pimageTarget);
+
+      //}
+
+      //}
 
    }
 
@@ -8464,20 +8686,33 @@ namespace draw2d_direct2d
    void graphics::destroy()
    {
 
-
       // ::draw2d::device_lock devicelock(this);
 
       _pop_all_layers();
 
       m_pd2d1pathgeometryClip = nullptr;
 
-      m_pd2d1devicecontext = nullptr;
+      m_pd2d1devicecontext1 = nullptr;
 
       m_pd2d1devicecontext = nullptr;
+
+      ::draw2d::graphics::destroy();
+
+      m_pd2d1bitmap.release();
+
+      m_d2d1bitmapa.clear();
+
+      m_pd2d1layer.release();
+
+      m_pd2d1pathgeometryClip.release();
+
+      m_pd2d1deviceMemoryGraphicsPool.release();
 
       //m_pd2d1bitmaprendertarget = nullptr;
 
-      //::draw2d::graphics::destroy_os_data();
+      ::draw2d::graphics::destroy();
+
+      ::direct2d::object::destroy();
 
    }
 
@@ -8714,6 +8949,8 @@ namespace draw2d_direct2d
 
       }
 
+      pdraw2dbrush->defer_update(this);
+
       ::cast < ::draw2d_direct2d::brush > pdraw2ddirect2dbrush = pdraw2dbrush;
 
       ::ID2D1Brush * pd2d1brush = pdraw2ddirect2dbrush->m_pd2d1brush;
@@ -8721,7 +8958,7 @@ namespace draw2d_direct2d
       if (pd2d1brush == nullptr)
       {
 
-         return false;
+         throw ::exception(error_wrong_state);
 
       }
 
@@ -8764,6 +9001,8 @@ namespace draw2d_direct2d
 
       ::cast < ::draw2d_direct2d::brush > pdraw2ddirect2dbrush = pdraw2dbrush;
 
+      pdraw2dbrush->defer_update(this);
+
       ::ID2D1Brush * pd2d1brush = pdraw2ddirect2dbrush->m_pd2d1brush;
 
       if (pd2d1brush == nullptr)
@@ -8796,27 +9035,31 @@ namespace draw2d_direct2d
 
       ::pointer<::draw2d_direct2d::path> pdraw2ddirect2dpath = ppathParam;
 
-      ID2D1PathGeometry * pgeometry = pdraw2ddirect2dpath->m_pd2d1pathgeometryHollow1;
+      pdraw2ddirect2dpath->defer_update(this);
 
-      if (pgeometry != nullptr)
+      ID2D1PathGeometry * pgeometry = pdraw2ddirect2dpath->_hollow_path_geometry(this);
+
+      if (!pgeometry)
       {
 
-         if (pdraw2ddirect2dpath && pdraw2ddirect2dpath->m_bUseGeometryRealization)
-         {
-
-            auto prealization = pdraw2ddirect2dpath->_get_stroked_geometry_realization(this, (::i32)pdraw2dpen->m_dWidth);
-
-            draw(prealization, pdraw2dpen);
-
-            return;
-
-         }
-
-         defer_primitive_blend();
-
-         draw(pgeometry, pdraw2dpen);
+         throw exception(error_wrong_state);
 
       }
+
+      if (pdraw2ddirect2dpath->m_bUseGeometryRealization)
+      {
+
+         auto prealization = pdraw2ddirect2dpath->_get_stroked_geometry_realization(this, (::i32)pdraw2dpen->m_dWidth);
+
+         draw(prealization, pdraw2dpen);
+
+         return;
+
+      }
+
+      defer_primitive_blend();
+
+      draw(pgeometry, pdraw2dpen);
 
       //for(::collection::index i = 0; i < pdraw2dpath->m_shapea.get_size(); i++)
       //{
@@ -8952,31 +9195,35 @@ namespace draw2d_direct2d
 
       ::cast < ::draw2d_direct2d::path > pdraw2ddirect2dpath = pdraw2dpath;
 
-      ID2D1PathGeometry * pgeometry = pdraw2ddirect2dpath->m_pd2d1pathgeometryFilled1;
+      pdraw2ddirect2dpath->defer_update(this);
 
-      if (pgeometry != nullptr)
+      ID2D1PathGeometry * pgeometry = pdraw2ddirect2dpath->_filled_path_geometry(this);
+
+      if (::is_null(pgeometry))
       {
 
-         if (pdraw2dpath && pdraw2dpath->m_bUseGeometryRealization && pdraw2dbrush->m_ebrush != ::draw2d::e_brush_box_gradient)
-         {
+         throw ::exception(error_wrong_state);
 
-            auto prealization = pdraw2dpath->_get_filled_geometry_realization(this);
+      }
 
-            fill(prealization, m_pdraw2dbrush);
+      if (pdraw2dpath && pdraw2dpath->m_bUseGeometryRealization && pdraw2dbrush->m_ebrush != ::draw2d::e_brush_box_gradient)
+      {
 
-            return;
+         auto prealization = pdraw2dpath->_get_filled_geometry_realization(this);
 
-         }
+         fill(prealization, m_pdraw2dbrush);
 
+         return;
 
+      }
 
-         defer_primitive_blend();
+      defer_primitive_blend();
 
-         fill(pgeometry, pdraw2dbrush);
+      fill(pgeometry, pdraw2dbrush);
 
          //m_pd2d1devicecontext->FillGeometry(pgeometry, pdraw2dbrush);
 
-      }
+      //}
 
       //for (::collection::index i = 0; i < pdraw2dpath->m_shapea.get_size(); i++)
       //{

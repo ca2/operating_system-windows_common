@@ -363,7 +363,7 @@ namespace draw2d_direct2d
 
       ::cast < ::draw2d_direct2d::path > pdraw2ddirect2dpath = pdraw2dpath;
 
-      return pdraw2ddirect2dpath->m_pd2d1pathgeometry;
+      return pdraw2ddirect2dpath->_filled_path_geometry(pdraw2dgraphics);
 
    }
 

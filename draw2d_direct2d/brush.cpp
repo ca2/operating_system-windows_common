@@ -23,18 +23,9 @@ namespace draw2d_direct2d
    }
 
 
-   //void brush::dump(dump_context & dumpcontext) const
-   //{
-
-   //   ::draw2d::object::dump(dumpcontext);
-
-   //}
-
-
    void brush::update(::draw2d::graphics * pdraw2dgraphics)
    {
 
-      //auto pdraw2dgraphics = __graphics(pdraw2dgraphics);
       ::cast<::draw2d_direct2d::graphics> pdirect2ddraw2dgraphics = pdraw2dgraphics;
 
       if (pdirect2ddraw2dgraphics->m_pd2d1devicecontext == nullptr)
@@ -58,18 +49,7 @@ namespace draw2d_direct2d
 
             m_pd2d1brush = m_pd2d1solidcolorbrush;
 
-            if(m_pd2d1solidcolorbrush != nullptr)
-            {
-
-               //m_osdata[0] = (ID2D1Brush*)m_psolidbrush;
-               
-               //m_baCalculated[0] = true;
-
-            }
-
          }
-
-         //return m_psolidbrush;
 
       }
       else if(m_ebrush == ::draw2d::e_brush_linear_gradient_point_color)
@@ -111,20 +91,9 @@ namespace draw2d_direct2d
 
             hr = pdirect2ddraw2dgraphics->m_pd2d1devicecontext->CreateLinearGradientBrush(&prop, &brushproperties, pstopcollection, &m_pd2d1lineargradientbrush);
 
-            m_pd2d1brush = m_pd2d1radialgradientbrush;
-
-            if(m_pd2d1lineargradientbrush != nullptr)
-            {
-               
-               //m_osdata[0] = (ID2D1Brush*)m_plineargradientbrush;
-
-               //m_baCalculated[0] = true;
-
-            }
+            m_pd2d1brush = m_pd2d1lineargradientbrush;
 
          }
-
-         //return (ID2D1Brush *) m_plineargradientbrush;
 
       }
       else if(m_ebrush == ::draw2d::e_brush_radial_gradient_color)
@@ -182,18 +151,7 @@ namespace draw2d_direct2d
 
             pgradientstops->Release();
 
-            if(m_pd2d1radialgradientbrush != nullptr)
-            {
-
-               //m_osdata[0] = (ID2D1Brush*)m_pradialgradientbrush;
-
-               //m_baCalculated[0] = true;
-
-            }
-
          }
-
-         //return (ID2D1Brush *)m_pradialgradientbrush;
 
       }
       else if (m_ebrush == ::draw2d::e_brush_pattern)

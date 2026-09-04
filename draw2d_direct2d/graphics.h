@@ -81,6 +81,7 @@ namespace draw2d_direct2d
       //void gpu_layer_on_before_end_render() override;
 
       void on_acquire_memory_graphics(
+         bool bExternalRendering,
          ::image::image * pimage,
          const ::i32_size & size,
          ::acme::user::interaction * pacmeuserinteractionAffinity) override;
@@ -95,7 +96,7 @@ namespace draw2d_direct2d
       void set_target_image(::image::image * pimage) override;
 
 
-      void begin_draw() override;
+      void begin_draw(bool bExternalRendering, ::user::interaction * puserinteraction, const ::i32_rectangle & rectangleFrame, ::image::image * pimageTarget = nullptr) override;
       void end_draw() override;
       ////bool IsPrinting() override;            // true if being used for printing
 
@@ -171,12 +172,12 @@ namespace draw2d_direct2d
       //bool CreateIC(const ::scoped_string & scopedstrDriverName, const ::scoped_string & scopedstrDeviceName,
       //              const_char_pointer pszOutput, const void * lpInitData) override;
       void create_for_window_draw2d(::user::interaction * puserinteraction, const ::i32_size & size) override;
-      void update_as_image_render_target(::image::image *pimage) override;
+      void update_as_image_render_target(::image::image *pimage, ::acme::user::interaction * pacmeuserinteractionAffinity) override;
       void _create_memory_graphics(const ::i32_size &size, ::acme::user::interaction * pacmeuserinteractionAffinity) override;
       //void create_compatible_graphics(::draw2d::graphics * pdraw2dgraphics) override;
       //virtual void _create_from_dxgi_surface(::i32 iIndex, ::i32 iLayerIndex, IDXGISurface* pdxgisurface);
       //void _create_memory_graphics(const ::i32_size& size = {}) override;
-      void create_bitmap_graphics(::draw2d::bitmap *pdraw2dbitmap) override;
+      void create_bitmap_graphics(::draw2d::bitmap *pdraw2dbitmap, ::acme::user::interaction * pacmeuserinteractionAffinity) override;
       void defer_set_size(const ::i32_size& size = {}) override;
       ::image::image_pointer get_current_target_image() override;
       //void create_offscreen_graphics_for_swap_chain_blitting(const ::i32_size& size) override;
@@ -504,7 +505,9 @@ namespace draw2d_direct2d
       //virtual bool draw_text(const ::scoped_string & scopedstrString, character_count nCount, const ::f64_rectangle & rectangle, const ::e_align & ealign = e_align_top_left, const ::e_draw_text & edrawtext = e_draw_text_none) override;
       void draw_text(const ::scoped_string & scopedstr,const ::f64_rectangle & rectangle, const ::e_align & ealign = e_align_top_left, const ::e_draw_text & edrawtext = e_draw_text_none) override;
 
-//      virtual ::i32 draw_text_ex(::i8 * lpszString, ::i32 nCount, ::f64_rectangle * prectangle, const ::e_align & ealign = e_align_top_left, const ::e_draw_text & edrawtext = e_draw_text_none, LPDRAWTEXTPARAMS lpDTParams) override;
+      void _005DrawText(const ::scoped_string & scopedstr, ::f64 x, ::f64 y) override;
+
+      //      virtual ::i32 draw_text_ex(::i8 * lpszString, ::i32 nCount, ::f64_rectangle * prectangle, const ::e_align & ealign = e_align_top_left, const ::e_draw_text & edrawtext = e_draw_text_none, LPDRAWTEXTPARAMS lpDTParams) override;
       //    virtual ::i32 draw_text_ex(const ::scoped_string & scopedstr, ::f64_rectangle * prectangle, const ::e_align & ealign = e_align_top_left, const ::e_draw_text & edrawtext = e_draw_text_none, LPDRAWTEXTPARAMS lpDTParams) override;
 
       ::f64_size _get_text_extent(const ::scoped_string & scopedstr, character_count iIndex) override;
@@ -524,6 +527,7 @@ namespace draw2d_direct2d
       ::u32 SetTextAlign(::u32 nFlags) override;
       //virtual ::i32 GetTextFace(count nCount, ::i8 * lpszFacename) override;
       //virtual ::i32 GetTextFace(string & rString) override;
+      using ::draw2d::graphics::get_text_metrics;
       void get_text_metrics(::write_text::text_metric * lpMetrics) override;
       void get_output_text_metrics(::write_text::text_metric * lpMetrics) override;
       //virtual ::i32 SetTextJustification(::i32 nBreakExtra, ::i32 nBreakCount) override;

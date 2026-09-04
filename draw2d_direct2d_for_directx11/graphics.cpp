@@ -191,7 +191,7 @@ namespace draw2d_direct2d_for_directx11
 
       //m_pdirect2d_ = ::direct2d::from_gpu_device(pgpudevice);
 
-      m_pdirect2d_ = ::direct2d::get();
+      //auto pdirect2d = ::direct2d::get();
 
       auto pgpuwindowattachment = ::gpu::window_attachment::get(m_pacmeuserinteractionAffinity);
 
@@ -381,23 +381,30 @@ namespace draw2d_direct2d_for_directx11
    ::draw2d::bitmap * graphics::get_target_bitmap()
    {
 
-      if (!m_pdraw2dbitmapTarget)
+      if (!m_pimageTarget)
       {
 
-         constructø(m_pdraw2dbitmapTarget);
+         constructø(m_pimageTarget);
 
       }
 
-      if (m_pdraw2dbitmapTarget->size() != ::i32_size(m_sizeTotal2))
+      if (!m_pimageTarget->m_pdraw2dbitmap)
       {
 
-         ::cast < ::draw2d_direct2d_for_directx11::bitmap > pdraw2dbitmap = m_pdraw2dbitmapTarget;
+         constructø(m_pimageTarget->m_pdraw2dbitmap);
+
+      }
+
+      if (m_pimageTarget->m_pdraw2dbitmap->size() != ::i32_size(m_sizeTotal2))
+      {
+
+         ::cast < ::draw2d_direct2d_for_directx11::bitmap > pdraw2dbitmap = m_pimageTarget->m_pdraw2dbitmap;
 
          pdraw2dbitmap->_create_d2d1_bitmap(this, m_sizeTotal2, nullptr, {}, {}, 0, m_pacmeuserinteractionAffinity);
 
       }
 
-      return m_pdraw2dbitmapTarget;
+      return m_pimageTarget->m_pdraw2dbitmap;
 
       //if (!m_pd2d1bitmaprendertarget)
       //{
@@ -432,7 +439,7 @@ namespace draw2d_direct2d_for_directx11
    }
 
 
-   void graphics::create_bitmap_graphics(::draw2d::bitmap *pdraw2dbitmap)
+   void graphics::create_bitmap_graphics(::draw2d::bitmap *pdraw2dbitmap, ::acme::user::interaction * pacmeuserinteractionAffinity)
    {
 
       throw ::interface_only();
@@ -808,9 +815,9 @@ namespace draw2d_direct2d_for_directx11
 
          pcontext->m_pgpucompositor = this;
 
-         auto pdirect2d = ::direct2d::get();
+         //auto pdirect2d = ::direct2d::get();
 
-         m_pdirect2d_ = pdirect2d;
+         //m_pdirect2d_ = pdirect2d;
 
       }
 
@@ -945,9 +952,9 @@ namespace draw2d_direct2d_for_directx11
 
             pixelformat.format = DXGI_FORMAT_B8G8R8A8_UNORM;
 
-            constructø(m_pdraw2dbitmapTarget);
+            constructø(m_pimageTarget->m_pdraw2dbitmap);
 
-            ::cast < ::draw2d_direct2d_for_directx11::bitmap> pdraw2dbitmap = m_pdraw2dbitmapTarget;
+            ::cast < ::draw2d_direct2d_for_directx11::bitmap> pdraw2dbitmap = m_pimageTarget->m_pdraw2dbitmap;
 
             pdraw2dbitmap->_create_d2d1_bitmap(this, size, nullptr, {}, {}, 0, pacmeuserinteractionAffinity);
 
@@ -1073,36 +1080,36 @@ namespace draw2d_direct2d_for_directx11
    //}
 
 
-   void graphics::gpu_layer_on_after_begin_render()
-   {
-      
-      ////m_bInLayer = true;
-      //
-      //m_pdirect2d->m_pd2d1multithread->Enter();
+   //void graphics::gpu_layer_on_after_begin_render()
+   //{
+   //   
+   //   ////m_bInLayer = true;
+   //   //
+   //   //m_pdirect2d->m_pd2d1multithread->Enter();
 
-      //bind_draw2d_compositor();
+   //   //bind_draw2d_compositor();
 
-      //m_pdevicecontext->BeginDraw();
+   //   //m_pdevicecontext->BeginDraw();
 
-      //m_pdevicecontext->Clear();
+   //   //m_pdevicecontext->Clear();
 
-   }
+   //}
 
 
-   void graphics::gpu_layer_on_before_end_render()
-   {
+   //void graphics::gpu_layer_on_before_end_render()
+   //{
 
-      //m_pdevicecontext->EndDraw();
+   //   //m_pdevicecontext->EndDraw();
 
-      ////m_pdevicecontext->Clear();
+   //   ////m_pdevicecontext->Clear();
 
-      //soft_unbind_draw2d_compositor();
+   //   //soft_unbind_draw2d_compositor();
 
-      //m_pdirect2d->m_pd2d1multithread->Leave();
+   //   //m_pdirect2d->m_pd2d1multithread->Leave();
 
-      ////m_bInLayer = false;
+   //   ////m_bInLayer = false;
 
-   }
+   //}
 
 
    ::f64_point graphics::GetBrushOrg()
@@ -1151,6 +1158,22 @@ namespace draw2d_direct2d_for_directx11
    //   //return ::EnumObjects(get_handle2(), nObjectType, (GOBJENUMPROC)lpfn, lpData);
    //}
 
+
+   bool graphics::is_memory_graphics_pool_compatible(
+::acme::user::interaction * pacmeuserinteractionAffinity) const
+   {
+
+      return ::gpu::graphics::is_memory_graphics_pool_compatible(pacmeuserinteractionAffinity);
+
+   }
+
+
+   void graphics::on_release_memory_graphics()
+   {
+
+      return ::gpu::graphics::on_release_memory_graphics();
+
+   }
 
    bool graphics::_draw_blend(const ::image::image_drawing & imagedrawing)
    {
@@ -5632,10 +5655,10 @@ namespace draw2d_direct2d_for_directx11
 
    //}
 
-   void graphics::intersect_clip(const ::draw2d::clip_group& clipgroup)
+   void graphics::intersect_clip(::draw2d::clip_group * pclipgroup)
    {
 
-      ::draw2d_direct2d::graphics::intersect_clip(clipgroup);
+      ::draw2d_direct2d::graphics::intersect_clip(pclipgroup);
 
       //comptr<ID2D1PathGeometry> ppathgeometry;
 
@@ -6121,11 +6144,16 @@ namespace draw2d_direct2d_for_directx11
 
       //}
 
+      throw(todo);
 
-      if (!m_bBeginDraw)
-      {
+      ::i32_rectangle rectangleFrame;
 
-         begin_draw();
+      ::image::image_pointer pimageTarget;
+
+      //if (!m_bBeginDraw)
+      //{
+
+         begin_draw(false, nullptr, rectangleFrame, pimageTarget);
 
          //m_bBeginDraw = true;
 
@@ -6143,7 +6171,7 @@ namespace draw2d_direct2d_for_directx11
 
          //fill_solid_rectangle({ ::i32_point(), m_sizeTarget }, ::color::transparent);
 
-      }
+      //}
 
    }
 
@@ -6192,7 +6220,7 @@ namespace draw2d_direct2d_for_directx11
 
       }
 
-      defer_soft_unbind_draw2d_compositor(pgpulayer);
+      // defer_soft_unbind_draw2d_compositor(pgpulayer);
 
    }
 
@@ -6870,6 +6898,7 @@ namespace draw2d_direct2d_for_directx11
 
 
    void graphics::on_acquire_memory_graphics(
+      bool bExternalRendering,
    ::image::image * pimage,
    const ::i32_size & size,
    ::acme::user::interaction * pacmeuserinteractionAffinity)
@@ -6882,6 +6911,7 @@ namespace draw2d_direct2d_for_directx11
 
       //}
       ::draw2d::graphics::on_acquire_memory_graphics(
+         bExternalRendering,
       pimage,
       size,
       pacmeuserinteractionAffinity);
@@ -6909,12 +6939,18 @@ namespace draw2d_direct2d_for_directx11
 
          }
 
-         if (!m_bBeginDraw)
-         {
+         throw(todo);
+
+         ::i32_rectangle rectangleFrame;
+
+         ::image::image_pointer pimageTarget;
+
+         //if (!m_bBeginDraw)
+         //{
 
             //m_bBeginDraw = true;
 
-            begin_draw();
+            begin_draw(true, pacmeuserinteractionAffinity->user_interaction(), rectangleFrame, pimageTarget);
 
             ////auto pgpucurrentlayer = ::gpu::current_layer();
 
@@ -6936,7 +6972,7 @@ namespace draw2d_direct2d_for_directx11
 
             //fill_solid_rectangle({ ::i32_point(), m_sizeTarget }, ::color::transparent);
 
-         }
+         //}
 
       }
 
@@ -7276,9 +7312,15 @@ namespace draw2d_direct2d_for_directx11
          if (!m_bBeginDraw)
          {
 
+            throw(todo);
+
+            ::i32_rectangle rectangleFrame;
+
+            ::image::image_pointer pimageTarget;
+
             //m_bBeginDraw = true;
 
-            begin_draw();
+            begin_draw(true, puserinteraction, rectangleFrame, pimageTarget);
 
          }
 
@@ -7336,12 +7378,12 @@ namespace draw2d_direct2d_for_directx11
    }
 
 
-   void graphics::just_after_new_frame()
-   {
+   //void graphics::just_after_new_frame()
+   //{
 
-      ::gpu::graphics::just_after_new_frame();
+   //   ::gpu::graphics::just_after_new_frame();
 
-   }
+   //}
 
 
    //void graphics::start_gpu_layer(::gpu::layer * pgpulayer)
@@ -7405,10 +7447,10 @@ namespace draw2d_direct2d_for_directx11
    //}
 
 
-   void graphics::begin_draw()
+   void graphics::begin_draw(bool bExternalRendering, ::user::interaction * puserinteraction, const ::i32_rectangle & rectangleFrame, ::image::image * pimageTarget)
    {
 
-      ::gpu::graphics::begin_draw();
+      ::gpu::graphics::begin_draw(bExternalRendering, puserinteraction, rectangleFrame, pimageTarget);
 
       //auto pgputexturesiteTarget = current_target_texture(::gpu::current_layer());
 

@@ -353,7 +353,7 @@ namespace draw2d_direct2d
 
       }
 
-      pdraw2dgraphics->update_as_image_render_target(this);
+      pdraw2dgraphics->update_as_image_render_target(this, m_pacmeuserinteractionAffinity);
 
       if (m_pdraw2dbitmap.ok())
       {
@@ -433,7 +433,7 @@ namespace draw2d_direct2d
 
       //}
 
-      copy_from(pdraw2dgraphics->m_pimage);
+      copy_from(pdraw2dgraphics->m_pimageTarget);
 
       return true;
 
@@ -1509,14 +1509,14 @@ namespace draw2d_direct2d
    //}
 
 
-   ::image_pixmap_lease image::_map(const ::i32_rectangle & rectangleParameter)
+   ::image_pixmap_lease image::_map(::image::enum_map emap, const ::i32_rectangle & rectangleParameter)
    {
 
       // The common image implementation allocates the CPU pixmap and asks this
       // backend's bitmap::read_pixels() to populate it. That readback copies
       // each row using D2D1_MAPPED_RECT::pitch, so the staging surface must not
       // be exposed through a second, independently mapped pixmap here.
-      return ::transfer(::image::image::_map(rectangleParameter));
+      return ::transfer(::image::image::_map(emap, rectangleParameter));
 
       _tidy_map(rectangleParameter);
 
@@ -1547,7 +1547,7 @@ namespace draw2d_direct2d
       if (m_pdraw2dbitmap.is_null())
       {
 
-         return ::transfer(::image::image::_map(rectangle));
+         return ::transfer(::image::image::_map(emap, rectangle));
 
          //return;
 

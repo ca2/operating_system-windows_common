@@ -154,7 +154,7 @@ namespace gpu_directx11
       void on_end_layer(::gpu::layer * pgpulayer) override;
 
 
-      void draw2d_on_end_draw(::gpu::graphics *pgpugraphics) override;
+      //void draw2d_on_end_draw(::gpu::graphics *pgpugraphics) override;
 
 
       void start_debug_happening(::gpu::command_buffer * pgpucommandbuffer, const ::scoped_string& scopedstrDebugHappening) override;
@@ -162,8 +162,8 @@ namespace gpu_directx11
 
 
 
-      ::pointer < ::gpu::command_buffer > beginSingleTimeCommands(::gpu::queue * pgpuqueue, ::gpu::enum_command_buffer ecommandbuffer = ::gpu::e_command_buffer_graphics) override;
-      void endSingleTimeCommands(::gpu::command_buffer * pcommandbuffer) override;
+      ::pointer < ::gpu::command_buffer > _beginSingleTimeCommands(::gpu::queue * pgpuqueue, ::gpu::enum_command_buffer ecommandbuffer = ::gpu::e_command_buffer_graphics) override;
+      void _endSingleTimeCommands(::gpu::command_buffer * pcommandbuffer) override;
 
 
       //void defer_bind(::gpu::shader* pgpushader) override;
@@ -215,7 +215,7 @@ namespace gpu_directx11
       void _create_gpu_context(::gpu::device* pgpudevice, const ::gpu::enum_output& eoutput, const ::gpu::enum_scene& escene, ::acme::windowing::window* pacmewindowingwindow, ::draw2d::graphics * pdraw2dgraphics, const ::i32_point & pointInput, const ::i32_point & pointOutput, const ::i32_size & size, const ::i32_size & sizeRaw) override;
 
 
-      void __bind_draw2d_compositor(::gpu::compositor* pgpucompositor, ::gpu::layer * pgpulayer) override;
+      //void __bind_draw2d_compositor(::gpu::compositor* pgpucompositor, ::gpu::layer * pgpulayer) override;
 
       //VkDevice logicalDevice();
 
