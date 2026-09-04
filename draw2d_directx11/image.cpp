@@ -225,7 +225,7 @@ namespace draw2d_directx11
 
       //}
 
-      copy_from(pdraw2dgraphics->m_pimage);
+      copy_from(pdraw2dgraphics->m_pimageTarget);
 
       return true;
 
@@ -1081,7 +1081,7 @@ namespace draw2d_directx11
 
 
 
-   ::image_pixmap_lease image::_map(const ::i32_rectangle & rectangle)
+   ::image_pixmap_lease image::_map(::image::enum_map emap, const ::i32_rectangle & rectangle)
    {
 
       //::draw2d::lock draw2dlock;

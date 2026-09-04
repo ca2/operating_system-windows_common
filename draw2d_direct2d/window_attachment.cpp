@@ -124,4 +124,17 @@ namespace draw2d_direct2d
    }
 
 
+   void window_attachment::destroy()
+   {
+
+
+      m_pd2d1devicecontext.release();
+      m_pmutexDeviceContext.release();
+      m_pgdioffscreen.defer_destroy_and_release();
+
+      ::draw2d::window_attachment::destroy();
+
+   }
+
+
 } // namespace draw2d_direct2d

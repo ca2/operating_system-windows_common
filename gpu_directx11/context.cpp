@@ -906,26 +906,26 @@ namespace gpu_directx11
    }
 
 
-   void context::__bind_draw2d_compositor(::gpu::compositor * pgpucompositor, ::gpu::layer * pgpulayer)
-   {
+   //void context::__bind_draw2d_compositor(::gpu::compositor * pgpucompositor, ::gpu::layer * pgpulayer)
+   //{
 
-      ::cast < ::dxgi_surface_bindable > pdxgisurfacebindable = pgpucompositor;
+   //   ::cast < ::dxgi_surface_bindable > pdxgisurfacebindable = pgpucompositor;
 
-      auto pgpurendertarget = get_gpu_renderer()->render_target();
+   //   auto pgpurendertarget = get_gpu_renderer()->render_target();
 
-      auto ptexturesite = pgpurendertarget->current_texture(::gpu::current_layer(), true);
-      
-      ::cast<::gpu_directx11::texture> ptexture = ptexturesite->gpu_texture();
+   //   auto ptexturesite = pgpurendertarget->current_texture(::gpu::current_layer(), true);
+   //   
+   //   ::cast<::gpu_directx11::texture> ptexture = ptexturesite->gpu_texture();
 
-      auto pgpuwindowattachment = ::gpu::window_attachment::get(pgpurendertarget);
+   //   auto pgpuwindowattachment = ::gpu::window_attachment::get(pgpurendertarget);
 
-      auto iFrameIndex = pgpuwindowattachment->get_frame_index3();
+   //   auto iFrameIndex = pgpuwindowattachment->get_frame_index3();
 
-      auto pdxgisurface = ptexture->__get_dxgi_surface();
+   //   auto pdxgisurface = ptexture->__get_dxgi_surface();
 
-      //pdxgisurfacebindable->_bind(iFrameIndex, pgpulayer->m_iGpuLayerIndex, pdxgisurface);
+   //   //pdxgisurfacebindable->_bind(iFrameIndex, pgpulayer->m_iGpuLayerIndex, pdxgisurface);
 
-   }
+   //}
 
 
    //void context::_create_window_context(::acme::windowing::window* pwindowParam)
@@ -1472,7 +1472,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    }
 
 
-   ::pointer < ::gpu::command_buffer > context::beginSingleTimeCommands(::gpu::queue * pgpuqueue, ::gpu::enum_command_buffer ecommandbuffer)
+   ::pointer < ::gpu::command_buffer > context::_beginSingleTimeCommands(::gpu::queue * pgpuqueue, ::gpu::enum_command_buffer ecommandbuffer)
    {
 
       auto pcommandbuffer = create_newø<::gpu_directx11::command_buffer>();
@@ -1486,7 +1486,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    }
 
 
-   void context::endSingleTimeCommands(::gpu::command_buffer * pcommandbuffer)
+   void context::_endSingleTimeCommands(::gpu::command_buffer * pcommandbuffer)
    {
 
       if (m_pgpudevice->m_pgpucontextMain == this)
@@ -2003,7 +2003,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
          ////pdxgisurfacebindable->_bind(iFrameIndex, pdxgisurface);
 
-         __bind_draw2d_compositor(m_pgpucompositor, pgpulayer);
+         //__bind_draw2d_compositor(m_pgpucompositor, pgpulayer);
 
          m_pgpucompositor->on_start_layer(pgpulayer);
 
@@ -2050,23 +2050,23 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
    }
 
 
-   void context::draw2d_on_end_draw(::gpu::graphics * pgpugraphics)
-   {
+   //void context::draw2d_on_end_draw(::gpu::graphics * pgpugraphics)
+   //{
 
-      if (m_papplication->m_gpu.m_bUseSwapChainWindow)
-      {
+   //   if (m_papplication->m_gpu.m_bUseSwapChainWindow)
+   //   {
 
-         //auto pgpuwindowattachment = ::gpu::window_attachment::get(this);
+   //      //auto pgpuwindowattachment = ::gpu::window_attachment::get(this);
 
-         //auto pswapchain = pgpuwindowattachment->window_context()->get_swap_chain();
+   //      //auto pswapchain = pgpuwindowattachment->window_context()->get_swap_chain();
 
-         //if (pswapchain)
-         //{
+   //      //if (pswapchain)
+   //      //{
 
-         //   pswapchain->swap_buffers();
-         //}
-      }
-   }
+   //      //   pswapchain->swap_buffers();
+   //      //}
+   //   }
+   //}
 
 
    //ID3D11DepthStencilState* context::depth_stencil_state_disabled()

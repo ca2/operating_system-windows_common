@@ -67,7 +67,7 @@ namespace acme_windows_common
    }
 
 
-   void file_context::term_system()
+   void file_context::on_system_termination()
    {
 
       //auto estatus = m_pfilesystem->update_module_path();

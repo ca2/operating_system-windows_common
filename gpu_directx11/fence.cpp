@@ -27,12 +27,12 @@ namespace gpu_directx11
    }
 
 
-   void fence::initialize_gpu_fence(::gpu::device * pgpudevice, bool bCreateSignaled)
+   void fence::initialize_gpu_fence(::gpu::context * pgpucontext, bool bCreateSignaled)
    {
 
-      ::gpu::fence::initialize_gpu_fence(pgpudevice, bCreateSignaled);
+      ::gpu::fence::initialize_gpu_fence(pgpucontext, bCreateSignaled);
 
-      ::cast < ::gpu_directx11::device > pdevice = pgpudevice;
+      ::cast < ::gpu_directx11::device > pdevice = m_pgpucontextGpuFence->m_pgpudevice;
 
       D3D11_QUERY_DESC querydesc = {};
 
@@ -53,7 +53,7 @@ namespace gpu_directx11
    void fence::reset_gpu_fence()
    {
 
-      ::cast < ::gpu_directx11::device > pdevice = m_pgpudevice;
+      ::cast < ::gpu_directx11::device > pdevice = m_pgpucontextGpuFence->m_pgpudevice;
 
       pdevice->m_pd3d11devicecontextMain->End(m_pquery);
 
@@ -72,7 +72,7 @@ namespace gpu_directx11
 
       }
 
-      ::cast < ::gpu_directx11::device > pdevice = m_pgpudevice;
+      ::cast < ::gpu_directx11::device > pdevice = m_pgpucontextGpuFence->m_pgpudevice;
 
       while (true)
       {

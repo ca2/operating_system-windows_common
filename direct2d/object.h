@@ -13,13 +13,13 @@ namespace direct2d
    public:
 
 
-      ::pointer < ::direct2d::direct2d > m_pdirect2d_;
 
       object();
       object(object && object);
       ~object() override;
 
 
+      
       //void initialize_direct2d_object(::direct2d::direct2d * pdirect2d);
 
 

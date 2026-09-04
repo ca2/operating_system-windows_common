@@ -109,10 +109,10 @@ namespace draw2d_directx11
    }
 
 
-   ::gpu_directx11::context* graphics::gpu_context()
+   ::gpu::context* graphics::gpu_context()
    {
 
-      return dynamic_cast <::gpu_directx11::context*>(::gpu::graphics::gpu_context());
+      return ::gpu::graphics::gpu_context();
 
    }
 
@@ -590,36 +590,36 @@ namespace draw2d_directx11
    //}
 
 
-   void graphics::gpu_layer_on_after_begin_render()
-   {
-      
-      ////m_bInLayer = true;
-      //
-      //m_pdirectx11->m_pd2d1multithread->Enter();
+   //void graphics::gpu_layer_on_after_begin_render()
+   //{
+   //   
+   //   ////m_bInLayer = true;
+   //   //
+   //   //m_pdirectx11->m_pd2d1multithread->Enter();
 
-      //bind_draw2d_compositor();
+   //   //bind_draw2d_compositor();
 
-      //m_pdevicecontext->BeginDraw();
+   //   //m_pdevicecontext->BeginDraw();
 
-      //m_pdevicecontext->Clear();
+   //   //m_pdevicecontext->Clear();
 
-   }
+   //}
 
 
-   void graphics::gpu_layer_on_before_end_render()
-   {
+   //void graphics::gpu_layer_on_before_end_render()
+   //{
 
-      //m_pdevicecontext->EndDraw();
+   //   //m_pdevicecontext->EndDraw();
 
-      ////m_pdevicecontext->Clear();
+   //   ////m_pdevicecontext->Clear();
 
-      //soft_unbind_draw2d_compositor();
+   //   //soft_unbind_draw2d_compositor();
 
-      //m_pdirectx11->m_pd2d1multithread->Leave();
+   //   //m_pdirectx11->m_pd2d1multithread->Leave();
 
-      ////m_bInLayer = false;
+   //   ////m_bInLayer = false;
 
-   }
+   //}
 
 
    ::f64_point graphics::GetBrushOrg()
@@ -2598,12 +2598,12 @@ namespace draw2d_directx11
       if (pimage->m_pextension && pimage->m_pextension->m_pframea)
       {
 
-         if (m_pimage)
+         if (m_pimageTarget)
          {
 
             auto & pframeaSource = pimage->m_pextension->m_pframea;
 
-            auto & pframeaTarget = m_pimage->get_extension()->m_pframea;
+            auto & pframeaTarget = m_pimageTarget->get_extension()->m_pframea;
 
             defer_construct_newø(pframeaTarget);
 
@@ -2635,7 +2635,7 @@ namespace draw2d_directx11
 
                   //defer_constructø(pimageTarget);
 
-                  pimageTarget->create_as_descriptor(m_pimage->size());
+                  pimageTarget->create_as_descriptor(m_pimageTarget->size());
 
                   auto pgraphicsImageTarget = pimageTarget->acquire_graphics();
 
@@ -5528,7 +5528,7 @@ namespace draw2d_directx11
 
          //m_pdevicecontext->Clear();
 
-         auto pcontext = gpu_context();
+         ::cast < ::gpu_directx11::context > pcontext = gpu_context();
 
          //pcontext->m_pcontext->OMSetDepthStencilState(
          //   pcontext->depth_stencil_state_disabled(), 0);
@@ -6672,12 +6672,12 @@ namespace draw2d_directx11
    }
 
 
-   void graphics::just_after_new_frame()
-   {
+   //void graphics::just_after_new_frame()
+   //{
 
-      ::gpu::graphics::just_after_new_frame();
+   //   ::gpu::graphics::just_after_new_frame();
 
-   }
+   //}
 
 
    //void graphics::_bind(::i32 iIndex, ::i32 iLayerIndex, IDXGISurface* psurface)
@@ -6746,7 +6746,7 @@ namespace draw2d_directx11
 
             }
 
-            auto pcontext = gpu_context();
+            ::cast < ::gpu_directx11::context > pcontext = gpu_context();
 
             {
 
@@ -6780,7 +6780,7 @@ namespace draw2d_directx11
 
             }
 
-            auto pcontext = gpu_context();
+            ::cast < ::gpu_directx11::context > pcontext = gpu_context();
 
             {
 

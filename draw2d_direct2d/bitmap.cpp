@@ -235,11 +235,31 @@ namespace draw2d_direct2d
 
       comptr<ID2D1Bitmap1> pdraw2dbitmap;
 
+      ::memory memoryTransparent;
+
+      const void * pInitialBits = nullptr;
+      UINT32 iInitialStride = 0;
+
+      if (!pbits)
+      {
+
+         iInitialStride =
+            sizeParam.cx * (::i32)sizeof(::image32_t);
+
+         memoryTransparent.set_size(
+            (memsize)iInitialStride * sizeParam.cy);
+
+         memoryTransparent.set(0);
+
+         pInitialBits = memoryTransparent.data();
+
+      }
+
       HRESULT hrCreateBitmap =
          pd2d1devicecontext->CreateBitmap(
             sizeu,
-            nullptr,
-            0,
+            pInitialBits,
+            iInitialStride,
             &properties,
             &pdraw2dbitmap);
 
@@ -609,7 +629,7 @@ namespace draw2d_direct2d
 
       props.pixelFormat.format = DXGI_FORMAT_B8G8R8A8_UNORM;
 
-      draw2d_direct2d::graphics * pgraphics2d = dynamic_cast < ::draw2d_direct2d::graphics * > (pdraw2dgraphics);
+      ::cast < draw2d_direct2d::graphics > pgraphics2d = pdraw2dgraphics;
 
       if (!::is_set(pgraphics2d))
       {
@@ -686,7 +706,24 @@ namespace draw2d_direct2d
 
          rectangleDst.bottom = size.cy;
 
-         hrResultCopyBitmap = m_pd2d1bitmap->CopyFromMemory(&rectangleDst, ppixmap->m_memoryPixmap.data(), iScan);
+         memory memory;
+
+         auto pimage32Source = (::image32_t *)ppixmap->m_memoryPixmap.data();
+
+         if (!ppixmap->m_bTopLeft)
+         {
+
+            memory.set_size(iScan * size.cy);
+
+            auto pimage32Target = (::image32_t *)memory.data();
+
+            pimage32Target->y_swap_copy(size, iScan, pimage32Source, iScan);
+
+            pimage32Source = (::image32_t *)memory.data();
+
+         }
+
+         hrResultCopyBitmap = m_pd2d1bitmap->CopyFromMemory(&rectangleDst, pimage32Source , iScan);
 
       }
 
@@ -825,7 +862,8 @@ namespace draw2d_direct2d
       const ::i32_size & size,
       const ::i32_point & point,
       const ::image32_t * pimage32,
-      ::i32 iScan)
+      ::i32 iScan, 
+      bool bTopDown)
    {
 
       if (size.cx <= 0 || size.cy <= 0)
@@ -869,14 +907,32 @@ namespace draw2d_direct2d
 
       }
 
+
       D2D1_RECT_U rectangleDst{};
 
-      rectangleDst.left = (UINT32) point.x;
-      rectangleDst.top = (UINT32) point.y;
-      rectangleDst.right = (UINT32) (point.x + size.cx);
-      rectangleDst.bottom = (UINT32) (point.y + size.cy);
+      rectangleDst.left = (UINT32)point.x;
+      rectangleDst.top = (UINT32)point.y;
+      rectangleDst.right = (UINT32)(point.x + size.cx);
+      rectangleDst.bottom = (UINT32)(point.y + size.cy);
 
-      auto hrCopy = m_pd2d1bitmap1->CopyFromMemory(&rectangleDst, pimage32, (UINT32) iScan);
+      memory memory;
+
+      auto pimage32Source = (::image32_t *) pimage32;
+
+      if (!bTopDown)
+      {
+
+         memory.set_size(iScan * size.cy);
+
+         auto pimage32Target = (::image32_t *)memory.data();
+
+         pimage32Target->y_swap_copy(size, iScan, pimage32, iScan);
+
+         pimage32Source = (::image32_t *)memory.data();
+
+      }
+
+      auto hrCopy = m_pd2d1bitmap1->CopyFromMemory(&rectangleDst, pimage32Source, (UINT32)iScan);
 
       if (FAILED(hrCopy))
       {

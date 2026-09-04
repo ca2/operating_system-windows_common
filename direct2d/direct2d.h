@@ -66,7 +66,7 @@ namespace direct2d
 
       
       
-
+      void destroy() override;
 
 
    };
@@ -75,8 +75,8 @@ namespace direct2d
    ///CLASS_DECL_DIRECT2D direct2d* from_gpu_device(::gpu::device* pgpudevice);
 
 
-   CLASS_DECL_DIRECT2D ::direct2d::direct2d *get();
-   CLASS_DECL_DIRECT2D void release();
+   CLASS_DECL_DIRECT2D ::direct2d::direct2d * get();
+   //CLASS_DECL_DIRECT2D void _release();
    ////inline ID2D1Factory1* factory()
    //{
 

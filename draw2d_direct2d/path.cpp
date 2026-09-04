@@ -21,7 +21,6 @@ namespace draw2d_direct2d
    path::path()
    {
 
-      //m_pthis = this;
       m_bUseGeometryRealization = true;
 
    }
@@ -38,7 +37,7 @@ namespace draw2d_direct2d
    bool path::internal_end_figure(bool bClose)
    {
 
-      if (m_pd2d1geometrysink == nullptr)
+      if (m_pd2d1geometrysinkTime == nullptr)
       {
 
          return false;
@@ -48,13 +47,13 @@ namespace draw2d_direct2d
       if(bClose)
       {
 
-         m_pd2d1geometrysink->EndFigure(D2D1_FIGURE_END_CLOSED);
+         m_pd2d1geometrysinkTime->EndFigure(D2D1_FIGURE_END_CLOSED);
 
       }
       else
       {
 
-         m_pd2d1geometrysink->EndFigure(D2D1_FIGURE_END_OPEN);
+         m_pd2d1geometrysinkTime->EndFigure(D2D1_FIGURE_END_OPEN);
 
       }
 
@@ -93,14 +92,13 @@ namespace draw2d_direct2d
          if (dDistance > 0.001)
          {
 
-            m_pd2d1geometrysink->AddLine({(FLOAT) point.x, (FLOAT) point.y});
+            m_pd2d1geometrysinkTime->AddLine({(FLOAT) point.x, (FLOAT) point.y});
 
          }
 
-
       }
 
-      m_pd2d1geometrysink->AddArc(arcseg);
+      m_pd2d1geometrysinkTime->AddArc(arcseg);
 
       m_pointEnd.x = arcseg.point.x;
 
@@ -132,41 +130,80 @@ namespace draw2d_direct2d
    bool path::internal_add_ellipse(::draw2d::graphics * pdraw2dgraphics, ::f64 x, ::f64 y, ::f64 cx, ::f64 cy)
    {
 
-      internal_start_figure(pdraw2dgraphics, x + cx, y + cy / 2.0);
+      const auto xCenter = x + cx / 2.0;
+      const auto yCenter = y + cy / 2.0;
 
-      ::f64_arc arc{};
+      const auto xRight = x + cx;
+      const auto xLeft = x;
 
-      arc.left = x;
-      arc.top = y;
-      arc.right =x + cx;
-      arc.bottom = y + cy;
-      arc.m_pointBegin.x = x + cx;
-      arc.m_pointBegin.y = y + cy / 2.0;
-      arc.m_pointEnd.x = x + cx;
-      arc.m_pointEnd.y = y + cy / 2.0;
-      arc.m_angleBeg = 0_degree;
-      arc.m_angleEnd2 = 360_degree;
-      arc.m_angleExt = 360_degree;
+      // Start at the rightmost point.
+      if (!internal_start_figure(
+         pdraw2dgraphics,
+         xRight,
+         yCenter))
+      {
 
-      internal_add_arc(pdraw2dgraphics, arc);
+         return false;
 
-      //arc.m_pointCenter.x = x + cx / 2.0;
-      //arc.m_pointCenter.y = y + cy / 2.0;
-      //arc.m_sizeRadius.cx = cx / 2.0;
-      //arc.m_sizeRadius.cy = cy / 2.0;
-      //arc.m_pointBegin.x = x;
-      //arc.m_pointBegin.y = y + cy / 2.0;
-      //arc.m_pointEnd.x = x + cx;
-      //arc.m_pointEnd.y = y + cy / 2.0;
-      //arc.m_angleBeg = MATH_PI;
-      //arc.m_angleEnd2 = MATH_PI * 2.0;
-      //arc.m_angleExt = MATH_PI;
+      }
 
-      //internal_add_arc(pdraw2dgraphics, arc);
+      // Right -> Left
+      {
+         ::f64_arc arc{};
+
+         arc.left = x;
+         arc.top = y;
+         arc.right = x + cx;
+         arc.bottom = y + cy;
+
+         arc.m_pointBegin.x = xRight;
+         arc.m_pointBegin.y = yCenter;
+
+         arc.m_pointEnd.x = xLeft;
+         arc.m_pointEnd.y = yCenter;
+
+         arc.m_angleBeg = 0_degree;
+         arc.m_angleEnd2 = 180_degree;
+         arc.m_angleExt = 180_degree;
+
+         if (!internal_add_arc(pdraw2dgraphics, arc))
+         {
+
+            return false;
+
+         }
+
+      }
+
+      // Left -> Right
+      {
+         ::f64_arc arc{};
+
+         arc.left = x;
+         arc.top = y;
+         arc.right = x + cx;
+         arc.bottom = y + cy;
+
+         arc.m_pointBegin.x = xLeft;
+         arc.m_pointBegin.y = yCenter;
+
+         arc.m_pointEnd.x = xRight;
+         arc.m_pointEnd.y = yCenter;
+
+         arc.m_angleBeg = 180_degree;
+         arc.m_angleEnd2 = 360_degree;
+         arc.m_angleExt = 180_degree;
+
+         if (!internal_add_arc(pdraw2dgraphics, arc))
+         {
+
+            return false;
+
+         }
+
+      }
 
       internal_end_figure(true);
-
-      return true;
 
    }
 
@@ -263,7 +300,7 @@ namespace draw2d_direct2d
 
       auto & renderer = direct2d()->m_geometrysinktextrenderer;
 
-      renderer.m_pgeometrysink = m_pd2d1geometrysink;
+      renderer.m_pgeometrysink = m_pd2d1geometrysinkTime;
 
       FLOAT dpix = 0.f;
       FLOAT dpiy = 0.f;
@@ -287,8 +324,6 @@ namespace draw2d_direct2d
 
       playout->Draw(nullptr, &renderer, (FLOAT)x, (FLOAT)y);
 
-      m_estatus = ::success;
-
       return true;
 
    }
@@ -297,20 +332,18 @@ namespace draw2d_direct2d
    bool path::internal_add_line(::draw2d::graphics * pdraw2dgraphics, ::f64 x, ::f64 y)
    {
 
-      if (::is_null(m_pd2d1geometrysink))
+      if (::is_null(m_pd2d1geometrysinkTime))
       {
 
          return false;
 
       }
 
-      m_pd2d1geometrysink->AddLine({ (FLOAT) x, (FLOAT)y });
+      m_pd2d1geometrysinkTime->AddLine({ (FLOAT) x, (FLOAT)y });
 
       m_pointEnd.x = x;
 
       m_pointEnd.y = y;
-
-      m_estatus = ::success;
 
       return true;
 
@@ -327,21 +360,21 @@ namespace draw2d_direct2d
 
       }
 
-      if (m_pd2d1geometrysink == nullptr)
+      if (m_pd2d1geometrysinkTime == nullptr)
       {
 
-         m_pd2d1pathgeometry->Open(&m_pd2d1geometrysink);
+         m_pd2d1pathgeometryTime->Open(&m_pd2d1geometrysinkTime);
 
          if (m_efillmode == ::draw2d::e_fill_mode_winding)
          {
 
-            m_pd2d1geometrysink->SetFillMode(D2D1_FILL_MODE_WINDING);
+            m_pd2d1geometrysinkTime->SetFillMode(D2D1_FILL_MODE_WINDING);
 
          }
          else if (m_efillmode == ::draw2d::e_fill_mode_alternate)
          {
 
-            m_pd2d1geometrysink->SetFillMode(D2D1_FILL_MODE_ALTERNATE);
+            m_pd2d1geometrysinkTime->SetFillMode(D2D1_FILL_MODE_ALTERNATE);
 
          }
 
@@ -362,7 +395,7 @@ namespace draw2d_direct2d
 
       }
 
-      m_pd2d1geometrysink->BeginFigure({ (FLOAT)x, (FLOAT)y }, pdraw2dgraphics->m_bOutline ? D2D1_FIGURE_BEGIN_HOLLOW : D2D1_FIGURE_BEGIN_FILLED);
+      m_pd2d1geometrysinkTime->BeginFigure({ (FLOAT)x, (FLOAT)y }, pdraw2dgraphics->m_bOutline ? D2D1_FIGURE_BEGIN_HOLLOW : D2D1_FIGURE_BEGIN_FILLED);
 
       m_pointBegin.x = x;
       m_pointBegin.y = y;
@@ -374,15 +407,6 @@ namespace draw2d_direct2d
       return true;
 
    }
-
-
-   //void * path::detach()
-   //{
-
-   //   return m_pd2d1pathgeometry.detach();
-
-   //}
-
 
 
    bool path::internal_get_arc(::f64_point & pointStart,D2D1_ARC_SEGMENT & arcseg, const ::f64_arc & arc)
@@ -415,7 +439,7 @@ namespace draw2d_direct2d
 
       }
 
-      if(fabs(arc.m_angleEnd2 - arc.m_angleBeg) < MATH_PI)
+      if(fabs(arc.m_angleEnd2 - arc.m_angleBeg) <= 2_π)
       {
 
          arcseg.arcSize = D2D1_ARC_SIZE_SMALL;
@@ -443,9 +467,9 @@ namespace draw2d_direct2d
    {
 
       //auto pdraw2dgraphics = __graphics(pdraw2dgraphics);
-
-      m_pd2d1pathgeometryHollow1.release();
-      m_pd2d1pathgeometryFilled1.release();
+      //m_pd2d1pathgeometryHollow.release();
+      //m_pd2d1pathgeometryFilled.release();
+      clear_node_data();
 
    }
 
@@ -453,221 +477,137 @@ namespace draw2d_direct2d
    ID2D1PathGeometry * path::_hollow_path_geometry(::draw2d::graphics * pdraw2dgraphics)
    {
 
-      ::cast < ::draw2d_direct2d::graphics > pdraw2ddirect2dgraphics = pdraw2dgraphics;
+      if (m_pd2d1pathgeometryHollow)
+      {
 
-      HRESULT hr = S_OK;
+         return m_pd2d1pathgeometryHollow;
 
-      //if (pdraw2ddirect2dgraphics->m_bOutline)
-      //{
+      }
 
-         //if (iCreate == path_hollow)
-         //{
+      auto hrCreatePathGeometry = direct2d()->d2d1_factory1()->CreatePathGeometry(&m_pd2d1pathgeometryHollow);
 
-            if (m_pd2d1pathgeometryHollow1)
-            {
+      ::defer_throw_hresult(hrCreatePathGeometry);
 
-              // m_osdata[path_hollow] = m_pd2d1pathgeometryHollow;
+      m_pd2d1pathgeometryTime = m_pd2d1pathgeometryHollow;
 
-               return m_pd2d1pathgeometryHollow1;
-
-            }
-
-         //}
-
-         hr = direct2d()->d2d1_factory1()->CreatePathGeometry(&m_pd2d1pathgeometryHollow1);
-
-         m_pd2d1pathgeometry = m_pd2d1pathgeometryHollow1;
-
-      //}
-      //else
-      //{
-
-      //   if (m_pd2d1pathgeometryFilled)
-      //   {
-
-      //      //m_osdata[path_filled] = m_pd2d1pathgeometryFilled;
-
-      //      return;
-
-      //   }
-
-      //   hr = direct2d()->d2d1_factory1()->CreatePathGeometry(&m_pd2d1pathgeometryFilled);
-      //   
-      //   m_pd2d1pathgeometry = m_pd2d1pathgeometryFilled;
-
-      //}
-
-      ::defer_throw_hresult(hr);
-
-      m_pd2d1geometrysink  = nullptr;
-
-      m_estatus = error_failed;
+      m_pd2d1geometrysinkTime  = nullptr;
 
       m_bHasPoint = false;
 
-      _set_create(pdraw2dgraphics);
+      pdraw2dgraphics->m_bOutline = true;
 
-      /*for(::i32 i = 0; i < m_elementa.get_count(); i++)
+      if (!_set_create(pdraw2dgraphics))
       {
 
-         if (m_elementa.ptr_at(i))
-         {
+         m_pd2d1geometrysinkTime = nullptr;
 
-            set(pdraw2dgraphics, m_elementa(i));
+         m_pd2d1pathgeometryTime = nullptr;
 
-         }
+         m_pd2d1pathgeometryHollow = nullptr;
 
-      }*/
-
-      if (!m_estatus)
-      {
-
-         m_pd2d1pathgeometry = nullptr;
-
-      }
-      else
-      {
-
-         if (m_bHasPoint)
-         {
-
-            internal_end_figure(false);
-
-         }
-
-         if (m_pd2d1geometrysink != nullptr)
-         {
-
-            HRESULT hr = m_pd2d1geometrysink->Close();
-
-            //m_osdata[iCreate] = m_pd2d1pathgeometry;
-
-         }
-         else
-         {
-
-            m_pd2d1pathgeometry = nullptr;
-
-         }
+         throw ::exception(error_wrong_state);
 
       }
 
-      m_pd2d1geometrysink = nullptr;
+      if (!m_pd2d1geometrysinkTime)
+      {
 
-      //return m_pd2d1pathgeometry != nullptr;
-      return m_pd2d1pathgeometryHollow1;
+         throw ::exception(error_wrong_state);
+
+      }
+
+      if (m_bHasPoint)
+      {
+
+         internal_end_figure(false);
+
+      }
+
+      auto hrClose = m_pd2d1geometrysinkTime->Close();
+
+      m_pd2d1pathgeometryTime = nullptr;
+
+      m_pd2d1geometrysinkTime = nullptr;
+
+      if (FAILED(hrClose))
+      {
+
+         m_pd2d1pathgeometryHollow = nullptr;
+
+         ::defer_throw_hresult(hrClose);
+
+      }
+
+      return m_pd2d1pathgeometryHollow;
 
    }
-
-
 
 
    ID2D1PathGeometry * path::_filled_path_geometry(::draw2d::graphics * pdraw2dgraphics)
    {
 
-      ::cast < ::draw2d_direct2d::graphics > pdraw2ddirect2dgraphics = pdraw2dgraphics;
+      if (m_pd2d1pathgeometryFilled)
+      {
 
-      HRESULT hr = S_OK;
+         return m_pd2d1pathgeometryFilled;
 
-      //if (pdraw2ddirect2dgraphics->m_bOutline)
-      //{
+      }
 
-         //if (iCreate == path_hollow)
-         //{
+      auto hrCreatePathGeometry = direct2d()->d2d1_factory1()->CreatePathGeometry(&m_pd2d1pathgeometryFilled);
 
-      //if (m_pd2d1pathgeometryHollow1)
-      //{
-
-      //   // m_osdata[path_hollow] = m_pd2d1pathgeometryHollow;
-
-      //   return m_pd2d1pathgeometryHollow1;
-
-      //}
-
-      ////}
-
-      //hr = direct2d()->d2d1_factory1()->CreatePathGeometry(&m_pd2d1pathgeometryHollow1);
-
-      //m_pd2d1pathgeometry = m_pd2d1pathgeometryHollow1;
-
-      //}
-      //else
-      //{
-
-         if (m_pd2d1pathgeometryFilled1)
-         {
-
-            //m_osdata[path_filled] = m_pd2d1pathgeometryFilled;
-
-            return m_pd2d1pathgeometryFilled1;
-
-         }
-
-         hr = direct2d()->d2d1_factory1()->CreatePathGeometry(&m_pd2d1pathgeometryFilled1);
+      ::defer_throw_hresult(hrCreatePathGeometry);
          
-         m_pd2d1pathgeometry = m_pd2d1pathgeometryFilled1;
+      m_pd2d1pathgeometryTime = m_pd2d1pathgeometryFilled;
 
-      //}
-
-      ::defer_throw_hresult(hr);
-
-      m_pd2d1geometrysink = nullptr;
-
-      m_estatus = error_failed;
+      m_pd2d1geometrysinkTime = nullptr;
 
       m_bHasPoint = false;
 
-      _set_create(pdraw2dgraphics);
+      pdraw2dgraphics->m_bOutline = false;
 
-      /*for(::i32 i = 0; i < m_elementa.get_count(); i++)
+      if (!_set_create(pdraw2dgraphics))
       {
 
-         if (m_elementa.ptr_at(i))
-         {
+         m_pd2d1geometrysinkTime = nullptr;
 
-            set(pdraw2dgraphics, m_elementa(i));
+         m_pd2d1pathgeometryTime = nullptr;
 
-         }
+         m_pd2d1pathgeometryFilled = nullptr;
 
-      }*/
-
-      if (!m_estatus)
-      {
-
-         m_pd2d1pathgeometry = nullptr;
-
-      }
-      else
-      {
-
-         if (m_bHasPoint)
-         {
-
-            internal_end_figure(false);
-
-         }
-
-         if (m_pd2d1geometrysink != nullptr)
-         {
-
-            HRESULT hr = m_pd2d1geometrysink->Close();
-
-            //m_osdata[iCreate] = m_pd2d1pathgeometry;
-
-         }
-         else
-         {
-
-            m_pd2d1pathgeometry = nullptr;
-
-         }
+         throw ::exception(error_wrong_state);
 
       }
 
-      m_pd2d1geometrysink = nullptr;
+      if (!m_pd2d1geometrysinkTime)
+      {
 
-      //return m_pd2d1pathgeometry != nullptr;
-      return m_pd2d1pathgeometryFilled1;
+         throw ::exception(error_wrong_state);
+
+      }
+
+      if (m_bHasPoint)
+      {
+
+         internal_end_figure(true);
+
+      }
+
+      auto hrClose = m_pd2d1geometrysinkTime->Close();
+
+      m_pd2d1pathgeometryTime = nullptr;
+
+      m_pd2d1geometrysinkTime = nullptr;
+
+      if (FAILED(hrClose))
+      {
+
+         m_pd2d1pathgeometryFilled = nullptr;
+
+         ::defer_throw_hresult(hrClose);
+
+      }
+
+      return m_pd2d1pathgeometryFilled;
 
    }
 
@@ -680,12 +620,10 @@ namespace draw2d_direct2d
       if (!prealization)
       {
 
-         //auto pdraw2dgraphics = __graphics(pdraw2dgraphics);
+         ::cast < ::draw2d_direct2d::graphics > pdraw2ddirect2dgraphics = pdraw2dgraphics;
 
-         ::cast < ::draw2d_direct2d::graphics > pdraw2dgraphics = pdraw2dgraphics;
-
-         HRESULT hr = pdraw2dgraphics->m_pd2d1devicecontext1->CreateStrokedGeometryRealization(
-            m_pd2d1pathgeometryHollow1,
+         HRESULT hr = pdraw2ddirect2dgraphics->m_pd2d1devicecontext1->CreateStrokedGeometryRealization(
+            m_pd2d1pathgeometryHollow,
             1.0f,
             (FLOAT)iWidth,
             nullptr,
@@ -708,12 +646,10 @@ namespace draw2d_direct2d
       if (!prealization)
       {
 
-         //auto pdraw2dgraphics = __graphics(pdraw2dgraphics);
+         ::cast<::draw2d_direct2d::graphics> pdraw2ddirect2dgraphics = pdraw2dgraphics;
 
-         ::cast<graphics> pdraw2dgraphics = pdraw2dgraphics;
-
-         HRESULT hr = pdraw2dgraphics->m_pd2d1devicecontext1->CreateFilledGeometryRealization(
-            m_pd2d1pathgeometryFilled1,
+         HRESULT hr = pdraw2ddirect2dgraphics->m_pd2d1devicecontext1->CreateFilledGeometryRealization(
+            m_pd2d1pathgeometryFilled,
             1.0f,
             &prealization);
 
@@ -726,101 +662,26 @@ namespace draw2d_direct2d
    }
 
 
-
-   void * path::detach(::draw2d::graphics * pdraw2dgraphics)
-   {
-
-      defer_update(pdraw2dgraphics);
-
-      return m_pd2d1pathgeometry.detach();
-
-   }
-
-
-   //void path::destroy()
-   //{
-
-   //   destroy_os_data();
-
-   //   ::draw2d::path::destroy();
-
-   //}
-
-
    void path::clear_node_data()
    {
 
-      m_pd2d1geometrysink = nullptr;
+      m_pd2d1geometrysinkTime = nullptr;
 
-      m_pd2d1pathgeometry = nullptr;
+      m_pd2d1pathgeometryTime = nullptr;
 
-      m_pd2d1pathgeometryHollow1 = nullptr;
+      m_pd2d1pathgeometryHollow = nullptr;
 
-      m_pd2d1pathgeometryFilled1 = nullptr;
+      m_pd2d1pathgeometryFilled = nullptr;
 
       m_mapD2D1HollowGeometryRealization.clear();
 
       m_pd2d1geometryrealizationFilled.release();
 
-      //object::destroy();
-
    }
-
-
-
-   bool path::create()
-   {
-
-      return true;
-
-   }
-
-
-   //bool path::set(::draw2d_direct2d::graphics * pdraw2dgraphics, const ::draw2d::path::matter & e)
-   //{
-
-   //   switch(e.m_etype)
-   //   {
-   //   case ::draw2d::path::matter::type_move:
-   //      set(e.u.m_move);
-   //      break;
-   //   case ::draw2d::path::matter::type_arc:
-   //      set(e.u.m_arc);
-   //      break;
-   //   case ::draw2d::path::matter::type_line:
-   //      set(e.u.m_line);
-   //      break;
-   //   case ::draw2d::path::matter::type_rect:
-   //      set(e.u.m_rectangle);
-   //      break;
-   //   case ::draw2d::path::matter::e_type_string:
-   //      set(pdraw2dgraphics,e.m_stringpath);
-   //      break;
-   //   case ::draw2d::path::matter::type_end:
-   //      internal_end_figure(e.u.m_end.m_bClose);
-   //      break;
-   //   default:
-   //      throw ::exception(::exception("unexpected simple os graphics matter type"));
-   //   }
-
-   //   return false;
-
-   //}
 
 
    bool path::_set(::draw2d::graphics * pdraw2dgraphics, const ::f64_arc & arc)
    {
-
-      //::f64_rectangle rectangle;
-
-      //rectangle.left      = (::i32) (arc.m_pointCenter.x - arc.m_sizeRadius.cx);
-      //rectangle.right     = (::i32) (arc.m_pointCenter.x + arc.m_sizeRadius.cx);
-      //rectangle.top       = (::i32) (arc.m_pointCenter.y - arc.m_sizeRadius.cy);
-      //rectangle.bottom    = (::i32) (arc.m_pointCenter.y + arc.m_sizeRadius.cy);
-
-      //bool bOk = internal_add_arc(pdraw2dgraphics, parc);
-
-      //return bOk;
 
       return internal_add_arc(pdraw2dgraphics, arc);
 
@@ -881,18 +742,10 @@ namespace draw2d_direct2d
    }
 
 
-   //bool path::_set(const ::draw2d::path::move & move)
-   //{
-
-   //   return internal_add_move((::i32) move.m_x, (::i32) move.m_y);
-
-   //}
-
-
    bool path::_set(::draw2d::graphics * pdraw2dgraphics, const ::f64_line & line)
    {
 
-      if (line.m_p1 != m_pointEnd || ::is_null(m_pd2d1geometrysink))
+      if (line.m_p1 != m_pointEnd || ::is_null(m_pd2d1geometrysinkTime))
       {
 
          if (!internal_start_figure(pdraw2dgraphics, line.m_p1.x, line.m_p1.y))
@@ -909,42 +762,12 @@ namespace draw2d_direct2d
    }
 
 
-   //bool path::_set(::draw2d::graphics * pdraw2dgraphics, const ::line & line)
-   //{
-
-   //   if (line.m_p1 != m_pointEnd || !m_bFigureOpened)
-   //   {
-
-   //      if (!internal_start_figure(pdraw2dgraphics, line.m_p1.x, line.m_p1.y))
-   //      {
-
-   //         return false;
-
-   //      }
-
-   //      m_pointEnd = line.m_p1;
-
-   //   }
-
-   //   return internal_add_line(pdraw2dgraphics, line.m_p2.x, line.m_p2.y);
-
-   //}
-
-
    bool path::_set(::draw2d::graphics * pdraw2dgraphics, const ::f64_rectangle & rectangle)
    {
 
       return internal_add_rectangle(pdraw2dgraphics, rectangle.left, rectangle.top, rectangle.width(), rectangle.height());
 
    }
-
-
-   //bool path::_set(::draw2d::graphics * pdraw2dgraphics, const ::f64_rectangle& rectangle)
-   //{
-
-   //   return internal_add_rect(pdraw2dgraphics, rectangle.left, rectangle.top, rectangle.width(), rectangle.height());
-
-   //}
 
 
    bool path::_set(::draw2d::graphics * pdraw2dgraphics, const ::f64_ellipse & ellipse)
@@ -955,7 +778,6 @@ namespace draw2d_direct2d
    }
 
 
-
    bool path::_set(::draw2d::graphics * pdraw2dgraphics, const ::f64_lines & lines)
    {
 
@@ -964,27 +786,12 @@ namespace draw2d_direct2d
    }
 
 
-   //bool path::_set(::draw2d::graphics * pdraw2dgraphics, const ::linesd& lines)
-   //{
-
-   //   return internal_add_lines(pdraw2dgraphics, (const ::f64_point_array&) lines, false);
-
-   //}
-
-
    bool path::_set(::draw2d::graphics * pdraw2dgraphics, const ::f64_polygon & polygon)
    {
 
       return internal_add_lines(pdraw2dgraphics, (const ::f64_point_array&)polygon, true);
 
    }
-
-   //bool path::_set(::draw2d::graphics * pdraw2dgraphics, const ::f64_polygon& i32_polygon)
-   //{
-
-   //   return internal_add_lines(pdraw2dgraphics, (const ::f64_point_array&)i32_polygon, true);
-
-   //}
 
 
    bool path::_set(::draw2d::graphics * pdraw2dgraphics, const ::write_text::text_out & textout)
@@ -1034,14 +841,14 @@ namespace draw2d_direct2d
 
       //auto pdraw2dgraphics = pdraw2dgraphics->cast < ::draw2d_direct2d::graphics>();
 
-      ////if (m_pd2d1geometrysink == nullptr)
+      ////if (m_pd2d1geometrysinkTime == nullptr)
       ////{
 
-      ////   hr = m_pd2d1pathgeometry->Open(&m_pd2d1geometrysink);
+      ////   hr = m_pd2d1pathgeometryTime->Open(&m_pd2d1geometrysinkTime);
 
       ////}
 
-      ////CustomTextRenderer renderer(direct2d()->d2d1_factory1(), m_pd2d1geometrysink);
+      ////CustomTextRenderer renderer(direct2d()->d2d1_factory1(), m_pd2d1geometrysinkTime);
 
       ////defer_text_primitive_blend();
 
@@ -1051,7 +858,7 @@ namespace draw2d_direct2d
 
       //auto & renderer = ::direct2d::get()->m_geometrysinktextrenderer;
 
-      //renderer.m_pgeometrysink = m_pd2d1geometrysink;
+      //renderer.m_pgeometrysink = m_pd2d1geometrysinkTime;
 
       //FLOAT dpix, dpiy;
 
@@ -1085,38 +892,10 @@ namespace draw2d_direct2d
    }
 
 
-   //bool path::_set(::draw2d::graphics * pdraw2dgraphics, ::draw2d::path::close* pclose)
-   //{
-
-   //   //::f64_rectangle rectangle;
-
-   //   //rectangle.left      = (::i32) (arc.m_pointCenter.x - arc.m_sizeRadius.cx);
-   //   //rectangle.right     = (::i32) (arc.m_pointCenter.x + arc.m_sizeRadius.cx);
-   //   //rectangle.top       = (::i32) (arc.m_pointCenter.y - arc.m_sizeRadius.cy);
-   //   //rectangle.bottom    = (::i32) (arc.m_pointCenter.y + arc.m_sizeRadius.cy);
-
-   //   //bool bOk = internal_add_arc(pdraw2dgraphics, parc);
-
-   //   //return bOk;
-
-   //   if (m_bFigureOpened)
-   //   {
-
-   //      internal_end_figure(true);
-
-   //   }
-
-   //   return true;
-
-   //}
-
-
 } // namespace draw2d_direct2d
 
 
 
-#define d2d1_fax_options D2D1_FACTORY_OPTIONS // fax of merde
-#define multi_threaded D2D1_FACTORY_TYPE_MULTI_THREADED // ???? muliple performance multi thread hidden option there exists cost uses?
 
 
 //class PathTextRenderer: public IDWriteTextRenderer
@@ -1254,7 +1033,7 @@ namespace draw2d_direct2d
 //                glyphRun->glyphCount,
 //                glyphRun->isSideways,
 //                glyphRun->bidiLevel % 2,
-//                dc->m_pd2d1geometrysink
+//                dc->m_pd2d1geometrysinkTime
 //                );
 //
 //   return hr;

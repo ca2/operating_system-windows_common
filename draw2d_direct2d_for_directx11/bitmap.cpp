@@ -1,5 +1,6 @@
 #include "platform.h"
 #include "bitmap.h"
+#include "draw2d.h"
 #include "graphics.h"
 #include "aura/graphics/draw2d/lock.h"
 #include "aura/graphics/draw2d/device_lock.h"
@@ -58,6 +59,13 @@ namespace draw2d_direct2d_for_directx11
 
    }
 
+
+   void bitmap::preserve_image(const ::i32_size & size, ::image::image * pimage)
+   {
+
+      ::draw2d_direct2d::bitmap::preserve_image(size, pimage);
+
+   }
 
 
    void bitmap::update_bitmap_as_backed_by_gpu_texture(::gpu::texture * pgputexture, ::draw2d::graphics * pdraw2dgraphics)
@@ -386,25 +394,37 @@ namespace draw2d_direct2d_for_directx11
 
       //}
 
-      m_pd2d1devicecontext->GetDpi(&props.dpiX, &props.dpiY);
+      HRESULT hr = S_OK;
 
-      props.colorContext = nullptr;
-
-      props.bitmapOptions = D2D1_BITMAP_OPTIONS_TARGET;
-
-      HRESULT hr = pdraw2ddirect2dfordirectx11graphics->m_pd2d1devicecontext->CreateBitmap(usize, nullptr, 0, props, &m_pd2d1bitmap1);
-
-      if (FAILED(hr) || m_pd2d1bitmap1 == nullptr)
       {
 
-         throw ::exception(error_failed);
+         auto pdraw2ddirect2d = ::draw2d_direct2d_for_directx11::draw2d::get();
 
-      }
+         synchronous_lock synchronouslock(pdraw2ddirect2d->default_device_context_mutex());
 
-      if (FAILED(m_pd2d1bitmap1.as(m_pd2d1bitmap)))
-      {
+         auto pd2d1devicecontextDefault = pdraw2ddirect2d->default_d2d1_device_context();
 
-         throw ::exception(error_failed);
+         pd2d1devicecontextDefault->GetDpi(&props.dpiX, &props.dpiY);
+
+         props.colorContext = nullptr;
+
+         props.bitmapOptions = D2D1_BITMAP_OPTIONS_TARGET;
+
+         hr = pd2d1devicecontextDefault->CreateBitmap(usize, nullptr, 0, props, &m_pd2d1bitmap1);
+
+         if (FAILED(hr) || m_pd2d1bitmap1 == nullptr)
+         {
+
+            throw ::exception(error_failed);
+
+         }
+
+         if (FAILED(m_pd2d1bitmap1.as(m_pd2d1bitmap)))
+         {
+
+            throw ::exception(error_failed);
+
+         }
 
       }
 
@@ -637,6 +657,14 @@ namespace draw2d_direct2d_for_directx11
 
    void bitmap::defer_update(::draw2d::graphics * pdraw2dgraphics) const
    {
+
+   }
+
+
+   void bitmap::write_pixels(const ::i32_size & size, const ::i32_point & point, const ::image32_t * pimage32, ::i32 iScan, bool bTopDown)
+   {
+
+      ::draw2d_direct2d::bitmap::write_pixels(size, point, pimage32, iScan, bTopDown);
 
    }
 

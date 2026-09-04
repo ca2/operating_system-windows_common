@@ -820,7 +820,7 @@ namespace gpu_directx11
    }
 
 
-   void texture::set_pixels(const ::i32_rectangle &rectangle, const void *data)
+   void texture::set_pixels(bool bSync, const ::i32_rectangle &rectangle, const void *data)
    {
 
       // D3D11_MAPPED_SUBRESOURCE mapped{};
@@ -880,12 +880,12 @@ namespace gpu_directx11
    }
 
 
-   void texture::set_pixels(::gpu::command_buffer * pgpucommandbuffer, const ::i32_rectangle & rectangle, const void * data)
-   {
+   //void texture::set_pixels(::gpu::command_buffer * pgpucommandbuffer, const ::i32_rectangle & rectangle, const void * data)
+   //{
 
-      set_pixels(pgpucommandbuffer, rectangle, data);
+   //   set_pixels(pgpucommandbuffer, rectangle, data);
 
-   }
+   //}
 
 
    void texture::create_with_image_data(::gpu::context *pgpucontext, const ::i32_size & size,

@@ -78,18 +78,19 @@ namespace draw2d_direct2d_for_directx11
 
 
 
-      void gpu_layer_on_after_begin_render() override;
-      void gpu_layer_on_before_end_render() override;
+      //void gpu_layer_on_after_begin_render() override;
+      //void gpu_layer_on_before_end_render() override;
 
 
-      void on_acquire_memory_graphics(::image::image * pimage, const ::i32_size & size,
+      void on_acquire_memory_graphics(bool bExternalRendering, ::image::image * pimage, const ::i32_size & size,
 ::acme::user::interaction * pacmeuserinteractionAffinity) override;
 
 
       bool TextOutAlphaBlend(::f64 x, ::f64 y, const ::scoped_string & scopedstr) override;
       bool _draw_blend(const ::image::image_drawing & imagedrawing) override;
-
-
+      bool is_memory_graphics_pool_compatible(
+   ::acme::user::interaction * pacmeuserinteractionAffinity) const override;
+      void on_release_memory_graphics() override;
       //bool IsPrinting() override;            // true if being used for printing
 
       //void start_layer(::e_graphics egraphics) override;
@@ -98,7 +99,7 @@ namespace draw2d_direct2d_for_directx11
       void end_layer(bool bClosingLayer = false) override;
 
 
-      void begin_draw() override;
+      void begin_draw(bool bExternalRendering, ::user::interaction * puserinteraction, const ::i32_rectangle & rectangleFrame, ::image::image * pimageTarget = nullptr) override;
       void end_draw() override;
 
 
@@ -108,7 +109,7 @@ namespace draw2d_direct2d_for_directx11
       //void on_end_draw1() override;
 
       bool _is_ok() const override;
-      void just_after_new_frame() override;
+      //void just_after_new_frame() override;
 
 
       void set_target_image(::image::image * pimage) override;
@@ -181,7 +182,7 @@ namespace draw2d_direct2d_for_directx11
       //virtual void _create_from_dxgi_surface1(::i32 iIndex, ::i32 iLayerIndex, IDXGISurface* pdxgisurface);
       virtual void _create_d2d1_device_context();
       void _create_memory_graphics(const ::i32_size & size = {}, ::acme::user::interaction * pacmeuserinteractionAffinity = nullptr) override;
-      void create_bitmap_graphics(::draw2d::bitmap *pdraw2dbitmap) override;
+      void create_bitmap_graphics(::draw2d::bitmap *pdraw2dbitmap, ::acme::user::interaction * pacmeuserinteractionAffinity) override;
       void defer_set_size(const ::i32_size& size = {}) override;
 
       //void create_offscreen_graphics_for_swap_chain_blitting(const ::i32_size& size) override;
@@ -338,8 +339,8 @@ namespace draw2d_direct2d_for_directx11
       void _add_shape(const ::f64_polygon_base & polygon) override;
 
 
-      virtual void intersect_clip(const ::draw2d::clip_group & clipgroup);
-      virtual void _add_clip_item(::draw2d::clip_item * pclipitem);
+      void intersect_clip(::draw2d::clip_group * pclipgroup) override;
+      void _add_clip_item(::draw2d::clip_item * pclipitem) override;
 
 
 

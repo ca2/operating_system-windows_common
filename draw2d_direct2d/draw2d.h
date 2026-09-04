@@ -28,6 +28,8 @@ namespace draw2d_direct2d
       //HBITMAP m_hbitmapOld;
 
 
+
+
       draw2d();
       ~draw2d() override;
 
