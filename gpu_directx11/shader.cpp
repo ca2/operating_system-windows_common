@@ -19,7 +19,7 @@
 #include "bred/gpu/layer.h"
 #include "bred/gpu/texture_site.h"
 #include "bred/gpu/types.h"
-#include "bred/graphics3d/engine.h"
+#include "bred/graphics3d/engine_instance.h"
 #include "bred/graphics3d/immersion_layer.h"
 #include "bred/graphics3d/scene_base.h"
 // #include "bred/user/user/graphics3d.h"
@@ -526,7 +526,7 @@ namespace gpu_directx11
       pgpucontext->m_pd3d11devicecontext->IASetPrimitiveTopology(etopology);
 
       //::cast<::gpu_directx11::block> pblockGlobalUbo1 =
-      //   pgpucontext->m_pengine->m_pimmersionlayer->m_pscene->global_ubo1(pgpucontext);
+      //   pgpucontext->m_pgraphics3dengineinstance->m_pimmersionlayer->m_pscene->global_ubo1(pgpucontext);
 
       // auto pbuffer = pblockGlobalUbo1->m_pbuffer.m_p;
 
@@ -751,7 +751,7 @@ namespace gpu_directx11
    //   pgpucontext->m_pcontext->IASetPrimitiveTopology(etopology);
 
    //   ::cast < ::gpu_directx11::block >  pblockGlobalUbo1 =
-   //   pgpucontext->m_pengine->m_pimmersionlayer->m_pscene->global_ubo1(pgpucontext);
+   //   pgpucontext->m_pgraphics3dengineinstance->m_pimmersionlayer->m_pscene->global_ubo1(pgpucontext);
 
    //   auto pbuffer = pblockGlobalUbo1->m_pbuffer.m_p;
 

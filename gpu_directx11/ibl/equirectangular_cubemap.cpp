@@ -8,7 +8,7 @@
 #include "bred/graphics3d/skybox.h"
 #include "bred/gpu/device.h"
 #include "bred/gpu/texture.h"
-#include "bred/graphics3d/engine.h"
+#include "bred/graphics3d/engine_instance.h"
 #include "bred/platform/timer.h"
 #include "gpu/model/_constant.h"
 #include "gpu_directx11/_gpu_directx11.h"
@@ -78,7 +78,7 @@ namespace gpu_directx11
          //   lookAt(origin, -unitZ, -unitY)};
 
          //floating_matrix4 projection =
-         //   m_pgpucontext->m_pengine->perspective(
+         //   m_pgpucontext->m_pgraphics3dengineinstance->perspective(
          //   90f_degrees, // 90 degrees to cover one face
          //   1.0f, // its a square
          //   0.1f, 2.0f);

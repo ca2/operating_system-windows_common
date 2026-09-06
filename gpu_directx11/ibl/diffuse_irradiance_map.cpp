@@ -8,7 +8,7 @@
 #include "bred/gpu/context_lock.h"
 #include "bred/gpu/device.h"
 #include "bred/graphics3d/_functions.h"
-#include "bred/graphics3d/engine.h"
+#include "bred/graphics3d/engine_instance.h"
 #include "bred/graphics3d/renderable.h"
 #include "bred/graphics3d/scene_base.h"
 #include "bred/graphics3d/skybox.h"
@@ -62,10 +62,10 @@ namespace gpu_directx11
       }
 
 
-      void diffuse_irradiance_map::computeIrradianceMap(::gpu::command_buffer * pgpucommandbuffer)
+      void diffuse_irradiance_map::computeIrradianceMap(::gpu::command_buffer * pgpucommandbuffer, ::graphics3d::scene_base * pscenebase)
       {
 
-         ::gpu::ibl::diffuse_irradiance_map::computeIrradianceMap(pgpucommandbuffer);
+         ::gpu::ibl::diffuse_irradiance_map::computeIrradianceMap(pgpucommandbuffer, pscenebase);
 
          //::gpu::context_lock contextlock(m_pgpucontext);
 
@@ -87,12 +87,12 @@ namespace gpu_directx11
          //   lookAt(origin, unitZ, -unitY)
          //};
 
-         //floating_matrix4 projection = m_pgpucontext->m_pengine->perspective(
+         //floating_matrix4 projection = m_pgpucontext->m_pgraphics3dengineinstance->perspective(
          //   90f_degrees, // 90 degrees to cover one face
          //   1.0f, // its a square
          //   0.1f, 2.0f);
 
-         //auto prenderableCube = m_pgpucontext->m_pengine->shape_factory()->create_cube_001(m_pgpucontext, 32.f);
+         //auto prenderableCube = m_pgpucontext->m_pgraphics3dengineinstance->shape_factory()->create_cube_001(m_pgpucontext, 32.f);
 
          ////pcube->initialize_gpu_cube(m_pgpucontext);
 

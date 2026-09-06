@@ -58,7 +58,7 @@ namespace gpu_directx11
          /**
           * Render the diffuse irradiance map.
           */
-        void computeIrradianceMap(::gpu::command_buffer *pgpucommandbuffer) override;
+        void computeIrradianceMap(::gpu::command_buffer *pgpucommandbuffer, ::graphics3d::scene_base * pscenebase) override;
 
 
          /**
