@@ -46,11 +46,11 @@ namespace draw2d_gdiplus
       virtual void create(const ::i32_size & size, ::eobject eobjectCreate = DEFAULT_CREATE_IMAGE_OBJECT_FLAG, ::i32 iGoodStride = -1, bool bPreserve = false) override;
       virtual bool host(const ::pixmap * pixmap) override;
       virtual bool on_host_read_pixels(const ::pixmap* pixmap) override;
-      virtual void create(::draw2d::graphics * pgraphics) override;
+      virtual void create(::draw2d::graphics * pdraw2dgraphics) override;
       virtual bool destroy() override;
 
 
-      //cvirtual bool stretch(::draw2d::graphics * pgraphics) override;
+      //cvirtual bool stretch(::draw2d::graphics * pdraw2dgraphics) override;
       //virtual bool draw(const ::image::image * pimage) override;
       virtual bool _draw_raw(const ::i32_rectangle & rectangleTarget, ::image::image * pimageSrc, const ::i32_point & pointSrc) override;
 

@@ -71,34 +71,34 @@ namespace universal_windows
 
                //::acme::windowing::window * pacmewindowingwindow = nullptr;
                //
-               //if (::is_set(pgraphics))
+               //if (::is_set(pdraw2dgraphics))
                //{
                // 
-               //   oswindow = pgraphics->get_window_handle();
+               //   oswindow = pdraw2dgraphics->get_window_handle();
 
                //}
 
                //if (m_fontsize.eunit() == ::e_unit_point)
                {
 
-                 // fFontSize = (::f32)pgraphics->m_pdraw2dhost->point_dpi(m_fontsize.as_f64());
+                 // fFontSize = (::f32)pdraw2dgraphics->m_pdraw2dhost->point_dpi(m_fontsize.as_f64());
 
                }
                //else
                {
 
-                  //fFontSize = (::f32)pgraphics->m_pdraw2dhost->dpiy(m_fontsize.as_f64());
+                  //fFontSize = (::f32)pdraw2dgraphics->m_pdraw2dhost->dpiy(m_fontsize.as_f64());
 
-                  //fFontSize = (::f32)pgraphics->m_pdraw2dhost->dpiy(m_iFontSize);
+                  //fFontSize = (::f32)pdraw2dgraphics->m_pdraw2dhost->dpiy(m_iFontSize);
 
                   fFontSize = (::f32)m_iFontSize;
 
                }
 
-               //if (::is_set(pgraphics))
+               //if (::is_set(pdraw2dgraphics))
                //{
 
-               //   fFontSize *= (::f32)pgraphics->m_dFontFactor;
+               //   fFontSize *= (::f32)pdraw2dgraphics->m_dFontFactor;
 
                //}
 

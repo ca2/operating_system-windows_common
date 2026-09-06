@@ -37,7 +37,7 @@ namespace draw2d_gdiplus
 
 //      ::windowing::window * GetWindow() override;
 
-      virtual bool attach(void * pgraphics) override;   // attach/detach affects only the Output DC
+      virtual bool attach(void * pdraw2dgraphics) override;   // attach/detach affects only the Output DC
       virtual void * detach() override;
 
       virtual bool attach_hdc(HDC hdc) override;   // attach/detach affects only the Output DC
@@ -72,7 +72,7 @@ namespace draw2d_gdiplus
 
                     const_char_pointer pszOutput, const void * lpInitData) override;
 
-      bool create_compatible_graphics(::draw2d::graphics * pgraphics) override;
+      bool create_compatible_graphics(::draw2d::graphics * pdraw2dgraphics) override;
 
       bool DeleteDC() override;
 
