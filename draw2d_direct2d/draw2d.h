@@ -45,11 +45,11 @@ namespace draw2d_direct2d
       bool lock_device() override;
       void unlock_device() override;
 
-      virtual ::dxgi_device_source * _dxgi_device_source();
+      virtual ::dxgi_device_source * _dxgi_device_source(::acme::windowing::window * pacmewindowingwindow);
 
       virtual ::particle * default_device_context_mutex();
 
-      virtual ID2D1DeviceContext * default_d2d1_device_context();
+      virtual ID2D1DeviceContext * default_d2d1_device_context(::acme::windowing::window * pacmewindowingwindow);
 
       static ::draw2d_direct2d::draw2d * get();
       //virtual mutex *_generic_d2d1_device_context_mutex();

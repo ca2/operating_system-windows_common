@@ -1,4 +1,5 @@
 #pragma once
+#include <d3d11_4.h>
 
 
 #include "bred/gpu/hlsl_context.h"
@@ -27,7 +28,7 @@ namespace gpu_directx11
       //comptr < ID3D11RasterizerState> m_prasterizerstate;
       ::comptr < ID3D11RasterizerState > m_prasterizerstateMergeLayers;
 
-      ::comptr<ID3D10Multithread> m_pmultithread;
+      ::comptr<ID3D11Multithread> m_pmultithread;
 
       //::comptr < ID3D11DepthStencilState > m_pdepthstencilstateDisabled;
 
@@ -140,7 +141,7 @@ namespace gpu_directx11
       void set_bitmap_1(::image::image *pimage) override;
 
       
-      void copy(::gpu::texture_site *pgputexturesiteTarget, ::gpu::texture_site *pgputexturesiteSource,
+      void copy(::gpu::command_buffer * pgpucommandbuffer, ::gpu::texture_site *pgputexturesiteTarget, ::gpu::texture_site *pgputexturesiteSource,
                 ::pointer<::gpu::fence> *pgpufence, ::pointer < ::gpu::semaphore > * pgpusemaphoreReady) override;
 
       virtual void copy_using_shader(::gpu::texture_site* pgputexturesiteTarget, ::gpu::texture_site* pgputexturesiteSource);

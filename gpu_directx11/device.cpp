@@ -1982,11 +1982,19 @@ bool device::_is_ok() const
    void device::create_main_gpu_context()
    {
 
+      // Enable protection before publishing the immediate context to any worker.
+      // This also serializes direct calls such as fence End/GetData that bypass
+      // gpu::context_lock; Enter/Leave additionally protect multi-call sequences.
+      ::comptr<ID3D11Multithread> multithread;
+      ::defer_throw_hresult(m_pd3d11devicecontextMain.as(multithread));
+      multithread->SetMultithreadProtected(TRUE);
+
       defer_constructø(m_pgpucontextMain);
 
       ::cast < ::gpu_directx11::context > pgpucontextMain = m_pgpucontextMain;
 
       pgpucontextMain->m_pgpudevice = this;
+      pgpucontextMain->m_pmultithread = multithread;
 
       m_pd3d11devicecontextMain.as(pgpucontextMain->m_pd3d11devicecontext);
 

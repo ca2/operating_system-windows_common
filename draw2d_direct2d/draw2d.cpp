@@ -199,7 +199,7 @@ namespace draw2d_direct2d
    }
 
    
-   ::dxgi_device_source * draw2d::_dxgi_device_source()
+   ::dxgi_device_source * draw2d::_dxgi_device_source(::acme::windowing::window * pacmewindowingwindow)
    {
 
       auto pdirect2d = direct2d();
@@ -217,10 +217,10 @@ namespace draw2d_direct2d
    }
 
 
-   ID2D1DeviceContext * draw2d::default_d2d1_device_context()
+   ID2D1DeviceContext * draw2d::default_d2d1_device_context(::acme::windowing::window * pacmewindowingwindow)
    {
 
-      auto pdxgidevicesource = _dxgi_device_source();
+      auto pdxgidevicesource = _dxgi_device_source(pacmewindowingwindow);
 
       auto pdirect2d = direct2d();
 

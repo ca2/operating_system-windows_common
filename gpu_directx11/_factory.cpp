@@ -21,6 +21,7 @@
 #include "shader.h"
 #include "swap_chain.h"
 #include "texture.h"
+#include "viewport_scissor_restore.h"
 #include "bred/gpu/command_buffer.h"
 #include "bred/gpu/layer.h"
 #include "bred/gpu/pixmap.h"
@@ -68,6 +69,8 @@ __FACTORY_EXPORT void gpu_directx11_factory(::factory::factory * pfactory)
    pfactory->add_factory_item < ::gpu_directx11::device, ::gpu::device >();
 
    pfactory->add_factory_item<::gpu::texture_synchronization>();
+
+   pfactory->add_factory_item<::gpu_directx11::viewport_scissor_restore, ::gpu::viewport_scissor_restore>();
 
    pfactory->add_factory_item < ::gpu_directx11::offscreen_render_target_view, ::gpu::render_target >();
    pfactory->add_factory_item < ::gpu_directx11::swap_chain, ::gpu::swap_chain >();

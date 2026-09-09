@@ -745,7 +745,7 @@ namespace gpu_directx11
 
       ::cast < ::gpu_directx11::texture > ptexture = ptexturesite->gpu_texture();
 
-      ID3D11Texture2D* offscreenTexture = ptexture->m_ptextureOffscreen;
+      ID3D11Texture2D* offscreenTexture = ptexture->m_pd3d11texture2d;
 
       if (!device || !context || !offscreenTexture)
       {
@@ -1018,7 +1018,7 @@ HRESULT hrCreateDepthStencilState = pgpudevice->m_pd3d11device->CreateDepthStenc
             if (m_pgpucontext->m_escene == ::gpu::e_scene_2d)
             {
 
-               if (!ptexture->m_prendertargetview)
+               if (!ptexture->m_pd3d11rendertargetview)
                {
 
                   ptexture->create_render_target();
@@ -1029,7 +1029,7 @@ HRESULT hrCreateDepthStencilState = pgpudevice->m_pd3d11device->CreateDepthStenc
             else if(m_pgpucontext->m_escene == ::gpu::e_scene_3d)
             {
 
-               if (!ptexture->m_prendertargetview)
+               if (!ptexture->m_pd3d11rendertargetview)
                {
 
                   ptexture->create_render_target();
@@ -1037,14 +1037,14 @@ HRESULT hrCreateDepthStencilState = pgpudevice->m_pd3d11device->CreateDepthStenc
 
                }
 
-               if (!ptexture->m_pshaderresourceview)
+               if (!ptexture->m_pd3d11shaderresourceview)
                {
 
                   ptexture->create_shader_resource_view();
 
                }
 
-               if (!ptexture->m_pdepthstencilview)
+               if (!ptexture->m_pd3d11depthstencilview)
                {
 
                   ptexture->create_depth_resources();
@@ -1053,11 +1053,11 @@ HRESULT hrCreateDepthStencilState = pgpudevice->m_pd3d11device->CreateDepthStenc
 
                //pdepthstencilstate = ptexture->m_pdepthstencilstate;
 
-               pdepthstencilview = ptexture->m_pdepthstencilview;
+               pdepthstencilview = ptexture->m_pd3d11depthstencilview;
 
             }
 
-            prendertargetview = ptexture->m_prendertargetview;
+            prendertargetview = ptexture->m_pd3d11rendertargetview;
 
          }
 
@@ -1089,7 +1089,7 @@ HRESULT hrCreateDepthStencilState = pgpudevice->m_pd3d11device->CreateDepthStenc
 
                   pcontext->OMSetDepthStencilState(m_pdepthstencilstateForCleaning, 0);
 
-                  pcontext->OMSetRenderTargets(1, ptexture->m_prendertargetview.pp(), pdepthstencilview);
+                  pcontext->OMSetRenderTargets(1, ptexture->m_pd3d11rendertargetview.pp(), pdepthstencilview);
 
                   pcontext->ClearDepthStencilView(pdepthstencilview, D3D11_CLEAR_DEPTH, 1.0f, 0);
 
@@ -1097,7 +1097,7 @@ HRESULT hrCreateDepthStencilState = pgpudevice->m_pd3d11device->CreateDepthStenc
                else
                {
 
-                  pcontext->OMSetRenderTargets(1, ptexture->m_prendertargetview.pp(), nullptr);
+                  pcontext->OMSetRenderTargets(1, ptexture->m_pd3d11rendertargetview.pp(), nullptr);
 
                }
 
@@ -1186,7 +1186,7 @@ HRESULT hrCreateDepthStencilState = pgpudevice->m_pd3d11device->CreateDepthStenc
 
       ::cast < texture > ptexture = ptexturesite->gpu_texture();
 
-      if (!ptexture->m_prendertargetview)
+      if (!ptexture->m_pd3d11rendertargetview)
       {
 
          ptexture->create_render_target();
@@ -1194,7 +1194,7 @@ HRESULT hrCreateDepthStencilState = pgpudevice->m_pd3d11device->CreateDepthStenc
       }
 
       pgpucontext->m_pd3d11devicecontext->ClearRenderTargetView(
-         ptexture->m_prendertargetview, clear);
+         ptexture->m_pd3d11rendertargetview, clear);
 
    }
 

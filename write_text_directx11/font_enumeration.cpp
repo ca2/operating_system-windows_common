@@ -4,6 +4,7 @@
 #include "directx11/directx11.h"
 #include "aura/graphics/write_text/font_enumeration_item.h"
 #include "bred/gpu/bred_approach.h"
+#include "acme/operating_system/windows_common/com/hresult_exception.h"
 #include <dwrite.h>
 
 
@@ -49,121 +50,232 @@ namespace write_text_directx11
 
       m_pfontenumerationitema->erase_all();
 
-      //::comptr<IDWriteFontCollection> pFontCollection;
 
-      //HRESULT hr = m_pdirectx11->dwrite_factory()->GetSystemFontCollection(&pFontCollection);
+      //
+      // Font enumeration is device-independent.
+      //
+      // There is no need to obtain this factory from the D3D11
+      // device or gpu_directx11::device.
+      //
 
-      //::u32 familyCount = 0;
+      ::comptr<IDWriteFactory> pwritefactory;
 
-      //if (SUCCEEDED(hr))
-      //{
+      HRESULT hr =
+         ::DWriteCreateFactory(
+            DWRITE_FACTORY_TYPE_SHARED,
+            __uuidof(IDWriteFactory),
+            reinterpret_cast<IUnknown **>(&pwritefactory));
 
-      //   familyCount = pFontCollection->GetFontFamilyCount();
+      ::defer_throw_hresult(hr);
 
-      //}
 
-      //::u32 index = 0;
+      ::comptr<IDWriteFontCollection> pfontcollection;
 
-      //BOOL exists = false;
+      hr =
+         pwritefactory->GetSystemFontCollection(
+            &pfontcollection,
+            FALSE);
 
-      //wchar_t localeName[LOCALE_NAME_MAX_LENGTH];
+      ::defer_throw_hresult(hr);
 
-      //::i32 defaultLocaleSuccess = GetUserDefaultLocaleName(localeName, LOCALE_NAME_MAX_LENGTH);
 
-      //for (::u32 i = 0; i < familyCount; ++i)
-      //{
+      wchar_t wszLocaleName[LOCALE_NAME_MAX_LENGTH]{};
 
-      //   ::comptr<IDWriteFontFamily> pFontFamily;
+      bool bHasUserLocale =
+         ::GetUserDefaultLocaleName(
+            wszLocaleName,
+            LOCALE_NAME_MAX_LENGTH) != 0;
 
-      //   if (SUCCEEDED(hr))
-      //   {
 
-      //      hr = pFontCollection->GetFontFamily(i, &pFontFamily);
+      const ::u32 uFamilyCount =
+         pfontcollection->GetFontFamilyCount();
 
-      //   }
 
-      //   ::comptr<IDWriteLocalizedStrings> pFamilyNames;
+      for (::u32 iFamily = 0;
+           iFamily < uFamilyCount;
+           ++iFamily)
+      {
 
-      //   if (SUCCEEDED(hr))
-      //   {
+         //
+         // IMPORTANT:
+         //
+         // Do not carry hr, index or exists from the previous family.
+         //
 
-      //      hr = pFontFamily->GetFamilyNames(&pFamilyNames);
+         ::comptr<IDWriteFontFamily> pfontfamily;
 
-      //   }
+         hr =
+            pfontcollection->GetFontFamily(
+               iFamily,
+               &pfontfamily);
 
-      //   if (SUCCEEDED(hr))
-      //   {
+         if (FAILED(hr))
+         {
 
-      //      if (defaultLocaleSuccess)
-      //      {
+            continue;
 
-      //         hr = pFamilyNames->FindLocaleName(localeName, &index, &exists);
+         }
 
-      //      }
 
-      //      if (SUCCEEDED(hr) && !exists) // if the above find did not find a match, retry with US English
-      //      {
+         ::comptr<IDWriteLocalizedStrings> pfamilynames;
 
-      //         hr = pFamilyNames->FindLocaleName(L"en-us", &index, &exists);
+         hr =
+            pfontfamily->GetFamilyNames(
+               &pfamilynames);
 
-      //      }
+         if (FAILED(hr))
+         {
 
-      //   }
+            continue;
 
-      //   // If the specified locale doesn't exist, select the first on the list_base.
-      //   if (!exists)
-      //   {
-      //      index = 0;
-      //   }
+         }
 
-      //   ::u32 length = 0;
 
-      //   // Get the string length.
-      //   if (SUCCEEDED(hr))
-      //   {
+         ::u32 uNameIndex = 0;
 
-      //      hr = pFamilyNames->GetStringLength(index, &length);
+         BOOL bExists = FALSE;
 
-      //   }
 
-      //   // Allocate a string big enough to hold the name.
-      //   wstring wstr;
+         //
+         // First try the user's Windows locale.
+         //
 
-      //   auto name = wstr.get_buffer(length + 1);
+         if (bHasUserLocale)
+         {
 
-      //   if (name == nullptr)
-      //   {
+            hr =
+               pfamilynames->FindLocaleName(
+                  wszLocaleName,
+                  &uNameIndex,
+                  &bExists);
 
-      //      hr = E_OUTOFMEMORY;
+            if (FAILED(hr))
+            {
 
-      //   }
+               bExists = FALSE;
 
-      //   // Get the family name.
-      //   if (SUCCEEDED(hr))
-      //   {
+            }
 
-      //      hr = pFamilyNames->GetString(index, name, length + 1);
+         }
 
-      //   }
 
-      //   wstr.release_buffer();
+         //
+         // Then fall back to en-us.
+         //
 
-      //   // Add the family name to the String Array.
-      //   if (SUCCEEDED(hr))
-      //   {
+         if (!bExists)
+         {
 
-      //      string strName = string((const ::wide_character*)(name));
+            uNameIndex = 0;
 
-      //      m_pfontenumerationitema->add(allocateø ::write_text::font_enumeration_item(strName, strName));
+            bExists = FALSE;
 
-      //   }
+            hr =
+               pfamilynames->FindLocaleName(
+                  L"en-us",
+                  &uNameIndex,
+                  &bExists);
 
-      //}
+            if (FAILED(hr))
+            {
 
-      //return ::success;
+               bExists = FALSE;
+
+            }
+
+         }
+
+
+         //
+         // If neither locale exists, DirectWrite guarantees
+         // that the localized-string collection has at least
+         // the family names it returned, so use entry zero.
+         //
+
+         if (!bExists)
+         {
+
+            uNameIndex = 0;
+
+         }
+
+
+         ::u32 uLength = 0;
+
+         hr =
+            pfamilynames->GetStringLength(
+               uNameIndex,
+               &uLength);
+
+         if (FAILED(hr))
+         {
+
+            continue;
+
+         }
+
+
+         wstring wstrName;
+
+         auto pwszName =
+            wstrName.get_buffer(
+               uLength + 1);
+
+         if (!pwszName)
+         {
+
+            throw ::exception(error_no_memory);
+
+         }
+
+
+         hr =
+            pfamilynames->GetString(
+               uNameIndex,
+               pwszName,
+               uLength + 1);
+
+         if (FAILED(hr))
+         {
+
+            wstrName.release_buffer();
+
+            continue;
+
+         }
+
+
+         //
+         // Convert while the buffer is definitely valid and
+         // null-terminated.
+         //
+
+         string strName(
+            (const ::wide_character *)pwszName);
+
+         wstrName.release_buffer();
+
+
+         if (strName.is_empty())
+         {
+
+            continue;
+
+         }
+
+
+         //
+         // This constructor is preferable here because we have
+         // a font FAMILY NAME, not a font file path.
+         //
+
+         m_pfontenumerationitema->add(
+            allocateø::write_text::font_enumeration_item(
+               strName));
+
+      }
 
    }
-
 
 } // namespace write_text_directx11
 

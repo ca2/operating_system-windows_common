@@ -23,6 +23,13 @@ namespace draw2d_directx11
 
       virtual string write_text_get_default_implementation_name() override;
 
+
+
+      bool write_text_supports_raster_fonts() override;
+
+
+      bool write_text_supports_legacy_gdi_fonts() override;
+  
       bool lock_device() override;
       void unlock_device() override;
 

@@ -15,10 +15,11 @@
 
 
 CLASS_DECL_AURA void init_draw2d_mutex();
-
+__FACTORY_IMPORT void direct2d_factory(::factory::factory * pfactory);
 
 __FACTORY_EXPORT void draw2d_direct2d_for_directx11_factory(::factory::factory* pfactory)
 {
+
 
    pfactory->m_papplication->m_bGpu = true;
 

@@ -6,6 +6,7 @@
 #include "aura/graphics/image/encoding_options.h"
 #include "acme/operating_system/windows_common/com/comptr.h"
 #include "acme/operating_system/windows_common/com/bstring.h"
+#include "acme/operating_system/windows_common/com/hresult_exception.h"
 
 
 #include "acme/_operating_system.h"
@@ -39,10 +40,34 @@
 #include <cstddef>
 #include <cstdlib>
 
+// 0: failures only (reported once per attempt by image::load_image::run).
+// 1: also decoded-image summaries. 2: every successful WIC decoding stage.
+// Override locally or via /DIMAGING_WIC_LOAD_TRACE_LEVEL=2 when diagnosing.
+#ifndef IMAGING_WIC_LOAD_TRACE_LEVEL
+// Temporarily verbose for the Rosendal pixmap-return investigation; restore 0 afterwards.
+#define IMAGING_WIC_LOAD_TRACE_LEVEL 2
+#endif
+
 
 
 namespace imaging_wic
 {
+
+   static void check_image_decode(::image::load_image * ploadimage, HRESULT hr,
+      const char * stage, UINT width = 0, UINT height = 0, UINT stride = 0)
+   {
+      if (FAILED(hr))
+      {
+         ::string message;
+         message.formatf("[image.decode.wic] stage=%s hr=0x%08X path=%s size=%ux%u stride=%u",
+            stage, (unsigned int)hr, ploadimage->m_payload.as_file_path().c_str(), width, height, stride);
+         throw ::hresult_exception(hr, message.c_str());
+      }
+#if IMAGING_WIC_LOAD_TRACE_LEVEL >= 2
+      ploadimage->informationf("[image.decode.wic] stage=%s succeeded path=%s size=%ux%u stride=%u",
+         stage, ploadimage->m_payload.as_file_path().c_str(), width, height, stride);
+#endif
+   }
 
    comptr < IWICImagingFactory > get_imaging_factory();
 
@@ -201,16 +226,12 @@ namespace imaging_wic
 
       pimagingfactory = get_imaging_factory();
 
+      check_image_decode(ploadimage, pimagingfactory ? S_OK : E_POINTER, "GetImagingFactory");
+
       comptr < IWICStream > piStream;
 
       HRESULT hr = pimagingfactory->CreateStream(&piStream);
-
-      if (FAILED(hr))
-      {
-
-         return;
-
-      }
+      check_image_decode(ploadimage, hr, "CreateStream");
 
       const_char_pointer pszData = (const_char_pointer )memory.data();
 
@@ -218,45 +239,36 @@ namespace imaging_wic
 
       if(::is_null(pszData) || size <= 0)
       {
-
-         return;
+         check_image_decode(ploadimage, E_INVALIDARG, "InputBufferEmpty");
 
       }
+
+      if ((::u64)size > MAXDWORD)
+      {
+         check_image_decode(ploadimage, E_INVALIDARG, "InputBufferExceedsWICDWORD");
+      }
+
+#if IMAGING_WIC_LOAD_TRACE_LEVEL >= 2
+      informationf("[image.decode.wic] input path=%s bytes=%llu",
+         ploadimage->m_payload.as_file_path().c_str(), (unsigned long long)size);
+#endif
 
       auto dwSize = (DWORD) size;
 
       hr = piStream->InitializeFromMemory((WICInProcPointer) pszData, dwSize);
-
-      if (FAILED(hr))
-      {
-
-         return;
-
-      }
+      check_image_decode(ploadimage, hr, "InitializeFromMemory");
 
       comptr < IWICBitmapDecoder > piDecoder;
 
       // jpeg,png:OK, bmp:88982f50
       // "bmp:88982f50 results in error, icon also errors"(TranslatedFromJapanese)
       hr = pimagingfactory->CreateDecoderFromStream(piStream, 0, WICDecodeMetadataCacheOnLoad, &piDecoder);
-
-      if (FAILED(hr))
-      {
-
-         return;
-
-      }
+      check_image_decode(ploadimage, hr, "CreateDecoderFromStream");
 
       comptr < IWICBitmapFrameDecode > pframedecode;
 
       hr = piDecoder->GetFrame(0, &pframedecode);
-
-      if (FAILED(hr))
-      {
-
-         return;
-
-      }
+      check_image_decode(ploadimage, hr, "GetFrame(0)");
 
       ::i32 iOrientation = -1;
 
@@ -318,27 +330,14 @@ namespace imaging_wic
       comptr < IWICFormatConverter > pbitmapsource;
 
       hr = pimagingfactory->CreateFormatConverter(&pbitmapsource);
-
-      if (FAILED(hr))
-      {
-
-         return;
-
-      }
+      check_image_decode(ploadimage, hr, "CreateFormatConverter");
 
       hr = pbitmapsource->Initialize(pframedecode, GUID_WICPixelFormat32bppPBGRA, WICBitmapDitherTypeNone, nullptr, 0.f, WICBitmapPaletteTypeCustom);
-
-      if (FAILED(hr))
-      {
-
-         return;
-
-      }
+      check_image_decode(ploadimage, hr, "Convert32bppPBGRA");
 
       if (!windows_load_image_from_bitmap_source(ploadimage, pbitmapsource, pimagingfactory))
       {
-
-         return;
+         check_image_decode(ploadimage, E_FAIL, "DeliverDecodedPixels");
 
       }
 
@@ -763,26 +762,17 @@ namespace imaging_wic
       comptr < IWICBitmap > piBmp;
 
       HRESULT hr = pimagingfactory->CreateBitmapFromSource(pbitmapsource, WICBitmapCacheOnLoad, &piBmp);
-
-      if (hr != S_OK)
-      {
-
-         return false;
-
-      }
+      check_image_decode(ploadimage, hr, "CreateBitmapFromSource");
 
       ::u32 uWidth;
 
       ::u32 uHeight;
 
       hr = piBmp->GetSize(&uWidth, &uHeight);
-
-      if (hr != S_OK)
-      {
-
-         return false;
-
-      }
+      check_image_decode(ploadimage, hr, "GetSize");
+      check_image_decode(ploadimage,
+         uWidth && uHeight && uWidth <= INT_MAX / 4 && uHeight <= INT_MAX ? S_OK : E_INVALIDARG,
+         "ValidateDimensions", uWidth, uHeight);
 
       if (ploadimage->m_sizePreferred.area() > 0)
       {
@@ -810,7 +800,10 @@ namespace imaging_wic
 
                   if (ploadimage->is_ok())
                   {
-
+#if IMAGING_WIC_LOAD_TRACE_LEVEL >= 1
+                     ploadimage->informationf("[image.decode.wic] decoded/resized/delivered path=%s size=%ux%u stride=%d",
+                        ploadimage->m_payload.as_file_path().c_str(), width, height, scanSize);
+#endif
                      return true;
 
                   }
@@ -834,46 +827,33 @@ namespace imaging_wic
       comptr < IWICBitmapLock > piLock;
 
       hr = piBmp->Lock(&rc, WICBitmapLockRead, &piLock);
-
-      if (hr != S_OK)
-      {
-
-         return false;
-
-      }
+      check_image_decode(ploadimage, hr, "LockBitmapRead", uWidth, uHeight);
 
       ::u32 cbStride;
 
-      piLock->GetStride(&cbStride);
-
-      if (hr != S_OK)
-      {
-
-         return false;
-
-      }
+      hr = piLock->GetStride(&cbStride);
+      check_image_decode(ploadimage, hr, "GetStride", uWidth, uHeight);
 
       ::u32 uArea;
 
       ::u8 * pData;
 
       hr = piLock->GetDataPointer(&uArea, &pData);
-
-      if (hr != S_OK)
-      {
-
-         return false;
-
-      }
+      check_image_decode(ploadimage, hr, "GetDataPointer", uWidth, uHeight, cbStride);
+      check_image_decode(ploadimage,
+         pData && cbStride >= (::u64)uWidth * 4 && cbStride <= INT_MAX
+            && (::u64)uArea >= (::u64)cbStride * (uHeight - 1) + (::u64)uWidth * 4
+            ? S_OK : E_INVALIDARG,
+         "ValidatePixelBuffer", uWidth, uHeight, cbStride);
 
       ploadimage->on_load_image({(::i32)uWidth, (::i32)uHeight}, (::image32_t *)pData, cbStride);
+      check_image_decode(ploadimage, ploadimage->is_ok() ? S_OK : E_FAIL,
+         "DeliverDecodedPixels", uWidth, uHeight, cbStride);
 
-      if (!ploadimage->is_ok())
-      {
-
-         return false;
-
-      }
+#if IMAGING_WIC_LOAD_TRACE_LEVEL >= 1
+      ploadimage->informationf("[image.decode.wic] decoded/delivered path=%s size=%ux%u stride=%u bytes=%u",
+         ploadimage->m_payload.as_file_path().c_str(), uWidth, uHeight, cbStride, uArea);
+#endif
 
       return true;
 

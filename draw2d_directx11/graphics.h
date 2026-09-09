@@ -451,6 +451,9 @@ namespace draw2d_directx11
       using ::draw2d::graphics::_draw_raw;
 
 
+      ::i32 image_draw_vertex_count() const override;
+      ::gpu::enum_topology image_draw_topology() const override;
+
       // Bitmap Functions
       //bool PatBlt(::f64 x, ::f64 y, ::f64 nWidth, ::f64 nHeight) override;
       void _draw_raw(const ::f64_rectangle & rectangleTarget, ::image::image * pimage, const ::image::image_drawing_options & imagedrawingoptions, const ::f64_point & pointSrc) override;

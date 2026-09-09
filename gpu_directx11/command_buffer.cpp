@@ -294,7 +294,7 @@ namespace gpu_directx11
 
       ::cast < ::gpu_directx11::texture > ptexture = pgputexture;
 
-      auto prendertargetview = ptexture->m_prendertargetview;
+      auto prendertargetview = ptexture->m_pd3d11rendertargetview;
 
       pd3d11devicecontext1->ClearView(prendertargetview, clearColor, r2, 1);
 
@@ -338,7 +338,7 @@ namespace gpu_directx11
 
       //::f32 clearColor[4] = { 0.1f ,0.1f, 0.1f, 0.1f };
 
-      auto prendertargetview = ptexture->m_prendertargetview;
+      auto prendertargetview = ptexture->m_pd3d11rendertargetview;
       //::cast < texture > ptexture = pgputexture;
 
       //::cast < ::gpu_directx11::context > pgpucontext = m_pgpurendertarget->m_pgpurenderer->m_pgpucontext;
@@ -387,10 +387,14 @@ namespace gpu_directx11
       if (m_pd3d11devicecontextCommandBufferDeferred)
       {
 
+         // A context is reused across layer/image leases. Its ca2 binding
+         // caches survive submission, so clearing the native state here would
+         // leave subsequent draws without the cached shader/topology/viewport.
          HRESULT hrFinishCommandList = m_pd3d11devicecontextCommandBufferDeferred->FinishCommandList(
-               FALSE,
+               TRUE,
                &m_pd3d11commandlist);
 
+         ::defer_throw_hresult(hrFinishCommandList);
 
          auto pgpudevice = m_pgpurendertarget->m_pgpurenderer->m_pgpucontext->m_pgpudevice;
 
@@ -404,8 +408,12 @@ namespace gpu_directx11
          
             ::gpu::context_lock contextlock(pgpucontext);
 
+            // Cached-image/font work can submit while the immediate context
+            // is partway through a UI layer. The lock prevents concurrent use;
+            // state restoration also prevents this submission from erasing the
+            // suspended layer's bindings. FALSE resets them to D3D defaults.
             pgpucontext->m_pd3d11devicecontextImmediate->ExecuteCommandList(
-                              pd3d11commandlist.m_p, FALSE);
+                              pd3d11commandlist.m_p, TRUE);
 
          }
 

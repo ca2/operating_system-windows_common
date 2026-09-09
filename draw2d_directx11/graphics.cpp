@@ -327,7 +327,7 @@ namespace draw2d_directx11
       pgpucontextNew->create_draw2d_gpu_context(
          //;; ::gpu::e_output_gpu_buffer,
          pgpudevice,
-         m_pacmeuserinteractionAffinity->m_pacmewindowingwindow,
+         m_pacmeuserinteractionAffinity->acme_windowing_window(),
          this,
          //rectanglePlacement,
          {},
@@ -2367,206 +2367,225 @@ namespace draw2d_directx11
    //}
 
 
+   ::i32 graphics::image_draw_vertex_count() const
+   {
+
+      return 4;
+
+   }
+
+
+   ::gpu::enum_topology graphics::image_draw_topology() const
+   {
+
+      return ::gpu::e_topology_triangle_strip;
+
+   }
+
+
+
    void graphics::_draw_raw(const ::f64_rectangle & rectangleTarget, ::image::image * pimageSource, const ::image::image_drawing_options & imagedrawingoptions, const ::f64_point & pointSrc)
    {
 
-      //::draw2d::lock draw2dlock;
+      ::draw2d::graphics::_draw_raw(rectangleTarget, pimageSource, imagedrawingoptions, pointSrc);
 
-      // ::draw2d::device_lock devicelock(this);
+   //   //::draw2d::lock draw2dlock;
 
-      auto pimage = pimageSource->get_source_image();
+   //   // ::draw2d::device_lock devicelock(this);
 
-      //pimage->defer_update_image();
+   //   auto pimage = pimageSource->get_source_image();
 
-      //try
-      //{
+   //   //pimage->defer_update_image();
 
-      if (pimage == nullptr || pimage->get_bitmap_as_source() == nullptr)
-      {
+   //   //try
+   //   //{
 
-         //return false;
+   //   if (pimage == nullptr || pimage->get_bitmap_as_source() == nullptr)
+   //   {
 
-         throw ::exception(error_null_pointer);
+   //      //return false;
 
-      }
+   //      throw ::exception(error_null_pointer);
 
-      //if (pgraphicsSrc->get_current_bitmap() == nullptr)
-      //{
+   //   }
 
-      //   return false;
+   //   //if (pgraphicsSrc->get_current_bitmap() == nullptr)
+   //   //{
 
-      //}
+   //   //   return false;
 
-      //if (pgraphicsSrc->get_current_bitmap()->nok())
-      //{
+   //   //}
 
-      //   return false;
+   //   //if (pgraphicsSrc->get_current_bitmap()->nok())
+   //   //{
 
-      //}
+   //   //   return false;
 
-      ::f64 x = rectangleTarget.left;
-      ::f64 y = rectangleTarget.top;
-      ::f64 nWidth = rectangleTarget.width();
-      ::f64 nHeight = rectangleTarget.height();
-      ::f64 xSrc = pointSrc.x;
-      ::f64 ySrc = pointSrc.y;
+   //   //}
 
-      if (x < 0)
-      {
+   //   ::f64 x = rectangleTarget.left;
+   //   ::f64 y = rectangleTarget.top;
+   //   ::f64 nWidth = rectangleTarget.width();
+   //   ::f64 nHeight = rectangleTarget.height();
+   //   ::f64 xSrc = pointSrc.x;
+   //   ::f64 ySrc = pointSrc.y;
 
-         xSrc -= x;
+   //   if (x < 0)
+   //   {
 
-         nWidth += x;
+   //      xSrc -= x;
 
-         x = 0;
+   //      nWidth += x;
 
-      }
+   //      x = 0;
 
-      if (y < 0)
-      {
+   //   }
 
-         ySrc -= y;
+   //   if (y < 0)
+   //   {
 
-         nHeight += y;
+   //      ySrc -= y;
 
-         y = 0;
+   //      nHeight += y;
 
-      }
+   //      y = 0;
 
-      if (get_current_bitmap())
-      {
+   //   }
 
-         //auto pd2d1bitmap = get_current_bitmap()->get_os_data < ID2D1Bitmap * >();
+   //   if (get_current_bitmap())
+   //   {
 
-         //if (::is_set(pd2d1bitmap))
-         //{
+   //      //auto pd2d1bitmap = get_current_bitmap()->get_os_data < ID2D1Bitmap * >();
 
-         //   D2D1_SIZE_U sz = pd2d1bitmap->GetPixelSize();
+   //      //if (::is_set(pd2d1bitmap))
+   //      //{
 
-         //   if (nWidth + x + get_origin().x > sz.width)
-         //   {
+   //      //   D2D1_SIZE_U sz = pd2d1bitmap->GetPixelSize();
 
-         //      nWidth = sz.width - x - get_origin().x;
+   //      //   if (nWidth + x + get_origin().x > sz.width)
+   //      //   {
 
-         //   }
+   //      //      nWidth = sz.width - x - get_origin().x;
 
-         //   if (nHeight + y + get_origin().y > sz.height)
-         //   {
+   //      //   }
 
-         //      nHeight = sz.height - y - get_origin().y;
+   //      //   if (nHeight + y + get_origin().y > sz.height)
+   //      //   {
 
-         //   }
+   //      //      nHeight = sz.height - y - get_origin().y;
 
-         //}
+   //      //   }
 
-      }
+   //      //}
 
-      {
+   //   }
 
-         //D2D1_SIZE_U sz = ((ID2D1Bitmap *)pimage->get_bitmap()->get_os_data())->GetPixelSize();
+   //   {
 
-         //if (nWidth + xSrc > sz.width)
-         //{
+   //      //D2D1_SIZE_U sz = ((ID2D1Bitmap *)pimage->get_bitmap()->get_os_data())->GetPixelSize();
 
-         //   nWidth = sz.width - xSrc;
+   //      //if (nWidth + xSrc > sz.width)
+   //      //{
 
-         //}
+   //      //   nWidth = sz.width - xSrc;
 
-         //if (nHeight + ySrc > sz.height)
-         //{
+   //      //}
 
-         //   nHeight = sz.height - ySrc;
+   //      //if (nHeight + ySrc > sz.height)
+   //      //{
 
-         //}
+   //      //   nHeight = sz.height - ySrc;
 
-      }
+   //      //}
 
-      {
+   //   }
 
-         //D2D1_RECT_F rectangleTarget = D2D1::RectF((::f32)x, (::f32)y, (::f32)(x + nWidth), (::f32)(y + nHeight));
+   //   {
 
-         //D2D1_RECT_F rectangleSource = D2D1::RectF((::f32)xSrc, (::f32)ySrc, (::f32)(xSrc + nWidth), (::f32)(ySrc + nHeight));
+   //      //D2D1_RECT_F rectangleTarget = D2D1::RectF((::f32)x, (::f32)y, (::f32)(x + nWidth), (::f32)(y + nHeight));
 
-         //auto pd2d1bitmap = ((ID2D1Bitmap *)pimage->get_bitmap()->get_os_data());
+   //      //D2D1_RECT_F rectangleSource = D2D1::RectF((::f32)xSrc, (::f32)ySrc, (::f32)(xSrc + nWidth), (::f32)(ySrc + nHeight));
 
-         //::i32 cx = pd2d1bitmap->GetPixelSize().width;
+   //      //auto pd2d1bitmap = ((ID2D1Bitmap *)pimage->get_bitmap()->get_os_data());
 
-         //::i32 cy = pd2d1bitmap->GetPixelSize().height;
+   //      //::i32 cx = pd2d1bitmap->GetPixelSize().width;
 
-         //pimage->unmap();
+   //      //::i32 cy = pd2d1bitmap->GetPixelSize().height;
 
-         //HRESULT hrFlush = ((ID2D1DeviceContext *)pgraphicsImage->get_os_data())->Flush();
+   //      //pimage->unmap();
 
-         //HRESULT hrEndDraw = ((ID2D1DeviceContext *)pgraphicsImage->get_os_data())->EndDraw();
+   //      //HRESULT hrFlush = ((ID2D1DeviceContext *)pgraphicsImage->get_os_data())->Flush();
 
-         //defer_primitive_blend();
+   //      //HRESULT hrEndDraw = ((ID2D1DeviceContext *)pgraphicsImage->get_os_data())->EndDraw();
 
-         //if (imagedrawingoptions.is_identity())
-         //{
+   //      //defer_primitive_blend();
 
-         //   m_pdevicecontext->DrawBitmap(pd2d1bitmap, rectangleTarget, (FLOAT)imagedrawingoptions.opacity().f32_opacity(), D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR, rectangleSource);
+   //      //if (imagedrawingoptions.is_identity())
+   //      //{
 
-         //}
-         //else
-         //{
+   //      //   m_pdevicecontext->DrawBitmap(pd2d1bitmap, rectangleTarget, (FLOAT)imagedrawingoptions.opacity().f32_opacity(), D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR, rectangleSource);
 
-         //   comptr<ID2D1Effect> colorMatrixEffect;
-         //   HRESULT hr = m_pdevicecontext->CreateEffect(CLSID_D2D1ColorMatrix, &colorMatrixEffect);
+   //      //}
+   //      //else
+   //      //{
 
-         //   defer_throw_hresult(hr);
+   //      //   comptr<ID2D1Effect> colorMatrixEffect;
+   //      //   HRESULT hr = m_pdevicecontext->CreateEffect(CLSID_D2D1ColorMatrix, &colorMatrixEffect);
 
-         //   colorMatrixEffect->SetInput(0, pd2d1bitmap);
-         //   D2D1_MATRIX_5X4_F matrix =
-         //      D2D1::Matrix5x4F(
-         //         (FLOAT)imagedrawingoptions.matrix().a1,
-         //         (FLOAT)imagedrawingoptions.matrix().a2,
-         //         (FLOAT)imagedrawingoptions.matrix().a3,
-         //         (FLOAT)imagedrawingoptions.matrix().a4,
-         //         (FLOAT)imagedrawingoptions.matrix().b1,
-         //         (FLOAT)imagedrawingoptions.matrix().b2,
-         //         (FLOAT)imagedrawingoptions.matrix().b3,
-         //         (FLOAT)imagedrawingoptions.matrix().b4,
-         //         (FLOAT)imagedrawingoptions.matrix().c1,
-         //         (FLOAT)imagedrawingoptions.matrix().c2,
-         //         (FLOAT)imagedrawingoptions.matrix().c3,
-         //         (FLOAT)imagedrawingoptions.matrix().c4,
-         //         (FLOAT)imagedrawingoptions.matrix().d1,
-         //         (FLOAT)imagedrawingoptions.matrix().d2,
-         //         (FLOAT)imagedrawingoptions.matrix().d3,
-         //         (FLOAT)imagedrawingoptions.matrix().d4,
-         //         (FLOAT)imagedrawingoptions.matrix().e1,
-         //         (FLOAT)imagedrawingoptions.matrix().e2,
-         //         (FLOAT)imagedrawingoptions.matrix().e3,
-         //         (FLOAT)imagedrawingoptions.matrix().e4);
-         //   colorMatrixEffect->SetValue(D2D1_COLORMATRIX_PROP_COLOR_MATRIX, matrix);
-         //   D2D1_POINT_2F pointTarget;
-         //   pointTarget.x = rectangleTarget.left;
-         //   pointTarget.y = rectangleTarget.top;
-         //   //m_pdevicecontext->BeginDraw();
-         //   m_pdevicecontext->DrawImage(colorMatrixEffect, &pointTarget, &rectangleSource, D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR);
-         //   //m_pdevicecontext->EndDraw();
+   //      //   defer_throw_hresult(hr);
 
-         //}
+   //      //   colorMatrixEffect->SetInput(0, pd2d1bitmap);
+   //      //   D2D1_MATRIX_5X4_F matrix =
+   //      //      D2D1::Matrix5x4F(
+   //      //         (FLOAT)imagedrawingoptions.matrix().a1,
+   //      //         (FLOAT)imagedrawingoptions.matrix().a2,
+   //      //         (FLOAT)imagedrawingoptions.matrix().a3,
+   //      //         (FLOAT)imagedrawingoptions.matrix().a4,
+   //      //         (FLOAT)imagedrawingoptions.matrix().b1,
+   //      //         (FLOAT)imagedrawingoptions.matrix().b2,
+   //      //         (FLOAT)imagedrawingoptions.matrix().b3,
+   //      //         (FLOAT)imagedrawingoptions.matrix().b4,
+   //      //         (FLOAT)imagedrawingoptions.matrix().c1,
+   //      //         (FLOAT)imagedrawingoptions.matrix().c2,
+   //      //         (FLOAT)imagedrawingoptions.matrix().c3,
+   //      //         (FLOAT)imagedrawingoptions.matrix().c4,
+   //      //         (FLOAT)imagedrawingoptions.matrix().d1,
+   //      //         (FLOAT)imagedrawingoptions.matrix().d2,
+   //      //         (FLOAT)imagedrawingoptions.matrix().d3,
+   //      //         (FLOAT)imagedrawingoptions.matrix().d4,
+   //      //         (FLOAT)imagedrawingoptions.matrix().e1,
+   //      //         (FLOAT)imagedrawingoptions.matrix().e2,
+   //      //         (FLOAT)imagedrawingoptions.matrix().e3,
+   //      //         (FLOAT)imagedrawingoptions.matrix().e4);
+   //      //   colorMatrixEffect->SetValue(D2D1_COLORMATRIX_PROP_COLOR_MATRIX, matrix);
+   //      //   D2D1_POINT_2F pointTarget;
+   //      //   pointTarget.x = rectangleTarget.left;
+   //      //   pointTarget.y = rectangleTarget.top;
+   //      //   //m_pdevicecontext->BeginDraw();
+   //      //   m_pdevicecontext->DrawImage(colorMatrixEffect, &pointTarget, &rectangleSource, D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR);
+   //      //   //m_pdevicecontext->EndDraw();
 
+   //      //}
 
-         //if (SUCCEEDED(hrEndDraw))
-         //{
 
-         //   ((ID2D1DeviceContext *)pgraphicsImage->get_os_data())->BeginDraw();
+   //      //if (SUCCEEDED(hrEndDraw))
+   //      //{
 
-         //}
+   //      //   ((ID2D1DeviceContext *)pgraphicsImage->get_os_data())->BeginDraw();
 
-      }
+   //      //}
 
-      //return true;
+   //   }
 
-   //}
-   //catch (...)
-   //{
+   //   //return true;
 
-   //   return false;
+   ////}
+   ////catch (...)
+   ////{
 
-   //}
+   ////   return false;
+
+   ////}
 
    }
 
@@ -5541,14 +5560,14 @@ namespace draw2d_directx11
 
          ::cast < ::gpu_directx11::texture > ptexture = ptexturesite->gpu_texture();
 
-         if (!ptexture->m_prendertargetview)
+         if (!ptexture->m_pd3d11rendertargetview)
          {
 
             ptexture->create_render_target();
 
          }
          ::f32 clearColor[4] = { 0, 0, 0, 0 }; // Clear to transparent
-         pcontext->m_pd3d11devicecontext->ClearRenderTargetView(ptexture->m_prendertargetview,
+         pcontext->m_pd3d11devicecontext->ClearRenderTargetView(ptexture->m_pd3d11rendertargetview,
             clearColor
             );
 

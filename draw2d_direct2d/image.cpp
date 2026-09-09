@@ -369,6 +369,14 @@ namespace draw2d_direct2d
          m_estatus = success;
 
       }
+
+      if (pdraw2dgraphics)
+      {
+
+         m_pgraphicsOwned = pdraw2dgraphics;
+
+      }
+
       //if (!estatus)
       //{
 

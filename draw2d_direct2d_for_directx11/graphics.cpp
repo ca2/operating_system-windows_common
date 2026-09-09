@@ -735,6 +735,19 @@ namespace draw2d_direct2d_for_directx11
    void graphics::_create_memory_graphics(const ::i32_size & size, ::acme::user::interaction * pacmeuserinteractionAffinity)
    {
 
+      if (pacmeuserinteractionAffinity)
+      {
+
+         m_pacmeuserinteractionAffinity = pacmeuserinteractionAffinity;
+
+      }
+      else if (!m_pacmeuserinteractionAffinity)
+      {
+
+         m_pacmeuserinteractionAffinity = m_papplication->main_acme_user_interaction();
+
+      }
+
       auto pcontext = gpu_context();
 
       if (pcontext)
@@ -771,8 +784,6 @@ namespace draw2d_direct2d_for_directx11
 
       }
 
-      auto pwindow = puserinteraction->window();
-
       //auto rectanglePlacement = pwindow->get_window_rectangle();
 
       auto pgpuapproach = m_papplication->get_gpu_approach();
@@ -791,7 +802,19 @@ namespace draw2d_direct2d_for_directx11
 
          auto pacmeuserinteractionMain = m_papplication->main_acme_user_interaction();
 
-         pacmewindowingwindow = pacmeuserinteractionMain->acme_windowing_window();
+         if (pacmeuserinteractionMain)
+         {
+
+            pacmewindowingwindow = pacmeuserinteractionMain->acme_windowing_window();
+
+         }
+
+      }
+
+      if (!pacmewindowingwindow)
+      {
+
+         throw ::exception(error_wrong_state, "Direct2D memory graphics has no window affinity");
 
       }
 
@@ -863,8 +886,6 @@ namespace draw2d_direct2d_for_directx11
             }
 
             //auto pwindow = puserinteraction->window();
-
-            auto rectanglePlacement = pwindow->get_window_rectangle();
 
             auto pdirect2d = direct2d();
 
@@ -952,11 +973,9 @@ namespace draw2d_direct2d_for_directx11
 
             pixelformat.format = DXGI_FORMAT_B8G8R8A8_UNORM;
 
-            constructø(m_pimageTarget->m_pdraw2dbitmap);
-
-            ::cast < ::draw2d_direct2d_for_directx11::bitmap> pdraw2dbitmap = m_pimageTarget->m_pdraw2dbitmap;
-
-            pdraw2dbitmap->_create_d2d1_bitmap(this, size, nullptr, {}, {}, 0, pacmeuserinteractionAffinity);
+            // Allocation precedes image binding. Text measurement has no
+            // destination image at all; on_acquire_memory_graphics prepares
+            // a destination bitmap when the caller supplies an image.
 
             //if (m_pd2d1bitmaprendertarget)
             //{
@@ -1171,9 +1190,19 @@ namespace draw2d_direct2d_for_directx11
    void graphics::on_release_memory_graphics()
    {
 
-      return ::gpu::graphics::on_release_memory_graphics();
+      // End the native drawing scope before releasing/publishing its image.
+      // end_draw owns m_bBeginDraw; clearing it here skips ID2D1::EndDraw.
+      if (m_bBeginDraw)
+      {
+
+         end_draw();
+
+      }
+
+      ::gpu::graphics::on_release_memory_graphics();
 
    }
+
 
    bool graphics::_draw_blend(const ::image::image_drawing & imagedrawing)
    {
@@ -2872,6 +2901,16 @@ namespace draw2d_direct2d_for_directx11
    //}
 
 
+   void graphics::_draw_raw(const ::image::image_drawing & imagedrawing)
+   {
+
+      // Dispatch copy/stretch to this backend's Direct2D bitmap methods,
+      // rather than the inherited GPU texture drawing entry point.
+      ::image::image_drawer::_draw_raw(imagedrawing);
+
+   }
+
+
    void graphics::_draw_raw(const ::f64_rectangle & rectangleTarget, ::image::image * pimageSource, const ::image::image_drawing_options & imagedrawingoptions, const ::f64_point & pointSrc)
    {
 
@@ -3078,6 +3117,15 @@ namespace draw2d_direct2d_for_directx11
 
    void graphics::_stretch_raw(const ::f64_rectangle & rectangleTarget, ::image::image * pimage, const ::image::image_drawing_options & imagedrawingoptions, const ::f64_rectangle & rectangleSource)
    {
+
+      // The native stretch implementation subsequently requests the bitmap
+      // without a graphics context; realize CPU-backed images here first.
+      if (pimage)
+      {
+
+         pimage->get_bitmap_as_source(this);
+
+      }
 
       ::draw2d_direct2d::graphics::_stretch_raw(rectangleTarget, pimage, imagedrawingoptions, rectangleSource);
 
@@ -6144,7 +6192,7 @@ namespace draw2d_direct2d_for_directx11
 
       //}
 
-      throw(todo);
+      //throw(todo);
 
       ::i32_rectangle rectangleFrame;
 
@@ -6904,12 +6952,43 @@ namespace draw2d_direct2d_for_directx11
    ::acme::user::interaction * pacmeuserinteractionAffinity)
    {
 
-      //if (::is_set(pimage))
-      //{
+      if (!pacmeuserinteractionAffinity)
+      {
 
-      //   pimage->create_bitmap(pacmeuserinteractionAffinity);
+         pacmeuserinteractionAffinity = m_pacmeuserinteractionAffinity;
 
-      //}
+      }
+      else if (!m_pacmeuserinteractionAffinity)
+      {
+
+         m_pacmeuserinteractionAffinity = pacmeuserinteractionAffinity;
+
+      }
+
+      // A descriptor is not a native bitmap. Realize the destination before
+      // the base acquisition caches its bitmap and before begin_draw binds it.
+      if (pimage)
+      {
+
+         ::cast<bitmap> pbitmap = pimage->m_pdraw2dbitmap;
+         if (!pbitmap || !pbitmap->m_pd2d1bitmap || pbitmap->size() != pimage->raw_size())
+         {
+
+            pimage->update_bitmap_as_render_target(pacmeuserinteractionAffinity, this);
+
+         }
+         else if (pimage->m_eacquire == ::draw2d::e_acquire_load
+            && pimage->m_bWasMappedAfterLastGraphicsAcquisition && pimage->m_ppixmapOwned)
+         {
+
+            pbitmap->defer_write_pixels(*pimage->m_ppixmapOwned);
+
+         }
+
+         pimage->m_bWasMappedAfterLastGraphicsAcquisition = false;
+
+      }
+
       ::draw2d::graphics::on_acquire_memory_graphics(
          bExternalRendering,
       pimage,
@@ -6919,38 +6998,21 @@ namespace draw2d_direct2d_for_directx11
          if (::is_set(pimage))
          {
 
-            if (pimage->m_pgraphicsOwned != this)
-            {
+         //throw(todo);
 
-               if (!pimage->m_pdraw2dbitmap)
-            {
+         ::i32_rectangle rectangleFrame(::i32_point{}, size);
 
-               ::cast < ::user::interaction > puserinteractionAffinity = pacmeuserinteractionAffinity;
-
-               pimage->update_as_render_target(size, puserinteractionAffinity, this);
-
-            }
-
-            //::cast <::draw2d_direct2d_for_directx11::bitmap> pdraw2dbitmap = pimage->m_pdraw2dbitmap;
-
-            //auto & pd2d1bitmap = pdraw2dbitmap->m_pdraw2dbitmap;
-
-            //m_pdevicecontext->SetTarget(pd2d1bitmap);
-
-         }
-
-         throw(todo);
-
-         ::i32_rectangle rectangleFrame;
-
-         ::image::image_pointer pimageTarget;
+         m_pdraw2dbitmap = pimage->m_pdraw2dbitmap;
 
          //if (!m_bBeginDraw)
          //{
 
             //m_bBeginDraw = true;
 
-            begin_draw(true, pacmeuserinteractionAffinity->user_interaction(), rectangleFrame, pimageTarget);
+            // An image lease always uses local offscreen coordinates, even
+            // when acquired during a window layer's drawing scope.
+            begin_draw(true, pacmeuserinteractionAffinity ? pacmeuserinteractionAffinity->user_interaction() : nullptr,
+               rectangleFrame, pimage);
 
             ////auto pgpucurrentlayer = ::gpu::current_layer();
 
@@ -7312,7 +7374,7 @@ namespace draw2d_direct2d_for_directx11
          if (!m_bBeginDraw)
          {
 
-            throw(todo);
+//            throw(todo);
 
             ::i32_rectangle rectangleFrame;
 
@@ -7364,7 +7426,7 @@ namespace draw2d_direct2d_for_directx11
       if (m_egraphics == ::e_graphics_draw)
       {
 
-         if (m_bBeginDraw && !bClosingLayer)
+         if (m_bBeginDraw)
          {
 
             end_draw();
@@ -7463,7 +7525,30 @@ namespace draw2d_direct2d_for_directx11
       if (!m_bBeginDraw)
       {
 
-         if (::gpu::current_layer())
+         if (pimageTarget)
+         {
+
+            ::cast<bitmap> pbitmap = pimageTarget->m_pdraw2dbitmap;
+            if (!pbitmap || !pbitmap->m_pd2d1bitmap)
+            {
+
+               throw ::exception(error_wrong_state, "Direct2D image lease has no target bitmap");
+
+            }
+
+            m_pd2d1devicecontext->SetTarget(pbitmap->m_pd2d1bitmap);
+            m_pd2d1devicecontext->BeginDraw();
+            m_bBeginDraw = true;
+
+            if (pimageTarget->m_eacquire == ::draw2d::e_acquire_dont_load)
+            {
+
+               m_pd2d1devicecontext->Clear(D2D1::ColorF(0.0f, 0.0f, 0.0f, 0.0f));
+
+            }
+
+         }
+         else if (::gpu::current_layer())
          {
 
             m_bBeginDraw = true;
@@ -7537,6 +7622,9 @@ namespace draw2d_direct2d_for_directx11
       if (m_bBeginDraw)
       {
 
+         // Balance native clips/layers while the drawing scope is active.
+         _pop_all_layers();
+
          m_bBeginDraw = false;
 
 
@@ -7558,7 +7646,7 @@ namespace draw2d_direct2d_for_directx11
 
             ::cast < ::gpu_directx11::texture > ptexture = ptexturesite->gpu_texture();
 
-            auto pd3d11texture = ptexture->m_ptextureOffscreen;
+            auto pd3d11texture = ptexture->m_pd3d11texture2d;
 
 
             comptr<ID2D1Image > pd2d1image;
@@ -7644,6 +7732,7 @@ namespace draw2d_direct2d_for_directx11
 
          m_pd2d1devicecontext->SetTarget(nullptr);
 
+         ::defer_throw_hresult(hrEndDraw);
 
 
          //if (1)

@@ -432,13 +432,13 @@ namespace gpu_directx11
 
          ::cast<texture> ptextureSrc = pgputexturesiteSource->gpu_texture();
 
-         if (!ptextureSrc->m_pshaderresourceview)
+         if (!ptextureSrc->m_pd3d11shaderresourceview)
          {
 
             ptextureSrc->create_shader_resource_view();
          }
 
-         auto pshaderresourceview = ptextureSrc->m_pshaderresourceview;
+         auto pshaderresourceview = ptextureSrc->m_pd3d11shaderresourceview;
 
          if (pshaderresourceview)
          {
@@ -447,7 +447,7 @@ namespace gpu_directx11
             pgpucontext->m_pd3d11devicecontext->PSSetShaderResources(0, 1, shaderresourceviewa);
          }
 
-         auto psamplerstate = ptextureSrc->m_psamplerstate;
+         auto psamplerstate = ptextureSrc->m_pd3d11samplerstate;
 
          if (psamplerstate)
          {
@@ -573,7 +573,7 @@ namespace gpu_directx11
 
          ::cast<texture> ptextureDst = pgputexturesiteTarget->gpu_texture();
 
-         if (!ptextureDst->m_prendertargetview)
+         if (!ptextureDst->m_pd3d11rendertargetview)
          {
 
             ptextureDst->create_render_target();
@@ -584,9 +584,9 @@ namespace gpu_directx11
 
             ID3D11RenderTargetView *rendertargetviewa[1];
 
-            rendertargetviewa[0] = ptextureDst->m_prendertargetview;
+            rendertargetviewa[0] = ptextureDst->m_pd3d11rendertargetview;
 
-            ID3D11DepthStencilView *pdepthstencilview = ptextureDst->m_pdepthstencilview;
+            ID3D11DepthStencilView *pdepthstencilview = ptextureDst->m_pd3d11depthstencilview;
 
             if (pdepthstencilview)
             {
@@ -622,9 +622,9 @@ namespace gpu_directx11
 
             ID3D11RenderTargetView *rendertargetviewa[1];
 
-            rendertargetviewa[0] = ptexture->m_rendertargetview2a[ptexture->m_iCurrentMip][ptexture->m_iCurrentLayer];
+            rendertargetviewa[0] = ptexture->m_d3d11rendertargetview2a[ptexture->m_iCurrentMip][ptexture->m_iCurrentLayer];
 
-            ID3D11DepthStencilView *pdepthstencilview = ptexture->m_pdepthstencilview;
+            ID3D11DepthStencilView *pdepthstencilview = ptexture->m_pd3d11depthstencilview;
             if (pdepthstencilview)
             {
                pgpucontext->m_pd3d11devicecontext->OMSetRenderTargets(1, rendertargetviewa, pdepthstencilview);
@@ -806,7 +806,7 @@ namespace gpu_directx11
             if (ptexture)
             {
 
-               auto pshaderresourceview = ptexture->m_pshaderresourceview;
+               auto pshaderresourceview = ptexture->m_pd3d11shaderresourceview;
 
                if (pshaderresourceview)
                {
@@ -966,13 +966,13 @@ namespace gpu_directx11
 
             ::cast<device> pgpudevice = pgpucontext->m_pgpudevice;
 
-            if (!ptexture->m_pshaderresourceview)
+            if (!ptexture->m_pd3d11shaderresourceview)
             {
 
                ptexture->create_shader_resource_view();
             }
 
-            auto pshaderresourceview = ptexture->m_pshaderresourceview;
+            auto pshaderresourceview = ptexture->m_pd3d11shaderresourceview;
 
             if (pshaderresourceview)
             {
@@ -984,7 +984,7 @@ namespace gpu_directx11
             if (iSlotIndex == 0)
             {
 
-               auto psamplerstate = ptexture->m_psamplerstate;
+               auto psamplerstate = ptexture->m_pd3d11samplerstate;
 
                if (psamplerstate)
                {

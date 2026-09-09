@@ -2,6 +2,7 @@
 
 
 #include "draw2d_direct2d/draw2d.h"
+#include "bred/gpu/draw2d.h"
 
 
 namespace draw2d_direct2d_for_directx11
@@ -9,7 +10,8 @@ namespace draw2d_direct2d_for_directx11
 
 
    class CLASS_DECL_DRAW2D_DIRECT2D_FOR_DIRECTX11 draw2d :
-      virtual public ::draw2d_direct2d::draw2d
+      virtual public ::draw2d_direct2d::draw2d,
+      virtual public ::gpu::draw2d
    {
    public:
 
@@ -23,6 +25,9 @@ namespace draw2d_direct2d_for_directx11
 
       bool lock_device() override;
       void unlock_device() override;
+
+
+      ::dxgi_device_source * _dxgi_device_source(::acme::windowing::window * pacmewindowingwindow) override;
 
       //void on_create_window(::windowing::window* pwindow) override;
       

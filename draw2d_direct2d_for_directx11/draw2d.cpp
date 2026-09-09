@@ -2,7 +2,10 @@
 #include "draw2d.h"
 #include "direct2d/direct2d.h"
 #include "image.h"
+#include "bred/gpu/bred_approach.h"
+#include "bred/gpu/device.h"
 #include "aura/windowing/window.h"
+#include "operating_system-windows_common/acme_windows_common/dxgi_device_source.h"
 
 
 namespace draw2d_direct2d_for_directx11
@@ -104,6 +107,18 @@ namespace draw2d_direct2d_for_directx11
    }
 
 
+   ::dxgi_device_source * draw2d::_dxgi_device_source(::acme::windowing::window * pacmewindowingwindow)
+   {
+
+      ::cast < ::gpu::approach > pgpuapproach = m_papplication->get_gpu_approach();
+
+      ::cast < ::dxgi_device_source > pdxgidevicesource = pgpuapproach->get_gpu_device(pacmewindowingwindow);
+
+      return pdxgidevicesource;
+
+   }
+
+
    //void draw2d::on_create_window(::windowing::window* pwindow)
    //{
 
@@ -135,16 +150,9 @@ namespace draw2d_direct2d_for_directx11
                                                                 const ::i32_size & size)
    {
 
-      auto pdraw2dgraphics = create_memory_graphics(size, pacmeuserinteractionAffinity);
-
-      if (::is_set(pimage))
-      {
-
-         pimage->create_from_graphics(pdraw2dgraphics);
-
-      }
-
-      return pdraw2dgraphics;
+      // The acquisition phase binds the caller's image. Taking a snapshot
+      // here would manufacture a different target before that binding.
+      return create_memory_graphics(size, pacmeuserinteractionAffinity);
 
    }
 

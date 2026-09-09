@@ -9,6 +9,7 @@
 #include "bred/gpu/binding.h"
 #include "bred/gpu/command_buffer.h"
 #include "bred/gpu/context_lock.h"
+#include "aura/graphics/draw2d/device_lock.h"
 #include "bred/gpu/model_buffer.h"
 #include "bred/gpu/texture_site.h"
 #include "operating_system-windows_common/directx11/directx11.h"
@@ -344,7 +345,7 @@ namespace gpu_directx11
 
          ::f32 clearColor[4] = { 0.1f ,0.1f, 0.1f, 0.1f };
 
-         auto prendertargetview = ptexture->m_prendertargetview;
+         auto prendertargetview = ptexture->m_pd3d11rendertargetview;
 
          //::f32 clearColor[4] = { 1.f ,1.f, 1.f, 1.f };
 
@@ -431,7 +432,7 @@ namespace gpu_directx11
 
          ::f32 clearColor[4] = { 0.5f * 0.5f,0.75f * 0.5f, 0.95f * 0.5f, 0.5f };
 
-         pgpucontext->m_pd3d11devicecontext1->ClearView(ptextureSwapChain->m_prendertargetview, clearColor, &rect, 1);
+         pgpucontext->m_pd3d11devicecontext1->ClearView(ptextureSwapChain->m_pd3d11rendertargetview, clearColor, &rect, 1);
 
       }
 
@@ -461,6 +462,9 @@ namespace gpu_directx11
 
    void swap_chain::swap_buffers()
    {
+
+      // Present also accesses the D3D device outside Direct2D's control.
+      ::draw2d::device_lock interoplock(this);
 
       HRESULT hresult = m_pdxgiswapchain1->Present(1, 0);
 

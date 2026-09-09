@@ -15,6 +15,8 @@
 #include "offscreen_render_target_view.h"
 #include "acme/platform/application.h"
 #include "aura/graphics/image/image.h"
+#include "aura/graphics/draw2d/draw2d.h"
+#include "aura/platform/system.h"
 #include "aura/user/user/interaction.h"
 #include "bred/gpu/binding.h"
 #include "bred/gpu/command_buffer.h"
@@ -29,6 +31,8 @@
 #include "initializers.h"
 #include "acme_windows_common/dxgi_surface_bindable.h"
 #include <DirectXMath.h>
+#include <memory>
+#include <vector>
 
 #include "block.h"
 
@@ -38,6 +42,36 @@ using namespace directx11;
 
 namespace gpu_directx11
 {
+
+   namespace
+   {
+
+      struct draw2d_interop_lock
+      {
+         ::pointer<::draw2d::draw2d> m_pdraw2d;
+         bool m_bLocked;
+
+         explicit draw2d_interop_lock(::draw2d::draw2d * pdraw2d) :
+            m_pdraw2d(pdraw2d),
+            m_bLocked(pdraw2d && pdraw2d->lock_device())
+         {
+         }
+
+         ~draw2d_interop_lock()
+         {
+            if (m_bLocked)
+               m_pdraw2d->unlock_device();
+         }
+
+         draw2d_interop_lock(const draw2d_interop_lock &) = delete;
+         draw2d_interop_lock & operator=(const draw2d_interop_lock &) = delete;
+      };
+
+      // Match every native context lock, including nested context switches.
+      // Keep the lock alive without changing the exported context's layout.
+      thread_local std::vector<std::unique_ptr<draw2d_interop_lock>> t_draw2dInteropLocks;
+
+   }
 
 
    //extern thread_local device* t_pgpudevice;
@@ -62,17 +96,26 @@ namespace gpu_directx11
 
    void context::_context_lock()
    {
+      // Direct2D holds its factory lock while executing a batch of D3D calls.
+      // Native D3D per-call protection alone allows state changes inside that
+      // batch. Always acquire the D2D lock BEFORE context/native D3D locks.
+      auto interopLock = std::make_unique<draw2d_interop_lock>(system()->m_pdraw2d);
+      t_draw2dInteropLocks.push_back(std::move(interopLock));
 
-      //if (!m_pmultithread)
+      try
       {
-
-         //         m_pcontext->QueryInterface(__interface_of(m_pmultithread));
-
+         this->synchronization()->lock();
+      }
+      catch (...)
+      {
+         t_draw2dInteropLocks.pop_back();
+         throw;
       }
 
-      ///    m_pmultithread->Enter();
-
-      this->synchronization()->lock();
+      // Different ca2 contexts can alias one immediate context. Its native
+      // critical section is shared by every alias, unlike synchronization().
+      if (m_pmultithread)
+         m_pmultithread->Enter();
 
    }
 
@@ -80,8 +123,12 @@ namespace gpu_directx11
    void context::_context_unlock()
    {
 
-      //m_pmultithread->Leave();
+      if (m_pmultithread)
+         m_pmultithread->Leave();
       this->synchronization()->unlock();
+
+      // Release in reverse order; never wait for D2D while holding D3D.
+      t_draw2dInteropLocks.pop_back();
 
    }
 
@@ -397,7 +444,7 @@ namespace gpu_directx11
 
    //   ::cast < gpu_directx11::renderer > pgpurenderer = m_pgpurenderer;
 
-   //   ::cast < swap_chain_render_target_view > pswapchainrendertargetview = pgpurenderer->m_prendertargetview;
+   //   ::cast < swap_chain_render_target_view > pswapchainrendertargetview = pgpurenderer->m_pd3d11rendertargetview;
 
    //   pswapchainrendertargetview->m_pdxgiswapchain->Present(1, 0);
 
@@ -878,6 +925,8 @@ namespace gpu_directx11
 
          ::defer_throw_hresult(pdevicecontext.as(m_pd3d11devicecontext1));
 
+         ::defer_throw_hresult(pdevicecontext.as(m_pmultithread));
+
       }
       else
       {
@@ -885,6 +934,9 @@ namespace gpu_directx11
          auto hrCreateDeferredContext = pgpudevice->m_pd3d11device->CreateDeferredContext(
             0,
             &m_pd3d11devicecontextDeferred);
+
+         ::defer_throw_hresult(hrCreateDeferredContext);
+         m_pmultithread.release(); // A deferred context has its own wrapper lock.
 
          ::defer_throw_hresult(m_pd3d11devicecontextDeferred.as(m_pd3d11devicecontext));
 
@@ -1192,7 +1244,7 @@ namespace gpu_directx11
           0);                        // unused for 2D textures
    }
 
-   void context::copy(::gpu::texture_site * pgputexturesiteTarget, ::gpu::texture_site * pgputexturesiteSource,
+   void context::copy(::gpu::command_buffer * pgpucommandbuffer, ::gpu::texture_site * pgputexturesiteTarget, ::gpu::texture_site * pgputexturesiteSource,
                       ::pointer<::gpu::fence> * pgpufence, ::pointer < ::gpu::semaphore > * pgpusemaphoreReady)
    {
 
@@ -1200,7 +1252,7 @@ namespace gpu_directx11
 
       ::cast < ::gpu_directx11::texture > ptextureDst = pgputexturesiteTarget->gpu_texture();
 
-      if (ptextureDst->m_prendertargetview)
+      if (ptextureDst->m_pd3d11rendertargetview)
       {
 
          copy_using_shader(pgputexturesiteTarget, pgputexturesiteSource);
@@ -1219,7 +1271,7 @@ namespace gpu_directx11
          //{
 
 
-         //   SetTextureRectangle(m_pcontext, ptextureSrc->m_ptextureOffscreen,
+         //   SetTextureRectangle(m_pcontext, ptextureSrc->m_pd3d11texture2d,
          //   400, 0,600, 200, 200 / 2, 160 / 2, 100 / 2, 128);
 
 
@@ -1228,7 +1280,7 @@ namespace gpu_directx11
          //{
 
 
-         //   SetTextureRectangle(m_pcontext, ptextureSrc->m_ptextureOffscreen,
+         //   SetTextureRectangle(m_pcontext, ptextureSrc->m_pd3d11texture2d,
          //   600, 0, 800, 200, 180 / 2, 200 / 2, 100 / 2, 128);
 
 
@@ -1236,15 +1288,15 @@ namespace gpu_directx11
 
 
          m_pd3d11devicecontext->CopyResource(
-            ptextureDst->m_ptextureOffscreen,
-            ptextureSrc->m_ptextureOffscreen);
+            ptextureDst->m_pd3d11texture2d,
+            ptextureSrc->m_pd3d11texture2d);
 
 
          //if (iLayerIndex == 0)
          //{
          //   
 
-         //   SetTextureRectangle(m_pcontext, ptextureDst->m_ptextureOffscreen,
+         //   SetTextureRectangle(m_pcontext, ptextureDst->m_pd3d11texture2d,
          //   0, 0, 200, 200, 200/2, 160/2, 100/2, 128);
          //   
 
@@ -1253,7 +1305,7 @@ namespace gpu_directx11
          //{
 
 
-         //   SetTextureRectangle(m_pcontext, ptextureDst->m_ptextureOffscreen,
+         //   SetTextureRectangle(m_pcontext, ptextureDst->m_pd3d11texture2d,
          //   200, 0, 400, 200, 180/2, 200/2, 100/2, 128);
 
 
@@ -1399,7 +1451,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       ::cast <::gpu_directx11::texture > ptextureDst = pgputexturesiteTarget->gpu_texture();
       //::f32 clearColor[4] = { 0.4*0.5, 0.35*0.5, 0.2*0.5, 0.5 }; // Clear to transparent
       ::f32 clearColor[4] = { 0.f, 0.f, 0.f, 0.f }; // Clear to transparent
-      m_pd3d11devicecontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor);
+      m_pd3d11devicecontext->ClearRenderTargetView(ptextureDst->m_pd3d11rendertargetview, clearColor);
 
       //UINT stride = sizeof(Vertex);
       //UINT offset = 0;
@@ -1418,7 +1470,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
       //   m_pcontext->PSSetSamplers(0, 1, samplerstatea);
       //   m_pcontext->PSSetShaderResources(0, 1, sharedresourceviewa);
 
-      //ID3D11RenderTargetView* rendertargetview[] = { ptextureDst->m_prendertargetview };
+      //ID3D11RenderTargetView* rendertargetview[] = { ptextureDst->m_pd3d11rendertargetview };
 
       //m_p(1, rendertargetview, nullptr);
 
@@ -1432,7 +1484,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
 
       //::f32 clearColor2[4] = { 0.45f * 0.5f, 0.99f * 0.5f, 0.45f * 0.5f, 0.5f }; // Clear to transparent
-      //m_pcontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor2);
+      //m_pcontext->ClearRenderTargetView(ptextureDst->m_pd3d11rendertargetview, clearColor2);
 
 
    }
@@ -1703,7 +1755,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 //      //::f32 clearColor[4] = { 0.95f * 0.5f, 0.95f * 0.5f, 0.25f * 0.5f, 0.5f }; // Translucent Yellow
 //      ::f32 clearColor[4] = { 0.f, 0.f, 0.f, 0.f }; // Clear to transparent
 //      m_pcontext->ClearRenderTargetView(
-//         ptextureDst->m_prendertargetview, clearColor);
+//         ptextureDst->m_pd3d11rendertargetview, clearColor);
 //
 //
 //      m_pshaderBlend3->bind(nullptr, pgputexturesiteTarget);
@@ -1737,10 +1789,10 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 //      //m_pcontext->RSSetState(m_prasterizerstateMergeLayers);
 //
 //      //::f32 clearColor[4] = { 0.f, 0.f, 0.f, 0.f }; // Clear to transparent
-//      //m_pcontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor);
+//      //m_pcontext->ClearRenderTargetView(ptextureDst->m_pd3d11rendertargetview, clearColor);
 //
 //
-//      //ID3D11RenderTargetView* rendertargetview[] = { ptextureDst->m_prendertargetview };
+//      //ID3D11RenderTargetView* rendertargetview[] = { ptextureDst->m_pd3d11rendertargetview };
 //
 //      //m_p(1, rendertargetview, nullptr);
 //
@@ -1936,7 +1988,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 //
 //      //   //::cast <texture > ptextureDst = ptextureTarget;
 //      //   ::f32 clearColor2[4] = { 0.95f * 0.5f, 0.75f * 0.5f, 0.95f * 0.5f, 0.5f };
-//      //   m_pcontext->ClearRenderTargetView(ptextureDst->m_prendertargetview, clearColor2);
+//      //   m_pcontext->ClearRenderTargetView(ptextureDst->m_pd3d11rendertargetview, clearColor2);
 //
 //      //}
 //
@@ -1950,7 +2002,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 //
 //      //   ::f32 clearColor[4] = { 0.95f * 0.5f, 0.75f * 0.5f, 0.95f * 0.5f, 0.5f };
 //
-//      //   m_pcontext1->ClearView(ptextureDst->m_prendertargetview, clearColor, &rect, 1);
+//      //   m_pcontext1->ClearView(ptextureDst->m_pd3d11rendertargetview, clearColor, &rect, 1);
 //
 //      //}
 //
@@ -3105,7 +3157,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
       ::f32 clearColor[4] = { color.f32_red(), color.f32_green(), color.f32_blue(), color.f32_opacity() };
 
-      m_pd3d11devicecontext->ClearRenderTargetView(ptexture->m_prendertargetview, clearColor);
+      m_pd3d11devicecontext->ClearRenderTargetView(ptexture->m_pd3d11rendertargetview, clearColor);
 
    }
 

@@ -82,7 +82,7 @@ namespace draw2d_direct2d_for_directx11
 
       pdraw2ddirect2dfordirectx11bitmap->m_pgputexture = ptexture;
 
-      ptexture->m_ptextureOffscreen.as(pdxgisurface);
+      ptexture->m_pd3d11texture2d.as(pdxgisurface);
 
       pdraw2dbitmap->update_bitmap_as_backed_by_gpu_texture(ptexture, pdraw2dgraphics);
 
@@ -130,7 +130,8 @@ namespace draw2d_direct2d_for_directx11
    ::draw2d::bitmap_pointer image::get_bitmap_as_source(::draw2d::graphics * pdraw2dgraphics) const
    {
 
-      return m_pdraw2dbitmap;
+      // Realize CPU-backed images and upload pixels changed by a pixmap lease.
+      return ::image::image::get_bitmap_as_source(pdraw2dgraphics);
 
    }
 
@@ -1313,102 +1314,106 @@ namespace draw2d_direct2d_for_directx11
    ::image_pixmap_lease image::_map(::image::enum_map emap, const ::i32_rectangle & rectangle)
    {
 
-      //::draw2d::lock draw2dlock;
+      // Native bitmap readback and CPU dirty tracking belong to the image
+      // lifecycle; a CPU edit need not have an owned GPU graphics context.
+      return ::transfer(::image::image::_map(emap, rectangle));
 
-      //::draw2d::device_lock devicelock(this);
+      ////::draw2d::lock draw2dlock;
 
-      //if (m_bMapped)
+      ////::draw2d::device_lock devicelock(this);
+
+      ////if (m_bMapped)
+      ////{
+
+      ////   throw ::exception(error_invalid_empty_argument);
+
+      ////}
+
+      //if (m_pdraw2dbitmap.is_null())
       //{
 
       //   throw ::exception(error_invalid_empty_argument);
 
       //}
 
-      if (m_pdraw2dbitmap.is_null())
-      {
+      ////auto pgraphics2d = m_pgraphics.cast < ::draw2d_direct2d_for_directx11::graphics>();
 
-         throw ::exception(error_invalid_empty_argument);
+      ////::gpu::context_lock contextlock(pgraphics2d->gpu_context());
 
-      }
+      ////D2D1_SIZE_U size;
 
-      //auto pgraphics2d = m_pgraphics.cast < ::draw2d_direct2d_for_directx11::graphics>();
+      ////size.width = m_size.cx;
+      ////size.height = m_size.cy;
 
-      //::gpu::context_lock contextlock(pgraphics2d->gpu_context());
+      ////HRESULT hrFlush = pgraphics2d->m_pdevicecontext->Flush();
 
-      //D2D1_SIZE_U size;
+      ////if (FAILED(hrFlush))
+      ////{
 
-      //size.width = m_size.cx;
-      //size.height = m_size.cy;
+      ////   throw ::exception(error_failed);
 
-      //HRESULT hrFlush = pgraphics2d->m_pdevicecontext->Flush();
+      ////}
 
-      //if (FAILED(hrFlush))
-      //{
+      ////m_hrEndDraw = pgraphics2d->m_pdevicecontext->EndDraw();
 
-      //   throw ::exception(error_failed);
+      ////if (FAILED(m_hrEndDraw))
+      ////{
 
-      //}
+      ////   throw ::exception(error_failed);
 
-      //m_hrEndDraw = pgraphics2d->m_pdevicecontext->EndDraw();
+      ////}
 
-      //if (FAILED(m_hrEndDraw))
-      //{
+      ////auto pdraw2dbitmap = m_pdraw2dbitmap->get_os_data < ID2D1Bitmap * >(data_bitmap);
 
-      //   throw ::exception(error_failed);
+      ////D2D1_BITMAP_OPTIONS options = 
+      ////   D2D1_BITMAP_OPTIONS_CPU_READ |
+      ////   D2D1_BITMAP_OPTIONS_CANNOT_DRAW;
 
-      //}
+      ////auto props = D2D1::BitmapProperties1(options, pdraw2dbitmap->GetPixelFormat());
 
-      //auto pdraw2dbitmap = m_pdraw2dbitmap->get_os_data < ID2D1Bitmap * >(data_bitmap);
+      ////HRESULT hr = pgraphics2d->m_pdevicecontext->CreateBitmap(size, nullptr, 0, props, &m_pbitmap1Map);
 
-      //D2D1_BITMAP_OPTIONS options = 
-      //   D2D1_BITMAP_OPTIONS_CPU_READ |
-      //   D2D1_BITMAP_OPTIONS_CANNOT_DRAW;
+      ////if (FAILED(hr))
+      ////{
 
-      //auto props = D2D1::BitmapProperties1(options, pdraw2dbitmap->GetPixelFormat());
+      ////   throw ::exception(error_failed);
 
-      //HRESULT hr = pgraphics2d->m_pdevicecontext->CreateBitmap(size, nullptr, 0, props, &m_pbitmap1Map);
+      ////}
 
-      //if (FAILED(hr))
-      //{
+      ////D2D1_POINT_2U pointDst = {};
 
-      //   throw ::exception(error_failed);
+      ////D2D1_RECT_U srcRect = {};
 
-      //}
+      ////srcRect.right = width();
 
-      //D2D1_POINT_2U pointDst = {};
+      ////srcRect.bottom = height();
 
-      //D2D1_RECT_U srcRect = {};
+      ////hr = m_pbitmap1Map->CopyFromBitmap(&pointDst, pdraw2dbitmap, &srcRect);
 
-      //srcRect.right = width();
+      ////D2D1_MAPPED_RECT map_base = {};
 
-      //srcRect.bottom = height();
+      ////hr = m_pbitmap1Map->Map(D2D1_MAP_OPTIONS_READ, &map_base);
 
-      //hr = m_pbitmap1Map->CopyFromBitmap(&pointDst, pdraw2dbitmap, &srcRect);
+      ////if (FAILED(hr) || map_base.bits == nullptr)
+      ////{
 
-      //D2D1_MAPPED_RECT map_base = {};
+      ////   throw ::exception(error_failed);
 
-      //hr = m_pbitmap1Map->Map(D2D1_MAP_OPTIONS_READ, &map_base);
+      ////}
 
-      //if (FAILED(hr) || map_base.bits == nullptr)
-      //{
+      ////auto pimage32 = (::image32_t *)map_base.bits;
 
-      //   throw ::exception(error_failed);
+      ////auto p = pimage32;
 
-      //}
+      ////auto iScan = map_base.pitch;
 
-      //auto pimage32 = (::image32_t *)map_base.bits;
+      ////auto area = (iScan / sizeof(*pimage32)) * m_size.cy;
 
-      //auto p = pimage32;
+      ////initialize_pixmap(m_size, pimage32, iScan);
 
-      //auto iScan = map_base.pitch;
+      ////m_bMapped = true;
 
-      //auto area = (iScan / sizeof(*pimage32)) * m_size.cy;
-
-      //initialize_pixmap(m_size, pimage32, iScan);
-
-      //m_bMapped = true;
-
-      //return true;
+      ////return true;
 
    }
 
@@ -1416,75 +1421,10 @@ namespace draw2d_direct2d_for_directx11
    void image::_unmap(::image_pixmap_lease * pimagepixmaplease)
    {
 
-      //::draw2d::lock draw2dlock;
-
-      //if (!m_bMapped)
-      //{
-
-      //   throw ::exception(error_wrong_state);
-
-      //}
-
-      if (m_pdraw2dbitmap.is_null())
-      {
-
-         throw ::exception(error_wrong_state);
-
-      }
-
-      try
-      {
-
-         D2D1_POINT_2U pointDst = {};
-
-         D2D1_RECT_U srcRect={};
-
-         srcRect.right = this->width();
-
-         srcRect.bottom = this->height();
-
-         ::cast < ::draw2d_direct2d_for_directx11::bitmap > pdraw2ddirect2dfordirectx11bitmap = m_pdraw2dbitmap;
-
-         auto pd2d1bitmap = pdraw2ddirect2dfordirectx11bitmap->m_pd2d1bitmap;
-
-         auto hr = pd2d1bitmap->CopyFromMemory(&srcRect, pimagepixmaplease->m_p->image32(), m_iScan);
-
-         m_pbitmap1Map->Unmap();
-
-         m_pbitmap1Map = nullptr;
-
-         //m_pimage32Raw = nullptr;
-
-         //m_pimage32 = nullptr;
-
-         if (FAILED(hr))
-         {
-
-            //m_bMapped = false;
-
-            defer_throw_hresult(hr);
-
-         }
-
-      }
-      catch (...)
-      {
-
-      }
-
-      if (SUCCEEDED(m_hrEndDraw))
-      {
-
-         //((ID2D1DeviceContext *)m_pgraphics->get_os_data())->BeginDraw();
-
-
-      }
-
-      //m_bMapped = false;
-
-      //m_bTrans = false;
-
-      //return true;
+      // Leave the CPU pixels dirty for get_bitmap_as_source/on_acquire to
+      // upload to the actual Direct2D bitmap. GPU unmap would instead try to
+      // allocate an unrelated texture, possibly without any GPU context.
+      ::image::image::_unmap(pimagepixmaplease);
 
    }
 

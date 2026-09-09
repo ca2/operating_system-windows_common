@@ -142,47 +142,11 @@ namespace draw2d_direct2d
 
       options = D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS_NONE;
 
-      if (!pacmeuserinteractionAffinity)
-      {
+      ::mutex * pmutex = nullptr;
 
-         throw ::exception(
-            error_wrong_state,
-            "Direct2D bitmap creation requires an interaction affinity");
+      ID2D1DeviceContext * pd2d1devicecontext = nullptr;
 
-      }
-
-      ::cast < ::windowing::window > pwindow =
-         pacmeuserinteractionAffinity->acme_windowing_window();
-
-      if (!pwindow)
-      {
-
-         throw ::exception(
-            error_wrong_state,
-            "Direct2D bitmap interaction affinity has no window");
-
-      }
-
-      ::cast < ::draw2d_direct2d::window_attachment > pwindowattachment = pwindow->m_pdraw2dwindowattachment;
-
-      if (!pwindowattachment)
-      {
-
-         throw ::exception(
-            error_wrong_state,
-            "Direct2D bitmap window has no Direct2D attachment");
-
-      }
-
-      _synchronous_lock synchronouslock(pwindowattachment->_d2d1_device_context_mutex());
-
-      //draw2d_direct2d::graphics * pgraphics2d = dynamic_cast < ::draw2d_direct2d::graphics * > (pdraw2dgraphics);
-
-      //pgraphics2d->m_pd2d1devicecontext->GetDpi(&props.dpiX, &props.dpiY); // Thank you https://repo.anl-external.org/repos/BlueTBB/tbb41_20130314oss/examples/common/gui/d2dvideo.cpp
-
-      auto pd2d1devicecontext = pwindowattachment->_d2d1_device_context();
-
-      if (!pd2d1devicecontext)
+      if (pdraw2dgraphics)
       {
 
          ::cast < ::draw2d_direct2d::graphics > pdirect2dgraphics = pdraw2dgraphics;
@@ -190,6 +154,60 @@ namespace draw2d_direct2d
          pd2d1devicecontext = pdirect2dgraphics->m_pd2d1devicecontext.m_p;
 
       }
+
+      if (!pd2d1devicecontext)
+      {
+
+         if (!pacmeuserinteractionAffinity)
+         {
+
+            throw ::exception(
+               error_wrong_state,
+               "Direct2D bitmap creation requires an interaction affinity");
+
+         }
+
+         ::cast < ::windowing::window > pwindow =
+            pacmeuserinteractionAffinity->acme_windowing_window();
+
+         if (!pwindow)
+         {
+
+            throw ::exception(
+               error_wrong_state,
+               "Direct2D bitmap interaction affinity has no window");
+
+         }
+
+         ::cast < ::draw2d_direct2d::window_attachment > pwindowattachment = pwindow->m_pdraw2dwindowattachment;
+
+         if (!pwindowattachment)
+         {
+
+            throw ::exception(
+               error_wrong_state,
+               "Direct2D bitmap window has no Direct2D attachment");
+
+         }
+
+         pd2d1devicecontext = pwindowattachment->_d2d1_device_context();
+
+         pmutex = pwindowattachment->_d2d1_device_context_mutex();
+
+      }
+
+      _synchronous_lock synchronouslock(pmutex);
+
+      //draw2d_direct2d::graphics * pgraphics2d = dynamic_cast < ::draw2d_direct2d::graphics * > (pdraw2dgraphics);
+
+      //pgraphics2d->m_pd2d1devicecontext->GetDpi(&props.dpiX, &props.dpiY); // Thank you https://repo.anl-external.org/repos/BlueTBB/tbb41_20130314oss/examples/common/gui/d2dvideo.cpp
+
+      //if (!pd2d1devicecontext)
+      //{
+
+      //   pd2d1devicecontext = pwindowattachment->_d2d1_device_context();
+
+      //}
 
       //auto hrCreateCompatibleRenderTarget = pd2d1devicecontext->CreateCompatibleRenderTarget(
       //   size,
@@ -1012,7 +1030,7 @@ namespace draw2d_direct2d
 
             synchronous_lock synchronouslock(pdraw2ddirect2d->default_device_context_mutex());
 
-            auto pd2d1devicecontextDefault = pdraw2ddirect2d->default_d2d1_device_context();
+            auto pd2d1devicecontextDefault = pdraw2ddirect2d->default_d2d1_device_context(m_papplication->main_acme_user_interaction()->acme_windowing_window());
 
             auto hrCreateMapBitmap = pd2d1devicecontextDefault->CreateBitmap(
                 sizeuThis,

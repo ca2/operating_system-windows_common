@@ -95,97 +95,99 @@ namespace draw2d_directx11
    void bitmap::create_bitmap(::draw2d::graphics * pdraw2dgraphics, const ::i32_size & size, ::pixmap * ppixmap)
    {
 
-      //::draw2d::lock draw2dlock;
+      ::gpu::bitmap::create_bitmap(pdraw2dgraphics, size, ppixmap);
 
-      ::draw2d::device_lock devicelock(this);
-      m_memory.set_size(size.area() * 4);
-      m_size = size;
-      m_iStride = size.cx * 4;
-      //if (m_pdraw2dbitmap != nullptr)
-      //{
+      ////::draw2d::lock draw2dlock;
 
-      //   destroy();
-
-      //}
-
-      //D2D1_SIZE_U usize;
-
-      //usize.width = abs(size.cx);
-
-      //usize.height = abs(size.cy);
-
-      //D2D1_BITMAP_PROPERTIES1 props = {};
-
-      //props.pixelFormat.alphaMode = D2D1_ALPHA_MODE_PREMULTIPLIED;
-
-      //props.pixelFormat.format = DXGI_FORMAT_B8G8R8A8_UNORM;
-
-      //draw2d_directx11::graphics * pgraphics2d = dynamic_cast < ::draw2d_directx11::graphics * > (pdraw2dgraphics);
-
-      //if (!::is_set(pgraphics2d))
-      //{
-
-      //   throw ::exception(error_failed);
-
-      //}
-
-      //auto prendertarget = pgraphics2d->m_pd2d1rendertarget;
-
-      //if (!prendertarget)
-      //{
-
-      //   throw ::exception(error_failed);
-
-      //}
-
-      //prendertarget->GetDpi(&props.dpiX, &props.dpiY);
-
-      //props.colorContext = nullptr;
-
-      //props.bitmapOptions = D2D1_BITMAP_OPTIONS_TARGET;
-
-      //HRESULT hr = ((ID2D1DeviceContext *)pdraw2dgraphics->get_os_data())->CreateBitmap(usize, nullptr, 0, props, &m_pbitmap1);
-
-      //if (FAILED(hr) || m_pbitmap1 == nullptr)
-      //{
-
-      //   throw ::exception(error_failed);
-
-      //}
-
-      //if (FAILED(m_pbitmap1.as(m_pdraw2dbitmap)))
-      //{
-
-      //   throw ::exception(error_failed);
-
-      //}
-
-      //auto pimage32 = (color32_t *)*ppdata;
-
-      //auto iScan = *pstride;
-
-      //HRESULT hrResultCopyBitmap = S_OK;
-
-      //if (pimage32 && iScan > 0)
-      //{
-
-      //   D2D1_RECT_U rectangleDst = {};
-
-      //   rectangleDst.right = size.cx;
-
-      //   rectangleDst.bottom = size.cy;
-
-      //   hrResultCopyBitmap = m_pdraw2dbitmap->CopyFromMemory(&rectangleDst, pimage32, iScan);
-
-      //}
-
+      //::draw2d::device_lock devicelock(this);
+      //m_memory.set_size(size.area() * 4);
       //m_size = size;
+      //m_iStride = size.cx * 4;
+      ////if (m_pdraw2dbitmap != nullptr)
+      ////{
 
-      //m_osdata[0] = m_pdraw2dbitmap;
+      ////   destroy();
 
-      //m_osdata[1] = m_pbitmap1;
+      ////}
 
-      //return true;
+      ////D2D1_SIZE_U usize;
+
+      ////usize.width = abs(size.cx);
+
+      ////usize.height = abs(size.cy);
+
+      ////D2D1_BITMAP_PROPERTIES1 props = {};
+
+      ////props.pixelFormat.alphaMode = D2D1_ALPHA_MODE_PREMULTIPLIED;
+
+      ////props.pixelFormat.format = DXGI_FORMAT_B8G8R8A8_UNORM;
+
+      ////draw2d_directx11::graphics * pgraphics2d = dynamic_cast < ::draw2d_directx11::graphics * > (pdraw2dgraphics);
+
+      ////if (!::is_set(pgraphics2d))
+      ////{
+
+      ////   throw ::exception(error_failed);
+
+      ////}
+
+      ////auto prendertarget = pgraphics2d->m_pd2d1rendertarget;
+
+      ////if (!prendertarget)
+      ////{
+
+      ////   throw ::exception(error_failed);
+
+      ////}
+
+      ////prendertarget->GetDpi(&props.dpiX, &props.dpiY);
+
+      ////props.colorContext = nullptr;
+
+      ////props.bitmapOptions = D2D1_BITMAP_OPTIONS_TARGET;
+
+      ////HRESULT hr = ((ID2D1DeviceContext *)pdraw2dgraphics->get_os_data())->CreateBitmap(usize, nullptr, 0, props, &m_pbitmap1);
+
+      ////if (FAILED(hr) || m_pbitmap1 == nullptr)
+      ////{
+
+      ////   throw ::exception(error_failed);
+
+      ////}
+
+      ////if (FAILED(m_pbitmap1.as(m_pdraw2dbitmap)))
+      ////{
+
+      ////   throw ::exception(error_failed);
+
+      ////}
+
+      ////auto pimage32 = (color32_t *)*ppdata;
+
+      ////auto iScan = *pstride;
+
+      ////HRESULT hrResultCopyBitmap = S_OK;
+
+      ////if (pimage32 && iScan > 0)
+      ////{
+
+      ////   D2D1_RECT_U rectangleDst = {};
+
+      ////   rectangleDst.right = size.cx;
+
+      ////   rectangleDst.bottom = size.cy;
+
+      ////   hrResultCopyBitmap = m_pdraw2dbitmap->CopyFromMemory(&rectangleDst, pimage32, iScan);
+
+      ////}
+
+      ////m_size = size;
+
+      ////m_osdata[0] = m_pdraw2dbitmap;
+
+      ////m_osdata[1] = m_pbitmap1;
+
+      ////return true;
 
    }
 

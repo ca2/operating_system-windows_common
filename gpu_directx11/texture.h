@@ -39,19 +39,19 @@ namespace gpu_directx11
       //::comptr<ID3D12DescriptorHeap>   m_pheapShaderResourceView;
       //D3D12_CPU_DESCRIPTOR_HANDLE      m_handleShaderResourceView;
 
-      D3D11_TEXTURE2D_DESC m_texture2ddesc;
+      D3D11_TEXTURE2D_DESC m_d3d11texture2ddesc;
 
 
-      comptr<ID3D11RenderTargetView>      m_prendertargetview;
-      comptr<ID3D11Texture2D> m_ptextureOffscreen;
-      comptr<ID3D11Texture2D> m_ptextureStaging;
-      comptr< ID3D11SamplerState> m_psamplerstate;
-      comptr<ID3D11ShaderResourceView>m_pshaderresourceview;
+      comptr<ID3D11RenderTargetView>      m_pd3d11rendertargetview;
+      comptr<ID3D11Texture2D>             m_pd3d11texture2d;
+      comptr<ID3D11Texture2D>             m_pd3d11texture2dStaging;
+      comptr< ID3D11SamplerState>         m_pd3d11samplerstate;
+      comptr<ID3D11ShaderResourceView>    m_pd3d11shaderresourceview;
 
-      ::array_base < ::array_base <::comptr<ID3D11RenderTargetView>>> m_rendertargetview2a;
+      ::array_base < ::array_base <::comptr<ID3D11RenderTargetView>>> m_d3d11rendertargetview2a;
 
-      comptr<ID3D11Texture2D> m_ptextureDepthStencil;
-      comptr<ID3D11DepthStencilView>m_pdepthstencilview;
+      comptr<ID3D11Texture2D> m_pd3d11texture2dDepthStencil;
+      comptr<ID3D11DepthStencilView>m_pd3d11depthstencilview;
       //comptr <ID3D11DepthStencilState>m_pdepthstencilstate;
 
 
@@ -89,6 +89,7 @@ namespace gpu_directx11
 
       //virtual ::i32 render_target_view_index(::i32 iFace, ::i32 iMip) const;
       void _create_texture(const ::gpu::texture_data & texturedata = {}) override;
+      void _set_data(const ::gpu::texture_data & texturedata = {}) override;
 
       // void initialize_texture(::gpu::renderer* prenderer,
       //    const ::i32_rectangle& rectangleTarget, bool bWithDepth,
@@ -124,6 +125,14 @@ namespace gpu_directx11
       virtual ID3D11RenderTargetView * render_target_view(::i32 iFace, ::i32 iMip);
 
       void generate_mipmap(::gpu::command_buffer *pgpucommandbuffer) override;
+
+      void write_pixels(bool bSync,
+         const void * pData,
+         const ::i32_size & size,
+         ::i32 iScan,
+         ::i32 iBytesPerPixel,
+         const ::i32_point & point) override;
+
 
    };
 

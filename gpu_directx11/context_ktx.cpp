@@ -241,8 +241,8 @@ namespace gpu_directx11
 
       auto tex = CreateDx11TextureFromKtx(pdevice->m_pd3d11device1, pktxtexture);
 
-      ptexture->m_ptextureOffscreen = tex.texture;
-      ptexture->m_pshaderresourceview = tex.srv;
+      ptexture->m_pd3d11texture2d = tex.texture;
+      ptexture->m_pd3d11shaderresourceview = tex.srv;
       ptexture->m_textureattributes.m_etexture = ::gpu::e_texture_image;
       ptexture->set_ok_flag();
 
@@ -380,8 +380,8 @@ namespace gpu_directx11
 
       auto tex = CreateDx11TextureFromKtx(pdevice->m_pd3d11device1, pktxtexture);
 
-      ptexture->m_ptextureOffscreen = tex.texture;
-      ptexture->m_pshaderresourceview = tex.srv;
+      ptexture->m_pd3d11texture2d = tex.texture;
+      ptexture->m_pd3d11shaderresourceview = tex.srv;
       ptexture->m_textureattributes.m_etexture = ::gpu::e_texture_cube_map;
       ptexture->set_ok_flag();
 

@@ -468,6 +468,7 @@ namespace draw2d_direct2d_for_directx11
 
       // Bitmap Functions
       //bool PatBlt(::f64 x, ::f64 y, ::f64 nWidth, ::f64 nHeight) override;
+      void _draw_raw(const ::image::image_drawing & imagedrawing) override;
       void _draw_raw(const ::f64_rectangle & rectangleTarget, ::image::image * pimage, const ::image::image_drawing_options & imagedrawingoptions, const ::f64_point & pointSrc) override;
       void _stretch_raw(const ::f64_rectangle & rectangleTarget, ::image::image * pimage, const ::image::image_drawing_options & imagedrawingoptions, const ::f64_rectangle & rectangleSource) override;
 

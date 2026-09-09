@@ -6,6 +6,7 @@
 
 #include "context.h"
 #include "device.h"
+#include "bred/gpu/context_lock.h"
 
 
 namespace gpu_directx11
@@ -55,6 +56,8 @@ namespace gpu_directx11
 
       ::cast < ::gpu_directx11::device > pdevice = m_pgpucontextGpuFence->m_pgpudevice;
 
+      ::gpu::context_lock contextlock(pdevice->main_gpu_context());
+
       pdevice->m_pd3d11devicecontextMain->End(m_pquery);
 
       m_bPending = true;
@@ -77,7 +80,11 @@ namespace gpu_directx11
       while (true)
       {
 
-         auto hresult = pdevice->m_pd3d11devicecontextMain->GetData(m_pquery, nullptr, 0, 0);
+         HRESULT hresult;
+         {
+            ::gpu::context_lock contextlock(pdevice->main_gpu_context());
+            hresult = pdevice->m_pd3d11devicecontextMain->GetData(m_pquery, nullptr, 0, 0);
+         }
 
          if (hresult == S_OK)
          {

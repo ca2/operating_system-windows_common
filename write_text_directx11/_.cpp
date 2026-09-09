@@ -3,3 +3,5 @@
 
 
 
+
+#pragma comment(lib, "dwrite.lib")

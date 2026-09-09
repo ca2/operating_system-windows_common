@@ -5,6 +5,7 @@
 #include "aura/graphics/draw2d/lock.h"
 #include "aura/graphics/draw2d/device_lock.h"
 #include "bred/gpu/layer.h"
+#include "bred/gpu/context_lock.h"
 #include "bred/gpu/window_attachment.h"
 #include "gpu_directx11/approach.h"
 #include "gpu_directx11/context.h"
@@ -50,10 +51,10 @@ namespace draw2d_direct2d_for_directx11
 
       ::cast < ::gpu_directx11::texture > ptexture = pgputexture;
 
-      ID3D11Texture2D * offscreenTexture = ptexture->m_ptextureOffscreen;
+      ID3D11Texture2D * offscreenTexture = ptexture->m_pd3d11texture2d;
 
       ::comptr<IDXGISurface> pdxgisurface;
-      ptexture->m_ptextureOffscreen.as(pdxgisurface);
+      ptexture->m_pd3d11texture2d.as(pdxgisurface);
 
       return pdxgisurface;
 
@@ -398,19 +399,25 @@ namespace draw2d_direct2d_for_directx11
 
       {
 
-         auto pdraw2ddirect2d = ::draw2d_direct2d_for_directx11::draw2d::get();
+         // The generic Direct2D default context may belong to a different
+         // device. Cached previews must share the consumer's resource domain.
+         ::gpu::context_lock contextlock(pdraw2ddirect2dfordirectx11graphics->gpu_context());
+         auto pdevicecontext = pdraw2ddirect2dfordirectx11graphics->m_pd2d1devicecontext;
+         if (!pdevicecontext)
+         {
 
-         synchronous_lock synchronouslock(pdraw2ddirect2d->default_device_context_mutex());
+            throw ::exception(error_wrong_state, "Direct2D bitmap creation has no device context");
 
-         auto pd2d1devicecontextDefault = pdraw2ddirect2d->default_d2d1_device_context();
+         }
 
-         pd2d1devicecontextDefault->GetDpi(&props.dpiX, &props.dpiY);
+         props.dpiX = 96.0f;
+         props.dpiY = 96.0f;
 
          props.colorContext = nullptr;
 
          props.bitmapOptions = D2D1_BITMAP_OPTIONS_TARGET;
 
-         hr = pd2d1devicecontextDefault->CreateBitmap(usize, nullptr, 0, props, &m_pd2d1bitmap1);
+         hr = pdevicecontext->CreateBitmap(usize, nullptr, 0, props, &m_pd2d1bitmap1);
 
          if (FAILED(hr) || m_pd2d1bitmap1 == nullptr)
          {

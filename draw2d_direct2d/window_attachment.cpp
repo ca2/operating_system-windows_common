@@ -109,11 +109,9 @@ namespace draw2d_direct2d
 
          ::cast < ::draw2d_direct2d::draw2d > pdraw2ddirect2ddraw2d = draw2d();
 
+         auto pdxgidevicesource = pdraw2ddirect2ddraw2d->_dxgi_device_source(m_pwindow);
+
          auto pdirect2d = pdraw2ddirect2ddraw2d->direct2d();
-
-         defer_constructø(pdirect2d->m_pdxgidevicesource);
-
-         ::cast<::dxgi_device_source> pdxgidevicesource = pdirect2d->m_pdxgidevicesource;
 
          m_pd2d1devicecontext = pdirect2d->create_d2d1_device_context(pdxgidevicesource);
 

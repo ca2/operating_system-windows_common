@@ -702,6 +702,7 @@
     <ClInclude Include="binding.h" />
     <ClInclude Include="block.h" />
     <ClInclude Include="command_buffer.h" />
+    <ClInclude Include="viewport_scissor_restore.h" />
     <ClInclude Include="window_attachment.h" />
     <ClInclude Include="frame_storage.h" />
     <ClInclude Include="gltf\aaa_vertex.h" />
@@ -807,6 +808,7 @@
     <ClCompile Include="block.cpp" />
     <ClCompile Include="command_buffer.cpp" />
     <ClCompile Include="context_ktx.cpp" />
+    <ClCompile Include="viewport_scissor_restore.cpp" />
     <ClCompile Include="window_attachment.cpp" />
     <ClCompile Include="frame_storage.cpp" />
     <ClCompile Include="gltf\mesh.cpp" />
