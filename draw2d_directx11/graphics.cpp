@@ -721,9 +721,9 @@ namespace draw2d_directx11
 
       //      ::i32_rectangle rectangleDib1(::f64_point(), pimage1->m_size);
 
-      //      pgraphicsImage1->set_alpha_mode(::draw2d::e_alpha_mode_set);
+      //      pdraw2dgraphicsImage1->set_alpha_mode(::draw2d::e_alpha_mode_set);
 
-      //      pgraphicsImage1->fill_rectangle(rectangleDib1, argb(0, 0, 0, 0));
+      //      pdraw2dgraphicsImage1->fill_rectangle(rectangleDib1, argb(0, 0, 0, 0));
 
       //      if (!pimage1->from(::f64_point(), pgraphicsSrc, ::f64_point(xSrc, ySrc), ::f64_size))
       //      {
@@ -736,9 +736,9 @@ namespace draw2d_directx11
 
       //      pimage2 = create_image(::f64_size);
 
-      //      pgraphicsImage2->set_alpha_mode(::draw2d::e_alpha_mode_set);
+      //      pdraw2dgraphicsImage2->set_alpha_mode(::draw2d::e_alpha_mode_set);
 
-      //      pgraphicsImage2->fill_rectangle(rectangleDib1, argb(255, 0, 0, 0));
+      //      pdraw2dgraphicsImage2->fill_rectangle(rectangleDib1, argb(255, 0, 0, 0));
 
       //      if (!pimage2->from(::f64_point(), m_pimageAlphaBlend, i32_point - m_pointAlphaBlend, rectangleIntersect.size()))
       //      {
@@ -747,9 +747,9 @@ namespace draw2d_directx11
 
       //      }
 
-      //      ::pointer<::draw2d_directx11::graphics>pgraphicsDib1 = pgraphicsImage1;
+      //      ::pointer<::draw2d_directx11::graphics>pgraphicsDib1 = pdraw2dgraphicsImage1;
 
-      //      ::pointer<::draw2d_directx11::graphics>pgraphicsDib2 = pgraphicsImage2;
+      //      ::pointer<::draw2d_directx11::graphics>pgraphicsDib2 = pdraw2dgraphicsImage2;
 
       //      HRESULT hr = ((ID2D1DeviceContext *)pgraphicsDib2->get_os_data())->EndDraw();
 
@@ -769,7 +769,7 @@ namespace draw2d_directx11
 
       //      set_alpha_mode(::draw2d::e_alpha_mode_blend);
 
-      //      BitBltRaw(x, y, nWidth, nHeight, pgraphicsImage2, 0, 0);
+      //      BitBltRaw(x, y, nWidth, nHeight, pdraw2dgraphicsImage2, 0, 0);
 
       //      return true;
 
@@ -855,9 +855,9 @@ namespace draw2d_directx11
 
             auto pimage1 = image()->create_image(rectangleBlt.size());
 
-            auto pgraphicsImage1 = pimage1->acquire_graphics();
+            auto pdraw2dgraphicsImage1 = pimage1->acquire_graphics();
 
-            pgraphicsImage1->set_alpha_mode(::draw2d::e_alpha_mode_set);
+            pdraw2dgraphicsImage1->set_alpha_mode(::draw2d::e_alpha_mode_set);
 
             auto pimage = imagedrawing.image();
 
@@ -928,27 +928,27 @@ namespace draw2d_directx11
 
       //   ::f64_rectangle rectangleDib1(::f64_point(), size);
 
-      //   pgraphicsImage1->set(get_current_font());
+      //   pdraw2dgraphicsImage1->set(get_current_font());
 
-      //   pgraphicsImage1->set(get_current_brush());
+      //   pdraw2dgraphicsImage1->set(get_current_brush());
 
-      //   pgraphicsImage1->set_alpha_mode(::draw2d::e_alpha_mode_set);
+      //   pdraw2dgraphicsImage1->set_alpha_mode(::draw2d::e_alpha_mode_set);
 
-      //   pgraphicsImage1->fill_rectangle(rectangleDib1, argb(0, 0, 0, 0));
+      //   pdraw2dgraphicsImage1->fill_rectangle(rectangleDib1, argb(0, 0, 0, 0));
 
-      //   pgraphicsImage1->text_out(0, 0, scopedstr);
+      //   pdraw2dgraphicsImage1->text_out(0, 0, scopedstr);
 
       //   auto pimage2 = image()->create_image(size);
 
-      //   pgraphicsImage2->set_alpha_mode(::draw2d::e_alpha_mode_set);
+      //   pdraw2dgraphicsImage2->set_alpha_mode(::draw2d::e_alpha_mode_set);
 
-      //   pgraphicsImage2->fill_rectangle(rectangleDib1, argb(255, 0, 0, 0));
+      //   pdraw2dgraphicsImage2->fill_rectangle(rectangleDib1, argb(255, 0, 0, 0));
 
       //   pimage2->_draw_raw(rectangleIntersect.size(), m_pimageAlphaBlend, ::f64_point(point - m_pointAlphaBlend));
 
-      //   ::pointer<::draw2d_directx11::graphics>pgraphicsDib1 = pgraphicsImage1;
+      //   ::pointer<::draw2d_directx11::graphics>pgraphicsDib1 = pdraw2dgraphicsImage1;
 
-      //   ::pointer<::draw2d_directx11::graphics>pgraphicsDib2 = pgraphicsImage2;
+      //   ::pointer<::draw2d_directx11::graphics>pgraphicsDib2 = pdraw2dgraphicsImage2;
 
       //   pimage2->unmap();
 
@@ -2514,9 +2514,9 @@ namespace draw2d_directx11
 
    //      //pimage->unmap();
 
-   //      //HRESULT hrFlush = ((ID2D1DeviceContext *)pgraphicsImage->get_os_data())->Flush();
+   //      //HRESULT hrFlush = ((ID2D1DeviceContext *)pdraw2dgraphicsImage->get_os_data())->Flush();
 
-   //      //HRESULT hrEndDraw = ((ID2D1DeviceContext *)pgraphicsImage->get_os_data())->EndDraw();
+   //      //HRESULT hrEndDraw = ((ID2D1DeviceContext *)pdraw2dgraphicsImage->get_os_data())->EndDraw();
 
    //      //defer_primitive_blend();
 
@@ -2571,7 +2571,7 @@ namespace draw2d_directx11
    //      //if (SUCCEEDED(hrEndDraw))
    //      //{
 
-   //      //   ((ID2D1DeviceContext *)pgraphicsImage->get_os_data())->BeginDraw();
+   //      //   ((ID2D1DeviceContext *)pdraw2dgraphicsImage->get_os_data())->BeginDraw();
 
    //      //}
 
@@ -2656,9 +2656,9 @@ namespace draw2d_directx11
 
                   pimageTarget->create_as_descriptor(m_pimageTarget->size());
 
-                  auto pgraphicsImageTarget = pimageTarget->acquire_graphics();
+                  auto pdraw2dgraphicsImageTarget = pimageTarget->acquire_graphics();
 
-                  pgraphicsImageTarget->_stretch_raw(rectangleTarget, pimageSource, imagedrawingoptions, rectangleSource);
+                  pdraw2dgraphicsImageTarget->_stretch_raw(rectangleTarget, pimageSource, imagedrawingoptions, rectangleSource);
 
                }
 
@@ -2681,9 +2681,9 @@ namespace draw2d_directx11
 
       }
 
-      auto pgraphicsImage = pimage->acquire_graphics();
+      auto pdraw2dgraphicsImage = pimage->acquire_graphics();
 
-      if (pgraphicsImage == nullptr)
+      if (pdraw2dgraphicsImage == nullptr)
       {
 
          //return false;
@@ -2700,9 +2700,9 @@ namespace draw2d_directx11
 
          //pimage->unmap();
 
-         //::cast < graphics > pgraphicsImage = pgraphicsImage;
+         //::cast < graphics > pdraw2dgraphicsImage = pdraw2dgraphicsImage;
 
-         //auto pd2d1contextImage = pgraphicsImage->m_pdevicecontext;
+         //auto pd2d1contextImage = pdraw2dgraphicsImage->m_pdevicecontext;
 
          //::directx11_lock directx11lock(::directx11::from_gpu_device(m_pgpucontextCompositor->m_pgpudevice));
 
@@ -2730,7 +2730,7 @@ namespace draw2d_directx11
          //if (SUCCEEDED(hrEndDraw))
          //{
 
-         //   ((ID2D1DeviceContext *)pgraphicsImage->get_os_data())->BeginDraw();
+         //   ((ID2D1DeviceContext *)pdraw2dgraphicsImage->get_os_data())->BeginDraw();
 
          //}
 

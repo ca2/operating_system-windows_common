@@ -768,9 +768,9 @@ namespace draw2d_direct2d
 
       {
 
-         auto pgraphicsImage1 = pimage1->acquire_graphics();
+         auto pdraw2dgraphicsImage1 = pimage1->acquire_graphics();
 
-         pgraphicsImage1->clear(::color::white);
+         pdraw2dgraphicsImage1->clear(::color::white);
 
          ::image::image_source imagesource(picon);
 
@@ -778,7 +778,7 @@ namespace draw2d_direct2d
 
          ::image::image_drawing imagedrawing(imagedrawingoptions, imagesource);
 
-         pgraphicsImage1->draw(imagedrawing);
+         pdraw2dgraphicsImage1->draw(imagedrawing);
 
       }
 
@@ -787,9 +787,9 @@ namespace draw2d_direct2d
 
       {
 
-         auto pgraphicsImage2 = pimage2->acquire_graphics();
+         auto pdraw2dgraphicsImage2 = pimage2->acquire_graphics();
 
-         pgraphicsImage2->clear(::color::transparent);
+         pdraw2dgraphicsImage2->clear(::color::transparent);
 
          ::image::image_source imagesource(picon);
 
@@ -797,14 +797,14 @@ namespace draw2d_direct2d
 
          ::image::image_drawing imagedrawing(imagedrawingoptions, imagesource);
 
-         //auto pgraphicsImage2 = pimage2->acquire_graphics();
+         //auto pdraw2dgraphicsImage2 = pimage2->acquire_graphics();
 
-         pgraphicsImage2->draw(imagedrawing);
+         pdraw2dgraphicsImage2->draw(imagedrawing);
 
       }
 
 //#else
-//      pgraphicsImage2->DrawIcon(
+//      pdraw2dgraphicsImage2->DrawIcon(
 //      0, 0,
 //      picon,
 //      cx, cy,
@@ -818,7 +818,7 @@ namespace draw2d_direct2d
 
       {
 
-         auto pgraphicsImageM = pimageM->acquire_graphics();
+         auto pdraw2dgraphicsImageM = pimageM->acquire_graphics();
 
          ::image::image_source imagesource(picon);
 
@@ -826,7 +826,7 @@ namespace draw2d_direct2d
 
          ::image::image_drawing imagedrawing(imagedrawingoptions, imagesource);
 
-         pgraphicsImageM->draw(imagedrawing);
+         pdraw2dgraphicsImageM->draw(imagedrawing);
 
       }
 
@@ -2098,7 +2098,7 @@ namespace draw2d_direct2d
    //   //try
    //   //{
 
-   //   //   ::draw2d::graphics * pgraphicsMap = pgraphicsImageSrc;
+   //   //   ::draw2d::graphics * pgraphicsMap = pdraw2dgraphicsImageSrc;
 
    //   //   if (pgraphicsMap == nullptr)
    //   //   {
@@ -2280,7 +2280,7 @@ namespace draw2d_direct2d
 
    //   //auto pgraphicsDib1 = __graphics(get_graphics());
 
-   //   //auto pgraphicsDib2 = __graphics(pgraphicsImage);
+   //   //auto pgraphicsDib2 = __graphics(pdraw2dgraphicsImage);
 
    //   //pgraphicsDib2->m_pdevicecontext->EndDraw();
 
