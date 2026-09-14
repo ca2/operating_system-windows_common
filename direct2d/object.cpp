@@ -14,12 +14,12 @@ namespace direct2d
    }
 
 
-   object::object(object && object) :
-      PARTICLE_TRANSFER(object)
-   {
+   //object::object(object && object) :
+   //   PARTICLE_TRANSFER(object)
+   //{
 
 
-   }
+   //}
 
    object::~object()
    {
