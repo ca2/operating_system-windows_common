@@ -37,7 +37,7 @@ namespace draw2d_direct2d
 
 
       bitmap();
-      bitmap(bitmap && bitmap);
+      //bitmap(bitmap && bitmap);
       ~bitmap() override;
 
 

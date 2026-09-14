@@ -23,20 +23,20 @@ namespace draw2d_direct2d
    }
 
 
-   bitmap::bitmap(bitmap && bitmap) :
-      DRAW2D_BITMAP_TRANSFER(bitmap),
-      draw2d_direct2d::object(::transfer(bitmap)),
-      direct2d::object(::transfer(bitmap)),
-      m_pd2d1bitmap(::transfer(bitmap.m_pd2d1bitmap)),
-      m_pd2d1bitmap1(::transfer(bitmap.m_pd2d1bitmap1)),
-      m_memory(::transfer(bitmap.m_memory)),
-      m_pd2d1bitmap1Map(::transfer(bitmap.m_pd2d1bitmap1Map)) //,
-      //m_pd2d1bitmaprendertarget(::transfer(bitmap.m_pd2d1bitmaprendertarget)),
-      //m_pd2d1devicecontext(::transfer(bitmap.m_pd2d1devicecontext))
-   {
+   //bitmap::bitmap(bitmap && bitmap) :
+   //   DRAW2D_BITMAP_TRANSFER(bitmap),
+   //   draw2d_direct2d::object(::transfer(bitmap)),
+   //   direct2d::object(::transfer(bitmap)),
+   //   m_pd2d1bitmap(::transfer(bitmap.m_pd2d1bitmap)),
+   //   m_pd2d1bitmap1(::transfer(bitmap.m_pd2d1bitmap1)),
+   //   m_memory(::transfer(bitmap.m_memory)),
+   //   m_pd2d1bitmap1Map(::transfer(bitmap.m_pd2d1bitmap1Map)) //,
+   //   //m_pd2d1bitmaprendertarget(::transfer(bitmap.m_pd2d1bitmaprendertarget)),
+   //   //m_pd2d1devicecontext(::transfer(bitmap.m_pd2d1devicecontext))
+   //{
 
 
-   }
+   //}
 
 
    bitmap::~bitmap()

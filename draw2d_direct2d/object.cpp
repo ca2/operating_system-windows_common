@@ -18,14 +18,14 @@ namespace draw2d_direct2d
    }
 
 
-   object::object(object && object) :
-      DRAW2D_OBJECT_TRANSFER(object),
-      direct2d::object(::transfer(object)),
-      m_pgraphics(::transfer(object.m_pgraphics))
-   {
+   //object::object(object && object) :
+   //   DRAW2D_OBJECT_TRANSFER(object),
+   //   direct2d::object(::transfer(object)),
+   //   m_pgraphics(::transfer(object.m_pgraphics))
+   //{
 
 
-   }
+   //}
 
 
 

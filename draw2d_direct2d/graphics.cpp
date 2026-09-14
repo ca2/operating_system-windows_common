@@ -1640,13 +1640,19 @@ namespace draw2d_direct2d
 
             auto pimage1 = image()->create_image(rectangleBlt.size());
 
-            auto pdraw2dgraphicsImage1 = pimage1->acquire_graphics();
+            ::cast < ::draw2d_direct2d::graphics > pdraw2dgraphicsImage1 = pimage1->acquire_graphics();
 
             pdraw2dgraphicsImage1->set_alpha_mode(::draw2d::e_alpha_mode_set);
 
             auto pimage = imagedrawing.image();
 
-            pimage1->_draw_raw(::f64_rectangle(rectangleBlt.size()), pimage, ::f64_point(xSrc, ySrc));
+            {
+
+               ::image::image_drawing_options imagedrawingoptions(rectangleBlt.size());
+
+               pdraw2dgraphicsImage1->_draw_raw(::f64_rectangle(rectangleBlt.size()), pimage, imagedrawingoptions, ::f64_point(xSrc, ySrc));
+
+            }
 
             //if (!pimage1->_draw_raw(::f64_rectangle(rectangleBlt.size()), pimage , ::f64_point(xSrc, ySrc)))
             //{
@@ -1729,17 +1735,23 @@ namespace draw2d_direct2d
 
          auto pimage2 = image()->create_image(size);
 
-         auto pdraw2dgraphicsImage2 = pimage2->acquire_graphics();
+         ::cast < ::draw2d_direct2d::graphics > pdraw2dgraphicsImage2 = pimage2->acquire_graphics();
 
          pdraw2dgraphicsImage2->set_alpha_mode(::draw2d::e_alpha_mode_set);
 
          pdraw2dgraphicsImage2->fill_rectangle(rectangleDib1, argb(255, 0, 0, 0));
 
-         pimage2->_draw_raw(rectangleIntersect.size(), m_pimageAlphaBlend, ::f64_point(point - m_pointAlphaBlend));
+         {
+
+            ::image::image_drawing_options imagedrawingoptions(size);
+
+            pdraw2dgraphicsImage2->_draw_raw(rectangleIntersect.size(), m_pimageAlphaBlend, imagedrawingoptions, ::f64_point(point - m_pointAlphaBlend));
+
+         }
 
          ::pointer<::draw2d_direct2d::graphics>pgraphicsDib1 = pdraw2dgraphicsImage1.get();
 
-         ::pointer<::draw2d_direct2d::graphics>pgraphicsDib2 = pdraw2dgraphicsImage2.get();
+         ::pointer<::draw2d_direct2d::graphics>pgraphicsDib2 = pdraw2dgraphicsImage2;
 
          //pimage2->unmap();
 
