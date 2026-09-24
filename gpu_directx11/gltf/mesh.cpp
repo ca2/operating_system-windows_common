@@ -73,6 +73,11 @@ namespace gpu_directx11
 
 
          }
+         else if (erendersystem == ::graphics3d::e_render_system_texture)
+         {
+
+
+         }
          else  if (erendersystem == ::graphics3d::e_render_system_gltf_ibl)
          {
             // albedo

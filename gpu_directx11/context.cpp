@@ -30,6 +30,8 @@
 #include "gpu_directx11/descriptors.h"
 #include "initializers.h"
 #include "acme_windows_common/dxgi_surface_bindable.h"
+#include "gpu/hlsl/_001Blend.vert.h"
+#include "gpu/hlsl/_001Blend.frag.h"
 #include <DirectXMath.h>
 #include <memory>
 #include <vector>
@@ -1263,9 +1265,9 @@ namespace gpu_directx11
 
          ::cast < ::gpu_directx11::texture > ptextureSrc = pgputexturesiteSource->gpu_texture();
 
-         int iGpuLayerIndex = ::gpu::current_layer()->m_iGpuLayerIndex;
+         //int iGpuLayerIndex = ::gpu::current_layer()->m_iGpuLayerIndex;
 
-         informationf("layer_end_copy (%d)", iGpuLayerIndex);
+         //informationf("layer_end_copy (%d)", iGpuLayerIndex);
 
          //if (iLayerIndex == 0)
          //{
@@ -2016,6 +2018,22 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 //      //   m_pcontext->PSSetSamplers(0, 1, nullSampler);
 //
       //}
+
+   }
+
+
+   ::memory context::_001BlendVertexShaderMemory()
+   {
+
+      return ::as_memory_block(g_psz__001Blend_vert);
+
+   }
+
+
+   ::memory context::_001BlendFragmentShaderMemory()
+   {
+
+      return ::as_memory_block(g_psz__001Blend_frag);
 
    }
 

@@ -75,14 +75,21 @@ namespace gpu_directx11
          {
 
             ::string strError((const_char_pointer )pblobError->GetBufferPointer(), pblobError->GetBufferSize());
+            
+            warning() << "Vertex Shader Compilation Error";
+            
+            warning() << (const char *)data;
 
             warning() << strError;
 
             throw ::exception(error_failed);
+
          }
+
       }
 
       return pblobShader;
+
    }
 
 
@@ -117,13 +124,20 @@ namespace gpu_directx11
 
             ::string strError((const_char_pointer )pblobError->GetBufferPointer(), pblobError->GetBufferSize());
 
+            warning() << "Fragment Shader Compilation Error";
+
+            warning() << (const char *)data;
+
             warning() << strError;
 
             throw ::exception(error_failed);
+
          }
+
       }
 
       return pblobShader;
+
    }
 
 

@@ -151,6 +151,10 @@ namespace gpu_directx11
                                                  ::pointer_array<::gpu::layer> *playera) override;
 
 
+      virtual ::memory _001BlendVertexShaderMemory();
+      virtual ::memory _001BlendFragmentShaderMemory();
+
+
       void on_start_layer(::gpu::layer * pgpulayer) override;
       void on_end_layer(::gpu::layer * pgpulayer) override;
 
