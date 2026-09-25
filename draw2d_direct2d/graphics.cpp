@@ -1,6 +1,7 @@
 #include "platform.h"
 #include "bitmap.h"
 #include "brush.h"
+#include "domain.h"
 #include "font.h"
 #include "graphics.h"
 #include "image.h"
@@ -85,7 +86,7 @@ namespace draw2d_direct2d
 
       //clear_os_data();
 
-      m_pthis = this;
+      //m_pthis = this;
 
       defer_create_synchronization();
 
@@ -184,7 +185,14 @@ namespace draw2d_direct2d
 
       m_bForWindowDraw2d = true;
 
-      m_pacmeuserinteractionAffinity = puserinteraction;
+      if (::is_null(draw2d_domain()))
+      {
+
+         set_draw2d_domain(puserinteraction->draw2d_domain());
+
+      }
+
+      //m_pacmeuserinteractionAffinity = puserinteraction;
 
       m_sizeTotal2 = size;
 
@@ -193,7 +201,7 @@ namespace draw2d_direct2d
 
          constructø(m_pgraphicsbufferitem->m_pimageBufferItem);
 
-         m_pgraphicsbufferitem->m_pimageBufferItem->update_as_render_target(size, puserinteraction, this);
+         m_pgraphicsbufferitem->m_pimageBufferItem->update_as_render_target(size, draw2d_domain(), this);
 
          //create_for_image(m_pgraphicsbufferitem->m_pimageBufferItem);
 
@@ -213,21 +221,21 @@ namespace draw2d_direct2d
 
 
    
-   void graphics::update_as_image_render_target(::image::image * pimage, ::acme::user::interaction * pacmeuserinteractionAffinity)
+   void graphics::update_as_image_render_target(::image::image * pimage)
    {
 
-      if (::is_set(pacmeuserinteractionAffinity))
-      {
+      //if (::is_set(pacmeuserinteractionAffinity))
+      //{
 
-         m_pacmeuserinteractionAffinity = pacmeuserinteractionAffinity;
+      //   m_pacmeuserinteractionAffinity = pacmeuserinteractionAffinity;
 
-      }
-      else
-      {
+      //}
+      //else
+      //{
 
-         m_pacmeuserinteractionAffinity = pimage->m_pacmeuserinteractionAffinity;
+      //   m_pacmeuserinteractionAffinity = pimage->m_pacmeuserinteractionAffinity;
 
-      }
+      //}
 
       ::cast<::draw2d_direct2d::image> pdirect2dimage = pimage;
 
@@ -252,10 +260,10 @@ namespace draw2d_direct2d
 
          }
 
-         if (::is_null(pimage->m_pacmeuserinteractionAffinity))
+         if (::is_null(pimage->draw2d_domain()))
          {
 
-            throw ::exception(error_wrong_state, "graphics::create_for_image : pimage->m_puserinteraction is null");
+            throw ::exception(error_wrong_state, "graphics::create_for_image : draw2d_domain() is null");
 
          }
 
@@ -278,7 +286,7 @@ namespace draw2d_direct2d
       else
       {
          
-         pimage->update_bitmap_as_render_target(pimage->m_pacmeuserinteractionAffinity, this);
+         pimage->update_bitmap_as_render_target(pimage->draw2d_domain(), this);
 
          //::cast < ::draw2d_direct2d::bitmap > pdraw2dbitmap = pimage->m_pdraw2dbitmap;
 
@@ -299,7 +307,7 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::_create_memory_graphics(const ::i32_size & sizeParam, ::acme::user::interaction * pacmeuserinteractionAffinity)
+   void graphics::_create_memory_graphics(const ::i32_size & sizeParam, ::draw2d::domain * pdraw2ddomain)
    {
 
       ////constructø(m_pdraw2dbitmap);
@@ -530,7 +538,7 @@ namespace draw2d_direct2d
 
       defer_constructø(m_pimageTarget);
 
-      m_pimageTarget->create_as_descriptor(sizeParam);
+      m_pimageTarget->create_as_descriptor(sizeParam, pdraw2ddomain);
 
       defer_constructø(m_pimageTarget->m_pdraw2dbitmap);
 
@@ -754,7 +762,7 @@ namespace draw2d_direct2d
    }
 
 
-   void graphics::create_bitmap_graphics(::draw2d::bitmap *pdraw2dbitmap, ::acme::user::interaction *pacmeuserinteractionAffinity)
+   void graphics::create_bitmap_graphics(::draw2d::bitmap *pdraw2dbitmap, ::draw2d::domain * pdraw2ddomain)
    {
 
       throw ::interface_only();
@@ -1638,7 +1646,7 @@ namespace draw2d_direct2d
             //else
             //{
 
-            auto pimage1 = image()->create_image(rectangleBlt.size());
+            auto pimage1 = image()->create_image(rectangleBlt.size(), draw2d_domain());
 
             ::cast < ::draw2d_direct2d::graphics > pdraw2dgraphicsImage1 = pimage1->acquire_graphics();
 
@@ -1717,7 +1725,7 @@ namespace draw2d_direct2d
 
          // ::draw2d::device_lock devicelock(this);
 
-         auto pimage1 = image()->create_image(size);
+         auto pimage1 = image()->create_image(size, draw2d_domain());
 
          ::f64_rectangle rectangleDib1(::f64_point(), size);
 
@@ -1733,7 +1741,7 @@ namespace draw2d_direct2d
 
          pdraw2dgraphicsImage1->text_out(0, 0, scopedstr);
 
-         auto pimage2 = image()->create_image(size);
+         auto pimage2 = image()->create_image(size, draw2d_domain());
 
          ::cast < ::draw2d_direct2d::graphics > pdraw2dgraphicsImage2 = pimage2->acquire_graphics();
 
@@ -3451,7 +3459,7 @@ namespace draw2d_direct2d
 
                   auto pimageSource = createø<::image::image>();
 
-                  pimageSource->create_as_descriptor(ppixmapSource->size(), DEFAULT_CREATE_IMAGE_FLAG, ppixmapSource->m_iScan);
+                  pimageSource->create_as_descriptor(ppixmapSource->size(), draw2d_domain(), DEFAULT_CREATE_IMAGE_FLAG, ppixmapSource->m_iScan);
 
                   pimageSource->m_ppixmapOwned = ppixmapSource;
 
@@ -3459,7 +3467,7 @@ namespace draw2d_direct2d
 
                   pframeTarget->m_pparticleImage = pimageTarget;
 
-                  pimageTarget->create_as_descriptor(m_pimageTarget->size());
+                  pimageTarget->create_as_descriptor(m_pimageTarget->size(), draw2d_domain());
 
                   auto pdraw2dgraphicsImageTarget = pimageTarget->acquire_graphics();
 
@@ -3477,7 +3485,7 @@ namespace draw2d_direct2d
 
       }
 
-      pimage->update_bitmap_as_render_target(m_pacmeuserinteractionAffinity, this);
+      pimage->update_bitmap_as_render_target(draw2d_domain(), this);
 
       if (pimage->get_bitmap_as_source() == nullptr)
       {
@@ -7231,10 +7239,10 @@ namespace draw2d_direct2d
 
 
    bool graphics::is_memory_graphics_pool_compatible(
-      ::acme::user::interaction * pacmeuserinteractionAffinity) const
+      ::draw2d::domain * pdraw2ddomain) const
    {
 
-      if (!pacmeuserinteractionAffinity
+      if (!pdraw2ddomain
          || m_bBeginDraw
          || m_pimageTarget
          || m_pdraw2dbitmap
@@ -7247,30 +7255,32 @@ namespace draw2d_direct2d
 
       }
 
-      ::cast < ::windowing::window > pwindow =
-         pacmeuserinteractionAffinity->acme_windowing_window();
+      ::cast < ::draw2d_direct2d::domain > pdraw2ddirect2ddomain = pdraw2ddomain;
 
-      if (!pwindow)
-      {
+      //::cast < ::windowing::window > pwindow =
+      //   pacmeuserinteractionAffinity->acme_windowing_window();
 
-         return false;
+      //if (!pwindow)
+      //{
 
-      }
+      //   return false;
 
-      ::cast < ::draw2d_direct2d::window_attachment > pwindowattachment =
-         pwindow->m_pdraw2dwindowattachment;
+      //}
 
-      if (!pwindowattachment)
-      {
+      //::cast < ::draw2d_direct2d::window_attachment > pwindowattachment =
+      //   pwindow->m_pdraw2dwindowattachment;
 
-         return false;
+      //if (!pwindowattachment)
+      //{
 
-      }
+      //   return false;
+
+      //}
 
       _synchronous_lock synchronouslock(
-         pwindowattachment->_d2d1_device_context_mutex());
+         pdraw2ddirect2ddomain->_d2d1_device_context_mutex());
 
-      auto pdevicecontext = pwindowattachment->_d2d1_device_context();
+      auto pdevicecontext = pdraw2ddirect2ddomain->_d2d1_device_context();
 
       if (!pdevicecontext)
       {
@@ -7294,7 +7304,8 @@ namespace draw2d_direct2d
       bool bExternalRendering,
       ::image::image * pimage,
       const ::i32_size & size,
-      ::acme::user::interaction * pacmeuserinteractionAffinity)
+      ::draw2d::domain * pdraw2ddomain)
+      //::acme::user::interaction * pacmeuserinteractionAffinity)
    {
 
       /*if (m_bBeginDraw)
@@ -7314,7 +7325,7 @@ namespace draw2d_direct2d
          if (!pimage->m_pdraw2dbitmap)
          {
 
-            pimage->update_bitmap_as_render_target(pacmeuserinteractionAffinity, this);
+            pimage->update_bitmap_as_render_target(pdraw2ddomain, this);
 
          }
 
@@ -7381,7 +7392,7 @@ namespace draw2d_direct2d
 
          }
 
-         _create_memory_graphics(size, pacmeuserinteractionAffinity);
+         _create_memory_graphics(size, draw2d_domain());
 
          pimageTarget = m_pimageTarget;
 
@@ -7422,7 +7433,7 @@ namespace draw2d_direct2d
 
       rectangleFrame.set(::i32_point(), size);
 
-      begin_draw(true, pacmeuserinteractionAffinity->user_interaction(), rectangleFrame, pimageTarget);
+      begin_draw(true, m_puserinteractionTopic, rectangleFrame, pimageTarget);
       //m_pd2d1devicecontext->BeginDraw();
       //m_bBeginDraw = true;
 
@@ -7444,7 +7455,7 @@ namespace draw2d_direct2d
             bExternalRendering,
             pimageTarget,
             size,
-            pacmeuserinteractionAffinity);
+            pdraw2ddomain);
 
          defer_on_target_rectangle_update();
          m_pd2d1devicecontext->SetPrimitiveBlend(
@@ -8120,7 +8131,14 @@ namespace draw2d_direct2d
    void graphics::start_layer(bool bFirstLayer, ::user::interaction * puserinteraction)
    {
 
-      m_pacmeuserinteractionAffinity = puserinteraction;
+      if (::is_null(draw2d_domain()))
+      {
+
+         set_draw2d_domain(puserinteraction->draw2d_domain());
+
+      }
+
+      m_puserinteractionTopic = puserinteraction;
 
       reset_clip();
 
@@ -8141,8 +8159,8 @@ namespace draw2d_direct2d
       ::i32_rectangle rectangleFrame;
 
       rectangleFrame.set(
-         m_pacmeuserinteractionAffinity->m_pacmewindowingwindow->m_pointWindow,
-         m_pacmeuserinteractionAffinity->m_pacmewindowingwindow->m_sizeWindow);
+         m_puserinteractionTopic->m_pacmewindowingwindow->m_pointWindow,
+         m_puserinteractionTopic->m_pacmewindowingwindow->m_sizeWindow);
       //m_pointTarget = ;
       //m_sizeTarget = m_pacmeuserinteractionAffinity->m_pacmewindowingwindow->m_sizeWindow;
 
@@ -8162,8 +8180,8 @@ namespace draw2d_direct2d
       {
 
          rectangleFrame.set(
-            m_pacmeuserinteractionAffinity->m_pacmewindowingwindow->m_pointWindow,
-            m_pacmeuserinteractionAffinity->m_pacmewindowingwindow->m_sizeWindow);
+            m_puserinteractionTopic->m_pacmewindowingwindow->m_pointWindow,
+            m_puserinteractionTopic->m_pacmewindowingwindow->m_sizeWindow);
 
          //m_pointTarget = m_pgraphicsbufferitem->m_pointBufferItem;
          //m_sizeTarget = m_pgraphicsbufferitem->m_sizeBufferItem;

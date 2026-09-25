@@ -53,7 +53,7 @@ namespace draw2d_direct2d
 
       void update_bitmap_as_image_render_target(
          ::image::image * pimage,
-         ::acme::user::interaction * pacmeuserinteractionAffinity = nullptr,
+         ::draw2d::domain * pdraw2ddomain = nullptr,
          ::draw2d::graphics * pdraw2dgraphics = nullptr) override;
       void _create_d2d1_bitmap(
          ::draw2d::graphics * pdraw2dgraphics,
@@ -62,7 +62,8 @@ namespace draw2d_direct2d
          const ::i32_point & pointBits,
          const ::i32_size & sizeBits,
          ::i32 stride,
-         ::acme::user::interaction * pacmeuserinteractionAffinity);
+         ::draw2d::domain * pdraw2ddomain);
+         //::acme::user::interaction * pacmeuserinteractionAffinity);
 
       void preserve_image(const ::i32_size & size, ::image::image * pimage) override;
       virtual void CreateBitmap(::draw2d::graphics * pdraw2dgraphics, const ::i32_size& size, ::u32 nPlanes, ::u32 nBitcount, const void * lpBits, ::i32 stride) override;

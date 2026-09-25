@@ -199,7 +199,7 @@ namespace draw2d_direct2d
    }
 
    
-   ::dxgi_device_source * draw2d::_dxgi_device_source(::acme::windowing::window * pacmewindowingwindow)
+   ::dxgi_device_source * draw2d::_dxgi_device_source(::draw2d::domain * pdraw2ddomain)
    {
 
       auto pdirect2d = direct2d();
@@ -217,10 +217,10 @@ namespace draw2d_direct2d
    }
 
 
-   ID2D1DeviceContext * draw2d::default_d2d1_device_context(::acme::windowing::window * pacmewindowingwindow)
+   ID2D1DeviceContext * draw2d::default_d2d1_device_context(::draw2d::domain * pdraw2domain)
    {
 
-      auto pdxgidevicesource = _dxgi_device_source(pacmewindowingwindow);
+      auto pdxgidevicesource = _dxgi_device_source(pdraw2domain);
 
       auto pdirect2d = direct2d();
 
@@ -293,11 +293,11 @@ namespace draw2d_direct2d
    }
 
 
-   ::draw2d::graphics_pointer draw2d::do_allocation_strategy(::acme::user::interaction * pacmeuserinteractionAffinity, ::image::image *pimage,
+   ::draw2d::graphics_pointer draw2d::do_allocation_strategy(::draw2d::domain * pdraw2ddomain, ::image::image *pimage,
                                                              const ::i32_size &size)
    {
 
-      return allocate_graphics(pacmeuserinteractionAffinity);
+      return allocate_graphics(pdraw2ddomain);
 
       
 

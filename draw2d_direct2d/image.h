@@ -49,7 +49,7 @@ namespace draw2d_direct2d
       virtual void _create_dib_hbitmap(const ::i32_size &sizeRaw);
       virtual void _delete_dib_hbitmap();
       //using ::image::image::create;
-      void update_as_render_target(const ::i32_size & size, ::user::interaction * puserinteraction, ::draw2d::graphics * pdraw2dgraphics, ::enum_flag eflagCreate = DEFAULT_CREATE_IMAGE_FLAG, ::i32 iStride = -1, bool bPreserve = false, bool bTopDraw2d = false) override;
+      void update_as_render_target(const ::i32_size & size, ::draw2d::domain * pdraw2ddomain, ::draw2d::graphics * pdraw2dgraphics, ::enum_flag eflagCreate = DEFAULT_CREATE_IMAGE_FLAG, ::i32 iStride = -1, bool bPreserve = false, bool bTopDraw2d = false) override;
       //void create_for_image(::image::image *pimage) override;
       //using ::image::image::initialize;
       //void initialize(const ::i32_size & size, ::image32_t * pimage32, ::i32 iScan, ::enum_flag eflagCreate = DEFAULT_CREATE_IMAGE_FLAG) override;

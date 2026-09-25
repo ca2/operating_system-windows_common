@@ -42,8 +42,8 @@ namespace draw2d_direct2d
       };
 
 
-      comptr<ID2D1DeviceContext> m_pd2d1devicecontext;
-      ::pointer<::mutex> m_pmutexDeviceContext;
+      //comptr<ID2D1DeviceContext> m_pd2d1devicecontext;
+      //::pointer<::mutex> m_pmutexDeviceContext;
       ::pointer< gdi_offscreen >m_pgdioffscreen;
 
 
@@ -54,8 +54,8 @@ namespace draw2d_direct2d
       void initialize_window_attachment(::windowing::window * pwindow) override;
 
 
-      virtual mutex *_d2d1_device_context_mutex();
-      virtual ID2D1DeviceContext *_d2d1_device_context();
+      //virtual mutex *_d2d1_device_context_mutex();
+      //virtual ID2D1DeviceContext *_d2d1_device_context();
 
 
       void destroy() override;

@@ -2,6 +2,7 @@
 #include "bitmap.h"
 #include "image.h"
 #include "graphics.h"
+#include "aura/graphics/draw2d/domain.h"
 #include "aura/graphics/draw2d/lock.h"
 #include "aura/graphics/draw2d/device_lock.h"
 #include "aura/graphics/image/context.h"
@@ -245,7 +246,7 @@ namespace draw2d_direct2d
 
       _delete_dib_hbitmap();
 
-      create_as_descriptor(sizeRaw);
+      create_as_descriptor(sizeRaw, draw2d_domain());
       // auto estatus =
 
       // create_ex(size, nullptr, 0, eflagCreate, iGoodStride, bPreserve);
@@ -277,17 +278,24 @@ namespace draw2d_direct2d
    }
 
 
-   void image::update_as_render_target(const ::i32_size & sizeRaw, ::user::interaction * puserinteraction, ::draw2d::graphics * pdraw2dgraphics, ::enum_flag eflagCreate, ::i32 iGoodStride, bool bPreserve, bool bTopDraw2d)
+   void image::update_as_render_target(const ::i32_size & sizeRaw, ::draw2d::domain * pdraw2ddomain, ::draw2d::graphics * pdraw2dgraphics, ::enum_flag eflagCreate, ::i32 iGoodStride, bool bPreserve, bool bTopDraw2d)
    {
 
-      if (::is_null(puserinteraction))
+      if (::is_null(pdraw2ddomain))
       {
          
          throw ::exception(error_wrong_state);
 
       }
 
-      m_pacmeuserinteractionAffinity = puserinteraction;
+      if (::is_null(draw2d_domain()))
+      {
+
+         set_draw2d_domain(pdraw2ddomain);
+
+      }
+
+      //m_pacmeuserinteractionAffinity = puserinteraction;
 
       //if (m_sizeRaw == sizeRaw
         // && m_pgraphicsOwned.ok())
@@ -345,7 +353,7 @@ namespace draw2d_direct2d
 
             ::cast < ::draw2d_direct2d::graphics > pdraw2dgraphics = m_pgraphicsOwned;
 
-            pdraw2dgraphics->_create_memory_graphics(sizeRaw, m_pacmeuserinteractionAffinity);
+            pdraw2dgraphics->_create_memory_graphics(sizeRaw, draw2d_domain());
 
          }
 
@@ -353,7 +361,7 @@ namespace draw2d_direct2d
 
       }
 
-      pdraw2dgraphics->update_as_image_render_target(this, m_pacmeuserinteractionAffinity);
+      pdraw2dgraphics->update_as_image_render_target(this);
 
       if (m_pdraw2dbitmap.ok())
       {
@@ -432,7 +440,7 @@ namespace draw2d_direct2d
 
       ::i32_size size = pdraw2dbitmap->size();
 
-      create_as_descriptor(size);
+      create_as_descriptor(size, draw2d_domain());
 
       //if (!create(size))
       //{
@@ -753,7 +761,7 @@ namespace draw2d_direct2d
 
       //auto estatus = 
       
-      create_as_descriptor({ cx, cy });
+      create_as_descriptor({ cx, cy }, draw2d_domain());
 
       //if (!estatus)
       //{
@@ -764,7 +772,7 @@ namespace draw2d_direct2d
       //}
 
       // White blend image
-      auto pimage1 = ::particle::image()->create_image({cx,  cy});
+      auto pimage1 = ::particle::image()->create_image({cx,  cy}, draw2d_domain());
 
       {
 
@@ -783,7 +791,7 @@ namespace draw2d_direct2d
       }
 
       // Black blend image
-      auto pimage2 = ::particle::image()->create_image({cx,  cy});
+      auto pimage2 = ::particle::image()->create_image({cx,  cy}, draw2d_domain());
 
       {
 
@@ -814,7 +822,7 @@ namespace draw2d_direct2d
 //#endif
 
       // Mask image
-      auto pimageM = ::particle::image()->create_image({cx,  cy});
+      auto pimageM = ::particle::image()->create_image({cx,  cy}, draw2d_domain());
 
       {
 

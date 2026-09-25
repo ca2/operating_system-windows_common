@@ -1,5 +1,6 @@
 #include "platform.h"
 #include "bitmap.h"
+#include "domain.h"
 #include "draw2d.h"
 #include "graphics.h"
 #include "window_attachment.h"
@@ -49,7 +50,7 @@ namespace draw2d_direct2d
 
    void bitmap::update_bitmap_as_image_render_target(
       ::image::image * pimage,
-      ::acme::user::interaction * pacmeuserinteractionAffinity, 
+      ::draw2d::domain * pdraw2ddomain, 
       ::draw2d::graphics * pdraw2dgraphics)
    {
 
@@ -63,7 +64,7 @@ namespace draw2d_direct2d
             pimage->origin(),
             pimage->size(),
             pimage->m_ppixmapOwned->m_iScan,
-            pacmeuserinteractionAffinity);
+            pdraw2ddomain);
 
       }
       else
@@ -85,7 +86,7 @@ namespace draw2d_direct2d
               pimage->origin(),
               pimage->size(),
               pimage->m_iScan,
-              pacmeuserinteractionAffinity);
+              pdraw2ddomain);
 
          }
 
@@ -101,7 +102,7 @@ namespace draw2d_direct2d
       const ::i32_point & pointBits,
       const ::i32_size & sizeBits,
       ::i32 stride,
-      ::acme::user::interaction * pacmeuserinteractionAffinity)
+      ::draw2d::domain * pdraw2ddomain)
    {
 
       //::draw2d::lock draw2dlock;
@@ -158,41 +159,43 @@ namespace draw2d_direct2d
       if (!pd2d1devicecontext)
       {
 
-         if (!pacmeuserinteractionAffinity)
+         if (!pdraw2ddomain)
          {
 
             throw ::exception(
                error_wrong_state,
-               "Direct2D bitmap creation requires an interaction affinity");
+               "Direct2D bitmap creation requires an draw2d domain");
 
          }
 
-         ::cast < ::windowing::window > pwindow =
-            pacmeuserinteractionAffinity->acme_windowing_window();
+         //::cast < ::windowing::window > pwindow =
+         //   pacmeuserinteractionAffinity->acme_windowing_window();
 
-         if (!pwindow)
-         {
+         //if (!pwindow)
+         //{
 
-            throw ::exception(
-               error_wrong_state,
-               "Direct2D bitmap interaction affinity has no window");
+         //   throw ::exception(
+         //      error_wrong_state,
+         //      "Direct2D bitmap interaction affinity has no window");
 
-         }
+         //}
 
-         ::cast < ::draw2d_direct2d::window_attachment > pwindowattachment = pwindow->m_pdraw2dwindowattachment;
+         ::cast < ::draw2d_direct2d::domain > pdraw2ddirect2ddomain = pdraw2ddomain;
 
-         if (!pwindowattachment)
-         {
+         //::cast < ::draw2d_direct2d::window_attachment > pwindowattachment = pwindow->m_pdraw2dwindowattachment;
 
-            throw ::exception(
-               error_wrong_state,
-               "Direct2D bitmap window has no Direct2D attachment");
+         //if (!pwindowattachment)
+         //{
 
-         }
+         //   throw ::exception(
+         //      error_wrong_state,
+         //      "Direct2D bitmap window has no Direct2D attachment");
 
-         pd2d1devicecontext = pwindowattachment->_d2d1_device_context();
+         //}
 
-         pmutex = pwindowattachment->_d2d1_device_context_mutex();
+         pd2d1devicecontext = pdraw2ddirect2ddomain->_d2d1_device_context();
+
+         pmutex = pdraw2ddirect2ddomain->_d2d1_device_context_mutex();
 
       }
 
@@ -399,11 +402,12 @@ namespace draw2d_direct2d
       if (!m_pd2d1bitmap)
       {
 
-         pimage->create_as_descriptor(size);
+         pimage->create_as_descriptor(size, pimage->draw2d_domain());
 
          _create_d2d1_bitmap(
             nullptr, size, nullptr, {}, {}, 0,
-            pimage->m_pacmeuserinteractionAffinity);
+            pimage->draw2d_domain());
+            //pimage->m_pacmeuserinteractionAffinity);
 
          pimage->m_pdraw2dbitmap = this;
 
@@ -417,51 +421,53 @@ namespace draw2d_direct2d
          && sizeOld.height == (UINT32)size.cy)
       {
 
-         pimage->create_as_descriptor(size);
+         pimage->create_as_descriptor(size, pimage->draw2d_domain());
 
          return;
 
       }
 
-      auto pacmeuserinteractionAffinity = pimage->m_pacmeuserinteractionAffinity;
+      //auto pacmeuserinteractionAffinity = pimage->m_pacmeuserinteractionAffinity;
 
-      if (!pacmeuserinteractionAffinity)
-      {
+      //if (!pacmeuserinteractionAffinity)
+      //{
 
-         throw ::exception(
-            error_wrong_state,
-            "Direct2D bitmap preservation requires an interaction affinity");
+      //   throw ::exception(
+      //      error_wrong_state,
+      //      "Direct2D bitmap preservation requires an interaction affinity");
 
-      }
+      //}
 
-      ::cast < ::windowing::window > pwindow =
-         pacmeuserinteractionAffinity->acme_windowing_window();
+      //::cast < ::windowing::window > pwindow =
+      //   pacmeuserinteractionAffinity->acme_windowing_window();
 
-      if (!pwindow)
-      {
+      //if (!pwindow)
+      //{
 
-         throw ::exception(
-            error_wrong_state,
-            "Direct2D bitmap preservation requires a window");
+      //   throw ::exception(
+      //      error_wrong_state,
+      //      "Direct2D bitmap preservation requires a window");
 
-      }
+      //}
 
-      ::cast < ::draw2d_direct2d::window_attachment > pwindowattachment =
-         pwindow->m_pdraw2dwindowattachment;
+      //::cast < ::draw2d_direct2d::window_attachment > pwindowattachment =
+      //   pwindow->m_pdraw2dwindowattachment;
 
-      if (!pwindowattachment)
-      {
+      //if (!pwindowattachment)
+      //{
 
-         throw ::exception(
-            error_wrong_state,
-            "Direct2D bitmap preservation requires a Direct2D window attachment");
+      //   throw ::exception(
+      //      error_wrong_state,
+      //      "Direct2D bitmap preservation requires a Direct2D window attachment");
 
-      }
+      //}
+
+      ::cast < ::draw2d_direct2d::domain > pdraw2ddirect2ddomain = pimage->draw2d_domain();
 
       _synchronous_lock synchronouslock(
-         pwindowattachment->_d2d1_device_context_mutex());
+         pdraw2ddirect2ddomain->_d2d1_device_context_mutex());
 
-      auto pd2d1devicecontext = pwindowattachment->_d2d1_device_context();
+      auto pd2d1devicecontext = pdraw2ddirect2ddomain->_d2d1_device_context();
 
       if (!pd2d1devicecontext)
       {
@@ -579,7 +585,7 @@ namespace draw2d_direct2d
       m_memory.set_size(0);
       m_size = size;
 
-      pimage->create_as_descriptor(size);
+      pimage->create_as_descriptor(size, pimage->draw2d_domain());
       pimage->m_pdraw2dbitmap = this;
 
    }
@@ -597,8 +603,8 @@ namespace draw2d_direct2d
       __UNREFERENCED_PARAMETER(nPlanes);
       __UNREFERENCED_PARAMETER(nBitcount);
 
-      auto pacmeuserinteractionAffinity = pdraw2dgraphics
-         ? pdraw2dgraphics->m_pacmeuserinteractionAffinity.m_p
+      auto pdraw2ddomain = pdraw2dgraphics
+         ? pdraw2dgraphics->draw2d_domain()
          : nullptr;
 
       _create_d2d1_bitmap(
@@ -608,7 +614,7 @@ namespace draw2d_direct2d
          {},
          size,
          stride,
-         pacmeuserinteractionAffinity);
+         pdraw2ddomain);
 
    }
 
@@ -1030,7 +1036,7 @@ namespace draw2d_direct2d
 
             synchronous_lock synchronouslock(pdraw2ddirect2d->default_device_context_mutex());
 
-            auto pd2d1devicecontextDefault = pdraw2ddirect2d->default_d2d1_device_context(m_papplication->main_acme_user_interaction()->acme_windowing_window());
+            auto pd2d1devicecontextDefault = pdraw2ddirect2d->default_d2d1_device_context(draw2d()->main_draw2d_domain());
 
             auto hrCreateMapBitmap = pd2d1devicecontextDefault->CreateBitmap(
                 sizeuThis,

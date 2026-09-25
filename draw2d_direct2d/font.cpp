@@ -87,13 +87,13 @@ namespace draw2d_direct2d
       if (m_fontsize.eunit() == ::e_unit_point)
       {
 
-         fFontSize = (::f32)pdraw2dgraphics->m_pacmeuserinteractionAffinity->point_dpi(m_fontsize.as_f64());
+         fFontSize = (::f32)pdraw2dgraphics->m_puserinteractionTopic->get_density_dpi_for_window();
 
       }
       else
       {
 
-         fFontSize = (::f32)pdraw2dgraphics->m_pacmeuserinteractionAffinity->dpiy(m_fontsize.as_f64());
+         fFontSize = (::f32)pdraw2dgraphics->m_puserinteractionTopic->scaler();
 
       }
 

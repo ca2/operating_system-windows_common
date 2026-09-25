@@ -45,11 +45,13 @@ namespace draw2d_direct2d
       bool lock_device() override;
       void unlock_device() override;
 
-      virtual ::dxgi_device_source * _dxgi_device_source(::acme::windowing::window * pacmewindowingwindow);
+      //virtual ::dxgi_device_source * _dxgi_device_source(::acme::windowing::window * pacmewindowingwindow);
+      virtual ::dxgi_device_source * _dxgi_device_source(::draw2d::domain * pdraw2ddomain);
 
       virtual ::particle * default_device_context_mutex();
 
-      virtual ID2D1DeviceContext * default_d2d1_device_context(::acme::windowing::window * pacmewindowingwindow);
+      //virtual ID2D1DeviceContext * default_d2d1_device_context(::acme::windowing::window * pacmewindowingwindow);
+      virtual ID2D1DeviceContext * default_d2d1_device_context(::draw2d::domain * pdraw2ddomain);
 
       static ::draw2d_direct2d::draw2d * get();
       //virtual mutex *_generic_d2d1_device_context_mutex();
@@ -58,7 +60,8 @@ namespace draw2d_direct2d
       //void on_create_window(::windowing::window* pwindow) override;
       
       void adjust_composited_window_styles(::u32& nExStyle, ::u32& nStyle) override;
-      ::draw2d::graphics_pointer do_allocation_strategy(::acme::user::interaction * pacmeuserinteractionAffinity, ::image::image *pimage,
+      ::draw2d::graphics_pointer do_allocation_strategy(::draw2d::domain * pdraw2ddomain,
+         ::image::image *pimage,
                                                                 const ::i32_size &size) override;
       void do_release_to_pool_strategy(::draw2d::graphics_pointer &pdraw2dgraphics, ::image::image *pimage) override;
 
