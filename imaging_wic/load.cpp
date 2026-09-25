@@ -2,6 +2,8 @@
 #include "context.h"
 #include "acme/filesystem/file/file.h"
 #include "apex/parallelization/handler_manager.h"
+#include "aura/graphics/draw2d/domain.h"
+#include "aura/graphics/draw2d/draw2d.h"
 #include "aura/graphics/image/load_image.h"
 #include "aura/graphics/image/encoding_options.h"
 #include "acme/operating_system/windows_common/com/comptr.h"
@@ -742,7 +744,7 @@ namespace imaging_wic
 
       }
 
-      ppixmap->create_from_data({(::i32)uWidth, (::i32)uHeight}, (::image32_t *)pData, cbStride);
+      ppixmap->create_from_data({(::i32)uWidth, (::i32)uHeight}, (::image32_t*)pData, cbStride, true, ::e_flag_success);
 
       if (!ppixmap->is_ok())
       {
@@ -796,7 +798,7 @@ namespace imaging_wic
                   INT scanSize = lock.stride();
                   size_t storageSize = lock.storage_size();
 
-                  ploadimage->on_load_image({(::i32)width, (::i32)height}, (::image32_t *)pStorage, scanSize);
+                  ploadimage->on_load_image({(::i32)width, (::i32)height}, (::image32_t *)pStorage, scanSize, true);
 
                   if (ploadimage->is_ok())
                   {
@@ -846,7 +848,7 @@ namespace imaging_wic
             ? S_OK : E_INVALIDARG,
          "ValidatePixelBuffer", uWidth, uHeight, cbStride);
 
-      ploadimage->on_load_image({(::i32)uWidth, (::i32)uHeight}, (::image32_t *)pData, cbStride);
+      ploadimage->on_load_image({(::i32)uWidth, (::i32)uHeight}, (::image32_t *)pData, cbStride, true);
       check_image_decode(ploadimage, ploadimage->is_ok() ? S_OK : E_FAIL,
          "DeliverDecodedPixels", uWidth, uHeight, cbStride);
 

@@ -2,6 +2,8 @@
 #include "context.h"
 #include "acme/exception/exception.h"
 #include "acme/graphics/image/frame_array.h"
+#include "aura/graphics/draw2d/domain.h"
+#include "aura/graphics/draw2d/draw2d.h"
 #include "aura/graphics/image/load_image.h"
 #include "acme/operating_system/windows_common/com/comptr.h"
 
@@ -544,7 +546,7 @@ namespace imaging_wic
 
             pframe->GetSize(&width, &height);
 
-            pimage->create_as_descriptor({(::i32)width, (::i32)height});
+            pimage->create_as_descriptor({(::i32)width, (::i32)height}, pimage->draw2d()->main_draw2d_domain());
 
             auto ppixmapImage = pimage->map();
 
@@ -564,7 +566,7 @@ namespace imaging_wic
 
             pframe->GetSize(&width, &height);
 
-            pimage->create_as_descriptor(::i32_size(width, height));
+            pimage->create_as_descriptor(::i32_size(width, height), pimage->draw2d()->main_draw2d_domain());
 
             auto ppixmapImage = pimage->map();
 
@@ -602,7 +604,7 @@ namespace imaging_wic
                hr = pdraw2dbitmap->GetSize(&width, &height);
             }
 
-            pimage->create_as_descriptor({(::i32)width, (::i32)height});
+            pimage->create_as_descriptor({(::i32)width, (::i32)height}, pimage->draw2d()->main_draw2d_domain());
 
             auto ppixmapImage = pimage->map();
 
