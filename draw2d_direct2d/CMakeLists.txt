@@ -13,6 +13,8 @@ list(APPEND library_source
         draw2d.cpp
         draw2d.h
         draw2d1.h
+        domain.cpp
+        domain.h
         font.cpp
         font.h
         platform.cpp

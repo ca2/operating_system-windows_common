@@ -16,6 +16,8 @@ list(APPEND library_source
         geometry_sink_text_renderer.h
         object.cpp
         object.h
+        tiny_dxgi_device_source.cpp
+        tiny_dxgi_device_source.h
 
 )
 
