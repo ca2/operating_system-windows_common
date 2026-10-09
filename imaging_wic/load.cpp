@@ -76,7 +76,7 @@ namespace imaging_wic
    bool windows_load_image_from_bitmap_source(::image::load_image * ploadimage, IWICBitmapSource * pbitmapsource, IWICImagingFactory * pimagingfactory);
 
 
-   void image_context::_load_image(::image::load_image * ploadimage, const ::payload & payloadFile, const ::image::load_options & loadoptions)
+   void image_context::_load_image(::image::load_image * ploadimage, const ::payload & payloadFile)
    {
 
       //auto ploadimage = allocateø::image::load_image(this);
@@ -107,37 +107,6 @@ namespace imaging_wic
 
       ploadimage->m_payload = payloadFile;
 
-      if (loadoptions.functionLoaded)
-      {
-
-         if (ploadimage->m_loadoptions.functionLoaded)
-         {
-
-            auto function1 = ploadimage->m_loadoptions.functionLoaded;
-
-            auto function2 = loadoptions.functionLoaded;
-
-            ploadimage->m_loadoptions.functionLoaded = [function1, function2](::image::load_image * ploadimage)
-            {
-
-               function1(ploadimage);
-
-               function2(ploadimage);
-
-            };
-
-         }
-         else
-         {
-
-            ploadimage->m_loadoptions.functionLoaded = loadoptions.functionLoaded;
-
-         }
-
-      }
-
-      ploadimage->m_bCreateHelperMaps = loadoptions.helper_maps;
-
       auto filepath = payloadFile.as_file_path();
 
       //if (!filepath.case_insensitive_ends(".webp"))
@@ -150,13 +119,13 @@ namespace imaging_wic
       if (filepath.case_insensitive_begins("http:/") || filepath.case_insensitive_begins("https:/"))
       {
 
-         m_pmanagerImageLoadSlowQueue->handle(loadoptions.sync, { e_timeout, 1_minute, ploadimage});
+         m_pmanagerImageLoadSlowQueue->handle(ploadimage->m_loadoptions.sync, { e_timeout, 1_minute, ploadimage});
 
       }
       else
       {
 
-         m_pmanagerImageLoadFastQueue->handle(loadoptions.sync, { e_timeout, 15_s, ploadimage });
+         m_pmanagerImageLoadFastQueue->handle(ploadimage->m_loadoptions.sync, { e_timeout, 15_s, ploadimage });
 
       }
 

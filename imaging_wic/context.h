@@ -30,7 +30,9 @@ namespace imaging_wic
 
 
       //virtual void _load_image(::image_context * pimagecontext, ::image::image * pimageParam, const ::payload & payloadFile, bool bSync, bool bCreateHelperMaps) override;
-      void _load_image(::image::load_image* pimage, const ::payload& payloadFile, const ::image::load_options & loadoptions = ::image::load_options()) override;
+      ///void _load_image(::image::load_image* pimage, const ::payload& payloadFile, const ::image::load_options & loadoptions = ::image::load_options()) override;
+
+      void _load_image(::image::load_image * pimage, const ::payload & payloadFile) override;
       //void _load_pixmap(::pixmap * ppixmap, const ::payload &payloadFile,
         //               const ::image::load_options &loadoptions = ::image::load_options()) override;
 
