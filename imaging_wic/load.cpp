@@ -187,9 +187,17 @@ namespace imaging_wic
    //   // return ploadimage->m_estatus;
    //}
 
+#if defined(__REACTOS__)
+   static bool load_gdiplus_fallback(::image::load_image * ploadimage, ::memory & input);
+#endif
+
    void image_context::_os_load_image(::image::load_image * ploadimage, memory & memory)
    {
 
+#if defined(__REACTOS__)
+      try
+      {
+#endif
       ploadimage->m_estatus = ::error_failed;
 
       ploadimage->set_nok();
@@ -313,6 +321,15 @@ namespace imaging_wic
 
       }
 
+#if defined(__REACTOS__)
+      }
+      catch (const ::exception &)
+      {
+         if (load_gdiplus_fallback(ploadimage, memory))
+            return;
+         throw;
+      }
+#endif
    }
 
 
@@ -645,6 +662,59 @@ namespace imaging_wic
    };
 
 
+#if defined(__REACTOS__)
+   static bool load_gdiplus_fallback(::image::load_image * ploadimage, ::memory & input)
+   {
+      if (input.size() <= 0 || (::u64)input.size() > ULONG_MAX)
+         return false;
+      comptr<IStream> stream;
+      if (FAILED(::CreateStreamOnHGlobal(nullptr, TRUE, &stream)))
+         return false;
+      ULONG written = 0;
+      if (FAILED(stream->Write(input.data(), (ULONG)input.size(), &written))
+         || written != input.size())
+         return false;
+      LARGE_INTEGER start{};
+      if (FAILED(stream->Seek(start, STREAM_SEEK_SET, nullptr)))
+         return false;
+      // GDI+ can defer decoding, so retain the stream until after the bitmap.
+      Gdiplus::Bitmap bitmap((IStream *)stream, FALSE);
+      const UINT width = bitmap.GetWidth();
+      const UINT height = bitmap.GetHeight();
+      if (bitmap.GetLastStatus() != Gdiplus::Ok || !width || !height
+         || width > INT_MAX / 4 || height > INT_MAX
+         || (::u64)width * height * 4 > INT_MAX)
+         return false;
+      Gdiplus::Bitmap *source = &bitmap;
+      std::unique_ptr<Gdiplus::Bitmap> resized;
+      const auto preferred = ploadimage->m_sizePreferred;
+      if (preferred.cx > 0 && preferred.cy > 0
+         && (preferred.cx != width || preferred.cy != height))
+      {
+         if ((::u64)preferred.cx * preferred.cy * 4 > INT_MAX)
+            return false;
+         resized.reset(new Gdiplus::Bitmap(preferred.cx, preferred.cy, PixelFormat32bppPARGB));
+         if (resized->GetLastStatus() != Gdiplus::Ok)
+            return false;
+         {
+            Gdiplus::Graphics graphics(resized.get());
+            graphics.SetCompositingMode(Gdiplus::CompositingModeSourceCopy);
+            graphics.SetInterpolationMode(Gdiplus::InterpolationModeHighQualityBicubic);
+            if (graphics.DrawImage(&bitmap, 0, 0, preferred.cx, preferred.cy) != Gdiplus::Ok)
+               return false;
+         }
+         source = resized.get();
+      }
+      gdiplus_bitmap_lock lock(source);
+      if (!lock.is_locked() || !lock.data())
+         return false;
+      ploadimage->on_load_image({(int)lock.width(), (int)lock.height()},
+         (::image32_t *)lock.data(), lock.stride(), true);
+      ploadimage->informationf("[image.decode.gdiplus] fallback path=%s size=%ux%u success=%d",
+         ploadimage->m_payload.as_file_path().c_str(), lock.width(), lock.height(), (int)ploadimage->is_ok());
+      return ploadimage->is_ok();
+   }
+#endif
    bool windows_pixmap_from_bitmap_source(::pixmap * ppixmap, IWICBitmapSource * pbitmapsource, IWICImagingFactory * pimagingfactory)
    {
 
@@ -789,6 +859,24 @@ namespace imaging_wic
       }
          
 
+#if defined(__REACTOS__)
+      // Older WIC implementations can lock a bitmap but return E_NOTIMPL
+      // from GetDataPointer. CopyPixels provides owned, premultiplied pixels.
+      const ::u64 copyStride = (::u64)uWidth * 4;
+      const ::u64 copyBytes = copyStride * uHeight;
+      check_image_decode(ploadimage,
+         copyBytes <= UINT_MAX && copyBytes <= INT_MAX ? S_OK : E_INVALIDARG,
+         "ValidateCopyPixelsSize", uWidth, uHeight);
+      memory pixels;
+      pixels.set_size((memsize)copyBytes);
+      hr = piBmp->CopyPixels(nullptr, (UINT)copyStride, (UINT)copyBytes, pixels.data());
+      check_image_decode(ploadimage, hr, "CopyPixels", uWidth, uHeight, (UINT)copyStride);
+      ploadimage->on_load_image({(::i32)uWidth, (::i32)uHeight},
+         (::image32_t *)pixels.data(), (int)copyStride, true);
+      check_image_decode(ploadimage, ploadimage->is_ok() ? S_OK : E_FAIL,
+         "DeliverDecodedPixels", uWidth, uHeight, (UINT)copyStride);
+      return true;
+#endif
       WICRect rc;
 
       rc.X = 0;

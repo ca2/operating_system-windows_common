@@ -11,6 +11,10 @@
 #include "acme/_operating_system.h"
 #include <Wincodec.h>
 #include <intsafe.h>
+#if defined(__REACTOS__)
+#include <gdiplus.h>
+#include <memory>
+#endif
 
 ::color::color WICColor_color(WICColor color)
 {
@@ -47,6 +51,72 @@ namespace imaging_wic
    void image_context::_load_image(::pixmap * ppixmapCompose, ::pointer<::image::image_frame_array>& pframea, memory & memory)
    {
 
+#if defined(__REACTOS__)
+      // XP WIC may lack GIF metadata queries. GDI+ supplies composed frames,
+      // including transparency/disposal, without relying on those queries.
+      comptr<IStream> stream;
+      if (memory.size() <= 0 || (::u64)memory.size() > ULONG_MAX
+         || FAILED(::CreateStreamOnHGlobal(nullptr, TRUE, &stream)))
+         throw ::exception(error_resource);
+      ULONG written = 0;
+      if (FAILED(stream->Write(memory.data(), (ULONG)memory.size(), &written))
+         || written != memory.size())
+         throw ::exception(error_resource);
+      LARGE_INTEGER start{};
+      if (FAILED(stream->Seek(start, STREAM_SEEK_SET, nullptr)))
+         throw ::exception(error_resource);
+      // The stream outlives the decoder and all selected frames.
+      Gdiplus::Bitmap bitmap((IStream *)stream, FALSE);
+      const UINT width = bitmap.GetWidth();
+      const UINT height = bitmap.GetHeight();
+      if (bitmap.GetLastStatus() != Gdiplus::Ok || !width || !height
+         || width > INT_MAX / 4 || height > INT_MAX
+         || (::u64)width * height * 4 > INT_MAX)
+         throw ::exception(error_resource);
+      const UINT count = bitmap.GetFrameCount(&Gdiplus::FrameDimensionTime);
+      if (!count || count > INT_MAX)
+         throw ::exception(error_resource);
+      const UINT delaySize = bitmap.GetPropertyItemSize(0x5100);
+      std::unique_ptr<BYTE[]> delayStorage(delaySize ? new BYTE[delaySize] : nullptr);
+      auto delays = reinterpret_cast<Gdiplus::PropertyItem *>(delayStorage.get());
+      const bool hasDelays = delaySize >= sizeof(Gdiplus::PropertyItem)
+         && bitmap.GetPropertyItem(0x5100, delaySize, delays) == Gdiplus::Ok
+         && delays->type == 4 && delays->value
+         && delays->length / sizeof(ULONG) >= count;
+      pframea->m_size = {(int)width, (int)height};
+      pframea->m_sizeLogical = pframea->m_size;
+      pframea->set_size(count);
+      ppixmapCompose->create_as_descriptor(pframea->m_size);
+      pframea->m_ppixmap = ppixmapCompose;
+      for (UINT i = 0; i < count; ++i)
+      {
+         if (bitmap.SelectActiveFrame(&Gdiplus::FrameDimensionTime, i) != Gdiplus::Ok)
+            throw ::exception(error_resource);
+         Gdiplus::Rect rect(0, 0, width, height);
+         Gdiplus::BitmapData bits{};
+         if (bitmap.LockBits(&rect, Gdiplus::ImageLockModeRead,
+            PixelFormat32bppPARGB, &bits) != Gdiplus::Ok)
+            throw ::exception(error_resource);
+         struct unlock_scope
+         {
+            Gdiplus::Bitmap &bitmap;
+            Gdiplus::BitmapData &bits;
+            ~unlock_scope() { bitmap.UnlockBits(&bits); }
+         } unlock{bitmap, bits};
+         auto &frame = pframea->element_at(i);
+         defer_construct_newø(frame);
+         construct_newø(frame->m_ppixmap);
+         frame->m_ppixmap->create_from_data(pframea->m_size,
+            (::image32_t *)bits.Scan0, bits.Stride, true, ::e_flag_success);
+         frame->m_iFrame = i;
+         frame->m_rectangle = {0, 0, (int)width, (int)height};
+         const ::u64 delay = hasDelays ? (::u64)((ULONG *)delays->value)[i] * 10 : 0;
+         frame->m_time = millisecond_time(delay < 20 ? 90 : delay);
+         pframea->m_timeTotal += frame->m_time;
+      }
+      ppixmapCompose->copy_from(pframea->first_pointer()->m_ppixmap);
+      return;
+#endif
       HRESULT hr = E_FAIL;
 
       {
