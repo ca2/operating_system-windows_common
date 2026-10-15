@@ -669,11 +669,12 @@ namespace acme_windows_common
 
       }
 
-      filestatus.m_timeCreation = class ::time(as_file_time(information.ftCreationTime));
+      using time_type = class ::time;
+      filestatus.m_timeCreation = time_type(as_file_time(information.ftCreationTime));
 
-      filestatus.m_timeAccess = class ::time(as_file_time(information.ftLastAccessTime));
+      filestatus.m_timeAccess = time_type(as_file_time(information.ftLastAccessTime));
 
-      filestatus.m_timeModification = class ::time(as_file_time(information.ftLastWriteTime));
+      filestatus.m_timeModification = time_type(as_file_time(information.ftLastWriteTime));
 
       if (filestatus.m_timeCreation <= 0_s)
       {
@@ -730,7 +731,8 @@ namespace acme_windows_common
 
       m_file.get_file_time(nullptr, nullptr, &filetimeLastWrite);
 
-      return class ::time(as_file_time(filetimeLastWrite));
+      using time_type = class ::time;
+      return time_type(as_file_time(filetimeLastWrite));
 
    }
 
@@ -751,7 +753,9 @@ namespace acme_windows_common
 } // namespace acme_windows_common
 
 
+#ifndef _wcsdec
 #define _wcsdec(_cpc1, _cpc2) ((_cpc1)>=(_cpc2) ? nullptr : (_cpc2)-1)
+#endif
 
 #define _wcsinc(_pc)    ((_pc)+1)
 

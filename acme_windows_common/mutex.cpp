@@ -19,7 +19,11 @@ namespace acme_windows_common
       m_itask = -1;
 #endif
 
+#ifdef __REACTOS__
+      m_handle = ::CreateMutexW(nullptr, bInitiallyOwn, nullptr);
+#else
       m_handle = ::CreateMutexExW(nullptr, nullptr, bInitiallyOwn ? CREATE_MUTEX_INITIAL_OWNER : 0, MUTEX_ALL_ACCESS);
+#endif
 
       set_own_synchronization_flag();
 
@@ -41,10 +45,16 @@ namespace acme_windows_common
 
       const unichar * pwszName = pszName == nullptr ? nullptr : (const unichar *)wstrName;
 
+#ifdef __REACTOS__
+      m_handle = ::CreateMutexW(
+         psecurityattributes ? (LPSECURITY_ATTRIBUTES)psecurityattributes->get_os_security_attributes() : nullptr,
+         bInitiallyOwn, pwszName);
+#else
       m_handle = ::CreateMutexExW(
          (LPSECURITY_ATTRIBUTES)psecurityattributes->get_os_security_attributes(),
          pwszName,
          bInitiallyOwn ? CREATE_MUTEX_INITIAL_OWNER : 0, MUTEX_ALL_ACCESS);
+#endif
 
       auto lasterror = ::windows::get_last_error();
 

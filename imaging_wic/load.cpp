@@ -1,4 +1,5 @@
 #include "platform.h"
+#include <memory>
 #include "context.h"
 #include "acme/filesystem/file/file.h"
 #include "apex/parallelization/handler_manager.h"
@@ -226,7 +227,7 @@ namespace imaging_wic
 
       auto dwSize = (DWORD) size;
 
-      hr = piStream->InitializeFromMemory((WICInProcPointer) pszData, dwSize);
+      hr = piStream->InitializeFromMemory((BYTE *) pszData, dwSize);
       check_image_decode(ploadimage, hr, "InitializeFromMemory");
 
       comptr < IWICBitmapDecoder > piDecoder;
@@ -919,7 +920,14 @@ namespace imaging_wic
 
 #else
 
-      comptr < IStream > pstream = SHCreateMemStream(nullptr, NULL);
+#if defined(__REACTOS__)
+      comptr<IStream> pstream;
+      HRESULT streamResult = CreateStreamOnHGlobal(nullptr, TRUE, &pstream);
+      if (FAILED(streamResult))
+         throw ::exception(error_failed);
+#else
+      comptr < IStream > pstream = SHCreateMemStream(nullptr, 0);
+#endif
 
 #endif
 

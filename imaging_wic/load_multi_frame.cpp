@@ -10,6 +10,7 @@
 
 #include "acme/_operating_system.h"
 #include <Wincodec.h>
+#include <intsafe.h>
 
 ::color::color WICColor_color(WICColor color)
 {

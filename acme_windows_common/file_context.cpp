@@ -268,9 +268,10 @@ namespace acme_windows_common
       //auto pnode = psystem->node();
 
       // convert times as appropriate
-      rStatus.m_timeCreation = class ::time(as_file_time(findfile.m_finddata.ftCreationTime));
-      rStatus.m_timeAccess = class ::time(as_file_time(findfile.m_finddata.ftLastAccessTime));
-      rStatus.m_timeModification = class ::time(as_file_time(findfile.m_finddata.ftLastWriteTime));
+      using time_type = class ::time;
+      rStatus.m_timeCreation = time_type(as_file_time(findfile.m_finddata.ftCreationTime));
+      rStatus.m_timeAccess = time_type(as_file_time(findfile.m_finddata.ftLastAccessTime));
+      rStatus.m_timeModification = time_type(as_file_time(findfile.m_finddata.ftLastWriteTime));
 
       if (rStatus.m_timeCreation <= 0_s)
          rStatus.m_timeCreation = rStatus.m_timeModification;

@@ -107,6 +107,11 @@ namespace acme_windows_common
 
    bool exception_translator::attach()
    {
+#if !defined(_MSC_VER)
+      // GCC has no MSVC SEH-to-C++ translator runtime; do not claim attachment.
+      return false;
+#else
+
 
       if (!m_bSet)
       {
@@ -188,11 +193,17 @@ namespace acme_windows_common
 
       }
 
+   #endif
    }
 
 
    bool exception_translator::detach()
    {
+#if !defined(_MSC_VER)
+      // GCC has no MSVC SEH-to-C++ translator runtime; do not claim attachment.
+      return false;
+#else
+
 
       if (m_bSet)
       {
@@ -219,6 +230,7 @@ namespace acme_windows_common
 
       }
 
+   #endif
    }
 
 
@@ -277,7 +289,17 @@ namespace acme_windows_common
    //}
 
 
-   const_char_pointer exception_translator::_get_standard_exception_name(::u32 uiCode)
+   string exception_translator::_get_standard_exception_name(::u32 uiCode)
+   {
+      return _s_get_standard_exception_name(uiCode);
+   }
+
+   string exception_translator::_get_standard_exception_description(::u32 uiCode)
+   {
+      return _s_get_standard_exception_description(uiCode);
+   }
+
+   const_char_pointer exception_translator::_s_get_standard_exception_name(::u32 uiCode)
    {
 
       const_char_pointer pszName = nullptr;
@@ -321,7 +343,7 @@ namespace acme_windows_common
    }
 
 
-   const_char_pointer exception_translator::_get_standard_exception_description(::u32 uiCode)
+   const_char_pointer exception_translator::_s_get_standard_exception_description(::u32 uiCode)
    {
 
       const_char_pointer pszDescription = nullptr;

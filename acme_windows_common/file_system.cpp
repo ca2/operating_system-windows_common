@@ -12,6 +12,7 @@
 #include "acme/operating_system/shared_posix/c_errno.h"
 #include "acme/operating_system/shared_posix/stdio_file.h"
 #include <stdio.h>
+#include <share.h>
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/stat.h>

@@ -47,7 +47,14 @@ namespace imaging_wic
       CreateStreamOverRandomAccessStream(punknown,__interface_of(pstream));
 #else
 
-      comptr < IStream > pstream = SHCreateMemStream(nullptr, NULL);
+#if defined(__REACTOS__)
+      comptr<IStream> pstream;
+      HRESULT streamResult = CreateStreamOnHGlobal(nullptr, TRUE, &pstream);
+      if (FAILED(streamResult))
+         throw ::exception(error_failed);
+#else
+      comptr < IStream > pstream = SHCreateMemStream(nullptr, 0);
+#endif
 
 #endif
 

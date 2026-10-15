@@ -34,11 +34,11 @@ namespace acme_windows_common
       virtual void filter(::u32 uiCode, EXCEPTION_POINTERS* ppointers);
 
 
-      //virtual string _get_standard_exception_name(::u32 uiCode) override;
-      //virtual string _get_standard_exception_description(::u32 uiCode) override;
+      string _get_standard_exception_name(::u32 uiCode) override;
+      string _get_standard_exception_description(::u32 uiCode) override;
 
-      static const_char_pointer _get_standard_exception_name(::u32 uiCode);
-      static const_char_pointer _get_standard_exception_description(::u32 uiCode);
+      static const_char_pointer _s_get_standard_exception_name(::u32 uiCode);
+      static const_char_pointer _s_get_standard_exception_description(::u32 uiCode);
 
    };
 
