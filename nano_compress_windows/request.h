@@ -20,7 +20,7 @@ namespace windows
       {
 
 
-         class CLASS_DECL_NANO_HTTP_WININET request :
+         class CLASS_DECL_NANO_HTTP_WINHTTP request :
             public hinternet
          {
          public:
