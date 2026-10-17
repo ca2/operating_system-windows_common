@@ -35,6 +35,13 @@ namespace windows_common
 
             void compress::unzip(const ::file::path& pathFolder, const ::payload& payloadZip)
             {
+                // Declare the guard first so all COM owners are destroyed before COM teardown.
+                defer_throw_hresult(::CoInitialize(nullptr));
+                at_end_of_scope
+                {
+                    ::CoUninitialize();
+                };
+
                 comptr<IShellDispatch> pISD;
 
                 comptr<Folder> pZippedFile;
@@ -46,17 +53,11 @@ namespace windows_common
 
                 variant Options, OutFolder, InZipFile, Item;
 
-                CoInitialize(NULL);
 
                 directory_system()->create(pathFolder);
 
 
                 {
-                    // speccylad@twitch contribution recalled
-                    at_end_of_scope
-                    {
-                        CoUninitialize();
-                    };
 
                     HRESULT hr = pISD.CoCreateInstance(CLSID_Shell, NULL, CLSCTX_INPROC_SERVER);
 
@@ -65,8 +66,8 @@ namespace windows_common
                     bstring bstrZip(payloadZip.as_file_path().windows_path().c_str());
 
                     InZipFile.vt = VT_BSTR;
-                    InZipFile.bstrVal = bstrZip;
-                    auto hrOpenZip = pISD->NameSpace(InZipFile, &pZippedFile);
+                    InZipFile.bstrVal = bstrZip.detach();
+                    defer_throw_hresult(pISD->NameSpace(InZipFile, &pZippedFile));
                     if (!pZippedFile)
                     {
                         //pISD->Release();
@@ -76,8 +77,8 @@ namespace windows_common
                     bstring bstrFolder(pathFolder.windows_path().c_str());
 
                     OutFolder.vt = VT_BSTR;
-                    OutFolder.bstrVal = bstrFolder;
-                    pISD->NameSpace(OutFolder, &pDestination);
+                    OutFolder.bstrVal = bstrFolder.detach();
+                    defer_throw_hresult(pISD->NameSpace(OutFolder, &pDestination));
                     if (!pDestination)
                     {
                         //pZippedFile->Release();
@@ -85,7 +86,7 @@ namespace windows_common
                         throw ::exception(error_failed, "::acme_windows::common::node::_unzip_to_folder (1)");
                     }
 
-                    pZippedFile->Items(&pFilesInside);
+                    defer_throw_hresult(pZippedFile->Items(&pFilesInside));
                     if (!pFilesInside)
                     {
                         //pDestination->Release();
@@ -94,7 +95,7 @@ namespace windows_common
                         throw ::exception(error_failed, "::acme_windows::common::node::_unzip_to_folder (2)");
                     }
 
-                    pFilesInside->get_Count(&FilesCount);
+                    defer_throw_hresult(pFilesInside->get_Count(&FilesCount));
                     if (FilesCount < 1)
                     {
                         //pFilesInside->Release();
@@ -104,15 +105,15 @@ namespace windows_common
                         throw ::exception(error_failed, "::acme_windows::common::node::_unzip_to_folder (3)");
                     }
 
-                    pFilesInside->QueryInterface(IID_IDispatch, (void**)&pItem);
+                    defer_throw_hresult(pFilesInside->QueryInterface(IID_IDispatch, (void**)&pItem));
 
                     Item.vt = VT_DISPATCH;
-                    Item.pdispVal = pItem;
+                    Item.pdispVal = pItem.detach();
 
                     Options.vt = VT_I4;
                     Options.lVal = 1024 | 512 | 16 | 4; //http://msdn.microsoft.com/en-us/library/bb787866(VS.85).aspx
 
-                    bool retval = pDestination->CopyHere(Item, Options) == S_OK;
+                    defer_throw_hresult(pDestination->CopyHere(Item, Options));
 
                     //pItem->Release(); pItem = 0L;
                     //pFilesInside->Release(); pFilesInside = 0L;
