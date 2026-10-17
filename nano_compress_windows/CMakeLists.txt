@@ -77,3 +77,7 @@ endif ()
 #target_compile_definitions(${PROJECT_NAME} PRIVATE _${PROJECT_NAME}_project)
 target_compile_definitions(${PROJECT_NAME} PRIVATE UNICODE)
 target_compile_definitions(${PROJECT_NAME} PRIVATE _UNICODE)
+
+if(__REACTOS__)
+    target_link_libraries(${PROJECT_NAME} PRIVATE folder_zip)
+endif()

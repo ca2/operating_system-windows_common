@@ -15,6 +15,12 @@
 #include "acme/operating_system/windows_common/com/variant.h"
 #include "acme/operating_system/windows_common/com/hresult_exception.h"
 #include <Shldisp.h>
+#if defined(__REACTOS__)
+#include "folder_zip/_.h"
+#include "folder_zip/folder.h"
+#include "acme/filesystem/filesystem/file_system.h"
+#include "acme/filesystem/filesystem/listing.h"
+#endif
 
 
 namespace windows_common
@@ -35,6 +41,51 @@ namespace windows_common
 
             void compress::unzip(const ::file::path& pathFolder, const ::payload& payloadZip)
             {
+#if defined(__REACTOS__)
+                // Shell CopyHere is asynchronous and may display a Windows copy dialog.
+                // Extract synchronously so dependencies and launching see completed files.
+                ::pointer<::folder_zip::folder> archive;
+                construct_newø(archive);
+                archive->open_for_reading(file_system()->get_reader(payloadZip));
+                ::file::listing_base entries;
+                entries.m_bRecursive = true;
+                archive->enumerate(entries);
+                if (entries.is_empty())
+                    throw ::exception(error_failed, "The ZIP archive contains no entries.");
+                directory_system()->create(pathFolder);
+                information() << "Extracting ZIP synchronously: " << payloadZip.as_file_path();
+                for (const auto& entry : entries)
+                {
+                    ::string relative(entry);
+                    relative.replace_with("/", "\\");
+                    ::string_array_base parts;
+                    parts.explode("/", relative);
+                    if (relative.begins("/") || relative.contains(":") || parts.contains("..") || parts.contains("."))
+                        throw ::exception(error_failed, "Unsafe ZIP entry: " + relative);
+                    for (const auto& part : parts)
+                    {
+                        // Win32 normalizes trailing dots/spaces, including disguised '..' components.
+                        if (part.ends(".") || part.ends(" "))
+                            throw ::exception(error_failed, "Unsafe ZIP entry: " + relative);
+                    }
+                    const auto destination = pathFolder / relative;
+                    if (relative.ends("/") || (entry.is_folder() && !relative.case_insensitive_ends(".zip")))
+                    {
+                        directory_system()->create(destination);
+                        continue;
+                    }
+                    ::memory contents;
+                    archive->extract(contents, entry);
+                    if (contents.size() != entry.m_iSize)
+                        throw ::exception(error_failed, "Incomplete ZIP entry: " + relative);
+                    directory_system()->create(destination.folder());
+                    // Also create empty files such as operating_system_packages.txt.
+                    file_system()->put_block(destination, contents);
+                    file_system()->set_modification_time(destination, archive->get_modification_time());
+                }
+                information() << "ZIP extraction completed: " << entries.size() << " entries.";
+                return;
+#else
                 // Declare the guard first so all COM owners are destroyed before COM teardown.
                 defer_throw_hresult(::CoInitialize(nullptr));
                 at_end_of_scope
@@ -121,6 +172,7 @@ namespace windows_common
                     //pZippedFile->Release(); pZippedFile = 0L;
                     //pISD->Release(); pISD = 0L;
                 }
+#endif
             }
         } // namespace compress
     } // namespace nano
