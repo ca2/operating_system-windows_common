@@ -3795,7 +3795,7 @@ namespace draw2d_direct2d
 
       //m_pwritetextfont->get_text_metric(this, *pmetrics);
 
-      *pmetrics = m_pwritetextfont->m_textmetric2;
+      *pmetrics = m_pwritetextfont->text_metric(this);
 
       //memory_copy(pmetrics, &m_pwritetextfont->m_textmetric2, sizeof(m_pwritetextfont->m_textmetric2));
 
