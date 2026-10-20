@@ -107,12 +107,16 @@ namespace draw2d_direct2d_for_directx11
    }
 
 
-   ::dxgi_device_source * draw2d::_dxgi_device_source(::acme::windowing::window * pacmewindowingwindow)
+   //::dxgi_device_source * draw2d::_dxgi_device_source(::acme::windowing::window * pacmewindowingwindow)
+
+   ::dxgi_device_source * draw2d::_dxgi_device_source(::draw2d::domain * pdraw2ddomain)
    {
 
       ::cast < ::gpu::approach > pgpuapproach = m_papplication->get_gpu_approach();
 
-      ::cast < ::dxgi_device_source > pdxgidevicesource = pgpuapproach->get_gpu_device(pacmewindowingwindow);
+      //::cast < ::dxgi_device_source > pdxgidevicesource = pgpuapproach->get_gpu_device(pacmewindowingwindow);
+
+      ::cast < ::dxgi_device_source > pdxgidevicesource = pgpuapproach->get_gpu_device(pdraw2ddomain);
 
       return pdxgidevicesource;
 
@@ -146,13 +150,15 @@ namespace draw2d_direct2d_for_directx11
    }
 
 
-   ::draw2d::graphics_pointer draw2d::do_allocation_strategy(::acme::user::interaction * pacmeuserinteractionAffinity, ::image::image * pimage,
+   //::draw2d::graphics_pointer draw2d::do_allocation_strategy(::acme::user::interaction * pacmeuserinteractionAffinity, ::image::image * pimage,
+     //                                                           const ::i32_size & size)
+   ::draw2d::graphics_pointer draw2d::do_allocation_strategy(::draw2d::domain * pdraw2ddomain, ::image::image * pimage,
                                                                 const ::i32_size & size)
    {
 
       // The acquisition phase binds the caller's image. Taking a snapshot
       // here would manufacture a different target before that binding.
-      return create_memory_graphics(size, pacmeuserinteractionAffinity);
+      return create_memory_graphics(size, pdraw2ddomain);
 
    }
 

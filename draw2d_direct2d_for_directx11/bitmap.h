@@ -55,7 +55,7 @@ namespace draw2d_direct2d_for_directx11
 
       void update_bitmap_as_image_render_target(
          ::image::image * pimage,
-         ::acme::user::interaction * pacmeuserinteractionAffinity = nullptr,
+         ::draw2d::domain * pdraw2ddomain = nullptr,
          ::draw2d::graphics * pdraw2dgraphics = nullptr) override;
       virtual void create_gpu_bitmap(::draw2d::graphics * pdraw2dgraphics, const ::i32_size & size, ::pixmap * ppixmap = nullptr) override;
       virtual void CreateBitmap(::draw2d::graphics * pdraw2dgraphics, const ::i32_size& size, ::u32 nPlanes, ::u32 nBitcount, const void * lpBits, ::i32 stride) override;

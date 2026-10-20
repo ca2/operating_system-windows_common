@@ -158,7 +158,7 @@ namespace draw2d_directx11
       //virtual bool save_clip() override;
       //virtual bool restore_clip() override;
 
-      ::f64 get_dpix() override;
+      //::f32 get_density_dpi() override;
 
       //// Constructors
       //bool CreateDC(const ::scoped_string & scopedstrDriverName, const ::scoped_string & scopedstrDeviceName,
@@ -167,7 +167,8 @@ namespace draw2d_directx11
       //              const_char_pointer pszOutput, const void * lpInitData) override;
       //void create_compatible_graphics(::draw2d::graphics * pdraw2dgraphics) override;
       //void _create_memory_graphics(const ::i32_size& size = {}) override;
-      void _create_memory_graphics(const ::i32_size & size = {}, ::acme::user::interaction * pacmeuserinteractionAffinity = nullptr) override;
+      //void _create_memory_graphics(const ::i32_size & size = {}, ::acme::user::interaction * pacmeuserinteractionAffinity = nullptr) override;
+      void _create_memory_graphics(const ::i32_size & size = {}, ::draw2d::domain * pdraw2ddomain = nullptr) override;
       void defer_set_size(const ::i32_size& size = {}) override;
 
       //void create_offscreen_graphics_for_swap_chain_blitting(const ::i32_size& size) override;

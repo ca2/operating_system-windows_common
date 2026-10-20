@@ -903,7 +903,7 @@ namespace gpu_directx11
    }
 
 
-   void context::_create_context_directx11(::gpu::device * pgpudeviceParam, const ::gpu::enum_output & eoutput, ::acme::windowing::window * pwindow, ::draw2d::graphics * pdraw2dgraphics, const ::i32_point & pointInput, const ::i32_point & pointOutput, const ::i32_size & size, const ::i32_size & sizeRaw)
+   void context::_create_context_directx11(::gpu::device * pgpudeviceParam, const ::gpu::enum_output & eoutput, ::draw2d::domain * pdraw2ddomain, ::draw2d::graphics * pdraw2dgraphics, const ::i32_point & pointInput, const ::i32_point & pointOutput, const ::i32_size & size, const ::i32_size & sizeRaw)
    {
 
       ::cast < device > pgpudevice = pgpudeviceParam;
@@ -950,12 +950,12 @@ namespace gpu_directx11
    }
 
 
-   void context::_create_gpu_context(::gpu::device * pgpudevice, const ::gpu::enum_output & eoutput, const ::gpu::enum_scene & escene, ::acme::windowing::window * pacmewindowingwindow, ::draw2d::graphics * pdraw2dgraphics, const ::i32_point & pointInput, const ::i32_point & pointOutput, const ::i32_size & size, const ::i32_size & sizeRaw)
+   void context::_create_gpu_context(::gpu::device * pgpudevice, const ::gpu::enum_output & eoutput, const ::gpu::enum_scene & escene, ::draw2d::domain * pdraw2ddomain, ::draw2d::graphics * pdraw2dgraphics, const ::i32_point & pointInput, const ::i32_point & pointOutput, const ::i32_size & size, const ::i32_size & sizeRaw)
    {
 
-      ::gpu_gpu::context::_create_gpu_context(pgpudevice, eoutput, escene, pacmewindowingwindow, pdraw2dgraphics, pointInput, pointOutput, size, sizeRaw);
+      ::gpu_gpu::context::_create_gpu_context(pgpudevice, eoutput, escene, pdraw2ddomain, pdraw2dgraphics, pointInput, pointOutput, size, sizeRaw);
 
-      _create_context_directx11(pgpudevice, eoutput, pacmewindowingwindow, pdraw2dgraphics, pointInput, pointOutput, size, sizeRaw);
+      _create_context_directx11(pgpudevice, eoutput, pdraw2ddomain, pdraw2dgraphics, pointInput, pointOutput, size, sizeRaw);
 
    }
 
@@ -3090,7 +3090,7 @@ float4 main(float4 pos : SV_POSITION, float2 uv : TEXCOORD0) : SV_Target {
 
       auto pgpurendertarget = m_pgpurenderer->render_target();
 
-      auto pgpuwindowattachment = ::gpu::window_attachment::get(m_pacmeuserinteractionAffinity);
+      auto pgpuwindowattachment = ::gpu::window_attachment::get(m_puserinteractionTopic);
 
       auto iFrameIndex = pgpuwindowattachment->get_frame_index3();
 

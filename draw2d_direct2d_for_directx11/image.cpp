@@ -255,153 +255,161 @@ namespace draw2d_direct2d_for_directx11
 //   }
 
 
-   void image::update_as_gpu_render_target(const ::i32_size & sizeRaw, ::user::interaction * puserinteraction, ::draw2d::graphics * pdraw2dgraphics, ::enum_flag eflagCreate, ::i32 iStride, bool bPreserve, bool bTopDraw2d)
+   //void image::update_as_gpu_render_target(const ::i32_size & sizeRaw, ::user::interaction * puserinteraction, ::draw2d::graphics * pdraw2dgraphics, ::enum_flag eflagCreate, ::i32 iStride, bool bPreserve, bool bTopDraw2d)
+
+   //void image::update_as_gpu_render_target(const ::i32_size & sizeRaw, ::draw2d::domain * pdraw2ddomain, puserinteraction, ::draw2d::graphics * pdraw2dgraphics, ::enum_flag eflagCreate, ::i32 iStride, bool bPreserve, bool bTopDraw2d)
+   //{
+
+   //   if (!pdraw2ddomain)
+   //   {
+
+   //      throw ::exception(error_null_pointer, "draw2d::domain  is null");
+
+   //   }
+
+   //   m_pacmeuserinteractionAffinity = puserinteraction;
+
+   //   // if (m_pgputexture && m_pgraphics && m_pgputexture->size() == size)
+
+   //   destroy();
+
+   //   if (sizeRaw.is_empty())
+   //   {
+
+   //      return;
+
+   //   }
+
+   //   create_as_descriptor(sizeRaw, eflagCreate, iStride);
+
+   //   //auto pdraw2dbitmap = createø<::draw2d::bitmap>();
+
+   //   //::cast<::gpu::bitmap> pgpubitmap = pdraw2dbitmap;
+
+   //   //auto pacmewindowingwindow = m_pacmeuserinteractionMain->m_pacmewindowingwindow;
+
+   //   //auto pgpudevice = m_papplication->get_gpu_approach()->get_gpu_device(pacmewindowingwindow);
+
+   //   //_synchronous_lock synchronouslock(pgpudevice->synchronization());
+
+   //   //auto pixmap = this->pixmap::map();
+
+   //   auto pacmewindowingwindow = m_pacmeuserinteractionAffinity->acme_windowing_window();
+
+   //   auto pgpudevice = m_papplication->get_gpu_approach()->get_gpu_device(pacmewindowingwindow);
+
+   //   _synchronous_lock synchronouslock(pgpudevice->synchronization());
+
+   //   //if (!bTopDraw2d)
+   //   //{
+
+   //   //   auto pgpucontextlease = pgpudevice->acquire_gpu_context(
+   //   //      bTopDraw2d ? ::gpu::e_output_draw2d_bitmap : ::gpu::e_output_none, m_size);
+
+   //   //   pgpucontextlease->m_pacmeuserinteractionAffinity = m_pacmeuserinteractionAffinity;
+
+   //   //   //::pixmap_t pixmap;
+
+   //   //   //pixmap.m_pimage32Raw = (::image32_t *)pimage32;
+
+   //   //   //pixmap.m_pimage32 = (::image32_t *)pimage32;
+
+   //   //   //pixmap.m_size = size;
+
+   //   //   //pixmap.m_sizeRaw = size;
+
+   //   //   //pixmap.m_iScan = iScan;
+
+   //   //   //pgpubitmap->initialize_gpu_bitmap(pgpucontextlease, sizeRaw, pixmap);
+
+   //   //   pgpubitmap->initialize_gpu_bitmap(pgpucontextlease, sizeRaw, {});
+
+   //   //   m_pdraw2dbitmap = pgpubitmap;
+
+   //   //}
+
+   //   //auto pdraw2dgraphics = system()->draw2d()->allocate_graphics(m_pacmeuserinteractionAffinity);
+
+   //   //if (bTopDraw2d)
+   //   //{
+
+   //   //   pdraw2dgraphics->create_for_window_draw2d(puserinteraction, sizeRaw);
+
+   //   //}
+   //   //else
+   //   //{
+
+   //   //   pdraw2dgraphics->create_for_image(this);
+
+   //   //}
+
+   //   ////m_pgraphicsOwned = pdraw2dgraphics;
+
+   //   //pdraw2dgraphics->m_pimage = this;
+
+   //   //auto pgpucontext = pgpudevice->acquire_gpu_context(::gpu::e_output_none, size);
+
+   //   //::gpu::context_lock contextlock(pgpucontext);
+
+   //   //pixmap_t pixmap;
+
+   //   //pixmap.initialize_pixmap(size, (::image32_t*) pimage32, iScan);
+
+   //   //pgputexture->initialize_gpu_pimage(pgpucontext, size, pixmap);
+
+
+   //   auto pdraw2dbitmap = createø<::draw2d::bitmap>();
+
+   //   ::cast < ::draw2d_direct2d_for_directx11::bitmap > pdraw2ddirect2dfordirectx11bitmap = pdraw2dbitmap;
+
+   //   pdraw2ddirect2dfordirectx11bitmap->create_gpu_bitmap(pdraw2dgraphics, sizeRaw);
+
+   //   m_pdraw2dbitmap = pdraw2dbitmap;
+
+   //   //::cast <::draw2d_direct2d_for_directx11::graphics > pdraw2dgraphics = m_pgraphicsOwned;
+
+   //   //auto & pd2d1bitmap = pdraw2dbitmap->m_pdraw2dbitmap;
+
+   //   //pdraw2dgraphics->m_pdevicecontext->SetTarget(pd2d1bitmap);
+
+   //   //auto estatus = 
+   //   
+   //   //create_ex(size, nullptr, 0, eflagCreate, iStride, bPreserve);
+
+   //   //if (!estatus)
+   //   //{
+
+   //   //   return estatus;
+
+   //   //}
+
+   //   //return estatus;
+
+   //   m_eflagElement = eflagCreate;
+
+   //   m_estatus = ::success;
+
+   //   set_ok_flag();
+
+   //   //      m_pgputexture->write_pixels(size, pimage32, iScan);
+
+
+   //}
+
+
+   //void image::update_as_render_target(const ::i32_size & sizeRaw, ::user::interaction * puserinteraction, ::draw2d::graphics * pdraw2dgraphics, ::enum_flag eflagCreate, ::i32 iStride, bool bPreserve, bool bTopDraw2d)
+   //{
+
+   //   ::draw2d_direct2d::image::update_as_render_target(sizeRaw, puserinteraction, pdraw2dgraphics, eflagCreate, iStride, bPreserve, bTopDraw2d);
+
+   //}
+
+   void image::update_as_render_target(const ::i32_size & sizeRaw, ::draw2d::domain * pdraw2ddomain, ::draw2d::graphics * pdraw2dgraphics, ::enum_flag eflagCreate, ::i32 iStride, bool bPreserve, bool bTopDraw2d)
    {
 
-      if (!puserinteraction)
-      {
-
-         throw ::exception(error_null_pointer, "user::interaction is null");
-
-      }
-
-      m_pacmeuserinteractionAffinity = puserinteraction;
-
-      // if (m_pgputexture && m_pgraphics && m_pgputexture->size() == size)
-
-      destroy();
-
-      if (sizeRaw.is_empty())
-      {
-
-         return;
-
-      }
-
-      create_as_descriptor(sizeRaw, eflagCreate, iStride);
-
-      //auto pdraw2dbitmap = createø<::draw2d::bitmap>();
-
-      //::cast<::gpu::bitmap> pgpubitmap = pdraw2dbitmap;
-
-      //auto pacmewindowingwindow = m_pacmeuserinteractionMain->m_pacmewindowingwindow;
-
-      //auto pgpudevice = m_papplication->get_gpu_approach()->get_gpu_device(pacmewindowingwindow);
-
-      //_synchronous_lock synchronouslock(pgpudevice->synchronization());
-
-      //auto pixmap = this->pixmap::map();
-
-      auto pacmewindowingwindow = m_pacmeuserinteractionAffinity->acme_windowing_window();
-
-      auto pgpudevice = m_papplication->get_gpu_approach()->get_gpu_device(pacmewindowingwindow);
-
-      _synchronous_lock synchronouslock(pgpudevice->synchronization());
-
-      //if (!bTopDraw2d)
-      //{
-
-      //   auto pgpucontextlease = pgpudevice->acquire_gpu_context(
-      //      bTopDraw2d ? ::gpu::e_output_draw2d_bitmap : ::gpu::e_output_none, m_size);
-
-      //   pgpucontextlease->m_pacmeuserinteractionAffinity = m_pacmeuserinteractionAffinity;
-
-      //   //::pixmap_t pixmap;
-
-      //   //pixmap.m_pimage32Raw = (::image32_t *)pimage32;
-
-      //   //pixmap.m_pimage32 = (::image32_t *)pimage32;
-
-      //   //pixmap.m_size = size;
-
-      //   //pixmap.m_sizeRaw = size;
-
-      //   //pixmap.m_iScan = iScan;
-
-      //   //pgpubitmap->initialize_gpu_bitmap(pgpucontextlease, sizeRaw, pixmap);
-
-      //   pgpubitmap->initialize_gpu_bitmap(pgpucontextlease, sizeRaw, {});
-
-      //   m_pdraw2dbitmap = pgpubitmap;
-
-      //}
-
-      //auto pdraw2dgraphics = system()->draw2d()->allocate_graphics(m_pacmeuserinteractionAffinity);
-
-      //if (bTopDraw2d)
-      //{
-
-      //   pdraw2dgraphics->create_for_window_draw2d(puserinteraction, sizeRaw);
-
-      //}
-      //else
-      //{
-
-      //   pdraw2dgraphics->create_for_image(this);
-
-      //}
-
-      ////m_pgraphicsOwned = pdraw2dgraphics;
-
-      //pdraw2dgraphics->m_pimage = this;
-
-      //auto pgpucontext = pgpudevice->acquire_gpu_context(::gpu::e_output_none, size);
-
-      //::gpu::context_lock contextlock(pgpucontext);
-
-      //pixmap_t pixmap;
-
-      //pixmap.initialize_pixmap(size, (::image32_t*) pimage32, iScan);
-
-      //pgputexture->initialize_gpu_pimage(pgpucontext, size, pixmap);
-
-
-      auto pdraw2dbitmap = createø<::draw2d::bitmap>();
-
-      ::cast < ::draw2d_direct2d_for_directx11::bitmap > pdraw2ddirect2dfordirectx11bitmap = pdraw2dbitmap;
-
-      pdraw2ddirect2dfordirectx11bitmap->create_gpu_bitmap(pdraw2dgraphics, sizeRaw);
-
-      m_pdraw2dbitmap = pdraw2dbitmap;
-
-      //::cast <::draw2d_direct2d_for_directx11::graphics > pdraw2dgraphics = m_pgraphicsOwned;
-
-      //auto & pd2d1bitmap = pdraw2dbitmap->m_pdraw2dbitmap;
-
-      //pdraw2dgraphics->m_pdevicecontext->SetTarget(pd2d1bitmap);
-
-      //auto estatus = 
-      
-      //create_ex(size, nullptr, 0, eflagCreate, iStride, bPreserve);
-
-      //if (!estatus)
-      //{
-
-      //   return estatus;
-
-      //}
-
-      //return estatus;
-
-      m_eflagElement = eflagCreate;
-
-      m_estatus = ::success;
-
-      set_ok_flag();
-
-      //      m_pgputexture->write_pixels(size, pimage32, iScan);
-
+      ::draw2d_direct2d::image::update_as_render_target(sizeRaw, pdraw2ddomain, pdraw2dgraphics, eflagCreate, iStride, bPreserve, bTopDraw2d);
 
    }
-
-
-   void image::update_as_render_target(const ::i32_size & sizeRaw, ::user::interaction * puserinteraction, ::draw2d::graphics * pdraw2dgraphics, ::enum_flag eflagCreate, ::i32 iStride, bool bPreserve, bool bTopDraw2d)
-   {
-
-      ::draw2d_direct2d::image::update_as_render_target(sizeRaw, puserinteraction, pdraw2dgraphics, eflagCreate, iStride, bPreserve, bTopDraw2d);
-
-   }
-
 
    //void image::initialize(const ::i32_size & size, ::image32_t * pimage32, ::i32 iScan, ::enum_flag eflagCreate)
    //{
@@ -444,7 +452,7 @@ namespace draw2d_direct2d_for_directx11
 
       ::i32_size size = pdraw2dbitmap->size();
 
-      create_as_descriptor(size);
+      create_as_descriptor(size, pdraw2dgraphics->draw2d_domain());
 
       //if (!create(size))
       //{
@@ -551,7 +559,7 @@ namespace draw2d_direct2d_for_directx11
 
       //auto estatus = 
       
-      create_as_descriptor({ cx, cy });
+      create_as_descriptor({ cx, cy }, draw2d_domain());
 
       //if (!estatus)
       //{
@@ -562,7 +570,7 @@ namespace draw2d_direct2d_for_directx11
       //}
 
       // White blend image
-      auto pimage1 = ::particle::image()->create_image({cx,  cy});
+      auto pimage1 = ::particle::image()->create_image({cx,  cy}, draw2d_domain());
 
       {
 
@@ -581,7 +589,7 @@ namespace draw2d_direct2d_for_directx11
       }
 
       // Black blend image
-      auto pimage2 = ::particle::image()->create_image({cx,  cy});
+      auto pimage2 = ::particle::image()->create_image({cx,  cy}, draw2d_domain());
 
       {
 
@@ -612,7 +620,7 @@ namespace draw2d_direct2d_for_directx11
 //#endif
 
       // Mask image
-      auto pimageM = ::particle::image()->create_image({cx,  cy});
+      auto pimageM = ::particle::image()->create_image({cx,  cy}, draw2d_domain());
 
       {
 

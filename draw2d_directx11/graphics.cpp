@@ -84,7 +84,7 @@ namespace draw2d_directx11
 
       //clear_os_data();
 
-      m_pthis = this;
+      //pthis = this;//
 
       defer_create_synchronization();
 
@@ -187,11 +187,11 @@ namespace draw2d_directx11
 
       auto pgpuapproach = m_papplication->get_gpu_approach();
 
-      auto pgpudevice = pgpuapproach->get_gpu_device(m_pacmeuserinteractionAffinity->m_pacmewindowingwindow);
+      auto pgpudevice = pgpuapproach->get_gpu_device(puserinteraction->draw2d_domain());
 
       //m_pdirectx11 = ::directx11::from_gpu_device(pgpudevice);
 
-      auto pgpuwindowattachment = ::gpu::window_attachment::get(m_pacmeuserinteractionAffinity);
+      auto pgpuwindowattachment = ::gpu::window_attachment::get(m_puserinteractionTopic);
 
       auto pgpucontextNew = pgpuwindowattachment->draw2d_context();
 
@@ -266,15 +266,15 @@ namespace draw2d_directx11
 
 
    //void graphics::_create_memory_graphics(const ::i32_size & size)
-   void graphics::_create_memory_graphics(const ::i32_size & size, ::acme::user::interaction * pacmeuserinteractionAffinity)
+   void graphics::_create_memory_graphics(const ::i32_size & size, ::draw2d::domain * pdraw2ddomain)
    {
 
-      if (pacmeuserinteractionAffinity)
-      {
+      //if (pacmeuserinteractionAffinity)
+      //{
 
-         m_pacmeuserinteractionAffinity = pacmeuserinteractionAffinity;
+      //   m_pacmeuserinteractionAffinity = pacmeuserinteractionAffinity;
 
-      }
+      //}
 
       auto pcontext = gpu_context();
 
@@ -301,7 +301,7 @@ namespace draw2d_directx11
 
       }
 
-      ::cast < ::user::interaction> puserinteraction = m_pacmeuserinteractionAffinity;
+      ::cast < ::user::interaction> puserinteraction = m_puserinteractionTopic;
 
       if (::is_null(puserinteraction))
       {
@@ -316,7 +316,7 @@ namespace draw2d_directx11
 
       auto pgpuapproach = m_papplication->get_gpu_approach();
 
-      auto pgpudevice = pgpuapproach->get_gpu_device(pwindow);
+      auto pgpudevice = pgpuapproach->get_gpu_device(draw2d_domain());
 
       auto pgpucontextNew = pgpudevice->allocate_gpu_context();
 
@@ -327,7 +327,7 @@ namespace draw2d_directx11
       pgpucontextNew->create_draw2d_gpu_context(
          //;; ::gpu::e_output_gpu_buffer,
          pgpudevice,
-         m_pacmeuserinteractionAffinity->acme_windowing_window(),
+         draw2d_domain(),
          this,
          //rectanglePlacement,
          {},
@@ -853,15 +853,15 @@ namespace draw2d_directx11
             //else
             //{
 
-            auto pimage1 = image()->create_image(rectangleBlt.size());
+            auto pimage1 = image()->create_image(rectangleBlt.size(), draw2d_domain());
 
             auto pdraw2dgraphicsImage1 = pimage1->acquire_graphics();
 
             pdraw2dgraphicsImage1->set_alpha_mode(::draw2d::e_alpha_mode_set);
 
-            auto pimage = imagedrawing.image();
+            //auto pimage = imagedrawing.image();
 
-            pimage1->_draw_raw(::f64_rectangle(rectangleBlt.size()), pimage, ::f64_point(xSrc, ySrc));
+            pdraw2dgraphicsImage1->draw(imagedrawing);
 
             //if (!pimage1->_draw_raw(::f64_rectangle(rectangleBlt.size()), pimage , ::f64_point(xSrc, ySrc)))
             //{
@@ -1858,76 +1858,7 @@ namespace draw2d_directx11
    void graphics::fill_ellipse(const ::f64_rectangle & rectangle)
    {
 
-      if (m_pdraw2dbrush.is_null())
-      {
-
-         throw ::exception(error_null_pointer);
-
-      }
-
-      if (m_pdraw2dbrush->m_ebrush == ::draw2d::e_brush_box_gradient)
-      {
-
-         //comptr < ID2D1PathGeometry1 > pgeometry;
-
-         //HRESULT hr = m_pdirectx11->d2d1_factory1()->CreatePathGeometry(&pgeometry);
-
-         //if (FAILED(hr))
-         //{
-
-         //   throw ::hresult_exception(hr);
-
-         //}
-
-         //comptr < ID2D1GeometrySink > psink;
-
-         //pgeometry->Open(&psink)
-
-         //if (FAILED(hr))
-         //{
-
-         //   throw ::hresult_exception(hr);
-
-         //}
-
-         //psink->SetFillMode(D2D1_FILL_MODE_WINDING);
-         //psink->BeginFigure(D2D1::Point2F(20, 50), D2D1_FIGURE_BEGIN_FILLED);
-         //psink->AddLine(D2D1::Point2F(130, 50));
-         //psink->AddLine(D2D1::Point2F(20, 130));
-         //psink->AddLine(D2D1::Point2F(80, 0));
-         //psink->AddLine(D2D1::Point2F(130, 130));
-         //psink->EndFigure(D2D1_FIGURE_END_CLOSED);
-
-         //   hr = pSink->Close();
-         //}
-
-         //SafeRelease(&pSink);
-
-      }
-
-      //auto pdraw2dbrush = m_pdraw2dbrush->get_os_data < ID2D1Brush * >(this);
-
-      //if (!pdraw2dbrush)
-      //{
-
-      //   //return false;
-
-      //   throw ::exception(error_null_pointer);
-
-      //}
-
-      //D2D1_ELLIPSE ellipse;
-
-      //ellipse.point.x = (::f32)(rectangle.right + rectangle.left) / 2.f;
-      //ellipse.point.y = (::f32)(rectangle.bottom + rectangle.top) / 2.f;
-      //ellipse.radiusX = (::f32)(rectangle.right - rectangle.left) / 2.f;
-      //ellipse.radiusY = (::f32)(rectangle.bottom - rectangle.top) / 2.f;
-
-      //defer_primitive_blend();
-
-      //m_pdevicecontext->FillEllipse(&ellipse, pdraw2dbrush);
-
-      //return true;
+      ::gpu::graphics::fill_ellipse(rectangle);
 
    }
 
@@ -2096,47 +2027,7 @@ namespace draw2d_directx11
    void graphics::fill_polygon(const ::f64_point * ppoints, ::collection::count count)
    {
 
-      if (count < 3)
-      {
-
-         //return false;
-
-         throw ::exception(error_invalid_empty_argument);
-
-      }
-
-      //comptr<ID2D1PathGeometry> pgeometry;
-
-      //HRESULT hr = m_pdirectx11->d2d1_factory1()->CreatePathGeometry(&pgeometry);
-
-      //{
-
-      //   comptr<ID2D1GeometrySink> psink;
-
-      //   pgeometry->Open(&psink);
-
-      //   psink->SetFillMode(D2D1_FILL_MODE_WINDING);
-
-      //   psink->BeginFigure(D2D1::Point2F((FLOAT)ppoints->x, (FLOAT)ppoints->y), D2D1_FIGURE_BEGIN_FILLED);
-
-      //   for (::collection::index i = 1; i < count; i++)
-      //   {
-
-      //      psink->AddLine({ (FLOAT)ppoints[i].x, (FLOAT)ppoints[i].y });
-
-      //   }
-
-      //   psink->EndFigure(D2D1_FIGURE_END_CLOSED);
-
-      //   psink->Close();
-
-      //}
-
-      ////bool bOk = 
-
-      //fill(pgeometry, m_pdraw2dbrush);
-
-      //return bOk;
+      ::gpu::graphics::fill_polygon(ppoints, count);
 
    }
 
@@ -2250,46 +2141,7 @@ namespace draw2d_directx11
    void graphics::fill_rectangle(const ::f64_rectangle & rectangleParam, ::draw2d::brush * pdraw2dbrush)
    {
 
-      if (pdraw2dbrush == nullptr)
-      {
-
-         throw ::exception(error_null_pointer);
-
-      }
-
-      if (pdraw2dbrush->m_ebrush == ::draw2d::e_brush_null)
-      {
-
-         return;
-
-      }
-
-      if (pdraw2dbrush->m_ebrush == ::draw2d::e_brush_box_gradient)
-      {
-
-
-
-         return;
-
-      }
-
-
-      ::color::color color = pdraw2dbrush->m_color;
-
-
-      fill_rectangle(rectangleParam, color);
-
-      //D2D1_RECT_F rectangle;
-
-      //copy(&rectangle, &rectangleParam);
-
-      //::draw2d_directx11::brush * pbrush2 = dynamic_cast <::draw2d_directx11::brush *> (pdraw2dbrush);
-
-      //defer_primitive_blend();
-
-      //m_pd2d1rendertarget->FillRectangle(rectangle, pbrush2->get_os_data < ID2D1Brush * >(this));
-
-      //return true;
+      ::gpu::graphics::fill_rectangle(rectangleParam, pdraw2dbrush);
 
    }
 
@@ -2654,7 +2506,7 @@ namespace draw2d_directx11
 
                   //defer_constructø(pimageTarget);
 
-                  pimageTarget->create_as_descriptor(m_pimageTarget->size());
+                  pimageTarget->create_as_descriptor(m_pimageTarget->size(), draw2d_domain());
 
                   auto pdraw2dgraphicsImageTarget = pimageTarget->acquire_graphics();
 
@@ -7130,12 +6982,12 @@ namespace draw2d_directx11
    }
 
 
-   ::f64 graphics::get_dpix()
-   {
+   //::f64 graphics::get_dpix()
+   //{
 
-      return 72.0;
+   //   return 72.0;
 
-   }
+   //}
 
 
    //void graphics::destroy()
@@ -7505,67 +7357,7 @@ namespace draw2d_directx11
    void graphics::fill(::draw2d::path * pdraw2dpath)
    {
 
-      fill(pdraw2dpath, m_pdraw2dbrush);
-
-      //::pointer<class path> pdraw2dpath = ppathParam;
-
-      //if (!pdraw2dpath)
-      //{
-
-      //   throw ::exception(error_null_pointer);
-
-      //}
-
-      //if (pdraw2dpath->is_empty())
-      //{
-
-      //   return;
-
-      //}
-
-      //__stack(m_bOutline, false);
-
-      //ID2D1PathGeometry * pgeometry = pdraw2dpath->get_os_data < ID2D1PathGeometry * >(this, path_filled);
-
-      //if (pgeometry != nullptr)
-      //{
-
-      //   if (pdraw2dpath && pdraw2dpath->m_bUseGeometryRealization)
-      //   {
-
-      //      auto prealization = pdraw2dpath->_get_filled_geometry_realization(this);
-
-      //      fill(prealization, m_pdraw2dbrush);
-
-      //      return;
-
-      //   }
-
-      //   defer_primitive_blend();
-
-      //   fill(pgeometry, m_pdraw2dbrush);
-
-      //}
-
-      ////for (::collection::index i = 0; i < pdraw2dpath->m_shapea.get_size(); i++)
-      ////{
-
-      ////   if (pdraw2dpath->m_shapea[i]->eshape() == ::e_shape_text_out)
-      ////   {
-
-      ////      fill(pdraw2dpath->m_shapea[i]->shape < ::write_text::text_out >(), m_pdraw2dbrush);
-
-      ////   }
-      ////   else if (pdraw2dpath->m_shapea[i]->eshape() == ::e_shape_draw_text)
-      ////   {
-
-      ////      fill(pdraw2dpath->m_shapea[i]->shape < ::write_text::draw_text >(), m_pdraw2dbrush);
-
-      ////   }
-
-      ////}
-
-      ////return true;
+      ::gpu::graphics::fill(pdraw2dpath);
 
    }
 
@@ -7615,84 +7407,7 @@ namespace draw2d_directx11
    void graphics::fill(::draw2d::path * ppathParam, ::draw2d::brush * pdraw2dbrush)
    {
 
-      ::pointer<class path> pdraw2dpath = ppathParam;
-
-      if (!pdraw2dpath)
-      {
-
-         throw ::exception(error_null_pointer);
-
-      }
-
-      if (pdraw2dpath->is_empty())
-      {
-
-         return;
-
-      }
-
-
-
-      //ID2D1Brush * pdraw2dbrush = pbrushParam->get_os_data < ID2D1Brush * >(this);
-
-      //if (pdraw2dbrush == nullptr)
-      //{
-
-      //   //return false;
-
-      //   throw ::exception(error_null_pointer);
-
-      //}
-
-      scoped_restore(m_bOutline);
-
-      m_bOutline = false;
-
-      //ID2D1PathGeometry * pgeometry = pdraw2dpath->get_os_data < ID2D1PathGeometry * >(this, path_filled);
-
-      //if (pgeometry != nullptr)
-      //{
-
-      //   if (pdraw2dpath && pdraw2dpath->m_bUseGeometryRealization && pdraw2dbrush->m_ebrush != ::draw2d::e_brush_box_gradient)
-      //   {
-
-      //      auto prealization = pdraw2dpath->_get_filled_geometry_realization(this);
-
-      //      fill(prealization, m_pdraw2dbrush);
-
-      //      return;
-
-      //   }
-
-
-
-      //   defer_primitive_blend();
-
-      //   fill(pgeometry, pdraw2dbrush);
-
-      //   //m_pd2d1rendertarget->FillGeometry(pgeometry, pdraw2dbrush);
-
-      //}
-
-      //for (::collection::index i = 0; i < pdraw2dpath->m_shapea.get_size(); i++)
-      //{
-
-      //   if (pdraw2dpath->m_shapea[i]->eshape() == ::e_shape_text_out)
-      //   {
-
-      //      fill(pdraw2dpath->m_shapea[i]->shape < ::write_text::text_out >(), pbrushParam);
-
-      //   }
-      //   else if (pdraw2dpath->m_shapea[i]->eshape() == ::e_shape_draw_text)
-      //   {
-
-      //      fill(pdraw2dpath->m_shapea[i]->shape < ::write_text::draw_text >(), pbrushParam);
-
-      //   }
-
-      //}
-
-      //return true;
+      ::gpu::graphics::fill(ppathParam, pdraw2dbrush);
 
    }
 

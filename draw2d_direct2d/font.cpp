@@ -84,18 +84,7 @@ namespace draw2d_direct2d
 
       //}
 
-      if (m_fontsize.eunit() == ::e_unit_point)
-      {
-
-         fFontSize = (::f32)pdraw2dgraphics->m_puserinteractionTopic->get_density_dpi_for_window();
-
-      }
-      else
-      {
-
-         fFontSize = (::f32)pdraw2dgraphics->m_puserinteractionTopic->scaler();
-
-      }
+      fFontSize = get_pixel_font_height(pdraw2dgraphics);
 
       if (::is_set(pdraw2dgraphics))
       {

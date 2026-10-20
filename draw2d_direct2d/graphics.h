@@ -164,7 +164,7 @@ namespace draw2d_direct2d
       //virtual bool save_clip() override;
       //virtual bool restore_clip() override;
 
-      ::f64 get_dpix() override;
+      //::f64 get_dpix() override;
 
       //// Constructors
       //bool CreateDC(const ::scoped_string & scopedstrDriverName, const ::scoped_string & scopedstrDeviceName,

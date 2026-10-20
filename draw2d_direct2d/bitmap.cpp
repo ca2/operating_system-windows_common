@@ -1036,7 +1036,9 @@ namespace draw2d_direct2d
 
             synchronous_lock synchronouslock(pdraw2ddirect2d->default_device_context_mutex());
 
-            auto pd2d1devicecontextDefault = pdraw2ddirect2d->default_d2d1_device_context(draw2d()->main_draw2d_domain());
+            auto pmaindraw2ddomain = pdraw2ddirect2d->main_draw2d_domain();
+
+            auto pd2d1devicecontextDefault = pdraw2ddirect2d->default_d2d1_device_context(pmaindraw2ddomain);
 
             auto hrCreateMapBitmap = pd2d1devicecontextDefault->CreateBitmap(
                 sizeuThis,

@@ -34,7 +34,7 @@ namespace write_text_directx11
 
       auto papproach = m_papplication->get_gpu_approach();
 
-      auto pdevice = papproach->get_gpu_device(m_papplication->main_acme_user_interaction()->m_pacmewindowingwindow);
+      auto pdevice = papproach->get_gpu_device(m_papplication->main_acme_user_interaction()->user_interaction()->draw2d_domain());
 
       auto pdirectx11 = ::directx11::from_gpu_device(pdevice);
 

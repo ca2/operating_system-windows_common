@@ -34,13 +34,15 @@ namespace draw2d_direct2d_for_directx11
 
    void bitmap::update_bitmap_as_image_render_target(
       ::image::image * pimage,
-      ::acme::user::interaction * pacmeuserinteractionAffinity,
+      //::acme::user::interaction * pacmeuserinteractionAffinity,
+      ::draw2d::domain * pdraw2ddomain,
       ::draw2d::graphics * pdraw2dgraphics)
    {
 
       ::draw2d::bitmap::update_bitmap_as_image_render_target(
          pimage,
-         pacmeuserinteractionAffinity,
+         //pacmeuserinteractionAffinity,
+         pdraw2ddomain,
          pdraw2dgraphics);
 
    }

@@ -216,7 +216,7 @@ namespace draw2d_directx11
 
       ::i32_size size = pdraw2dbitmap->size();
 
-      create_as_descriptor(size);
+      create_as_descriptor(size, pdraw2dgraphics->draw2d_domain());
 
       //if (!create(size))
       //{
@@ -323,7 +323,7 @@ namespace draw2d_directx11
 
       //auto estatus = 
       
-      create_as_descriptor({ cx, cy });
+      create_as_descriptor({ cx, cy }, draw2d_domain());
 
       //if (!estatus)
       //{
@@ -334,7 +334,7 @@ namespace draw2d_directx11
       //}
 
       // White blend image
-      auto pimage1 = ::particle::image()->create_image({cx,  cy});
+      auto pimage1 = ::particle::image()->create_image({cx,  cy}, draw2d_domain());
 
       {
 
@@ -353,7 +353,7 @@ namespace draw2d_directx11
       }
 
       // Black blend image
-      auto pimage2 = ::particle::image()->create_image({cx,  cy});
+      auto pimage2 = ::particle::image()->create_image({cx,  cy}, draw2d_domain());
 
       {
 
@@ -382,7 +382,7 @@ namespace draw2d_directx11
 //#endif
 
       // Mask image
-      auto pimageM = ::particle::image()->create_image({cx,  cy});
+      auto pimageM = ::particle::image()->create_image({cx,  cy}, draw2d_domain());
 
       {
 

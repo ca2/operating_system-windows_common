@@ -85,18 +85,7 @@ namespace draw2d_directx11
 
       //}
 
-      if (m_fontsize.eunit() == ::e_unit_point)
-      {
-
-         fFontSize = (::f32)pdraw2dgraphics->m_pacmeuserinteractionAffinity->point_dpi(m_fontsize.as_f64());
-
-      }
-      else
-      {
-
-         fFontSize = (::f32)pdraw2dgraphics->m_pacmeuserinteractionAffinity->dpiy(m_fontsize.as_f64());
-
-      }
+      fFontSize = get_pixel_font_height(pdraw2dgraphics);
 
       if (::is_set(pdraw2dgraphics))
       {
@@ -176,9 +165,9 @@ namespace draw2d_directx11
    void font::create_text_metrics(::draw2d::graphics * pdraw2dgraphics)
    {
 
-      WCHAR name[256];
-      ::u32 findex;
-      BOOL exists;
+      //WCHAR name[256];
+      //::u32 findex;
+      //BOOL exists;
 
       //if (::is_null(m_pformat))
       //{

@@ -232,7 +232,7 @@ namespace gpu_directx11
 
          }
 
-         write_pixels(false, pixmap.data(), pixmap.size(), pixmap.m_iScan, 4, {});
+         write_pixels(false, pixmap.data(), pixmap.size(), pixmap.m_iScan, 4, {}, true);
          return;
 
       }
@@ -983,7 +983,7 @@ namespace gpu_directx11
    }
 
 
-   void texture::set_pixels(bool bSync, const ::i32_rectangle &rectangle, const void *data)
+   void texture::set_pixels(bool bSync, const ::i32_rectangle &rectangle, const void *data, bool bTopDown)
    {
 
       // D3D11_MAPPED_SUBRESOURCE mapped{};
@@ -1366,7 +1366,8 @@ namespace gpu_directx11
       const ::i32_size & size,
       ::i32 iScan,
       ::i32 iBytesPerPixel,
-      const ::i32_point & point)
+      const ::i32_point & point,
+      bool bTopDown)
    {
 
       if (!pData)

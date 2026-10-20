@@ -10,6 +10,7 @@
 #include "internal_font.h"
 #include "graphics.h"
 #include "draw2d.h"
+#include "aura/graphics/draw2d/domain.h"
 #include "directx11/directx11.h"
 #include "bred/gpu/command_buffer.h"
 #include "bred/gpu/frame_ephemeral.h"
@@ -20,6 +21,8 @@ CLASS_DECL_AURA void init_draw2d_mutex();
 
 __FACTORY_EXPORT void draw2d_directx11_factory(::factory::factory* pfactory)
 {
+
+   pfactory->add_factory_item < ::draw2d::domain, ::acme::draw2d::domain >();
 
    pfactory->add_factory_item < ::draw2d_directx11::image, ::image::image >();
    pfactory->add_factory_item < ::draw2d_directx11::bitmap, ::draw2d::bitmap >();

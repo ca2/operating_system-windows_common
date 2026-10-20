@@ -84,7 +84,7 @@ namespace draw2d_direct2d_for_directx11
 
       //clear_os_data();
 
-      m_pthis = this;
+      // m_pthis = this;
 
       defer_create_synchronization();
 
@@ -187,15 +187,15 @@ namespace draw2d_direct2d_for_directx11
 
       auto pgpuapproach = m_papplication->get_gpu_approach();
 
-      auto pgpudevice = pgpuapproach->get_gpu_device(m_pacmeuserinteractionAffinity->m_pacmewindowingwindow);
+      auto pgpudevice = pgpuapproach->get_gpu_device(puserinteraction->draw2d_domain());
 
       //m_pdirect2d_ = ::direct2d::from_gpu_device(pgpudevice);
 
       //auto pdirect2d = ::direct2d::get();
 
-      auto pgpuwindowattachment = ::gpu::window_attachment::get(m_pacmeuserinteractionAffinity);
+      auto pgpuwindowattachment = ::gpu::window_attachment::get(puserinteraction);
 
-      auto pacmewindowingwindow = m_pacmeuserinteractionAffinity->m_pacmewindowingwindow;
+      auto pacmewindowingwindow = puserinteraction->m_pacmewindowingwindow;
 
       auto rectangleWindow = pacmewindowingwindow->get_window_rectangle();
 
@@ -211,8 +211,7 @@ namespace draw2d_direct2d_for_directx11
 
       auto pgpucontextNew = pgpudevice->allocate_gpu_context();
 
-      pgpucontextNew->create_draw2d_gpu_context(pgpudevice, m_pacmeuserinteractionAffinity
-      ->m_pacmewindowingwindow, this, {}, pointOutput, sizeWindow, sizeRaw);
+      pgpucontextNew->create_draw2d_gpu_context(pgpudevice, draw2d_domain(), this, {}, pointOutput, sizeWindow, sizeRaw);
 
       m_pgpucontextOwned = pgpucontextNew;
 
@@ -400,7 +399,7 @@ namespace draw2d_direct2d_for_directx11
 
          ::cast < ::draw2d_direct2d_for_directx11::bitmap > pdraw2dbitmap = m_pimageTarget->m_pdraw2dbitmap;
 
-         pdraw2dbitmap->_create_d2d1_bitmap(this, m_sizeTotal2, nullptr, {}, {}, 0, m_pacmeuserinteractionAffinity);
+         pdraw2dbitmap->_create_d2d1_bitmap(this, m_sizeTotal2, nullptr, {}, {}, 0, draw2d_domain());
 
       }
 
@@ -439,7 +438,7 @@ namespace draw2d_direct2d_for_directx11
    }
 
 
-   void graphics::create_bitmap_graphics(::draw2d::bitmap *pdraw2dbitmap, ::acme::user::interaction * pacmeuserinteractionAffinity)
+   void graphics::create_bitmap_graphics(::draw2d::bitmap *pdraw2dbitmap, ::draw2d::domain * pdraw2ddomain)
    {
 
       throw ::interface_only();
@@ -732,21 +731,21 @@ namespace draw2d_direct2d_for_directx11
 }
 
 
-   void graphics::_create_memory_graphics(const ::i32_size & size, ::acme::user::interaction * pacmeuserinteractionAffinity)
+   void graphics::_create_memory_graphics(const ::i32_size & size, ::draw2d::domain * pdraw2ddomain)
    {
 
-      if (pacmeuserinteractionAffinity)
-      {
+      //if (pacmeuserinteractionAffinity)
+      //{
 
-         m_pacmeuserinteractionAffinity = pacmeuserinteractionAffinity;
+      //   m_pacmeuserinteractionAffinity = pacmeuserinteractionAffinity;
 
-      }
-      else if (!m_pacmeuserinteractionAffinity)
-      {
+      //}
+      //else if (!m_pacmeuserinteractionAffinity)
+      //{
 
-         m_pacmeuserinteractionAffinity = m_papplication->main_acme_user_interaction();
+      //   m_pacmeuserinteractionAffinity = m_papplication->main_acme_user_interaction();
 
-      }
+      //}
 
       auto pcontext = gpu_context();
 
@@ -773,7 +772,7 @@ namespace draw2d_direct2d_for_directx11
 
       }
 
-      ::cast < ::user::interaction > puserinteraction = m_pacmeuserinteractionAffinity;
+      ::cast < ::user::interaction > puserinteraction = m_puserinteractionTopic;
 
       if (::is_null(puserinteraction))
       {
@@ -790,10 +789,10 @@ namespace draw2d_direct2d_for_directx11
 
       ::acme::windowing::window *pacmewindowingwindow = nullptr;
 
-      if (::is_set(m_pacmeuserinteractionAffinity))
+      if (::is_set(m_puserinteractionTopic))
       {
 
-         pacmewindowingwindow = m_pacmeuserinteractionAffinity->acme_windowing_window();
+         pacmewindowingwindow = m_puserinteractionTopic->acme_windowing_window();
 
       }
 
@@ -818,7 +817,7 @@ namespace draw2d_direct2d_for_directx11
 
       }
 
-      auto pgpudevice = pgpuapproach->get_gpu_device(pacmewindowingwindow);
+      auto pgpudevice = pgpuapproach->get_gpu_device(draw2d_domain());
 
       auto pgpucontextNew = pgpudevice->allocate_gpu_context();
 
@@ -826,7 +825,7 @@ namespace draw2d_direct2d_for_directx11
 
       auto sizeRaw = pacmewindowingwindow->get_raw_buffer_size().maximum(size);
 
-      pgpucontextNew->create_draw2d_gpu_context(pgpudevice, pacmewindowingwindow, this, {}, {}, size, sizeRaw);
+      pgpucontextNew->create_draw2d_gpu_context(pgpudevice, draw2d_domain(), this, {}, {}, size, sizeRaw);
 
       set_gpu_context(pgpucontextNew);
 
@@ -1179,10 +1178,10 @@ namespace draw2d_direct2d_for_directx11
 
 
    bool graphics::is_memory_graphics_pool_compatible(
-::acme::user::interaction * pacmeuserinteractionAffinity) const
+::draw2d::domain * pdraw2ddomain) const
    {
 
-      return ::gpu::graphics::is_memory_graphics_pool_compatible(pacmeuserinteractionAffinity);
+      return ::gpu::graphics::is_memory_graphics_pool_compatible(pdraw2ddomain);
 
    }
 
@@ -6949,21 +6948,22 @@ namespace draw2d_direct2d_for_directx11
       bool bExternalRendering,
    ::image::image * pimage,
    const ::i32_size & size,
-   ::acme::user::interaction * pacmeuserinteractionAffinity)
+   //::acme::user::interaction * pacmeuserinteractionAffinity)
+      ::draw2d::domain * pdraw2ddomain)
    {
 
-      if (!pacmeuserinteractionAffinity)
-      {
+      //if (!pacmeuserinteractionAffinity)
+      //{
 
-         pacmeuserinteractionAffinity = m_pacmeuserinteractionAffinity;
+      //   pacmeuserinteractionAffinity = m_pacmeuserinteractionAffinity;
 
-      }
-      else if (!m_pacmeuserinteractionAffinity)
-      {
+      //}
+      //else if (!m_pacmeuserinteractionAffinity)
+      //{
 
-         m_pacmeuserinteractionAffinity = pacmeuserinteractionAffinity;
+      //   m_pacmeuserinteractionAffinity = pacmeuserinteractionAffinity;
 
-      }
+      //}
 
       // A descriptor is not a native bitmap. Realize the destination before
       // the base acquisition caches its bitmap and before begin_draw binds it.
@@ -6974,7 +6974,7 @@ namespace draw2d_direct2d_for_directx11
          if (!pbitmap || !pbitmap->m_pd2d1bitmap || pbitmap->size() != pimage->raw_size())
          {
 
-            pimage->update_bitmap_as_render_target(pacmeuserinteractionAffinity, this);
+            pimage->update_bitmap_as_render_target(draw2d_domain(), this);
 
          }
          else if (pimage->m_eacquire == ::draw2d::e_acquire_load
@@ -6993,7 +6993,7 @@ namespace draw2d_direct2d_for_directx11
          bExternalRendering,
       pimage,
       size,
-      pacmeuserinteractionAffinity);
+      pdraw2ddomain);
 
          if (::is_set(pimage))
          {
@@ -7011,8 +7011,7 @@ namespace draw2d_direct2d_for_directx11
 
             // An image lease always uses local offscreen coordinates, even
             // when acquired during a window layer's drawing scope.
-            begin_draw(true, pacmeuserinteractionAffinity ? pacmeuserinteractionAffinity->user_interaction() : nullptr,
-               rectangleFrame, pimage);
+            begin_draw(true, m_puserinteractionTopic, rectangleFrame, pimage);
 
             ////auto pgpucurrentlayer = ::gpu::current_layer();
 
@@ -7321,7 +7320,7 @@ namespace draw2d_direct2d_for_directx11
 
          constructø(pimage);
 
-         auto puserinteraction = m_pacmeuserinteractionAffinity->user_interaction();
+         auto puserinteraction = m_puserinteractionTopic->user_interaction();
 
          ::cast < ::gpu::image > pgpuimage = pimage;
 
@@ -8068,13 +8067,13 @@ namespace draw2d_direct2d_for_directx11
    }
 
 
-   ::f64 graphics::get_dpix()
-   {
+   //::f64 graphics::get_dpix()
+   //{
 
-      return ::draw2d_direct2d::graphics::get_dpix();
-      // return 72.0;
+   //   return ::draw2d_direct2d::graphics::get_dpix();
+   //   // return 72.0;
 
-   }
+   //}
 
 
    //void graphics::destroy()

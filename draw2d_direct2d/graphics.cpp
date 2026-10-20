@@ -8694,12 +8694,12 @@ namespace draw2d_direct2d
    }
 
 
-   ::f64 graphics::get_dpix()
-   {
+   //::f64 graphics::get_dpix()
+   //{
 
-      return 72.0;
+   //   return 72.0;
 
-   }
+   //}
 
 
    //void graphics::destroy()

@@ -163,40 +163,22 @@ namespace gpu_directx11
    }
 
 
-   void device::initialize_gpu_device_for_swap_chain(::gpu::approach* pgpuapproachParam, ::windowing::window * pwindow)
+   //void device::initialize_gpu_device_for_swap_chain(::gpu::approach* pgpuapproachParam, ::windowing::window * pwindow)
+   //{
+
+   //   ::gpu::device::initialize_gpu_device_for_swap_chain(pgpuapproachParam, pwindow);
+
+   //   initialize_d3d11_device();
+
+   //}
+
+
+   void device::initialize_gpu_device(::gpu::approach * pgpuapproachParam, ::draw2d::domain * pdraw2ddomain)
    {
 
-      ::gpu::device::initialize_gpu_device_for_swap_chain(pgpuapproachParam, pwindow);
+      ::gpu::device::initialize_gpu_device(pgpuapproachParam, pdraw2ddomain);
 
       initialize_d3d11_device();
-
-   }
-
-
-   void device::initialize_gpu_device_for_off_screen(::gpu::approach* pgpuapproachParam, const ::i32_rectangle& rectanglePlacement)
-   {
-
-      ::gpu::device::initialize_gpu_device_for_off_screen(pgpuapproachParam, rectanglePlacement);
-
-      //createInstance();
-      //setupDebugMessenger();
-      //createSurface();
-      //pickPhysicalDevice();
-      //createLogicalDevice();
-      //createCommandPool();
-
-      /*if (bAddSwapChainSupport)
-      {
-
-         initialize_swap_chain(pwindow);
-
-      }
-      else*/
-      {
-
-         initialize_cpu_buffer(rectanglePlacement.size());
-
-      }
 
       ::cast < approach > pgpuapproach = pgpuapproachParam;
 
@@ -207,83 +189,128 @@ namespace gpu_directx11
 
       }
 
-      m_pgpuapproach = pgpuapproach.m_p;
-
       auto pphysicaldevice = pgpuapproach->m_pphysicaldevice;
 
       //assert(pphysicaldevice && pphysicaldevice->m_physicaldevice);
 
       m_pphysicaldevice = pphysicaldevice;
 
-      //if (m_papplication->m_bUseSwapChainWindow)
-      //{
-
-      //   m_pphysicaldevice->createWindowSurface(pwindow);
-
-      //}
 
 
+   }
 
-      //if (startcontext.m_eoutput == ::gpu::e_output_swap_chain)
-      //{
 
-      //   m_pphysicaldevice->createWindowSurface(startcontext.m_pwindow);
-
-      //}
-
-      //auto physicaldevice = pphysicaldevice->m_physicaldevice;
-
-      //// Get list_base of supported extensions
-      //uint32_t extCount = 0;
-      //vkEnumerateDeviceExtensionProperties(physicaldevice, nullptr, &extCount, nullptr);
-      //if (extCount > 0)
-      //{
-      //   ::array<VkExtensionProperties> extensions(extCount);
-      //   if (vkEnumerateDeviceExtensionProperties(physicaldevice, nullptr, &extCount, extensions.data()) == VK_SUCCESS)
-      //   {
-      //      for (auto& ext : extensions)
-      //      {
-      //         m_straSupportedExtensions.add(ext.extensionName);
-      //      }
-      //   }
-      //}
-
-      // Derived examples can enable extensions based on the list_base of supported extensions read from the physical device
-      //getEnabledExtensions();
-
-      //bool useSwapChain = m_eoutput == ::gpu::e_output_swap_chain;
-
-      //bool useSwapChain = bAddSwapChainSupport;
-
-      //m_itaskGpu = ::current_itask();
+//   void device::initialize_gpu_device_for_off_screen(::gpu::approach* pgpuapproachParam, const ::i32_rectangle& rectanglePlacement)
+//   {
 //
-//      VkPhysicalDeviceScalarBlockLayoutFeatures scalarBlockLayoutSupport = {
-//.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SCALAR_BLOCK_LAYOUT_FEATURES,
-//      .scalarBlockLayout = TRUE };
-//      pgpuapproach->m_pDeviceCreatepNextChain = &scalarBlockLayoutSupport;
-//      m_physicaldevicefeaturesCreate.logicOp = TRUE;
-//      m_physicaldevicefeaturesCreate.independentBlend = TRUE;
-//      HRESULT result = createLogicalDevice(
-//         m_physicaldevicefeaturesCreate,
-//         pgpuapproach->m_pszaEnabledDeviceExtensions,
-//         pgpuapproach->m_pDeviceCreatepNextChain,
-//         useSwapChain);
+//      ::gpu::device::initialize_gpu_device_for_off_screen(pgpuapproachParam, rectanglePlacement);
 //
-//      if (result != VK_SUCCESS)
+//      //createInstance();
+//      //setupDebugMessenger();
+//      //createSurface();
+//      //pickPhysicalDevice();
+//      //createLogicalDevice();
+//      //createCommandPool();
+//
+//      /*if (bAddSwapChainSupport)
 //      {
 //
-//         //m_itaskGpu = {};
+//         initialize_swap_chain(pwindow);
 //
-//         exitFatal("Could not create DirectX11 device: \n" + errorString(result) + " HRESULT=" + ::as_string(result), result);
+//      }
+//      else*/
+//      {
+//
+//         initialize_cpu_buffer(rectanglePlacement.size());
+//
+//      }
+//
+//      ::cast < approach > pgpuapproach = pgpuapproachParam;
+//
+//      if (!pgpuapproach)
+//      {
 //
 //         throw ::exception(error_failed);
 //
 //      }
 //
-
-      //device = directx11Device->logicalDevice;
-
-   }
+//      m_pgpuapproach = pgpuapproach.m_p;
+//
+//      auto pphysicaldevice = pgpuapproach->m_pphysicaldevice;
+//
+//      //assert(pphysicaldevice && pphysicaldevice->m_physicaldevice);
+//
+//      m_pphysicaldevice = pphysicaldevice;
+//
+//      //if (m_papplication->m_bUseSwapChainWindow)
+//      //{
+//
+//      //   m_pphysicaldevice->createWindowSurface(pwindow);
+//
+//      //}
+//
+//
+//
+//      //if (startcontext.m_eoutput == ::gpu::e_output_swap_chain)
+//      //{
+//
+//      //   m_pphysicaldevice->createWindowSurface(startcontext.m_pwindow);
+//
+//      //}
+//
+//      //auto physicaldevice = pphysicaldevice->m_physicaldevice;
+//
+//      //// Get list_base of supported extensions
+//      //uint32_t extCount = 0;
+//      //vkEnumerateDeviceExtensionProperties(physicaldevice, nullptr, &extCount, nullptr);
+//      //if (extCount > 0)
+//      //{
+//      //   ::array<VkExtensionProperties> extensions(extCount);
+//      //   if (vkEnumerateDeviceExtensionProperties(physicaldevice, nullptr, &extCount, extensions.data()) == VK_SUCCESS)
+//      //   {
+//      //      for (auto& ext : extensions)
+//      //      {
+//      //         m_straSupportedExtensions.add(ext.extensionName);
+//      //      }
+//      //   }
+//      //}
+//
+//      // Derived examples can enable extensions based on the list_base of supported extensions read from the physical device
+//      //getEnabledExtensions();
+//
+//      //bool useSwapChain = m_eoutput == ::gpu::e_output_swap_chain;
+//
+//      //bool useSwapChain = bAddSwapChainSupport;
+//
+//      //m_itaskGpu = ::current_itask();
+////
+////      VkPhysicalDeviceScalarBlockLayoutFeatures scalarBlockLayoutSupport = {
+////.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SCALAR_BLOCK_LAYOUT_FEATURES,
+////      .scalarBlockLayout = TRUE };
+////      pgpuapproach->m_pDeviceCreatepNextChain = &scalarBlockLayoutSupport;
+////      m_physicaldevicefeaturesCreate.logicOp = TRUE;
+////      m_physicaldevicefeaturesCreate.independentBlend = TRUE;
+////      HRESULT result = createLogicalDevice(
+////         m_physicaldevicefeaturesCreate,
+////         pgpuapproach->m_pszaEnabledDeviceExtensions,
+////         pgpuapproach->m_pDeviceCreatepNextChain,
+////         useSwapChain);
+////
+////      if (result != VK_SUCCESS)
+////      {
+////
+////         //m_itaskGpu = {};
+////
+////         exitFatal("Could not create DirectX11 device: \n" + errorString(result) + " HRESULT=" + ::as_string(result), result);
+////
+////         throw ::exception(error_failed);
+////
+////      }
+////
+//
+//      //device = directx11Device->logicalDevice;
+//
+//   }
 
 
 

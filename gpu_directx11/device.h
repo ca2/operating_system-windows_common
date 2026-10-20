@@ -135,9 +135,11 @@ namespace gpu_directx11
 
       //svirtual void initialize_swap_chain(::windowing::window * pwindow);
       
-      void initialize_gpu_device_for_swap_chain(::gpu::approach* pgpuapproach, ::windowing::window *pwindow) override;
-      void initialize_gpu_device_for_off_screen(::gpu::approach* pgpuapproach, const ::i32_rectangle& rectanglePlacement) override;
+      //void initialize_gpu_device_for_swap_chain(::gpu::approach* pgpuapproach, ::windowing::window *pwindow) override;
+      //void initialize_gpu_device_for_off_screen(::gpu::approach* pgpuapproach, const ::i32_rectangle& rectanglePlacement) override;
 
+
+      void initialize_gpu_device(::gpu::approach * papproach, ::draw2d::domain * pdraw2ddomain) override;
 
 
       virtual void create_main_gpu_context();

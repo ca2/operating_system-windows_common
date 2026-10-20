@@ -1,6 +1,7 @@
 #include "platform.h"
 #include "image.h"
 #include "bitmap.h"
+#include "domain.h"
 #include "path.h"
 #include "pen.h"
 #include "brush.h"
@@ -40,6 +41,10 @@ __FACTORY_EXPORT void draw2d_direct2d_factory(::factory::factory* pfactory)
    pfactory->add_factory_item < ::draw2d_direct2d::draw2d, ::draw2d::draw2d >();
    pfactory->add_factory_item < ::direct2d::direct2d >();
    //pfactory->add_factory_item < ::draw2d_direct2d::directx11_swap_chain, ::gpu::swap_chain >();
+
+
+   pfactory->add_factory_item < ::draw2d_direct2d::domain, ::acme::draw2d::domain >();
+
 
 
 }

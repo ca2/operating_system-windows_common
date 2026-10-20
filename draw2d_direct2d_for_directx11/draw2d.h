@@ -27,12 +27,12 @@ namespace draw2d_direct2d_for_directx11
       void unlock_device() override;
 
 
-      ::dxgi_device_source * _dxgi_device_source(::acme::windowing::window * pacmewindowingwindow) override;
+      ::dxgi_device_source * _dxgi_device_source(::draw2d::domain * pdraw2ddomain) override;
 
       //void on_create_window(::windowing::window* pwindow) override;
       
       void adjust_composited_window_styles(::u32& nExStyle, ::u32& nStyle) override;
-      virtual ::draw2d::graphics_pointer do_allocation_strategy(::acme::user::interaction * pacmeuserinteractionAffinity, ::image::image * pimage,
+      virtual ::draw2d::graphics_pointer do_allocation_strategy(::draw2d::domain * pdraw2ddomain, ::image::image * pimage,
                                                                 const ::i32_size & size);
 
 
