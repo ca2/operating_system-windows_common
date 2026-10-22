@@ -819,7 +819,7 @@ namespace windows
    ::file::path directory_context::time()
    {
       
-      return m_pdirectorysystem->m_strTimeFolder;
+      return m_pdirectorysystem->time_folder();
 
    }
 
@@ -843,7 +843,7 @@ namespace windows
    ::file::path directory_context::netseed()
    {
 
-      return m_pdirectorysystem->m_strNetSeedFolder;
+      return m_pdirectorysystem->net_seed_folder();
 
    }
 
@@ -1152,7 +1152,7 @@ namespace windows
    ::file::path directory_context::commonappdata_root()
    {
 
-      return m_pdirectorysystem->m_strCommonAppData;
+      return m_pdirectorysystem->common_app_data();
 
    }
 
@@ -1160,7 +1160,7 @@ namespace windows
    ::file::path directory_context::userquicklaunch()
    {
 
-      return m_pdirectorysystem->m_strAppData / "Microsoft\\Internet Explorer\\Quick Launch";
+      return m_pdirectorysystem->user_app_data() / "Microsoft\\Internet Explorer\\Quick Launch";
 
    }
 
@@ -1168,7 +1168,7 @@ namespace windows
    ::file::path directory_context::userprograms()
    {
 
-      return m_pdirectorysystem->m_strPrograms;
+      return m_pdirectorysystem->user_programs();
 
    }
 
@@ -1176,7 +1176,7 @@ namespace windows
    ::file::path directory_context::commonprograms()
    {
 
-      return m_pdirectorysystem->m_strCommonPrograms;
+      return m_pdirectorysystem->common_programs();
 
    }
 
