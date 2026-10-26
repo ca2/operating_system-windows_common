@@ -1,6 +1,6 @@
 #include "platform.h"
 #include "node.h"
-#include "mutex.h"
+//#include "mutex.h"
 #include "acme/constant/id.h"
 #include "acme/constant/user_key.h"
 #include "acme/filesystem/filesystem/directory_system.h"
@@ -809,61 +809,6 @@ namespace acme_windows_common
    }
 
 
-   ::pointer < ::mutex > node::create_named_mutex(::particle * pparticleContext, bool bInitiallyOwn, const_char_pointer pszName, security_attributes * psecurityattributes)
-   {
-
-      //return allocateø mutex(pparticleContext, bInitiallyOwn, pszName ADD_PARAM_SEC_ATTRS);
-      return allocateø ::acme_windows_common::mutex(pparticleContext, bInitiallyOwn, pszName, psecurityattributes);
-
-   }
-
-
-   ::pointer < ::mutex > node::create_local_named_mutex(::particle * pparticleContext, bool bInitiallyOwned, const ::scoped_string & scopedstrName, security_attributes * psecurityattributes)
-   {
-
-      ::string strLocalName;
-
-      strLocalName = "Local\\" + scopedstrName;
-
-      return create_named_mutex(pparticleContext, bInitiallyOwned, strLocalName, psecurityattributes);
-
-   }
-
-
-   ::pointer < ::mutex > node::create_global_named_mutex(::particle * pparticleContext, bool bInitiallyOwned, const ::scoped_string & scopedstrName, security_attributes * psecurityattributes)
-   {
-
-      ::string strGlobalName;
-
-      strGlobalName = "Global\\" + scopedstrName;
-
-      return create_named_mutex(pparticleContext, bInitiallyOwned, strGlobalName, psecurityattributes);
-
-   }
-
-
-   ::pointer < ::mutex > node::open_local_named_mutex(::particle * pparticleContext, const ::scoped_string & scopedstrName)
-   {
-
-      return nullptr;
-
-   }
-
-
-   ::pointer < ::mutex > node::open_global_named_mutex(::particle * pparticleContext, const ::scoped_string & scopedstrName)
-   {
-
-      return nullptr;
-
-   }
-
-   
-   ::pointer < ::mutex > node::get_install_mutex(::particle * pparticleContext, const ::scoped_string & scopedstrPlatform, const ::scoped_string & scopedstrSuffix)
-   {
-
-      return nullptr;
-
-   }
 
 
    //bool node::succeeded(const ::error_code& errorcode)

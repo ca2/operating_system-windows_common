@@ -34,8 +34,8 @@ list(APPEND library_source
         platform.h
         #hresult_exception.cpp
         #hresult_exception.h
-        mutex.cpp
-        mutex.h
+        #mutex.cpp
+        #mutex.h
         node.cpp
         node.h
         #prop_variant.h
