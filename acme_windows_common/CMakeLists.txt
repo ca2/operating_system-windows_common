@@ -43,8 +43,8 @@ list(APPEND library_source
         security_attributes.h
         standard_exception.cpp
         standard_exception.h
-        synchronization_object.cpp
-        synchronization_object.h
+        #synchronization_object.cpp
+        #synchronization_object.h
         #variant.h
 )
 
