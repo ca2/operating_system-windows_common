@@ -201,7 +201,7 @@ synchronization_result semaphore::wait(const duration & durationTimeout)
 
 #elif defined(__APPLE__)
 
-//::mutex * g_pmutexSemaphore = nullptr;
+//::parallelization::mutex * g_pmutexSemaphore = nullptr;
 //
 //comparable_array < pthread_t > * g_pthreadaSemaphore = nullptr;
 //

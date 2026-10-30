@@ -76,7 +76,7 @@ namespace draw2d_direct2d
 
 
 
-   //::mutex * draw2d::_generic_d2d1_device_context_mutex()
+   //::parallelization::mutex * draw2d::_generic_d2d1_device_context_mutex()
    //{
 
    //   return m_pmutexDeviceContext;

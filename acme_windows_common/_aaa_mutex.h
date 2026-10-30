@@ -13,7 +13,7 @@ namespace acme_windows_common
 
 
    class CLASS_DECL_ACME_WINDOWS_COMMON mutex :
-      virtual public ::mutex,
+      virtual public ::parallelization::mutex,
       virtual public synchronization_object
    {
    public:
@@ -84,14 +84,14 @@ namespace acme_windows_common
       //
       //#endif
 
-      using ::mutex::unlock;
+      using ::parallelization::mutex::unlock;
       void unlock() override;
 
 
       //virtual bool already_exists();
 
 
-      ///static ::pointer < ::mutex >open_mutex(::matter * pmatter, const_char_pointer pszName) {return ::open_mutex(pmatter, pszName);}
+      ///static ::pointer < ::parallelization::mutex >open_mutex(::matter * pmatter, const_char_pointer pszName) {return ::open_mutex(pmatter, pszName);}
 
 
    };
@@ -104,6 +104,6 @@ namespace acme_windows_common
 //
 //
 //
-//CLASS_DECL_ACME::pointer< ::mutex > get_ui_destroyed_mutex();
+//CLASS_DECL_ACME::pointer< ::parallelization::mutex > get_ui_destroyed_mutex();
 //
 

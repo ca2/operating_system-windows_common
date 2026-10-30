@@ -219,7 +219,7 @@
 //}
 //
 //
-//::mutex * g_pmutexMq;
+//::parallelization::mutex * g_pmutexMq;
 //
 //
 //map < itask, ::pointer<message_queue >>* g_pmapMq;

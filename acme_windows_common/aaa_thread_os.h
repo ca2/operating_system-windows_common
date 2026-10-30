@@ -117,7 +117,7 @@ CLASS_DECL_ACME bool task_get_run();
 //
 //   //CLASS_DECL_ACME extern comparable_eq_array <itask> * s_piaThread;
 //   //CLASS_DECL_ACME extern address_array < ::thread * > * s_pthreadptra;
-//   //CLASS_DECL_ACME extern ::mutex * s_pmutex;
+//   //CLASS_DECL_ACME extern ::parallelization::mutex * s_pmutex;
 //
 //
 //} // namespace parallelization
@@ -179,8 +179,8 @@ synchronization_result wait(size_t numberOfItems, synchronization_object ** psyn
 
 
 
-//CLASS_DECL_ACME ::mutex & user_mutex();
-CLASS_DECL_ACME ::mutex & message_dispatch_mutex();
+//CLASS_DECL_ACME ::parallelization::mutex & user_mutex();
+CLASS_DECL_ACME ::parallelization::mutex & message_dispatch_mutex();
 
 
 

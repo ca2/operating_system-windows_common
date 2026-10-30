@@ -53,7 +53,7 @@ bool critical_section::Init()
 
       pthread_mutexattr_init(&mutexattr);
 
-      // set the ::mutex as a recursive ::mutex
+      // set the ::parallelization::mutex as a recursive ::parallelization::mutex
 
 #ifdef __APPLE__
 
@@ -66,10 +66,10 @@ bool critical_section::Init()
 
 #endif
 
-      // create the ::mutex with the attributes set
+      // create the ::parallelization::mutex with the attributes set
       pthread_mutex_init(&m_mutex, &mutexattr);
 
-      //After initializing the ::mutex, the thread attribute can be destroyed
+      //After initializing the ::parallelization::mutex, the thread attribute can be destroyed
       pthread_mutexattr_destroy(&mutexattr);
 
    }
@@ -97,7 +97,7 @@ critical_section::operator pthread_mutex_t()
 
 critical_section::~critical_section()
 {
-   // Destroy / close the ::mutex
+   // Destroy / close the ::parallelization::mutex
    pthread_mutex_destroy (&m_mutex);
 
 
@@ -109,7 +109,7 @@ critical_section::~critical_section()
 //   try
 //   {
 //
-//      // Acquire the ::mutex to access the shared resource
+//      // Acquire the ::parallelization::mutex to access the shared resource
 //      pthread_mutex_lock ((pthread_mutex_t *) mutex());
 //
 //   }
@@ -134,7 +134,7 @@ critical_section::~critical_section()
 //
 //bool critical_section::unlock()
 //{
-//   // Release the ::mutex  and release the access to shared resource
+//   // Release the ::parallelization::mutex  and release the access to shared resource
 //   pthread_mutex_unlock ((pthread_mutex_t *) mutex());
 //   return true;
 //}

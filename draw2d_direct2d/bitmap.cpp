@@ -143,7 +143,7 @@ namespace draw2d_direct2d
 
       options = D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS_NONE;
 
-      ::mutex * pmutex = nullptr;
+      ::parallelization::mutex * pmutex = nullptr;
 
       ID2D1DeviceContext * pd2d1devicecontext = nullptr;
 

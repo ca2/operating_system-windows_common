@@ -22,7 +22,7 @@ namespace draw2d_direct2d
 
 
       comptr<ID2D1DeviceContext> m_pd2d1devicecontext;
-      ::pointer<::mutex> m_pmutexDeviceContext;
+      ::pointer<::parallelization::mutex> m_pmutexDeviceContext;
 
 
       domain();
@@ -30,7 +30,7 @@ namespace draw2d_direct2d
 
 
 
-      virtual mutex * _d2d1_device_context_mutex();
+      virtual ::parallelization::mutex * _d2d1_device_context_mutex();
       virtual ID2D1DeviceContext * _d2d1_device_context();
 
 

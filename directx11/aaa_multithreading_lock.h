@@ -83,7 +83,7 @@ namespace directx11
    //{
    //public:
 
-   //   static ::mutex * g_pmutex;
+   //   static ::parallelization::mutex * g_pmutex;
 
    //   lock() :
    //      synchronous_lock(g_pmutex)

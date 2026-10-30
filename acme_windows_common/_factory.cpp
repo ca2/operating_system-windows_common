@@ -84,7 +84,7 @@ __FACTORY_EXPORT void acme_windows_common_factory(::factory::factory * pfactory)
    //pfactory->add_factory_item < ::windows::copydesk, ::user::copydesk >();
    //pfactory->add_factory_item < ::windows::shell, ::user::shell >();
 
-   //pfactory->add_factory_item < ::acme_windows_common::mutex, ::mutex >();
+   //pfactory->add_factory_item < ::acme_windows_common::mutex, ::parallelization::mutex >();
    //pfactory->add_factory_item < ::acme_windows_common::exclusive, ::acme::exclusive >();
 
    pfactory->add_factory_item < ::acme_windows_common::exception_translator, ::exception_translator >();

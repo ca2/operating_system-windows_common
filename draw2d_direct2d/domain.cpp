@@ -29,7 +29,7 @@ namespace draw2d_direct2d
    }
 
 
-   mutex * domain::_d2d1_device_context_mutex()
+   ::parallelization::mutex * domain::_d2d1_device_context_mutex()
    {
 
       return m_pmutexDeviceContext;

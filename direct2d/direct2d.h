@@ -28,7 +28,7 @@ namespace direct2d
       comptr<ID2D1Factory1>         m_pd2d1factory;
       geometry_sink_text_renderer   m_geometrysinktextrenderer;
 
-      ::pointer < ::mutex >         m_pmutexDeviceContextDefault;
+      ::pointer < ::parallelization::mutex >         m_pmutexDeviceContextDefault;
       comptr<ID2D1DeviceContext>    m_pd2d1devicecontextDefault;
 
       comptr<ID2D1Multithread>      m_pd2d1multithread;

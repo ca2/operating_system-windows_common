@@ -21,7 +21,7 @@ namespace draw2d_direct2d
       
       //comptr<ID2D1DCRenderTarget> m_pd2d1dcrendertarget;
       //comptr<ID2D1DeviceContext> m_pd2d1devicecontext;
-      //::pointer<::mutex> m_pmutexDeviceContext;
+      //::pointer<::parallelization::mutex> m_pmutexDeviceContext;
       //::image32_t *m_pimage32Raw;
       //HDC m_hdcMemory;
       //HBITMAP m_hbitmap;
@@ -54,7 +54,7 @@ namespace draw2d_direct2d
       virtual ID2D1DeviceContext * default_d2d1_device_context(::draw2d::domain * pdraw2ddomain);
 
       static ::draw2d_direct2d::draw2d * get();
-      //virtual mutex *_generic_d2d1_device_context_mutex();
+      //virtual ::parallelization::mutex *_generic_d2d1_device_context_mutex();
       //virtual ID2D1DeviceContext *_generic_d2d1_device_context();
 
       //void on_create_window(::windowing::window* pwindow) override;

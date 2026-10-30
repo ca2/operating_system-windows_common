@@ -30,7 +30,7 @@ static ::i32 g_iMutex = 0;
 
 
 
-::mutex::mutex(enum_create_new, bool bInitiallyOwn)
+::parallelization::mutex::mutex(enum_create_new, bool bInitiallyOwn)
 {
 
    m_bOwner = true;
@@ -91,7 +91,7 @@ static ::i32 g_iMutex = 0;
 }
 
 
-::mutex::mutex(enum_create_new, bool bInitiallyOwn, const ::string & pstrName, LPSECURITY_ATTRIBUTES psaAttribute)
+::parallelization::mutex::mutex(enum_create_new, bool bInitiallyOwn, const ::string & pstrName, LPSECURITY_ATTRIBUTES psaAttribute)
 {
 
    m_bAlreadyExists = false;
@@ -451,7 +451,7 @@ get_existing:
 
 #ifdef WINDOWS
 
-::mutex::mutex(enum_create_new, const ::string & pstrName, void * h, bool bOwner)
+::parallelization::mutex::mutex(enum_create_new, const ::string & pstrName, void * h, bool bOwner)
 {
 
    m_bOwner = bOwner;
@@ -459,7 +459,7 @@ get_existing:
 
 }
 
-//mutexmutex(const ::mutex & m):
+//mutexmutex(const ::parallelization::mutex & m):
 //   synchronization_object(m.m_pszName)
 //{
 //   m_bOwner = false;
@@ -487,7 +487,7 @@ mutexmutex(const ::string & pstrName, sem_t * psem, bool bOwner) :
 
 }
 
-mutexmutex(const ::mutex & m):
+mutexmutex(const ::parallelization::mutex & m):
    matter(m.get_application()),
    synchronization_object(m.m_pszName)
 {
@@ -507,7 +507,7 @@ mutexmutex(const ::mutex & m):
 #elif defined(MUTEX_NAMED_FD)
 
 
-::mutex::mutex(enum_create_new, const ::scoped_string & scopedstrName, ::i32 iFd, bool bOwner)
+::parallelization::mutex::mutex(enum_create_new, const ::scoped_string & scopedstrName, ::i32 iFd, bool bOwner)
 {
 
    m_strName = pszName;
@@ -516,7 +516,7 @@ mutexmutex(const ::mutex & m):
 
 }
 
-//mutexmutex(const ::mutex & m) :
+//mutexmutex(const ::parallelization::mutex & m) :
 //   matter(m.get_application()),
 //   synchronization_object(m.m_pszName)
 //{
@@ -543,7 +543,7 @@ mutexmutex(e_create_new enew, const ::string & pstrName, key_t key, ::i32 semid,
 }
 
 
-//mutexmutex(const ::mutex & m):
+//mutexmutex(const ::parallelization::mutex & m):
 //   matter(m.get_application()),
 //   synchronization_object(m.m_pszName)
 //{
@@ -560,7 +560,7 @@ mutexmutex(e_create_new enew, const ::string & pstrName, key_t key, ::i32 semid,
 
 
 
-::mutex::~mutex()
+::parallelization::mutex::~mutex()
 {
 
 #ifndef WINDOWS
@@ -631,7 +631,7 @@ mutexmutex(e_create_new enew, const ::string & pstrName, key_t key, ::i32 semid,
 }
 
 
-bool ::mutex::already_exists()
+bool ::parallelization::mutex::already_exists()
 {
 
    return m_bAlreadyExists;
@@ -658,7 +658,7 @@ bool ::mutex::already_exists()
 
 #if !defined(WINDOWS)
 
-synchronization_result ::mutex::wait(const duration & duration)
+synchronization_result ::parallelization::mutex::wait(const duration & duration)
 {
 
    if(duration.is_pos_infinity())
@@ -1047,7 +1047,7 @@ synchronization_result ::mutex::wait(const duration & duration)
 }
 
 
-bool ::mutex::lock()
+bool ::parallelization::mutex::lock()
 {
 
 #if defined(MUTEX_NAMED_POSIX)
@@ -1293,7 +1293,7 @@ bool ::mutex::lock()
 }
 
 
-bool ::mutex::lock(const duration & duration)
+bool ::parallelization::mutex::lock(const duration & duration)
 {
 
    synchronization_result result = wait(duration);
@@ -1310,7 +1310,7 @@ bool ::mutex::lock(const duration & duration)
 }
 
 
-synchronization_result ::mutex::wait()
+synchronization_result ::parallelization::mutex::wait()
 {
 
    if (!lock())
@@ -1327,7 +1327,7 @@ synchronization_result ::mutex::wait()
 #endif
 
 
-bool ::mutex::unlock()
+bool ::parallelization::mutex::unlock()
 {
 
 #ifdef WINDOWS
@@ -1496,7 +1496,7 @@ bool ::mutex::unlock()
 
 
 
-::pointer<::mutex>open_mutex(const ::scoped_string & scopedstrName)
+::pointer<::parallelization::mutex>open_mutex(const ::scoped_string & scopedstrName)
 {
 
 #ifdef WINDOWS
@@ -1510,7 +1510,7 @@ bool ::mutex::unlock()
 
    }
 
-   auto pmutex  = allocateø ::mutex(e_create_new, pszName, h);
+   auto pmutex  = allocateø ::parallelization::mutex(e_create_new, pszName, h);
 
    return pmutex;
 
@@ -1543,7 +1543,7 @@ bool ::mutex::unlock()
 
    }
 
-   auto pmutex = allocateø ::mutex(strName, psem, isCreator);
+   auto pmutex = allocateø ::parallelization::mutex(strName, psem, isCreator);
 
    return pmutex;
 
@@ -1612,7 +1612,7 @@ pacmedir->create(path.folder());
 
    //pthread_mutex_init(&m_mutex, &attr);
 
-   auto pmutex = allocateø ::mutex(e_create_new, pszName, iFd, false);
+   auto pmutex = allocateø ::parallelization::mutex(e_create_new, pszName, iFd, false);
 
    return pmutex;
 
@@ -1638,7 +1638,7 @@ pacmedir->create(path.folder());
 
    }
 
-   auto pmutex = allocateø ::mutex(strName, key, semid);
+   auto pmutex = allocateø ::parallelization::mutex(strName, key, semid);
 
    return pmutex;
 
@@ -1650,7 +1650,7 @@ pacmedir->create(path.folder());
 void wait_until_mutex_does_not_exist(const ::scoped_string & scopedstrName)
 {
 
-   ::pointer<::mutex>pmutex = allocateø ::mutex(e_create_new, false, "Global\\::ca::account::ca2_spa::7807e510-5579-11dd-ae16-0800200c7784");
+   ::pointer<::parallelization::mutex>pmutex = allocateø ::parallelization::mutex(e_create_new, false, "Global\\::ca::account::ca2_spa::7807e510-5579-11dd-ae16-0800200c7784");
 
    if(::get_last_status() == ::error_already_exists)
    {
@@ -1662,7 +1662,7 @@ void wait_until_mutex_does_not_exist(const ::scoped_string & scopedstrName)
 
          sleep(200_ms);
 
-         pmutex = allocateø ::mutex(e_create_new, false, "Global\\::ca::account::ca2_spa::7807e510-5579-11dd-ae16-0800200c7784");
+         pmutex = allocateø ::parallelization::mutex(e_create_new, false, "Global\\::ca::account::ca2_spa::7807e510-5579-11dd-ae16-0800200c7784");
 
       }
 
@@ -1671,9 +1671,9 @@ void wait_until_mutex_does_not_exist(const ::scoped_string & scopedstrName)
 }
 
 
-::mutex * g_pmutexUiDestroyed = nullptr;
+::parallelization::mutex * g_pmutexUiDestroyed = nullptr;
 
-CLASS_DECL_ACME ::mutex * get_ui_destroyed_mutex()
+CLASS_DECL_ACME ::parallelization::mutex * get_ui_destroyed_mutex()
 {
 
    return g_pmutexUiDestroyed;
@@ -1720,12 +1720,12 @@ null_dacl_security_attributes::null_dacl_security_attributes()
 namespace install
 {
 
-   ::mutex::mutex(string strPlatform, string strSuffix) :
+   mutex::mutex(string strPlatform, string strSuffix) :
 #ifdef WINDOWS_DESKTOP
-      ::mutex(e_create_new, false, "Global\\::ca2::account::ccwarehouse::install::" + strPlatform + "::200010001951042219770204-11dd-ae16-0800200c7784" + strSuffix, &m_securityattributes)
+      ::parallelization::mutex(e_create_new, false, "Global\\::ca2::account::ccwarehouse::install::" + strPlatform + "::200010001951042219770204-11dd-ae16-0800200c7784" + strSuffix, &m_securityattributes)
       , synchronization_object("Global\\::ca2::account::ccwarehouse::install::" + strPlatform + "::200010001951042219770204-11dd-ae16-0800200c7784" + strSuffix)
 #else
-      ::mutex(e_create_new, false, "Global\\::ca2::account::ccwarehouse::spa::" + strPlatform + "::200010001951042219770204-11dd-ae16-0800200c7784" + strSuffix, (LPSECURITY_ATTRIBUTES)nullptr)
+      ::parallelization::mutex(e_create_new, false, "Global\\::ca2::account::ccwarehouse::spa::" + strPlatform + "::200010001951042219770204-11dd-ae16-0800200c7784" + strSuffix, (LPSECURITY_ATTRIBUTES)nullptr)
 #endif
 
    {
@@ -1734,9 +1734,9 @@ namespace install
 
    admin_mutex::admin_mutex(string strPlatform, string strSuffix) :
 #ifdef WINDOWS_DESKTOP
-      ::mutex(e_create_new, false, "Global\\::ca2::account::ccwarehouse::" + strPlatform + "::200010001951042219770204-11dd-ae16-0800200c7784" + strSuffix, &m_securityattributes)
+      ::parallelization::mutex(e_create_new, false, "Global\\::ca2::account::ccwarehouse::" + strPlatform + "::200010001951042219770204-11dd-ae16-0800200c7784" + strSuffix, &m_securityattributes)
 #else
-      ::mutex(e_create_new, false, "Global\\::ca2::account::ccwarehouse::" + strPlatform + "::200010001951042219770204-11dd-ae16-0800200c7784" + strSuffix)
+      ::parallelization::mutex(e_create_new, false, "Global\\::ca2::account::ccwarehouse::" + strPlatform + "::200010001951042219770204-11dd-ae16-0800200c7784" + strSuffix)
 #endif
 
    {
