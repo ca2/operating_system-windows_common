@@ -45,7 +45,7 @@ namespace draw2d_direct2d
 
       ::draw2d::window_attachment::initialize_window_attachment(pwindow);
    
-      if (m_papplication->m_gpu.m_bUseSwapChainWindow)
+      if (m_papplication->use_gpu_swap_chain())
       {
          //::direct2d::get() -> d2d1_factory1()->CreateHwndRenderTarget(rendertargetproperties,
            // hwndrendertargetproperties)
