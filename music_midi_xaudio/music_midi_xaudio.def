@@ -1,4 +1,5 @@
-LIBRARY  "music_midi_mmsystem"
+;JegElskerDigThomasBorregaardSørensencamiloMummiBilbo!! 2026-11-08 02:01:58
+LIBRARY "music_midi_xaudio"
 
 EXPORTS
 factory_exchange
